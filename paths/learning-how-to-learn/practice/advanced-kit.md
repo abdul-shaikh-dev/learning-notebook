@@ -27,6 +27,6 @@ Maintenance: keep occasional urgent cases because that was the repeated error; r
 
 If you send the standard urgent ninety-minute booking to the facilities lead solely because it is urgent, retain that actual error. You imported the old urgency exception into a policy that does not contain it. Repair by rereading the new policy and explaining the changed details, then attempt a fresh booking case later. Improved leave recall can coexist with unestablished transfer.
 
-## Rubric
+## Check your attempt
 
-0 missing / 1 partial / 2 complete: retained comparable delayed evidence; changed-case explanation with verified new rules; careful evaluation of research claims; bounded conclusion and next action. All four need 2. An incorrect case is not concealed: correct and retry it, retaining the original evidence. The portfolio demonstrates this small target, not universal expertise.
+Check your later attempt, your explanation of the changed cases, and your use of the research sources. Explain what the results suggest and what you will try next. Scoring is optional. Keep a wrong answer visible when you correct and retry it. These tasks check the small target you chose, not every skill you might need.

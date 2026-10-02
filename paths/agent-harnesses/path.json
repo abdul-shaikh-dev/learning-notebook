@@ -211,7 +211,7 @@
           "url": "https://developers.openai.com/api/docs/guides/agents",
           "section": "Agent runtime choices",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -267,7 +267,7 @@
           "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
           "section": "Deny by default; validate permissions on every request",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -323,7 +323,7 @@
           "url": "https://developers.openai.com/api/docs/guides/agents",
           "section": "Agent runtime choices",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -379,7 +379,7 @@
           "url": "https://docs.python.org/3/library/json.html",
           "section": "Basic usage; JSONEncoder and JSONDecoder",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -435,7 +435,7 @@
           "url": "https://developers.openai.com/api/docs/guides/function-calling",
           "section": "Function calling; strict mode; executing functions",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -497,7 +497,7 @@
           "url": "https://developers.openai.com/api/docs/guides/function-calling",
           "section": "Function calling; strict mode; executing functions",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -553,7 +553,7 @@
           "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
           "section": "Deny by default; validate permissions on every request",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -616,7 +616,7 @@
           "url": "https://docs.python.org/3/library/json.html",
           "section": "Basic usage; JSONEncoder and JSONDecoder",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -672,7 +672,7 @@
           "url": "https://docs.python.org/3/library/time.html#time.monotonic",
           "section": "time.monotonic",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -769,7 +769,7 @@
           "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
           "section": "Deny by default; validate permissions on every request",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -825,7 +825,7 @@
           "url": "https://docs.python.org/3/library/time.html#time.monotonic",
           "section": "time.monotonic",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -881,7 +881,7 @@
           "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
           "section": "Reducing client complexity with idempotent API design",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -978,7 +978,7 @@
           "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
           "section": "Reducing client complexity with idempotent API design",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -1096,7 +1096,7 @@
           "url": "https://docs.python.org/3/library/json.html",
           "section": "Basic usage; JSONEncoder and JSONDecoder",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         },
         {
           "title": "SQLite transactions",
@@ -1159,7 +1159,7 @@
           "url": "https://developers.openai.com/api/docs/guides/agents",
           "section": "Agent runtime choices",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -1254,7 +1254,7 @@
           "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
           "section": "Safety risks and mitigations",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -1310,7 +1310,7 @@
           "url": "https://developers.openai.com/cookbook/examples/agents_sdk/migrate-from-claude-agent-sdk/readme",
           "section": "Harness ownership and execution responsibilities",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -1380,7 +1380,7 @@
           "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
           "section": "Reducing client complexity with idempotent API design",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         },
         {
           "title": "SQLite transactions",
@@ -1444,7 +1444,7 @@
           "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
           "section": "Reducing client complexity with idempotent API design",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -1500,7 +1500,7 @@
           "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
           "section": "Deny by default; validate permissions on every request",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -1563,7 +1563,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Test cases; assertRaises",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -1619,7 +1619,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Test cases; assertRaises",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -1675,7 +1675,7 @@
           "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
           "section": "Reducing client complexity with idempotent API design",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         }
       ]
     },
@@ -1737,7 +1737,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Test cases; assertRaises",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
         },
         {
           "title": "SQLite transactions",

@@ -807,7 +807,7 @@
       "id": "uncertainty-and-intervals",
       "title": "14. Interpret a confidence interval",
       "stage": "intermediate",
-      "takeaway": "An interval procedure has coverage across repeated samples.",
+      "takeaway": "Across repeated samples, a 95% confidence-interval method captures the population mean about 95% of the time, under its assumptions.",
       "sections": [
         {
           "title": "How it works",

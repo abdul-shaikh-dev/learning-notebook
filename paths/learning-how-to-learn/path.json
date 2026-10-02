@@ -376,7 +376,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Score these answers: planned two-day manager because duration; urgent one-day coordinator because duration; planned one-day coordinator because duration. State a fair next check.",
+        "prompt": "A learner gives three answers: \"A planned two-day request goes to the manager because it lasts at least two days.\" \"An urgent one-day request goes to the coordinator because it lasts one day.\" \"A planned one-day request goes to the coordinator because it lasts one day.\" Which answers are correct? Choose a new case to check later.",
         "solution": "Two of three are correct. The urgent answer misses the override. A fair follow-up uses a new urgent case plus different planned durations after a gap, with the same rule for counting route and reason. Three cases cannot establish broad competence in every policy situation.",
         "solutionFormat": "prose",
         "checks": [

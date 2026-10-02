@@ -1,6 +1,6 @@
-# Define a useful session outcome — printable worksheet
+# Define a useful session outcome: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ An outcome names what exists after a session: a checked paragraph, five attempte
 
 The presentation needs an outline covering audience, problem and recommendation. Replace work on presentation with a checkable outcome for a 35-minute session.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your session outcome and stopping point: ________________________________
 
 ## Worked example
 
 Create a three-slide outline stating audience, problem and recommendation; stop when each slide has one sentence and the missing evidence is listed. Formatting is outside this session.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Name the audience and intended result.
+- Give each outline slide a checkable message.
+- Separate evidence gaps from optional formatting.
 
 ## Source and scope
 

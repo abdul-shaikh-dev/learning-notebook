@@ -1,6 +1,6 @@
-# Use past durations before optimism — printable worksheet
+# Use past durations before optimism: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ Planning fallacy research concerns optimistic completion predictions. A useful r
 
 Three comparable drafts took 70, 90 and 110 minutes. A new draft is predicted at 40. Give a grounded planning range.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your revised estimate and its limits: ________________________________
 
 ## Worked example
 
 Use 70–110 minutes as a starting range and ask why the new draft would differ. Reserve about 90 minutes plus a review window if the work is comparable; mark this as a judgement, not a confidence interval.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Adjusts observations to 35, 50 and 80.
+- Uses 50 as a baseline rather than a promise.
+- Checks that the map really removes new work.
 
 ## Source and scope
 

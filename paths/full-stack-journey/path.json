@@ -173,7 +173,7 @@
         {
           "title": "React, API and storage roles",
           "paragraphs": [
-            "The supplied application is a synthetic single-user loopback lab. React handles presentation, .NET enforces the HTTP contract, and SQL Server later stores records durably. GitHub Pages hosts this notebook, but a dynamic .NET API needs its own runtime."
+            "This practice app runs on your computer for one user and uses fictional study records. React handles presentation, .NET enforces the HTTP contract, and SQL Server later stores records durably. GitHub Pages hosts this notebook, but a dynamic .NET API needs its own runtime."
           ]
         }
       ],
@@ -194,7 +194,7 @@
           "The architecture uses modern tools."
         ],
         "correct": 0,
-        "explanation": "Given SQL study and 25 minutes, create returns 201 and the list shows the same record. Blank title returns 400 and adds nothing. Completion returns version 2. Login, public deployment and multi-user isolation remain later extensions."
+        "explanation": "Creating a 25-minute session and seeing it listed gives you an action and an observable result. Enterprise readiness and modern tools do not specify a result you can check."
       },
       "references": [
         {
@@ -221,7 +221,7 @@
         {
           "title": "Local runtimes and commands",
           "paragraphs": [
-            "Use .NET 10, Node 24/npm and Python 3.11+. Run the API on 127.0.0.1:5087 and Vite on 127.0.0.1:5173 in separate terminals. npm ci installs the pinned graph; npm run build checks types and bundles the UI. Record versions and commands so another attempt can reproduce the result."
+            "Use .NET 10, Node 24/npm and Python 3.11+. Run the API on 127.0.0.1:5087 and Vite on 127.0.0.1:5173 in separate terminals. The loopback address 127.0.0.1 points to your own computer. npm ci installs the pinned graph; npm run build checks types and bundles the UI. Record versions and commands so another attempt can reproduce the result."
           ]
         }
       ],
@@ -338,7 +338,7 @@
           "To accept arbitrary JSON types."
         ],
         "correct": 0,
-        "explanation": "Zero is valid. A JSON boolean cannot bind to nullable int, so it returns 400. Omitted minutes is null and fails validation. done=false is a real update value when version and other fields are valid. Acceptance checks must distinguish these cases."
+        "explanation": "A nullable field is null when omitted, so validation can distinguish missing input from an explicitly supplied zero or false. The endpoint must still check types and allowed values."
       },
       "references": [
         {
@@ -489,7 +489,7 @@
           "Yes, if the response status is 200."
         ],
         "correct": 0,
-        "explanation": "Refresh keeps sessions because the same API process retains its dictionary. Restart creates a fresh dictionary and loses sessions. Durable persistence requires SQL mode and a restart test that reads the database-backed state."
+        "explanation": "Refreshing the browser leaves the API process running, so its in-memory dictionary can still supply the records. To test the SQL version, restart the API and read the saved records again."
       },
       "references": [
         {
@@ -537,7 +537,7 @@
           "Naming the variable StudyTask."
         ],
         "correct": 0,
-        "explanation": "The assertion disappears at runtime. minutes=true and version=0 could reach rendering and update logic despite the declared type. Decode unknown fields and test independent expected outcomes; type checking still helps after validation establishes a trusted shape."
+        "explanation": "The decoder inspects actual values and rejects fields with invalid types or ranges. A TypeScript assertion and a variable name perform no runtime checks."
       },
       "references": [
         {
@@ -737,7 +737,7 @@
           "Disabling the button in one tab."
         ],
         "correct": 0,
-        "explanation": "Both send expected version 1 for the same ID. One atomic update increments to 2; the other no longer matches. Read back version 2, not 3. If both succeed, the adapter failed its concurrency contract. Missing IDs return 404 in this reference, which has no delete operation."
+        "explanation": "Putting the ID and expected version in the UPDATE predicate makes the comparison part of the write. Once one update changes the version, a stale update no longer matches. A separate SELECT leaves time for another writer to intervene."
       },
       "references": [
         {
@@ -1040,7 +1040,7 @@
           "Elapsed time units."
         ],
         "correct": 0,
-        "explanation": "Record bounded operation name, status/error category, duration and correlation ID. Link deeper SQL diagnostics under controlled access. Exclude the title, token and connection string. Compare the observed timeline against the user outcome, not merely the presence of a log line."
+        "explanation": "Tokens can grant access, and complete request bodies can contain private data. Log only the fields needed to diagnose the request, such as its status and elapsed time with units."
       },
       "references": [
         {
@@ -1143,7 +1143,7 @@
           "A green UI screenshot from before the failure."
         ],
         "correct": 0,
-        "explanation": "An observed restore drill into an isolated database, with timing under representative conditions and independent content verification. A configured backup job alone is insufficient. Record tolerated data loss and which infrastructure or identity recovery dependencies remain untested."
+        "explanation": "A restore followed by application-level data checks shows that the backup can recover usable records. A backup filename or an earlier screenshot does not show that restoration works."
       },
       "references": [
         {

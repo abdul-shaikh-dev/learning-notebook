@@ -1,6 +1,6 @@
-# State outcome and exclusions — printable worksheet
+# State outcome and exclusions: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ State who the project helps, what it will produce, its limits and what it will l
 
 Scope a 20-person beginner workshop with a two-week deadline.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+What the workshop includes and leaves out: ________________________________
 
 ## Worked example
 
 Deliver one 60-minute session and a one-page exercise sheet for 20 beginners. Exclude a recorded course and custom software. Include accessible participation arrangements as an explicit planning question.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- State audience, duration and participant capacity.
+- Name excluded deliverables.
+- Keep essential participation arrangements visible.
 
 ## Source and scope
 

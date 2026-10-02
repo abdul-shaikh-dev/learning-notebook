@@ -24,6 +24,6 @@ Correction: planned duration of two or more days goes to a manager; urgent same-
 
 Friday, three-day gap, no source during answering: D manager because two days; E manager because urgent today; F coordinator because planned one day. Score 3/3. Conclusion: improvement on these small comparable sets; not proof of permanent retention or every workplace policy.
 
-## Rubric and revision
+## Check your attempt
 
-Score each 0 missing / 1 partial / 2 complete: observable target; checked route-and-reason scoring; visible original errors and corrections; delayed date/support/count plus limitation. Example earns 2 in each. If your delayed check is pending, the fourth criterion is not yet demonstrated. Preserve the plan and complete the check when feasible instead of inventing it.
+Use these questions to check your attempt: Is the target clear? Did you check both the approval route and the reason? Can you see what you corrected? Did you try a new case after a gap and note any help you used? Scoring is optional. If the later check has not happened, mark it pending and return when you can.

@@ -5,25 +5,25 @@
       "id": "README-md",
       "href": "paths/linux-operating-systems/practice/README.md",
       "role": "guide",
-      "description": "Course-owned README.md"
+      "description": "Setup and commands for the operating-system exercises"
     },
     {
       "id": "diagnostic_lab-py",
       "href": "paths/linux-operating-systems/practice/diagnostic_lab.py",
       "role": "reference",
-      "description": "Course-owned diagnostic_lab.py"
+      "description": "Child-process exercises for output, exit status and timeouts"
     },
     {
       "id": "test_os_labs-py",
       "href": "paths/linux-operating-systems/practice/test_os_labs.py",
       "role": "test",
-      "description": "Course-owned test_os_labs.py"
+      "description": "Tests for the portable operating-system exercises"
     },
     {
       "id": "linux-observation-md",
       "href": "paths/linux-operating-systems/practice/linux-observation.md",
       "role": "guide",
-      "description": "Course-owned linux-observation.md"
+      "description": "Optional Linux commands and observations to compare with the portable lab"
     },
     {
       "id": "mechanism-lab-script",

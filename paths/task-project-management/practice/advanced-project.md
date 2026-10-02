@@ -11,7 +11,7 @@ Close a project using acceptance and improvement evidence.
 
 ## Assessment
 
-Score each criterion 0 (missing), 1 (partial) or 2 (supported). Revise any missing criterion before progressing. This is a learning self-assessment, not a professional certification.
+Use these criteria to check your answer and choose what to revisit. A score is optional, and no completed worksheet is required to keep reading. This practice does not award a professional certification.
 
 - Age, cycle time and throughput use consistent boundaries.
 - Acceptance includes both specification checks and intended-use evidence.

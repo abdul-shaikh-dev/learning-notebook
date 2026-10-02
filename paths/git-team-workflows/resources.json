@@ -89,7 +89,7 @@
         "Verify committed contents independently with git show.",
         "Show that an untracked synthetic config file is ignored without claiming history erasure.",
         "In the reported foundation repository, independently try staged four and unstaged five from the three-states lesson. Verify both diffs before comparing the explanation.",
-        "Compare submitted evidence with the rubric: The two diff baselines and committed snapshot are correct. No existing repository or global config is changed. Ignore evidence uses check-ignore and ls-files. Report separates mechanical checks from release verification."
+        "Check your result: The two diff baselines and committed snapshot are correct. No existing repository or global config is changed. Ignore evidence uses check-ignore and ls-files. Report separates mechanical checks from release verification."
       ],
       "commands": [
         {
@@ -135,8 +135,8 @@
         "Explain base/ours/theirs and preserve both fixture intents.",
         "Verify a two-parent merge.",
         "Observe fetch updating origin/main while HEAD stays unchanged, then integrate with --ff-only.",
-        "Write an offline pull-request review with candidate identifiers and remaining hosting limits.",
-        "Compare submitted evidence with the rubric: The recorded output shows the conflict, the abort and the later resolution. The resolved contents preserve both stated intents. Fetch and integration are distinguished. The review names the candidate commit and states that no hosted approval was obtained.",
+        "Explain whether the merged result preserves both changes. You can keep a short offline review note if useful.",
+        "Check your result: The recorded output shows the conflict, the abort and the later resolution. The resolved contents preserve both stated intents. Fetch and integration are distinguished. The review names the candidate commit and states that no hosted approval was obtained.",
         "Inspect semantic-merge.md and compare two individually valid branches with the invalid combined candidate."
       ],
       "commands": [
@@ -165,7 +165,7 @@
     },
     {
       "id": "advanced",
-      "title": "Local recovery and release portfolio",
+      "title": "Local recovery and release practice",
       "goal": "Locate a regression, preserve recovered work, integrate a selected patch and identify a release candidate.",
       "fileIds": [
         "sandbox-py",
@@ -188,8 +188,8 @@
         "Compare targeted revert with the private reset/reflog recovery.",
         "Explain the cherry-picked change and rebased topic's changed identity.",
         "Verify the annotated tag object.",
-        "Produce an offline release record including artifact/hosting checks not executed.",
-        "Compare submitted evidence with the rubric: Bisect result identifies the known synthetic defect. Recovery branches retain the intended committed work. History operations are justified by ownership and purpose. Release records do not equate a tag with trusted deployment evidence.",
+        "Explain which commit you would release and which checks support that choice. Use release-review.md for an optional longer note.",
+        "Check your result: Bisect result identifies the known synthetic defect. Recovery branches retain the intended committed work. History operations are justified by ownership and purpose. Release records do not equate a tag with trusted deployment evidence.",
         "Run review_roleplay.py in a fresh owned child and inspect reviewer feedback, revised candidate and second review.",
         "Inspect semantic-merge.md and compare two individually valid branches with the invalid combined candidate."
       ],

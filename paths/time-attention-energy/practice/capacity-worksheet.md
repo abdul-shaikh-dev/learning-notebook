@@ -1,6 +1,6 @@
-# Begin with available capacity — printable worksheet
+# Begin with available capacity: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ A calendar contains fixed commitments and negotiable work. Count the remaining s
 
 A learner has 4 free hours, a 45-minute journey, 30-minute meal and 15-minute transition. How much time remains for study?
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Minutes remaining and calculation: ________________________________
 
 ## Worked example
 
-Subtract 90 minutes from 240: 150 minutes remain. Allocate 90 minutes to the draft, 30 to practice and leave 30 uncommitted. This preserves explicit uncertainty instead of filling every minute.
+Subtract 90 minutes from 240: 150 minutes remain. Allocate 90 minutes to the draft, 30 to practice and leave 30 uncommitted. This leaves time for unexpected work.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Subtract all named essential commitments.
+- Distinguish a continuous window from several short gaps.
+- Keep the selected outcomes inside the calculated capacity.
 
 ## Source and scope
 

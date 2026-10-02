@@ -1016,7 +1016,7 @@
         {
           "title": "Preconditions versus boundary validation",
           "paragraphs": [
-            "Finite nonnegative numeric edge weights and hashable vertices in a finite graph are caller preconditions. The teaching implementation checks negative weights, but does not comprehensively validate NaN, infinity, malformed edges or numeric types. Inputs outside that contract are unsupported; this is not a valid-input correctness bug. Add a validated boundary if accepting untrusted data."
+            "Finite nonnegative numeric edge weights and hashable vertices in a finite graph are caller preconditions. The teaching implementation checks negative weights, but does not comprehensively validate NaN, infinity, malformed edges or numeric types. Validate these other cases before calling the function with external data."
           ]
         }
       ],
@@ -1192,7 +1192,7 @@
         {
           "title": "Preconditions versus boundary validation",
           "paragraphs": [
-            "Capacity must be a nonnegative integer and every weight a positive integer; values must be finite numeric values in the stated optimization contract. These are caller preconditions. Negative capacity and nonpositive weights are checked, but fractional capacity/weights, malformed pairs and nonfinite values are not a comprehensive public validation API. Reject them explicitly in a wrapper if the data boundary is untrusted; unsupported input is not evidence of a valid-input algorithm bug.",
+            "Capacity must be a nonnegative integer and every weight a positive integer; values must be finite numeric values in the stated optimization contract. These are caller preconditions. The function rejects negative capacity and nonpositive weights. Before using external data, also reject fractional capacity or weights, malformed pairs and nonfinite values.",
             "Use advanced-reasoning.md and test_advanced_oracles.py for the learner extension: explain the invariant and recurrence, run the bounded independent oracles, and test a deliberately wrong implementation."
           ]
         }

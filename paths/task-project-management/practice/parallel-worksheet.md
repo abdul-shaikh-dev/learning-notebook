@@ -1,6 +1,6 @@
-# Coordinate parallel branches and handoffs — printable worksheet
+# Coordinate parallel branches and handoffs: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ Independent branches can progress together, but integration work still consumes 
 
 Two people draft exercises and invitations independently; plan their integration.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your shared details and final check: ________________________________
 
 ## Worked example
 
 Agree the workshop date, audience and terminology first. Use stable file links, then reserve a joint review to check that invitation promises match the exercises and session duration.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Agree shared date, audience and terminology early.
+- Use stable file versions or links.
+- Reserve an integration check against workshop promises.
 
 ## Source and scope
 

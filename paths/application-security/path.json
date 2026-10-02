@@ -200,7 +200,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x24-V15-Secure-Coding-and-Architecture.md",
           "section": "V15: threat modeling and architecture",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         }
       ]
     },
@@ -252,7 +252,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x15-V6-Authentication.md",
           "section": "V6: authentication architecture",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         }
       ]
     },
@@ -304,7 +304,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x15-V6-Authentication.md",
           "section": "V6: general authentication security",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         },
         {
           "title": "OWASP Authentication Cheat Sheet",
@@ -370,7 +370,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x17-V8-Authorization.md",
           "section": "V8: authorization design and operation",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         },
         {
           "title": "OWASP Authorization Cheat Sheet",
@@ -428,7 +428,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x11-V2-Validation-and-Business-Logic.md",
           "section": "V2: input validation and business logic",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         }
       ]
     },
@@ -436,12 +436,12 @@
       "id": "sessions",
       "title": "6. Manage session rotation, expiry and logout",
       "stage": "foundation",
-      "takeaway": "A session is a bearer capability with a lifecycle.",
+      "takeaway": "A session lets the server recognise a signed-in user until the session expires or is revoked.",
       "sections": [
         {
           "title": "Bearer sessions and revocation",
           "paragraphs": [
-            "A server session maps an unpredictable opaque identifier to authenticated context. Whoever presents a valid bearer identifier may act as that session, so protect it in transport/storage and never log it. The application must define creation, expiry, privilege changes and revocation.",
+            "A server session links a random session ID to the signed-in user. Anyone holding a valid ID may be able to act as that user. This is why it is called a bearer credential. The ID is opaque: it does not reveal the stored user information. Protect it when sending and storing it, and never log it. Define when sessions are created, expire, change privileges and are revoked.",
             "Sessions in the kit generate random identifiers using Python secrets, rotate a previous session during login, expire after five minutes using injected time, and revoke on logout. The short lifetime is a fixture policy, not a universal recommendation. There is no durable store, idle timeout or multi-worker coordination here."
           ]
         },
@@ -479,7 +479,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x16-V7-Session-Management.md",
           "section": "V7: session lifecycle and termination",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         }
       ]
     },
@@ -532,7 +532,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x12-V3-Web-Frontend-Security.md",
           "section": "V3: browser security controls",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         },
         {
           "title": "RFC 6265 HTTP State Management Mechanism",
@@ -598,7 +598,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x15-V6-Authentication.md",
           "section": "V6: password and multifactor authentication",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         },
         {
           "title": "OWASP Password Storage Cheat Sheet",
@@ -657,7 +657,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x12-V3-Web-Frontend-Security.md",
           "section": "V3: cross-site request forgery",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         },
         {
           "title": "OWASP CSRF Prevention Cheat Sheet",
@@ -716,7 +716,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x10-V1-Encoding-and-Sanitization.md",
           "section": "V1: output encoding and sanitization",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         },
         {
           "title": "OWASP XSS Prevention Cheat Sheet",
@@ -775,7 +775,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x10-V1-Encoding-and-Sanitization.md",
           "section": "V1: injection prevention",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         },
         {
           "title": "Python sqlite3 documentation",
@@ -834,7 +834,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x19-V10-OAuth-and-OIDC.md",
           "section": "V10: OAuth client and resource server security",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         },
         {
           "title": "RFC 9700 OAuth Security BCP",
@@ -893,7 +893,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x19-V10-OAuth-and-OIDC.md",
           "section": "V10: OpenID Connect",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         },
         {
           "title": "OpenID Connect Core 1.0 errata set 2",
@@ -960,7 +960,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x19-V10-OAuth-and-OIDC.md",
           "section": "V10: authorization flow defenses",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         },
         {
           "title": "RFC 7636 PKCE",
@@ -1019,7 +1019,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x18-V9-Self-contained-Tokens.md",
           "section": "V9: token integrity and validation",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         },
         {
           "title": "RFC 8725 JWT Best Current Practices",
@@ -1078,7 +1078,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x22-V13-Configuration.md",
           "section": "V13: secrets management",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         },
         {
           "title": "OWASP Secrets Management Cheat Sheet",
@@ -1137,7 +1137,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md",
           "section": "V16: security logging and error handling",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         }
       ]
     },
@@ -1189,7 +1189,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x24-V15-Secure-Coding-and-Architecture.md",
           "section": "V15: secure dependencies and development",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         }
       ]
     },
@@ -1241,7 +1241,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x11-V2-Validation-and-Business-Logic.md",
           "section": "V2: business logic and anti-automation",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         }
       ]
     },
@@ -1300,7 +1300,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x04-Assessment_and_Certification.md",
           "section": "Assessment and certification scope",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         },
         {
           "title": "OWASP ASVS project",
@@ -1359,7 +1359,7 @@
           "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md",
           "section": "V16: incident evidence and safe error handling",
           "reviewed": "2026-09-27",
-          "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
         }
       ]
     }

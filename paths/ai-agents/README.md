@@ -150,3 +150,8 @@ From this practice directory run `python -m unittest test_provider_scaffold.py`.
 ## Optional measured provider sample
 
 See `provider-evaluation-lab.md`. Run `python -m unittest -v test_provider_eval.py` offline, then inspect `python provider_eval.py --model YOUR_SUPPORTED_MODEL`. Live requests require `--live` and a locally supplied API key.
+
+
+## Reference scope and verification limits
+
+The sources explain the cited mechanisms. Examples and design advice are original to this notebook. The review checked that each reference applies to its lesson; it did not execute every source example or verify a production or live-provider integration.

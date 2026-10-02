@@ -471,7 +471,7 @@
         {
           "title": "Reduce an unfamiliar missing-row report",
           "paragraphs": [
-            "A user reports that a timeline loses entries when loading page two. Start with four rows: a,b,c at time5 and d at time6. Page size2 returns a,b then d; c disappears. Network retries, authentication and thousands of production records are unnecessary to reproduce this particular symptom.",
+            "A user reports that a timeline loses entries when loading page two. Start with four rows: a, b and c at timestamp 5, and d at timestamp 6. With a page size of 2, the first page returns a and b, and the second returns d. Row c disappears. Network retries, authentication and thousands of production records are unnecessary to reproduce this particular symptom.",
             "The new cursor_candidate.py is small enough to inspect after reproducing. Run python cursor_checks.py cursor_candidate to see expected failures, then repair a copy. The first test records the missing user-visible row rather than asserting how many internal sorting calls occur."
           ]
         },
@@ -1064,7 +1064,7 @@
         }
       ],
       "exercise": {
-        "prompt": "A test fails only when run after another file test. What first?",
+        "prompt": "A test fails only when run after another file test. What would you inspect first, and which rerun would test your suspicion?",
         "solution": "Run alone and reverse ordering, inspect shared destination paths and globals, then replace them with isolated fixtures. Do not increase every timeout first.",
         "solutionFormat": "prose",
         "checks": [

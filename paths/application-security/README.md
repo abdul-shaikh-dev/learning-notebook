@@ -13,3 +13,8 @@ The reference implements downstream object authorization, narrow field validatio
 Run `python -B -m unittest -v test_security_lab.py test_security_http.py`. Read each stage kit, then complete threat-model.md and verification-matrix.md. Source pointers use ASVS 5.0.0 and applicable IETF/OIDC guidance. Selected controls and a passing test suite are not ASVS certification. Browser cookie attributes, real issuer/key validation, password/MFA and production operations remain separately verified work.
 
 identity-provider-lab.md is an optional learner exercise. Its prerequisite is an explicitly chosen authorized training tenant and maintained library, with exact documented setup and sanitized evidence. The baseline runs without this extension. No real tenant/account changes or requests are performed by these files.
+
+
+## Reference scope and verification limits
+
+The course covers selected web-application controls from ASVS 5.0.0, released in 2025. Its original exercises use fictional data and require Python 3.11 or later. They are neither an ASVS certification nor a complete HTTP server or identity-provider implementation.

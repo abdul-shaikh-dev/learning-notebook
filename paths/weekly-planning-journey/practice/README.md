@@ -25,4 +25,4 @@ These lessons follow one evolving situation. Read the worked case first; try a c
 
 - **8. Replan when the week changes** (`midweek-disruption`): Reconcile what remains before moving blocks.
 - **9. Communicate a concrete trade-off** (`communicate-tradeoffs`): Change the message when the constraint changes.
-- **14. Change one thing next week** (`choose-next-experiment`): Choose an experiment that could disappoint you.
+- **14. Change one thing next week** (`choose-next-experiment`): Choose a change and check whether it helps.

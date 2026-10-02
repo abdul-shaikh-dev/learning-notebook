@@ -16,7 +16,7 @@ python -m venv .venv
 .venv\Scripts\python analysis.py --out report-output
 ```
 
-On macOS or Linux, replace `.venv\Scripts\python` with `.venv/bin/python`. The requirements pin the tested direct libraries. Transitive dependencies are not fully locked. The report records the versions actually used. After checking a chosen environment, use `python -m pip freeze` to record its full package set if you need to reproduce that environment.
+On macOS or Linux, replace `.venv\Scripts\python` with `.venv/bin/python`. The tested direct libraries are pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. The requirements pin these versions. Transitive dependencies are not fully locked. The report records the versions actually used. After checking a chosen environment, use `python -m pip freeze` to record its full package set if you need to reproduce that environment.
 
 The dataset suite has two tests. The dependency suite has six tests, including invalid inputs, an independently calculated summary, join failure cases and repeatable JSON output. Passing the references does not test your own implementation. Adapt the tests to import your module, or compare independent hand-calculated fixtures first.
 

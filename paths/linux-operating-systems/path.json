@@ -137,7 +137,7 @@
           "A private kernel embedded in the Python interpreter"
         ],
         "correct": 0,
-        "explanation": "Python and Bash run in user space. The filesystem driver participates in kernel-managed I/O. Containers share a kernel; a VM runs a guest kernel."
+        "explanation": "Python runs in user space and requests file access through library and system calls. The kernel mediates that access and coordinates the filesystem and device operations."
       },
       "references": [
         {
@@ -145,7 +145,7 @@
           "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
           "section": "Overview",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -192,7 +192,7 @@
           "Under the user home directory regardless of working directory"
         ],
         "correct": 0,
-        "explanation": "Initially both identify the sample. After cd input, input/sample.csv looks for a nested input directory; sample.csv is the correct relative path."
+        "explanation": "It resolves to /data.csv. A relative path starts from the process working directory, which is / here, regardless of where the script is stored."
       },
       "references": [
         {
@@ -200,7 +200,7 @@
           "url": "https://man7.org/linux/man-pages/man7/path_resolution.7.html",
           "section": "Start of resolution",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -247,7 +247,7 @@
           "Check only the filename because a same-disk backup covers disk failure"
         ],
         "correct": 0,
-        "explanation": "Verify the target path, retain a separate prior version, and compare after writing. Recovery backup also needs independent storage and a restore check."
+        "explanation": "Check the exact target before writing, keep its previous contents separately, and compare the result afterward. Overwriting the only copy first leaves nothing to recover if the write is wrong."
       },
       "references": [
         {
@@ -255,7 +255,7 @@
           "url": "https://man7.org/linux/man-pages/man7/path_resolution.7.html",
           "section": "Pathname lookup",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -302,7 +302,7 @@
           "The argument list applies Bash quoting in every operating system"
         ],
         "correct": 0,
-        "explanation": "The list preserves argument boundaries without invoking shell expansion. Joined shell source can interpret spaces, substitutions and operators."
+        "explanation": "With shell=False and an argument list, quarterly report.csv is passed as one filename. The shell does not split its space or interpret special characters in it."
       },
       "references": [
         {
@@ -317,7 +317,7 @@
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "subprocess argument sequences",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -364,7 +364,7 @@
           "Both to stderr so every line is treated as diagnostic evidence"
         ],
         "correct": 0,
-        "explanation": "Write report rows to stdout or a report file. Send diagnostics to stderr or a separate log. Diagnostic text does not satisfy the report schema and must not enter its data stream."
+        "explanation": "Send CSV to stdout and the validation message to stderr. Mixing the message into stdout can make the downstream CSV reader interpret it as a data row."
       },
       "references": [
         {
@@ -379,7 +379,7 @@
           "url": "https://man7.org/linux/man-pages/man2/open.2.html",
           "section": "File descriptors",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -434,7 +434,7 @@
           "The file must have execute permission before its bytes can be read"
         ],
         "correct": 0,
-        "explanation": "640 grants owner read/write and group read. Directory traversal is a separate requirement, so access can fail before the file is reached."
+        "explanation": "The process needs permission to traverse the parent directories as well as permission to read the file. File read permission alone cannot make an inaccessible path reachable."
       },
       "references": [
         {
@@ -442,7 +442,7 @@
           "url": "https://man7.org/linux/man-pages/man7/credentials.7.html",
           "section": "Process credentials",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         },
         {
           "title": "GNU chmod numeric modes",
@@ -496,7 +496,7 @@
           "A zero exit status because the error was handled intentionally"
         ],
         "correct": 0,
-        "explanation": "Use 0 for completed work and a documented nonzero value for invalid input. Send a useful explanation to stderr and avoid claiming output was committed."
+        "explanation": "Automation uses the documented nonzero exit status to detect failure. The diagnostic explains the cause; printing a helpful message does not change a successful exit status into a failure."
       },
       "references": [
         {
@@ -504,7 +504,7 @@
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "subprocess returncode",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -566,7 +566,7 @@
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "subprocess env",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -627,7 +627,7 @@
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "subprocess timeouts",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -674,7 +674,7 @@
           "A termination handler can extend the deadline after SIGKILL"
         ],
         "correct": 0,
-        "explanation": "Stop accepting new work and finish the task that fits within the shutdown deadline. Save unfinished work durably for retry. Durable work identity must survive a process that cannot run cleanup."
+        "explanation": "SIGKILL cannot be caught or handled by cleanup code. Any information needed to recover unfinished work must already have been saved durably before that signal arrives."
       },
       "references": [
         {
@@ -682,7 +682,7 @@
           "url": "https://man7.org/linux/man-pages/man7/signal.7.html",
           "section": "Signal dispositions",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -729,7 +729,7 @@
           "The 120 MiB RSS proves that no allocation leak can exist"
         ],
         "correct": 0,
-        "explanation": "VSZ includes reserved and mapped virtual address space. Track resident memory and heap growth under an equivalent workload, then inspect allocations before calling the growth a leak."
+        "explanation": "VSZ measures virtual address space, while RSS measures memory currently resident in RAM. These two values alone do not show that the process is leaking memory; investigate how retained memory changes over time."
       },
       "references": [
         {
@@ -744,7 +744,7 @@
           "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html",
           "section": "Shared process resources",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -791,7 +791,7 @@
           "A lock covering only the printed result"
         ],
         "correct": 0,
-        "explanation": "Protect the read, calculation and write with the same lock. Locking only the write lets both workers calculate the same next value from stale reads."
+        "explanation": "The lock must cover the whole read-modify-write operation. Locking only the write still lets both workers calculate 6 from the same old value of 5."
       },
       "references": [
         {
@@ -799,7 +799,7 @@
           "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html",
           "section": "Process resources shared by threads",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -863,7 +863,7 @@
           "url": "https://man7.org/linux/man-pages/man2/open.2.html",
           "section": "Open file descriptions",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         },
         {
           "title": "Python Unix resource limits",
@@ -917,7 +917,7 @@
           "The pathname switching to the new file after successful replacement"
         ],
         "correct": 0,
-        "explanation": "Replacement can prevent partial visibility; locking/transactions coordinate writers; fsync and filesystem/storage policies address durability. No one operation establishes all three."
+        "explanation": "Atomic replacement prevents readers from seeing a partly replaced file under the relevant filesystem rules. Survival after power loss also depends on flushing, filesystem and storage guarantees and needs separate verification."
       },
       "references": [
         {
@@ -932,7 +932,7 @@
           "url": "https://man7.org/linux/man-pages/man2/open.2.html",
           "section": "Synchronized I/O",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -979,7 +979,7 @@
           "Treat the port number as proof that TLS is configured"
         ],
         "correct": 0,
-        "explanation": "Confirm the resolved destination and exact listener, then test the protocol response and business authorization separately. Refused connection occurs before HTTP authorization."
+        "explanation": "A listening port shows that a socket is accepting connections. Check the protocol response and the required application operation before calling the service healthy."
       },
       "references": [
         {
@@ -994,7 +994,7 @@
           "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
           "section": "Network namespaces",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -1056,7 +1056,7 @@
           "url": "https://man7.org/linux/man-pages/man5/proc.5.html",
           "section": "Process inspection",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -1103,7 +1103,7 @@
           "Only the error sentence, omitting time, identity and operation details"
         ],
         "correct": 0,
-        "explanation": "Record the time with its timezone, the operation ID, a sanitized error category, the input schema and version, and the relevant path or identity. Keep sensitive source data only in approved storage."
+        "explanation": "Record the command, time, relevant error and correlation metadata so someone can reproduce or investigate the failure. Redact secrets and customer contents that are unnecessary for that investigation."
       },
       "references": [
         {
@@ -1118,7 +1118,7 @@
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "subprocess diagnostics",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -1180,7 +1180,7 @@
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "Bounded child process timeout",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -1227,7 +1227,7 @@
           "The cgroup assigns PID 1 and grants host administrator identity"
         ],
         "correct": 0,
-        "explanation": "A PID namespace controls which process IDs are visible. A memory cgroup controls the memory budget. A process ID alone establishes neither user identity nor capabilities."
+        "explanation": "A PID namespace changes which process IDs the container sees. A memory cgroup limits its memory use. Seeing PID 1 inside the container does not grant host administrator access."
       },
       "references": [
         {
@@ -1242,7 +1242,7 @@
           "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
           "section": "Namespace types",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -1289,7 +1289,7 @@
           "Run as administrator to avoid diagnosing output-directory permissions"
         ],
         "correct": 0,
-        "explanation": "Runtime identity reads input, writes only reports and reads/executes installed code. It should not rewrite application code or obtain general administrator rights."
+        "explanation": "The importer needs to read input, write reports and read or execute its installed code. It does not need permission to modify its code or unrelated files."
       },
       "references": [
         {
@@ -1297,7 +1297,7 @@
           "url": "https://man7.org/linux/man-pages/man7/credentials.7.html",
           "section": "Permission checks",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -1361,7 +1361,7 @@
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "subprocess exceptions",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -1408,7 +1408,7 @@
           "Production capacity is verified because each small test completed"
         ],
         "correct": 0,
-        "explanation": "Include the tool and runtime versions, the exact bounded test, observations before and after recovery, and the state that was preserved. State which Linux and production behaviors remain untested."
+        "explanation": "The passing suite supports the portable behaviours it actually tested. Linux-specific mechanisms and production recovery still require their own observations and tests."
       },
       "references": [
         {
@@ -1416,7 +1416,7 @@
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "subprocess testing boundary",
           "reviewed": "2026-09-30",
-          "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
         }
       ]
     }

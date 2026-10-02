@@ -1,6 +1,6 @@
-# Reserve time with a purpose — printable worksheet
+# Reserve time with a purpose: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ A time block is a provisional appointment with an outcome. Include a start cue, 
 
 Place a 40-minute draft, 20-minute review and 10-minute transition into an 80-minute window.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your schedule and unused time: ________________________________
 
 ## Worked example
 
 Draft 09:00–09:40, transition 09:40–09:50, review 09:50–10:10 and keep 10 minutes free. State what review checks rather than letting it expand indefinitely.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Fit drafting, review and transition inside 80 minutes.
+- Specify what the review checks.
+- Show the remaining uncommitted time.
 
 ## Source and scope
 

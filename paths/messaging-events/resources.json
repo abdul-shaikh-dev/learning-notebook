@@ -5,7 +5,7 @@
       "id": "event_lab-py",
       "href": "paths/messaging-events/practice/event_lab.py",
       "role": "reference",
-      "description": "Reference implementation or clearly labeled training configuration."
+      "description": "SQLite messaging example with duplicate detection and transactional effects"
     },
     {
       "id": "test_event_lab-py",

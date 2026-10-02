@@ -164,7 +164,7 @@ const ADVANCED = [
       {
         "label": "IFRS 13 official standard landing page",
         "url": "https://www.ifrs.org/issued-standards/list-of-standards/ifrs-13-fair-value-measurement/",
-        "paragraph": "Standard landing page; detailed PDF paragraphs16–26 and93",
+        "paragraph": "Standard landing page; detailed PDF paragraphs 16–26 and 93",
         "checkedDate": "2026-09-26",
         "status": "Stable entry point; detailed 2022 PDF redirected to sign-in in this check."
       },

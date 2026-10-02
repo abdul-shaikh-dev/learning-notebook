@@ -1,6 +1,6 @@
-# Choose when everything seems important — printable worksheet
+# Choose when everything seems important: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ Urgency concerns the cost of delay; importance concerns contribution to an outco
 
 Choose between proofreading due tomorrow, optional theme redesign and sending a file needed by a teammate today.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your order and reason: ________________________________
 
 ## Worked example
 
 Send the dependency first, proofread next and defer theme work. Record the reason: another person is blocked today. Revisit if the deadline or dependency changes.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Identify who is blocked and by which input.
+- Distinguish a real deadline consequence from preference.
+- State what new information would change the order.
 
 ## Source and scope
 

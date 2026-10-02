@@ -1,16 +1,11 @@
-# Offline candidate review
+# Optional release review note
 
-Problem and resulting behavior:
-Base commit and candidate commit:
-Changed paths and dependencies:
-Integration choice and why:
-Executed command, runtime version, assertion outcomes:
-Conflict decisions and review concerns:
-Reviewer feedback, first candidate, revised candidate and second review evidence:
-Tag type and candidate it resolves to:
-Artifact/version/hash evidence (unexecuted in baseline):
-Hosted review/approval and release authority (unexecuted in baseline):
-Recovery choice and verification:
-Remaining limitations:
+Use this when you want to practise handing a change to another developer. No submission is required. A few sentences and relevant command output are enough.
 
-Do not insert credentials or publish this record automatically. A local annotated tag is not evidence of a trusted signature or successful deployment.
+- What changed, and which commit would you release?
+- Which checks did you run, and what did they show?
+- What would make you stop the release or choose a recovery step?
+
+For a fuller review, include the base commit, relevant conflict decisions and any changes made after feedback. Add tag, artifact or hosting details only when you have checked them. The local lab does not exercise hosted approval or deployment.
+
+Keep credentials out of the note. A local annotated tag identifies a candidate; verifying a signature and confirming deployment require separate checks.

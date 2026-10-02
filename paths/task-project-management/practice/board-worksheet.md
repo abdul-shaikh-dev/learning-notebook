@@ -1,6 +1,6 @@
-# Visualize the real workflow — printable worksheet
+# Visualize the real workflow: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ A task board shows where work stands and what must happen before it moves. Ready
 
 A beginner workshop needs a venue, exercise materials and an invitation. Design entry criteria for Ready and exit criteria for Review on its task board.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your Ready and Review rules: ________________________________
 
 ## Worked example
 
 Ready requires a clear action, owner and needed input. Review exits when required checks pass or returns with a named correction. Done retains the resulting file link.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Define Ready entry conditions.
+- Define Review exit and correction rules.
+- Retain the deliverable link at completion.
 
 ## Source and scope
 

@@ -168,7 +168,7 @@
           "url": "https://kubernetes.io/docs/concepts/overview/",
           "section": "What is Kubernetes?",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "foundation"
@@ -217,7 +217,7 @@
           "url": "https://kubernetes.io/docs/concepts/overview/components/",
           "section": "Control plane components; node components",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "foundation"
@@ -323,7 +323,7 @@
           "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/",
           "section": "Label selectors",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "foundation"
@@ -372,7 +372,7 @@
           "url": "https://kubernetes.io/docs/concepts/workloads/pods/",
           "section": "Using Pods; Pod lifecycle",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "foundation"
@@ -421,7 +421,7 @@
           "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/",
           "section": "Creating a Deployment; updating a Deployment",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "foundation"
@@ -476,7 +476,7 @@
           "url": "https://kubernetes.io/docs/concepts/services-networking/service/",
           "section": "Defining a Service; discovering services",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "foundation"
@@ -525,7 +525,7 @@
           "url": "https://kubernetes.io/docs/concepts/configuration/configmap/",
           "section": "Using ConfigMaps; mounted ConfigMaps are updated automatically",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "foundation"
@@ -574,7 +574,7 @@
           "url": "https://kubernetes.io/docs/concepts/configuration/secret/",
           "section": "Caution; information security for Secrets",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "intermediate"
@@ -632,7 +632,7 @@
           "url": "https://kubernetes.io/docs/concepts/workloads/pods/probes/",
           "section": "Liveness, readiness, startup probes",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "intermediate"
@@ -681,7 +681,7 @@
           "url": "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
           "section": "Requests and limits; scheduling and resource limits",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "intermediate"
@@ -730,7 +730,7 @@
           "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/",
           "section": "Rolling update Deployment; failed Deployment",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "intermediate"
@@ -779,7 +779,7 @@
           "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/",
           "section": "Concepts",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "intermediate"
@@ -828,7 +828,7 @@
           "url": "https://kubernetes.io/docs/concepts/services-networking/network-policies/",
           "section": "Prerequisites; behavior of selectors",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "intermediate"
@@ -877,7 +877,7 @@
           "url": "https://kubernetes.io/docs/reference/access-authn-authz/rbac/",
           "section": "Role and ClusterRole; RoleBinding and ClusterRoleBinding",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "intermediate"
@@ -926,7 +926,7 @@
           "url": "https://kubernetes.io/docs/concepts/security/pod-security-standards/",
           "section": "Restricted policy",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "intermediate"
@@ -975,7 +975,7 @@
           "url": "https://kubernetes.io/docs/concepts/storage/persistent-volumes/",
           "section": "Access modes; reclaiming",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "advanced"
@@ -1024,7 +1024,7 @@
           "url": "https://kubernetes.io/docs/concepts/workloads/controllers/job/",
           "section": "Pod backoff failure policy; Job termination and cleanup",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "advanced"
@@ -1073,7 +1073,7 @@
           "url": "https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/",
           "section": "How does a HorizontalPodAutoscaler work?",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "advanced"
@@ -1122,7 +1122,7 @@
           "url": "https://v1-34.docs.kubernetes.io/docs/concepts/workloads/pods/disruptions/",
           "section": "Pod disruption budgets",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "advanced"
@@ -1278,7 +1278,7 @@
           "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/",
           "section": "Examining Pod status; logs; debugging",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "advanced"
@@ -1327,7 +1327,7 @@
           "url": "https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/",
           "section": "Backing up an etcd cluster; restoring an etcd cluster",
           "reviewed": "2026-09-27",
-          "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
         }
       ],
       "stage": "advanced"

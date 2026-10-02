@@ -1,6 +1,6 @@
-# Design a reachable focus period — printable worksheet
+# Design a reachable focus period: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ Notification rules should respect responsibilities. Disable or batch optional al
 
 Design a 25-minute focus period while responsible for an urgent call from a family member.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your focus plan and urgent-call arrangement: ________________________________
 
 ## Worked example
 
 Keep that person’s calls audible, silence optional application alerts and check messages after the block. Tell collaborators the response window if needed. Record interruptions and outcome after the trial.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Retain the specified urgent family channel.
+- Name when optional messages will be checked.
+- Include a way to evaluate both focus and responsibility.
 
 ## Source and scope
 

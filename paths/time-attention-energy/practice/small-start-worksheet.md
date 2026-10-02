@@ -1,6 +1,6 @@
-# Make starting concrete — printable worksheet
+# Make starting concrete: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ Starting is harder when the first action is unclear or a needed file is missing.
 
 Turn revise chapter into a first action using a chapter with three unclear headings.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your first action: ________________________________
 
 ## Worked example
 
 Open the chapter and rewrite the first unclear heading as a question it answers. The next action is visible and bounded. After that, decide whether to continue or schedule the remaining headings.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Use a verb and a specific object.
+- Make the first move possible with available material.
+- Choose a stopping point that leaves useful state.
 
 ## Source and scope
 

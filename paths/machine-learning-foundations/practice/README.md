@@ -22,7 +22,7 @@ Write your own confusion-count and MAE functions before comparing the reference.
 
 ## Run the model on Windows
 
-Use CPython 3.14 for the tested scientific package pins. Initial installation needs Internet
+Use CPython 3.14 for the tested scientific package pins, including scikit-learn 1.9.1. Lesson references were checked against its stable documentation on October 2, 2026. These fictional examples teach evaluation methods; their results do not establish that a model is ready for real users. Initial installation needs Internet
 access. All later runs use local fictional data.
 
 ```text

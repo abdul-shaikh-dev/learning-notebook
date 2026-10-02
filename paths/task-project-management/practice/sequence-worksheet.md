@@ -1,6 +1,6 @@
-# Map dependencies before dates — printable worksheet
+# Map dependencies before dates: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ A dependency means one item needs an input or completion from another. Distingui
 
 Order confirm venue, publish invitation, draft exercises and review exercises.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+What can proceed and what must wait: ________________________________
 
 ## Worked example
 
 Confirm venue before publishing its address. Draft before review. Draft exercises can proceed while the venue is being confirmed, so these branches may run independently.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Places confirmation before final registration configuration.
+- Preserves genuinely independent text work.
+- Does not count a placeholder as verification.
 
 ## Source and scope
 

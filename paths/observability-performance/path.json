@@ -279,7 +279,7 @@
           "Independent service logs with no shared request context."
         ],
         "correct": 0,
-        "explanation": "Use metrics for how often imports fail and how latency changes, a trace for which segment consumed time, and a structured log for the validation or retry event on a specific request. Correlate identifiers without putting user content into every measurement."
+        "explanation": "A distributed trace relates spans from work performed across services. Metrics summarise measurements and logs record events; a trace shows how the recorded operations relate within a request."
       },
       "references": [
         {
@@ -287,7 +287,7 @@
           "url": "https://opentelemetry.io/docs/concepts/signals/",
           "section": "Logs, metrics and traces",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -330,7 +330,7 @@
           "Two unsynchronised host timestamps."
         ],
         "correct": 0,
-        "explanation": "Browser action to visible result supports the user experience. API entry to response creation measures server work, and database call to result measures a dependency. Use local monotonic timers for each duration and preserve boundary names. The durations can overlap and should not be naively added."
+        "explanation": "Use a monotonic elapsed-time clock such as perf_counter to measure duration. Wall-clock adjustments can change calendar time during a benchmark and distort an elapsed-time calculation."
       },
       "references": [
         {
@@ -338,7 +338,7 @@
           "url": "https://docs.python.org/3/library/time.html",
           "section": "time.perf_counter and monotonic clocks",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -381,7 +381,7 @@
           "Every raw user field copied into the message."
         ],
         "correct": 0,
-        "explanation": "Record event=import_rejected, reason=missing_required_field, a generated correlation ID, bounded route and status. Omit bearer token and payload; record only an approved field-name category if needed. Restrict log access and retention, and test that secrets do not appear during error handling."
+        "explanation": "A safe reason category explains why the import was rejected, and a correlation ID helps find related events. Tokens and full customer payloads add sensitive data that this diagnosis does not need."
       },
       "references": [
         {
@@ -389,7 +389,7 @@
           "url": "https://opentelemetry.io/docs/security/",
           "section": "Protecting sensitive data; telemetry security",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -432,7 +432,7 @@
           "A log containing the last queue item only."
         ],
         "correct": 0,
-        "explanation": "Queued jobs is a gauge, completed jobs is a counter and job duration is a distribution. The failure ratio is 8/200=4% for the stated eligible attempts and window. Decide whether retries count as attempts or user operations before comparing ratios."
+        "explanation": "Queue depth is a current level that can rise or fall, so it is a gauge. A counter instead accumulates events such as completed jobs."
       },
       "references": [
         {
@@ -440,7 +440,7 @@
           "url": "https://prometheus.io/docs/practices/naming/",
           "section": "Metric names, base units and type suffixes",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -483,7 +483,7 @@
           "By taking the smallest host median."
         ],
         "correct": 0,
-        "explanation": "The mean is 22, the median is 3 and the nearest-rank p95 is 100 because ceil(.95*5)=5. There are only five observations, so this identifies the observed maximum rather than a reliable population tail. Gather a larger representative sample and report the estimator."
+        "explanation": "Calculate global p95 from the combined compatible observations or distribution. Averaging host p95 values loses the population sizes and distribution information needed to find the global percentile."
       },
       "references": [
         {
@@ -491,7 +491,7 @@
           "url": "https://prometheus.io/docs/practices/histograms/",
           "section": "Quantiles; aggregation and estimation error",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -534,7 +534,7 @@
           "The proportion of application responses returning 5xx alone."
         ],
         "correct": 0,
-        "explanation": "Measure imports per second, failed eligible imports ratio, successful import duration distribution and database pool occupancy or queue wait. Rising pool wait with a growing backlog can warn before request timeouts. Validate that the measurements cover the user operation rather than only one retry attempt."
+        "explanation": "Connection pool occupancy and waiting requests show pressure on a limited resource. They can reveal saturation before requests begin failing."
       },
       "references": [
         {
@@ -542,7 +542,7 @@
           "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
           "section": "The four golden signals",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -601,7 +601,7 @@
           "url": "https://opentelemetry.io/docs/concepts/signals/",
           "section": "Traces and spans",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         },
         {
           "title": "Python monotonic and process clocks",
@@ -651,7 +651,7 @@
           "The authenticity of every HTTP header."
         ],
         "correct": 0,
-        "explanation": "The browser or trusted gateway supplies supported context to the API, which extracts it and creates an operation span. The queued job carries safe correlation metadata, and the worker creates its own processing span with the chosen relationship. None of these IDs replaces authentication or permission checks."
+        "explanation": "A trace ID links recorded operations. It does not authenticate a caller or grant permission to access a resource; those checks must happen separately."
       },
       "references": [
         {
@@ -659,7 +659,7 @@
           "url": "https://opentelemetry.io/docs/concepts/context-propagation/",
           "section": "Context propagation; W3C Trace Context; baggage",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -702,7 +702,7 @@
           "Yes; hashing removes cardinality costs because the original identifier is hidden."
         ],
         "correct": 0,
-        "explanation": "The upper bound is 8*6*4=192 combinations before histogram buckets or other dimensions. Investigate one request through a correlation ID in logs/traces, not a request_id metric label. Use route templates rather than raw paths and document which values are permitted."
+        "explanation": "Hashing changes the representation of each ID, but unique IDs still normally produce unique label values. The number of metric series therefore remains large."
       },
       "references": [
         {
@@ -710,7 +710,7 @@
           "url": "https://prometheus.io/docs/practices/naming/",
           "section": "Labels; avoid high-cardinality labels",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -761,7 +761,7 @@
           "It guarantees that every request is successful."
         ],
         "correct": 0,
-        "explanation": "Use seconds consistently and place a boundary at 0.2, with smaller buckets around the usual fast region and wider ones toward 2 seconds. Preserve +Inf and total count. Compare the threshold fraction directly; report percentile estimates with the bucket uncertainty rather than claiming exact raw durations."
+        "explanation": "A bucket at the SLO threshold directly counts observations at or below that latency. Without that boundary, a wider bucket may not show how many requests met the target."
       },
       "references": [
         {
@@ -769,7 +769,7 @@
           "url": "https://prometheus.io/docs/practices/histograms/",
           "section": "Histograms; errors of quantile estimation; aggregation",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -812,7 +812,7 @@
           "5%."
         ],
         "correct": 0,
-        "explanation": "Define good as a valid user import completing correctly within the threshold, with explicit eligibility. Allowed bad is .005*20000=100; 60 bad consumes 60% and leaves 40 observed events of budget at that volume. The result describes the stated window, not a future guarantee."
+        "explanation": "A 99.5% good-event target leaves 100% - 99.5% = 0.5% for bad events in the defined population and time window."
       },
       "references": [
         {
@@ -820,7 +820,7 @@
           "url": "https://sre.google/workbook/implementing-slos/",
           "section": "Choosing SLIs; SLOs and error budgets",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -834,7 +834,7 @@
           "title": "Burn rates and response actions",
           "paragraphs": [
             "Burn rate compares the observed bad-event fraction with the permitted fraction. At a 99% target, a 5% bad fraction burns budget at five times the allowed rate. Short windows detect rapid impact; longer windows reduce noise and reveal sustained degradation. Multi-window approaches can require both to avoid paging on a tiny transient spike.",
-            "A page should demand an immediate response and have an owner and runbook. A ticket can address slower trends. Record low-traffic behaviour, missing telemetry and maintenance handling. An alert that nobody can act on trains people to ignore it, so review alert usefulness after incidents."
+            "An urgent on-call alert, often called a page, should name who must respond and link to the response steps. A ticket can address slower trends. Define how alerts handle low traffic, missing measurements and planned maintenance. Review whether alerts helped the team act after an incident."
           ],
           "example": "SLO bad allowance = 1%; observed bad = 5%\nBurn rate = 5\nResponse: check affected route and release, then dependency saturation; rollback if supported by evidence."
         },
@@ -846,7 +846,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Design one page and one ticket for an import service. Include a response owner and zero-traffic behaviour.",
+        "prompt": "Design one urgent on-call alert and one follow-up ticket for an import service. State who responds and what happens when there is no traffic.",
         "solution": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Create a ticket for slower budget consumption that does not need an immediate response. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified.",
         "solutionFormat": "prose",
         "checks": [
@@ -863,7 +863,7 @@
           "400 requests per second."
         ],
         "correct": 0,
-        "explanation": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Create a ticket for slower budget consumption that does not need an immediate response. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified."
+        "explanation": "The burn rate is 4 because 4% divided by 1% equals 4. Bad events are consuming the error budget four times as fast as the allowed rate."
       },
       "references": [
         {
@@ -871,7 +871,7 @@
           "url": "https://sre.google/workbook/alerting-on-slos/",
           "section": "Burn rate; multiple windows; low-traffic services",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -914,7 +914,7 @@
           "That all clients received responses."
         ],
         "correct": 0,
-        "explanation": "Keep aggregate counters for all eligible outcomes, then sample normal traces while retaining error traces when infrastructure permits. Document upstream sampling and export loss. Absence means no retained trace was found under this policy and window, not that the operation succeeded or never happened."
+        "explanation": "Sampling or retention may have removed error traces. Finding none in the retained data does not establish that no errors occurred; use the separately measured failure rate."
       },
       "references": [
         {
@@ -922,7 +922,7 @@
           "url": "https://opentelemetry.io/docs/concepts/sampling/",
           "section": "Head sampling and tail sampling",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -965,7 +965,7 @@
           "Only the best run from one implementation."
         ],
         "correct": 0,
-        "explanation": "The script verifies equal results, warms both implementations and prints median/min/max elapsed times for repeated lookup batches. The index is built before timing, so the claim applies to reuse. For one lookup on a small list, building the index may cost more than scanning; add an end-to-end experiment to test that case."
+        "explanation": "First check that both implementations produce equivalent correct results. A faster implementation that returns the wrong answer is not a valid performance improvement."
       },
       "references": [
         {
@@ -973,7 +973,7 @@
           "url": "https://docs.python.org/3/library/time.html",
           "section": "perf_counter; elapsed wall-clock measurement",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -1038,7 +1038,7 @@
           "url": "https://docs.python.org/3/library/time.html",
           "section": "perf_counter; local elapsed measurement (profiling command is a lab extension)",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         },
         {
           "title": "Python deterministic profilers",
@@ -1088,7 +1088,7 @@
           "Yes; traced allocation totals also include all kernel file-cache pages."
         ],
         "correct": 0,
-        "explanation": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. If each import retains rows in a list, the list will keep growing. Inspect which code owns those references and when it should release them. State that native and full process memory are outside this tool's complete coverage."
+        "explanation": "tracemalloc tracks supported Python allocations, not all process memory. Use other measurements when investigating native allocations or total resident memory."
       },
       "references": [
         {
@@ -1096,7 +1096,7 @@
           "url": "https://docs.python.org/3/library/tracemalloc.html",
           "section": "Snapshot comparison; tracked allocations; current and peak size",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -1139,7 +1139,7 @@
           "It increases to preserve the configured worker count."
         ],
         "correct": 0,
-        "explanation": "Four workers wait for each response, so added service delay lowers the achieved rate. Report count, elapsed time, errors and latency distribution for each run. The deterministic every-fifth slow response should raise tail latency. The result validates this bounded closed-loop experiment, not production capacity."
+        "explanation": "Closed-loop workers wait for a response before sending more work. Slower responses keep those workers busy longer, usually reducing the offered request rate."
       },
       "references": [
         {
@@ -1147,7 +1147,7 @@
           "url": "https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Understanding_latency",
           "section": "Network and processing latency; lab closed-loop model",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         },
         {
           "title": "wrk2 load-generation design",
@@ -1197,7 +1197,7 @@
           "Automatic improvement from more client retries."
         ],
         "correct": 0,
-        "explanation": "Net growth is 5 jobs/s, so backlog grows by approximately 300 jobs in one minute under constant rates and no rejection. Set a bounded capacity, define overflow behaviour, inspect oldest-job age and assess whether downstream limits allow higher throughput. This calculation excludes burst variation and changes in service time."
+        "explanation": "When arrivals keep exceeding completions, unfinished jobs accumulate. The backlog grows until rates change or a limit causes work to be rejected or dropped."
       },
       "references": [
         {
@@ -1205,7 +1205,7 @@
           "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
           "section": "Saturation; latency and traffic interpretation",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         },
         {
           "title": "Google SRE handling overload",
@@ -1262,7 +1262,7 @@
           "The shortest function in the codebase."
         ],
         "correct": 0,
-        "explanation": "Record browser action-to-visible timing, API elapsed timing and query span under a shared correlation ID. If the API returns quickly but visible completion is delayed, profile rendering and inspect result size. If database wait dominates, examine connection pressure and plans. Repeat after a bounded change and verify row count and ordering."
+        "explanation": "Measure where time is spent in the actual user journey. A database change will not fix a delay caused mainly by rendering the returned rows in the browser."
       },
       "references": [
         {
@@ -1270,7 +1270,7 @@
           "url": "https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Understanding_latency",
           "section": "Latency contributors and processing boundaries",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -1313,7 +1313,7 @@
           "It explains one correlated chart without a test that could reject it."
         ],
         "correct": 0,
-        "explanation": "Identify the local route, profile and delay distribution; run a baseline, then the slow profile and record tail change. Recovery selects the healthy profile and repeats the same bounded test. Avoid claiming a real database root cause because this demo injects sleep and does not use a database. Mark the simulated scope explicitly."
+        "explanation": "A useful hypothesis predicts an observation that would distinguish it from another explanation. That gives you a concrete next check and a reason to keep or reject the hypothesis."
       },
       "references": [
         {
@@ -1321,7 +1321,7 @@
           "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
           "section": "Monitoring causes and symptoms; useful monitoring",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         }
       ]
     },
@@ -1364,7 +1364,7 @@
           "Every real alert reaches an on-call engineer."
         ],
         "correct": 0,
-        "explanation": "Mark percentile tests, loopback HTTP timing and benchmark equivalence as executable local checks. Mark an OpenTelemetry collector, backend retention, real alert delivery and distributed propagation as extensions requiring separate setup and execution. Include data-field review, expected loss behaviour, cost assumptions and a fault-injection plan."
+        "explanation": "The loopback lab verifies the local timing and analysis behaviours exercised by its tests. It does not verify a collector, cross-service propagation or production capacity."
       },
       "references": [
         {
@@ -1372,7 +1372,7 @@
           "url": "https://opentelemetry.io/docs/security/",
           "section": "Security of telemetry pipelines and components",
           "reviewed": "2026-09-30",
-          "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+          "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
         },
         {
           "title": "Python http.server documentation",

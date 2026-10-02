@@ -33,3 +33,8 @@ References are linked per lesson; OpenTelemetry, Prometheus, Google SRE, Python 
 See [mechanism-lab.md](mechanism-lab.md) for `trace_investigation.py`: Two measured JSON timelines, one success and one error, followed by PASS for timeline bounds and error evidence. Timings vary.
 
 Requirements: Python 3.11+ standard library.
+
+
+## Reference scope and verification limits
+
+The source review dates record checks against the conceptual documentation. The downloadable lab measures behaviour with the Python standard library. It does not use an OpenTelemetry SDK or deploy production monitoring.

@@ -1,6 +1,6 @@
-# Agree what done means — printable worksheet
+# Agree what done means: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ Completion criteria describe the state of the deliverable, not merely time spent
 
 Define done for a one-page workshop invitation.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your completion criteria: ________________________________
 
 ## Worked example
 
 The invitation includes date, location, accessibility contact and registration route; a peer checks the details; the approved file is stored at the agreed link. Drafting alone is insufficient.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Check the required invitation details.
+- Include review evidence and the accepted file location.
+- Distinguish a draft from a checked deliverable.
 
 ## Source and scope
 

@@ -306,15 +306,15 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
           ]
         }
       ],
       "exercise": {
         "prompt": "A learner has 4 free hours, a 45-minute journey, 30-minute meal and 15-minute transition. How much time remains for study?",
-        "solution": "Subtract 90 minutes from 240: 150 minutes remain. Allocate 90 minutes to the draft, 30 to practice and leave 30 uncommitted. This preserves explicit uncertainty instead of filling every minute.",
+        "solution": "Subtract 90 minutes from 240: 150 minutes remain. Allocate 90 minutes to the draft, 30 to practice and leave 30 uncommitted. This leaves time for unexpected work.",
         "solutionFormat": "prose",
         "checks": [
           "Subtract all named essential commitments.",
@@ -358,14 +358,14 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
           ]
         }
       ],
       "exercise": {
-        "prompt": "Record a synthetic day with 40 minutes reading, 20 messages, 15 travel delay and 25 drafting. Classify without moral labels.",
+        "prompt": "A fictional day includes 40 minutes reading, 20 minutes on messages, 15 minutes of travel delay and 25 minutes drafting. Group the time by activity without assuming that messages or delays were avoidable.",
         "solution": "There are 100 observed minutes: 65 task minutes, 20 communication and 15 delay. Messages may be essential; ask whether their timing was flexible before changing them. Keep uncertainty if the log is approximate.",
         "solutionFormat": "prose",
         "checks": [
@@ -410,9 +410,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "This exercise borrows selected planning practices from Scrum. Using them does not mean you are following the whole Scrum framework."
           ]
         }
       ],
@@ -462,9 +462,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "These planning ideas are adapted from an engineering guide for everyday projects. This exercise does not establish compliance with NASA requirements."
           ]
         }
       ],
@@ -514,9 +514,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Protecting sleep opportunity; no diagnosis or treatment advice. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "Protect time for sleep when planning. This exercise does not assess sleep problems or give treatment advice."
           ]
         }
       ],
@@ -567,9 +567,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Field study of suspension and resumption; context-specific evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "The interruption study describes a particular work setting. Use the times supplied here rather than assuming every interruption has the same cost."
           ]
         }
       ],
@@ -619,9 +619,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
           ]
         }
       ],
@@ -671,9 +671,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
           ]
         }
       ],
@@ -723,7 +723,7 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
             "The original 1994 experiments document optimistic completion predictions. Their interventions did not establish improved absolute prediction accuracy. Using comparable recorded work and a locally chosen buffer here is a planning heuristic to evaluate, not an accuracy guarantee from that study."
           ]
@@ -791,7 +791,7 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
             "The original 1994 experiments document optimistic completion predictions. Their interventions did not establish improved absolute prediction accuracy. Using comparable recorded work and a locally chosen buffer here is a planning heuristic to evaluate, not an accuracy guarantee from that study."
           ]
@@ -859,9 +859,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Field study of suspension and resumption; context-specific evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "The interruption study describes a particular work setting. Use the times supplied here rather than assuming every interruption has the same cost."
           ]
         }
       ],
@@ -911,7 +911,7 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
             "The study reports field observations and design suggestions about preserving task context. The specific return-note format in this lesson is an original planning heuristic, not a tested intervention from that study."
           ]
@@ -963,9 +963,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
           ]
         }
       ],
@@ -1015,9 +1015,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Protecting sleep opportunity; no diagnosis or treatment advice. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "Protect time for sleep when planning. This exercise does not assess sleep problems or give treatment advice."
           ]
         }
       ],
@@ -1067,9 +1067,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "This exercise borrows selected planning practices from Scrum. Using them does not mean you are following the whole Scrum framework."
           ]
         }
       ],
@@ -1119,9 +1119,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "These planning ideas are adapted from an engineering guide for everyday projects. This exercise does not establish compliance with NASA requirements."
           ]
         },
         {
@@ -1180,9 +1180,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
           ]
         }
       ],
@@ -1232,9 +1232,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
           ]
         }
       ],
@@ -1284,9 +1284,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "These planning ideas are adapted from an engineering guide for everyday projects. This exercise does not establish compliance with NASA requirements."
           ]
         }
       ],
@@ -1336,9 +1336,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
           ]
         }
       ],
@@ -1388,9 +1388,9 @@
           "exampleFormat": "prose"
         },
         {
-          "title": "Evidence and adaptation",
+          "title": "What the source supports",
           "paragraphs": [
-            "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+            "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
           ]
         }
       ],

@@ -98,3 +98,8 @@ From this practice directory run `python -m unittest test_durable_state.py test_
 ## Integrated persisted-run lab
 
 `persisted-run-lab.md` combines SQLite checkpoints, a transactional note/receipt and crash recovery. Run `python -m unittest -v test_persisted_run_lab.py`. This demonstrates a local single-host recovery boundary.
+
+
+## Reference scope and verification limits
+
+The sources explain the cited mechanisms. Examples and design advice are original to this notebook. The review checked that each reference applies to its lesson; it did not execute every source example or verify a production or live-provider integration.

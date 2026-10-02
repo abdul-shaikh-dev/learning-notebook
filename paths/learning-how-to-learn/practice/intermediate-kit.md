@@ -23,6 +23,6 @@ Prediction Thursday: 4/5 correct. Actual: 3/5. Confidently wrong urgent case: co
 
 Disruption alternative: Thursday cancelled. Log Tuesday done, Thursday cancelled, Monday pending. Do not copy the 3/5 sample into your actual record. The fallback is still sensible, but a completed two-occasion project requires the later attempt to occur.
 
-## Rubric
+## Check your attempt
 
-0 missing / 1 partial / 2 complete per criterion: purpose-specific occasions; related case mixing with selection reasons; feasible fallback; distinct prediction, actual count and checked repair. All four need 2. A neat schedule without actual attempts supplies planning evidence only. Revise by completing and checking the missing attempt, not by increasing the timetable.
+Check whether each practice session has a purpose, the mixed cases make you choose a rule, and the fallback fits your available time. Compare your prediction with your actual answers and corrections. Scoring is optional. A schedule shows what you plan to do; only a completed attempt shows what you could answer.

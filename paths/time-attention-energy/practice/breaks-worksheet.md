@@ -1,6 +1,6 @@
-# Choose breaks as a local experiment — printable worksheet
+# Choose breaks as a local experiment: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ A fixed timer can provide a stopping cue, but no single work–break ratio suits
 
 Compare two synthetic sessions on similar problems checked with the same answer key: 25 minutes produces three correct answers; 40 minutes produces four answers, two incorrect. Compare correct output and choose a next trial.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Correct answers in each session and next comparison: ________________________________
 
 ## Worked example
 
 The shorter session produces three correct answers; the longer produces two. This small comparison favours the shorter session for checked output, but does not establish a universal timer. Try a checking pause in another comparable longer session and record correct answers and comfort.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Distinguish attempted problems from accurate results.
+- Account for the two reported errors.
+- Describe a further comparison instead of declaring a universal timer.
 
 ## Source and scope
 

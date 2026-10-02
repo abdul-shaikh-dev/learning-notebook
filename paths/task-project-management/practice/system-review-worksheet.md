@@ -1,6 +1,6 @@
-# Select a proportionate management system — printable worksheet
+# Select a proportionate management system: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ A useful system supports the project’s decisions with modest maintenance. Comb
 
 A two-person project has 12 cards and spends an hour daily updating seven reports. Simplify it.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Reports to keep and remove: ________________________________
 
 ## Worked example
 
 Retain one board with owner, finish criteria and blockers, plus a short twice-weekly review. Remove reports that inform no decision. If claiming Kanban, preserve the guide’s required workflow and metrics; otherwise call it a simple task board.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Keep essential ownership, completion and blocker information.
+- Remove reports that inform no decision.
+- Distinguish a simple board from a complete named method.
 
 ## Source and scope
 

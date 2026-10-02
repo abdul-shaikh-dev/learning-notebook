@@ -63,3 +63,8 @@ Record API/client/node-image versions, applied/rendered object identities, rollo
 See [mechanism-lab.md](mechanism-lab.md) for `readiness_drill.py`: PASS reports same Pod UID, endpoint unready and unchanged restart count; RESTORED reports Ready again. No cluster is created by this script.
 
 Requirements: Python 3.11+, kubectl, and the existing disposable kind-notebook-lab from README.md with two Ready release-demo Pods.
+
+
+## Reference scope and verification limits
+
+References cover stable Kubernetes APIs and the official concepts reviewed for these lessons. Their review dates record when applicability was checked. Running a cluster is an optional local exercise; the kit README separately records what was actually executed.

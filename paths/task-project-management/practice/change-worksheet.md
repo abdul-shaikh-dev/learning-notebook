@@ -1,6 +1,6 @@
-# Handle new scope as a decision — printable worksheet
+# Handle new scope as a decision: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ A new request changes cost, schedule, quality or benefit. Describe that trade-of
 
 A recorded video is requested three days before the workshop. Existing capacity is full.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Work to remove and checks to repeat: ________________________________
 
 ## Worked example
 
 Offer to replace an optional deliverable, move the video to a later project or obtain support. Record the chosen option and revised completion criteria. Do not add it silently to the existing deadline.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Removes unnecessary multi-session work.
+- Repeats evidence invalidated by changed details.
+- Makes a scope decision instead of accepting every task.
 
 ## Source and scope
 

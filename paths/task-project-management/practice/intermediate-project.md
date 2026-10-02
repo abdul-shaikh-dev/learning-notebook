@@ -11,7 +11,7 @@ Operate a synthetic board through a week of changes.
 
 ## Assessment
 
-Score each criterion 0 (missing), 1 (partial) or 2 (supported). Revise any missing criterion before progressing. This is a learning self-assessment, not a professional certification.
+Use these criteria to check your answer and choose what to revisit. A score is optional, and no completed worksheet is required to keep reading. This practice does not award a professional certification.
 
 - Workflow states have clear entry and exit policies.
 - WIP control counts blocked items inside the defined boundary.

@@ -1,6 +1,6 @@
-# Coordinate time with other people — printable worksheet
+# Coordinate time with other people: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ Personal plans interact with shared deadlines, care, availability and dependenci
 
 A draft needs comments by Wednesday but the reviewer is away Tuesday. Build a workable handoff.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your handoff and review timing: ________________________________
 
 ## Worked example
 
 Send a small draft Monday with two explicit questions, confirm a Wednesday reply window and prepare independent edits while waiting. If no reply arrives by the agreed time, use the agreed fallback rather than silently changing the deadline.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Account for the reviewer's Tuesday absence.
+- Give a specific input and reply window.
+- Include independent work and an agreed fallback.
 
 ## Source and scope
 

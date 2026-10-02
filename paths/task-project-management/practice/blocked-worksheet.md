@@ -1,6 +1,6 @@
-# Make blocked work actionable — printable worksheet
+# Make blocked work actionable: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ A blocked card records the missing input, responsible contact, next check and co
 
 The venue confirmation has had no reply for two days and publication needs it tomorrow. Write a blocker note.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your blocker note: ________________________________
 
 ## Worked example
 
 Waiting for seated capacity from venue contact; owner Mira; follow up today at 14:00; if no reply by 17:00, ask Jo to select the backup venue. Publication remains blocked meanwhile.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- State the missing venue input.
+- Give an owner and timed follow-up.
+- Identify the decision fallback before publication is due.
 
 ## Source and scope
 

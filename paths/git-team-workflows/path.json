@@ -570,7 +570,7 @@
         {
           "title": "A clean merge can combine incompatible decisions",
           "paragraphs": [
-            "Both developers start with batch size5 and capacity10. Alice changes batch to8; Bob changes capacity to6. Each branch still satisfies batch <= capacity. Because the values live in different files, Git merges the edits cleanly. The merged program has batch8 and capacity6 and violates the invariant.",
+            "Both developers start with a batch size of 5 and a capacity of 10. Alice raises the batch size to 8. Bob lowers the capacity to 6. Each branch still satisfies batch <= capacity. Because the values live in different files, Git merges the edits cleanly. The merged program has a batch size of 8 and a capacity of 6 and violates the invariant.",
             "The semantic_merge.py lab creates a source and two local clones, records both independently valid states, performs the merge and asserts the combined failure. This is why a successful merge command is only evidence about integration of file histories. Behavioral checks must run on the combined candidate."
           ]
         }
@@ -629,8 +629,8 @@
         {
           "title": "Resolve meaning even when there are no conflict markers",
           "paragraphs": [
-            "A textual conflict asks you to reconcile overlapping edits. A semantic conflict can require the same reasoning without any markers: here Alice wanted larger batches, while Bob imposed a smaller capacity. Preserving both exact numbers is impossible under the shared invariant. The reference chooses batch6, retaining the capacity reduction and the largest permitted batch.",
-            "That choice is a scenario policy, not something Git can infer. If the product required batch8, the owners would need to revisit the capacity decision. Inspect the separate commits before editing the resolution so you can distinguish a deliberate compromise from accidentally losing one person's work."
+            "A textual conflict asks you to reconcile overlapping edits. A semantic conflict can require the same reasoning without any markers: here Alice wanted larger batches, while Bob imposed a smaller capacity. Preserving both exact numbers is impossible under the shared invariant. The reference chooses a batch size of 6, retaining the capacity reduction and the largest permitted batch.",
+            "That choice is a scenario policy, not something Git can infer. If the product required a batch size of 8, the owners would need to revisit the capacity decision. Inspect the separate commits before editing the resolution so you can distinguish a deliberate compromise from accidentally losing one person's work."
           ]
         }
       ],
@@ -1155,7 +1155,7 @@
         {
           "title": "Reviewing the complete fixture",
           "paragraphs": [
-            "The advanced kit asks for an offline release-review record tied to the sandbox's candidate and tag. Include the bisect result, recovery branch, cherry-picked change and rebased topic so another reader can reconstruct the decisions.",
+            "Use the candidate and tag from the advanced kit to explain your release choice. Trace the bisect result, recovery branch, cherry-picked change and rebased topic. You can keep an optional note in release-review.md if it helps you revisit those decisions.",
             "The fixture verifies local mechanics. It cannot certify remote policy, actual pull-request approvals, signed release trust or production rollback. Those remain explicit extensions with independent verification."
           ],
           "example": "# Review record:\n# Candidate SHA / Base SHA / Diff purpose / Checks\n# Integration decision / Reviewer concerns / Tag\n# Artifact evidence / Release authority / Recovery plan"
@@ -1163,8 +1163,8 @@
         {
           "title": "Review the integrated commit and its follow-up repair",
           "paragraphs": [
-            "The evidence file gives the base, Alice, Bob, merged and repaired commit IDs. Compare the merged values8/6 with repaired6/6, and verify that the repaired candidate descends from both developers. A check run on Alice before the merge says nothing about Bob's newly combined capacity change.",
-            "Run python semantic_merge.py --workspace-parent . to retain a fresh fixture for inspection, or its unittest for temporary verification. It never adopts an existing checkout. Change the scenario to batch4 and capacity6 as an independent valid merge, then check that your behavior test accepts that case without requiring a repair."
+            "The evidence file gives the base, Alice, Bob, merged and repaired commit IDs. Compare the merged batch size of 8 and capacity of 6 with the repaired values of 6 and 6, and verify that the repaired candidate descends from both developers. A check run on Alice before the merge says nothing about Bob's newly combined capacity change.",
+            "Run python semantic_merge.py --workspace-parent . to retain a fresh fixture for inspection, or its unittest for temporary verification. It never adopts an existing checkout. Change the scenario to a batch size of 4 and a capacity of 6 as an independent valid merge, then check that your behavior test accepts that case without requiring a repair."
           ]
         },
         {
@@ -1175,7 +1175,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Deliver a reviewable release record and choose between merge, cherry-pick, rebase and revert for four concrete scenarios.",
+        "prompt": "Choose between merge, cherry-pick, rebase and revert for the four scenarios. Explain which result you would inspect after each operation.",
         "solution": "Use merge for combining branch histories, cherry-pick for a selected backport, rebase for coordinated/private replay, and revert for a compensating shared-history change. Explain dependencies, verification and ownership in each choice. Attach fixture outputs and separate unexecuted hosting/deployment claims.",
         "solutionFormat": "prose",
         "checks": [
@@ -1252,7 +1252,7 @@
           "Explain base/ours/theirs and preserve both fixture intents.",
           "Verify a two-parent merge.",
           "Observe fetch updating origin/main while HEAD stays unchanged, then integrate with --ff-only.",
-          "Write an offline pull-request review with candidate identifiers and remaining hosting limits."
+          "Explain whether the merged result preserves both changes. You can keep a short offline review note if useful."
         ],
         "rubric": [
           "The recorded output shows the conflict, the abort and the later resolution.",
@@ -1274,14 +1274,14 @@
         "Release records do not equate a tag with trusted deployment evidence."
       ],
       "project": {
-        "title": "Local recovery and release portfolio",
+        "title": "Local recovery and release practice",
         "brief": "Locate a regression, preserve recovered work, integrate a selected patch and identify a release candidate.",
         "requirements": [
           "Run the advanced fixture and verify the first bad commit with its predicate.",
           "Compare targeted revert with the private reset/reflog recovery.",
           "Explain the cherry-picked change and rebased topic's changed identity.",
           "Verify the annotated tag object.",
-          "Produce an offline release record including artifact/hosting checks not executed."
+          "Explain which commit you would release and which checks support that choice. Use release-review.md for an optional longer note."
         ],
         "rubric": [
           "Bisect result identifies the known synthetic defect.",

@@ -231,7 +231,7 @@
           "url": "https://sre.google/workbook/implementing-slos/",
           "section": "Choosing an initial SLO; implementing SLOs",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -286,7 +286,7 @@
           "url": "https://sre.google/workbook/implementing-slos/",
           "section": "Choosing an initial SLO; implementing SLOs",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -341,7 +341,7 @@
           "url": "https://sre.google/workbook/implementing-slos/",
           "section": "Choosing an initial SLO; implementing SLOs",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -457,7 +457,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
           "section": "Sections 3–9: HTTP architecture, messages and methods",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -512,7 +512,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
           "section": "Sections 3–9: HTTP architecture, messages and methods",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -567,7 +567,7 @@
           "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
           "section": "Data sovereignty; consistency and transactions",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -622,7 +622,7 @@
           "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
           "section": "Data sovereignty; consistency and transactions",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -677,7 +677,7 @@
           "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
           "section": "The four golden signals",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -781,7 +781,7 @@
           "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/cache-aside",
           "section": "Solution; issues and considerations",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -836,7 +836,7 @@
           "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers",
           "section": "Solution; issues and considerations",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -891,7 +891,7 @@
           "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
           "section": "Data sovereignty; consistency and transactions",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -946,7 +946,7 @@
           "url": "https://www.cs.princeton.edu/courses/archive/spr22/cos418/papers/cap.pdf",
           "section": "Definitions and impossibility theorem",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -1001,7 +1001,7 @@
           "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/sharding",
           "section": "Solution; issues and considerations",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -1062,7 +1062,7 @@
           "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
           "section": "Data sovereignty; consistency and transactions",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -1158,7 +1158,7 @@
           "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
           "section": "Reducing client complexity with idempotent API design",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -1221,7 +1221,7 @@
           "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
           "section": "Timeouts; retries and backoff; jitter",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -1325,7 +1325,7 @@
           "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers",
           "section": "Solution; issues and considerations",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -1388,7 +1388,7 @@
           "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html",
           "section": "Intent; issues and considerations",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -1443,7 +1443,7 @@
           "url": "https://opentelemetry.io/docs/concepts/signals/",
           "section": "Traces, metrics and logs",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -1504,7 +1504,7 @@
           "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
           "section": "Deny by default; validate permissions on every request",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         },
         {
           "title": "OWASP Threat Modeling Cheat Sheet",
@@ -1566,7 +1566,7 @@
           "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/plan-for-disaster-recovery-dr.html",
           "section": "Plan for disaster recovery",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -1621,7 +1621,7 @@
           "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
           "section": "Data sovereignty; consistency and transactions",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         }
       ]
     },
@@ -1690,7 +1690,7 @@
           "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
           "section": "The four golden signals",
           "reviewed": "2026-09-27",
-          "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
         },
         {
           "title": "OWASP Threat Modeling Cheat Sheet",

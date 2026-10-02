@@ -213,7 +213,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agents",
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ],
         "diagram": {
@@ -381,7 +381,7 @@ const LEARNING_PATHS = [
             "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
             "section": "Deny by default; validate permissions on every request",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ]
       },
@@ -437,7 +437,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agents",
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ],
         "diagram": {
@@ -623,7 +623,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/json.html",
             "section": "Basic usage; JSONEncoder and JSONDecoder",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ]
       },
@@ -679,7 +679,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/function-calling",
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ]
       },
@@ -741,7 +741,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/function-calling",
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ]
       },
@@ -797,7 +797,7 @@ const LEARNING_PATHS = [
             "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
             "section": "Deny by default; validate permissions on every request",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ]
       },
@@ -860,7 +860,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/json.html",
             "section": "Basic usage; JSONEncoder and JSONDecoder",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ]
       },
@@ -916,7 +916,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/time.html#time.monotonic",
             "section": "time.monotonic",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ]
       },
@@ -1013,7 +1013,7 @@ const LEARNING_PATHS = [
             "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
             "section": "Deny by default; validate permissions on every request",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ],
         "diagram": {
@@ -1174,7 +1174,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/time.html#time.monotonic",
             "section": "time.monotonic",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ]
       },
@@ -1230,7 +1230,7 @@ const LEARNING_PATHS = [
             "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
             "section": "Reducing client complexity with idempotent API design",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ]
       },
@@ -1327,7 +1327,7 @@ const LEARNING_PATHS = [
             "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
             "section": "Reducing client complexity with idempotent API design",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ],
         "diagram": {
@@ -1550,7 +1550,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/json.html",
             "section": "Basic usage; JSONEncoder and JSONDecoder",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           },
           {
             "title": "SQLite transactions",
@@ -1715,7 +1715,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agents",
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ]
       },
@@ -1810,7 +1810,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
             "section": "Safety risks and mitigations",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ]
       },
@@ -1866,7 +1866,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/cookbook/examples/agents_sdk/migrate-from-claude-agent-sdk/readme",
             "section": "Harness ownership and execution responsibilities",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ],
         "diagram": {
@@ -2036,7 +2036,7 @@ const LEARNING_PATHS = [
             "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
             "section": "Reducing client complexity with idempotent API design",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           },
           {
             "title": "SQLite transactions",
@@ -2212,7 +2212,7 @@ const LEARNING_PATHS = [
             "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
             "section": "Reducing client complexity with idempotent API design",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ],
         "diagram": {
@@ -2373,7 +2373,7 @@ const LEARNING_PATHS = [
             "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
             "section": "Deny by default; validate permissions on every request",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ]
       },
@@ -2436,7 +2436,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Test cases; assertRaises",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ]
       },
@@ -2492,7 +2492,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Test cases; assertRaises",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ]
       },
@@ -2548,7 +2548,7 @@ const LEARNING_PATHS = [
             "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
             "section": "Reducing client complexity with idempotent API design",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
         ],
         "diagram": {
@@ -2722,7 +2722,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Test cases; assertRaises",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           },
           {
             "title": "SQLite transactions",
@@ -3231,7 +3231,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agents",
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ]
       },
@@ -3288,7 +3288,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agents",
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ],
         "diagram": {
@@ -3482,7 +3482,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agents",
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ]
       },
@@ -3539,7 +3539,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
             "section": "Safety risks and mitigations",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ],
         "diagram": {
@@ -3689,7 +3689,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/function-calling",
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           },
           {
             "title": "Toolformer",
@@ -3791,7 +3791,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/function-calling",
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ],
         "diagram": {
@@ -3992,7 +3992,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agents",
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ]
       },
@@ -4049,7 +4049,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/function-calling",
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ]
       },
@@ -4107,7 +4107,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/function-calling",
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ]
       },
@@ -4164,7 +4164,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/function-calling",
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ]
       },
@@ -4229,7 +4229,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/function-calling",
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           },
           {
             "title": "Retrieval-Augmented Generation",
@@ -4405,7 +4405,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
             "section": "Safety risks and mitigations",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ]
       },
@@ -4462,7 +4462,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agents",
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           },
           {
             "title": "ReAct",
@@ -4619,7 +4619,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agents",
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ]
       },
@@ -4705,7 +4705,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
             "section": "Safety risks and mitigations",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ],
         "diagram": {
@@ -4855,7 +4855,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/function-calling",
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ]
       },
@@ -4912,7 +4912,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agents",
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ]
       },
@@ -4997,7 +4997,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
             "section": "Safety risks and mitigations",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ]
       },
@@ -5092,7 +5092,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
             "section": "Evaluation design and continuous evaluation",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           },
           {
             "title": "AgentBench",
@@ -5156,7 +5156,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
             "section": "Evaluation design and continuous evaluation",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ]
       },
@@ -5213,7 +5213,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
             "section": "Evaluation design and continuous evaluation",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ],
         "diagram": {
@@ -5367,7 +5367,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agents",
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ],
         "diagram": {
@@ -5536,7 +5536,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
             "section": "Evaluation design and continuous evaluation",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
         ]
       },
@@ -5602,7 +5602,7 @@ const LEARNING_PATHS = [
             "url": "https://developers.openai.com/api/docs/guides/agents",
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           },
           {
             "title": "OpenAI function calling",
@@ -6088,7 +6088,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x24-V15-Secure-Coding-and-Architecture.md",
             "section": "V15: threat modeling and architecture",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           }
         ]
       },
@@ -6140,7 +6140,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x15-V6-Authentication.md",
             "section": "V6: authentication architecture",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           }
         ]
       },
@@ -6192,7 +6192,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x15-V6-Authentication.md",
             "section": "V6: general authentication security",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OWASP Authentication Cheat Sheet",
@@ -6258,7 +6258,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x17-V8-Authorization.md",
             "section": "V8: authorization design and operation",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OWASP Authorization Cheat Sheet",
@@ -6424,7 +6424,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x11-V2-Validation-and-Business-Logic.md",
             "section": "V2: input validation and business logic",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           }
         ]
       },
@@ -6432,12 +6432,12 @@ const LEARNING_PATHS = [
         "id": "sessions",
         "title": "6. Manage session rotation, expiry and logout",
         "stage": "foundation",
-        "takeaway": "A session is a bearer capability with a lifecycle.",
+        "takeaway": "A session lets the server recognise a signed-in user until the session expires or is revoked.",
         "sections": [
           {
             "title": "Bearer sessions and revocation",
             "paragraphs": [
-              "A server session maps an unpredictable opaque identifier to authenticated context. Whoever presents a valid bearer identifier may act as that session, so protect it in transport/storage and never log it. The application must define creation, expiry, privilege changes and revocation.",
+              "A server session links a random session ID to the signed-in user. Anyone holding a valid ID may be able to act as that user. This is why it is called a bearer credential. The ID is opaque: it does not reveal the stored user information. Protect it when sending and storing it, and never log it. Define when sessions are created, expire, change privileges and are revoked.",
               "Sessions in the kit generate random identifiers using Python secrets, rotate a previous session during login, expire after five minutes using injected time, and revoke on logout. The short lifetime is a fixture policy, not a universal recommendation. There is no durable store, idle timeout or multi-worker coordination here."
             ]
           },
@@ -6475,7 +6475,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x16-V7-Session-Management.md",
             "section": "V7: session lifecycle and termination",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           }
         ],
         "diagram": {
@@ -6637,7 +6637,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x12-V3-Web-Frontend-Security.md",
             "section": "V3: browser security controls",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "RFC 6265 HTTP State Management Mechanism",
@@ -6703,7 +6703,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x15-V6-Authentication.md",
             "section": "V6: password and multifactor authentication",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OWASP Password Storage Cheat Sheet",
@@ -6762,7 +6762,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x12-V3-Web-Frontend-Security.md",
             "section": "V3: cross-site request forgery",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OWASP CSRF Prevention Cheat Sheet",
@@ -6955,7 +6955,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x10-V1-Encoding-and-Sanitization.md",
             "section": "V1: output encoding and sanitization",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OWASP XSS Prevention Cheat Sheet",
@@ -7014,7 +7014,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x10-V1-Encoding-and-Sanitization.md",
             "section": "V1: injection prevention",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "Python sqlite3 documentation",
@@ -7073,7 +7073,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x19-V10-OAuth-and-OIDC.md",
             "section": "V10: OAuth client and resource server security",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "RFC 9700 OAuth Security BCP",
@@ -7261,7 +7261,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x19-V10-OAuth-and-OIDC.md",
             "section": "V10: OpenID Connect",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OpenID Connect Core 1.0 errata set 2",
@@ -7433,7 +7433,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x19-V10-OAuth-and-OIDC.md",
             "section": "V10: authorization flow defenses",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "RFC 7636 PKCE",
@@ -7607,7 +7607,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x18-V9-Self-contained-Tokens.md",
             "section": "V9: token integrity and validation",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "RFC 8725 JWT Best Current Practices",
@@ -7778,7 +7778,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x22-V13-Configuration.md",
             "section": "V13: secrets management",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OWASP Secrets Management Cheat Sheet",
@@ -7930,7 +7930,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md",
             "section": "V16: security logging and error handling",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           }
         ]
       },
@@ -7982,7 +7982,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x24-V15-Secure-Coding-and-Architecture.md",
             "section": "V15: secure dependencies and development",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           }
         ]
       },
@@ -8034,7 +8034,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x11-V2-Validation-and-Business-Logic.md",
             "section": "V2: business logic and anti-automation",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           }
         ]
       },
@@ -8093,7 +8093,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x04-Assessment_and_Certification.md",
             "section": "Assessment and certification scope",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OWASP ASVS project",
@@ -8152,7 +8152,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md",
             "section": "V16: incident evidence and safe error handling",
             "reviewed": "2026-09-27",
-            "scope": "ASVS 5.0.0 (2025) selected web-application controls; original Python 3.11+ synthetic exercises are not an ASVS certification or complete HTTP/IdP implementation."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           }
         ]
       }
@@ -8842,7 +8842,7 @@ const LEARNING_PATHS = [
           {
             "title": "Choose return and failure contracts together",
             "paragraphs": [
-              "This is an optional preview of the later integration-checks lab. Complete the small console exercise first; HttpClient adapters and their scripted handler are not foundation requirements.",
+              "Complete the console exercise first. You can return to this optional HTTP example after the integration-checks lesson.",
               "The focused HTTP client returns Session? because a documented 404 means no session exists. A 503 is not an empty result: it throws, so the caller can show a service problem without falsely claiming the record is absent. A successful response with minutes 0 is valid and must not be confused with missing data.",
               "Its positive-ID precondition is checked before sending. The test counts handler calls and proves an invalid ID dispatches nothing. This combines two observations: the exception and the absence of an external attempt. A test checking only the exception could miss a method that sends first and rejects afterward."
             ]
@@ -9449,8 +9449,8 @@ const LEARNING_PATHS = [
           {
             "title": "Cancellation is an observed asynchronous outcome",
             "paragraphs": [
-              "This is an optional preview of the later integration-checks lab. Complete the small console exercise first; HttpClient adapters and their scripted handler are not foundation requirements.",
-              "The HTTP-boundary lab uses a TaskCompletionSource to confirm the handler has started, then cancels the caller token. The handler waits on a cancellable operation; the test awaits the task and observes OperationCanceledException. No guessed sleep duration is used to make the race seem reliable.",
+              "Complete the console exercise first. You can return to this optional HTTP example after the integration-checks lesson.",
+              "The HTTP-boundary lab uses a TaskCompletionSource to confirm the handler has started, then cancels the caller token. The handler waits on a cancellable operation; the test awaits the task and observes OperationCanceledException. The started signal controls the test order without relying on a timed delay.",
               "Passing this check shows token propagation through this in-process adapter. It does not prove a remote service stopped work or rolled back a write. A caller cancelling after a remote commit can still have an unknown result. Distinguish cancelling the wait from undoing an operation."
             ]
           }
@@ -14291,7 +14291,7 @@ const LEARNING_PATHS = [
           "id": "infra_lab-py",
           "href": "paths/cloud-infrastructure/practice/infra_lab.py",
           "role": "reference",
-          "description": "Reference implementation or clearly labeled training configuration."
+          "description": "Offline infrastructure planner and policy checks"
         },
         {
           "id": "test_infra_lab-py",
@@ -14303,13 +14303,13 @@ const LEARNING_PATHS = [
           "id": "topology-json",
           "href": "paths/cloud-infrastructure/practice/topology.json",
           "role": "reference",
-          "description": "Reference implementation or clearly labeled training configuration."
+          "description": "Fictional infrastructure inventory for planning and policy exercises"
         },
         {
           "id": "main-tf-json",
           "href": "paths/cloud-infrastructure/practice/main.tf.json",
           "role": "reference",
-          "description": "Reference implementation or clearly labeled training configuration."
+          "description": "Optional Azure Terraform configuration for provider validation"
         },
         {
           "id": "README-md",
@@ -14575,14 +14575,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which result uses tickets as the denominator?",
+          "question": "A file contains 6 completed tickets and 18 messages. Two tickets took more than 24 hours. What is the ticket breach rate?",
           "options": [
-            "One of two tickets breached, so the fraction is 0.5 or 50%.",
-            "40 divided by 48 is the breach fraction.",
-            "Count every message as a ticket."
+            "2/6, about 33.3%.",
+            "2/18, about 11.1%.",
+            "6/18, about 33.3%."
           ],
           "correct": 0,
-          "explanation": "The 40-hour ticket is the single breach. Dividing its duration by total duration measures a share of hours, not a share of tickets. Counting messages changes the unit of observation."
+          "explanation": "Two of the six tickets breached. Messages are a different unit, even when a calculation using them happens to produce the same percentage."
         },
         "references": [
           {
@@ -14590,7 +14590,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -14624,14 +14624,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "What does a repeated ID require?",
+          "question": "The first five rows have unique IDs, but the file contains 500 rows. Which check establishes whether IDs are unique throughout?",
           "options": [
-            "No. Investigate the repeated ID before reporting ticket-level results.",
-            "Use head() and ignore later rows.",
-            "Assume the extra row is harmless because the CSV loaded."
+            "Compare the full row count with the number of distinct ticket IDs.",
+            "Inspect head() again.",
+            "Check whether read_csv raised an error."
           ],
           "correct": 0,
-          "explanation": "The duplicate violates the intended grain even though read_csv succeeds. head() only previews a few records and cannot establish whole-file uniqueness."
+          "explanation": "Uniqueness is a whole-column property. A preview cannot reveal duplicates later in the file, and CSV parsing does not enforce unique business IDs."
         },
         "references": [
           {
@@ -14639,7 +14639,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -14673,14 +14673,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which operation converts both durations?",
+          "question": "What does np.array([30.0, 90.0]) / 60 produce when the input is in minutes?",
           "options": [
-            "Multiply by 60 to obtain [90.0, 120.0] minutes.",
-            "Repeat the array values 60 times.",
-            "Add 60 to each value."
+            "[0.5, 1.5] hours.",
+            "[30.0, 90.0] hours.",
+            "An array with 120 elements."
           ],
           "correct": 0,
-          "explanation": "Multiplication applies to both numeric elements. Repeating values changes the number of observations, and adding 60 does not convert the unit."
+          "explanation": "NumPy divides each value by 60 and keeps the two-element shape. The numbers change units from minutes to hours."
         },
         "references": [
           {
@@ -14688,7 +14688,7 @@ const LEARNING_PATHS = [
             "url": "https://numpy.org/doc/stable/user/absolute_beginners.html",
             "section": "Array creation, shape, indexing and basic operations",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "API guidance for the pinned practice libraries; examples use fictional ticket data."
           }
         ]
       },
@@ -14722,14 +14722,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "What preserves the difference between unknown and zero?",
+          "question": "After numeric conversion, durations are [0, 12, missing]. Which report preserves their meaning?",
           "options": [
-            "No. Keep it missing or reject it, and report the missing count.",
-            "Replace unknown durations with zero before averaging.",
-            "Delete the entire source file."
+            "The two measured durations average 6 hours; one duration is missing.",
+            "All three tickets average 4 hours.",
+            "Zero and missing both mean the ticket was resolved immediately."
           ],
           "correct": 0,
-          "explanation": "Zero claims an immediate resolution. The source supplies no such measurement. Rejecting the cell or marking it missing keeps that uncertainty visible without destroying the source."
+          "explanation": "The measured zero belongs in the mean. The missing value supplies no duration, so report its absence separately rather than treating it as another zero."
         },
         "references": [
           {
@@ -14737,7 +14737,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -14771,14 +14771,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which statement keeps the population clear?",
+          "question": "A source has 20 tickets. Five are high priority and two of those breached. What can you conclude from that subset?",
           "options": [
-            "The subset rate is 3/4 or 75%; it does not describe all tickets.",
-            "75% of every ticket in the source breached.",
-            "The rate is 3 divided by all message counts."
+            "40% of high-priority tickets breached.",
+            "40% of all tickets breached.",
+            "10% of high-priority tickets breached."
           ],
           "correct": 0,
-          "explanation": "The mask selects four tickets, three of which breached. Neither all-ticket claims nor message counts use that same population."
+          "explanation": "The selected population contains five tickets, so its rate is 2/5. The overall rate also needs breach information about the other 15 tickets."
         },
         "references": [
           {
@@ -14786,7 +14786,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/indexing.html",
             "section": "Boolean indexing and selection by label",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -14820,14 +14820,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which response preserves the unresolved conflict?",
+          "question": "Two rows for T014 have durations 6 and 9. The source contract says the greatest update timestamp is authoritative, and the 9-hour row is newer. What should you do?",
           "options": [
-            "Reject or quarantine the conflict for review rather than silently choosing one.",
-            "Always keep the first row.",
-            "Average the two rows and call them one measured ticket."
+            "Keep the 9-hour row under the documented rule and record the duplicate handling.",
+            "Always keep the first row regardless of timestamps.",
+            "Replace both values with their mean of 7.5."
           ],
           "correct": 0,
-          "explanation": "Averaging the conflicting durations creates a new value that neither record measured. Keeping the first row relies on an undocumented ordering rule. Review is needed before choosing a record."
+          "explanation": "Here the source provides an ordering rule, so the newer record resolves the conflict. Averaging would invent a measurement; file order need not match update order."
         },
         "references": [
           {
@@ -14835,7 +14835,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/missing_data.html",
             "section": "Detecting missing values and calculations",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -14869,14 +14869,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "A filtered table has index labels 2 and 5. How do you select its first stored row?",
+          "question": "A table has unique index labels 2 and 5, in that order. Which expression selects the row labeled 5?",
           "options": [
-            "Use iloc[0]. loc[0] looks for label 0 and may fail.",
-            "Use loc[0] because every filtered table starts at label zero.",
-            "Rename the ticket IDs to match the index."
+            "df.loc[5]",
+            "df.iloc[5]",
+            "df.loc[1]"
           ],
           "correct": 0,
-          "explanation": "iloc selects by position. loc selects by label, so loc[0] asks for a different thing. Changing business identifiers to match row positions would corrupt their meaning."
+          "explanation": "loc selects the label 5. iloc[5] requests the sixth stored row, which this two-row table does not have. The second row does not acquire label 1 automatically."
         },
         "references": [
           {
@@ -14884,7 +14884,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/indexing.html",
             "section": "Selection by label and position",
             "reviewed": "2026-10-02",
-            "scope": "Official pandas API guidance; original examples explain labels and aggregation. Chunk aggregation reasoning applies to the stated arithmetic mean, not every statistic."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -14918,14 +14918,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "How should equality behave?",
+          "question": "The rule changes to resolution_hours >= 24. How many of [23, 24, 25] breach?",
           "options": [
-            "No. The rule uses greater than 24, not greater than or equal to 24.",
-            "It breaches because all thresholds are inclusive.",
-            "Its classification depends on the CSV row order."
+            "Two.",
+            "One.",
+            "Three."
           ],
           "correct": 0,
-          "explanation": "A strict greater-than comparison is false at equality. Row order never changes the classification; the numeric threshold and operator determine it."
+          "explanation": "The inclusive comparison counts 24 and 25. Changing > to >= changes the boundary case, so the derived column and its tests must follow the stated rule."
         },
         "references": [
           {
@@ -14933,7 +14933,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -14967,14 +14967,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which denominator answers the ticket-level question?",
+          "question": "Team A has 1 breach among 2 tickets; team B has 3 among 18. What is the overall ticket breach rate?",
           "options": [
-            "Use 2/10 or 20%, because each ticket gets equal weight.",
-            "Average the two percentages to get the overall ticket rate.",
-            "Use only the larger team and ignore the other one."
+            "4/20, or 20%.",
+            "The unweighted mean of 50% and 16.7%, about 33.3%.",
+            "3/18, about 16.7%."
           ],
           "correct": 0,
-          "explanation": "The numerator is two breaches and the denominator is ten tickets. An unweighted average of group percentages gives the two-ticket team the same influence as the eight-ticket team."
+          "explanation": "Add the four breaches and all 20 tickets before dividing. Averaging team rates equally gives a small team too much weight; using only team B drops team A."
         },
         "references": [
           {
@@ -14982,7 +14982,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/groupby.html",
             "section": "Aggregation and missing group keys",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -15016,14 +15016,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "What prevents ticket multiplication?",
+          "question": "Three tickets have team billing. The lookup contains two billing rows. How many rows does an ordinary left join produce for those tickets?",
           "options": [
-            "No. Enforce many-to-one cardinality and investigate the duplicate lookup key.",
-            "A left join always preserves the original row count.",
-            "Drop any repeated output rows after calculating totals."
+            "Six, because each ticket matches both lookup rows.",
+            "Three, because a left join always preserves the left row count.",
+            "Two, because only the lookup rows count."
           ],
           "correct": 0,
-          "explanation": "A left join can repeat left rows when several right rows match. Removing output rows after calculating totals cannot repair those already-inflated totals or establish the correct owner."
+          "explanation": "Each of the three left rows has two matches, yielding six rows. A many-to-one validation would reject this lookup before inflated totals are accepted."
         },
         "references": [
           {
@@ -15031,7 +15031,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/merging.html",
             "section": "Merge key uniqueness and indicator",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ],
         "diagram": {
@@ -15145,14 +15145,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which summary avoids hiding the tail?",
+          "question": "Durations are [2, 3, 4, 5, 86]. The source confirms that 86 is valid. What should the summary do?",
           "options": [
-            "Report mean 20, median 4 and maximum 86 with the count of 5.",
-            "Report only median 4 and claim every ticket takes about four hours.",
-            "Delete 86 because it is above the mean."
+            "Retain it and report the tail alongside typical durations.",
+            "Delete it because it is larger than the mean.",
+            "Replace it with the median without recording a change."
           ],
           "correct": 0,
-          "explanation": "The mean and median answer different questions. The maximum exposes the tail. Removing 86 only because it exceeds the mean discards a possibly real observation without a source-based rule."
+          "explanation": "A valid long duration is part of the distribution. The median helps describe a typical observation, while the maximum and mean keep the long tail visible."
         },
         "references": [
           {
@@ -15160,7 +15160,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -15194,14 +15194,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "What avoids inventing measured zero activity?",
+          "question": "Collection is confirmed complete for Wednesday, and no tickets were opened that day. What belongs in the daily opened-ticket count?",
           "options": [
-            "Mark Tuesday as missing or explain the gap until collection completeness is established.",
-            "Fill Tuesday with zero and claim nobody contacted support.",
-            "Copy Monday into Tuesday to make the chart continuous."
+            "Zero, with the completeness assumption recorded.",
+            "A missing value in every case.",
+            "The count from Tuesday."
           ],
           "correct": 0,
-          "explanation": "No Tuesday rows may reflect missing collection. Zero invents a measured absence; copying Monday invents activity. A gap preserves what the export does and does not establish."
+          "explanation": "Confirmed complete collection supports a measured count of zero. This differs from an unexplained gap, where absence of rows alone cannot establish zero activity."
         },
         "references": [
           {
@@ -15209,7 +15209,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -15243,14 +15243,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which chart answers a distribution question?",
+          "question": "You want to compare ticket counts across four teams. Which chart fits that question?",
           "options": [
-            "Use a histogram of resolution_hours with labeled hour bins and ticket counts.",
-            "Use a line joining arbitrary ticket IDs and call it a time trend.",
-            "Use a pie chart with one slice per duration."
+            "A bar chart with one bar per team and a labeled ticket-count axis.",
+            "A line through arbitrary ticket IDs.",
+            "A histogram of resolution hours."
           ],
           "correct": 0,
-          "explanation": "A histogram groups durations into intervals to show their distribution. Connecting ticket IDs implies an order that is not elapsed time, and one pie slice per duration does not show frequency across intervals clearly."
+          "explanation": "Bars compare counts across named groups. A duration histogram answers a distribution question, and arbitrary ticket IDs do not define a time series."
         },
         "references": [
           {
@@ -15258,7 +15258,7 @@ const LEARNING_PATHS = [
             "url": "https://matplotlib.org/stable/users/explain/quick_start.html",
             "section": "Figure, Axes and explicit plotting interface",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "API guidance for the pinned practice libraries; examples use fictional ticket data."
           }
         ]
       },
@@ -15292,14 +15292,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Several tickets share the same team and priority. How do you build a count table?",
+          "question": "After grouping, billing has 3 high-priority and 2 low-priority tickets. What should the billing row contain after reshaping the counts?",
           "options": [
-            "Group by team and priority, count tickets, then reshape the resulting counts.",
-            "Pivot raw durations and assume a missing combination proves zero activity.",
-            "Use the mean duration as the ticket count."
+            "High: 3, low: 2, with a row total of 5.",
+            "High: 1, low: 1, because there are two groups.",
+            "The mean duration of each priority."
           ],
           "correct": 0,
-          "explanation": "Repeated team-priority combinations are normal in ticket-level data. Counting them first defines one aggregate per output cell. A duration mean cannot stand in for the number of tickets."
+          "explanation": "Reshaping moves the existing counts into columns. It does not change their meaning or replace ticket counts with durations."
         },
         "references": [
           {
@@ -15307,7 +15307,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/reshaping.html",
             "section": "Pivot and pivot tables",
             "reviewed": "2026-10-02",
-            "scope": "Official pandas API guidance; original examples explain labels and aggregation. Chunk aggregation reasoning applies to the stated arithmetic mean, not every statistic."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -15341,14 +15341,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which conclusion fits observational groups?",
+          "question": "Email has more complex tickets than chat. Its average resolution time is also higher. Which next comparison helps investigate case mix?",
           "options": [
-            "No. Describe the difference and investigate case mix or a suitable study before claiming causation.",
-            "Moving all tickets to chat must reduce resolution time.",
-            "A groupby operation removes all confounding."
+            "Compare channels within similar complexity groups, while checking for other differences.",
+            "Conclude that switching every ticket to chat will reduce its duration.",
+            "Remove complexity from the data because it complicates the chart."
           ],
           "correct": 0,
-          "explanation": "Grouping organizes observations but does not randomly assign customers or remove hidden differences. An intervention claim needs evidence about what would happen under a different channel, which this file does not supply."
+          "explanation": "Comparing similar cases can help examine a measured difference in case mix. It still does not establish causation or rule out unmeasured differences between channels."
         },
         "references": [
           {
@@ -15356,7 +15356,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -15390,14 +15390,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which check rejects an invalid numeric measurement?",
+          "question": "A duration of -3 converts to a finite float. Should the duration validator accept it?",
           "options": [
-            "No. Check finiteness as well as numeric conversion and nonnegativity.",
-            "Any value accepted by float() is a valid duration.",
-            "Sort the file and accept it if the totals look plausible."
+            "No. It also violates the nonnegative-duration rule.",
+            "Yes. Finite numeric values are always valid measurements.",
+            "Yes, if another ticket offsets it in the total."
           ],
           "correct": 0,
-          "explanation": "float conversion accepts infinity, but it is not a finite measured duration. Sorting cannot change this invalid value into valid evidence, and plausible-looking totals are not a data contract."
+          "explanation": "Numeric conversion and finiteness are necessary checks, but durations must also satisfy the domain rule of zero or more hours. A plausible aggregate cannot repair an invalid row."
         },
         "references": [
           {
@@ -15405,7 +15405,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -15439,14 +15439,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which test has independent expectations?",
+          "question": "A test fixture has one team with durations 4 and 28 hours. The breach rule is > 24. What should the test assert?",
           "options": [
-            "Assert the literal counts, breach counts and means for both teams.",
-            "Build the expected output by calling the function under test again.",
-            "Check only that a PNG file exists."
+            "Count 2, breach count 1, mean 16 hours.",
+            "Whatever values the summary function returns on a second call.",
+            "Only that the function returns a table."
           ],
           "correct": 0,
-          "explanation": "Literal values calculated from the four input rows can expose a faulty implementation. Calling the same function twice repeats its mistakes. Checking a PNG exists verifies output creation, not arithmetic."
+          "explanation": "The two rows give independent expected values: (4 + 28) / 2 = 16 and only 28 breaches. Repeating the function or checking the output type cannot establish correct arithmetic."
         },
         "references": [
           {
@@ -15454,7 +15454,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -15488,14 +15488,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "How do you combine the two example chunks?",
+          "question": "One chunk has 3 durations averaging 10 hours. Another has 1 duration averaging 30 hours. What is the combined mean?",
           "options": [
-            "Carry sum 260 and count 10, then divide to get 26 hours.",
-            "Average the chunk means and report 20 hours.",
-            "Use only the final chunk because it is larger."
+            "15 hours.",
+            "20 hours.",
+            "30 hours."
           ],
           "correct": 0,
-          "explanation": "The larger chunk contains four times as many observations and must contribute four times the weight. Averaging chunk means assigns equal weight to chunks; using only the final chunk discards two observations."
+          "explanation": "The first chunk contributes a sum of 30 and the second contributes 30. Divide their combined sum of 60 by four observations to get 15; do not average unequal-size chunk means equally."
         },
         "references": [
           {
@@ -15503,7 +15503,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/scale.html",
             "section": "Use chunking",
             "reviewed": "2026-10-02",
-            "scope": "Official pandas API guidance; original examples explain labels and aggregation. Chunk aggregation reasoning applies to the stated arithmetic mean, not every statistic."
+            "scope": "pandas 3.0.6 API; chunk means must be weighted by their observation counts."
           }
         ]
       },
@@ -15537,14 +15537,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "What helps explain a changed result?",
+          "question": "Two reports have the same input hash and dependency versions, but different totals. What should you inspect next?",
           "options": [
-            "Compare the input hashes, filtering rules and dependency versions before interpreting the difference.",
-            "Assume the newer chart is correct because it looks cleaner.",
-            "Erase the older result so there is only one report."
+            "The code revision, filters and analysis parameters used by each run.",
+            "Assume identical input guarantees identical calculations.",
+            "Keep whichever report has the newer file timestamp."
           ],
           "correct": 0,
-          "explanation": "A prettier chart does not establish a correct calculation. Keeping both reports and their provenance lets you identify whether changed inputs, code or libraries explain the difference."
+          "explanation": "Identical inputs can produce different results when calculation rules change. Recorded code and parameters help explain the difference; file timestamps do not establish correctness."
         },
         "references": [
           {
@@ -15552,7 +15552,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -15586,14 +15586,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which answer applies the same strict comparison?",
+          "question": "For durations [8, 24, 40, 60], change the strict breach threshold from > 24 to > 40. What happens?",
           "options": [
-            "Two of four breach, giving 50%; exactly 24 does not breach.",
-            "Three breach because equality counts.",
-            "Change the threshold until the rate is below 10%."
+            "The rate falls from 50% to 25% on the same four tickets.",
+            "The rate stays at 50% because 40 still counts.",
+            "The rate rises because the threshold is larger."
           ],
           "correct": 0,
-          "explanation": "Exactly 24 is excluded by the strict comparison. Choosing a threshold to obtain a desired rate changes the question after seeing the result rather than testing a stated sensitivity."
+          "explanation": "At > 24, both 40 and 60 breach. At > 40, only 60 breaches. Keeping the same records isolates the effect of the changed threshold."
         },
         "references": [
           {
@@ -15601,7 +15601,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       },
@@ -15635,14 +15635,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Which predictor avoids using the future outcome?",
+          "question": "A model predicts delay when a ticket arrives. Which field can be a predictor if it is recorded at that moment?",
           "options": [
-            "Channel is available at intake; resolution_hours is an outcome and must be excluded.",
-            "Use resolution_hours because it is strongly correlated with the target.",
-            "Use breached to predict breached and report perfect accuracy."
+            "The priority assigned at intake.",
+            "The final resolution timestamp.",
+            "A customer rating submitted after closure."
           ],
           "correct": 0,
-          "explanation": "Channel is recorded at intake. Duration is known only after completion. Using it or the target gives the model information it would not have at the intended decision time."
+          "explanation": "Intake priority is available at the decision time. Resolution timestamps and later ratings use future information, even if they correlate strongly with delay."
         },
         "references": [
           {
@@ -15650,7 +15650,7 @@ const LEARNING_PATHS = [
             "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
-            "scope": "Official API guidance. Original fictional cases teach analysis choices, not claims about real support operations. Executable references were tested with Python 3.14, pandas 3.0.6, NumPy 2.5.3 and Matplotlib 3.11.2. Pinned libraries require Python 3.12+."
+            "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
         ]
       }
@@ -16105,7 +16105,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/csv.html",
             "section": "DictReader field mapping",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -16152,7 +16152,7 @@ const LEARNING_PATHS = [
             "At ingestion only; later transformations need no checks"
           ],
           "correct": 0,
-          "explanation": "ETL can reject before loading curated data; ELT can land governed raw data then quarantine invalid rows before publishing. Both need explicit error evidence and access policy."
+          "explanation": "ELT can store raw rows before transforming them, but malformed timestamps must be rejected or quarantined before curated results are published. Keep the rejection records under the same access controls as the source data."
         },
         "references": [
           {
@@ -16167,7 +16167,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Tutorial and transactions",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "diagram": {
@@ -16329,7 +16329,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/csv.html",
             "section": "Reader objects and newline handling",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -16376,7 +16376,7 @@ const LEARNING_PATHS = [
             "Keep the empty field and let the report decide its meaning"
           ],
           "correct": 0,
-          "explanation": "This contract requires a known nonblank identifier and a present integer amount. Missing amounts reject the batch rather than inventing zero revenue."
+          "explanation": "An empty amount violates the required integer-cents field. Reject it. Substituting zero would turn missing information into a false revenue value."
         },
         "references": [
           {
@@ -16384,7 +16384,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "SQLite and Python types",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -16431,7 +16431,7 @@ const LEARNING_PATHS = [
             "Only the accepted row count because the rejected sale is outside the output"
           ],
           "correct": 0,
-          "explanation": "All-or-nothing preserves a coherent snapshot but delays availability; partial success can improve availability only if missing/rejected contributions are explicit and reconciled."
+          "explanation": "The total covers only accepted rows. Report accepted and rejected counts and explain whether the missing sale makes the total incomplete. Otherwise a valid partial sum can be mistaken for complete revenue."
         },
         "references": [
           {
@@ -16439,7 +16439,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/csv.html",
             "section": "Error handling",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -16486,7 +16486,7 @@ const LEARNING_PATHS = [
             "A valid timestamp always has the same calendar date in every timezone"
           ],
           "correct": 0,
-          "explanation": "Delayed delivery and replay can ingest older events today. Different time definitions produce different day buckets and must be labeled."
+          "explanation": "The order occurred on September 1 but arrived on September 3. Grouping by event date puts it on the first day; grouping by ingestion date puts it on the third. Label which date the report uses."
         },
         "references": [
           {
@@ -16494,7 +16494,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/datetime.html",
             "section": "Aware and naive objects",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -16541,7 +16541,7 @@ const LEARNING_PATHS = [
             "Convert amounts to floating point so refunds need no separate rule"
           ],
           "correct": 0,
-          "explanation": "Add an explicit refund/event type and signed-amount semantics, define duplicate behavior, and test net totals and reconciliation. Do not silently relax the existing rule."
+          "explanation": "A refund changes the meaning of an amount. Define how its sign and event type affect the total, how duplicates are handled, and tests for the resulting net revenue before accepting refunds."
         },
         "references": [
           {
@@ -16556,7 +16556,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Python integer binding",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -16611,7 +16611,7 @@ const LEARNING_PATHS = [
             "Write the marker first so a retry can skip unfinished data writes"
           ],
           "correct": 0,
-          "explanation": "Otherwise a crash can record completed without data or store data without a marker, breaking replay detection. One boundary coordinates both effects."
+          "explanation": "The completion marker and order writes must commit together. If either fails, the transaction rolls both back, so the marker cannot claim completion for missing orders."
         },
         "references": [
           {
@@ -16619,7 +16619,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Connection context manager",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -16673,7 +16673,7 @@ const LEARNING_PATHS = [
             "Different run IDs for the two workers so neither waits"
           ],
           "correct": 0,
-          "explanation": "Both workers can find that the ID is absent and attempt the write. A database uniqueness constraint must protect the ID, and the effect and marker must commit together. A pre-check alone is insufficient."
+          "explanation": "Both workers can pass a separate existence check. A database uniqueness constraint prevents duplicate identities, while committing the marker and its data changes together prevents partial completion."
         },
         "references": [
           {
@@ -16681,7 +16681,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Transaction control",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "diagram": {
@@ -16838,7 +16838,7 @@ const LEARNING_PATHS = [
             "Advance halfway based on the number of attempted writes"
           ],
           "correct": 0,
-          "explanation": "It must not advance. Roll back or reconcile the target changes, then retry from the previous committed boundary using deduplication."
+          "explanation": "Advancing the watermark would skip records whose target writes failed. Keep the last successfully committed position, then roll back or reconcile the partial writes before retrying."
         },
         "references": [
           {
@@ -16853,7 +16853,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Commit and rollback",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -16900,7 +16900,7 @@ const LEARNING_PATHS = [
             "Treat missing change records as evidence that nothing changed"
           ],
           "correct": 0,
-          "explanation": "Stop claiming completeness, obtain a consistent rebaseline/snapshot and reconcile according to the source-specific protocol; do not silently skip the gap."
+          "explanation": "Some changes have expired, so the consumer cannot reconstruct them from the remaining log. Obtain a consistent new snapshot and reconcile it using the source protocol before claiming the dataset is complete."
         },
         "references": [
           {
@@ -16908,7 +16908,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server?view=sql-server-ver17",
             "section": "SQL Server CDC overview",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -16955,7 +16955,7 @@ const LEARNING_PATHS = [
             "Whether dividing every joined total by two is a valid general correction"
           ],
           "correct": 0,
-          "explanation": "Check customer join-key uniqueness and count unmatched order customer IDs. Compare source and joined fact counts and sums under the expected cardinality."
+          "explanation": "A customer key appearing twice can match each order twice and double the sum. Check key uniqueness and the number of matches per order before changing the aggregation."
         },
         "references": [
           {
@@ -16970,7 +16970,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
             "section": "SQL Server CREATE TABLE constraints",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "diagram": {
@@ -17104,7 +17104,7 @@ const LEARNING_PATHS = [
             "To neither version to avoid double counting"
           ],
           "correct": 0,
-          "explanation": "At Sep 10 exactly, match the new version once. Reject overlaps and verify each fact has the required single matching version."
+          "explanation": "A half-open interval includes its start and excludes its end. The event at the September 10 boundary belongs to the new version, which starts then, and must match only once."
         },
         "references": [
           {
@@ -17119,7 +17119,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
             "section": "SQL Server table constraints",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -17166,7 +17166,7 @@ const LEARNING_PATHS = [
             "Rerunning the whole DAG cannot duplicate any external effect"
           ],
           "correct": 0,
-          "explanation": "Publication depends on reconciliation to avoid exposing incorrect totals. Email failure normally triggers an independent retry rather than undoing a valid data commit."
+          "explanation": "A dependency graph determines task order; it does not reverse an earlier database commit. Handle the email failure separately, for example with a retry policy that does not rerun the committed import."
         },
         "references": [
           {
@@ -17174,7 +17174,7 @@ const LEARNING_PATHS = [
             "url": "https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html",
             "section": "Airflow DAG concepts",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "diagram": {
@@ -17328,7 +17328,7 @@ const LEARNING_PATHS = [
             "A changed historical total with no revision information"
           ],
           "correct": 0,
-          "explanation": "For this exercise, revise the affected event day with a revision/updated timestamp and record accepted late count. Avoid silently changing history without an audit trail."
+          "explanation": "Under this correction policy, the sale changes the September 1 total. Publish the revised total with an update time or revision so readers can tell that the previously published result changed."
         },
         "references": [
           {
@@ -17336,7 +17336,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/datetime.html",
             "section": "Time comparisons",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -17383,7 +17383,7 @@ const LEARNING_PATHS = [
             "Choose a CSV extension so the input size is predictable"
           ],
           "correct": 0,
-          "explanation": "An unbounded read can exhaust memory before validation runs. Selective partitions reduce scanning, while too many tiny partitions create overhead and management complexity."
+          "explanation": "Checking size after loading cannot prevent memory exhaustion during the read. Check or enforce the limit before reading all the data into memory."
         },
         "references": [
           {
@@ -17391,7 +17391,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/csv.html",
             "section": "File reading contract",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -17438,7 +17438,7 @@ const LEARNING_PATHS = [
             "Ignoring currency when older consumers do not recognize the column"
           ],
           "correct": 0,
-          "explanation": "Version the schema, define currency scale, update validators/queries, test old/new fixtures, rebaseline affected outputs and plan rollback. Reject unversioned ambiguity."
+          "explanation": "The new fields change how amounts are interpreted. Define the scale for each currency, version the schema and test consumers against the supported old and new formats before trusting their totals."
         },
         "references": [
           {
@@ -17446,7 +17446,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
             "section": "SQL Server CREATE TABLE column definitions",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -17493,7 +17493,7 @@ const LEARNING_PATHS = [
             "Compare only the row count with the source"
           ],
           "correct": 0,
-          "explanation": "Changing one order +100 and another -100 preserves the sum. Swapping IDs or dropping/duplicating equal amounts can preserve totals too; check keys and values."
+          "explanation": "The two errors cancel in the sum. Comparing each order ID and amount reveals the incorrect values even though the total is unchanged."
         },
         "references": [
           {
@@ -17501,7 +17501,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Query result iteration",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -17548,7 +17548,7 @@ const LEARNING_PATHS = [
             "An encrypted full-file copy with no access or retention decision"
           ],
           "correct": 0,
-          "explanation": "Store run ID, schema/version, sanitized rejection category, bounded row index and observation time. Assign an accountable dataset owner and retention rule."
+          "explanation": "A rejection category and run metadata can support diagnosis without copying customer rows into a shared log. Give the log an owner, restrict access and define when records are deleted."
         },
         "references": [
           {
@@ -17563,7 +17563,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server?view=sql-server-ver17",
             "section": "SQL Server CDC capture and cleanup roles",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -17610,7 +17610,7 @@ const LEARNING_PATHS = [
             "A DATETIME2 column, which alone proves UTC input handling"
           ],
           "correct": 0,
-          "explanation": "Run the clean-load, replay, changed-payload conflict, duplicate-order rollback and invalid-input tests against the selected SQL Server and driver versions. Then verify the stored keys and totals."
+          "explanation": "SQLite tests establish only the SQLite implementation. Run load, replay, conflict, rollback and validation cases against the chosen SQL Server and driver, then check the stored keys and totals."
         },
         "references": [
           {
@@ -17618,7 +17618,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
             "section": "SQL Server CREATE TABLE types and constraints",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -17665,7 +17665,7 @@ const LEARNING_PATHS = [
             "Report success because sending the commit request proves it completed"
           ],
           "correct": 0,
-          "explanation": "Treat outcome as unknown, inspect the durable run identity/content fingerprint, and reuse the same intent for safe replay rather than issuing a new untracked batch."
+          "explanation": "A timeout does not say whether the server committed. Look up the durable run identity and its content fingerprint before retrying, so a lost response does not cause a second logical import."
         },
         "references": [
           {
@@ -17673,7 +17673,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Transaction commit and rollback",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       },
@@ -17720,7 +17720,7 @@ const LEARNING_PATHS = [
             "A claim of distributed readiness based on the local SQLite result"
           ],
           "correct": 0,
-          "explanation": "Demonstrate preserved prior state after failure, exact replay behavior, explicit schema/time/money assumptions and truthful limits. Explain each extension test rather than merely copying the reference."
+          "explanation": "The demo covers one successful load and replay. The capstone also needs tests that failed input preserves prior data, totals reconcile, and a change you implemented behaves as intended."
         },
         "references": [
           {
@@ -17728,7 +17728,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Transactions and parameter binding",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ]
       }
@@ -17835,31 +17835,31 @@ const LEARNING_PATHS = [
           "id": "README-md",
           "href": "paths/data-engineering/practice/README.md",
           "role": "guide",
-          "description": "Course-owned README.md"
+          "description": "Setup, importer commands and expected results"
         },
         {
           "id": "pipeline_lab-py",
           "href": "paths/data-engineering/practice/pipeline_lab.py",
           "role": "reference",
-          "description": "Course-owned pipeline_lab.py"
+          "description": "CSV importer with validation, SQLite transactions and replay checks"
         },
         {
           "id": "test_pipeline_lab-py",
           "href": "paths/data-engineering/practice/test_pipeline_lab.py",
           "role": "test",
-          "description": "Course-owned test_pipeline_lab.py"
+          "description": "Tests for import validation, replay, conflicts and rollback"
         },
         {
           "id": "sample_orders-csv",
           "href": "paths/data-engineering/practice/sample_orders.csv",
           "role": "reference",
-          "description": "Course-owned sample_orders.csv"
+          "description": "Sample orders for the CSV import exercises"
         },
         {
           "id": "sql-server-bridge-sql",
           "href": "paths/data-engineering/practice/sql-server-bridge.sql",
           "role": "reference",
-          "description": "Course-owned sql-server-bridge.sql"
+          "description": "SQL Server schema for the optional importer extension"
         },
         {
           "id": "depth-revision-lab-py",
@@ -21318,7 +21318,7 @@ const LEARNING_PATHS = [
           {
             "title": "Preconditions versus boundary validation",
             "paragraphs": [
-              "Finite nonnegative numeric edge weights and hashable vertices in a finite graph are caller preconditions. The teaching implementation checks negative weights, but does not comprehensively validate NaN, infinity, malformed edges or numeric types. Inputs outside that contract are unsupported; this is not a valid-input correctness bug. Add a validated boundary if accepting untrusted data."
+              "Finite nonnegative numeric edge weights and hashable vertices in a finite graph are caller preconditions. The teaching implementation checks negative weights, but does not comprehensively validate NaN, infinity, malformed edges or numeric types. Validate these other cases before calling the function with external data."
             ]
           }
         ],
@@ -21693,7 +21693,7 @@ const LEARNING_PATHS = [
           {
             "title": "Preconditions versus boundary validation",
             "paragraphs": [
-              "Capacity must be a nonnegative integer and every weight a positive integer; values must be finite numeric values in the stated optimization contract. These are caller preconditions. Negative capacity and nonpositive weights are checked, but fractional capacity/weights, malformed pairs and nonfinite values are not a comprehensive public validation API. Reject them explicitly in a wrapper if the data boundary is untrusted; unsupported input is not evidence of a valid-input algorithm bug.",
+              "Capacity must be a nonnegative integer and every weight a positive integer; values must be finite numeric values in the stated optimization contract. These are caller preconditions. The function rejects negative capacity and nonpositive weights. Before using external data, also reject fractional capacity or weights, malformed pairs and nonfinite values.",
               "Use advanced-reasoning.md and test_advanced_oracles.py for the learner extension: explain the invariant and recurrence, run the bounded independent oracles, and test a deliberately wrong implementation."
             ]
           }
@@ -29354,7 +29354,7 @@ const LEARNING_PATHS = [
           {
             "title": "React, API and storage roles",
             "paragraphs": [
-              "The supplied application is a synthetic single-user loopback lab. React handles presentation, .NET enforces the HTTP contract, and SQL Server later stores records durably. GitHub Pages hosts this notebook, but a dynamic .NET API needs its own runtime."
+              "This practice app runs on your computer for one user and uses fictional study records. React handles presentation, .NET enforces the HTTP contract, and SQL Server later stores records durably. GitHub Pages hosts this notebook, but a dynamic .NET API needs its own runtime."
             ]
           }
         ],
@@ -29375,7 +29375,7 @@ const LEARNING_PATHS = [
             "The architecture uses modern tools."
           ],
           "correct": 0,
-          "explanation": "Given SQL study and 25 minutes, create returns 201 and the list shows the same record. Blank title returns 400 and adds nothing. Completion returns version 2. Login, public deployment and multi-user isolation remain later extensions."
+          "explanation": "Creating a 25-minute session and seeing it listed gives you an action and an observable result. Enterprise readiness and modern tools do not specify a result you can check."
         },
         "references": [
           {
@@ -29402,7 +29402,7 @@ const LEARNING_PATHS = [
           {
             "title": "Local runtimes and commands",
             "paragraphs": [
-              "Use .NET 10, Node 24/npm and Python 3.11+. Run the API on 127.0.0.1:5087 and Vite on 127.0.0.1:5173 in separate terminals. npm ci installs the pinned graph; npm run build checks types and bundles the UI. Record versions and commands so another attempt can reproduce the result."
+              "Use .NET 10, Node 24/npm and Python 3.11+. Run the API on 127.0.0.1:5087 and Vite on 127.0.0.1:5173 in separate terminals. The loopback address 127.0.0.1 points to your own computer. npm ci installs the pinned graph; npm run build checks types and bundles the UI. Record versions and commands so another attempt can reproduce the result."
             ]
           }
         ],
@@ -29635,7 +29635,7 @@ const LEARNING_PATHS = [
             "To accept arbitrary JSON types."
           ],
           "correct": 0,
-          "explanation": "Zero is valid. A JSON boolean cannot bind to nullable int, so it returns 400. Omitted minutes is null and fails validation. done=false is a real update value when version and other fields are valid. Acceptance checks must distinguish these cases."
+          "explanation": "A nullable field is null when omitted, so validation can distinguish missing input from an explicitly supplied zero or false. The endpoint must still check types and allowed values."
         },
         "references": [
           {
@@ -29786,7 +29786,7 @@ const LEARNING_PATHS = [
             "Yes, if the response status is 200."
           ],
           "correct": 0,
-          "explanation": "Refresh keeps sessions because the same API process retains its dictionary. Restart creates a fresh dictionary and loses sessions. Durable persistence requires SQL mode and a restart test that reads the database-backed state."
+          "explanation": "Refreshing the browser leaves the API process running, so its in-memory dictionary can still supply the records. To test the SQL version, restart the API and read the saved records again."
         },
         "references": [
           {
@@ -29834,7 +29834,7 @@ const LEARNING_PATHS = [
             "Naming the variable StudyTask."
           ],
           "correct": 0,
-          "explanation": "The assertion disappears at runtime. minutes=true and version=0 could reach rendering and update logic despite the declared type. Decode unknown fields and test independent expected outcomes; type checking still helps after validation establishes a trusted shape."
+          "explanation": "The decoder inspects actual values and rejects fields with invalid types or ranges. A TypeScript assertion and a variable name perform no runtime checks."
         },
         "references": [
           {
@@ -30034,7 +30034,7 @@ const LEARNING_PATHS = [
             "Disabling the button in one tab."
           ],
           "correct": 0,
-          "explanation": "Both send expected version 1 for the same ID. One atomic update increments to 2; the other no longer matches. Read back version 2, not 3. If both succeed, the adapter failed its concurrency contract. Missing IDs return 404 in this reference, which has no delete operation."
+          "explanation": "Putting the ID and expected version in the UPDATE predicate makes the comparison part of the write. Once one update changes the version, a stale update no longer matches. A separate SELECT leaves time for another writer to intervene."
         },
         "references": [
           {
@@ -30632,7 +30632,7 @@ const LEARNING_PATHS = [
             "Elapsed time units."
           ],
           "correct": 0,
-          "explanation": "Record bounded operation name, status/error category, duration and correlation ID. Link deeper SQL diagnostics under controlled access. Exclude the title, token and connection string. Compare the observed timeline against the user outcome, not merely the presence of a log line."
+          "explanation": "Tokens can grant access, and complete request bodies can contain private data. Log only the fields needed to diagnose the request, such as its status and elapsed time with units."
         },
         "references": [
           {
@@ -30834,7 +30834,7 @@ const LEARNING_PATHS = [
             "A green UI screenshot from before the failure."
           ],
           "correct": 0,
-          "explanation": "An observed restore drill into an isolated database, with timing under representative conditions and independent content verification. A configured backup job alone is insufficient. Record tolerated data loss and which infrastructure or identity recovery dependencies remain untested."
+          "explanation": "A restore followed by application-level data checks shows that the backup can recover usable records. A backup filename or an earlier screenshot does not show that restoration works."
         },
         "references": [
           {
@@ -31954,7 +31954,7 @@ const LEARNING_PATHS = [
           {
             "title": "A clean merge can combine incompatible decisions",
             "paragraphs": [
-              "Both developers start with batch size5 and capacity10. Alice changes batch to8; Bob changes capacity to6. Each branch still satisfies batch <= capacity. Because the values live in different files, Git merges the edits cleanly. The merged program has batch8 and capacity6 and violates the invariant.",
+              "Both developers start with a batch size of 5 and a capacity of 10. Alice raises the batch size to 8. Bob lowers the capacity to 6. Each branch still satisfies batch <= capacity. Because the values live in different files, Git merges the edits cleanly. The merged program has a batch size of 8 and a capacity of 6 and violates the invariant.",
               "The semantic_merge.py lab creates a source and two local clones, records both independently valid states, performs the merge and asserts the combined failure. This is why a successful merge command is only evidence about integration of file histories. Behavioral checks must run on the combined candidate."
             ]
           }
@@ -32013,8 +32013,8 @@ const LEARNING_PATHS = [
           {
             "title": "Resolve meaning even when there are no conflict markers",
             "paragraphs": [
-              "A textual conflict asks you to reconcile overlapping edits. A semantic conflict can require the same reasoning without any markers: here Alice wanted larger batches, while Bob imposed a smaller capacity. Preserving both exact numbers is impossible under the shared invariant. The reference chooses batch6, retaining the capacity reduction and the largest permitted batch.",
-              "That choice is a scenario policy, not something Git can infer. If the product required batch8, the owners would need to revisit the capacity decision. Inspect the separate commits before editing the resolution so you can distinguish a deliberate compromise from accidentally losing one person's work."
+              "A textual conflict asks you to reconcile overlapping edits. A semantic conflict can require the same reasoning without any markers: here Alice wanted larger batches, while Bob imposed a smaller capacity. Preserving both exact numbers is impossible under the shared invariant. The reference chooses a batch size of 6, retaining the capacity reduction and the largest permitted batch.",
+              "That choice is a scenario policy, not something Git can infer. If the product required a batch size of 8, the owners would need to revisit the capacity decision. Inspect the separate commits before editing the resolution so you can distinguish a deliberate compromise from accidentally losing one person's work."
             ]
           }
         ],
@@ -32949,7 +32949,7 @@ const LEARNING_PATHS = [
           {
             "title": "Reviewing the complete fixture",
             "paragraphs": [
-              "The advanced kit asks for an offline release-review record tied to the sandbox's candidate and tag. Include the bisect result, recovery branch, cherry-picked change and rebased topic so another reader can reconstruct the decisions.",
+              "Use the candidate and tag from the advanced kit to explain your release choice. Trace the bisect result, recovery branch, cherry-picked change and rebased topic. You can keep an optional note in release-review.md if it helps you revisit those decisions.",
               "The fixture verifies local mechanics. It cannot certify remote policy, actual pull-request approvals, signed release trust or production rollback. Those remain explicit extensions with independent verification."
             ],
             "example": "# Review record:\n# Candidate SHA / Base SHA / Diff purpose / Checks\n# Integration decision / Reviewer concerns / Tag\n# Artifact evidence / Release authority / Recovery plan"
@@ -32957,8 +32957,8 @@ const LEARNING_PATHS = [
           {
             "title": "Review the integrated commit and its follow-up repair",
             "paragraphs": [
-              "The evidence file gives the base, Alice, Bob, merged and repaired commit IDs. Compare the merged values8/6 with repaired6/6, and verify that the repaired candidate descends from both developers. A check run on Alice before the merge says nothing about Bob's newly combined capacity change.",
-              "Run python semantic_merge.py --workspace-parent . to retain a fresh fixture for inspection, or its unittest for temporary verification. It never adopts an existing checkout. Change the scenario to batch4 and capacity6 as an independent valid merge, then check that your behavior test accepts that case without requiring a repair."
+              "The evidence file gives the base, Alice, Bob, merged and repaired commit IDs. Compare the merged batch size of 8 and capacity of 6 with the repaired values of 6 and 6, and verify that the repaired candidate descends from both developers. A check run on Alice before the merge says nothing about Bob's newly combined capacity change.",
+              "Run python semantic_merge.py --workspace-parent . to retain a fresh fixture for inspection, or its unittest for temporary verification. It never adopts an existing checkout. Change the scenario to a batch size of 4 and a capacity of 6 as an independent valid merge, then check that your behavior test accepts that case without requiring a repair."
             ]
           },
           {
@@ -32969,7 +32969,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Deliver a reviewable release record and choose between merge, cherry-pick, rebase and revert for four concrete scenarios.",
+          "prompt": "Choose between merge, cherry-pick, rebase and revert for the four scenarios. Explain which result you would inspect after each operation.",
           "solution": "Use merge for combining branch histories, cherry-pick for a selected backport, rebase for coordinated/private replay, and revert for a compensating shared-history change. Explain dependencies, verification and ownership in each choice. Attach fixture outputs and separate unexecuted hosting/deployment claims.",
           "solutionFormat": "prose",
           "checks": [
@@ -33046,7 +33046,7 @@ const LEARNING_PATHS = [
             "Explain base/ours/theirs and preserve both fixture intents.",
             "Verify a two-parent merge.",
             "Observe fetch updating origin/main while HEAD stays unchanged, then integrate with --ff-only.",
-            "Write an offline pull-request review with candidate identifiers and remaining hosting limits."
+            "Explain whether the merged result preserves both changes. You can keep a short offline review note if useful."
           ],
           "rubric": [
             "The recorded output shows the conflict, the abort and the later resolution.",
@@ -33068,14 +33068,14 @@ const LEARNING_PATHS = [
           "Release records do not equate a tag with trusted deployment evidence."
         ],
         "project": {
-          "title": "Local recovery and release portfolio",
+          "title": "Local recovery and release practice",
           "brief": "Locate a regression, preserve recovered work, integrate a selected patch and identify a release candidate.",
           "requirements": [
             "Run the advanced fixture and verify the first bad commit with its predicate.",
             "Compare targeted revert with the private reset/reflog recovery.",
             "Explain the cherry-picked change and rebased topic's changed identity.",
             "Verify the annotated tag object.",
-            "Produce an offline release record including artifact/hosting checks not executed."
+            "Explain which commit you would release and which checks support that choice. Use release-review.md for an optional longer note."
           ],
           "rubric": [
             "Bisect result identifies the known synthetic defect.",
@@ -33178,7 +33178,7 @@ const LEARNING_PATHS = [
             "Verify committed contents independently with git show.",
             "Show that an untracked synthetic config file is ignored without claiming history erasure.",
             "In the reported foundation repository, independently try staged four and unstaged five from the three-states lesson. Verify both diffs before comparing the explanation.",
-            "Compare submitted evidence with the rubric: The two diff baselines and committed snapshot are correct. No existing repository or global config is changed. Ignore evidence uses check-ignore and ls-files. Report separates mechanical checks from release verification."
+            "Check your result: The two diff baselines and committed snapshot are correct. No existing repository or global config is changed. Ignore evidence uses check-ignore and ls-files. Report separates mechanical checks from release verification."
           ],
           "commands": [
             {
@@ -33224,8 +33224,8 @@ const LEARNING_PATHS = [
             "Explain base/ours/theirs and preserve both fixture intents.",
             "Verify a two-parent merge.",
             "Observe fetch updating origin/main while HEAD stays unchanged, then integrate with --ff-only.",
-            "Write an offline pull-request review with candidate identifiers and remaining hosting limits.",
-            "Compare submitted evidence with the rubric: The recorded output shows the conflict, the abort and the later resolution. The resolved contents preserve both stated intents. Fetch and integration are distinguished. The review names the candidate commit and states that no hosted approval was obtained.",
+            "Explain whether the merged result preserves both changes. You can keep a short offline review note if useful.",
+            "Check your result: The recorded output shows the conflict, the abort and the later resolution. The resolved contents preserve both stated intents. Fetch and integration are distinguished. The review names the candidate commit and states that no hosted approval was obtained.",
             "Inspect semantic-merge.md and compare two individually valid branches with the invalid combined candidate."
           ],
           "commands": [
@@ -33254,7 +33254,7 @@ const LEARNING_PATHS = [
         },
         {
           "id": "advanced",
-          "title": "Local recovery and release portfolio",
+          "title": "Local recovery and release practice",
           "goal": "Locate a regression, preserve recovered work, integrate a selected patch and identify a release candidate.",
           "fileIds": [
             "sandbox-py",
@@ -33277,8 +33277,8 @@ const LEARNING_PATHS = [
             "Compare targeted revert with the private reset/reflog recovery.",
             "Explain the cherry-picked change and rebased topic's changed identity.",
             "Verify the annotated tag object.",
-            "Produce an offline release record including artifact/hosting checks not executed.",
-            "Compare submitted evidence with the rubric: Bisect result identifies the known synthetic defect. Recovery branches retain the intended committed work. History operations are justified by ownership and purpose. Release records do not equate a tag with trusted deployment evidence.",
+            "Explain which commit you would release and which checks support that choice. Use release-review.md for an optional longer note.",
+            "Check your result: Bisect result identifies the known synthetic defect. Recovery branches retain the intended committed work. History operations are justified by ownership and purpose. Release records do not equate a tag with trusted deployment evidence.",
             "Run review_roleplay.py in a fresh owned child and inspect reviewer feedback, revised candidate and second review.",
             "Inspect semantic-merge.md and compare two individually valid branches with the invalid combined candidate."
           ],
@@ -39804,7 +39804,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/overview/",
             "section": "What is Kubernetes?",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "foundation"
@@ -39853,7 +39853,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/overview/components/",
             "section": "Control plane components; node components",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "foundation",
@@ -40040,7 +40040,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/",
             "section": "Label selectors",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "foundation",
@@ -40166,7 +40166,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/workloads/pods/",
             "section": "Using Pods; Pod lifecycle",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "foundation",
@@ -40295,7 +40295,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/",
             "section": "Creating a Deployment; updating a Deployment",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "foundation",
@@ -40722,7 +40722,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/services-networking/service/",
             "section": "Defining a Service; discovering services",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "foundation",
@@ -41174,7 +41174,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/configuration/configmap/",
             "section": "Using ConfigMaps; mounted ConfigMaps are updated automatically",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "foundation",
@@ -41303,7 +41303,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/configuration/secret/",
             "section": "Caution; information security for Secrets",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "intermediate"
@@ -41361,7 +41361,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/workloads/pods/probes/",
             "section": "Liveness, readiness, startup probes",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "intermediate",
@@ -41500,7 +41500,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
             "section": "Requests and limits; scheduling and resource limits",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "intermediate"
@@ -41549,7 +41549,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/",
             "section": "Rolling update Deployment; failed Deployment",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "intermediate",
@@ -41948,7 +41948,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/",
             "section": "Concepts",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "intermediate"
@@ -41997,7 +41997,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/services-networking/network-policies/",
             "section": "Prerequisites; behavior of selectors",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "intermediate"
@@ -42046,7 +42046,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/reference/access-authn-authz/rbac/",
             "section": "Role and ClusterRole; RoleBinding and ClusterRoleBinding",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "intermediate",
@@ -42175,7 +42175,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/security/pod-security-standards/",
             "section": "Restricted policy",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "intermediate"
@@ -42224,7 +42224,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/storage/persistent-volumes/",
             "section": "Access modes; reclaiming",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "advanced",
@@ -42353,7 +42353,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/workloads/controllers/job/",
             "section": "Pod backoff failure policy; Job termination and cleanup",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "advanced"
@@ -42402,7 +42402,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/",
             "section": "How does a HorizontalPodAutoscaler work?",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "advanced"
@@ -42451,7 +42451,7 @@ const LEARNING_PATHS = [
             "url": "https://v1-34.docs.kubernetes.io/docs/concepts/workloads/pods/disruptions/",
             "section": "Pod disruption budgets",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "advanced"
@@ -42699,7 +42699,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/",
             "section": "Examining Pod status; logs; debugging",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "advanced"
@@ -42748,7 +42748,7 @@ const LEARNING_PATHS = [
             "url": "https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/",
             "section": "Backing up an etcd cluster; restoring an etcd cluster",
             "reviewed": "2026-09-27",
-            "scope": "Stable Kubernetes APIs; current official concepts reviewed; cluster execution remains an opt-in local lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
         "stage": "advanced",
@@ -43928,7 +43928,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Score these answers: planned two-day manager because duration; urgent one-day coordinator because duration; planned one-day coordinator because duration. State a fair next check.",
+          "prompt": "A learner gives three answers: \"A planned two-day request goes to the manager because it lasts at least two days.\" \"An urgent one-day request goes to the coordinator because it lasts one day.\" \"A planned one-day request goes to the coordinator because it lasts one day.\" Which answers are correct? Choose a new case to check later.",
           "solution": "Two of three are correct. The urgent answer misses the override. A fair follow-up uses a new urgent case plus different planned durations after a gap, with the same rule for counting route and reason. Three cases cannot establish broad competence in every policy situation.",
           "solutionFormat": "prose",
           "checks": [
@@ -45402,7 +45402,7 @@ const LEARNING_PATHS = [
             "A private kernel embedded in the Python interpreter"
           ],
           "correct": 0,
-          "explanation": "Python and Bash run in user space. The filesystem driver participates in kernel-managed I/O. Containers share a kernel; a VM runs a guest kernel."
+          "explanation": "Python runs in user space and requests file access through library and system calls. The kernel mediates that access and coordinates the filesystem and device operations."
         },
         "references": [
           {
@@ -45410,7 +45410,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
             "section": "Overview",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ],
         "diagram": {
@@ -45531,7 +45531,7 @@ const LEARNING_PATHS = [
             "Under the user home directory regardless of working directory"
           ],
           "correct": 0,
-          "explanation": "Initially both identify the sample. After cd input, input/sample.csv looks for a nested input directory; sample.csv is the correct relative path."
+          "explanation": "It resolves to /data.csv. A relative path starts from the process working directory, which is / here, regardless of where the script is stored."
         },
         "references": [
           {
@@ -45539,7 +45539,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/path_resolution.7.html",
             "section": "Start of resolution",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       },
@@ -45586,7 +45586,7 @@ const LEARNING_PATHS = [
             "Check only the filename because a same-disk backup covers disk failure"
           ],
           "correct": 0,
-          "explanation": "Verify the target path, retain a separate prior version, and compare after writing. Recovery backup also needs independent storage and a restore check."
+          "explanation": "Check the exact target before writing, keep its previous contents separately, and compare the result afterward. Overwriting the only copy first leaves nothing to recover if the write is wrong."
         },
         "references": [
           {
@@ -45594,7 +45594,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/path_resolution.7.html",
             "section": "Pathname lookup",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       },
@@ -45641,7 +45641,7 @@ const LEARNING_PATHS = [
             "The argument list applies Bash quoting in every operating system"
           ],
           "correct": 0,
-          "explanation": "The list preserves argument boundaries without invoking shell expansion. Joined shell source can interpret spaces, substitutions and operators."
+          "explanation": "With shell=False and an argument list, quarterly report.csv is passed as one filename. The shell does not split its space or interpret special characters in it."
         },
         "references": [
           {
@@ -45656,7 +45656,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "subprocess argument sequences",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       },
@@ -45703,7 +45703,7 @@ const LEARNING_PATHS = [
             "Both to stderr so every line is treated as diagnostic evidence"
           ],
           "correct": 0,
-          "explanation": "Write report rows to stdout or a report file. Send diagnostics to stderr or a separate log. Diagnostic text does not satisfy the report schema and must not enter its data stream."
+          "explanation": "Send CSV to stdout and the validation message to stderr. Mixing the message into stdout can make the downstream CSV reader interpret it as a data row."
         },
         "references": [
           {
@@ -45718,7 +45718,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man2/open.2.html",
             "section": "File descriptors",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ],
         "diagram": {
@@ -45831,7 +45831,7 @@ const LEARNING_PATHS = [
             "The file must have execute permission before its bytes can be read"
           ],
           "correct": 0,
-          "explanation": "640 grants owner read/write and group read. Directory traversal is a separate requirement, so access can fail before the file is reached."
+          "explanation": "The process needs permission to traverse the parent directories as well as permission to read the file. File read permission alone cannot make an inaccessible path reachable."
         },
         "references": [
           {
@@ -45839,7 +45839,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/credentials.7.html",
             "section": "Process credentials",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           },
           {
             "title": "GNU chmod numeric modes",
@@ -45893,7 +45893,7 @@ const LEARNING_PATHS = [
             "A zero exit status because the error was handled intentionally"
           ],
           "correct": 0,
-          "explanation": "Use 0 for completed work and a documented nonzero value for invalid input. Send a useful explanation to stderr and avoid claiming output was committed."
+          "explanation": "Automation uses the documented nonzero exit status to detect failure. The diagnostic explains the cause; printing a helpful message does not change a successful exit status into a failure."
         },
         "references": [
           {
@@ -45901,7 +45901,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "subprocess returncode",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       },
@@ -45963,7 +45963,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "subprocess env",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       },
@@ -46024,7 +46024,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "subprocess timeouts",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ],
         "diagram": {
@@ -46150,7 +46150,7 @@ const LEARNING_PATHS = [
             "A termination handler can extend the deadline after SIGKILL"
           ],
           "correct": 0,
-          "explanation": "Stop accepting new work and finish the task that fits within the shutdown deadline. Save unfinished work durably for retry. Durable work identity must survive a process that cannot run cleanup."
+          "explanation": "SIGKILL cannot be caught or handled by cleanup code. Any information needed to recover unfinished work must already have been saved durably before that signal arrives."
         },
         "references": [
           {
@@ -46158,7 +46158,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/signal.7.html",
             "section": "Signal dispositions",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       },
@@ -46205,7 +46205,7 @@ const LEARNING_PATHS = [
             "The 120 MiB RSS proves that no allocation leak can exist"
           ],
           "correct": 0,
-          "explanation": "VSZ includes reserved and mapped virtual address space. Track resident memory and heap growth under an equivalent workload, then inspect allocations before calling the growth a leak."
+          "explanation": "VSZ measures virtual address space, while RSS measures memory currently resident in RAM. These two values alone do not show that the process is leaking memory; investigate how retained memory changes over time."
         },
         "references": [
           {
@@ -46220,7 +46220,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html",
             "section": "Shared process resources",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       },
@@ -46267,7 +46267,7 @@ const LEARNING_PATHS = [
             "A lock covering only the printed result"
           ],
           "correct": 0,
-          "explanation": "Protect the read, calculation and write with the same lock. Locking only the write lets both workers calculate the same next value from stale reads."
+          "explanation": "The lock must cover the whole read-modify-write operation. Locking only the write still lets both workers calculate 6 from the same old value of 5."
         },
         "references": [
           {
@@ -46275,7 +46275,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html",
             "section": "Process resources shared by threads",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       },
@@ -46339,7 +46339,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man2/open.2.html",
             "section": "Open file descriptions",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           },
           {
             "title": "Python Unix resource limits",
@@ -46393,7 +46393,7 @@ const LEARNING_PATHS = [
             "The pathname switching to the new file after successful replacement"
           ],
           "correct": 0,
-          "explanation": "Replacement can prevent partial visibility; locking/transactions coordinate writers; fsync and filesystem/storage policies address durability. No one operation establishes all three."
+          "explanation": "Atomic replacement prevents readers from seeing a partly replaced file under the relevant filesystem rules. Survival after power loss also depends on flushing, filesystem and storage guarantees and needs separate verification."
         },
         "references": [
           {
@@ -46408,7 +46408,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man2/open.2.html",
             "section": "Synchronized I/O",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       },
@@ -46455,7 +46455,7 @@ const LEARNING_PATHS = [
             "Treat the port number as proof that TLS is configured"
           ],
           "correct": 0,
-          "explanation": "Confirm the resolved destination and exact listener, then test the protocol response and business authorization separately. Refused connection occurs before HTTP authorization."
+          "explanation": "A listening port shows that a socket is accepting connections. Check the protocol response and the required application operation before calling the service healthy."
         },
         "references": [
           {
@@ -46470,7 +46470,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
             "section": "Network namespaces",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       },
@@ -46532,7 +46532,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man5/proc.5.html",
             "section": "Process inspection",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       },
@@ -46579,7 +46579,7 @@ const LEARNING_PATHS = [
             "Only the error sentence, omitting time, identity and operation details"
           ],
           "correct": 0,
-          "explanation": "Record the time with its timezone, the operation ID, a sanitized error category, the input schema and version, and the relevant path or identity. Keep sensitive source data only in approved storage."
+          "explanation": "Record the command, time, relevant error and correlation metadata so someone can reproduce or investigate the failure. Redact secrets and customer contents that are unnecessary for that investigation."
         },
         "references": [
           {
@@ -46594,7 +46594,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "subprocess diagnostics",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       },
@@ -46656,7 +46656,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "Bounded child process timeout",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       },
@@ -46703,7 +46703,7 @@ const LEARNING_PATHS = [
             "The cgroup assigns PID 1 and grants host administrator identity"
           ],
           "correct": 0,
-          "explanation": "A PID namespace controls which process IDs are visible. A memory cgroup controls the memory budget. A process ID alone establishes neither user identity nor capabilities."
+          "explanation": "A PID namespace changes which process IDs the container sees. A memory cgroup limits its memory use. Seeing PID 1 inside the container does not grant host administrator access."
         },
         "references": [
           {
@@ -46718,7 +46718,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
             "section": "Namespace types",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ],
         "diagram": {
@@ -46860,7 +46860,7 @@ const LEARNING_PATHS = [
             "Run as administrator to avoid diagnosing output-directory permissions"
           ],
           "correct": 0,
-          "explanation": "Runtime identity reads input, writes only reports and reads/executes installed code. It should not rewrite application code or obtain general administrator rights."
+          "explanation": "The importer needs to read input, write reports and read or execute its installed code. It does not need permission to modify its code or unrelated files."
         },
         "references": [
           {
@@ -46868,7 +46868,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/credentials.7.html",
             "section": "Permission checks",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       },
@@ -46932,7 +46932,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "subprocess exceptions",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       },
@@ -46979,7 +46979,7 @@ const LEARNING_PATHS = [
             "Production capacity is verified because each small test completed"
           ],
           "correct": 0,
-          "explanation": "Include the tool and runtime versions, the exact bounded test, observations before and after recovery, and the state that was preserved. State which Linux and production behaviors remain untested."
+          "explanation": "The passing suite supports the portable behaviours it actually tested. Linux-specific mechanisms and production recovery still require their own observations and tests."
         },
         "references": [
           {
@@ -46987,7 +46987,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "subprocess testing boundary",
             "reviewed": "2026-09-30",
-            "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
         ]
       }
@@ -47091,25 +47091,25 @@ const LEARNING_PATHS = [
           "id": "README-md",
           "href": "paths/linux-operating-systems/practice/README.md",
           "role": "guide",
-          "description": "Course-owned README.md"
+          "description": "Setup and commands for the operating-system exercises"
         },
         {
           "id": "diagnostic_lab-py",
           "href": "paths/linux-operating-systems/practice/diagnostic_lab.py",
           "role": "reference",
-          "description": "Course-owned diagnostic_lab.py"
+          "description": "Child-process exercises for output, exit status and timeouts"
         },
         {
           "id": "test_os_labs-py",
           "href": "paths/linux-operating-systems/practice/test_os_labs.py",
           "role": "test",
-          "description": "Course-owned test_os_labs.py"
+          "description": "Tests for the portable operating-system exercises"
         },
         {
           "id": "linux-observation-md",
           "href": "paths/linux-operating-systems/practice/linux-observation.md",
           "role": "guide",
-          "description": "Course-owned linux-observation.md"
+          "description": "Optional Linux commands and observations to compare with the portable lab"
         },
         {
           "id": "mechanism-lab-script",
@@ -47409,7 +47409,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/getting_started.html",
             "section": "Fitting and predicting: estimator basics",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate fitting and predicting: estimator basics."
           }
         ]
       },
@@ -47465,7 +47465,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/common_pitfalls.html",
             "section": "Inconsistent preprocessing; data leakage; controlling randomness",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate inconsistent preprocessing."
           }
         ]
       },
@@ -47521,7 +47521,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html",
             "section": "Parameters: strategy; fit; predict",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate parameters: strategy."
           }
         ]
       },
@@ -47535,7 +47535,7 @@ const LEARNING_PATHS = [
             "title": "How it works",
             "paragraphs": [
               "Training rows fit model parameters. Validation rows help choose features, model settings or decision thresholds. Test rows estimate the frozen procedure after those choices. If you repeatedly choose changes because they improve the test score, those rows have become another validation set.",
-              "A split should match the intended use. Random splitting is a reasonable teaching starting point for independent, exchangeable examples. Predicting later tickets usually calls for chronological evaluation. Predicting tickets from unseen customers requires customer separation. Those answer different questions."
+              "A split should match how you will use the model. Random splitting is a useful starting point when examples are independent draws from the same population. In that setting, reordering the examples does not change their joint probability distribution, a property called exchangeability. Predicting later tickets usually calls for chronological evaluation. Predicting tickets from unseen customers requires keeping each customer in a single partition. These splits test different uses of the model."
             ]
           },
           {
@@ -47577,7 +47577,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
             "section": "Computing cross-validated metrics; grouped data; time series split",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate computing cross-validated metrics."
           }
         ],
         "diagram": {
@@ -47736,7 +47736,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
             "section": "Classification metrics; regression metrics; dummy estimators",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate classification metrics."
           }
         ]
       },
@@ -47792,7 +47792,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
             "section": "Classification metrics; regression metrics; dummy estimators",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate classification metrics."
           }
         ]
       },
@@ -47848,7 +47848,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
             "section": "Computing cross-validated metrics; grouped data; time series split",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate computing cross-validated metrics."
           }
         ]
       },
@@ -47904,7 +47904,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/linear_model.html",
             "section": "Ordinary least squares; ridge regression; logistic regression",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate ordinary least squares."
           }
         ]
       },
@@ -47960,7 +47960,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/linear_model.html",
             "section": "Ordinary least squares; ridge regression; logistic regression",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate ordinary least squares."
           }
         ]
       },
@@ -48016,7 +48016,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/compose.html",
             "section": "Pipeline; ColumnTransformer",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate pipeline."
           }
         ]
       },
@@ -48072,7 +48072,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/compose.html",
             "section": "Pipeline; ColumnTransformer",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate pipeline."
           }
         ]
       },
@@ -48128,7 +48128,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
             "section": "Computing cross-validated metrics; grouped data; time series split",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate computing cross-validated metrics."
           }
         ]
       },
@@ -48184,7 +48184,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/linear_model.html",
             "section": "Ordinary least squares; ridge regression; logistic regression",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate ordinary least squares."
           }
         ]
       },
@@ -48240,7 +48240,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
             "section": "Computing cross-validated metrics; grouped data; time series split",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate computing cross-validated metrics."
           }
         ]
       },
@@ -48296,7 +48296,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/common_pitfalls.html",
             "section": "Inconsistent preprocessing; data leakage; controlling randomness",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate inconsistent preprocessing."
           }
         ]
       },
@@ -48352,7 +48352,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
             "section": "Computing cross-validated metrics; grouped data; time series split",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate computing cross-validated metrics."
           }
         ]
       },
@@ -48408,7 +48408,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
             "section": "Classification metrics; regression metrics; dummy estimators",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate classification metrics."
           }
         ]
       },
@@ -48464,7 +48464,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
             "section": "Classification metrics; regression metrics; dummy estimators",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate classification metrics."
           }
         ]
       },
@@ -48520,7 +48520,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/common_pitfalls.html",
             "section": "Inconsistent preprocessing; data leakage; controlling randomness",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate inconsistent preprocessing."
           }
         ]
       },
@@ -48576,7 +48576,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/common_pitfalls.html",
             "section": "Inconsistent preprocessing; data leakage; controlling randomness",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate inconsistent preprocessing."
           }
         ]
       },
@@ -48633,7 +48633,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/getting_started.html",
             "section": "Fitting and predicting: estimator basics",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1 documentation, reviewed against the stable pages on 2026-10-02. The runnable lab pins 1.9.1 on Python 3.14. Fictional ticket examples teach evaluation mechanics, not deployment readiness."
+            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate fitting and predicting: estimator basics."
           }
         ]
       }
@@ -50827,7 +50827,7 @@ const LEARNING_PATHS = [
           "id": "event_lab-py",
           "href": "paths/messaging-events/practice/event_lab.py",
           "role": "reference",
-          "description": "Reference implementation or clearly labeled training configuration."
+          "description": "SQLite messaging example with duplicate detection and transactional effects"
         },
         {
           "id": "test_event_lab-py",
@@ -51216,7 +51216,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 3.1–3.5: resources, representations, connections",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -51367,7 +51367,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/socket.html",
             "section": "socket.bind; getsockname; create_connection",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ]
       },
@@ -51416,7 +51416,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc1035.html",
             "section": "Sections 3.2.1–3.2.2: resource record format and types",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ]
       },
@@ -51441,7 +51441,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Write a case for TTL zero.",
+          "prompt": "Add a test that stores an entry with TTL 0 and looks it up at the same time. Predict the result before running it.",
           "solution": "An entry stored with a zero TTL expires immediately in this model. A lookup at the insertion time returns None. Test both operations with the same injected time, without sleeping.",
           "solutionFormat": "prose",
           "checks": [
@@ -51465,7 +51465,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc1035.html",
             "section": "Section 3.2.1: TTL field",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -51604,7 +51604,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/socket.html",
             "section": "socket.recv; socket.sendall",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ]
       },
@@ -51653,7 +51653,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/urllib.parse.html",
             "section": "urlsplit; URL parsing security",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ]
       },
@@ -51708,7 +51708,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 8.3 and 8.4: media type and content encoding",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           },
           {
             "title": "IETF RFC 8259: JSON",
@@ -51764,7 +51764,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 6 and 9.3.2: message abstraction and HEAD",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ]
       },
@@ -51813,7 +51813,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Section 15: status codes",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ]
       },
@@ -51862,7 +51862,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 9.2.1–9.2.2: safe and idempotent methods",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ]
       },
@@ -51911,7 +51911,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc8446.html",
             "section": "Sections 4.4 and 7: authentication and cryptographic computation",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ]
       },
@@ -51960,7 +51960,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/ssl.html",
             "section": "create_default_context; security considerations",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ]
       },
@@ -52009,7 +52009,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc6265.html",
             "section": "Sections 4.1.2.5–4.1.2.6: Secure and HttpOnly",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -52138,7 +52138,7 @@ const LEARNING_PATHS = [
             "url": "https://fetch.spec.whatwg.org/#http-cors-protocol",
             "section": "HTTP CORS protocol; CORS-preflight fetch",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -52267,7 +52267,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9111.html",
             "section": "Sections 3 and 5.2.2: storing responses and response directives",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ]
       },
@@ -52316,7 +52316,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 8.8.3, 13.1.2 and 15.4.5: ETag, If-None-Match, 304",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -52469,7 +52469,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 10.2.2 and 15.4.8: Location and 307",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -52598,7 +52598,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 3.7 and 7.6: intermediaries and message forwarding",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -52736,7 +52736,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/socket.html",
             "section": "Timeout notes; socket.settimeout",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -52877,7 +52877,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Section 9.2.2: retrying idempotent requests",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -53035,7 +53035,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Section 8.3: Content-Type; representation metadata",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -53176,7 +53176,7 @@ const LEARNING_PATHS = [
             "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
             "section": "White-box versus black-box monitoring; symptoms and causes",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ]
       },
@@ -53225,7 +53225,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 2.5 and 3.5: conformance and messages",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ]
       },
@@ -53274,7 +53274,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/http.server.html",
             "section": "Security considerations; ThreadingHTTPServer",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ]
       }
@@ -53811,7 +53811,7 @@ const LEARNING_PATHS = [
             "Independent service logs with no shared request context."
           ],
           "correct": 0,
-          "explanation": "Use metrics for how often imports fail and how latency changes, a trace for which segment consumed time, and a structured log for the validation or retry event on a specific request. Correlate identifiers without putting user content into every measurement."
+          "explanation": "A distributed trace relates spans from work performed across services. Metrics summarise measurements and logs record events; a trace shows how the recorded operations relate within a request."
         },
         "references": [
           {
@@ -53819,7 +53819,7 @@ const LEARNING_PATHS = [
             "url": "https://opentelemetry.io/docs/concepts/signals/",
             "section": "Logs, metrics and traces",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ]
       },
@@ -53862,7 +53862,7 @@ const LEARNING_PATHS = [
             "Two unsynchronised host timestamps."
           ],
           "correct": 0,
-          "explanation": "Browser action to visible result supports the user experience. API entry to response creation measures server work, and database call to result measures a dependency. Use local monotonic timers for each duration and preserve boundary names. The durations can overlap and should not be naively added."
+          "explanation": "Use a monotonic elapsed-time clock such as perf_counter to measure duration. Wall-clock adjustments can change calendar time during a benchmark and distort an elapsed-time calculation."
         },
         "references": [
           {
@@ -53870,7 +53870,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/time.html",
             "section": "time.perf_counter and monotonic clocks",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ]
       },
@@ -53913,7 +53913,7 @@ const LEARNING_PATHS = [
             "Every raw user field copied into the message."
           ],
           "correct": 0,
-          "explanation": "Record event=import_rejected, reason=missing_required_field, a generated correlation ID, bounded route and status. Omit bearer token and payload; record only an approved field-name category if needed. Restrict log access and retention, and test that secrets do not appear during error handling."
+          "explanation": "A safe reason category explains why the import was rejected, and a correlation ID helps find related events. Tokens and full customer payloads add sensitive data that this diagnosis does not need."
         },
         "references": [
           {
@@ -53921,7 +53921,7 @@ const LEARNING_PATHS = [
             "url": "https://opentelemetry.io/docs/security/",
             "section": "Protecting sensitive data; telemetry security",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ]
       },
@@ -53964,7 +53964,7 @@ const LEARNING_PATHS = [
             "A log containing the last queue item only."
           ],
           "correct": 0,
-          "explanation": "Queued jobs is a gauge, completed jobs is a counter and job duration is a distribution. The failure ratio is 8/200=4% for the stated eligible attempts and window. Decide whether retries count as attempts or user operations before comparing ratios."
+          "explanation": "Queue depth is a current level that can rise or fall, so it is a gauge. A counter instead accumulates events such as completed jobs."
         },
         "references": [
           {
@@ -53972,7 +53972,7 @@ const LEARNING_PATHS = [
             "url": "https://prometheus.io/docs/practices/naming/",
             "section": "Metric names, base units and type suffixes",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ]
       },
@@ -54015,7 +54015,7 @@ const LEARNING_PATHS = [
             "By taking the smallest host median."
           ],
           "correct": 0,
-          "explanation": "The mean is 22, the median is 3 and the nearest-rank p95 is 100 because ceil(.95*5)=5. There are only five observations, so this identifies the observed maximum rather than a reliable population tail. Gather a larger representative sample and report the estimator."
+          "explanation": "Calculate global p95 from the combined compatible observations or distribution. Averaging host p95 values loses the population sizes and distribution information needed to find the global percentile."
         },
         "references": [
           {
@@ -54023,7 +54023,7 @@ const LEARNING_PATHS = [
             "url": "https://prometheus.io/docs/practices/histograms/",
             "section": "Quantiles; aggregation and estimation error",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ]
       },
@@ -54066,7 +54066,7 @@ const LEARNING_PATHS = [
             "The proportion of application responses returning 5xx alone."
           ],
           "correct": 0,
-          "explanation": "Measure imports per second, failed eligible imports ratio, successful import duration distribution and database pool occupancy or queue wait. Rising pool wait with a growing backlog can warn before request timeouts. Validate that the measurements cover the user operation rather than only one retry attempt."
+          "explanation": "Connection pool occupancy and waiting requests show pressure on a limited resource. They can reveal saturation before requests begin failing."
         },
         "references": [
           {
@@ -54074,7 +54074,7 @@ const LEARNING_PATHS = [
             "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
             "section": "The four golden signals",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ]
       },
@@ -54133,7 +54133,7 @@ const LEARNING_PATHS = [
             "url": "https://opentelemetry.io/docs/concepts/signals/",
             "section": "Traces and spans",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           },
           {
             "title": "Python monotonic and process clocks",
@@ -54292,7 +54292,7 @@ const LEARNING_PATHS = [
             "The authenticity of every HTTP header."
           ],
           "correct": 0,
-          "explanation": "The browser or trusted gateway supplies supported context to the API, which extracts it and creates an operation span. The queued job carries safe correlation metadata, and the worker creates its own processing span with the chosen relationship. None of these IDs replaces authentication or permission checks."
+          "explanation": "A trace ID links recorded operations. It does not authenticate a caller or grant permission to access a resource; those checks must happen separately."
         },
         "references": [
           {
@@ -54300,7 +54300,7 @@ const LEARNING_PATHS = [
             "url": "https://opentelemetry.io/docs/concepts/context-propagation/",
             "section": "Context propagation; W3C Trace Context; baggage",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ],
         "diagram": {
@@ -54446,7 +54446,7 @@ const LEARNING_PATHS = [
             "Yes; hashing removes cardinality costs because the original identifier is hidden."
           ],
           "correct": 0,
-          "explanation": "The upper bound is 8*6*4=192 combinations before histogram buckets or other dimensions. Investigate one request through a correlation ID in logs/traces, not a request_id metric label. Use route templates rather than raw paths and document which values are permitted."
+          "explanation": "Hashing changes the representation of each ID, but unique IDs still normally produce unique label values. The number of metric series therefore remains large."
         },
         "references": [
           {
@@ -54454,7 +54454,7 @@ const LEARNING_PATHS = [
             "url": "https://prometheus.io/docs/practices/naming/",
             "section": "Labels; avoid high-cardinality labels",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ]
       },
@@ -54505,7 +54505,7 @@ const LEARNING_PATHS = [
             "It guarantees that every request is successful."
           ],
           "correct": 0,
-          "explanation": "Use seconds consistently and place a boundary at 0.2, with smaller buckets around the usual fast region and wider ones toward 2 seconds. Preserve +Inf and total count. Compare the threshold fraction directly; report percentile estimates with the bucket uncertainty rather than claiming exact raw durations."
+          "explanation": "A bucket at the SLO threshold directly counts observations at or below that latency. Without that boundary, a wider bucket may not show how many requests met the target."
         },
         "references": [
           {
@@ -54513,7 +54513,7 @@ const LEARNING_PATHS = [
             "url": "https://prometheus.io/docs/practices/histograms/",
             "section": "Histograms; errors of quantile estimation; aggregation",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ]
       },
@@ -54556,7 +54556,7 @@ const LEARNING_PATHS = [
             "5%."
           ],
           "correct": 0,
-          "explanation": "Define good as a valid user import completing correctly within the threshold, with explicit eligibility. Allowed bad is .005*20000=100; 60 bad consumes 60% and leaves 40 observed events of budget at that volume. The result describes the stated window, not a future guarantee."
+          "explanation": "A 99.5% good-event target leaves 100% - 99.5% = 0.5% for bad events in the defined population and time window."
         },
         "references": [
           {
@@ -54564,7 +54564,7 @@ const LEARNING_PATHS = [
             "url": "https://sre.google/workbook/implementing-slos/",
             "section": "Choosing SLIs; SLOs and error budgets",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ],
         "diagram": {
@@ -54686,7 +54686,7 @@ const LEARNING_PATHS = [
             "title": "Burn rates and response actions",
             "paragraphs": [
               "Burn rate compares the observed bad-event fraction with the permitted fraction. At a 99% target, a 5% bad fraction burns budget at five times the allowed rate. Short windows detect rapid impact; longer windows reduce noise and reveal sustained degradation. Multi-window approaches can require both to avoid paging on a tiny transient spike.",
-              "A page should demand an immediate response and have an owner and runbook. A ticket can address slower trends. Record low-traffic behaviour, missing telemetry and maintenance handling. An alert that nobody can act on trains people to ignore it, so review alert usefulness after incidents."
+              "An urgent on-call alert, often called a page, should name who must respond and link to the response steps. A ticket can address slower trends. Define how alerts handle low traffic, missing measurements and planned maintenance. Review whether alerts helped the team act after an incident."
             ],
             "example": "SLO bad allowance = 1%; observed bad = 5%\nBurn rate = 5\nResponse: check affected route and release, then dependency saturation; rollback if supported by evidence."
           },
@@ -54698,7 +54698,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Design one page and one ticket for an import service. Include a response owner and zero-traffic behaviour.",
+          "prompt": "Design one urgent on-call alert and one follow-up ticket for an import service. State who responds and what happens when there is no traffic.",
           "solution": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Create a ticket for slower budget consumption that does not need an immediate response. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified.",
           "solutionFormat": "prose",
           "checks": [
@@ -54715,7 +54715,7 @@ const LEARNING_PATHS = [
             "400 requests per second."
           ],
           "correct": 0,
-          "explanation": "Page for sustained rapid budget burn with enough eligible events and a runbook to inspect releases, latency and dependency pressure. Create a ticket for slower budget consumption that does not need an immediate response. Treat no traffic as no ratio observation rather than automatically healthy or failed; separately alert on telemetry absence when justified."
+          "explanation": "The burn rate is 4 because 4% divided by 1% equals 4. Bad events are consuming the error budget four times as fast as the allowed rate."
         },
         "references": [
           {
@@ -54723,7 +54723,7 @@ const LEARNING_PATHS = [
             "url": "https://sre.google/workbook/alerting-on-slos/",
             "section": "Burn rate; multiple windows; low-traffic services",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ]
       },
@@ -54766,7 +54766,7 @@ const LEARNING_PATHS = [
             "That all clients received responses."
           ],
           "correct": 0,
-          "explanation": "Keep aggregate counters for all eligible outcomes, then sample normal traces while retaining error traces when infrastructure permits. Document upstream sampling and export loss. Absence means no retained trace was found under this policy and window, not that the operation succeeded or never happened."
+          "explanation": "Sampling or retention may have removed error traces. Finding none in the retained data does not establish that no errors occurred; use the separately measured failure rate."
         },
         "references": [
           {
@@ -54774,7 +54774,7 @@ const LEARNING_PATHS = [
             "url": "https://opentelemetry.io/docs/concepts/sampling/",
             "section": "Head sampling and tail sampling",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ]
       },
@@ -54817,7 +54817,7 @@ const LEARNING_PATHS = [
             "Only the best run from one implementation."
           ],
           "correct": 0,
-          "explanation": "The script verifies equal results, warms both implementations and prints median/min/max elapsed times for repeated lookup batches. The index is built before timing, so the claim applies to reuse. For one lookup on a small list, building the index may cost more than scanning; add an end-to-end experiment to test that case."
+          "explanation": "First check that both implementations produce equivalent correct results. A faster implementation that returns the wrong answer is not a valid performance improvement."
         },
         "references": [
           {
@@ -54825,7 +54825,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/time.html",
             "section": "perf_counter; elapsed wall-clock measurement",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ]
       },
@@ -54890,7 +54890,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/time.html",
             "section": "perf_counter; local elapsed measurement (profiling command is a lab extension)",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           },
           {
             "title": "Python deterministic profilers",
@@ -54940,7 +54940,7 @@ const LEARNING_PATHS = [
             "Yes; traced allocation totals also include all kernel file-cache pages."
           ],
           "correct": 0,
-          "explanation": "Take a baseline after setup, repeat equal-sized imports, then compare snapshots while deliberately retaining rows in one variant and releasing them in another. Track current and peak traced allocations. If each import retains rows in a list, the list will keep growing. Inspect which code owns those references and when it should release them. State that native and full process memory are outside this tool's complete coverage."
+          "explanation": "tracemalloc tracks supported Python allocations, not all process memory. Use other measurements when investigating native allocations or total resident memory."
         },
         "references": [
           {
@@ -54948,7 +54948,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/tracemalloc.html",
             "section": "Snapshot comparison; tracked allocations; current and peak size",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ]
       },
@@ -54991,7 +54991,7 @@ const LEARNING_PATHS = [
             "It increases to preserve the configured worker count."
           ],
           "correct": 0,
-          "explanation": "Four workers wait for each response, so added service delay lowers the achieved rate. Report count, elapsed time, errors and latency distribution for each run. The deterministic every-fifth slow response should raise tail latency. The result validates this bounded closed-loop experiment, not production capacity."
+          "explanation": "Closed-loop workers wait for a response before sending more work. Slower responses keep those workers busy longer, usually reducing the offered request rate."
         },
         "references": [
           {
@@ -54999,7 +54999,7 @@ const LEARNING_PATHS = [
             "url": "https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Understanding_latency",
             "section": "Network and processing latency; lab closed-loop model",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           },
           {
             "title": "wrk2 load-generation design",
@@ -55049,7 +55049,7 @@ const LEARNING_PATHS = [
             "Automatic improvement from more client retries."
           ],
           "correct": 0,
-          "explanation": "Net growth is 5 jobs/s, so backlog grows by approximately 300 jobs in one minute under constant rates and no rejection. Set a bounded capacity, define overflow behaviour, inspect oldest-job age and assess whether downstream limits allow higher throughput. This calculation excludes burst variation and changes in service time."
+          "explanation": "When arrivals keep exceeding completions, unfinished jobs accumulate. The backlog grows until rates change or a limit causes work to be rejected or dropped."
         },
         "references": [
           {
@@ -55057,7 +55057,7 @@ const LEARNING_PATHS = [
             "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
             "section": "Saturation; latency and traffic interpretation",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           },
           {
             "title": "Google SRE handling overload",
@@ -55114,7 +55114,7 @@ const LEARNING_PATHS = [
             "The shortest function in the codebase."
           ],
           "correct": 0,
-          "explanation": "Record browser action-to-visible timing, API elapsed timing and query span under a shared correlation ID. If the API returns quickly but visible completion is delayed, profile rendering and inspect result size. If database wait dominates, examine connection pressure and plans. Repeat after a bounded change and verify row count and ordering."
+          "explanation": "Measure where time is spent in the actual user journey. A database change will not fix a delay caused mainly by rendering the returned rows in the browser."
         },
         "references": [
           {
@@ -55122,7 +55122,7 @@ const LEARNING_PATHS = [
             "url": "https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Understanding_latency",
             "section": "Latency contributors and processing boundaries",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ]
       },
@@ -55165,7 +55165,7 @@ const LEARNING_PATHS = [
             "It explains one correlated chart without a test that could reject it."
           ],
           "correct": 0,
-          "explanation": "Identify the local route, profile and delay distribution; run a baseline, then the slow profile and record tail change. Recovery selects the healthy profile and repeats the same bounded test. Avoid claiming a real database root cause because this demo injects sleep and does not use a database. Mark the simulated scope explicitly."
+          "explanation": "A useful hypothesis predicts an observation that would distinguish it from another explanation. That gives you a concrete next check and a reason to keep or reject the hypothesis."
         },
         "references": [
           {
@@ -55173,7 +55173,7 @@ const LEARNING_PATHS = [
             "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
             "section": "Monitoring causes and symptoms; useful monitoring",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
         ],
         "diagram": {
@@ -55325,7 +55325,7 @@ const LEARNING_PATHS = [
             "Every real alert reaches an on-call engineer."
           ],
           "correct": 0,
-          "explanation": "Mark percentile tests, loopback HTTP timing and benchmark equivalence as executable local checks. Mark an OpenTelemetry collector, backend retention, real alert delivery and distributed propagation as extensions requiring separate setup and execution. Include data-field review, expected loss behaviour, cost assumptions and a fault-injection plan."
+          "explanation": "The loopback lab verifies the local timing and analysis behaviours exercised by its tests. It does not verify a collector, cross-service propagation or production capacity."
         },
         "references": [
           {
@@ -55333,7 +55333,7 @@ const LEARNING_PATHS = [
             "url": "https://opentelemetry.io/docs/security/",
             "section": "Security of telemetry pipelines and components",
             "reviewed": "2026-09-30",
-            "scope": "Primary documentation checked on this date. Current conceptual documentation; the downloadable lab uses Python standard-library measurements, not an OpenTelemetry SDK or a production monitoring deployment."
+            "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           },
           {
             "title": "Python http.server documentation",
@@ -56313,9 +56313,9 @@ const LEARNING_PATHS = [
           {
             "title": "Reconcile what remains before moving blocks",
             "paragraphs": [
-              "Separate practice variant: the following case changes the baseline facts for this lesson only. Do not add its meeting or venue changes to the service-disruption ledger used in the project worksheets.",
+              "For this exercise only, use the changed facts below. Keep the project worksheet unchanged.",
               "Sam began with 11 project hours, eight for the event pack and three reserved. By Wednesday, four event hours are complete. An essential extra meeting removes two remaining hours. Start the revision from seven remaining hours, not the original eleven.",
-              "Five hours now remain: four for event work and one uncommitted. If Lee's venue confirmation also slips past the print cutoff, spare effort cannot fix release. Separate reduced capacity from a missing prerequisite."
+              "Five hours now remain: four for event work and one uncommitted. If Lee confirms the venue after the printing deadline, extra working time will not help. Sam needs both enough time and confirmed venue details."
             ],
             "example": "11 - 4 completed - 2 lost = 5 available. Remaining event effort: 8 - 4 = 4. Reserve: 1. With venue confirmation pending, Sam asks whether a confirmed-content save-the-date is an acceptable interim output.",
             "exampleFormat": "prose"
@@ -56488,7 +56488,7 @@ const LEARNING_PATHS = [
           {
             "title": "Change the message when the constraint changes",
             "paragraphs": [
-              "Separate practice variant: the following case changes the baseline facts for this lesson only. Do not add its meeting or venue changes to the service-disruption ledger used in the project worksheets.",
+              "For this exercise only, use the changed facts below. Keep the project worksheet unchanged.",
               "Sam reports: \"The pack needs four more hours and I have five, but venue confirmation arrives after the print cutoff. I can finish confirmed content today; we need a decision on venue details.\" This identifies the constraint rather than saying only that the week is busy.",
               "The organiser explains that printed directions are essential for attendees unable to use the digital version. A digital-only substitute is not equivalent. Sam offers a confirmed alternative venue or a later distribution decision instead of assuming the first workaround is acceptable."
             ],
@@ -56957,10 +56957,10 @@ const LEARNING_PATHS = [
             ]
           },
           {
-            "title": "Choose an experiment that could disappoint you",
+            "title": "Choose a change and check whether it helps",
             "paragraphs": [
-              "Separate practice variant: the following case changes the baseline facts for this lesson only. Do not add its meeting or venue changes to the service-disruption ledger used in the project worksheets.",
-              "Sam completes the pack after the distribution date changes. Two delays involved venue confirmation; editing stayed near its estimate. An earlier dependency request is a candidate improvement. The evidence does not justify rebuilding every part of the planning system.",
+              "For this exercise only, use the changed facts below. Keep the project worksheet unchanged.",
+              "Sam completes the pack after the distribution date changes. Two delays involved venue confirmation; editing stayed near its estimate. Sam could ask for confirmation earlier. The evidence does not justify rebuilding every part of the planning system.",
               "Next week Sam requests the key confirmation two working days earlier while keeping estimation unchanged. The observation is whether a usable answer arrives before the decision point. If the source cannot confirm earlier, the experiment may fail and a fallback release decision becomes more relevant."
             ],
             "example": "Prediction: earlier request produces an answer before cutoff. In-time answer -> keep provisionally. Same late answer because venue availability is undecided -> address the dependency or fallback, not simply add more reminders.",
@@ -58151,7 +58151,7 @@ const LEARNING_PATHS = [
         "id": "uncertainty-and-intervals",
         "title": "14. Interpret a confidence interval",
         "stage": "intermediate",
-        "takeaway": "An interval procedure has coverage across repeated samples.",
+        "takeaway": "Across repeated samples, a 95% confidence-interval method captures the population mean about 95% of the time, under its assumptions.",
         "sections": [
           {
             "title": "How it works",
@@ -61895,7 +61895,7 @@ const LEARNING_PATHS = [
           "complexity": "O(n) time and O(n) output space, with O(1) auxiliary space beyond the output.",
           "pitfalls": [
             "Sorting the readings and changing their order.",
-            "Clamping the entire list to one value when low equals high is correct."
+            "Treating low == high as invalid. In that case, every output should equal that boundary."
           ],
           "transfer": "Return the indices of changed readings as well. Keep indices tied to the original order."
         },
@@ -66528,13 +66528,13 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the distinction",
             "paragraphs": [
-              "A boundary explains what you can participate in or provide, rather than controlling another person. Use clear scope and an alternative when one is available. You do not need an elaborate justification for every limit. A boundary may disappoint someone and still be reasonable. Avoid making threats or promising actions you cannot carry out."
+              "A boundary explains what you can participate in or provide, rather than controlling another person. Say what you can offer and suggest an alternative when one is available. You do not need an elaborate justification for every limit. A boundary may disappoint someone and still be reasonable. Avoid making threats or promising actions you cannot carry out."
             ]
           },
           {
             "title": "Mechanism and practical trade-off",
             "paragraphs": [
-              "A boundary must specify something you can carry out, such as when you respond or whether you join a task. It cannot guarantee another person's behaviour. Consider whether an agreed role imposes a genuine obligation before declining, and use an appropriate role discussion when expectations conflict. Clarity avoids both hidden resentment and impossible promises."
+              "A boundary must specify something you can carry out, such as when you respond or whether you join a task. It cannot guarantee another person's behaviour. Check responsibilities you have already agreed to before declining. If expectations conflict, discuss them with the person who assigns the work. Clarity avoids both hidden resentment and impossible promises."
             ]
           },
           {
@@ -68454,7 +68454,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/ssms/quickstarts/ssms-connect-query-sql-server",
             "section": "Connect and query",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ]
       },
@@ -68513,7 +68513,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/null-and-unknown-transact-sql?view=sql-server-ver17",
             "section": "Remarks: NULL and UNKNOWN",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ]
       },
@@ -68572,7 +68572,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql?view=sql-server-ver17",
             "section": "Logical processing order",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ]
       },
@@ -68631,7 +68631,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/joins?view=sql-server-ver17",
             "section": "Logical and physical joins",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ],
         "diagram": {
@@ -69237,7 +69237,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-group-by-transact-sql?view=sql-server-ver17",
             "section": "GROUP BY arguments",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ]
       },
@@ -69303,7 +69303,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql?view=sql-server-ver17",
             "section": "Guidelines for CTEs",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ],
         "diagram": {
@@ -69439,7 +69439,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/row-number-transact-sql?view=sql-server-ver17",
             "section": "General remarks: determinism",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ]
       },
@@ -69505,7 +69505,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-procedure-transact-sql?view=sql-server-ver17",
             "section": "Parameters and examples",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ]
       },
@@ -69564,7 +69564,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
             "section": "Temporary tables",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ]
       },
@@ -69630,7 +69630,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/set-transaction-isolation-level-transact-sql?view=sql-server-ver17",
             "section": "READ COMMITTED and RCSI",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ],
         "diagram": {
@@ -69787,7 +69787,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/indexes/indexes?view=sql-server-ver17",
             "section": "Index types and design",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ],
         "visual": {
@@ -70157,7 +70157,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-group-by-transact-sql?view=sql-server-ver17",
             "section": "GROUP BY and aggregate expressions",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           },
           {
             "title": "Microsoft Learn: CASE expressions",
@@ -70336,7 +70336,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/decimal-and-numeric-transact-sql?view=sql-server-ver17",
             "section": "Conversion and rounding",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ]
       },
@@ -70397,7 +70397,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql?view=sql-server-ver17",
             "section": "Using APPLY",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ]
       },
@@ -70457,7 +70457,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-over-clause-transact-sql?view=sql-server-ver17",
             "section": "ROWS and RANGE frames",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ]
       },
@@ -70526,7 +70526,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/statistics/statistics?view=sql-server-ver17",
             "section": "Histogram and cardinality estimates",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ]
       },
@@ -70586,7 +70586,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/try-catch-transact-sql?view=sql-server-ver17",
             "section": "Uncommittable transactions and XACT_STATE",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ]
       },
@@ -70652,7 +70652,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/try-convert-transact-sql?view=sql-server-ver17",
             "section": "Return types and failed conversions",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ]
       },
@@ -70726,7 +70726,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/monitoring-performance-by-using-the-query-store?view=sql-server-ver17",
             "section": "Query Store collection and runtime statistics",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           },
           {
             "title": "Microsoft Learn: sys.query_store_runtime_stats",
@@ -70815,7 +70815,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/set-transaction-isolation-level-transact-sql?view=sql-server-ver17",
             "section": "Read protection versus modification locks",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ],
         "visual": {
@@ -71214,7 +71214,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-deadlocks-guide?view=sql-server-ver17",
             "section": "Deadlock detection, victim selection and error handling",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ],
         "diagram": {
@@ -71378,7 +71378,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/sp-executesql-transact-sql?view=sql-server-ver17",
             "section": "Parameters and SQL injection caution",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ]
       },
@@ -71439,7 +71439,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/alter-table-transact-sql?view=sql-server-ver17",
             "section": "Locking and online operations",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ],
         "diagram": {
@@ -71597,10 +71597,10 @@ const LEARNING_PATHS = [
           "starter": "--Preserve raw rows; parse safely; group by EventId for conflicts; rank exact copies;\n--classify; check existing ledger payloads; load unseen accepted keys atomically;\n--reconcile all orders; prove replay inserts0.",
           "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN EXISTS (\n  SELECT 1 FROM #LNRawEvents other WHERE other.EventId=t.EventId\n  AND (other.OrderId<>t.OrderId\n   OR DATALENGTH(other.AmountText)<>DATALENGTH(t.AmountText)\n   OR CONVERT(varbinary(60),other.AmountText)<>CONVERT(varbinary(60),t.AmountText))\n ) THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n",
           "checks": [
-            "Raw counts 6=3 accepted+1 duplicate+1 invalid+1 orphan.",
-            "First inserts 3;replay 0;ledger 3 rows/215.",
-            "Report 5 rows;due 390;paid 215;net 175.",
-            "Conflict handling never silently picksMAX(amount).",
+            "All six raw rows are accounted for: three accepted, one duplicate, one invalid and one orphan.",
+            "The first run inserts three rows. Repeating it inserts none, and the ledger still contains three rows totalling 215.",
+            "The report contains five rows, with 390 due, 215 paid and 175 outstanding.",
+            "Conflicting amounts are rejected or quarantined; the loader does not silently choose the largest amount.",
             "Declare no live engine, concurrency or durability test unless performed."
           ]
         },
@@ -71620,7 +71620,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/set-xact-abort-transact-sql?view=sql-server-ver17",
             "section": "Remarks and transaction error behavior",
             "reviewed": "2026-09-27",
-            "scope": "SQL Server 2019+ teaching scope; documentation view SQL Server 2025 (17.x). Selected downloadable labs executed on SQL Server 2025 Express 17.0.1000.7; see engine-verification.md for exact coverage. Other snippets remain source-reviewed; no Azure default-isolation equivalence."
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
         ],
         "diagram": {
@@ -72322,7 +72322,7 @@ const LEARNING_PATHS = [
             "url": "https://sre.google/workbook/implementing-slos/",
             "section": "Choosing an initial SLO; implementing SLOs",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ]
       },
@@ -72377,7 +72377,7 @@ const LEARNING_PATHS = [
             "url": "https://sre.google/workbook/implementing-slos/",
             "section": "Choosing an initial SLO; implementing SLOs",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ]
       },
@@ -72432,7 +72432,7 @@ const LEARNING_PATHS = [
             "url": "https://sre.google/workbook/implementing-slos/",
             "section": "Choosing an initial SLO; implementing SLOs",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ]
       },
@@ -72548,7 +72548,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 3–9: HTTP architecture, messages and methods",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ],
         "visual": {
@@ -72890,7 +72890,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 3–9: HTTP architecture, messages and methods",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ]
       },
@@ -72945,7 +72945,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
             "section": "Data sovereignty; consistency and transactions",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ]
       },
@@ -73000,7 +73000,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
             "section": "Data sovereignty; consistency and transactions",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ]
       },
@@ -73055,7 +73055,7 @@ const LEARNING_PATHS = [
             "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
             "section": "The four golden signals",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ]
       },
@@ -73159,7 +73159,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/cache-aside",
             "section": "Solution; issues and considerations",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ],
         "diagram": {
@@ -73305,7 +73305,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers",
             "section": "Solution; issues and considerations",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ],
         "visual": {
@@ -73622,7 +73622,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
             "section": "Data sovereignty; consistency and transactions",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ],
         "diagram": {
@@ -73758,7 +73758,7 @@ const LEARNING_PATHS = [
             "url": "https://www.cs.princeton.edu/courses/archive/spr22/cos418/papers/cap.pdf",
             "section": "Definitions and impossibility theorem",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ]
       },
@@ -73813,7 +73813,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/sharding",
             "section": "Solution; issues and considerations",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ]
       },
@@ -73874,7 +73874,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
             "section": "Data sovereignty; consistency and transactions",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ],
         "diagram": {
@@ -74047,7 +74047,7 @@ const LEARNING_PATHS = [
             "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
             "section": "Reducing client complexity with idempotent API design",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ],
         "diagram": {
@@ -74247,7 +74247,7 @@ const LEARNING_PATHS = [
             "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
             "section": "Timeouts; retries and backoff; jitter",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ],
         "visual": {
@@ -74631,7 +74631,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers",
             "section": "Solution; issues and considerations",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ]
       },
@@ -74694,7 +74694,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html",
             "section": "Intent; issues and considerations",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ],
         "diagram": {
@@ -74848,7 +74848,7 @@ const LEARNING_PATHS = [
             "url": "https://opentelemetry.io/docs/concepts/signals/",
             "section": "Traces, metrics and logs",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ]
       },
@@ -74909,7 +74909,7 @@ const LEARNING_PATHS = [
             "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
             "section": "Deny by default; validate permissions on every request",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           },
           {
             "title": "OWASP Threat Modeling Cheat Sheet",
@@ -75051,7 +75051,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/plan-for-disaster-recovery-dr.html",
             "section": "Plan for disaster recovery",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ],
         "diagram": {
@@ -75184,7 +75184,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/azure/architecture/microservices/design/data-considerations",
             "section": "Data sovereignty; consistency and transactions",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ],
         "diagram": {
@@ -75345,7 +75345,7 @@ const LEARNING_PATHS = [
             "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
             "section": "The four golden signals",
             "reviewed": "2026-09-27",
-            "scope": "Supports the cited source mechanism; lesson examples and design recommendations are local teaching synthesis, not a production or live-provider guarantee. Reference mapping reviewed; no claim that all source examples were executed."
+            "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           },
           {
             "title": "OWASP Threat Modeling Cheat Sheet",
@@ -75901,9 +75901,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "These planning ideas are adapted from an engineering guide for everyday projects. This exercise does not establish compliance with NASA requirements."
             ]
           }
         ],
@@ -75953,9 +75953,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "These planning ideas are adapted from an engineering guide for everyday projects. This exercise does not establish compliance with NASA requirements."
             ]
           }
         ],
@@ -76005,9 +76005,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Stakeholder expectations and requirements; adapted to small ordinary projects. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "These questions adapt an engineering guide to small projects. Check them with the people who will use the result."
             ]
           }
         ],
@@ -76057,9 +76057,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Verification and validation; adapted to learner deliverables. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The engineering guide distinguishes checking requirements from checking whether a result is useful. Here you practise both on a small project."
             ]
           }
         ],
@@ -76109,9 +76109,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Stakeholder expectations and requirements; adapted to small ordinary projects. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "These questions adapt an engineering guide to small projects. Check them with the people who will use the result."
             ]
           }
         ],
@@ -76162,9 +76162,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "These planning ideas are adapted from an engineering guide for everyday projects. This exercise does not establish compliance with NASA requirements."
             ]
           }
         ],
@@ -76350,9 +76350,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "These planning ideas are adapted from an engineering guide for everyday projects. This exercise does not establish compliance with NASA requirements."
             ]
           },
           {
@@ -76547,9 +76547,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The Kanban guide defines a way to manage work. It does not establish that this approach will improve every project."
             ]
           }
         ],
@@ -76599,9 +76599,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The Kanban guide defines a way to manage work. It does not establish that this approach will improve every project."
             ]
           }
         ],
@@ -76769,9 +76769,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The Kanban guide defines a way to manage work. It does not establish that this approach will improve every project."
             ]
           }
         ],
@@ -76821,9 +76821,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "These planning ideas are adapted from an engineering guide for everyday projects. This exercise does not establish compliance with NASA requirements."
             ]
           }
         ],
@@ -76873,9 +76873,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Original 1994 experiments on completion-time predictions. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The cited experiments studied completion-time predictions. Use similar past work to check your estimate; these examples do not predict an exact finish date."
             ]
           }
         ],
@@ -76925,9 +76925,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The Kanban guide defines a way to manage work. It does not establish that this approach will improve every project."
             ]
           }
         ],
@@ -77114,9 +77114,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "These planning ideas are adapted from an engineering guide for everyday projects. This exercise does not establish compliance with NASA requirements."
             ]
           }
         ],
@@ -77166,9 +77166,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "These planning ideas are adapted from an engineering guide for everyday projects. This exercise does not establish compliance with NASA requirements."
             ]
           },
           {
@@ -77227,9 +77227,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The Kanban guide defines a way to manage work. It does not establish that this approach will improve every project."
             ]
           }
         ],
@@ -77279,9 +77279,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Verification and validation; adapted to learner deliverables. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The engineering guide distinguishes checking requirements from checking whether a result is useful. Here you practise both on a small project."
             ]
           },
           {
@@ -77451,9 +77451,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "This exercise borrows selected planning practices from Scrum. Using them does not mean you are following the whole Scrum framework."
             ]
           }
         ],
@@ -77503,9 +77503,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "These planning ideas are adapted from an engineering guide for everyday projects. This exercise does not establish compliance with NASA requirements."
             ]
           }
         ],
@@ -77555,9 +77555,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Verification and validation; adapted to learner deliverables. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The engineering guide distinguishes checking requirements from checking whether a result is useful. Here you practise both on a small project."
             ]
           }
         ],
@@ -77709,9 +77709,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The Kanban guide defines a way to manage work. It does not establish that this approach will improve every project."
             ]
           }
         ],
@@ -77753,127 +77753,127 @@ const LEARNING_PATHS = [
           "id": "capture-worksheet",
           "href": "paths/task-project-management/practice/capture-worksheet.md",
           "role": "worksheet",
-          "description": "Printable capture commitments in one inbox case with blank response fields and worked solution."
+          "description": "Your combined task and unresolved question. Includes a printable exercise and worked answer."
         },
         {
           "id": "task-project-worksheet",
           "href": "paths/task-project-management/practice/task-project-worksheet.md",
           "role": "worksheet",
-          "description": "Printable separate tasks, projects and routines case with blank response fields and worked solution."
+          "description": "Your classifications. Includes a printable exercise and worked answer."
         },
         {
           "id": "next-action-worksheet",
           "href": "paths/task-project-management/practice/next-action-worksheet.md",
           "role": "worksheet",
-          "description": "Printable write the next observable action case with blank response fields and worked solution."
+          "description": "Your next action. Includes a printable exercise and worked answer."
         },
         {
           "id": "done-worksheet",
           "href": "paths/task-project-management/practice/done-worksheet.md",
           "role": "worksheet",
-          "description": "Printable agree what done means case with blank response fields and worked solution."
+          "description": "Your completion criteria. Includes a printable exercise and worked answer."
         },
         {
           "id": "scope-worksheet",
           "href": "paths/task-project-management/practice/scope-worksheet.md",
           "role": "worksheet",
-          "description": "Printable state outcome and exclusions case with blank response fields and worked solution."
+          "description": "What the workshop includes and leaves out. Includes a printable exercise and worked answer."
         },
         {
           "id": "decompose-worksheet",
           "href": "paths/task-project-management/practice/decompose-worksheet.md",
           "role": "worksheet",
-          "description": "Printable break deliverables into manageable work case with blank response fields and worked solution."
+          "description": "Three deliverables and their actions. Includes a printable exercise and worked answer."
         },
         {
           "id": "sequence-worksheet",
           "href": "paths/task-project-management/practice/sequence-worksheet.md",
           "role": "worksheet",
-          "description": "Printable map dependencies before dates case with blank response fields and worked solution."
+          "description": "What can proceed and what must wait. Includes a printable exercise and worked answer."
         },
         {
           "id": "board-worksheet",
           "href": "paths/task-project-management/practice/board-worksheet.md",
           "role": "worksheet",
-          "description": "Printable visualize the real workflow case with blank response fields and worked solution."
+          "description": "Your Ready and Review rules. Includes a printable exercise and worked answer."
         },
         {
           "id": "wip-worksheet",
           "href": "paths/task-project-management/practice/wip-worksheet.md",
           "role": "worksheet",
-          "description": "Printable control work in progress case with blank response fields and worked solution."
+          "description": "Your decision and reason. Includes a printable exercise and worked answer."
         },
         {
           "id": "pull-worksheet",
           "href": "paths/task-project-management/practice/pull-worksheet.md",
           "role": "worksheet",
-          "description": "Printable pull work when capacity exists case with blank response fields and worked solution."
+          "description": "Your next item and reason. Includes a printable exercise and worked answer."
         },
         {
           "id": "owners-worksheet",
           "href": "paths/task-project-management/practice/owners-worksheet.md",
           "role": "worksheet",
-          "description": "Printable clarify ownership and decisions case with blank response fields and worked solution."
+          "description": "Who writes, checks and approves. Includes a printable exercise and worked answer."
         },
         {
           "id": "estimates-worksheet",
           "href": "paths/task-project-management/practice/estimates-worksheet.md",
           "role": "worksheet",
-          "description": "Printable forecast using comparable items case with blank response fields and worked solution."
+          "description": "Your forecast and its limits. Includes a printable exercise and worked answer."
         },
         {
           "id": "blocked-worksheet",
           "href": "paths/task-project-management/practice/blocked-worksheet.md",
           "role": "worksheet",
-          "description": "Printable make blocked work actionable case with blank response fields and worked solution."
+          "description": "Your blocker note. Includes a printable exercise and worked answer."
         },
         {
           "id": "risk-worksheet",
           "href": "paths/task-project-management/practice/risk-worksheet.md",
           "role": "worksheet",
-          "description": "Printable distinguish risks from issues case with blank response fields and worked solution."
+          "description": "Your classifications and responses. Includes a printable exercise and worked answer."
         },
         {
           "id": "change-worksheet",
           "href": "paths/task-project-management/practice/change-worksheet.md",
           "role": "worksheet",
-          "description": "Printable handle new scope as a decision case with blank response fields and worked solution."
+          "description": "Work to remove and checks to repeat. Includes a printable exercise and worked answer."
         },
         {
           "id": "metrics-worksheet",
           "href": "paths/task-project-management/practice/metrics-worksheet.md",
           "role": "worksheet",
-          "description": "Printable measure flow with defined boundaries case with blank response fields and worked solution."
+          "description": "Cycle time, age and completed-item count. Includes a printable exercise and worked answer."
         },
         {
           "id": "review-worksheet",
           "href": "paths/task-project-management/practice/review-worksheet.md",
           "role": "worksheet",
-          "description": "Printable inspect outcomes with the beneficiary case with blank response fields and worked solution."
+          "description": "Expected outcomes and walkthrough. Includes a printable exercise and worked answer."
         },
         {
           "id": "retrospective-worksheet",
           "href": "paths/task-project-management/practice/retrospective-worksheet.md",
           "role": "worksheet",
-          "description": "Printable improve one workflow constraint case with blank response fields and worked solution."
+          "description": "One change and review date. Includes a printable exercise and worked answer."
         },
         {
           "id": "parallel-worksheet",
           "href": "paths/task-project-management/practice/parallel-worksheet.md",
           "role": "worksheet",
-          "description": "Printable coordinate parallel branches and handoffs case with blank response fields and worked solution."
+          "description": "Your shared details and final check. Includes a printable exercise and worked answer."
         },
         {
           "id": "close-worksheet",
           "href": "paths/task-project-management/practice/close-worksheet.md",
           "role": "worksheet",
-          "description": "Printable close the project with usable evidence case with blank response fields and worked solution."
+          "description": "Delivered work and remaining responsibilities. Includes a printable exercise and worked answer."
         },
         {
           "id": "system-review-worksheet",
           "href": "paths/task-project-management/practice/system-review-worksheet.md",
           "role": "worksheet",
-          "description": "Printable select a proportionate management system case with blank response fields and worked solution."
+          "description": "Reports to keep and remove. Includes a printable exercise and worked answer."
         },
         {
           "id": "foundation-project",
@@ -79115,7 +79115,7 @@ const LEARNING_PATHS = [
           {
             "title": "Reduce an unfamiliar missing-row report",
             "paragraphs": [
-              "A user reports that a timeline loses entries when loading page two. Start with four rows: a,b,c at time5 and d at time6. Page size2 returns a,b then d; c disappears. Network retries, authentication and thousands of production records are unnecessary to reproduce this particular symptom.",
+              "A user reports that a timeline loses entries when loading page two. Start with four rows: a, b and c at timestamp 5, and d at timestamp 6. With a page size of 2, the first page returns a and b, and the second returns d. Row c disappears. Network retries, authentication and thousands of production records are unnecessary to reproduce this particular symptom.",
               "The new cursor_candidate.py is small enough to inspect after reproducing. Run python cursor_checks.py cursor_candidate to see expected failures, then repair a copy. The first test records the missing user-visible row rather than asserting how many internal sorting calls occur."
             ]
           },
@@ -80305,7 +80305,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "A test fails only when run after another file test. What first?",
+          "prompt": "A test fails only when run after another file test. What would you inspect first, and which rerun would test your suspicion?",
           "solution": "Run alone and reverse ordering, inspect shared destination paths and globals, then replace them with isolated fixtures. Do not increase every timeout first.",
           "solutionFormat": "prose",
           "checks": [
@@ -81401,15 +81401,15 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
             ]
           }
         ],
         "exercise": {
           "prompt": "A learner has 4 free hours, a 45-minute journey, 30-minute meal and 15-minute transition. How much time remains for study?",
-          "solution": "Subtract 90 minutes from 240: 150 minutes remain. Allocate 90 minutes to the draft, 30 to practice and leave 30 uncommitted. This preserves explicit uncertainty instead of filling every minute.",
+          "solution": "Subtract 90 minutes from 240: 150 minutes remain. Allocate 90 minutes to the draft, 30 to practice and leave 30 uncommitted. This leaves time for unexpected work.",
           "solutionFormat": "prose",
           "checks": [
             "Subtract all named essential commitments.",
@@ -81577,14 +81577,14 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
             ]
           }
         ],
         "exercise": {
-          "prompt": "Record a synthetic day with 40 minutes reading, 20 messages, 15 travel delay and 25 drafting. Classify without moral labels.",
+          "prompt": "A fictional day includes 40 minutes reading, 20 minutes on messages, 15 minutes of travel delay and 25 minutes drafting. Group the time by activity without assuming that messages or delays were avoidable.",
           "solution": "There are 100 observed minutes: 65 task minutes, 20 communication and 15 delay. Messages may be essential; ask whether their timing was flexible before changing them. Keep uncertainty if the log is approximate.",
           "solutionFormat": "prose",
           "checks": [
@@ -81629,9 +81629,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "This exercise borrows selected planning practices from Scrum. Using them does not mean you are following the whole Scrum framework."
             ]
           }
         ],
@@ -81681,9 +81681,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "These planning ideas are adapted from an engineering guide for everyday projects. This exercise does not establish compliance with NASA requirements."
             ]
           }
         ],
@@ -81733,9 +81733,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Protecting sleep opportunity; no diagnosis or treatment advice. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "Protect time for sleep when planning. This exercise does not assess sleep problems or give treatment advice."
             ]
           }
         ],
@@ -81786,9 +81786,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Field study of suspension and resumption; context-specific evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The interruption study describes a particular work setting. Use the times supplied here rather than assuming every interruption has the same cost."
             ]
           }
         ],
@@ -81976,9 +81976,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
             ]
           }
         ],
@@ -82028,9 +82028,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
             ]
           }
         ],
@@ -82080,7 +82080,7 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
               "The original 1994 experiments document optimistic completion predictions. Their interventions did not establish improved absolute prediction accuracy. Using comparable recorded work and a locally chosen buffer here is a planning heuristic to evaluate, not an accuracy guarantee from that study."
             ]
@@ -82259,7 +82259,7 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
               "The original 1994 experiments document optimistic completion predictions. Their interventions did not establish improved absolute prediction accuracy. Using comparable recorded work and a locally chosen buffer here is a planning heuristic to evaluate, not an accuracy guarantee from that study."
             ]
@@ -82327,9 +82327,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Field study of suspension and resumption; context-specific evidence. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The interruption study describes a particular work setting. Use the times supplied here rather than assuming every interruption has the same cost."
             ]
           }
         ],
@@ -82379,7 +82379,7 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
               "The study reports field observations and design suggestions about preserving task context. The specific return-note format in this lesson is an original planning heuristic, not a tested intervention from that study."
             ]
@@ -82431,9 +82431,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
             ]
           }
         ],
@@ -82483,9 +82483,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Protecting sleep opportunity; no diagnosis or treatment advice. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "Protect time for sleep when planning. This exercise does not assess sleep problems or give treatment advice."
             ]
           }
         ],
@@ -82535,9 +82535,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "This exercise borrows selected planning practices from Scrum. Using them does not mean you are following the whole Scrum framework."
             ]
           }
         ],
@@ -82704,9 +82704,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "These planning ideas are adapted from an engineering guide for everyday projects. This exercise does not establish compliance with NASA requirements."
             ]
           },
           {
@@ -82765,9 +82765,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
             ]
           }
         ],
@@ -82817,9 +82817,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
             ]
           }
         ],
@@ -82986,9 +82986,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "These planning ideas are adapted from an engineering guide for everyday projects. This exercise does not establish compliance with NASA requirements."
             ]
           }
         ],
@@ -83038,9 +83038,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
             ]
           }
         ],
@@ -83090,9 +83090,9 @@ const LEARNING_PATHS = [
             "exampleFormat": "prose"
           },
           {
-            "title": "Evidence and adaptation",
+            "title": "What the source supports",
             "paragraphs": [
-              "Source scope: Discussion and limitations; associations are not individual guarantees. The worked cases are original examples; adapt these planning heuristics to your responsibilities."
+              "The research reports associations, so it cannot guarantee that this plan will help you. Try it with your own commitments and check what happens."
             ]
           }
         ],
@@ -83134,127 +83134,127 @@ const LEARNING_PATHS = [
           "id": "capacity-worksheet",
           "href": "paths/time-attention-energy/practice/capacity-worksheet.md",
           "role": "worksheet",
-          "description": "Printable begin with available capacity case with blank response fields and worked solution."
+          "description": "Minutes remaining and calculation. Includes a printable exercise and worked answer."
         },
         {
           "id": "time-log-worksheet",
           "href": "paths/time-attention-energy/practice/time-log-worksheet.md",
           "role": "worksheet",
-          "description": "Printable observe a day without grading it case with blank response fields and worked solution."
+          "description": "Activity groups and totals. Includes a printable exercise and worked answer."
         },
         {
           "id": "outcomes-worksheet",
           "href": "paths/time-attention-energy/practice/outcomes-worksheet.md",
           "role": "worksheet",
-          "description": "Printable define a useful session outcome case with blank response fields and worked solution."
+          "description": "Your session outcome and stopping point. Includes a printable exercise and worked answer."
         },
         {
           "id": "priorities-worksheet",
           "href": "paths/time-attention-energy/practice/priorities-worksheet.md",
           "role": "worksheet",
-          "description": "Printable choose when everything seems important case with blank response fields and worked solution."
+          "description": "Your order and reason. Includes a printable exercise and worked answer."
         },
         {
           "id": "sleep-boundary-worksheet",
           "href": "paths/time-attention-energy/practice/sleep-boundary-worksheet.md",
           "role": "worksheet",
-          "description": "Printable protect essential recovery case with blank response fields and worked solution."
+          "description": "Your revised 90-minute plan. Includes a printable exercise and worked answer."
         },
         {
           "id": "attention-context-worksheet",
           "href": "paths/time-attention-energy/practice/attention-context-worksheet.md",
           "role": "worksheet",
-          "description": "Printable notice what pulls attention case with blank response fields and worked solution."
+          "description": "Interruption time and remaining drafting time. Includes a printable exercise and worked answer."
         },
         {
           "id": "small-start-worksheet",
           "href": "paths/time-attention-energy/practice/small-start-worksheet.md",
           "role": "worksheet",
-          "description": "Printable make starting concrete case with blank response fields and worked solution."
+          "description": "Your first action. Includes a printable exercise and worked answer."
         },
         {
           "id": "blocks-worksheet",
           "href": "paths/time-attention-energy/practice/blocks-worksheet.md",
           "role": "worksheet",
-          "description": "Printable reserve time with a purpose case with blank response fields and worked solution."
+          "description": "Your schedule and unused time. Includes a printable exercise and worked answer."
         },
         {
           "id": "estimate-worksheet",
           "href": "paths/time-attention-energy/practice/estimate-worksheet.md",
           "role": "worksheet",
-          "description": "Printable use past durations before optimism case with blank response fields and worked solution."
+          "description": "Your revised estimate and its limits. Includes a printable exercise and worked answer."
         },
         {
           "id": "buffer-worksheet",
           "href": "paths/time-attention-energy/practice/buffer-worksheet.md",
           "role": "worksheet",
-          "description": "Printable make uncertainty visible case with blank response fields and worked solution."
+          "description": "Remaining spare time and next check. Includes a printable exercise and worked answer."
         },
         {
           "id": "notifications-worksheet",
           "href": "paths/time-attention-energy/practice/notifications-worksheet.md",
           "role": "worksheet",
-          "description": "Printable design a reachable focus period case with blank response fields and worked solution."
+          "description": "Your focus plan and urgent-call arrangement. Includes a printable exercise and worked answer."
         },
         {
           "id": "resume-worksheet",
           "href": "paths/time-attention-energy/practice/resume-worksheet.md",
           "role": "worksheet",
-          "description": "Printable leave a return cue case with blank response fields and worked solution."
+          "description": "Your return note. Includes a printable exercise and worked answer."
         },
         {
           "id": "breaks-worksheet",
           "href": "paths/time-attention-energy/practice/breaks-worksheet.md",
           "role": "worksheet",
-          "description": "Printable choose breaks as a local experiment case with blank response fields and worked solution."
+          "description": "Correct answers in each session and next comparison. Includes a printable exercise and worked answer."
         },
         {
           "id": "energy-patterns-worksheet",
           "href": "paths/time-attention-energy/practice/energy-patterns-worksheet.md",
           "role": "worksheet",
-          "description": "Printable schedule from observations case with blank response fields and worked solution."
+          "description": "Tasks and times you would compare. Includes a printable exercise and worked answer."
         },
         {
           "id": "weekly-review-worksheet",
           "href": "paths/time-attention-energy/practice/weekly-review-worksheet.md",
           "role": "worksheet",
-          "description": "Printable review commitments before adding more case with blank response fields and worked solution."
+          "description": "What to keep, postpone or decline. Includes a printable exercise and worked answer."
         },
         {
           "id": "boundaries-worksheet",
           "href": "paths/time-attention-energy/practice/boundaries-worksheet.md",
           "role": "worksheet",
-          "description": "Printable renegotiate with specific trade-offs case with blank response fields and worked solution."
+          "description": "Your proposed response. Includes a printable exercise and worked answer."
         },
         {
           "id": "overload-worksheet",
           "href": "paths/time-attention-energy/practice/overload-worksheet.md",
           "role": "worksheet",
-          "description": "Printable reduce load when the plan repeatedly fails case with blank response fields and worked solution."
+          "description": "One change and how you would check it. Includes a printable exercise and worked answer."
         },
         {
           "id": "experiment-worksheet",
           "href": "paths/time-attention-energy/practice/experiment-worksheet.md",
           "role": "worksheet",
-          "description": "Printable test one scheduling change case with blank response fields and worked solution."
+          "description": "Your comparison and what you would observe. Includes a printable exercise and worked answer."
         },
         {
           "id": "shared-time-worksheet",
           "href": "paths/time-attention-energy/practice/shared-time-worksheet.md",
           "role": "worksheet",
-          "description": "Printable coordinate time with other people case with blank response fields and worked solution."
+          "description": "Your handoff and review timing. Includes a printable exercise and worked answer."
         },
         {
           "id": "sustainable-system-worksheet",
           "href": "paths/time-attention-energy/practice/sustainable-system-worksheet.md",
           "role": "worksheet",
-          "description": "Printable build the smallest sustainable routine case with blank response fields and worked solution."
+          "description": "What to keep and remove. Includes a printable exercise and worked answer."
         },
         {
           "id": "evidence-review-worksheet",
           "href": "paths/time-attention-energy/practice/evidence-review-worksheet.md",
           "role": "worksheet",
-          "description": "Printable report what changed with honest limits case with blank response fields and worked solution."
+          "description": "What helped and what remains uncertain. Includes a printable exercise and worked answer."
         },
         {
           "id": "foundation-project",

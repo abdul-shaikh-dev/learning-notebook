@@ -252,7 +252,7 @@
     "complexity": "O(n) time and O(n) output space, with O(1) auxiliary space beyond the output.",
     "pitfalls": [
       "Sorting the readings and changing their order.",
-      "Clamping the entire list to one value when low equals high is correct."
+      "Treating low == high as invalid. In that case, every output should equal that boundary."
     ],
     "transfer": "Return the indices of changed readings as well. Keep indices tied to the original order.",
     "references": [

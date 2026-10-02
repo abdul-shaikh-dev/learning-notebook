@@ -109,12 +109,13 @@ printable study pack. Attempt each brief before reading the reference code.
 - Do not send email inside this local unit of work and call it atomic. External
   effects need a separate delivery/retry/duplicate-handling design.
 
-## Design review worksheet
+## Discuss your design
 
-Write: context; current pain; simplest option; selected collaboration; rejected
-alternative; failure semantics; lifecycle owner; tests; remaining uncertainty.
-Name one future requirement that would justify revisiting the design. A good
-answer may deliberately use fewer patterns than the reference vocabulary.
+Explain which change is difficult and how your proposed design helps. Compare it
+with a simpler option, then name a test that would catch a broken assumption.
+Discuss failure handling or resource ownership when your design changes them.
+You can explain this aloud or keep a short note; no worksheet is required.
+Name one future requirement that would make you reconsider the design.
 
 ## Selected catalog and collaboration lab
 

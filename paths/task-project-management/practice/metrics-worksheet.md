@@ -1,6 +1,6 @@
-# Measure flow with defined boundaries — printable worksheet
+# Measure flow with defined boundaries: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ Cycle time runs from the defined start to finish; age applies to unfinished item
 
 An item started Monday and finished Thursday; another started Tuesday and is unfinished Friday. Use elapsed day differences.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Cycle time, age and completed-item count: ________________________________
 
 ## Worked example
 
 The completed item’s cycle time is three days. The unfinished item’s age is three days on Friday. Throughput for the week includes the finished item but excludes the unfinished one. State this date convention explicitly.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- State the elapsed-day convention.
+- Calculate completed cycle time separately from unfinished age.
+- Exclude unfinished work from throughput.
 
 ## Source and scope
 

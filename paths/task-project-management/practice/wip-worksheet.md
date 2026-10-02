@@ -1,6 +1,6 @@
-# Control work in progress — printable worksheet
+# Control work in progress: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ WIP counts started but unfinished items within the defined workflow, including b
 
 A limit is two. One draft is in Doing and one is blocked in Review. May a third item start?
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your decision and reason: ________________________________
 
 ## Worked example
 
 Not under the stated policy: both started items count as WIP. First help the review blocker or finish the draft. If a genuine exception is needed, make it explicit and record its cost.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Count both started unfinished items.
+- Keep blocked review within the defined WIP boundary.
+- Choose an unblocking or finishing action before a new start.
 
 ## Source and scope
 

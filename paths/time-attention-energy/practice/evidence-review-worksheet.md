@@ -1,6 +1,6 @@
-# Report what changed and what remains uncertain — printable worksheet
+# Report what changed and what remains uncertain: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ A final review compares intended outcomes with observed results and costs. Inclu
 
 In a two-week trial, missed deadlines decreased but workload was lighter in week two. Capacity budgeting exposed schedule conflicts; message batching was also tested. Explain what helped and why these results do not show which change caused the improvement.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+What helped and what remains uncertain: ________________________________
 
 ## Worked example
 
 The routine coincided with fewer misses, but week two had fewer commitments, so the routine’s independent effect is unknown. Keep capacity budgeting because it exposed conflicts; retest message batching under comparable workload.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Report the workload difference between weeks.
+- Separate local usefulness from a causal conclusion.
+- Choose a next revision grounded in the evidence.
 
 ## Source and scope
 

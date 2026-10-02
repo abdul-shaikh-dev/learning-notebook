@@ -318,7 +318,7 @@
         {
           "title": "Choose return and failure contracts together",
           "paragraphs": [
-            "This is an optional preview of the later integration-checks lab. Complete the small console exercise first; HttpClient adapters and their scripted handler are not foundation requirements.",
+            "Complete the console exercise first. You can return to this optional HTTP example after the integration-checks lesson.",
             "The focused HTTP client returns Session? because a documented 404 means no session exists. A 503 is not an empty result: it throws, so the caller can show a service problem without falsely claiming the record is absent. A successful response with minutes 0 is valid and must not be confused with missing data.",
             "Its positive-ID precondition is checked before sending. The test counts handler calls and proves an invalid ID dispatches nothing. This combines two observations: the exception and the absence of an external attempt. A test checking only the exception could miss a method that sends first and rejects afterward."
           ]
@@ -538,8 +538,8 @@
         {
           "title": "Cancellation is an observed asynchronous outcome",
           "paragraphs": [
-            "This is an optional preview of the later integration-checks lab. Complete the small console exercise first; HttpClient adapters and their scripted handler are not foundation requirements.",
-            "The HTTP-boundary lab uses a TaskCompletionSource to confirm the handler has started, then cancels the caller token. The handler waits on a cancellable operation; the test awaits the task and observes OperationCanceledException. No guessed sleep duration is used to make the race seem reliable.",
+            "Complete the console exercise first. You can return to this optional HTTP example after the integration-checks lesson.",
+            "The HTTP-boundary lab uses a TaskCompletionSource to confirm the handler has started, then cancels the caller token. The handler waits on a cancellable operation; the test awaits the task and observes OperationCanceledException. The started signal controls the test order without relying on a timed delay.",
             "Passing this check shows token propagation through this in-process adapter. It does not prove a remote service stopped work or rolled back a write. A caller cancelling after a remote commit can still have an unknown result. Distinguish cancelling the wait from undoing an operation."
           ]
         }

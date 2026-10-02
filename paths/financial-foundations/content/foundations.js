@@ -129,8 +129,8 @@ FOUNDATIONS.push(...[
     ],
     "paragraphs": [
       "A fixed two-payment instrument pays EUR 50 in year one and EUR 1,050 in year two. FO discount factors are 0.95 and 0.90; independent factors are 0.94 and 0.88. Multiply each payment by its factor and sum.",
-      "FO value is 992.50; independent value 971.00. The −21.50 difference decomposes into −0.50 for year one and−21.00 for year two. This exact input bridge is linear in discount factors. It is not a full swap pricer because the cash flows are fixed.",
-      "In a separate flat annual-rate example, changing 5% to 6% gives exact value change−18.333927. A derivative-based first-order estimate gives−18.594104: the 0.260178 residual reflects curvature. Rates and discount factors are different input coordinates.",
+      "FO value is 992.50; independent value 971.00. The −21.50 difference decomposes into −0.50 for year one and −21.00 for year two. This exact input bridge is linear in discount factors. It is not a full swap pricer because the cash flows are fixed.",
+      "In a separate flat annual-rate example, changing 5% to 6% gives an exact value change of −18.333927. A derivative-based first-order estimate gives −18.594104: the 0.260178 residual reflects curvature. Rates and discount factors are different input coordinates.",
       "Before selecting a curve, check valuation date, currency, collateral/discounting basis, contractual conventions and source independence. Matching arithmetic is not evidence that the chosen curve is suitable."
     ],
     "example": "FO: 50×0.95 +1,050×0.90 =992.50\nIndependent: 50×0.94 +1,050×0.88 =971.00\nDifference:−21.50 =50×(−0.01)+1,050×(−0.02)",

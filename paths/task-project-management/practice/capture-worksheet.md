@@ -1,6 +1,6 @@
-# Capture commitments in one inbox — printable worksheet
+# Capture commitments in one inbox: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ An inbox holds unprocessed requests rather than a final plan. Capture enough con
 
 Combine an email request, a handwritten reminder and a duplicate message about the same report. The due date is unresolved; preserve that question and the source context.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your combined task and unresolved question: ________________________________
 
 ## Worked example
 
 Create one report item with links to the two messages and the reminder context. Preserve the due-date question for clarification rather than creating three separate reports.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Merge duplicate requests into one commitment.
+- Preserve the source context and unresolved due-date question.
+- Avoid accepting work merely because it was captured.
 
 ## Source and scope
 

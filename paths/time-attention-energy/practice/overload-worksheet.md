@@ -1,6 +1,6 @@
-# Reduce load when the plan repeatedly fails — printable worksheet
+# Reduce load when the plan repeatedly fails: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ Repeated carry-over can mean the plan exceeds capacity, tasks are unclear or the
 
 Four of six daily outcomes carry over on three days. Choose one change to try and explain what you would check afterward.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+One change and how you would check it: ________________________________
 
 ## Worked example
 
 Limit tomorrow to the two essential outcomes, clarify their finish conditions and defer the optional four. Compare actual durations. If essential obligations still exceed capacity, negotiate support or scope rather than extending the workday.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Reduce a named part of the next day's commitment.
+- Check actual durations of the essential outcomes.
+- Avoid solving capacity shortage through sleep reduction.
 
 ## Source and scope
 

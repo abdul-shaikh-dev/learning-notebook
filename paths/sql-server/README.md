@@ -51,3 +51,8 @@ rules that would make ordinary SQL string equality too permissive for this polic
 ## Optional permanent-schema extension
 
 Read `schema-permissions-lab.md` before running `schema-permissions-lab.sql` in a disposable database. It adds a real foreign key, a repeatable nullable-column expand/backfill and a read-only role. A separate limited user is needed to observe write denial. Use `schema-permissions-cleanup.sql` only after confirming object ownership. These permanent objects are separate from the main session-local fixtures.
+
+
+## Reference scope and verification limits
+
+Lessons target SQL Server 2019 or later and cite the SQL Server 2025 documentation, version 17.x. Selected downloadable labs ran on SQL Server 2025 Express 17.0.1000.7; engine-verification.md lists the exact coverage. Other snippets were checked against sources but were not executed. Do not assume Azure services use the same default isolation settings.

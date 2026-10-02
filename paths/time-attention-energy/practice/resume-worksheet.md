@@ -1,6 +1,6 @@
-# Leave a return cue — printable worksheet
+# Leave a return cue: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ Before stopping, note where you got to, what comes next, any open question and w
 
 Write a return cue before leaving a half-checked table in budget-draft.md. Rows 1–7 have been checked against receipts; row 8 is next, and row 5 has an unresolved date discrepancy.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your return note: ________________________________
 
 ## Worked example
 
 Checked rows 1–7 against receipts; next compare row 8; unresolved: row 5 date differs; file budget-draft.md. This tells the returning learner where to begin and what still needs a decision.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Identify rows already checked and the next row.
+- Preserve the unresolved date discrepancy.
+- Include the file location or name.
 
 ## Source and scope
 

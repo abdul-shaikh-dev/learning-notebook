@@ -1,18 +1,18 @@
 # Time, Attention & Energy practice bundle
 
-Begin with the foundation lessons, then intermediate and advanced. Each lesson has its own printable worksheet and worked solution. Each stage has an assessed project.
+Begin with the foundation lessons, then intermediate and advanced. Each lesson has its own printable worksheet and worked solution. Each stage has a project you can use to practise the ideas together.
 
 ## Offline use
 
-Open Markdown files in a text editor or Markdown viewer and print using that viewer. Answer blank fields before scrolling to the worked example. All filenames are flat within the practice folder. No software installation, account, paid service or external API is needed.
+Open Markdown files in a text editor or Markdown viewer and print using that viewer. Try an answer aloud or in a short note before reading the worked example. All filenames are flat within the practice folder. No software installation, account, paid service or external API is needed.
 
 ## Recommended sequence
 
 1. Read a lesson and attempt its worksheet.
 2. Compare reasoning with the worked synthetic example.
 3. Answer the lesson quiz and read its explanation.
-4. Complete the stage project and score each rubric criterion.
-5. Revise missing evidence before proceeding.
+4. Try the stage project and use its criteria to check your answer.
+5. Revisit anything unclear. A score or completed worksheet is not required to keep reading.
 
 ## Evidence limits
 

@@ -1,6 +1,6 @@
-# Inspect outcomes with the beneficiary — printable worksheet
+# Inspect outcomes with the beneficiary: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ A review checks whether the deliverable helps the intended user. Verification as
 
 The exercise sheet has every required section but a beginner cannot identify the first step. Evaluate it.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Expected outcomes and walkthrough: ________________________________
 
 ## Worked example
 
 Verification may pass the section checklist, but validation exposes an unclear starting instruction. Revise the first step and repeat the beginner task before calling the material ready.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Describes both one-place-left and full-event outcomes.
+- Distinguishes waiting-list choice from a confirmed place.
+- Separates a fictional walkthrough from evidence about a running booking system.
 
 ## Source and scope
 

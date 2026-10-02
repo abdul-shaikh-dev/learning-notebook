@@ -31,3 +31,8 @@ Complete `threat-model-worksheet.md` for the booking design. Record planned vers
 ## Optional booking lab
 
 `booking-lab.md` links a runnable SQLite last-seat race, idempotency replay, injected rollback and outbox relay crash to the workbook timeline. Run `python -m unittest -v test_booking_lab.py`.
+
+
+## Reference scope and verification limits
+
+The sources explain the cited mechanisms. Examples and design advice are original to this notebook. The review checked that each reference applies to its lesson; it did not execute every source example or verify a production or live-provider integration.

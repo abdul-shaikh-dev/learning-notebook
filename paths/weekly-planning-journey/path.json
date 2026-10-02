@@ -447,9 +447,9 @@
         {
           "title": "Reconcile what remains before moving blocks",
           "paragraphs": [
-            "Separate practice variant: the following case changes the baseline facts for this lesson only. Do not add its meeting or venue changes to the service-disruption ledger used in the project worksheets.",
+            "For this exercise only, use the changed facts below. Keep the project worksheet unchanged.",
             "Sam began with 11 project hours, eight for the event pack and three reserved. By Wednesday, four event hours are complete. An essential extra meeting removes two remaining hours. Start the revision from seven remaining hours, not the original eleven.",
-            "Five hours now remain: four for event work and one uncommitted. If Lee's venue confirmation also slips past the print cutoff, spare effort cannot fix release. Separate reduced capacity from a missing prerequisite."
+            "Five hours now remain: four for event work and one uncommitted. If Lee confirms the venue after the printing deadline, extra working time will not help. Sam needs both enough time and confirmed venue details."
           ],
           "example": "11 - 4 completed - 2 lost = 5 available. Remaining event effort: 8 - 4 = 4. Reserve: 1. With venue confirmation pending, Sam asks whether a confirmed-content save-the-date is an acceptable interim output.",
           "exampleFormat": "prose"
@@ -501,7 +501,7 @@
         {
           "title": "Change the message when the constraint changes",
           "paragraphs": [
-            "Separate practice variant: the following case changes the baseline facts for this lesson only. Do not add its meeting or venue changes to the service-disruption ledger used in the project worksheets.",
+            "For this exercise only, use the changed facts below. Keep the project worksheet unchanged.",
             "Sam reports: \"The pack needs four more hours and I have five, but venue confirmation arrives after the print cutoff. I can finish confirmed content today; we need a decision on venue details.\" This identifies the constraint rather than saying only that the week is busy.",
             "The organiser explains that printed directions are essential for attendees unable to use the digital version. A digital-only substitute is not equivalent. Sam offers a confirmed alternative venue or a later distribution decision instead of assuming the first workaround is acceptable."
           ],
@@ -754,10 +754,10 @@
           ]
         },
         {
-          "title": "Choose an experiment that could disappoint you",
+          "title": "Choose a change and check whether it helps",
           "paragraphs": [
-            "Separate practice variant: the following case changes the baseline facts for this lesson only. Do not add its meeting or venue changes to the service-disruption ledger used in the project worksheets.",
-            "Sam completes the pack after the distribution date changes. Two delays involved venue confirmation; editing stayed near its estimate. An earlier dependency request is a candidate improvement. The evidence does not justify rebuilding every part of the planning system.",
+            "For this exercise only, use the changed facts below. Keep the project worksheet unchanged.",
+            "Sam completes the pack after the distribution date changes. Two delays involved venue confirmation; editing stayed near its estimate. Sam could ask for confirmation earlier. The evidence does not justify rebuilding every part of the planning system.",
             "Next week Sam requests the key confirmation two working days earlier while keeping estimation unchanged. The observation is whether a usable answer arrives before the decision point. If the source cannot confirm earlier, the experiment may fail and a fallback release decision becomes more relevant."
           ],
           "example": "Prediction: earlier request produces an answer before cutoff. In-time answer -> keep provisionally. Same late answer because venue availability is undecided -> address the dependency or fallback, not simply add more reminders.",

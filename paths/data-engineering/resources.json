@@ -5,31 +5,31 @@
       "id": "README-md",
       "href": "paths/data-engineering/practice/README.md",
       "role": "guide",
-      "description": "Course-owned README.md"
+      "description": "Setup, importer commands and expected results"
     },
     {
       "id": "pipeline_lab-py",
       "href": "paths/data-engineering/practice/pipeline_lab.py",
       "role": "reference",
-      "description": "Course-owned pipeline_lab.py"
+      "description": "CSV importer with validation, SQLite transactions and replay checks"
     },
     {
       "id": "test_pipeline_lab-py",
       "href": "paths/data-engineering/practice/test_pipeline_lab.py",
       "role": "test",
-      "description": "Course-owned test_pipeline_lab.py"
+      "description": "Tests for import validation, replay, conflicts and rollback"
     },
     {
       "id": "sample_orders-csv",
       "href": "paths/data-engineering/practice/sample_orders.csv",
       "role": "reference",
-      "description": "Course-owned sample_orders.csv"
+      "description": "Sample orders for the CSV import exercises"
     },
     {
       "id": "sql-server-bridge-sql",
       "href": "paths/data-engineering/practice/sql-server-bridge.sql",
       "role": "reference",
-      "description": "Course-owned sql-server-bridge.sql"
+      "description": "SQL Server schema for the optional importer extension"
     },
     {
       "id": "depth-revision-lab-py",

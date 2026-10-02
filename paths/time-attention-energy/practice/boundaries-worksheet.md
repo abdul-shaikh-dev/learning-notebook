@@ -1,6 +1,6 @@
-# Renegotiate with specific trade-offs — printable worksheet
+# Renegotiate with specific trade-offs: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ A boundary is useful when it names available capacity and a concrete alternative
 
 Today includes a promised draft and only 30 spare minutes. Draft a reply to a new 90-minute request; completing it today would displace that draft.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your proposed response: ________________________________
 
 ## Worked example
 
 I can do the 30-minute first section today or complete the full review Thursday. Doing all of it today would move the promised draft. Which outcome should take priority? This states a choice without pretending capacity expands.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Treats audience needs as a scope condition.
+- Recognises the unavailable review today.
+- Makes an explicit scope/date decision.
 
 ## Source and scope
 

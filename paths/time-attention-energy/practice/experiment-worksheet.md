@@ -1,6 +1,6 @@
-# Test one scheduling change — printable worksheet
+# Test one scheduling change: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ A personal experiment needs a question, one change, a comparison period and an o
 
 Design a trial of message batching with four comparable study sessions.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your comparison and what you would observe: ________________________________
 
 ## Worked example
 
 Alternate two normal sessions and two sessions with optional messages checked at the end. Record checked paragraphs, errors and urgent interruptions. Keep the focus window similar; report the small sample and task differences.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Define outcome measures before the trial.
+- Keep comparison windows and tasks reasonably similar.
+- State the small sample and potential confounds.
 
 ## Source and scope
 

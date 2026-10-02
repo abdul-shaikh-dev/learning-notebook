@@ -1,6 +1,6 @@
-# Notice what pulls attention — printable worksheet
+# Notice what pulls attention: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -12,27 +12,17 @@ A return cue is a short note that lets you restart: name the file or page, the l
 
 A 50-minute draft session contains two 3-minute messages and two 4-minute resumptions. How much time do the interruptions take?
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Interruption time and remaining drafting time: ________________________________
 
 ## Worked example
 
 Six minutes of messages plus eight minutes of resumption equals 14 minutes. There are 36 minutes left for drafting. This is the supplied scenario, not a universal interruption cost.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Add message and resumption durations separately.
+- Use the supplied observations rather than a universal average.
+- Distinguish optional alerts from necessary responsibility.
 
 ## Source and scope
 

@@ -4,11 +4,11 @@
 
 A boundary explains what you can participate in or provide, rather than controlling another person.
 
-Use clear scope and an alternative when one is available. You do not need an elaborate justification for every limit. A boundary may disappoint someone and still be reasonable. Avoid making threats or promising actions you cannot carry out.
+Say what you can offer and suggest an alternative when one is available. You do not need an elaborate justification for every limit. A boundary may disappoint someone and still be reasonable. Avoid making threats or promising actions you cannot carry out.
 
 ## Mechanism and practical trade-off
 
-A boundary must specify something you can carry out, such as when you respond or whether you join a task. It cannot guarantee another person’s behaviour. Consider whether an agreed role imposes a genuine obligation before declining, and use an appropriate role discussion when expectations conflict. Clarity avoids both hidden resentment and impossible promises.
+A boundary must specify something you can carry out, such as when you respond or whether you join a task. It cannot guarantee another person’s behaviour. Check responsibilities you have already agreed to before declining. If expectations conflict, discuss them with the person who assigns the work. Clarity avoids both hidden resentment and impossible promises.
 
 ## Fictional case
 

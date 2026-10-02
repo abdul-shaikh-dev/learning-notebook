@@ -1,6 +1,6 @@
-# Make uncertainty visible — printable worksheet
+# Make uncertainty visible: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ A buffer is unassigned capacity for variable work, delays or recovery. Its size 
 
 A 180-minute window contains 160 minutes of work, including an optional 30-minute task, and 30 minutes of essential transitions. Repair it.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Remaining spare time and next check: ________________________________
 
 ## Worked example
 
 The plan exceeds capacity by 10 minutes before uncertainty. Reduce work to 130 minutes, keep 30 transitions and leave 20 as buffer. Identify exactly which optional 30 minutes move elsewhere.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Calculates 115 minutes and 35 remaining.
+- Separates effort from unavailable prerequisites.
+- Checks that review time is included.
 
 ## Source and scope
 

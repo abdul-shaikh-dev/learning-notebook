@@ -1,6 +1,6 @@
-# Break deliverables into manageable work — printable worksheet
+# Break deliverables into manageable work: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -12,27 +12,17 @@ An owner is the person responsible for moving an item forward and following up; 
 
 Plan a 60-minute beginner workshop for 20 people, with an exercise sheet and invitation. Break the workshop into three deliverables and list one action for each.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Three deliverables and their actions: ________________________________
 
 ## Worked example
 
 Venue arrangement: confirm capacity. Learning material: draft the exercise. Participation information: check and publish the invitation. Add review and delivery tasks before considering the decomposition complete.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Connect every action to a deliverable.
+- Include review and handoff work.
+- Do not mistake the work tree for execution order.
 
 ## Source and scope
 

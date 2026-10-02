@@ -1,6 +1,6 @@
-# Build the smallest sustainable routine — printable worksheet
+# Build the smallest sustainable routine: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ Choose a few recurring decisions: capture commitments, plan within capacity, lea
 
 A tracker takes 25 minutes daily and only its next-action field is used. Simplify it.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+What to keep and remove: ________________________________
 
 ## Worked example
 
 Keep next action, deadline consequence and available window; remove unused mood graphs and categories. Review once weekly. Compare maintenance time and missed commitments after a week before making another change.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Retain fields that inform actual decisions.
+- Reduce the 25-minute daily maintenance burden.
+- Review missed commitments as well as administration time.
 
 ## Source and scope
 

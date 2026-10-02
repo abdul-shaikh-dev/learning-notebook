@@ -1,6 +1,6 @@
-# Forecast using comparable items — printable worksheet
+# Forecast using comparable items: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ Estimate with historical work that uses the same start and finish definitions. A
 
 Three invitation cards took 2, 3 and 6 elapsed days. Forecast another similar item.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your forecast and its limits: ________________________________
 
 ## Worked example
 
 Use 2–6 days as a provisional observed range and explain that three samples are insufficient for a reliable percentile. Ask whether the same review availability applies to the new item.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Use comparable elapsed start-to-finish durations.
+- Keep the 2–6 day observed variation visible.
+- State the three-sample limitation and review assumption.
 
 ## Source and scope
 

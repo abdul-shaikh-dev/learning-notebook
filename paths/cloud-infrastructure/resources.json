@@ -5,7 +5,7 @@
       "id": "infra_lab-py",
       "href": "paths/cloud-infrastructure/practice/infra_lab.py",
       "role": "reference",
-      "description": "Reference implementation or clearly labeled training configuration."
+      "description": "Offline infrastructure planner and policy checks"
     },
     {
       "id": "test_infra_lab-py",
@@ -17,13 +17,13 @@
       "id": "topology-json",
       "href": "paths/cloud-infrastructure/practice/topology.json",
       "role": "reference",
-      "description": "Reference implementation or clearly labeled training configuration."
+      "description": "Fictional infrastructure inventory for planning and policy exercises"
     },
     {
       "id": "main-tf-json",
       "href": "paths/cloud-infrastructure/practice/main.tf.json",
       "role": "reference",
-      "description": "Reference implementation or clearly labeled training configuration."
+      "description": "Optional Azure Terraform configuration for provider validation"
     },
     {
       "id": "README-md",

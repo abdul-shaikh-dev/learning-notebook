@@ -123,7 +123,7 @@
           "url": "https://docs.python.org/3/library/csv.html",
           "section": "DictReader field mapping",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -170,7 +170,7 @@
           "At ingestion only; later transformations need no checks"
         ],
         "correct": 0,
-        "explanation": "ETL can reject before loading curated data; ELT can land governed raw data then quarantine invalid rows before publishing. Both need explicit error evidence and access policy."
+        "explanation": "ELT can store raw rows before transforming them, but malformed timestamps must be rejected or quarantined before curated results are published. Keep the rejection records under the same access controls as the source data."
       },
       "references": [
         {
@@ -185,7 +185,7 @@
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Tutorial and transactions",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -247,7 +247,7 @@
           "url": "https://docs.python.org/3/library/csv.html",
           "section": "Reader objects and newline handling",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -294,7 +294,7 @@
           "Keep the empty field and let the report decide its meaning"
         ],
         "correct": 0,
-        "explanation": "This contract requires a known nonblank identifier and a present integer amount. Missing amounts reject the batch rather than inventing zero revenue."
+        "explanation": "An empty amount violates the required integer-cents field. Reject it. Substituting zero would turn missing information into a false revenue value."
       },
       "references": [
         {
@@ -302,7 +302,7 @@
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "SQLite and Python types",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -349,7 +349,7 @@
           "Only the accepted row count because the rejected sale is outside the output"
         ],
         "correct": 0,
-        "explanation": "All-or-nothing preserves a coherent snapshot but delays availability; partial success can improve availability only if missing/rejected contributions are explicit and reconciled."
+        "explanation": "The total covers only accepted rows. Report accepted and rejected counts and explain whether the missing sale makes the total incomplete. Otherwise a valid partial sum can be mistaken for complete revenue."
       },
       "references": [
         {
@@ -357,7 +357,7 @@
           "url": "https://docs.python.org/3/library/csv.html",
           "section": "Error handling",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -404,7 +404,7 @@
           "A valid timestamp always has the same calendar date in every timezone"
         ],
         "correct": 0,
-        "explanation": "Delayed delivery and replay can ingest older events today. Different time definitions produce different day buckets and must be labeled."
+        "explanation": "The order occurred on September 1 but arrived on September 3. Grouping by event date puts it on the first day; grouping by ingestion date puts it on the third. Label which date the report uses."
       },
       "references": [
         {
@@ -412,7 +412,7 @@
           "url": "https://docs.python.org/3/library/datetime.html",
           "section": "Aware and naive objects",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -459,7 +459,7 @@
           "Convert amounts to floating point so refunds need no separate rule"
         ],
         "correct": 0,
-        "explanation": "Add an explicit refund/event type and signed-amount semantics, define duplicate behavior, and test net totals and reconciliation. Do not silently relax the existing rule."
+        "explanation": "A refund changes the meaning of an amount. Define how its sign and event type affect the total, how duplicates are handled, and tests for the resulting net revenue before accepting refunds."
       },
       "references": [
         {
@@ -474,7 +474,7 @@
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Python integer binding",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -529,7 +529,7 @@
           "Write the marker first so a retry can skip unfinished data writes"
         ],
         "correct": 0,
-        "explanation": "Otherwise a crash can record completed without data or store data without a marker, breaking replay detection. One boundary coordinates both effects."
+        "explanation": "The completion marker and order writes must commit together. If either fails, the transaction rolls both back, so the marker cannot claim completion for missing orders."
       },
       "references": [
         {
@@ -537,7 +537,7 @@
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Connection context manager",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -591,7 +591,7 @@
           "Different run IDs for the two workers so neither waits"
         ],
         "correct": 0,
-        "explanation": "Both workers can find that the ID is absent and attempt the write. A database uniqueness constraint must protect the ID, and the effect and marker must commit together. A pre-check alone is insufficient."
+        "explanation": "Both workers can pass a separate existence check. A database uniqueness constraint prevents duplicate identities, while committing the marker and its data changes together prevents partial completion."
       },
       "references": [
         {
@@ -599,7 +599,7 @@
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Transaction control",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -654,7 +654,7 @@
           "Advance halfway based on the number of attempted writes"
         ],
         "correct": 0,
-        "explanation": "It must not advance. Roll back or reconcile the target changes, then retry from the previous committed boundary using deduplication."
+        "explanation": "Advancing the watermark would skip records whose target writes failed. Keep the last successfully committed position, then roll back or reconcile the partial writes before retrying."
       },
       "references": [
         {
@@ -669,7 +669,7 @@
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Commit and rollback",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -716,7 +716,7 @@
           "Treat missing change records as evidence that nothing changed"
         ],
         "correct": 0,
-        "explanation": "Stop claiming completeness, obtain a consistent rebaseline/snapshot and reconcile according to the source-specific protocol; do not silently skip the gap."
+        "explanation": "Some changes have expired, so the consumer cannot reconstruct them from the remaining log. Obtain a consistent new snapshot and reconcile it using the source protocol before claiming the dataset is complete."
       },
       "references": [
         {
@@ -724,7 +724,7 @@
           "url": "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server?view=sql-server-ver17",
           "section": "SQL Server CDC overview",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -771,7 +771,7 @@
           "Whether dividing every joined total by two is a valid general correction"
         ],
         "correct": 0,
-        "explanation": "Check customer join-key uniqueness and count unmatched order customer IDs. Compare source and joined fact counts and sums under the expected cardinality."
+        "explanation": "A customer key appearing twice can match each order twice and double the sum. Check key uniqueness and the number of matches per order before changing the aggregation."
       },
       "references": [
         {
@@ -786,7 +786,7 @@
           "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
           "section": "SQL Server CREATE TABLE constraints",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -841,7 +841,7 @@
           "To neither version to avoid double counting"
         ],
         "correct": 0,
-        "explanation": "At Sep 10 exactly, match the new version once. Reject overlaps and verify each fact has the required single matching version."
+        "explanation": "A half-open interval includes its start and excludes its end. The event at the September 10 boundary belongs to the new version, which starts then, and must match only once."
       },
       "references": [
         {
@@ -856,7 +856,7 @@
           "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
           "section": "SQL Server table constraints",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -903,7 +903,7 @@
           "Rerunning the whole DAG cannot duplicate any external effect"
         ],
         "correct": 0,
-        "explanation": "Publication depends on reconciliation to avoid exposing incorrect totals. Email failure normally triggers an independent retry rather than undoing a valid data commit."
+        "explanation": "A dependency graph determines task order; it does not reverse an earlier database commit. Handle the email failure separately, for example with a retry policy that does not rerun the committed import."
       },
       "references": [
         {
@@ -911,7 +911,7 @@
           "url": "https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html",
           "section": "Airflow DAG concepts",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -965,7 +965,7 @@
           "A changed historical total with no revision information"
         ],
         "correct": 0,
-        "explanation": "For this exercise, revise the affected event day with a revision/updated timestamp and record accepted late count. Avoid silently changing history without an audit trail."
+        "explanation": "Under this correction policy, the sale changes the September 1 total. Publish the revised total with an update time or revision so readers can tell that the previously published result changed."
       },
       "references": [
         {
@@ -973,7 +973,7 @@
           "url": "https://docs.python.org/3/library/datetime.html",
           "section": "Time comparisons",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -1020,7 +1020,7 @@
           "Choose a CSV extension so the input size is predictable"
         ],
         "correct": 0,
-        "explanation": "An unbounded read can exhaust memory before validation runs. Selective partitions reduce scanning, while too many tiny partitions create overhead and management complexity."
+        "explanation": "Checking size after loading cannot prevent memory exhaustion during the read. Check or enforce the limit before reading all the data into memory."
       },
       "references": [
         {
@@ -1028,7 +1028,7 @@
           "url": "https://docs.python.org/3/library/csv.html",
           "section": "File reading contract",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -1075,7 +1075,7 @@
           "Ignoring currency when older consumers do not recognize the column"
         ],
         "correct": 0,
-        "explanation": "Version the schema, define currency scale, update validators/queries, test old/new fixtures, rebaseline affected outputs and plan rollback. Reject unversioned ambiguity."
+        "explanation": "The new fields change how amounts are interpreted. Define the scale for each currency, version the schema and test consumers against the supported old and new formats before trusting their totals."
       },
       "references": [
         {
@@ -1083,7 +1083,7 @@
           "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
           "section": "SQL Server CREATE TABLE column definitions",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -1130,7 +1130,7 @@
           "Compare only the row count with the source"
         ],
         "correct": 0,
-        "explanation": "Changing one order +100 and another -100 preserves the sum. Swapping IDs or dropping/duplicating equal amounts can preserve totals too; check keys and values."
+        "explanation": "The two errors cancel in the sum. Comparing each order ID and amount reveals the incorrect values even though the total is unchanged."
       },
       "references": [
         {
@@ -1138,7 +1138,7 @@
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Query result iteration",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -1185,7 +1185,7 @@
           "An encrypted full-file copy with no access or retention decision"
         ],
         "correct": 0,
-        "explanation": "Store run ID, schema/version, sanitized rejection category, bounded row index and observation time. Assign an accountable dataset owner and retention rule."
+        "explanation": "A rejection category and run metadata can support diagnosis without copying customer rows into a shared log. Give the log an owner, restrict access and define when records are deleted."
       },
       "references": [
         {
@@ -1200,7 +1200,7 @@
           "url": "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server?view=sql-server-ver17",
           "section": "SQL Server CDC capture and cleanup roles",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -1247,7 +1247,7 @@
           "A DATETIME2 column, which alone proves UTC input handling"
         ],
         "correct": 0,
-        "explanation": "Run the clean-load, replay, changed-payload conflict, duplicate-order rollback and invalid-input tests against the selected SQL Server and driver versions. Then verify the stored keys and totals."
+        "explanation": "SQLite tests establish only the SQLite implementation. Run load, replay, conflict, rollback and validation cases against the chosen SQL Server and driver, then check the stored keys and totals."
       },
       "references": [
         {
@@ -1255,7 +1255,7 @@
           "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
           "section": "SQL Server CREATE TABLE types and constraints",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -1302,7 +1302,7 @@
           "Report success because sending the commit request proves it completed"
         ],
         "correct": 0,
-        "explanation": "Treat outcome as unknown, inspect the durable run identity/content fingerprint, and reuse the same intent for safe replay rather than issuing a new untracked batch."
+        "explanation": "A timeout does not say whether the server committed. Look up the durable run identity and its content fingerprint before retrying, so a lost response does not cause a second logical import."
       },
       "references": [
         {
@@ -1310,7 +1310,7 @@
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Transaction commit and rollback",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -1357,7 +1357,7 @@
           "A claim of distributed readiness based on the local SQLite result"
         ],
         "correct": 0,
-        "explanation": "Demonstrate preserved prior state after failure, exact replay behavior, explicit schema/time/money assumptions and truthful limits. Explain each extension test rather than merely copying the reference."
+        "explanation": "The demo covers one successful load and replay. The capstone also needs tests that failed input preserves prior data, totals reconcile, and a change you implemented behaves as intended."
       },
       "references": [
         {
@@ -1365,7 +1365,7 @@
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Transactions and parameter binding",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ local CSV/SQLite baseline; SQL Server 17 documentation and Airflow concepts are integration extensions, not locally executed connectors."
+          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     }

@@ -1,6 +1,6 @@
-# Protect essential recovery — printable worksheet
+# Protect essential recovery: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ Treat sleep opportunity and essential recovery as constraints when making a plan
 
 An evening plan includes a required 60-minute section, optional formatting and preparation for tomorrow; together the planned work needs three hours. Only 90 minutes remain before the protected bedtime. Revise it.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Your revised 90-minute plan: ________________________________
 
 ## Worked example
 
 Complete the essential 60-minute section, allow 15 minutes to prepare tomorrow and leave 15 for transition. Move optional formatting to tomorrow. Reduce scope rather than borrowing from protected sleep.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Keep the protected bedtime in the revised schedule.
+- Move or reduce a named part of the work.
+- Reserve a transition instead of filling all 90 minutes.
 
 ## Source and scope
 

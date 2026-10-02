@@ -63,3 +63,8 @@ Changing the same batch ID's exact input bytes conflicts even if parsed rows
 look equivalent. Source and target paths must differ. Schema initialization is
 separate from each data/marker transaction; an empty target may be initialized
 on a failed first transaction but no business rows/marker are committed.
+
+
+## Reference scope and verification limits
+
+The local CSV and SQLite exercises require Python 3.11 or later. SQL Server 17 documentation and Airflow concepts support optional extensions. Their connectors were not executed locally.

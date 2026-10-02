@@ -5,127 +5,127 @@
       "id": "capture-worksheet",
       "href": "paths/task-project-management/practice/capture-worksheet.md",
       "role": "worksheet",
-      "description": "Printable capture commitments in one inbox case with blank response fields and worked solution."
+      "description": "Your combined task and unresolved question. Includes a printable exercise and worked answer."
     },
     {
       "id": "task-project-worksheet",
       "href": "paths/task-project-management/practice/task-project-worksheet.md",
       "role": "worksheet",
-      "description": "Printable separate tasks, projects and routines case with blank response fields and worked solution."
+      "description": "Your classifications. Includes a printable exercise and worked answer."
     },
     {
       "id": "next-action-worksheet",
       "href": "paths/task-project-management/practice/next-action-worksheet.md",
       "role": "worksheet",
-      "description": "Printable write the next observable action case with blank response fields and worked solution."
+      "description": "Your next action. Includes a printable exercise and worked answer."
     },
     {
       "id": "done-worksheet",
       "href": "paths/task-project-management/practice/done-worksheet.md",
       "role": "worksheet",
-      "description": "Printable agree what done means case with blank response fields and worked solution."
+      "description": "Your completion criteria. Includes a printable exercise and worked answer."
     },
     {
       "id": "scope-worksheet",
       "href": "paths/task-project-management/practice/scope-worksheet.md",
       "role": "worksheet",
-      "description": "Printable state outcome and exclusions case with blank response fields and worked solution."
+      "description": "What the workshop includes and leaves out. Includes a printable exercise and worked answer."
     },
     {
       "id": "decompose-worksheet",
       "href": "paths/task-project-management/practice/decompose-worksheet.md",
       "role": "worksheet",
-      "description": "Printable break deliverables into manageable work case with blank response fields and worked solution."
+      "description": "Three deliverables and their actions. Includes a printable exercise and worked answer."
     },
     {
       "id": "sequence-worksheet",
       "href": "paths/task-project-management/practice/sequence-worksheet.md",
       "role": "worksheet",
-      "description": "Printable map dependencies before dates case with blank response fields and worked solution."
+      "description": "What can proceed and what must wait. Includes a printable exercise and worked answer."
     },
     {
       "id": "board-worksheet",
       "href": "paths/task-project-management/practice/board-worksheet.md",
       "role": "worksheet",
-      "description": "Printable visualize the real workflow case with blank response fields and worked solution."
+      "description": "Your Ready and Review rules. Includes a printable exercise and worked answer."
     },
     {
       "id": "wip-worksheet",
       "href": "paths/task-project-management/practice/wip-worksheet.md",
       "role": "worksheet",
-      "description": "Printable control work in progress case with blank response fields and worked solution."
+      "description": "Your decision and reason. Includes a printable exercise and worked answer."
     },
     {
       "id": "pull-worksheet",
       "href": "paths/task-project-management/practice/pull-worksheet.md",
       "role": "worksheet",
-      "description": "Printable pull work when capacity exists case with blank response fields and worked solution."
+      "description": "Your next item and reason. Includes a printable exercise and worked answer."
     },
     {
       "id": "owners-worksheet",
       "href": "paths/task-project-management/practice/owners-worksheet.md",
       "role": "worksheet",
-      "description": "Printable clarify ownership and decisions case with blank response fields and worked solution."
+      "description": "Who writes, checks and approves. Includes a printable exercise and worked answer."
     },
     {
       "id": "estimates-worksheet",
       "href": "paths/task-project-management/practice/estimates-worksheet.md",
       "role": "worksheet",
-      "description": "Printable forecast using comparable items case with blank response fields and worked solution."
+      "description": "Your forecast and its limits. Includes a printable exercise and worked answer."
     },
     {
       "id": "blocked-worksheet",
       "href": "paths/task-project-management/practice/blocked-worksheet.md",
       "role": "worksheet",
-      "description": "Printable make blocked work actionable case with blank response fields and worked solution."
+      "description": "Your blocker note. Includes a printable exercise and worked answer."
     },
     {
       "id": "risk-worksheet",
       "href": "paths/task-project-management/practice/risk-worksheet.md",
       "role": "worksheet",
-      "description": "Printable distinguish risks from issues case with blank response fields and worked solution."
+      "description": "Your classifications and responses. Includes a printable exercise and worked answer."
     },
     {
       "id": "change-worksheet",
       "href": "paths/task-project-management/practice/change-worksheet.md",
       "role": "worksheet",
-      "description": "Printable handle new scope as a decision case with blank response fields and worked solution."
+      "description": "Work to remove and checks to repeat. Includes a printable exercise and worked answer."
     },
     {
       "id": "metrics-worksheet",
       "href": "paths/task-project-management/practice/metrics-worksheet.md",
       "role": "worksheet",
-      "description": "Printable measure flow with defined boundaries case with blank response fields and worked solution."
+      "description": "Cycle time, age and completed-item count. Includes a printable exercise and worked answer."
     },
     {
       "id": "review-worksheet",
       "href": "paths/task-project-management/practice/review-worksheet.md",
       "role": "worksheet",
-      "description": "Printable inspect outcomes with the beneficiary case with blank response fields and worked solution."
+      "description": "Expected outcomes and walkthrough. Includes a printable exercise and worked answer."
     },
     {
       "id": "retrospective-worksheet",
       "href": "paths/task-project-management/practice/retrospective-worksheet.md",
       "role": "worksheet",
-      "description": "Printable improve one workflow constraint case with blank response fields and worked solution."
+      "description": "One change and review date. Includes a printable exercise and worked answer."
     },
     {
       "id": "parallel-worksheet",
       "href": "paths/task-project-management/practice/parallel-worksheet.md",
       "role": "worksheet",
-      "description": "Printable coordinate parallel branches and handoffs case with blank response fields and worked solution."
+      "description": "Your shared details and final check. Includes a printable exercise and worked answer."
     },
     {
       "id": "close-worksheet",
       "href": "paths/task-project-management/practice/close-worksheet.md",
       "role": "worksheet",
-      "description": "Printable close the project with usable evidence case with blank response fields and worked solution."
+      "description": "Delivered work and remaining responsibilities. Includes a printable exercise and worked answer."
     },
     {
       "id": "system-review-worksheet",
       "href": "paths/task-project-management/practice/system-review-worksheet.md",
       "role": "worksheet",
-      "description": "Printable select a proportionate management system case with blank response fields and worked solution."
+      "description": "Reports to keep and remove. Includes a printable exercise and worked answer."
     },
     {
       "id": "foundation-project",

@@ -1,6 +1,6 @@
-# Improve one workflow constraint — printable worksheet
+# Improve one workflow constraint: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -10,27 +10,17 @@ A retrospective examines how work happened and chooses a change with an owner an
 
 Three items waited five days for review. Design a workflow experiment.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+One change and review date: ________________________________
 
 ## Worked example
 
 Reserve a short review window twice weekly, limit review queue size and assign an owner to monitor waiting. After two weeks compare item age and quality; revise if the new window simply moves the bottleneck.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Connect the change to repeated review waiting.
+- Give the trial an owner and review date.
+- Observe quality and any moved bottleneck.
 
 ## Source and scope
 

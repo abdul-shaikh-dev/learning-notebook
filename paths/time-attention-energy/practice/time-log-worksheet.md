@@ -1,6 +1,6 @@
-# Observe a day without grading it — printable worksheet
+# Observe a day without grading it: printable worksheet
 
-Synthetic practice case. No account, app or private data required.
+Use this fictional case. You can answer aloud or make a short note; the space below is optional.
 
 ## Read
 
@@ -8,29 +8,19 @@ A short log records start, finish, activity and context. Its purpose is to revea
 
 ## Try before reading the answer
 
-Record a synthetic day with 40 minutes reading, 20 messages, 15 travel delay and 25 drafting. Classify without moral labels.
+A fictional day includes 40 minutes reading, 20 minutes on messages, 15 minutes of travel delay and 25 minutes drafting. Group the time by activity without assuming that messages or delays were avoidable.
 
-Decision: ____________________________________________
-
-Reason and calculation: ________________________________
-
-Assumptions: _________________________________________
-
-What would change the choice? _________________________
+Activity groups and totals: ________________________________
 
 ## Worked example
 
 There are 100 observed minutes: 65 task minutes, 20 communication and 15 delay. Messages may be essential; ask whether their timing was flexible before changing them. Keep uncertainty if the log is approximate.
 
-## Transfer carefully
+## Check your answer
 
-Choose one ordinary commitment. Record its constraint, your proposed action, a review date and the observed result. Do not include sensitive personal information. Compare your reasoning to the example rather than copying its numbers.
-
-## Self-check
-
-- The action is executable.
-- The relevant constraint is explicit.
-- The conclusion does not promise a universal result.
+- Account for all 100 supplied minutes.
+- Avoid treating communication as automatically unnecessary.
+- Mark an uncertain classification instead of inventing a cause.
 
 ## Source and scope
 
