@@ -292,7 +292,7 @@
         {
           "title": "Understand the decision",
           "paragraphs": [
-            "Missing means the value is unavailable. Duplicate means more than one record represents the same intended unit. isna() counts unavailable cells; duplicated(\"ticket_id\") tests repeated identifiers. drop_duplicates() across all columns removes exact copies, but conflicting records with the same ID need a rule grounded in how the source was collected.",
+            "Missing means the value is unavailable. Duplicate means more than one record represents the same intended unit. isna() marks unavailable cells with True; sum that mask to count them. duplicated(\"ticket_id\") tests repeated identifiers. drop_duplicates() across all columns removes exact copies, but conflicting records with the same ID need a rule grounded in how the source was collected.",
             "Do not choose the first record just because it makes a test pass. If two versions have explicit update times, the newest validated version may be appropriate. If the source lacks that information, stop and report the conflict. For missing durations, report both total tickets and known durations so readers can see the denominator used by the mean."
           ]
         },
@@ -771,6 +771,13 @@
           "section": "Selection, missing data, operations and merge",
           "reviewed": "2026-10-02",
           "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+        },
+        {
+          "title": "OpenStax experimental design",
+          "url": "https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics",
+          "section": "Observational studies, random assignment and confounding",
+          "scope": "Study-design context for why a grouped descriptive comparison does not by itself establish causation.",
+          "reviewed": "2026-10-02"
         }
       ]
     },
@@ -937,7 +944,7 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "python analysis.py --out report-output produces both files. Running it twice with the same environment and input preserves the JSON content. The recorded SHA-256 changes if even one source byte changes."
+            "python analysis.py --out report-output produces both files. Running it twice with the same environment and input preserves the JSON content. A changed source will normally have a different SHA-256. Matching hashes are a practical identity check, not a mathematical guarantee that two files are identical."
           ]
         }
       ],
@@ -967,6 +974,13 @@
           "section": "Selection, missing data, operations and merge",
           "reviewed": "2026-10-02",
           "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+        },
+        {
+          "title": "Python hashlib",
+          "url": "https://docs.python.org/3.11/library/hashlib.html",
+          "section": "Hash objects and hexdigest",
+          "scope": "Hash API behaviour. Collision resistance is practical evidence, not proof that distinct inputs can never share a digest.",
+          "reviewed": "2026-10-02"
         }
       ]
     },

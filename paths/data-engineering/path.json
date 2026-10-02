@@ -278,10 +278,10 @@
         }
       ],
       "exercise": {
-        "prompt": "Define whether an unknown customer ID may be blank and what should happen to a missing amount.",
-        "solution": "This contract requires a known nonblank identifier and a present integer amount. Missing amounts reject the batch rather than inventing zero revenue.",
+        "prompt": "May the customer ID be blank under this contract, and what should happen to a missing amount?",
+        "solution": "Require a nonblank identifier that matches the documented syntax and a present integer amount. The lab does not check whether the customer exists in another table. Missing amounts reject the batch rather than inventing zero revenue.",
         "checks": [
-          "Require a known nonblank customer identifier and a present integer amount.",
+          "Require a nonblank customer identifier with valid syntax and a present integer amount; distinguish syntax validation from a customer lookup.",
           "Reject a missing amount rather than converting it to zero."
         ],
         "solutionFormat": "prose"
@@ -974,6 +974,13 @@
           "section": "Time comparisons",
           "reviewed": "2026-09-30",
           "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+        },
+        {
+          "title": "Beam watermarks and late data",
+          "url": "https://beam.apache.org/documentation/programming-guide/#watermarks-and-late-data",
+          "section": "Beam watermarks and late data",
+          "reviewed": "2026-10-02",
+          "scope": "Concept and type behavior checked against primary documentation; the local lab does not execute the external platform."
         }
       ]
     },
@@ -1029,6 +1036,13 @@
           "section": "File reading contract",
           "reviewed": "2026-09-30",
           "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+        },
+        {
+          "title": "Apache Parquet overview",
+          "url": "https://parquet.apache.org/docs/overview/",
+          "section": "Apache Parquet overview",
+          "reviewed": "2026-10-02",
+          "scope": "Concept and type behavior checked against primary documentation; the local lab does not execute the external platform."
         }
       ]
     },
@@ -1256,6 +1270,13 @@
           "section": "SQL Server CREATE TABLE types and constraints",
           "reviewed": "2026-09-30",
           "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+        },
+        {
+          "title": "SQL Server datetime2",
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/datetime2-transact-sql?view=sql-server-ver17",
+          "section": "SQL Server datetime2",
+          "reviewed": "2026-10-02",
+          "scope": "Concept and type behavior checked against primary documentation; the local lab does not execute the external platform."
         }
       ]
     },

@@ -20,7 +20,7 @@ class AnalysisTests(unittest.TestCase):
         self.assertEqual(table.loc["technical", "mean_hours"], 36)
         self.assertEqual(table.loc["technical", "breach_rate"], .5)
     def test_invalid_values(self):
-        for col, value in [("resolution_hours", -1), ("resolution_hours", float("inf")), ("customer_messages", -2), ("team", "unknown"), ("created_date", "bad-date"), ("breached", 1)]:
+        for col, value in [("resolution_hours", -1), ("resolution_hours", float("inf")), ("customer_messages", -2), ("team", "unknown"), ("created_date", "bad-date"), ("created_date", "NaT"), ("created_date", ""), ("breached", 1)]:
             with self.subTest(column=col, value=value):
                 frame = self.raw.copy()
                 frame[col] = frame[col].astype(object)

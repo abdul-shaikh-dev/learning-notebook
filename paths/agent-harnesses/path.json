@@ -617,6 +617,13 @@
           "section": "Basic usage; JSONEncoder and JSONDecoder",
           "reviewed": "2026-09-27",
           "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+        },
+        {
+          "title": "OWASP: application logging",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+          "section": "Event data; data to exclude",
+          "reviewed": "2026-10-02",
+          "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
         }
       ]
     },
@@ -1388,6 +1395,13 @@
           "section": "Read versus write transactions; transaction control",
           "reviewed": "2026-09-27",
           "scope": "Trusted local checkpoint exercise; two-connection CAS evidence, no secure sandbox or external effect atomicity."
+        },
+        {
+          "title": "Martin Kleppmann: distributed locking and fencing",
+          "url": "https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html",
+          "section": "Protecting a resource with a lock; fencing tokens",
+          "reviewed": "2026-10-02",
+          "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
         }
       ]
     },
@@ -1501,6 +1515,13 @@
           "section": "Deny by default; validate permissions on every request",
           "reviewed": "2026-09-27",
           "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+        },
+        {
+          "title": "OWASP: application logging",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+          "section": "Data to exclude; protecting logs",
+          "reviewed": "2026-10-02",
+          "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
         }
       ]
     },

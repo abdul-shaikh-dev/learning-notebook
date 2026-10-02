@@ -203,7 +203,8 @@
         {
           "title": "Keep the sample envelope and the design distinct",
           "paragraphs": [
-            "The JSON below is the small executable lab contract. It contains id, job_id, type, version and value only. The earlier discussion names additional production metadata; do not add those fields to the strict v1 parser and expect it to accept them. In the foundation sketch, write correlation and occurrence time beside the event. Lesson 14 explains how to introduce them as a versioned contract change."
+            "The JSON below is the small executable lab contract. It contains id, job_id, type, version and value only. The earlier discussion names additional production metadata; do not add those fields to the strict v1 parser and expect it to accept them. In the foundation sketch, write correlation and occurrence time beside the event. Lesson 14 explains how to introduce them as a versioned contract change.",
+            "The lab assumes event IDs are unique across its single event source. CloudEvents identifies an event by source plus id, so a multi-source inbox must preserve that source scope or use a documented globally unique ID policy."
           ]
         }
       ],
@@ -231,6 +232,13 @@
           "section": "Solution; problems and considerations",
           "reviewed": "2026-09-30",
           "scope": "General asynchronous architecture; product guarantees must be checked separately."
+        },
+        {
+          "title": "CloudEvents 1.0.2 event identity",
+          "url": "https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md",
+          "section": "Required attributes: id and source",
+          "reviewed": "2026-10-02",
+          "scope": "Source-plus-ID uniqueness; the teaching envelope is not a conformant CloudEvents implementation."
         }
       ],
       "stage": "foundation",
@@ -691,8 +699,8 @@
           "title": "RabbitMQ dead-letter exchanges",
           "url": "https://www.rabbitmq.com/docs/dlx",
           "section": "What is a dead letter exchange; configuring; safety",
-          "reviewed": "2026-09-30",
-          "scope": "RabbitMQ-specific routing; the local lab uses a simpler quarantine table."
+          "reviewed": "2026-10-02",
+          "scope": "RabbitMQ dead-letter routing. The local retry classifier returns a quarantine decision; it does not persist a quarantine table or transfer messages."
         },
         {
           "title": "RabbitMQ reliability guide",
@@ -746,8 +754,8 @@
           "title": "RabbitMQ dead-letter exchanges",
           "url": "https://www.rabbitmq.com/docs/dlx",
           "section": "What is a dead letter exchange; configuring; safety",
-          "reviewed": "2026-09-30",
-          "scope": "RabbitMQ-specific routing; the local lab uses a simpler quarantine table."
+          "reviewed": "2026-10-02",
+          "scope": "RabbitMQ dead-letter routing. The local retry classifier returns a quarantine decision; it does not persist a quarantine table or transfer messages."
         }
       ],
       "stage": "intermediate",
@@ -1066,6 +1074,13 @@
           "section": "Acknowledgements; data safety; consumer reliability",
           "reviewed": "2026-09-30",
           "scope": "RabbitMQ guidance; actual durability requires broker-specific replication and persistence configuration."
+        },
+        {
+          "title": "RabbitMQ access control",
+          "url": "https://www.rabbitmq.com/docs/access-control",
+          "section": "Authentication and authorization",
+          "reviewed": "2026-10-02",
+          "scope": "Broker resource permissions; no live broker ACL or TLS test performed by the core SQLite suite."
         }
       ],
       "stage": "advanced",

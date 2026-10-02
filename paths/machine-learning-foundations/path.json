@@ -107,7 +107,7 @@
           "url": "https://scikit-learn.org/stable/getting_started.html",
           "section": "Fitting and predicting: estimator basics",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate fitting and predicting: estimator basics."
+          "scope": "scikit-learn 1.9.1. fictional ticket examples illustrate fitting and predicting: estimator basics."
         }
       ]
     },
@@ -163,7 +163,7 @@
           "url": "https://scikit-learn.org/stable/common_pitfalls.html",
           "section": "Inconsistent preprocessing; data leakage; controlling randomness",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate inconsistent preprocessing."
+          "scope": "scikit-learn 1.9.1. Data leakage and feature availability. Fictional examples do not establish real-service performance."
         }
       ]
     },
@@ -219,7 +219,14 @@
           "url": "https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html",
           "section": "Parameters: strategy; fit; predict",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate parameters: strategy."
+          "scope": "scikit-learn 1.9.1. Dummy classification baseline strategies; the fictional scores do not establish real-service performance."
+        },
+        {
+          "title": "scikit-learn DummyRegressor",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyRegressor.html",
+          "section": "Mean and median prediction strategies",
+          "scope": "Constant regression baselines. The exercise calculates its own absolute error.",
+          "reviewed": "2026-10-02"
         }
       ]
     },
@@ -275,7 +282,7 @@
           "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
           "section": "Computing cross-validated metrics; grouped data; time series split",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate computing cross-validated metrics."
+          "scope": "scikit-learn 1.9.1. Training, validation and test separation. Fictional examples do not establish real-service performance."
         }
       ]
     },
@@ -331,7 +338,7 @@
           "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
           "section": "Classification metrics; regression metrics; dummy estimators",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate classification metrics."
+          "scope": "scikit-learn 1.9.1. Confusion counts, precision and recall. Fictional examples do not establish real-service performance."
         }
       ]
     },
@@ -387,7 +394,7 @@
           "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
           "section": "Classification metrics; regression metrics; dummy estimators",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate classification metrics."
+          "scope": "scikit-learn 1.9.1. MAE, MSE, RMSE and R-squared. Fictional examples do not establish real-service performance."
         }
       ]
     },
@@ -443,7 +450,7 @@
           "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
           "section": "Computing cross-validated metrics; grouped data; time series split",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate computing cross-validated metrics."
+          "scope": "scikit-learn 1.9.1. Stratification and its limits. Fictional examples do not establish real-service performance."
         }
       ]
     },
@@ -499,7 +506,7 @@
           "url": "https://scikit-learn.org/stable/modules/linear_model.html",
           "section": "Ordinary least squares; ridge regression; logistic regression",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate ordinary least squares."
+          "scope": "scikit-learn 1.9.1. Ordinary least squares. Fictional examples do not establish real-service performance."
         }
       ]
     },
@@ -555,7 +562,7 @@
           "url": "https://scikit-learn.org/stable/modules/linear_model.html",
           "section": "Ordinary least squares; ridge regression; logistic regression",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate ordinary least squares."
+          "scope": "scikit-learn 1.9.1. Binary logistic regression and thresholds. Fictional examples do not establish real-service performance."
         }
       ]
     },
@@ -568,7 +575,7 @@
         {
           "title": "How it works",
           "paragraphs": [
-            "Numerical models need a representation of category strings. One-hot encoding gives each known category its own indicator instead of inventing an ordering between email and chat. Unknown categories need an explicit policy; the lab encodes them with zeros for the relevant category group.",
+            "Numerical models need a representation of category strings. One-hot encoding gives each known category its own indicator. For three or more unordered categories, consecutive integer codes can impose an unsupported order and spacing in a linear model. A single binary indicator is a valid representation for two categories. Unknown categories need an explicit policy; the lab encodes them with zeros for the relevant category group.",
             "Scaling centers a numeric feature using a training mean and divides by its training standard deviation. Imputation fills missing values using a training statistic or rule. Fit these quantities on training rows and reuse them unchanged for validation and prediction."
           ]
         },
@@ -596,14 +603,14 @@
         ]
       },
       "quiz": {
-        "question": "Why avoid encoding chat=1 and email=2 without justification?",
+        "question": "Why avoid coding unordered channels chat=1, email=2 and phone=3 as one numeric feature in a linear model without justification?",
         "options": [
           "It invents an ordered numeric distance",
           "Strings cannot ever be represented",
           "It prevents any missing values"
         ],
         "correct": 0,
-        "explanation": "The numeric ordering introduces an assumption about category relationships. One-hot indicators avoid that particular assumption."
+        "explanation": "A single coefficient would force equally spaced effects in the supplied order. Separate indicators allow different effects without that constraint. For just two categories, one binary indicator is sufficient."
       },
       "references": [
         {
@@ -611,7 +618,14 @@
           "url": "https://scikit-learn.org/stable/modules/compose.html",
           "section": "Pipeline; ColumnTransformer",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate pipeline."
+          "scope": "scikit-learn 1.9.1. ColumnTransformer and categorical/numeric preprocessing. Fictional examples do not establish real-service performance."
+        },
+        {
+          "title": "scikit-learn preprocessing",
+          "url": "https://scikit-learn.org/stable/modules/preprocessing.html",
+          "section": "Encoding categorical features",
+          "scope": "Integer encoding can impose an artificial order or spacing. One-hot encoding and training-only preprocessing are checked with the pinned practice version.",
+          "reviewed": "2026-10-02"
         }
       ]
     },
@@ -667,7 +681,7 @@
           "url": "https://scikit-learn.org/stable/modules/compose.html",
           "section": "Pipeline; ColumnTransformer",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate pipeline."
+          "scope": "scikit-learn 1.9.1. Pipeline fitting within cross-validation. Fictional examples do not establish real-service performance."
         }
       ]
     },
@@ -723,7 +737,7 @@
           "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
           "section": "Computing cross-validated metrics; grouped data; time series split",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate computing cross-validated metrics."
+          "scope": "scikit-learn 1.9.1. TimeSeriesSplit and development evaluation. Fictional examples do not establish real-service performance."
         }
       ]
     },
@@ -779,7 +793,14 @@
           "url": "https://scikit-learn.org/stable/modules/linear_model.html",
           "section": "Ordinary least squares; ridge regression; logistic regression",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate ordinary least squares."
+          "scope": "scikit-learn 1.9.1. Logistic regression regularization. Fictional examples do not establish real-service performance."
+        },
+        {
+          "title": "scikit-learn LogisticRegression",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html",
+          "section": "C parameter",
+          "scope": "Smaller C means stronger regularisation in LogisticRegression; scikit-learn 1.9.1 was used for local checks.",
+          "reviewed": "2026-10-02"
         }
       ]
     },
@@ -835,7 +856,14 @@
           "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
           "section": "Computing cross-validated metrics; grouped data; time series split",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate computing cross-validated metrics."
+          "scope": "scikit-learn 1.9.1. Training-size diagnostics with fixed evaluation data. Fictional examples do not establish real-service performance."
+        },
+        {
+          "title": "scikit-learn learning curves",
+          "url": "https://scikit-learn.org/stable/modules/learning_curve.html",
+          "section": "Learning curves",
+          "scope": "Training-size and validation-score interpretation. The local count example is hypothetical.",
+          "reviewed": "2026-10-02"
         }
       ]
     },
@@ -891,7 +919,7 @@
           "url": "https://scikit-learn.org/stable/common_pitfalls.html",
           "section": "Inconsistent preprocessing; data leakage; controlling randomness",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate inconsistent preprocessing."
+          "scope": "scikit-learn 1.9.1. Target leakage and split contamination. Fictional examples do not establish real-service performance."
         }
       ]
     },
@@ -947,7 +975,7 @@
           "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
           "section": "Computing cross-validated metrics; grouped data; time series split",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate computing cross-validated metrics."
+          "scope": "scikit-learn 1.9.1. Grouped and chronological splitting. Fictional examples do not establish real-service performance."
         }
       ]
     },
@@ -1003,7 +1031,7 @@
           "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
           "section": "Classification metrics; regression metrics; dummy estimators",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate classification metrics."
+          "scope": "scikit-learn 1.9.1. Classification metrics and subgroup denominators. Fictional examples do not establish real-service performance."
         }
       ]
     },
@@ -1059,7 +1087,7 @@
           "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
           "section": "Classification metrics; regression metrics; dummy estimators",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate classification metrics."
+          "scope": "scikit-learn 1.9.1. Decision threshold selection on validation data. Fictional examples do not establish real-service performance."
         }
       ]
     },
@@ -1115,7 +1143,7 @@
           "url": "https://scikit-learn.org/stable/common_pitfalls.html",
           "section": "Inconsistent preprocessing; data leakage; controlling randomness",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate inconsistent preprocessing."
+          "scope": "scikit-learn 1.9.1. Randomness and reproducibility. Fictional examples do not establish real-service performance."
         }
       ]
     },
@@ -1171,7 +1199,14 @@
           "url": "https://scikit-learn.org/stable/common_pitfalls.html",
           "section": "Inconsistent preprocessing; data leakage; controlling randomness",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate inconsistent preprocessing."
+          "scope": "scikit-learn 1.9.1. Input changes and separately measured prediction error. Fictional examples do not establish real-service performance."
+        },
+        {
+          "title": "Google Machine Learning Crash Course",
+          "url": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring",
+          "section": "Data schema, training-serving skew and live quality checks",
+          "scope": "Monitoring input changes and measuring model quality separately. The local exercise does not establish production performance.",
+          "reviewed": "2026-10-02"
         }
       ]
     },
@@ -1204,7 +1239,7 @@
       ],
       "exercise": {
         "prompt": "Complete the advanced project. Explain one result, one failure case and the smallest next evaluation you would run before considering real use.",
-        "solution": "Run the reference, record the data hash and frozen threshold, compare its test cost with the dummy cost, and inspect channel counts. Name a mistaken ticket if present. Propose a later real-data pilot with permission, mature outcomes and human review; do not treat generated accuracy as deployment evidence.",
+        "solution": "Freeze the model and threshold choices, then run python ml_lab.py --final. Record the data hash and threshold, compare test cost with the dummy cost, and inspect channel counts. Name a mistaken validation ticket if present; the report lists validation mistakes, not individual test mistakes. Propose a later real-data pilot with permission, mature outcomes and human review; do not treat generated accuracy as deployment evidence.",
         "solutionFormat": "prose",
         "checks": [
           "Report the baseline and model on identical test rows.",
@@ -1228,7 +1263,7 @@
           "url": "https://scikit-learn.org/stable/getting_started.html",
           "section": "Fitting and predicting: estimator basics",
           "reviewed": "2026-10-02",
-          "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate fitting and predicting: estimator basics."
+          "scope": "scikit-learn 1.9.1. fictional ticket examples illustrate fitting and predicting: estimator basics."
         }
       ]
     }

@@ -1103,9 +1103,9 @@
       "references": [
         {
           "title": "Primary reference: Lecture 1: interval scheduling",
-          "url": "https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/pages/lecture-notes/",
-          "section": "Lecture 1: interval scheduling",
-          "reviewed": "2026-09-27",
+          "url": "https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/ff2a7015ff913fc01f0381d8f5126a9a_MIT6_046JS15_lec01.pdf",
+          "section": "Lecture 1, pages 2-4: interval scheduling and the exchange proof",
+          "reviewed": "2026-10-02",
           "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]

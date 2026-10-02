@@ -1061,7 +1061,7 @@
         {
           "title": "Tested artifact promotion",
           "paragraphs": [
-            "Build the React assets and publish the .NET application once in CI. Record commit and artifact checksum, run tests against those outputs and promote the same bytes. Rebuilding separately for production breaks the connection between test evidence and deployed behavior. Configuration and secrets are supplied at runtime."
+            "Build the React assets and publish the .NET application once in CI. Record commit and artifact checksum, run tests against those outputs and promote the same bytes. Rebuilding separately for production breaks the connection between test evidence and deployed behavior. Supply server configuration and secrets at runtime. Vite normally replaces import.meta.env values during the frontend build; changing those values requires a rebuild unless you design a separate public runtime-configuration mechanism. Never expose secrets through frontend configuration."
           ]
         },
         {
@@ -1097,6 +1097,13 @@
           "section": "Reproducible builds and release process",
           "scope": "Operational guidance; supplied local exercises do not prove a cloud release.",
           "reviewed": "2026-09-30"
+        },
+        {
+          "title": "Vite environment variables",
+          "url": "https://vite.dev/guide/env-and-mode",
+          "section": "Build-time replacement of import.meta.env",
+          "reviewed": "2026-10-02",
+          "scope": "Primary documentation checked for frontend build-time configuration; no deployment execution claim."
         }
       ]
     },

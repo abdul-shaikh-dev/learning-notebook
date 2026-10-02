@@ -505,7 +505,7 @@
         {
           "title": "Checking the rendered threshold",
           "paragraphs": [
-            "Do not round a ratio below the threshold up to a passing number. Translucency, anti-aliasing and different backgrounds can invalidate a token-only calculation; inspect the final state too."
+            "Do not round a ratio below the threshold up to a passing number. Measure the foreground and background colours from the rendered styles, accounting for transparency and the actual background. For WCAG text-contrast evaluation, do not sample anti-aliased edge pixels. Thin text may still look faint despite a passing ratio; inspect readability and choose a stronger font or greater contrast when needed."
           ]
         }
       ],
@@ -1039,7 +1039,7 @@
         {
           "title": "Equivalent controls and keyboard models",
           "paragraphs": [
-            "Drag-and-drop can make ordering feel direct, but some people cannot execute a drag precisely. Provide move up/down controls or a position selector that reaches the same result. Preserve focus on the moved item and announce the new position without flooding the user with updates.",
+            "Drag-and-drop can make ordering feel direct, but some people cannot execute a drag precisely. Provide move up/down controls or a position selector that reaches the same result. Preserve focus on the moved item and announce the new position without flooding the user with updates. The non-drag alternative must also work with a single pointer, such as tapping those buttons; keyboard support alone does not satisfy the dragging criterion.",
             "Custom tabs, menus and comboboxes need a defined keyboard model and ARIA relationships. Prefer native controls when they satisfy the task. Do not use a menu role for ordinary site links merely because the design calls it a menu; application menus have specialised interaction expectations."
           ],
           "example": "Task: move \"SQL joins\" from position 3 to 2\nPointer route: drag item\nKeyboard route: focus item → Move up\nFeedback: \"SQL joins moved to position 2 of 5\""

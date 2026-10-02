@@ -14,7 +14,7 @@ One change and how you would check it: ________________________________
 
 ## Worked example
 
-Limit tomorrow to the two essential outcomes, clarify their finish conditions and defer the optional four. Compare actual durations. If essential obligations still exceed capacity, negotiate support or scope rather than extending the workday.
+Check which outcomes are essential and which can be deferred. If two essential outcomes fit tomorrow, commit to those and agree to move the others. Compare actual durations. If essential obligations still exceed capacity, negotiate support or scope rather than extending the workday.
 
 ## Check your answer
 

@@ -149,7 +149,7 @@
         {
           "title": "An explicit training scope",
           "paragraphs": [
-            "A developer belongs to two tenants and has access to a work and personal subscription. A familiar resource-group name can exist in the wrong subscription. The optional template requires an explicit subscription_id and creates only a named training resource group if separately applied."
+            "A developer belongs to two tenants and has access to a work and personal subscription. A familiar resource-group name can exist in the wrong subscription. The optional template requires an explicit subscription_id and declares a named training resource group and a storage account inside it. A separate apply would create both resources."
           ]
         }
       ],

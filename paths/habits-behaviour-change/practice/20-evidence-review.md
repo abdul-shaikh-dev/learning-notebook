@@ -30,7 +30,7 @@ Evidence to review afterwards: ____________________________________
 
 ## Worked fictional response
 
-Keep the after-dinner cue and bag by the door. Add a note for late shifts and review next month. Search time appeared lower, but a lighter timetable also changed. The plan is useful local evidence, not proof of a universal habit rule.
+Keep the parts of the routine that helped. One option to try is an after-dinner cue with the bag ready by the door, plus a fallback for unavailable evenings. Review next month. Fewer searches were reported, but the case does not identify a cause; check whether workload or other conditions changed. Do not report a lighter timetable as a fact without evidence.
 
 ## Self-check
 

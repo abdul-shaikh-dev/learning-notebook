@@ -1009,7 +1009,7 @@
         {
           "title": "Know what each synchronization primitive contributes",
           "paragraphs": [
-            "A Thread runs a worker function. A Barrier waits until both workers have reached the same point, so both read the old version before either attempts the update. A Lock allows only one worker at a time through comparison and mutation. join waits for a worker to finish; a timeout prevents a failed test from waiting forever.",
+            "A Thread runs a worker function. A Barrier waits until both workers have reached the same point, so both read the old version before either attempts the update. A Lock allows only one worker at a time through comparison and mutation. join waits for a worker to finish; its timeout bounds that wait but does not stop the worker. Check is_alive() afterward. This fixture also bounds the barrier wait; arbitrary blocking worker code needs its own cancellation or process-level timeout.",
             "First read VersionStore and test it sequentially: read version 0, update with expected 0, then try expected 0 again. Expect success then conflict. Next introduce the two threads and barrier. This keeps the version rule separate from the machinery needed to expose simultaneous stale proposals."
           ]
         }
@@ -1058,7 +1058,7 @@
         {
           "title": "Barriers and safety timeouts",
           "paragraphs": [
-            "Our concurrency test gates progress using a Barrier and joins workers with safety timeouts. The timeout prevents a hang but is not the asserted ordering mechanism. If a worker fails before reaching the barrier, report that failure before a later join timeout obscures the cause."
+            "Our concurrency test gates progress using a Barrier and joins workers with safety timeouts. The barrier timeout bounds its wait, and the join timeout lets the test detect an unfinished worker with is_alive(). A join timeout does not terminate a thread and is not the ordering mechanism. If a worker fails before reaching the barrier, report that failure before a later join timeout obscures the cause."
           ],
           "example": "Fragile: sleep(.01), assert worker finished\nControlled: Event signals readiness, release explicitly, join with bound\nEvidence: exact outcomes rather than elapsed milliseconds"
         }

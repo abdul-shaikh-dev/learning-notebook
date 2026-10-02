@@ -325,6 +325,13 @@
           "section": "Agent runtime choices",
           "reviewed": "2026-09-27",
           "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+        },
+        {
+          "title": "OpenAI: conversation state and context windows",
+          "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+          "section": "Managing the context window",
+          "reviewed": "2026-10-02",
+          "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
         }
       ]
     },
@@ -849,6 +856,13 @@
           "section": "Abstract, method and evaluation",
           "reviewed": "2026-09-27",
           "scope": "Optional original research reading; results belong to paper settings, not this workshop."
+        },
+        {
+          "title": "OpenAI: semantic retrieval",
+          "url": "https://developers.openai.com/api/docs/guides/retrieval",
+          "section": "Semantic search; ranking; vector stores",
+          "reviewed": "2026-10-02",
+          "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
         }
       ]
     },

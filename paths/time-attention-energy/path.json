@@ -1188,7 +1188,7 @@
       ],
       "exercise": {
         "prompt": "Four of six daily outcomes carry over on three days. Choose one change to try and explain what you would check afterward.",
-        "solution": "Limit tomorrow to the two essential outcomes, clarify their finish conditions and defer the optional four. Compare actual durations. If essential obligations still exceed capacity, negotiate support or scope rather than extending the workday.",
+        "solution": "Check which outcomes are essential and which can be deferred. If two essential outcomes fit tomorrow, commit to those and agree to move the others. Compare actual durations. If essential obligations still exceed capacity, negotiate support or scope rather than extending the workday.",
         "solutionFormat": "prose",
         "checks": [
           "Reduce a named part of the next day's commitment.",

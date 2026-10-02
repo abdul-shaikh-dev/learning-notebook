@@ -851,7 +851,7 @@
       ],
       "exercise": {
         "prompt": "Plan the same target when only Tuesday and next Monday are available. List what you would omit and what evidence remains.",
-        "solution": "Tuesday: baseline, check the source and practise two mixed cases. Monday: answer three new cases without the source, check and log. Omit the extra Thursday review; record the longer gap and small sample. This plan gives actual delayed evidence but cannot tell how the omitted occasion would have changed performance.",
+        "solution": "Tuesday: baseline, check the source and practise two mixed cases. Monday: answer three new cases without the source, check and log. Omit the extra Thursday review; record the longer gap and small sample. If the later attempt is carried out, it provides delayed evidence. The plan alone does not, and neither result can show how the omitted occasion would have changed performance.",
         "solutionFormat": "prose",
         "checks": [
           "Only Tuesday and next Monday are scheduled.",

@@ -1280,11 +1280,18 @@
       },
       "references": [
         {
-          "title": "Web Storage",
-          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API",
-          "section": "Testing for availability",
-          "reviewed": "2026-09-27",
-          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          "title": "React Component: Error Boundaries",
+          "url": "https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary",
+          "section": "Catching rendering errors with an Error Boundary",
+          "reviewed": "2026-10-02",
+          "scope": "Primary guidance checked for descendant rendering errors and excluded error paths; not a browser execution claim."
+        },
+        {
+          "title": "OWASP XSS prevention",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+          "section": "Framework security and output encoding",
+          "reviewed": "2026-10-02",
+          "scope": "Primary guidance checked for framework escape hatches and untrusted HTML/URL boundaries; not a full application security audit."
         }
       ]
     },

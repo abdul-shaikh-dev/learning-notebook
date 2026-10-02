@@ -861,6 +861,13 @@ const LEARNING_PATHS = [
             "section": "Basic usage; JSONEncoder and JSONDecoder",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          },
+          {
+            "title": "OWASP: application logging",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+            "section": "Event data; data to exclude",
+            "reviewed": "2026-10-02",
+            "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
           }
         ]
       },
@@ -2044,6 +2051,13 @@ const LEARNING_PATHS = [
             "section": "Read versus write transactions; transaction control",
             "reviewed": "2026-09-27",
             "scope": "Trusted local checkpoint exercise; two-connection CAS evidence, no secure sandbox or external effect atomicity."
+          },
+          {
+            "title": "Martin Kleppmann: distributed locking and fencing",
+            "url": "https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html",
+            "section": "Protecting a resource with a lock; fencing tokens",
+            "reviewed": "2026-10-02",
+            "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
           }
         ],
         "diagram": {
@@ -2374,6 +2388,13 @@ const LEARNING_PATHS = [
             "section": "Deny by default; validate permissions on every request",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          },
+          {
+            "title": "OWASP: application logging",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+            "section": "Data to exclude; protecting logs",
+            "reviewed": "2026-10-02",
+            "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
           }
         ]
       },
@@ -3483,6 +3504,13 @@ const LEARNING_PATHS = [
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          },
+          {
+            "title": "OpenAI: conversation state and context windows",
+            "url": "https://developers.openai.com/api/docs/guides/conversation-state",
+            "section": "Managing the context window",
+            "reviewed": "2026-10-02",
+            "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
           }
         ]
       },
@@ -4237,6 +4265,13 @@ const LEARNING_PATHS = [
             "section": "Abstract, method and evaluation",
             "reviewed": "2026-09-27",
             "scope": "Optional original research reading; results belong to paper settings, not this workshop."
+          },
+          {
+            "title": "OpenAI: semantic retrieval",
+            "url": "https://developers.openai.com/api/docs/guides/retrieval",
+            "section": "Semantic search; ranking; vector stores",
+            "reviewed": "2026-10-02",
+            "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
           }
         ],
         "diagram": {
@@ -6089,6 +6124,13 @@ const LEARNING_PATHS = [
             "section": "V15: threat modeling and architecture",
             "reviewed": "2026-09-27",
             "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+          },
+          {
+            "title": "OWASP Threat Modeling Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html",
+            "section": "Assets, threats and trust boundaries",
+            "reviewed": "2026-10-02",
+            "scope": "Threat-model concepts and abuse-case design; the synthetic exercise is not a production assessment."
           }
         ]
       },
@@ -12522,7 +12564,7 @@ const LEARNING_PATHS = [
           {
             "title": "An explicit training scope",
             "paragraphs": [
-              "A developer belongs to two tenants and has access to a work and personal subscription. A familiar resource-group name can exist in the wrong subscription. The optional template requires an explicit subscription_id and creates only a named training resource group if separately applied."
+              "A developer belongs to two tenants and has access to a work and personal subscription. A familiar resource-group name can exist in the wrong subscription. The optional template requires an explicit subscription_id and declares a named training resource group and a storage account inside it. A separate apply would create both resources."
             ]
           }
         ],
@@ -14799,7 +14841,7 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the decision",
             "paragraphs": [
-              "Missing means the value is unavailable. Duplicate means more than one record represents the same intended unit. isna() counts unavailable cells; duplicated(\"ticket_id\") tests repeated identifiers. drop_duplicates() across all columns removes exact copies, but conflicting records with the same ID need a rule grounded in how the source was collected.",
+              "Missing means the value is unavailable. Duplicate means more than one record represents the same intended unit. isna() marks unavailable cells with True; sum that mask to count them. duplicated(\"ticket_id\") tests repeated identifiers. drop_duplicates() across all columns removes exact copies, but conflicting records with the same ID need a rule grounded in how the source was collected.",
               "Do not choose the first record just because it makes a test pass. If two versions have explicit update times, the newest validated version may be appropriate. If the source lacks that information, stop and report the conflict. For missing durations, report both total tickets and known durations so readers can see the denominator used by the mean."
             ]
           },
@@ -15357,6 +15399,13 @@ const LEARNING_PATHS = [
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          },
+          {
+            "title": "OpenStax experimental design",
+            "url": "https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics",
+            "section": "Observational studies, random assignment and confounding",
+            "scope": "Study-design context for why a grouped descriptive comparison does not by itself establish causation.",
+            "reviewed": "2026-10-02"
           }
         ]
       },
@@ -15523,7 +15572,7 @@ const LEARNING_PATHS = [
           {
             "title": "Worked example",
             "paragraphs": [
-              "python analysis.py --out report-output produces both files. Running it twice with the same environment and input preserves the JSON content. The recorded SHA-256 changes if even one source byte changes."
+              "python analysis.py --out report-output produces both files. Running it twice with the same environment and input preserves the JSON content. A changed source will normally have a different SHA-256. Matching hashes are a practical identity check, not a mathematical guarantee that two files are identical."
             ]
           }
         ],
@@ -15553,6 +15602,13 @@ const LEARNING_PATHS = [
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          },
+          {
+            "title": "Python hashlib",
+            "url": "https://docs.python.org/3.11/library/hashlib.html",
+            "section": "Hash objects and hexdigest",
+            "scope": "Hash API behaviour. Collision resistance is practical evidence, not proof that distinct inputs can never share a digest.",
+            "reviewed": "2026-10-02"
           }
         ]
       },
@@ -16360,10 +16416,10 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Define whether an unknown customer ID may be blank and what should happen to a missing amount.",
-          "solution": "This contract requires a known nonblank identifier and a present integer amount. Missing amounts reject the batch rather than inventing zero revenue.",
+          "prompt": "May the customer ID be blank under this contract, and what should happen to a missing amount?",
+          "solution": "Require a nonblank identifier that matches the documented syntax and a present integer amount. The lab does not check whether the customer exists in another table. Missing amounts reject the batch rather than inventing zero revenue.",
           "checks": [
-            "Require a known nonblank customer identifier and a present integer amount.",
+            "Require a nonblank customer identifier with valid syntax and a present integer amount; distinguish syntax validation from a customer lookup.",
             "Reject a missing amount rather than converting it to zero."
           ],
           "solutionFormat": "prose"
@@ -17337,6 +17393,13 @@ const LEARNING_PATHS = [
             "section": "Time comparisons",
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          },
+          {
+            "title": "Beam watermarks and late data",
+            "url": "https://beam.apache.org/documentation/programming-guide/#watermarks-and-late-data",
+            "section": "Beam watermarks and late data",
+            "reviewed": "2026-10-02",
+            "scope": "Concept and type behavior checked against primary documentation; the local lab does not execute the external platform."
           }
         ]
       },
@@ -17392,6 +17455,13 @@ const LEARNING_PATHS = [
             "section": "File reading contract",
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          },
+          {
+            "title": "Apache Parquet overview",
+            "url": "https://parquet.apache.org/docs/overview/",
+            "section": "Apache Parquet overview",
+            "reviewed": "2026-10-02",
+            "scope": "Concept and type behavior checked against primary documentation; the local lab does not execute the external platform."
           }
         ]
       },
@@ -17619,6 +17689,13 @@ const LEARNING_PATHS = [
             "section": "SQL Server CREATE TABLE types and constraints",
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          },
+          {
+            "title": "SQL Server datetime2",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/datetime2-transact-sql?view=sql-server-ver17",
+            "section": "SQL Server datetime2",
+            "reviewed": "2026-10-02",
+            "scope": "Concept and type behavior checked against primary documentation; the local lab does not execute the external platform."
           }
         ]
       },
@@ -21502,9 +21579,9 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Primary reference: Lecture 1: interval scheduling",
-            "url": "https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/pages/lecture-notes/",
-            "section": "Lecture 1: interval scheduling",
-            "reviewed": "2026-09-27",
+            "url": "https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/ff2a7015ff913fc01f0381d8f5126a9a_MIT6_046JS15_lec01.pdf",
+            "section": "Lecture 1, pages 2-4: interval scheduling and the exchange proof",
+            "reviewed": "2026-10-02",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ]
@@ -30653,7 +30730,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tested artifact promotion",
             "paragraphs": [
-              "Build the React assets and publish the .NET application once in CI. Record commit and artifact checksum, run tests against those outputs and promote the same bytes. Rebuilding separately for production breaks the connection between test evidence and deployed behavior. Configuration and secrets are supplied at runtime."
+              "Build the React assets and publish the .NET application once in CI. Record commit and artifact checksum, run tests against those outputs and promote the same bytes. Rebuilding separately for production breaks the connection between test evidence and deployed behavior. Supply server configuration and secrets at runtime. Vite normally replaces import.meta.env values during the frontend build; changing those values requires a rebuild unless you design a separate public runtime-configuration mechanism. Never expose secrets through frontend configuration."
             ]
           },
           {
@@ -30689,6 +30766,13 @@ const LEARNING_PATHS = [
             "section": "Reproducible builds and release process",
             "scope": "Operational guidance; supplied local exercises do not prove a cloud release.",
             "reviewed": "2026-09-30"
+          },
+          {
+            "title": "Vite environment variables",
+            "url": "https://vite.dev/guide/env-and-mode",
+            "section": "Build-time replacement of import.meta.env",
+            "reviewed": "2026-10-02",
+            "scope": "Primary documentation checked for frontend build-time configuration; no deployment execution claim."
           }
         ],
         "diagram": {
@@ -35099,7 +35183,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "Wen's two-week bag-packing log shows fewer searches, with two unavailable evenings and one missed cue. Write a keep/change decision with an uncertainty statement.",
-          "solution": "Keep the after-dinner cue and bag by the door. Add a note for late shifts and review next month. Search time appeared lower, but a lighter timetable also changed. The plan is useful local evidence, not proof of a universal habit rule.",
+          "solution": "Keep the parts of the routine that helped. One option to try is an after-dinner cue with the bag ready by the door, plus a fallback for unavailable evenings. Review next month. Fewer searches were reported, but the case does not identify a cause; check whether workload or other conditions changed. Do not report a lighter timetable as a fact without evidence.",
           "solutionFormat": "prose",
           "checks": [
             "Observations and alternate explanations are separate.",
@@ -38976,11 +39060,18 @@ const LEARNING_PATHS = [
         },
         "references": [
           {
-            "title": "Web Storage",
-            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API",
-            "section": "Testing for availability",
-            "reviewed": "2026-09-27",
-            "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+            "title": "React Component: Error Boundaries",
+            "url": "https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary",
+            "section": "Catching rendering errors with an Error Boundary",
+            "reviewed": "2026-10-02",
+            "scope": "Primary guidance checked for descendant rendering errors and excluded error paths; not a browser execution claim."
+          },
+          {
+            "title": "OWASP XSS prevention",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+            "section": "Framework security and output encoding",
+            "reviewed": "2026-10-02",
+            "scope": "Primary guidance checked for framework escape hatches and untrusted HTML/URL boundaries; not a full application security audit."
           }
         ]
       },
@@ -44614,7 +44705,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "Plan the same target when only Tuesday and next Monday are available. List what you would omit and what evidence remains.",
-          "solution": "Tuesday: baseline, check the source and practise two mixed cases. Monday: answer three new cases without the source, check and log. Omit the extra Thursday review; record the longer gap and small sample. This plan gives actual delayed evidence but cannot tell how the omitted occasion would have changed performance.",
+          "solution": "Tuesday: baseline, check the source and practise two mixed cases. Monday: answer three new cases without the source, check and log. Omit the extra Thursday review; record the longer gap and small sample. If the later attempt is carried out, it provides delayed evidence. The plan alone does not, and neither result can show how the omitted occasion would have changed performance.",
           "solutionFormat": "prose",
           "checks": [
             "Only Tuesday and next Monday are scheduled.",
@@ -47409,7 +47500,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/getting_started.html",
             "section": "Fitting and predicting: estimator basics",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate fitting and predicting: estimator basics."
+            "scope": "scikit-learn 1.9.1. fictional ticket examples illustrate fitting and predicting: estimator basics."
           }
         ]
       },
@@ -47465,7 +47556,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/common_pitfalls.html",
             "section": "Inconsistent preprocessing; data leakage; controlling randomness",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate inconsistent preprocessing."
+            "scope": "scikit-learn 1.9.1. Data leakage and feature availability. Fictional examples do not establish real-service performance."
           }
         ]
       },
@@ -47521,7 +47612,14 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html",
             "section": "Parameters: strategy; fit; predict",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate parameters: strategy."
+            "scope": "scikit-learn 1.9.1. Dummy classification baseline strategies; the fictional scores do not establish real-service performance."
+          },
+          {
+            "title": "scikit-learn DummyRegressor",
+            "url": "https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyRegressor.html",
+            "section": "Mean and median prediction strategies",
+            "scope": "Constant regression baselines. The exercise calculates its own absolute error.",
+            "reviewed": "2026-10-02"
           }
         ]
       },
@@ -47577,7 +47675,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
             "section": "Computing cross-validated metrics; grouped data; time series split",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate computing cross-validated metrics."
+            "scope": "scikit-learn 1.9.1. Training, validation and test separation. Fictional examples do not establish real-service performance."
           }
         ],
         "diagram": {
@@ -47736,7 +47834,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
             "section": "Classification metrics; regression metrics; dummy estimators",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate classification metrics."
+            "scope": "scikit-learn 1.9.1. Confusion counts, precision and recall. Fictional examples do not establish real-service performance."
           }
         ]
       },
@@ -47792,7 +47890,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
             "section": "Classification metrics; regression metrics; dummy estimators",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate classification metrics."
+            "scope": "scikit-learn 1.9.1. MAE, MSE, RMSE and R-squared. Fictional examples do not establish real-service performance."
           }
         ]
       },
@@ -47848,7 +47946,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
             "section": "Computing cross-validated metrics; grouped data; time series split",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate computing cross-validated metrics."
+            "scope": "scikit-learn 1.9.1. Stratification and its limits. Fictional examples do not establish real-service performance."
           }
         ]
       },
@@ -47904,7 +48002,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/linear_model.html",
             "section": "Ordinary least squares; ridge regression; logistic regression",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate ordinary least squares."
+            "scope": "scikit-learn 1.9.1. Ordinary least squares. Fictional examples do not establish real-service performance."
           }
         ]
       },
@@ -47960,7 +48058,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/linear_model.html",
             "section": "Ordinary least squares; ridge regression; logistic regression",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate ordinary least squares."
+            "scope": "scikit-learn 1.9.1. Binary logistic regression and thresholds. Fictional examples do not establish real-service performance."
           }
         ]
       },
@@ -47973,7 +48071,7 @@ const LEARNING_PATHS = [
           {
             "title": "How it works",
             "paragraphs": [
-              "Numerical models need a representation of category strings. One-hot encoding gives each known category its own indicator instead of inventing an ordering between email and chat. Unknown categories need an explicit policy; the lab encodes them with zeros for the relevant category group.",
+              "Numerical models need a representation of category strings. One-hot encoding gives each known category its own indicator. For three or more unordered categories, consecutive integer codes can impose an unsupported order and spacing in a linear model. A single binary indicator is a valid representation for two categories. Unknown categories need an explicit policy; the lab encodes them with zeros for the relevant category group.",
               "Scaling centers a numeric feature using a training mean and divides by its training standard deviation. Imputation fills missing values using a training statistic or rule. Fit these quantities on training rows and reuse them unchanged for validation and prediction."
             ]
           },
@@ -48001,14 +48099,14 @@ const LEARNING_PATHS = [
           ]
         },
         "quiz": {
-          "question": "Why avoid encoding chat=1 and email=2 without justification?",
+          "question": "Why avoid coding unordered channels chat=1, email=2 and phone=3 as one numeric feature in a linear model without justification?",
           "options": [
             "It invents an ordered numeric distance",
             "Strings cannot ever be represented",
             "It prevents any missing values"
           ],
           "correct": 0,
-          "explanation": "The numeric ordering introduces an assumption about category relationships. One-hot indicators avoid that particular assumption."
+          "explanation": "A single coefficient would force equally spaced effects in the supplied order. Separate indicators allow different effects without that constraint. For just two categories, one binary indicator is sufficient."
         },
         "references": [
           {
@@ -48016,7 +48114,14 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/compose.html",
             "section": "Pipeline; ColumnTransformer",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate pipeline."
+            "scope": "scikit-learn 1.9.1. ColumnTransformer and categorical/numeric preprocessing. Fictional examples do not establish real-service performance."
+          },
+          {
+            "title": "scikit-learn preprocessing",
+            "url": "https://scikit-learn.org/stable/modules/preprocessing.html",
+            "section": "Encoding categorical features",
+            "scope": "Integer encoding can impose an artificial order or spacing. One-hot encoding and training-only preprocessing are checked with the pinned practice version.",
+            "reviewed": "2026-10-02"
           }
         ]
       },
@@ -48072,7 +48177,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/compose.html",
             "section": "Pipeline; ColumnTransformer",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate pipeline."
+            "scope": "scikit-learn 1.9.1. Pipeline fitting within cross-validation. Fictional examples do not establish real-service performance."
           }
         ]
       },
@@ -48128,7 +48233,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
             "section": "Computing cross-validated metrics; grouped data; time series split",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate computing cross-validated metrics."
+            "scope": "scikit-learn 1.9.1. TimeSeriesSplit and development evaluation. Fictional examples do not establish real-service performance."
           }
         ]
       },
@@ -48184,7 +48289,14 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/linear_model.html",
             "section": "Ordinary least squares; ridge regression; logistic regression",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate ordinary least squares."
+            "scope": "scikit-learn 1.9.1. Logistic regression regularization. Fictional examples do not establish real-service performance."
+          },
+          {
+            "title": "scikit-learn LogisticRegression",
+            "url": "https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html",
+            "section": "C parameter",
+            "scope": "Smaller C means stronger regularisation in LogisticRegression; scikit-learn 1.9.1 was used for local checks.",
+            "reviewed": "2026-10-02"
           }
         ]
       },
@@ -48240,7 +48352,14 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
             "section": "Computing cross-validated metrics; grouped data; time series split",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate computing cross-validated metrics."
+            "scope": "scikit-learn 1.9.1. Training-size diagnostics with fixed evaluation data. Fictional examples do not establish real-service performance."
+          },
+          {
+            "title": "scikit-learn learning curves",
+            "url": "https://scikit-learn.org/stable/modules/learning_curve.html",
+            "section": "Learning curves",
+            "scope": "Training-size and validation-score interpretation. The local count example is hypothetical.",
+            "reviewed": "2026-10-02"
           }
         ]
       },
@@ -48296,7 +48415,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/common_pitfalls.html",
             "section": "Inconsistent preprocessing; data leakage; controlling randomness",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate inconsistent preprocessing."
+            "scope": "scikit-learn 1.9.1. Target leakage and split contamination. Fictional examples do not establish real-service performance."
           }
         ]
       },
@@ -48352,7 +48471,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
             "section": "Computing cross-validated metrics; grouped data; time series split",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate computing cross-validated metrics."
+            "scope": "scikit-learn 1.9.1. Grouped and chronological splitting. Fictional examples do not establish real-service performance."
           }
         ]
       },
@@ -48408,7 +48527,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
             "section": "Classification metrics; regression metrics; dummy estimators",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate classification metrics."
+            "scope": "scikit-learn 1.9.1. Classification metrics and subgroup denominators. Fictional examples do not establish real-service performance."
           }
         ]
       },
@@ -48464,7 +48583,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
             "section": "Classification metrics; regression metrics; dummy estimators",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate classification metrics."
+            "scope": "scikit-learn 1.9.1. Decision threshold selection on validation data. Fictional examples do not establish real-service performance."
           }
         ]
       },
@@ -48520,7 +48639,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/common_pitfalls.html",
             "section": "Inconsistent preprocessing; data leakage; controlling randomness",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate inconsistent preprocessing."
+            "scope": "scikit-learn 1.9.1. Randomness and reproducibility. Fictional examples do not establish real-service performance."
           }
         ]
       },
@@ -48576,7 +48695,14 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/common_pitfalls.html",
             "section": "Inconsistent preprocessing; data leakage; controlling randomness",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate inconsistent preprocessing."
+            "scope": "scikit-learn 1.9.1. Input changes and separately measured prediction error. Fictional examples do not establish real-service performance."
+          },
+          {
+            "title": "Google Machine Learning Crash Course",
+            "url": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring",
+            "section": "Data schema, training-serving skew and live quality checks",
+            "scope": "Monitoring input changes and measuring model quality separately. The local exercise does not establish production performance.",
+            "reviewed": "2026-10-02"
           }
         ]
       },
@@ -48609,7 +48735,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "Complete the advanced project. Explain one result, one failure case and the smallest next evaluation you would run before considering real use.",
-          "solution": "Run the reference, record the data hash and frozen threshold, compare its test cost with the dummy cost, and inspect channel counts. Name a mistaken ticket if present. Propose a later real-data pilot with permission, mature outcomes and human review; do not treat generated accuracy as deployment evidence.",
+          "solution": "Freeze the model and threshold choices, then run python ml_lab.py --final. Record the data hash and threshold, compare test cost with the dummy cost, and inspect channel counts. Name a mistaken validation ticket if present; the report lists validation mistakes, not individual test mistakes. Propose a later real-data pilot with permission, mature outcomes and human review; do not treat generated accuracy as deployment evidence.",
           "solutionFormat": "prose",
           "checks": [
             "Report the baseline and model on identical test rows.",
@@ -48633,7 +48759,7 @@ const LEARNING_PATHS = [
             "url": "https://scikit-learn.org/stable/getting_started.html",
             "section": "Fitting and predicting: estimator basics",
             "reviewed": "2026-10-02",
-            "scope": "scikit-learn 1.9.1; fictional ticket examples illustrate fitting and predicting: estimator basics."
+            "scope": "scikit-learn 1.9.1. fictional ticket examples illustrate fitting and predicting: estimator basics."
           }
         ]
       }
@@ -49236,7 +49362,8 @@ const LEARNING_PATHS = [
           {
             "title": "Keep the sample envelope and the design distinct",
             "paragraphs": [
-              "The JSON below is the small executable lab contract. It contains id, job_id, type, version and value only. The earlier discussion names additional production metadata; do not add those fields to the strict v1 parser and expect it to accept them. In the foundation sketch, write correlation and occurrence time beside the event. Lesson 14 explains how to introduce them as a versioned contract change."
+              "The JSON below is the small executable lab contract. It contains id, job_id, type, version and value only. The earlier discussion names additional production metadata; do not add those fields to the strict v1 parser and expect it to accept them. In the foundation sketch, write correlation and occurrence time beside the event. Lesson 14 explains how to introduce them as a versioned contract change.",
+              "The lab assumes event IDs are unique across its single event source. CloudEvents identifies an event by source plus id, so a multi-source inbox must preserve that source scope or use a documented globally unique ID policy."
             ]
           }
         ],
@@ -49264,6 +49391,13 @@ const LEARNING_PATHS = [
             "section": "Solution; problems and considerations",
             "reviewed": "2026-09-30",
             "scope": "General asynchronous architecture; product guarantees must be checked separately."
+          },
+          {
+            "title": "CloudEvents 1.0.2 event identity",
+            "url": "https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md",
+            "section": "Required attributes: id and source",
+            "reviewed": "2026-10-02",
+            "scope": "Source-plus-ID uniqueness; the teaching envelope is not a conformant CloudEvents implementation."
           }
         ],
         "stage": "foundation",
@@ -49999,8 +50133,8 @@ const LEARNING_PATHS = [
             "title": "RabbitMQ dead-letter exchanges",
             "url": "https://www.rabbitmq.com/docs/dlx",
             "section": "What is a dead letter exchange; configuring; safety",
-            "reviewed": "2026-09-30",
-            "scope": "RabbitMQ-specific routing; the local lab uses a simpler quarantine table."
+            "reviewed": "2026-10-02",
+            "scope": "RabbitMQ dead-letter routing. The local retry classifier returns a quarantine decision; it does not persist a quarantine table or transfer messages."
           },
           {
             "title": "RabbitMQ reliability guide",
@@ -50054,8 +50188,8 @@ const LEARNING_PATHS = [
             "title": "RabbitMQ dead-letter exchanges",
             "url": "https://www.rabbitmq.com/docs/dlx",
             "section": "What is a dead letter exchange; configuring; safety",
-            "reviewed": "2026-09-30",
-            "scope": "RabbitMQ-specific routing; the local lab uses a simpler quarantine table."
+            "reviewed": "2026-10-02",
+            "scope": "RabbitMQ dead-letter routing. The local retry classifier returns a quarantine decision; it does not persist a quarantine table or transfer messages."
           }
         ],
         "stage": "intermediate",
@@ -50476,6 +50610,13 @@ const LEARNING_PATHS = [
             "section": "Acknowledgements; data safety; consumer reliability",
             "reviewed": "2026-09-30",
             "scope": "RabbitMQ guidance; actual durability requires broker-specific replication and persistence configuration."
+          },
+          {
+            "title": "RabbitMQ access control",
+            "url": "https://www.rabbitmq.com/docs/access-control",
+            "section": "Authentication and authorization",
+            "reviewed": "2026-10-02",
+            "scope": "Broker resource permissions; no live broker ACL or TLS test performed by the core SQLite suite."
           }
         ],
         "stage": "advanced",
@@ -51429,7 +51570,8 @@ const LEARNING_PATHS = [
           {
             "title": "Expiry and new resolution",
             "paragraphs": [
-              "A TTL limits how long a DNS answer may be retained under the resolver's rules. Our simplified cache stores an expiry and returns no answer at or after it. An expired value needs a new resolution, which can produce a changed address or a failure."
+              "A TTL limits how long a DNS answer may be retained under the resolver's rules. Our simplified cache stores an expiry and returns no answer at or after it. An expired value needs a new resolution, which can produce a changed address or a failure.",
+              "In real DNS, a record with TTL 0 may still be used for the current transaction; it must not be reused from cache for later requests. This teaching cache models reuse only, so its immediate lookup returns no cached answer."
             ]
           },
           {
@@ -51666,7 +51808,7 @@ const LEARNING_PATHS = [
           {
             "title": "Bytes, text and JSON",
             "paragraphs": [
-              "A response body arrives as bytes. Text decoding and JSON parsing are separate transformations; content type tells the client how the representation is intended to be interpreted. JSON exchanged between systems uses UTF-8, and malformed encodings must not quietly become valid-looking lesson content."
+              "A response body arrives as bytes. Text decoding and JSON parsing are separate transformations; content type tells the client how the representation is intended to be interpreted. RFC 8259 requires UTF-8 for JSON exchanged between systems outside a closed ecosystem, and malformed encodings must not quietly become valid-looking lesson content."
             ]
           },
           {
@@ -51714,8 +51856,8 @@ const LEARNING_PATHS = [
             "title": "IETF RFC 8259: JSON",
             "url": "https://www.rfc-editor.org/rfc/rfc8259.html",
             "section": "Section 8.1: character encoding",
-            "reviewed": "2026-09-27",
-            "scope": "JSON exchanged between systems uses UTF-8; supplied tests reject invalid encoded observations and accept non-ASCII UTF-8 content."
+            "reviewed": "2026-10-02",
+            "scope": "RFC 8259 requires UTF-8 outside closed ecosystems. This lab deliberately accepts only UTF-8 and rejects other encodings."
           }
         ]
       },
@@ -54087,7 +54229,7 @@ const LEARNING_PATHS = [
           {
             "title": "Span relationships and overlap",
             "paragraphs": [
-              "A trace groups spans for a logical operation. Each span records a start, end, operation name and relationship to a parent. A request span may contain parsing and database child spans. A child duration is already included in its parent's elapsed time; adding parent and child durations double-counts.",
+              "A trace groups spans for a logical operation. Each span records a start, end and operation name; a root span has no parent, while a child refers to its parent. In the example below the request waits for its parsing and database work, so the child intervals fit inside the request span. Adding those durations to the parent double-counts elapsed time. In asynchronous systems, a child can outlive its parent: inspect the actual intervals rather than assume containment.",
               "Parallel children can overlap. A parent lasting 120 ms with two overlapping 80 ms children does not imply 160 ms of user waiting. Study the timeline and critical path: the chain of dependencies that determines completion. Missing instrumentation leaves unaccounted time, which is a question to investigate rather than proof of CPU work."
             ],
             "example": "Request span: [0,120] ms\nParse span: [5,15] ms\nQuery A: [20,100] ms; Query B: [25,105] ms\nChildren overlap; do not sum them into request latency."
@@ -54114,11 +54256,11 @@ const LEARNING_PATHS = [
             "Compute coverage from the union of child intervals, preserving overlap.",
             "The failed run retains both timing and error status; uncovered time is not automatically CPU time."
           ],
-          "solution": "Child intervals lie inside the parent and can overlap each other, so adding parent and children double-counts. Use their union to identify uncovered elapsed time. B failure changes request outcome but does not erase the time spent waiting for it. Exact durations and even completion order depend on scheduling; the script checks timeline invariants, not a machine-speed threshold.",
+          "solution": "In this drill, child intervals lie inside the parent and can overlap each other, so adding parent and children double-counts. Use their union to identify uncovered elapsed time. B failure changes request outcome but does not erase the time spent waiting for it. Exact durations and even completion order depend on scheduling; the script checks timeline invariants, not a machine-speed threshold.",
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "Why should parent and child durations not simply be added?",
+          "question": "In this drill, why should parent and child durations not simply be added?",
           "options": [
             "Child elapsed time is already inside the parent and may overlap other children.",
             "Child spans measure CPU exclusively, while parents measure elapsed time.",
@@ -54141,6 +54283,13 @@ const LEARNING_PATHS = [
             "section": "perf_counter and process_time",
             "reviewed": "2026-10-02",
             "scope": "Primary API documentation for the optional mechanism lab. Runtime prerequisites and execution evidence are separate in mechanism-lab.md."
+          },
+          {
+            "title": "OpenTelemetry tracing API",
+            "url": "https://opentelemetry.io/docs/specs/otel/trace/api/",
+            "section": "Span creation; End; span lifetime",
+            "reviewed": "2026-10-02",
+            "scope": "Root spans have no parent. Ending a parent does not end its children; this local drill deliberately waits for both children."
           }
         ],
         "diagram": {
@@ -57597,7 +57746,7 @@ const LEARNING_PATHS = [
             "title": "How it works",
             "paragraphs": [
               "Write the unit beside each number before calculating. Dividing 1,200 requests by 60 seconds gives 20 requests per second. Multiplying that rate by 15 seconds gives 300 requests. Seconds cancel; the remaining unit describes the answer.",
-              "An average rate over several periods uses total work divided by total time. An unweighted average of period rates works only when the periods have equal durations. Decimal MB means 1,000,000 bytes here; binary MiB means 1,048,576 bytes. State which unit a size uses."
+              "An average rate over several periods uses total work divided by total time. Equal-duration periods let you average their rates without weights. Otherwise, weight each rate by its duration; an unweighted average can give the wrong result. Decimal MB means 1,000,000 bytes here; binary MiB means 1,048,576 bytes. State which unit a size uses."
             ]
           },
           {
@@ -58084,10 +58233,10 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "OpenStax Introductory Statistics 2e",
-            "url": "https://openstax.org/books/introductory-statistics-2e/pages/1-4-experimental-design-and-ethics",
-            "section": "1.4, random assignment, control and confounding",
+            "url": "https://openstax.org/books/introductory-statistics-2e/pages/1-2-data-sampling-and-variation-in-data-and-sampling",
+            "section": "1.2, random sampling, sampling bias and variation",
             "reviewed": "2026-10-02",
-            "scope": "Introductory experimental design; the local demonstration does not establish a real treatment effect."
+            "scope": "Sampling methods and selection bias; the finite population and samples are original examples."
           }
         ]
       },
@@ -71595,7 +71744,7 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Implement the classification and loader from the starter fixture before viewing advanced-solutions.sql. Provide two runs and a conflict-case explanation, plus a production-readiness gap list.",
           "starter": "--Preserve raw rows; parse safely; group by EventId for conflicts; rank exact copies;\n--classify; check existing ledger payloads; load unseen accepted keys atomically;\n--reconcile all orders; prove replay inserts0.",
-          "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN EXISTS (\n  SELECT 1 FROM #LNRawEvents other WHERE other.EventId=t.EventId\n  AND (other.OrderId<>t.OrderId\n   OR DATALENGTH(other.AmountText)<>DATALENGTH(t.AmountText)\n   OR CONVERT(varbinary(60),other.AmountText)<>CONVERT(varbinary(60),t.AmountText))\n ) THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n",
+          "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN EXISTS (\n  SELECT 1 FROM #LNRawEvents other WHERE other.EventId=t.EventId\n  AND (other.OrderId<>t.OrderId\n   OR DATALENGTH(other.AmountText)<>DATALENGTH(t.AmountText)\n   OR CONVERT(varbinary(60),other.AmountText)<>CONVERT(varbinary(60),t.AmountText))\n ) THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,ParsedAmount AS NormalizedAmount,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n",
           "checks": [
             "All six raw rows are accounted for: three accepted, one duplicate, one invalid and one orphan.",
             "The first run inserts three rows. Repeating it inserts none, and the ledger still contains three rows totalling 215.",
@@ -72488,6 +72637,13 @@ const LEARNING_PATHS = [
             "section": "Operations Research 9(3), 383–387 (1961)",
             "reviewed": "2026-09-27",
             "scope": "Long-run averages for a stable consistently bounded system; not a per-request prediction or an overload sizing guarantee."
+          },
+          {
+            "title": "Prometheus histograms and summaries",
+            "url": "https://prometheus.io/docs/practices/histograms/",
+            "section": "Prometheus histograms and summaries",
+            "reviewed": "2026-10-02",
+            "scope": "Quantile aggregation rules; no Prometheus deployment or load test."
           }
         ]
       },
@@ -72946,6 +73102,13 @@ const LEARNING_PATHS = [
             "section": "Data sovereignty; consistency and transactions",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          },
+          {
+            "title": "SQLite query planning",
+            "url": "https://www.sqlite.org/queryplanner.html",
+            "section": "SQLite query planning",
+            "reviewed": "2026-10-02",
+            "scope": "Multi-column index ordering for the teaching access pattern; actual plans depend on engine and data."
           }
         ]
       },
@@ -73001,6 +73164,13 @@ const LEARNING_PATHS = [
             "section": "Data sovereignty; consistency and transactions",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          },
+          {
+            "title": "PostgreSQL index introduction",
+            "url": "https://www.postgresql.org/docs/17/indexes-intro.html",
+            "section": "PostgreSQL index introduction",
+            "reviewed": "2026-10-02",
+            "scope": "Index access and write overhead as a concrete database example; no PostgreSQL benchmark."
           }
         ]
       },
@@ -73623,6 +73793,13 @@ const LEARNING_PATHS = [
             "section": "Data sovereignty; consistency and transactions",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          },
+          {
+            "title": "PostgreSQL standby replication",
+            "url": "https://www.postgresql.org/docs/current/warm-standby.html",
+            "section": "PostgreSQL standby replication",
+            "reviewed": "2026-10-02",
+            "scope": "Asynchronous lag and configured synchronous acknowledgments; no PostgreSQL failover drill."
           }
         ],
         "diagram": {
@@ -73875,6 +74052,13 @@ const LEARNING_PATHS = [
             "section": "Data sovereignty; consistency and transactions",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          },
+          {
+            "title": "SQLite transaction control",
+            "url": "https://sqlite.org/lang_transaction.html",
+            "section": "SQLite transaction control",
+            "reviewed": "2026-10-02",
+            "scope": "BEGIN IMMEDIATE and local transaction boundaries used by booking_lab.py; no distributed transaction claim."
           }
         ],
         "diagram": {
@@ -74559,7 +74743,7 @@ const LEARNING_PATHS = [
           {
             "title": "Distinguish a faster worker from a stable queue",
             "paragraphs": [
-              "Arrivals average 12 jobs per second and a worker completes 10. After 60 seconds, a constant-rate model predicts 120 queued jobs. Making each job 10% faster yields about 11.1 jobs per second, so the queue still grows. An optimisation can improve latency in a small benchmark while leaving the system unstable under the actual arrival rate.",
+              "Arrivals average 12 jobs per second and a worker completes 10. After 60 seconds, a constant-rate model predicts 120 queued jobs. Reducing each job's processing time by 10% yields about 11.1 jobs per second, so the queue still grows. An optimisation can improve latency in a small benchmark while leaving the system unstable under the actual arrival rate.",
               "Run capacity_calculator.py to check the arithmetic, then change the arrival rate to 8 and calculate drain time. Keep the initial backlog: an empty-queue benchmark hides the recovery period. Compare three decisions: add capacity, reject excess work, or accept delay within a bounded queue. Each changes a user-visible promise.",
               "For an implementation extension, cap an in-memory queue at a small capacity, make a worker wait on an event, and submit more requests than the cap. Assert explicit rejection and eventual draining after release. Avoid sleeps as evidence of ordering; use events. This proves admission behaviour locally, not internet-scale capacity."
             ]
@@ -80158,7 +80342,7 @@ const LEARNING_PATHS = [
           {
             "title": "Know what each synchronization primitive contributes",
             "paragraphs": [
-              "A Thread runs a worker function. A Barrier waits until both workers have reached the same point, so both read the old version before either attempts the update. A Lock allows only one worker at a time through comparison and mutation. join waits for a worker to finish; a timeout prevents a failed test from waiting forever.",
+              "A Thread runs a worker function. A Barrier waits until both workers have reached the same point, so both read the old version before either attempts the update. A Lock allows only one worker at a time through comparison and mutation. join waits for a worker to finish; its timeout bounds that wait but does not stop the worker. Check is_alive() afterward. This fixture also bounds the barrier wait; arbitrary blocking worker code needs its own cancellation or process-level timeout.",
               "First read VersionStore and test it sequentially: read version 0, update with expected 0, then try expected 0 again. Expect success then conflict. Next introduce the two threads and barrier. This keeps the version rule separate from the machinery needed to expose simultaneous stale proposals."
             ]
           }
@@ -80299,7 +80483,7 @@ const LEARNING_PATHS = [
           {
             "title": "Barriers and safety timeouts",
             "paragraphs": [
-              "Our concurrency test gates progress using a Barrier and joins workers with safety timeouts. The timeout prevents a hang but is not the asserted ordering mechanism. If a worker fails before reaching the barrier, report that failure before a later join timeout obscures the cause."
+              "Our concurrency test gates progress using a Barrier and joins workers with safety timeouts. The barrier timeout bounds its wait, and the join timeout lets the test detect an unfinished worker with is_alive(). A join timeout does not terminate a thread and is not the ordering mechanism. If a worker fails before reaching the barrier, report that failure before a later join timeout obscures the cause."
             ],
             "example": "Fragile: sleep(.01), assert worker finished\nControlled: Event signals readiness, release explicitly, join with bound\nEvidence: exact outcomes rather than elapsed milliseconds"
           }
@@ -82773,7 +82957,7 @@ const LEARNING_PATHS = [
         ],
         "exercise": {
           "prompt": "Four of six daily outcomes carry over on three days. Choose one change to try and explain what you would check afterward.",
-          "solution": "Limit tomorrow to the two essential outcomes, clarify their finish conditions and defer the optional four. Compare actual durations. If essential obligations still exceed capacity, negotiate support or scope rather than extending the workday.",
+          "solution": "Check which outcomes are essential and which can be deferred. If two essential outcomes fit tomorrow, commit to those and agree to move the others. Compare actual durations. If essential obligations still exceed capacity, negotiate support or scope rather than extending the workday.",
           "solutionFormat": "prose",
           "checks": [
             "Reduce a named part of the next day's commitment.",
@@ -84608,7 +84792,7 @@ const LEARNING_PATHS = [
           {
             "title": "Checking the rendered threshold",
             "paragraphs": [
-              "Do not round a ratio below the threshold up to a passing number. Translucency, anti-aliasing and different backgrounds can invalidate a token-only calculation; inspect the final state too."
+              "Do not round a ratio below the threshold up to a passing number. Measure the foreground and background colours from the rendered styles, accounting for transparency and the actual background. For WCAG text-contrast evaluation, do not sample anti-aliased edge pixels. Thin text may still look faint despite a passing ratio; inspect readability and choose a stronger font or greater contrast when needed."
             ]
           }
         ],
@@ -85348,7 +85532,7 @@ const LEARNING_PATHS = [
           {
             "title": "Equivalent controls and keyboard models",
             "paragraphs": [
-              "Drag-and-drop can make ordering feel direct, but some people cannot execute a drag precisely. Provide move up/down controls or a position selector that reaches the same result. Preserve focus on the moved item and announce the new position without flooding the user with updates.",
+              "Drag-and-drop can make ordering feel direct, but some people cannot execute a drag precisely. Provide move up/down controls or a position selector that reaches the same result. Preserve focus on the moved item and announce the new position without flooding the user with updates. The non-drag alternative must also work with a single pointer, such as tapping those buttons; keyboard support alone does not satisfy the dragging criterion.",
               "Custom tabs, menus and comboboxes need a defined keyboard model and ARIA relationships. Prefer native controls when they satisfy the task. Do not use a menu role for ordinary site links merely because the design calls it a menu; application menus have specialised interaction expectations."
             ],
             "example": "Task: move \"SQL joins\" from position 3 to 2\nPointer route: drag item\nKeyboard route: focus item → Move up\nFeedback: \"SQL joins moved to position 2 of 5\""

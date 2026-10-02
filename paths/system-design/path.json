@@ -397,6 +397,13 @@
           "section": "Operations Research 9(3), 383–387 (1961)",
           "reviewed": "2026-09-27",
           "scope": "Long-run averages for a stable consistently bounded system; not a per-request prediction or an overload sizing guarantee."
+        },
+        {
+          "title": "Prometheus histograms and summaries",
+          "url": "https://prometheus.io/docs/practices/histograms/",
+          "section": "Prometheus histograms and summaries",
+          "reviewed": "2026-10-02",
+          "scope": "Quantile aggregation rules; no Prometheus deployment or load test."
         }
       ]
     },
@@ -568,6 +575,13 @@
           "section": "Data sovereignty; consistency and transactions",
           "reviewed": "2026-09-27",
           "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+        },
+        {
+          "title": "SQLite query planning",
+          "url": "https://www.sqlite.org/queryplanner.html",
+          "section": "SQLite query planning",
+          "reviewed": "2026-10-02",
+          "scope": "Multi-column index ordering for the teaching access pattern; actual plans depend on engine and data."
         }
       ]
     },
@@ -623,6 +637,13 @@
           "section": "Data sovereignty; consistency and transactions",
           "reviewed": "2026-09-27",
           "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+        },
+        {
+          "title": "PostgreSQL index introduction",
+          "url": "https://www.postgresql.org/docs/17/indexes-intro.html",
+          "section": "PostgreSQL index introduction",
+          "reviewed": "2026-10-02",
+          "scope": "Index access and write overhead as a concrete database example; no PostgreSQL benchmark."
         }
       ]
     },
@@ -892,6 +913,13 @@
           "section": "Data sovereignty; consistency and transactions",
           "reviewed": "2026-09-27",
           "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+        },
+        {
+          "title": "PostgreSQL standby replication",
+          "url": "https://www.postgresql.org/docs/current/warm-standby.html",
+          "section": "PostgreSQL standby replication",
+          "reviewed": "2026-10-02",
+          "scope": "Asynchronous lag and configured synchronous acknowledgments; no PostgreSQL failover drill."
         }
       ]
     },
@@ -1063,6 +1091,13 @@
           "section": "Data sovereignty; consistency and transactions",
           "reviewed": "2026-09-27",
           "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+        },
+        {
+          "title": "SQLite transaction control",
+          "url": "https://sqlite.org/lang_transaction.html",
+          "section": "SQLite transaction control",
+          "reviewed": "2026-10-02",
+          "scope": "BEGIN IMMEDIATE and local transaction boundaries used by booking_lab.py; no distributed transaction claim."
         }
       ]
     },
@@ -1253,7 +1288,7 @@
         {
           "title": "Distinguish a faster worker from a stable queue",
           "paragraphs": [
-            "Arrivals average 12 jobs per second and a worker completes 10. After 60 seconds, a constant-rate model predicts 120 queued jobs. Making each job 10% faster yields about 11.1 jobs per second, so the queue still grows. An optimisation can improve latency in a small benchmark while leaving the system unstable under the actual arrival rate.",
+            "Arrivals average 12 jobs per second and a worker completes 10. After 60 seconds, a constant-rate model predicts 120 queued jobs. Reducing each job's processing time by 10% yields about 11.1 jobs per second, so the queue still grows. An optimisation can improve latency in a small benchmark while leaving the system unstable under the actual arrival rate.",
             "Run capacity_calculator.py to check the arithmetic, then change the arrival rate to 8 and calculate drain time. Keep the initial backlog: an empty-queue benchmark hides the recovery period. Compare three decisions: add capacity, reject excess work, or accept delay within a bounded queue. Each changes a user-visible promise.",
             "For an implementation extension, cap an in-memory queue at a small capacity, make a worker wait on an event, and submit more requests than the cap. Assert explicit rejection and eventual draining after release. Avoid sleeps as evidence of ordering; use events. This proves admission behaviour locally, not internet-scale capacity."
           ]

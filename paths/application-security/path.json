@@ -201,6 +201,13 @@
           "section": "V15: threat modeling and architecture",
           "reviewed": "2026-09-27",
           "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+        },
+        {
+          "title": "OWASP Threat Modeling Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html",
+          "section": "Assets, threats and trust boundaries",
+          "reviewed": "2026-10-02",
+          "scope": "Threat-model concepts and abuse-case design; the synthetic exercise is not a production assessment."
         }
       ]
     },

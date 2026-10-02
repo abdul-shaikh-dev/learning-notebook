@@ -24,6 +24,8 @@ def validate(frame):
         if not df[column].isin(allowed).all():
             raise ValueError("Unknown " + column)
     df["created_date"] = pd.to_datetime(df.created_date, format="%Y-%m-%d", errors="raise")
+    if df.created_date.isna().any():
+        raise ValueError("Missing parsed date")
     for column in ["customer_messages", "resolution_hours", "breached"]:
         df[column] = pd.to_numeric(df[column], errors="raise")
         if not np.isfinite(df[column].to_numpy(dtype=float)).all():

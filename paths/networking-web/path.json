@@ -317,7 +317,8 @@
         {
           "title": "Expiry and new resolution",
           "paragraphs": [
-            "A TTL limits how long a DNS answer may be retained under the resolver's rules. Our simplified cache stores an expiry and returns no answer at or after it. An expired value needs a new resolution, which can produce a changed address or a failure."
+            "A TTL limits how long a DNS answer may be retained under the resolver's rules. Our simplified cache stores an expiry and returns no answer at or after it. An expired value needs a new resolution, which can produce a changed address or a failure.",
+            "In real DNS, a record with TTL 0 may still be used for the current transaction; it must not be reused from cache for later requests. This teaching cache models reuse only, so its immediate lookup returns no cached answer."
           ]
         },
         {
@@ -473,7 +474,7 @@
         {
           "title": "Bytes, text and JSON",
           "paragraphs": [
-            "A response body arrives as bytes. Text decoding and JSON parsing are separate transformations; content type tells the client how the representation is intended to be interpreted. JSON exchanged between systems uses UTF-8, and malformed encodings must not quietly become valid-looking lesson content."
+            "A response body arrives as bytes. Text decoding and JSON parsing are separate transformations; content type tells the client how the representation is intended to be interpreted. RFC 8259 requires UTF-8 for JSON exchanged between systems outside a closed ecosystem, and malformed encodings must not quietly become valid-looking lesson content."
           ]
         },
         {
@@ -521,8 +522,8 @@
           "title": "IETF RFC 8259: JSON",
           "url": "https://www.rfc-editor.org/rfc/rfc8259.html",
           "section": "Section 8.1: character encoding",
-          "reviewed": "2026-09-27",
-          "scope": "JSON exchanged between systems uses UTF-8; supplied tests reject invalid encoded observations and accept non-ASCII UTF-8 content."
+          "reviewed": "2026-10-02",
+          "scope": "RFC 8259 requires UTF-8 outside closed ecosystems. This lab deliberately accepts only UTF-8 and rejects other encodings."
         }
       ]
     },

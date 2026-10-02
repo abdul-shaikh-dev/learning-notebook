@@ -555,7 +555,7 @@
         {
           "title": "Span relationships and overlap",
           "paragraphs": [
-            "A trace groups spans for a logical operation. Each span records a start, end, operation name and relationship to a parent. A request span may contain parsing and database child spans. A child duration is already included in its parent's elapsed time; adding parent and child durations double-counts.",
+            "A trace groups spans for a logical operation. Each span records a start, end and operation name; a root span has no parent, while a child refers to its parent. In the example below the request waits for its parsing and database work, so the child intervals fit inside the request span. Adding those durations to the parent double-counts elapsed time. In asynchronous systems, a child can outlive its parent: inspect the actual intervals rather than assume containment.",
             "Parallel children can overlap. A parent lasting 120 ms with two overlapping 80 ms children does not imply 160 ms of user waiting. Study the timeline and critical path: the chain of dependencies that determines completion. Missing instrumentation leaves unaccounted time, which is a question to investigate rather than proof of CPU work."
           ],
           "example": "Request span: [0,120] ms\nParse span: [5,15] ms\nQuery A: [20,100] ms; Query B: [25,105] ms\nChildren overlap; do not sum them into request latency."
@@ -582,11 +582,11 @@
           "Compute coverage from the union of child intervals, preserving overlap.",
           "The failed run retains both timing and error status; uncovered time is not automatically CPU time."
         ],
-        "solution": "Child intervals lie inside the parent and can overlap each other, so adding parent and children double-counts. Use their union to identify uncovered elapsed time. B failure changes request outcome but does not erase the time spent waiting for it. Exact durations and even completion order depend on scheduling; the script checks timeline invariants, not a machine-speed threshold.",
+        "solution": "In this drill, child intervals lie inside the parent and can overlap each other, so adding parent and children double-counts. Use their union to identify uncovered elapsed time. B failure changes request outcome but does not erase the time spent waiting for it. Exact durations and even completion order depend on scheduling; the script checks timeline invariants, not a machine-speed threshold.",
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "Why should parent and child durations not simply be added?",
+        "question": "In this drill, why should parent and child durations not simply be added?",
         "options": [
           "Child elapsed time is already inside the parent and may overlap other children.",
           "Child spans measure CPU exclusively, while parents measure elapsed time.",
@@ -609,6 +609,13 @@
           "section": "perf_counter and process_time",
           "reviewed": "2026-10-02",
           "scope": "Primary API documentation for the optional mechanism lab. Runtime prerequisites and execution evidence are separate in mechanism-lab.md."
+        },
+        {
+          "title": "OpenTelemetry tracing API",
+          "url": "https://opentelemetry.io/docs/specs/otel/trace/api/",
+          "section": "Span creation; End; span lifetime",
+          "reviewed": "2026-10-02",
+          "scope": "Root spans have no parent. Ending a parent does not end its children; this local drill deliberately waits for both children."
         }
       ]
     },
