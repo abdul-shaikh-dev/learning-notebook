@@ -215,6 +215,13 @@
             "Do not place the expected computation inside the assertion by calling the same implementation twice. Pick a hand-computable case and distinguish the expected literal from the observed result. Keep setup short enough that the reason for a failure remains visible in the test body."
           ],
           "example": "Arrange: rows with 7 and 2 minutes\nAct: total_minutes(rows)\nAssert: result equals 9, not total_minutes(rows)"
+        },
+        {
+          "title": "Run one complete test",
+          "paragraphs": [
+            "Save this as test_my_total.py beside testing_foundation.py in the extracted kit. TestCase supplies assertEqual; the runner discovers methods whose names start with test_. Run python -m unittest -v test_my_total.py. It should report one passing test. Then write the empty-list test requested below."
+          ],
+          "example": "import unittest\nfrom testing_foundation import total_minutes\n\nclass TotalTests(unittest.TestCase):\n    def test_two_records(self):\n        rows = [{\"id\": \"a\", \"minutes\": 7}, {\"id\": \"b\", \"minutes\": 2}]\n        self.assertEqual(total_minutes(rows), 9)"
         }
       ],
       "exercise": {
@@ -467,6 +474,14 @@
             "A user reports that a timeline loses entries when loading page two. Start with four rows: a,b,c at time5 and d at time6. Page size2 returns a,b then d; c disappears. Network retries, authentication and thousands of production records are unnecessary to reproduce this particular symptom.",
             "The new cursor_candidate.py is small enough to inspect after reproducing. Run python cursor_checks.py cursor_candidate to see expected failures, then repair a copy. The first test records the missing user-visible row rather than asserting how many internal sorting calls occur."
           ]
+        },
+        {
+          "title": "Observe duplicate keys before writing the rejection",
+          "paragraphs": [
+            "json.loads normally returns a dictionary, which cannot retain two identical keys. Its object_pairs_hook instead receives the ordered key/value pairs while decoding each object. In the parser project, build a dictionary from those pairs and raise ValueError when a key is already present. Check the text length before decoding. This is how the project can reject both duplicate keys and oversized text.",
+            "Try the observation below first, then add a second case with distinct keys to make sure your rejection does not forbid valid objects."
+          ],
+          "example": "import json\npairs = json.loads('{\"minutes\":5,\"minutes\":9}', object_pairs_hook=lambda items: items)\nprint(pairs)\n# [(\"minutes\", 5), (\"minutes\", 9)]"
         }
       ],
       "exercise": {
@@ -990,6 +1005,13 @@
             "The winning thread is intentionally unspecified. Assert one success and one conflict, then inspect version one and either allowed value. Sleeping to encourage an ordering is fragile. This is a single-process thread test; it cannot establish distributed database or multi-process coordination."
           ],
           "example": "Both read version 0\nBarrier releases both\nWriter A commits -> version 1\nWriter B's expected 0 conflicts (or roles reverse)"
+        },
+        {
+          "title": "Know what each synchronization primitive contributes",
+          "paragraphs": [
+            "A Thread runs a worker function. A Barrier waits until both workers have reached the same point, so both read the old version before either attempts the update. A Lock allows only one worker at a time through comparison and mutation. join waits for a worker to finish; a timeout prevents a failed test from waiting forever.",
+            "First read VersionStore and test it sequentially: read version 0, update with expected 0, then try expected 0 again. Expect success then conflict. Next introduce the two threads and barrier. This keeps the version rule separate from the machinery needed to expose simultaneous stale proposals."
+          ]
         }
       ],
       "exercise": {

@@ -6,8 +6,8 @@
   "description": "Investigate latency and failures using structured signals, local measurements, SLO arithmetic and bounded fault experiments.",
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
-    "Basic file editing and running a terminal command. No prior specialist knowledge required.",
-    "HTML/JavaScript basics help with the UI lab; Python basics help with the measurement lab. Related notebook paths provide deeper programming foundations."
+    "Read basic HTTP request/response examples and edit a file. The lessons introduce telemetry vocabulary.",
+    "Optional measurements require Python 3.11+ functions, lists and dictionaries, plus terminal use. No collector, cloud account or UI project is needed."
   ],
   "outcomes": [
     "Choose signals that answer concrete operational questions.",
@@ -175,7 +175,7 @@
           "No sensitive payload is logged.",
           "Parent/child elapsed time is not double-counted."
         ],
-        "solution": "Run telemetry.test.py, create a small observation set and calculate counts, good-event ratio and percentiles. Attach boundaries, sample size and safe correlation fields; distinguish missing observations from success."
+        "solution": "Use a small duration sample to calculate mean, median and nearest-rank p95. Run the three selected percentile checks, then interpret the nested span timeline. Keep units, sample size and safe correlation fields explicit. The intermediate project adds good-event objectives and a running HTTP service."
       }
     },
     {
@@ -723,7 +723,7 @@
         {
           "title": "Bucket boundaries and aggregation",
           "paragraphs": [
-            "A classic histogram counts observations in cumulative buckets. If the objective is completion under 300 ms, a bucket at 0.3 seconds can directly support that threshold ratio. Buckets too coarse around the boundary make quantile estimates less precise. More buckets consume more series and processing resources.",
+            "A classic histogram counts observations in cumulative buckets. If the objective is completion within 300 ms, including exactly 300 ms, a bucket at 0.3 seconds can directly support that threshold ratio. Buckets too coarse around the boundary make quantile estimates less precise. More buckets consume more series and processing resources.",
             "Aggregate compatible bucket counts across instances before deriving a service-level quantile. Keep units and boundaries consistent; mixing seconds and milliseconds creates meaningless results. Different systems also offer native histograms, whose representation and configuration should be studied separately rather than assumed identical."
           ],
           "example": "Buckets seconds: 0.05, 0.1, 0.3, 1.0, +Inf\nCount at <=0.3 divided by total count estimates the observed threshold success fraction."
@@ -733,6 +733,14 @@
           "paragraphs": [
             "A p95 derived from buckets is an estimate bounded by the available bucket resolution. Do not present it with unjustified decimal precision."
           ]
+        },
+        {
+          "title": "Count the same request in several buckets",
+          "paragraphs": [
+            "For durations 0.05, 0.15 and 0.8 seconds, cumulative counts at 0.1, 0.2, 1.0 and +Inf are 1, 2, 3 and 3. The 0.05 observation contributes to every bucket. Adding the bucket counts would count it repeatedly; total observations come from the count or +Inf bucket. For a threshold of at most 0.2 seconds, two of the three meet the latency bound."
+          ],
+          "example": "<=0.1: 1\n<=0.2: 2\n<=1.0: 3\n+Inf: 3\nthreshold fraction = 2/3; not 2/(1+2+3+3)",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
@@ -997,6 +1005,12 @@
           ],
           "example": "wall time: includes waiting and CPU\nprocess CPU: all process threads, excludes sleeping\nindex break-even: 20ms / 0.5ms saved per lookup = 40 lookups",
           "exampleFormat": "prose"
+        },
+        {
+          "title": "Read the profiler columns",
+          "paragraphs": [
+            "ncalls is call count. tottime excludes called functions; cumtime includes them. A wrapper with tottime 0.001 seconds and cumtime 0.200 seconds delegates most measured time to callees. Inspect its children before rewriting the wrapper. A child with many calls can dominate the total even when each call is short. These profile values include instrumentation overhead; use the separate benchmark for an improvement claim."
+          ]
         }
       ],
       "exercise": {

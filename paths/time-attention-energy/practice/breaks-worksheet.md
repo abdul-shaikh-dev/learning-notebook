@@ -8,7 +8,7 @@ A fixed timer can provide a stopping cue, but no single work–break ratio suits
 
 ## Try before reading the answer
 
-Compare two synthetic sessions: 25-minute blocks finish 3 problems; 40-minute blocks finish 4 but leave two careless errors.
+Compare two synthetic sessions on similar problems checked with the same answer key: 25 minutes produces three correct answers; 40 minutes produces four answers, two incorrect. Compare correct output and choose a next trial.
 
 Decision: ____________________________________________
 
@@ -20,7 +20,7 @@ What would change the choice? _________________________
 
 ## Worked example
 
-Record both output and accuracy. The longer block has more attempted work but only two clearly correct items if two are wrong. Try a review pause and compare again before selecting a default.
+The shorter session produces three correct answers; the longer produces two. This small comparison favours the shorter session for checked output, but does not establish a universal timer. Try a checking pause in another comparable longer session and record correct answers and comfort.
 
 ## Transfer carefully
 

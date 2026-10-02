@@ -830,8 +830,58 @@
       ]
     },
     {
+      "id": "plan-practice-week",
+      "title": "15. Build a flexible practice week",
+      "stage": "intermediate",
+      "takeaway": "Choose review occasions and a small assessment you can actually complete.",
+      "sections": [
+        {
+          "title": "Understand and try it",
+          "paragraphs": [
+            "Start with available windows, the target and the current error pattern. Give each occasion a purpose: introduce or clarify, retrieve, mix cases, or test after a gap. Leave room for a missed occasion. A larger timetable is not automatically better.",
+            "For the intermediate project, build a two-week plan using a topic you can check safely on paper. Include a normal plan and fallback, a baseline, correction and a delayed check. Do not turn every spare minute into compulsory practice; the target should fit your life."
+          ]
+        },
+        {
+          "title": "Worked scenario",
+          "paragraphs": [
+            "Maya has Tuesday 12 minutes, Thursday 8 and Monday 10. She uses Tuesday to repair urgency, Thursday for mixed cases and Monday for a delayed new-case check. If Thursday is lost, she keeps Monday and narrows the test rather than doubling Monday."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Plan the same target when only Tuesday and next Monday are available. List what you would omit and what evidence remains.",
+        "solution": "Tuesday: baseline, check the source and practise two mixed cases. Monday: answer three new cases without the source, check and log. Omit the extra Thursday review; record the longer gap and small sample. This plan gives actual delayed evidence but cannot tell how the omitted occasion would have changed performance.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Only Tuesday and next Monday are scheduled.",
+          "Omitted Thursday review is recorded and later check retained.",
+          "State the scenario-specific condition that would change the decision."
+        ]
+      },
+      "quiz": {
+        "question": "What is a sensible fallback?",
+        "options": [
+          "Double every missed session regardless of capacity.",
+          "Declare all previous practice worthless.",
+          "Reduce scope while preserving a useful later check."
+        ],
+        "correct": 2,
+        "explanation": "Checking fewer cases later may fit the available time. Automatic doubling ignores the reason a session was missed."
+      },
+      "references": [
+        {
+          "title": "Cepeda et al. (2006), Distributed practice in verbal recall tasks",
+          "url": "https://escholarship.org/content/qt3rr6q10c/qt3rr6q10c.pdf",
+          "section": "University repository manuscript; inter-study interval analyses and discussion",
+          "reviewed": "2026-10-02",
+          "scope": "Quantitative review of verbal recall; interval choices depend on retention horizon. No universal expanding-interval formula is claimed."
+        }
+      ]
+    },
+    {
       "id": "transfer-cases",
-      "title": "15. Test transfer with changed cases",
+      "title": "16. Test transfer with changed cases",
       "stage": "advanced",
       "takeaway": "A new context checks whether you can use the underlying idea.",
       "sections": [
@@ -879,56 +929,6 @@
           "section": "Abstract: four prose-learning experiments with same and new inferential questions",
           "reviewed": "2026-09-30",
           "scope": "Prose-learning experiments with later inference questions; transfer to every workplace skill is not established."
-        }
-      ]
-    },
-    {
-      "id": "plan-practice-week",
-      "title": "16. Build a flexible practice week",
-      "stage": "advanced",
-      "takeaway": "Choose review occasions and a small assessment you can actually complete.",
-      "sections": [
-        {
-          "title": "Understand and try it",
-          "paragraphs": [
-            "Start with available windows, the target and the current error pattern. Give each occasion a purpose: introduce or clarify, retrieve, mix cases, or test after a gap. Leave room for a missed occasion. A larger timetable is not automatically better.",
-            "For the intermediate project, build a two-week plan using a topic you can check safely on paper. Include a normal plan and fallback, a baseline, correction and a delayed check. Do not turn every spare minute into compulsory practice; the target should fit your life."
-          ]
-        },
-        {
-          "title": "Worked scenario",
-          "paragraphs": [
-            "Maya has Tuesday 12 minutes, Thursday 8 and Monday 10. She uses Tuesday to repair urgency, Thursday for mixed cases and Monday for a delayed new-case check. If Thursday is lost, she keeps Monday and narrows the test rather than doubling Monday."
-          ]
-        }
-      ],
-      "exercise": {
-        "prompt": "Plan the same target when only Tuesday and next Monday are available. List what you would omit and what evidence remains.",
-        "solution": "Tuesday: baseline, check the source and practise two mixed cases. Monday: answer three new cases without the source, check and log. Omit the extra Thursday review; record the longer gap and small sample. This plan gives actual delayed evidence but cannot tell how the omitted occasion would have changed performance.",
-        "solutionFormat": "prose",
-        "checks": [
-          "Only Tuesday and next Monday are scheduled.",
-          "Omitted Thursday review is recorded and later check retained.",
-          "State the scenario-specific condition that would change the decision."
-        ]
-      },
-      "quiz": {
-        "question": "What is a sensible fallback?",
-        "options": [
-          "Double every missed session regardless of capacity.",
-          "Declare all previous practice worthless.",
-          "Reduce scope while preserving a useful later check."
-        ],
-        "correct": 2,
-        "explanation": "Checking fewer cases later may fit the available time. Automatic doubling ignores the reason a session was missed."
-      },
-      "references": [
-        {
-          "title": "Cepeda et al. (2006), Distributed practice in verbal recall tasks",
-          "url": "https://escholarship.org/content/qt3rr6q10c/qt3rr6q10c.pdf",
-          "section": "University repository manuscript; inter-study interval analyses and discussion",
-          "reviewed": "2026-10-02",
-          "scope": "Quantitative review of verbal recall; interval choices depend on retention horizon. No universal expanding-interval formula is claimed."
         }
       ]
     },
@@ -1217,7 +1217,7 @@
           "Research claims distinguish studied outcomes from practical adaptations.",
           "The conclusion names demonstrated skill, untested scope and one next action."
         ],
-        "solution": "A strong sample reports one of three baseline and three of three delayed cases, then correctly applies the urgency-first structure to the supplied booking policy. It explicitly declines to claim real workplace competence or guaranteed retention. See advanced-kit.md for the complete synthetic portfolio and a failed-transfer alternative.",
+        "solution": "A strong sample reports one of three baseline and three of three delayed leave cases, then applies the new equipment-booking rules: standard two hours to the desk coordinator; restricted half-hour to the facilities lead; standard urgent ninety minutes to the desk coordinator. It carries forward checking exceptions, not the old urgency rule. It does not claim real workplace competence or guaranteed retention. See advanced-kit.md for the complete synthetic example and a failed-transfer alternative.",
         "solutionFormat": "prose"
       }
     }

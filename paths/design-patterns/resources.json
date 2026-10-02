@@ -102,8 +102,7 @@
         "Run the reference and check its output.",
         "Export a small sequence of validated titles as lines or JSON while keeping selection and formatting separate.",
         "Build the project described in the reader: Validate all titles before producing output. Use two compatible formatting strategies selected at one entry point. Reject unknown formats and preserve input order. Include an empty-input test and a malformed-title test.",
-        "Check your result: Both output formats are correct for the same input. No mutation of caller records occurs. The design note explains why a simple factory/function is enough. Tests assert observable behavior, including failures.",
-        "Use batch-refactor.md to preserve complete-batch behavior through extraction, then add a CSV strategy."
+        "Check your result: Both output formats are correct for the same input. No mutation of caller records occurs. The design note explains why a simple factory/function is enough. Tests assert observable behavior, including failures."
       ],
       "commands": [
         {
@@ -115,11 +114,6 @@
           "label": "Run baseline tests from design-patterns-practice folder root",
           "command": "python -m unittest -v test_workshop.py",
           "expected": "The supplied regression suite should pass. Test your own changes separately."
-        },
-        {
-          "label": "Run the focused depth lab from the extracted bundle root",
-          "command": "python -m unittest -v test_batch_export.py",
-          "expected": "Four characterization tests pass for both legacy and refactored implementations."
         }
       ],
       "prerequisites": [
@@ -131,7 +125,8 @@
       "notes": [
         "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
         "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
-        "Use the supplied code as a reference. Test your own project and report its results separately."
+        "Use the supplied code as a reference. Test your own project and report its results separately.",
+        "Attempt only validation and two formatters at this stage. The shared workshop also contains later examples; defer batch-refactor.md and versioned commit behavior until unit-of-work and refactoring."
       ]
     },
     {
@@ -152,7 +147,7 @@
         "Wrap the exporter with successful-output measurements and expose one preview facade without writing files or calling services.",
         "Build the project described in the reader: Adapt a legacy seconds field with an explicit conversion policy. Use a measurement decorator that delegates once and records only success. Test wrapper failure and input immutability. Write a note comparing facade, adapter, decorator and proxy intentions.",
         "Check your result: Boundary conversion is correct at 59/60/61 seconds. Failures are propagated and not counted as successful output. Facade remains focused on the preview workflow. The design note explains one case where each wrapper would be unnecessary.",
-        "Compare first-handler selection, event broadcast, represented commands and a coordinated workflow; test failures and explain the external-effect limitation."
+        "Compare first-handler selection with event broadcast. Defer Command and Mediator portions of the shared collaboration tests until their advanced lessons."
       ],
       "commands": [
         {
@@ -237,7 +232,7 @@
       ],
       "prerequisites": [
         {
-          "label": "14. Command: represent an action explicitly",
+          "label": "15. Command: represent an action explicitly",
           "href": "#topic/design-patterns/command"
         }
       ],

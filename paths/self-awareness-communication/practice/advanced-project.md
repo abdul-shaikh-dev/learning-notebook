@@ -8,7 +8,13 @@ Complete the following requirements using the related numbered worksheets. Use a
 2. Compare two options using agreed practical criteria.
 3. Record agreements, unresolved questions and an appropriate follow-up.
 
-## Printable project record
+## Supplied fictional case
+
+Dana wants the document frozen today; Lee wants to revise its introduction. They are peers, and the shared purpose is accurate information by Friday noon. A full rewrite needs two hours; only thirty minutes remain. A factual correction needs twenty minutes. The organiser decides release scope.
+
+Try the task aloud or in a short note. The detailed record below is optional; use it only if it helps.
+
+## Optional printable project record
 
 Case and purpose: ________________________________________________
 
@@ -24,7 +30,7 @@ Next decision and review date: ____________________________________
 
 ## Worked fictional project
 
-Dana and a fictional partner discuss a changed document. Dana distinguishes the actual changes from presumed motives, asks what happened, checks a summary and requests a stable version. They record a deadline and an unresolved introduction question; a respectful process does not guarantee agreement.
+Dana values a stable version; Lee wants clearer information. They compare a full rewrite and a twenty-minute factual correction against accuracy and the Friday deadline. The rewrite does not fit the thirty-minute window, so they propose the factual correction and ask the organiser to confirm scope. In the fictional outcome, the organiser agrees; Lee edits and Dana checks by 11:30. The introduction rewrite remains unresolved and is reviewed next Tuesday. Dana records that agreement and responsibility without claiming that both prefer the result or that a peer can unilaterally approve release.
 
 ## Exit criteria
 

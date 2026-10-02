@@ -199,6 +199,12 @@
             "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
           ],
           "example": "{\n  \"id\": \"e-17\",\n  \"job_id\": \"j-4\",\n  \"type\": \"ExportRequested\",\n  \"version\": 1,\n  \"value\": 7\n}"
+        },
+        {
+          "title": "Keep the sample envelope and the design distinct",
+          "paragraphs": [
+            "The JSON below is the small executable lab contract. It contains id, job_id, type, version and value only. The earlier discussion names additional production metadata; do not add those fields to the strict v1 parser and expect it to accept them. In the foundation sketch, write correlation and occurrence time beside the event. Lesson 14 explains how to introduce them as a versioned contract change."
+          ]
         }
       ],
       "quiz": {
@@ -376,7 +382,8 @@
           "title": "Reproduce the commit-to-ack gap against a broker",
           "paragraphs": [
             "An event adds 7 to a balance. The consumer inserts event-1 into its inbox and updates the balance in one transaction, then its channel closes before acknowledgement. RabbitMQ redelivers the unacknowledged delivery. On replay the inbox key already exists, so the transaction skips the balance increment and the consumer acknowledges on the new channel. The two deliveries share an application ID; their channel delivery tags need not match.",
-            "broker_ack_drill.py exercises that transport boundary with a real optional local RabbitMQ server. It closes the first connection deliberately and verifies redelivered plus balance=7 on the second. Its in-memory SQLite database stays alive in the same Python process, so the drill demonstrates channel loss, not process-crash persistence. The existing file-backed inbox tests address local durable state separately."
+            "broker_ack_drill.py exercises that transport boundary with a real optional local RabbitMQ server. It closes the first connection deliberately and verifies redelivered plus balance=7 on the second. Its in-memory SQLite database stays alive in the same Python process, so the drill demonstrates channel loss, not process-crash persistence. The existing file-backed inbox tests address local durable state separately.",
+            "Read this as a transport preview now. Implement the inbox in lesson 9 before attempting mechanism-lab.md; the local foundation project needs no broker installation."
           ],
           "example": "first delivery: inbox inserts event-1; balance 0 -> 7; commit\nconnection closes before ack\nredelivery: inbox conflict; balance stays 7; ack on new channel",
           "exampleFormat": "prose"
@@ -417,10 +424,10 @@
       ],
       "stage": "foundation",
       "exercise": {
-        "prompt": "In the optional broker drill, replace the inbox check in a disposable copy with an unconditional increment. Which result exposes the bug, and why would acknowledging earlier be an unsafe fix?",
+        "prompt": "Event e-17 adds 7. Its first delivery commits, then acknowledgement is lost. Predict the balance after redelivery with a remembered event ID and with an unconditional increment. Explain why acknowledging before commit creates a different failure. You can trace this on paper; the optional broker drill belongs after the inbox lesson.",
         "checks": [
-          "Without deduplication the balance becomes 14 after redelivery; the reference remains 7 with one inbox row.",
-          "Acknowledging before commit can lose the effect if the transaction subsequently fails."
+          "Predict balance 7 with duplicate detection and 14 with an unconditional second increment.",
+          "Explain how an acknowledgement before commit can lose the effect if the worker crashes."
         ],
         "solution": "The duplicate business effect is balance=14, even though both deliveries carried one event ID. Restore the inbox/effect transaction and acknowledge after it commits. Early acknowledgement hides redelivery by accepting a loss window; it does not provide exactly-once effects.",
         "solutionFormat": "prose"
@@ -1144,6 +1151,12 @@
             "The local lab verifies that a crash during consume rolls back both inbox and projection. It also deliberately relays the same outbox event twice and confirms one projection effect. This is actual SQLite transaction evidence; it is not evidence about RabbitMQ quorum failover."
           ],
           "example": "python event_lab.py\npython -m unittest -v test_event_lab.py"
+        },
+        {
+          "title": "Change an identity without changing the transport",
+          "paragraphs": [
+            "After the reference passes, use one event with two consumer names. Predict two inbox rows and a value of 7 in each consumer projection. Then reuse the original consumer and event ID with value 8: it must conflict, not add 8 or silently return duplicate. These cases distinguish subscription ownership, duplicate delivery and identity collision without requiring a broker."
+          ]
         }
       ],
       "quiz": {

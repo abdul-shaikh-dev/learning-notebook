@@ -66,7 +66,7 @@
     {
       "id": "foundation",
       "title": "Layered request and DNS worksheet",
-      "goal": "Implement and explain URL-origin policy, offline DNS expiry and a bounded read-retry decision.",
+      "goal": "Implement URL-origin comparisons and offline DNS expiry, then explain where an HTTP response fits in the request journey.",
       "fileIds": [
         "network_foundation-py",
         "network_http-py",
@@ -80,46 +80,28 @@
         "mechanism-lab-guide"
       ],
       "steps": [
-        "Read README.md and run the supplied references.",
-        "Attempt the stage brief before inspecting its reference solution.",
+        "Extract the kit and read README.md.",
         "Parse scheme/host/default port and reject credentials, fragments and unsupported schemes.",
         "Store an offline address with TTL and test just before and at expiry using injected time.",
-        "Distinguish DNS answers, listener availability, HTTPS identity and application body success.",
-        "Permit retries only for the explicit safe-read policy with attempts and time left.",
-        "Compare your evidence with the stage rubric and document extensions separately.",
-        "Optional: read mechanism-lab.md and run the real mechanism drill if its prerequisites are available."
+        "Distinguish a resolved name, an available listener, an HTTP response and readable body bytes. Certificate identity checks follow in the intermediate stage.",
+        "Try one changed case before comparing the reference explanation."
       ],
       "commands": [
         {
-          "label": "Run network_foundation.py",
+          "label": "Inspect origin and expiry examples",
           "command": "python network_foundation.py",
-          "expected": "Prints ('https', 'lessons.example', 443), then 192.0.2.10 and None for pre-expiry versus expiry."
+          "expected": "Origin tuple, cached address before expiry, then None at expiry."
         },
         {
-          "label": "Run network_http.py",
-          "command": "python network_http.py",
-          "expected": "Prints /lesson 200 with lesson JSON, /redirect 307 with empty content, /private 401 synthetic denial, and /bad-json 200 with malformed content."
-        },
-        {
-          "label": "Run network_resilience.py",
-          "command": "python network_resilience.py",
-          "expected": "Prints (200, [{'attempt': 1, 'status': 503}, {'attempt': 2, 'status': 200}]) for the offline retry scenario."
-        },
-        {
-          "label": "Run meaningful regression suite",
-          "command": "python -m unittest -v test_network_labs.py",
-          "expected": "All 15 local regression tests pass; this is not a production or external-service certification."
-        },
-        {
-          "label": "Optional mechanism drill (read its guide first)",
-          "command": "python tcp_framing.py",
-          "expected": "PASS covers valid split/coalesced UTF-8 frames, empty EOF, truncated EOF and the 64-byte frame limit."
+          "label": "Check the two foundation boundaries",
+          "command": "python -m unittest -v test_network_labs.ProtocolModels.test_origins_and_invalid_urls test_network_labs.ProtocolModels.test_dns_ttl_boundary",
+          "expected": "Two tests pass. Retry, TLS and server tests belong to later stages."
         }
       ],
       "prerequisites": [
         {
-          "label": "1. Follow a request through layers",
-          "href": "#topic/networking-web/request-journey"
+          "label": "Finish this stage through 8. Read methods, fields and content",
+          "href": "#topic/networking-web/http-message"
         }
       ],
       "notes": [
@@ -143,41 +125,25 @@
         "browser_drill-py"
       ],
       "steps": [
-        "Read README.md and run the supplied references.",
-        "Attempt the stage brief before inspecting its reference solution.",
-        "Bind only 127.0.0.1 on port zero and close resources on failure.",
-        "Check GET, HEAD, ETag/304, relative 307 redirect and missing route.",
+        "Extract the kit and read README.md.",
+        "Use the supplied local_server context manager for its loopback port and cleanup; focus on client observations before changing server internals.",
+        "Check GET, HEAD, ETag/304 and a missing route; save redirect policy for the advanced stage.",
         "Observe synthetic cookie issuance/private denial without claiming real authentication.",
-        "Reject malformed 200 JSON and classify 503.",
-        "Use a readiness Event and delayed response to observe a real bounded client read timeout.",
-        "Compare your evidence with the stage rubric and document extensions separately."
+        "Compare malformed 200 JSON with a 503 status; save the full schema decoder for body-contracts in the advanced stage.",
+        "Permit retries only for the explicit safe-read policy with attempts and time left.",
+        "Try one changed case before comparing the reference explanation."
       ],
       "commands": [
         {
-          "label": "Run network_foundation.py",
-          "command": "python network_foundation.py",
-          "expected": "Prints ('https', 'lessons.example', 443), then 192.0.2.10 and None for pre-expiry versus expiry."
-        },
-        {
-          "label": "Run network_http.py",
-          "command": "python network_http.py",
-          "expected": "Prints /lesson 200 with lesson JSON, /redirect 307 with empty content, /private 401 synthetic denial, and /bad-json 200 with malformed content."
-        },
-        {
-          "label": "Run network_resilience.py",
-          "command": "python network_resilience.py",
-          "expected": "Prints (200, [{'attempt': 1, 'status': 503}, {'attempt': 2, 'status': 200}]) for the offline retry scenario."
-        },
-        {
-          "label": "Run meaningful regression suite",
-          "command": "python -m unittest -v test_network_labs.py",
-          "expected": "All 15 local regression tests pass; this is not a production or external-service certification."
+          "label": "Check HTTP semantics and read-retry decisions",
+          "command": "python -m unittest -v test_network_labs.LoopbackHttp.test_get_head_conditional_and_missing test_network_labs.LoopbackHttp.test_cookie_and_private_denial test_network_labs.ProtocolModels.test_retry_policy test_network_labs.ProtocolModels.test_tls_context_defaults_only_not_handshake",
+          "expected": "Four tests pass. TLS assertions inspect settings, not a handshake."
         }
       ],
       "prerequisites": [
         {
-          "label": "9. Interpret status without overclaiming",
-          "href": "#topic/networking-web/status"
+          "label": "Finish this stage through 16. Conditional requests and 304 responses",
+          "href": "#topic/networking-web/validators"
         }
       ],
       "notes": [
@@ -202,16 +168,14 @@
         "mechanism-lab-guide"
       ],
       "steps": [
-        "Read README.md and run the supplied references.",
-        "Attempt the stage brief before inspecting its reference solution.",
+        "Extract the kit and read README.md.",
         "Bound body size and require media type plus exact lesson/version schema.",
         "Reject private cache insertion and test exact freshness expiry with an injected clock.",
         "Stop new GET attempts after the attempt budget or overall deadline.",
         "Record only status/attempt metadata and classify final failure.",
         "Explain real-TLS, browser/CORS, real-DNS and proxy drills still needed.",
-        "Compare your evidence with the stage rubric and document extensions separately.",
-        "Optionally follow browser-boundary-drill.md in an authorized local environment; mark unexecuted checks explicitly.",
-        "Optional: read mechanism-lab.md and run the real mechanism drill if its prerequisites are available."
+        "Use the supplied /stall fixture to observe a client timeout, and inspect a 307 before deciding whether to follow it.",
+        "Try one changed case before comparing the reference explanation."
       ],
       "commands": [
         {
@@ -242,8 +206,8 @@
       ],
       "prerequisites": [
         {
-          "label": "17. Follow redirects with a policy",
-          "href": "#topic/networking-web/redirects"
+          "label": "Finish this stage through 24. Defend a client with explicit evidence",
+          "href": "#topic/networking-web/network-review"
         }
       ],
       "notes": [

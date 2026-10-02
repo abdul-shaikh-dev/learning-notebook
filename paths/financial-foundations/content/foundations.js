@@ -106,8 +106,6 @@ FOUNDATIONS.push(...[
     "id": "daily-pnl",
     "title": "Reconcile a whole day, including cash and FX",
     "lessons": [
-      1,
-      6,
       16,
       17
     ],
@@ -145,5 +143,5 @@ FOUNDATIONS.push(...[
 {
  const swap = FOUNDATIONS.find(f => f.id === 'swaps-options');
  swap.resourceTask = 'swap-repricing';
- swap.paragraphs.push('Try the worked floating-leg extension: receive floating and pay 4% on EUR 1m, with two half-year periods. FO projected rates 3%/5% and discount factors 0.98/0.96 produce signed net payments -5,000/+5,000 and value -100. Independent projections 3.1%/4.8% and factors 0.979/0.958 give -573.50. The -473.50 difference splits into -470 from forecasts, then -3.50 from discounting. A known fixing replaces a projection; notional is not exchanged. The workbook derives every row and shows how attribution order changes components but not the total.');
+ swap.paragraphs.push('After lesson 3 and the fixed-cash-flow curve example, open swap-repricing.md for the optional two-payment extension. Calculate one floating and fixed payment first, then value both payments. Compare forecast and discount changes only after that baseline reconciles. The later daily-P&L exercise is a separate task and is not needed to start this same-time comparison.');
 }

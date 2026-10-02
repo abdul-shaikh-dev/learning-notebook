@@ -760,7 +760,7 @@
     {
       "id": "foundation",
       "title": "A factual baseline and a feasible target",
-      "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+      "goal": "Use the supplied fictional case. Try an answer aloud or in a short note before comparing with the worked example. The full worksheet is optional. Mira wants to find keys without searching. Monday she arrives with free hands and puts keys on the table; Tuesday she arrives carrying bags and leaves them in a coat; Wednesday she arrives with free hands and uses the existing door-side bowl.",
       "fileIds": [
         "README",
         "foundation-project",
@@ -790,12 +790,17 @@
         "No runtime required. Keep any personal record private by default.",
         "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
       ],
-      "prerequisites": []
+      "prerequisites": [
+        {
+          "label": "Finish this stage through 7. Reject fixed habit deadlines",
+          "href": "#topic/habits-behaviour-change/time-variation"
+        }
+      ]
     },
     {
       "id": "intermediate",
       "title": "A small routine experiment",
-      "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+      "goal": "Use the supplied fictional case. Try an answer aloud or in a short note before comparing with the worked example. The full worksheet is optional. Keep the keys-in-bowl action. Mira may move the existing bowl to a reachable clear shelf. In a supplied five-arrival trial there are four usable opportunities: three completions and one noticed cue without completion. The fifth arrival needed immediate assistance and had no opportunity. Starting was described as easy twice and deliberate once.",
       "fileIds": [
         "README",
         "intermediate-project",
@@ -825,12 +830,17 @@
         "No runtime required. Keep any personal record private by default.",
         "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
       ],
-      "prerequisites": []
+      "prerequisites": [
+        {
+          "label": "Finish this stage through 14. Notice immediate usefulness without inventing brain claims",
+          "href": "#topic/habits-behaviour-change/feedback-reward"
+        }
+      ]
     },
     {
       "id": "advanced",
       "title": "Decide whether to keep or change a routine",
-      "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+      "goal": "Use the supplied fictional case. Try an answer aloud or in a short note before comparing with the worked example. The full worksheet is optional. After moving the bowl, a fictional sample has four of five usable arrivals completed and searches on one of five departures, compared with searches on three of five earlier departures. The later week involved fewer bags. Moving the bowl costs little, but a forthcoming trip removes the usual doorway cue.",
       "fileIds": [
         "README",
         "advanced-project",
@@ -859,7 +869,12 @@
         "No runtime required. Keep any personal record private by default.",
         "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
       ],
-      "prerequisites": []
+      "prerequisites": [
+        {
+          "label": "Finish this stage through 20. Make a plan for keeping or changing the routine",
+          "href": "#topic/habits-behaviour-change/evidence-review"
+        }
+      ]
     }
   ],
   "lessonTasks": {

@@ -204,7 +204,7 @@
       ],
       "project": {
         "title": "A factual baseline and a feasible target",
-        "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+        "brief": "Use the supplied fictional case. Try an answer aloud or in a short note before comparing with the worked example. The full worksheet is optional. Mira wants to find keys without searching. Monday she arrives with free hands and puts keys on the table; Tuesday she arrives carrying bags and leaves them in a coat; Wednesday she arrives with free hands and uses the existing door-side bowl.",
         "requirements": [
           "State a useful outcome and a controllable action.",
           "Record three opportunities with context, completion and constraints.",
@@ -216,7 +216,7 @@
           "Choose a recognised cue and a useful minimum.",
           "Record known facts and uncertainty separately, using the relevant stage measures."
         ],
-        "solution": "Mira uses a keys-in-bowl target. She records available arrival opportunities, tries moving the bowl nearer the door, and keeps it if retrieval is easier. A missed arrival cue prompts a next-opportunity plan; a short log cannot prove automaticity or universal causation.",
+        "solution": "Outcome: less searching before leaving. Controllable action: put keys in the reachable bowl when arriving. The three arrival opportunities produced table, coat and bowl placement; only Wednesday used the target. Carrying bags constrained Tuesday, so Mira checks whether she can put bags down safely before reaching the bowl. The useful minimum is storing the keys, not organising the whole hallway. This baseline describes three events and does not show automaticity.",
         "solutionFormat": "prose"
       }
     },
@@ -232,7 +232,7 @@
       ],
       "project": {
         "title": "A small routine experiment",
-        "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+        "brief": "Use the supplied fictional case. Try an answer aloud or in a short note before comparing with the worked example. The full worksheet is optional. Keep the keys-in-bowl action. Mira may move the existing bowl to a reachable clear shelf. In a supplied five-arrival trial there are four usable opportunities: three completions and one noticed cue without completion. The fifth arrival needed immediate assistance and had no opportunity. Starting was described as easy twice and deliberate once.",
         "requirements": [
           "Write a cue/action plan and an obstacle branch.",
           "Try one reversible setup change, keeping the target stable.",
@@ -244,7 +244,7 @@
           "Record available opportunities, completion and ease separately.",
           "Record known facts and uncertainty separately, using the relevant stage measures."
         ],
-        "solution": "Mira uses a keys-in-bowl target. She records available arrival opportunities, tries moving the bowl nearer the door, and keeps it if retrieval is easier. A missed arrival cue prompts a next-opportunity plan; a short log cannot prove automaticity or universal causation.",
+        "solution": "If I arrive and can put my bags down, then I put my keys in the bowl. If immediate assistance is needed, I skip that moment and store the keys at the next available pause. The single setup change is moving the bowl; the action stays the same. Completion is three of four available opportunities, with the unavailable arrival retained separately. Two easy starts and one deliberate start are observations, not proof of automaticity. Compare retrieval usefulness before deciding to keep the setup.",
         "solutionFormat": "prose"
       }
     },
@@ -260,7 +260,7 @@
       ],
       "project": {
         "title": "Decide whether to keep or change a routine",
-        "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+        "brief": "Use the supplied fictional case. Try an answer aloud or in a short note before comparing with the worked example. The full worksheet is optional. After moving the bowl, a fictional sample has four of five usable arrivals completed and searches on one of five departures, compared with searches on three of five earlier departures. The later week involved fewer bags. Moving the bowl costs little, but a forthcoming trip removes the usual doorway cue.",
         "requirements": [
           "Compare benefit, effort and context fit.",
           "State what was observed and what cannot be inferred.",
@@ -272,7 +272,7 @@
           "Choose keep, change or retire with a recovery branch and review date.",
           "Record known facts and uncertainty separately, using the relevant stage measures."
         ],
-        "solution": "Mira uses a keys-in-bowl target. She records available arrival opportunities, tries moving the bowl nearer the door, and keeps it if retrieval is easier. A missed arrival cue prompts a next-opportunity plan; a short log cannot prove automaticity or universal causation.",
+        "solution": "Keep the reachable bowl provisionally: fewer searches were observed and setup cost is small. The lighter bag load also changed, so the sample cannot isolate the bowl as the cause. On the trip, use an agreed secure place when unpacking; if no opportunity exists, resume at the next suitable pause. Review after the next five home arrivals and again after travel. Change or retire the setup if it obstructs access or stops helping retrieval; preserve the purpose rather than the streak.",
         "solutionFormat": "prose"
       }
     }

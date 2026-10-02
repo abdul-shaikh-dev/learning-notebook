@@ -8,7 +8,13 @@ Complete the following requirements using the related numbered worksheets. Use a
 2. Practise a question, paraphrase, clear request and feedback example.
 3. Record the partner’s correction and revise the message.
 
-## Printable project record
+## Supplied fictional case
+
+Role-play both sides, or practise with someone who agrees and may pause. Dana sees changed headings and assumes the whole introduction was replaced. The partner says only the headings were edited because readers could not find the dates.
+
+Try the task aloud or in a short note. The detailed record below is optional; use it only if it helps.
+
+## Optional printable project record
 
 Case and purpose: ________________________________________________
 
@@ -24,7 +30,7 @@ Next decision and review date: ____________________________________
 
 ## Worked fictional project
 
-Dana and a fictional partner discuss a changed document. Dana distinguishes the actual changes from presumed motives, asks what happened, checks a summary and requests a stable version. They record a deadline and an unresolved introduction question; a respectful process does not guarantee agreement.
+Dana asks, "What were you trying to make easier?" Her first summary is, "You replaced the introduction because it was unclear?" The partner corrects her: only the headings changed. Dana revises: "You changed the headings to make the dates easier to find; the introduction is unchanged. Is that right?" Feedback: "When headings changed without a note, I rechecked the whole section." Request: "Could you leave a short change note before tomorrow's review?" The partner agrees to the note, not to freezing every edit. Either can pause the practice.
 
 ## Exit criteria
 

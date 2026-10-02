@@ -59,8 +59,7 @@
         "README-md",
         "pipeline_lab-py",
         "test_pipeline_lab-py",
-        "sample_orders-csv",
-        "sql-server-bridge-sql"
+        "sample_orders-csv"
       ],
       "steps": [
         "Download and extract the bundle; all files are at the named folder root.",
@@ -86,8 +85,8 @@
       ],
       "prerequisites": [
         {
-          "label": "1. Define a data product and its grain",
-          "href": "#topic/data-engineering/data-products-and-grain"
+          "label": "7. Exact amounts and numeric meaning",
+          "href": "#topic/data-engineering/money-and-numeric-precision"
         }
       ],
       "notes": [
@@ -103,8 +102,7 @@
         "README-md",
         "pipeline_lab-py",
         "test_pipeline_lab-py",
-        "sample_orders-csv",
-        "sql-server-bridge-sql"
+        "sample_orders-csv"
       ],
       "steps": [
         "Download and extract the bundle; all files are at the named folder root.",
@@ -130,8 +128,8 @@
       ],
       "prerequisites": [
         {
-          "label": "1. Define a data product and its grain",
-          "href": "#topic/data-engineering/data-products-and-grain"
+          "label": "9. Safe replay and batch identity",
+          "href": "#topic/data-engineering/idempotency-and-replay"
         }
       ],
       "notes": [
@@ -182,8 +180,8 @@
       ],
       "prerequisites": [
         {
-          "label": "1. Define a data product and its grain",
-          "href": "#topic/data-engineering/data-products-and-grain"
+          "label": "18. Reconcile counts, totals and lineage",
+          "href": "#topic/data-engineering/reconciliation-and-lineage"
         }
       ],
       "notes": [

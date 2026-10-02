@@ -72,8 +72,8 @@
       ],
       "prerequisites": [
         {
-          "label": "1. Meet the operating system",
-          "href": "#topic/linux-operating-systems/kernel-and-user-space"
+          "label": "Finish this stage through 8. Environment, PATH and configuration",
+          "href": "#topic/linux-operating-systems/environment-and-path"
         }
       ],
       "notes": [
@@ -122,8 +122,8 @@
       ],
       "prerequisites": [
         {
-          "label": "1. Meet the operating system",
-          "href": "#topic/linux-operating-systems/kernel-and-user-space"
+          "label": "Finish this stage through 16. Services and supervision",
+          "href": "#topic/linux-operating-systems/services-and-supervision"
         }
       ],
       "notes": [
@@ -174,8 +174,8 @@
       ],
       "prerequisites": [
         {
-          "label": "1. Meet the operating system",
-          "href": "#topic/linux-operating-systems/kernel-and-user-space"
+          "label": "Finish this stage through 22. Build your diagnosis portfolio",
+          "href": "#topic/linux-operating-systems/operating-systems-capstone"
         }
       ],
       "notes": [

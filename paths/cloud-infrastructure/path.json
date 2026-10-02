@@ -206,6 +206,13 @@
           "paragraphs": [
             "A personal notebook needs mostly cached static assets. A collaborative project adds authenticated writes and a database. For a training API, managed application compute can reduce OS work; Kubernetes can be a learning choice, but its cluster lifecycle is an additional responsibility."
           ]
+        },
+        {
+          "title": "A small decision to try",
+          "paragraphs": [
+            "An architecture decision record, or ADR, is a short explanation of the need, options, choice and reason to revisit it. For this exercise use 20 learners, occasional note writes and no custom operating-system packages. One learner maintains the app. All records are synthetic, and nothing is deployed by this exercise.",
+            "Compare managed application compute plus a data store with a VM hosting the API. List compute uptime, stored data, outbound transfer and logs as cost categories. Use categories only; the cost-control lesson handles estimates. A new requirement for a custom OS component would be a reason to reconsider the choice."
+          ]
         }
       ],
       "quiz": {
@@ -236,12 +243,12 @@
       ],
       "stage": "foundation",
       "exercise": {
-        "prompt": "Write a two-option ADR for your full-stack project. Include baseline monthly cost categories without claiming current prices, and name the trigger that would justify changing the architecture.",
+        "prompt": "For the 20-learner scenario, choose managed application compute or a VM. Give the constraint that drives your choice and one changed requirement that would make you reconsider.",
+        "solution": "Managed application compute is a reasonable first choice because the app needs no custom OS and has one maintainer. The owner still handles application permissions and recovery. A required unsupported OS component could justify a VM and its added patching duties. A different choice needs an explicit constraint; no price is implied.",
         "checks": [
-          "Compare two options against stated workload constraints.",
-          "Include a measurable decision trigger and avoid invented current pricing."
+          "Use the supplied workload and maintenance constraint.",
+          "Name a changed requirement that would reverse the decision."
         ],
-        "solution": "Compare managed application compute with a VM against authenticated writes, sensitive data, operational ownership, recovery and deployment requirements. Keep static hosting for read-only needs. Record cost categories and current-pricing lookup instead of fixed fictional rates. Define a measurable trigger such as required OS customization that could justify switching models.",
         "solutionFormat": "prose"
       }
     },
@@ -291,12 +298,12 @@
       ],
       "stage": "foundation",
       "exercise": {
-        "prompt": "In the offline topology change storage to public and run policy tests. Restore the fixture. On paper diagnose three failures separately: wrong DNS result, blocked route, and valid connection with denied identity.",
+        "prompt": "In a Python prompt opened in the extracted kit, load topology.json, change resources[1][\"public_network\"] to True in memory, and call infra_lab.validate(resources). Predict the result. Then explain how wrong DNS differs from a reachable service denying an identity.",
+        "solution": "validate raises ValueError because the model forbids public storage. The source JSON remains unchanged when only the loaded object changes. A wrong DNS result affects destination selection; a reachable service can still deny its data action. Neither local result proves Azure enforcement.",
         "checks": [
-          "Diagnose DNS, routing/filter and authorization failures separately.",
-          "State the template's missing private-connectivity prerequisites."
+          "Change an in-memory copy, leaving the source fixture intact.",
+          "Separate the local policy rejection from actual DNS and authorization behavior."
         ],
-        "solution": "The request needs intended DNS resolution, a reachable route/filter path and authorized data action. Public storage should fail the training policy. A private endpoint does not itself grant identity permission. The supplied template disables public networking but creates no private endpoint or connected application network, so it is not a complete usable backend.",
         "solutionFormat": "prose"
       }
     },

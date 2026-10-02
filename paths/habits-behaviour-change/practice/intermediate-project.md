@@ -8,7 +8,13 @@ Complete the following requirements using the related numbered worksheets. Use a
 2. Try one reversible setup change, keeping the target stable.
 3. Record available opportunities, completion and ease separately.
 
-## Printable project record
+## Supplied fictional case
+
+Keep the keys-in-bowl action. Mira may move the existing bowl to a reachable clear shelf. In a supplied five-arrival trial there are four usable opportunities: three completions and one noticed cue without completion. The fifth arrival needed immediate assistance and had no opportunity. Starting was described as easy twice and deliberate once.
+
+Try the task aloud or in a short note. The detailed record below is optional; use it only if it helps.
+
+## Optional printable project record
 
 Case and purpose: ________________________________________________
 
@@ -24,7 +30,7 @@ Next decision and review date: ____________________________________
 
 ## Worked fictional project
 
-Mira uses a keys-in-bowl target. She records available arrival opportunities, tries moving the bowl nearer the door, and keeps it if retrieval is easier. A missed arrival cue prompts a next-opportunity plan; a short log cannot prove automaticity or universal causation.
+If I arrive and can put my bags down, then I put my keys in the bowl. If immediate assistance is needed, I skip that moment and store the keys at the next available pause. The single setup change is moving the bowl; the action stays the same. Completion is three of four available opportunities, with the unavailable arrival retained separately. Two easy starts and one deliberate start are observations, not proof of automaticity. Compare retrieval usefulness before deciding to keep the setup.
 
 ## Exit criteria
 

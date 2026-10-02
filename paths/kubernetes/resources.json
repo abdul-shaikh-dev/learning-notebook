@@ -186,8 +186,8 @@
       ],
       "prerequisites": [
         {
-          "label": "1. Identify the problem Kubernetes solves",
-          "href": "#topic/kubernetes/cluster-model"
+          "label": "Finish this stage through 8. Configure behavior with a ConfigMap",
+          "href": "#topic/kubernetes/configmaps"
         }
       ],
       "notes": [
@@ -256,8 +256,8 @@
       ],
       "prerequisites": [
         {
-          "label": "9. Treat Secrets as protected references, not encryption",
-          "href": "#topic/kubernetes/secrets"
+          "label": "Finish this stage through 16. Harden a workload and distinguish admission from runtime",
+          "href": "#topic/kubernetes/pod-security"
         }
       ],
       "notes": [
@@ -329,8 +329,8 @@
       ],
       "prerequisites": [
         {
-          "label": "17. Connect PVC lifecycle, access mode and recovery",
-          "href": "#topic/kubernetes/persistent-storage"
+          "label": "Finish this stage through 24. Separate cluster backup, application restore and production readiness",
+          "href": "#topic/kubernetes/backup-production"
         }
       ],
       "notes": [

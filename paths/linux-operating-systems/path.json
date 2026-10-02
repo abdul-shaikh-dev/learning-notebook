@@ -7,7 +7,7 @@
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Comfort creating files and opening a terminal.",
-    "Python 3.11+ for the portable practice kit; no external packages.",
+    "Python functions, lists, exceptions and context managers for the optional portable kit; Python 3.11+ with no external packages. You can read the operating-system lessons without running it.",
     "Optional Linux observations require an existing disposable Linux/WSL environment."
   ],
   "outcomes": [
@@ -407,6 +407,14 @@
           "paragraphs": [
             "chmod 777 is not a diagnosis. An effective identity, parent access, ACL, mount option or security policy can explain a failure. Windows NTFS permissions and WSL-mounted directories may behave differently."
           ]
+        },
+        {
+          "title": "Build each permission digit",
+          "paragraphs": [
+            "Read has value 4, write 2 and execute 1. Add the required values separately for owner, group and others. Thus 6 means read plus write, 5 means read plus execute, and 0 means none. The three digits in 640 therefore describe rw-, r-- and ---. Directory traversal still needs the directory execute bit; these digits do not replace that separate check."
+          ],
+          "example": "600 = owner 4+2, group 0, others 0\n750 = owner 4+2+1, group 4+1, others 0",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
@@ -435,6 +443,13 @@
           "section": "Process credentials",
           "reviewed": "2026-09-30",
           "scope": "Linux man-pages mechanisms; distribution commands are optional Linux observations. Portable Python examples target 3.11+ and do not emulate kernel behavior."
+        },
+        {
+          "title": "GNU chmod numeric modes",
+          "url": "https://man7.org/linux/man-pages/man1/chmod.1.html",
+          "section": "DESCRIPTION: numeric mode bit values",
+          "reviewed": "2026-10-02",
+          "scope": "Primary documentation for the worked progression example; execution evidence is recorded separately."
         }
       ]
     },
@@ -579,14 +594,20 @@
           "paragraphs": [
             "The portable lab verifies direct-child behavior, not Linux process groups or a production supervisor. Output capture in memory needs a bound for potentially large output. For streaming tools consume output incrementally."
           ]
+        },
+        {
+          "title": "Inspect one trusted child first",
+          "paragraphs": [
+            "The returned CompletedProcess keeps returncode, stdout and stderr separate. A nonzero child status does not raise automatically with the default check=False. A timeout raises TimeoutExpired instead of returning a normal completion. Start with these two observable outcomes before designing a supervisor for descendants."
+          ]
         }
       ],
       "exercise": {
-        "prompt": "Explain how you would contain an untrusted tool that creates grandchildren and unlimited output.",
-        "solution": "Use an appropriate OS sandbox/supervisor, resource limits, process-group cleanup and bounded streaming output; a single run timeout alone is insufficient.",
+        "prompt": "Replace the child source string \"print(42)\" with \"import sys; print('bad row', file=sys.stderr); sys.exit(2)\". Predict returncode, stdout and stderr, then run it with the same argument list and timeout. How does this differ from TimeoutExpired?",
+        "solution": "The result has returncode 2, empty stdout and stderr \"bad row\\n\". subprocess.run returns normally because check=True was not requested. TimeoutExpired is an exception when the child exceeds the wait; it is not status 2. Optional later extension: study descendant cleanup and output limits after resource-limits.",
         "checks": [
-          "Include sandbox or supervisor controls, resource bounds and bounded streamed output.",
-          "Include descendant/process-group cleanup rather than relying on a direct-child timeout alone."
+          "Keep child status distinct from the parent exception.",
+          "Use only the fixed trusted snippet and the existing current-interpreter argument list."
         ],
         "solutionFormat": "prose"
       },

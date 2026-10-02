@@ -88,28 +88,21 @@
       "fileIds": [
         "harness_workshop-py",
         "test_harness_workshop-py",
-        "README-md",
-        "operations-runbook-md",
-        "architecture-decision-md"
+        "README-md"
       ],
       "steps": [
         "Extract the bundle and open agent-harnesses-practice. All listed files are flat at this folder root.",
         "Read README.md before running the references.",
-        "Run the reference and check its output.",
+        "Start with the read-only tests below. Save and approval behavior is introduced in the intermediate stage.",
         "Build a scripted read-only loop for synthetic lessons. No model API or external execution is needed.",
         "Build the project described in the reader: Define trusted subject, readable lesson IDs and a proposal budget. Create an explicit registry with read_lesson only. Validate exact argument fields and bounded strings. Return structured states and metadata events. Test unknown tools, forbidden lessons and malformed proposals.",
         "Check your result: No invalid or forbidden proposal changes the fake store. The authenticated subject cannot be overridden by arguments. Events distinguish proposal, denial and confirmation. The final result does not claim a write occurred."
       ],
       "commands": [
         {
-          "label": "Run reference from agent-harnesses-practice folder root",
-          "command": "python harness_workshop.py",
-          "expected": "The scripted runtime waits for approval and then finishes with one fake note."
-        },
-        {
-          "label": "Run baseline tests from agent-harnesses-practice folder root",
-          "command": "python -m unittest -v test_harness_workshop.py",
-          "expected": "The supplied regression suite should pass. Test your own changes separately."
+          "label": "Check read-only dispatch boundaries",
+          "command": "python -m unittest -v test_harness_workshop.HarnessTests.test_read_and_final test_harness_workshop.HarnessTests.test_unknown_tool_and_bad_shapes_never_execute test_harness_workshop.HarnessTests.test_forbidden_resource_and_write_capability",
+          "expected": "Three reference tests pass. Implement your read-only subset and apply the same accepted and rejected scenarios."
         }
       ],
       "prerequisites": [

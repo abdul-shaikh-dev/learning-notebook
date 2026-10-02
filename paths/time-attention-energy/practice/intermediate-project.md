@@ -16,7 +16,7 @@ Score each criterion 0 (missing), 1 (partial) or 2 (supported). Revise any missi
 - Estimates refer to comparable past durations and show variation.
 - Focus blocks respect an agreed urgent communication route.
 - The trial compares checked output, errors and context.
-- The weekly review defers or renegotiates work beyond capacity.
+- The comparison supports one feasible next scheduling change and states what remains uncertain.
 
 ## Worked synthetic approach
 

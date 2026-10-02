@@ -10,7 +10,7 @@
     "Python 3.11+ and a terminal for runnable labs; no third-party package, account or external service required."
   ],
   "outcomes": [
-    "Implement and explain URL-origin policy, offline DNS expiry and a bounded read-retry decision.",
+    "Implement URL-origin comparisons and offline DNS expiry, then explain where an HTTP response fits in the request journey.",
     "Run a complete ephemeral local server/client exercise and classify transport, HTTP and body outcomes.",
     "Compose strict observation validation, public-only model caching and deadline-aware retry accounting, then defend what was measured.",
     "Explain the difference between supplied test evidence and unexecuted deployment extensions."
@@ -79,7 +79,7 @@
     {
       "id": "foundation",
       "title": "Foundation practice",
-      "description": "Implement and explain URL-origin policy, offline DNS expiry and a bounded read-retry decision.",
+      "description": "Implement URL-origin comparisons and offline DNS expiry, then explain where an HTTP response fits in the request journey.",
       "exitCriteria": [
         "Examples include different scheme and port origins.",
         "TTL tests do not sleep or access a public resolver.",
@@ -87,20 +87,18 @@
       ],
       "project": {
         "title": "Layered request and DNS worksheet",
-        "brief": "Implement and explain URL-origin policy, offline DNS expiry and a bounded read-retry decision.",
+        "brief": "Implement URL-origin comparisons and offline DNS expiry, then explain where an HTTP response fits in the request journey.",
         "requirements": [
           "Parse scheme/host/default port and reject credentials, fragments and unsupported schemes.",
           "Store an offline address with TTL and test just before and at expiry using injected time.",
-          "Distinguish DNS answers, listener availability, HTTPS identity and application body success.",
-          "Permit retries only for the explicit safe-read policy with attempts and time left."
+          "Distinguish a resolved name, an available listener, an HTTP response and readable body bytes. Certificate identity checks follow in the intermediate stage."
         ],
         "rubric": [
           "Examples include different scheme and port origins.",
           "TTL tests do not sleep or access a public resolver.",
-          "The model is labeled incomplete and separate from real DNS.",
-          "POST is not repeated without an explicit operation contract."
+          "The model is labeled incomplete and separate from real DNS."
         ],
-        "solution": "network_foundation.py implements the origin tuple, injected-time DnsCache and retry_allowed. ProtocolModels verifies normalization, rejection, exact TTL expiry and attempt policy. The example address is documentation-only and no DNS query is performed."
+        "solution": "Compare origin tuples and DnsCache lookups before and exactly at expiry. Run the two named ProtocolModels tests. The address is documentation-only; no DNS request occurs. Leave retry_allowed for methods-retries in the next stage."
       }
     },
     {
@@ -116,20 +114,19 @@
         "title": "Loopback HTTP diagnostic client",
         "brief": "Run a complete ephemeral local server/client exercise and classify transport, HTTP and body outcomes.",
         "requirements": [
-          "Bind only 127.0.0.1 on port zero and close resources on failure.",
-          "Check GET, HEAD, ETag/304, relative 307 redirect and missing route.",
+          "Use the supplied local_server context manager for its loopback port and cleanup; focus on client observations before changing server internals.",
+          "Check GET, HEAD, ETag/304 and a missing route; save redirect policy for the advanced stage.",
           "Observe synthetic cookie issuance/private denial without claiming real authentication.",
-          "Reject malformed 200 JSON and classify 503.",
-          "Use a readiness Event and delayed response to observe a real bounded client read timeout."
+          "Compare malformed 200 JSON with a 503 status; save the full schema decoder for body-contracts in the advanced stage.",
+          "Permit retries only for the explicit safe-read policy with attempts and time left."
         ],
         "rubric": [
           "Status, headers and content are asserted separately.",
           "HEAD and 304 have no body.",
-          "Redirects are observed and not followed without policy.",
           "The fixture owns its port, threads and cleanup.",
           "Evidence is HTTP/1.1 loopback, with no TLS or browser enforcement claim."
         ],
-        "solution": "network_http.py supplies the complete server, bounded fetch and context-managed cleanup. LoopbackHttp exercises actual socket exchanges, including a blocked response released on cleanup. The cookie is fixed synthetic data; no credential service or real TLS exists."
+        "solution": "Use the supplied local_server and fetch helpers to compare GET, HEAD, conditional GET and cookie denial. Run the four selected tests, including the read-retry policy and TLS configuration assertions. The fixed cookie does not authenticate accounts; redirects and stalled responses are revisited in the advanced project."
       }
     },
     {
@@ -149,7 +146,8 @@
           "Reject private cache insertion and test exact freshness expiry with an injected clock.",
           "Stop new GET attempts after the attempt budget or overall deadline.",
           "Record only status/attempt metadata and classify final failure.",
-          "Explain real-TLS, browser/CORS, real-DNS and proxy drills still needed."
+          "Explain real-TLS, browser/CORS, real-DNS and proxy drills still needed.",
+          "Use the supplied /stall fixture to observe a client timeout, and inspect a 307 before deciding whether to follow it."
         ],
         "rubric": [
           "Malformed syntax, incompatible types and wrong media type each reject.",
@@ -484,16 +482,22 @@
             "The supplied decoder first decodes bytes as strict UTF-8, then passes the resulting text to Python's JSON reader. It rejects decoding and syntax failures. Passing bytes directly to json.loads would also accept UTF-16 and UTF-32, which is broader than this lab's wire contract. It also checks a strict schema after parsing. Do not measure Content-Length from characters: a non-ASCII lesson name can require more bytes. Compression and transfer framing are separate protocol concerns delegated to the chosen client stack."
           ],
           "example": "Text lesson='café'\nUTF-8 bytes contain more octets than text characters\nWrong encoding or truncated bytes -> decoding failure\nCorrect bytes + wrong field types -> schema failure"
+        },
+        {
+          "title": "Try bytes before the full decoder",
+          "paragraphs": [
+            "Use a Python prompt for this first check. Encode the text cafe with an accented final letter, then decode those bytes back to text. The round trip is about encoding; it says nothing yet about JSON syntax or a lesson schema. body-contracts later connects all three checks."
+          ]
         }
       ],
       "exercise": {
-        "prompt": "Add a byte-encoding boundary test without a remote server.",
-        "solution": "Pass an invalid UTF-8 byte sequence within a JSON string to decode_observation and require ProtocolError. Also test a correctly UTF-8-encoded non-ASCII lesson to show valid input remains accepted.",
-        "solutionFormat": "prose",
+        "prompt": "In Python, compare len(\"café\") with len(\"café\".encode(\"utf-8\")). Then try b\"\\xff\".decode(\"utf-8\"). Which transformation fails?",
+        "solution": "The text has four characters and its UTF-8 representation has five bytes. Decoding b\"\\xff\" raises UnicodeDecodeError. No JSON parser or remote server is needed. Later, body-contracts wraps this failure as ProtocolError.",
         "checks": [
-          "Provide byte fixtures with a named encoding policy and expected acceptance or rejection.",
-          "Include a valid non-ASCII case and malformed input; verify error and publication behavior."
-        ]
+          "Keep byte count distinct from character count.",
+          "Locate the malformed input failure at decoding, before JSON or schema checks."
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What should an invalid byte sequence become?",
@@ -1140,13 +1144,13 @@
         }
       ],
       "exercise": {
-        "prompt": "What can multiplying retries across three layers do?",
-        "solution": "If each layer attempts three times, one logical operation can reach up to 27 deepest calls. Coordinate ownership and use an end-to-end bound.",
-        "solutionFormat": "prose",
+        "prompt": "Three nested layers each allow three total attempts, including the original. Calculate the maximum deepest calls. Then compare a single retry owner allowing three attempts.",
+        "solution": "The nested policies can make 3 * 3 * 3 = 27 deepest calls. A single owner making three attempts against a callee that does not retry makes at most three. These maxima assume every attempt reaches the next layer and the deadline permits them.",
         "checks": [
-          "Calculate attempts from stated per-layer retry policies.",
-          "State a shared limit and demonstrate behavior when it is exhausted."
-        ]
+          "Count attempts including the original explicitly.",
+          "Explain why the shared deadline can reduce the maximum."
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Which prevents a new call after time is exhausted?",

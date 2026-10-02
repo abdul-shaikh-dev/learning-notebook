@@ -8,7 +8,13 @@ Complete the following requirements using the related numbered worksheets. Use a
 2. State what was observed and what cannot be inferred.
 3. Choose keep, change or retire with a recovery branch and review date.
 
-## Printable project record
+## Supplied fictional case
+
+After moving the bowl, a fictional sample has four of five usable arrivals completed and searches on one of five departures, compared with searches on three of five earlier departures. The later week involved fewer bags. Moving the bowl costs little, but a forthcoming trip removes the usual doorway cue.
+
+Try the task aloud or in a short note. The detailed record below is optional; use it only if it helps.
+
+## Optional printable project record
 
 Case and purpose: ________________________________________________
 
@@ -24,7 +30,7 @@ Next decision and review date: ____________________________________
 
 ## Worked fictional project
 
-Mira uses a keys-in-bowl target. She records available arrival opportunities, tries moving the bowl nearer the door, and keeps it if retrieval is easier. A missed arrival cue prompts a next-opportunity plan; a short log cannot prove automaticity or universal causation.
+Keep the reachable bowl provisionally: fewer searches were observed and setup cost is small. The lighter bag load also changed, so the sample cannot isolate the bowl as the cause. On the trip, use an agreed secure place when unpacking; if no opportunity exists, resume at the next suitable pause. Review after the next five home arrivals and again after travel. Change or retire the setup if it obstructs access or stops helping retrieval; preserve the purpose rather than the streak.
 
 ## Exit criteria
 

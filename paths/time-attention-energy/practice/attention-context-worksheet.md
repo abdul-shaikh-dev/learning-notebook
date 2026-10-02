@@ -6,6 +6,8 @@ Synthetic practice case. No account, app or private data required.
 
 An interruption can be external, self-initiated or necessary. The cost includes finding the previous context again, not simply message-reading time. Research describes particular computing environments; it does not establish a universal number of minutes lost for every person and interruption.
 
+A return cue is a short note that lets you restart: name the file or page, the last checked step and the next action. For example: draft.md, paragraph two checked; next verify the date in paragraph three against the booking email. Save it before an interruption when feasible. The later return-cue lesson develops this into a handoff for longer gaps.
+
 ## Try before reading the answer
 
 A 50-minute draft session contains two 3-minute messages and two 4-minute resumptions. Calculate observed disruption.

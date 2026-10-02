@@ -99,51 +99,26 @@
       "goal": "Build a pure parser and independently demonstrate allowed values, type boundaries and malformed records.",
       "fileIds": [
         "testing_foundation-py",
+        "test_testing_labs-py",
         "testing_integration-py",
         "testing_concurrency-py",
-        "test_testing_labs-py",
         "README-md",
-        "project-workbook-md",
-        "depth-cursor_candidate-py",
-        "depth-cursor_reference-py",
-        "depth-cursor_checks-py",
-        "depth-cursor-investigation-md"
+        "project-workbook-md"
       ],
       "steps": [
-        "Read README.md and run the supplied references.",
+        "Read README.md, then run the foundation tests below. The other modules are included because the shared test file imports them; later stages use them.",
         "Attempt the stage brief before inspecting its reference solution.",
         "Require exact id/minutes fields, nonblank bounded IDs and integer duration 0 through 1440.",
         "Reject duplicate JSON keys, booleans, invalid JSON and oversized text.",
         "Compute known totals and demonstrate a test distinguishing the supplied boolean mutant.",
         "Produce a minimal reproduction note with expected and observed results.",
-        "Compare your evidence with the stage rubric and document extensions separately.",
-        "Debug the unfamiliar pagination report using cursor-investigation.md and run the same checks against your repaired module."
+        "Compare your evidence with the stage rubric and document extensions separately."
       ],
       "commands": [
         {
-          "label": "Run testing_foundation.py",
-          "command": "python testing_foundation.py",
-          "expected": "Prints 5 for one validated five-minute record."
-        },
-        {
-          "label": "Run testing_integration.py",
-          "command": "python testing_integration.py",
-          "expected": "Prints 7; creates and cleans a temporary report directory."
-        },
-        {
-          "label": "Run testing_concurrency.py",
-          "command": "python testing_concurrency.py",
-          "expected": "Prints stale edit rejected (1, 8)."
-        },
-        {
-          "label": "Run meaningful regression suite",
-          "command": "python -m unittest -v test_testing_labs.py",
-          "expected": "All 10 local regression tests pass; this is not a production or external-service certification."
-        },
-        {
-          "label": "Run the focused depth lab from the extracted bundle root",
-          "command": "python cursor_checks.py",
-          "expected": "Four contract tests pass on the reference. The candidate command in the guide intentionally fails."
+          "label": "Run parser boundary tests",
+          "command": "python -m unittest -v test_testing_labs.FoundationTests",
+          "expected": "Four tests pass for the reference parser and totals. Your independent parser still needs its own checks."
         }
       ],
       "prerequisites": [

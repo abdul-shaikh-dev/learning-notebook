@@ -90,7 +90,8 @@
           "Demonstrate a valid add and completion through React and .NET.",
           "Reject malformed data while preserving the draft.",
           "Explain refresh versus process restart.",
-          "Use the milestone workbook and record the observed result before comparing the reference."
+          "Use the milestone workbook as an optional guide; verify the behavior in your own application before comparing the reference.",
+          "Implement the Open minutes extension from first-slice and verify the 25-to-0 success and unchanged-25 conflict cases."
         ],
         "rubric": [
           "Demonstrate a valid add and completion through React and .NET.",
@@ -117,7 +118,7 @@
           "Show persisted IDs after API restart.",
           "Prove one winner and one stale conflict.",
           "Specify atomic idempotent creation and ownership boundaries.",
-          "Use the milestone workbook and record the observed result before comparing the reference."
+          "Use the milestone workbook as an optional guide; verify the behavior in your own application before comparing the reference."
         ],
         "rubric": [
           "Show persisted IDs after API restart.",
@@ -144,7 +145,7 @@
           "Separate browser, HTTP and SQL evidence.",
           "Explain which authentication and deployment features still need implementation and testing.",
           "Defend a recovery plan with measured results where executed.",
-          "Use the milestone workbook and record the observed result before comparing the reference."
+          "Use the milestone workbook as an optional guide; verify the behavior in your own application before comparing the reference."
         ],
         "rubric": [
           "Separate browser, HTTP and SQL evidence.",
@@ -461,6 +462,13 @@
           "title": "Refresh versus API restart",
           "paragraphs": [
             "In memory mode the API owns a locked dictionary. A browser refresh reloads current server state, but restarting the API loses it. This is a useful foundation boundary: the UI is integrated, while durability is intentionally not yet established. Record both behaviors instead of calling refresh a persistence test."
+          ]
+        },
+        {
+          "title": "Change one behavior independently",
+          "paragraphs": [
+            "After the baseline works, add an Open minutes summary above the list. Derive it from tasks whose done field is false; do not add an API field or store a second mutable total. With open sessions of 25 and 0 minutes plus a completed 10-minute session, the summary is 25.",
+            "Complete the 25-minute session using the API result: the summary becomes 0. Make the update return 409 instead: the existing row and summary must remain 25, with a visible conflict. Empty tasks also gives 0. Add a component assertion for success and rejection so copying the existing reference cannot satisfy this extension."
           ]
         }
       ],
@@ -813,6 +821,13 @@
             "The server commits a new session, but its response is lost. The UI sees a timeout. A second POST with a new identity can create two sessions. A disabled button only prevents a second click while the page remains alive; it does not identify the operation after a reload.",
             "An extension can persist one client operation key for one intended create, send it on retries, and bind the server's receipt to that key plus the request fingerprint. Same key and same content returns the original result; same key and different content conflicts. Persist the receipt with the created row so a crash cannot separate them. The current reference does not implement this extension.",
             "Reproduce the ambiguity with a proxy or test adapter that allows the first server commit but drops only its response. Query the database independently. Implement receipt replay, then repeat the fault: there should be one session and the same returned identity. Do not mark this complete merely because a mocked fetch was called once."
+          ]
+        },
+        {
+          "title": "Order the implementation after the design",
+          "paragraphs": [
+            "At this point you can specify replay and conflict cases without implementing authentication. First use a fixed synthetic owner inside the local test fixture to explore key/payload behavior. This is not a client-provided identity and is not suitable for public access.",
+            "Before implementing multi-user receipts, complete the next identity lesson and derive the owner from its verified server principal. Then test the same operation key under users A and B: their receipts must be independent. Keep this design exercise separate from the baseline's already implemented stale-update checks."
           ]
         }
       ],

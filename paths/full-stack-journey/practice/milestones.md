@@ -3,12 +3,16 @@
 ## Foundation: one complete vertical slice
 Create and list sessions; validate 0, 1440, -1, 1441, blank title and boolean minutes.
 Keep a draft when the API is stopped; show a useful error instead of an empty list.
-Add a filter without duplicating task state. Record HTTP status and visible behavior.
+Add the Open minutes summary from first-slice without duplicating task state.
+Check 25 before completion, 0 after success, and unchanged 25 after a rejected update.
+A text filter is another optional extension. Check both HTTP status and visible behavior.
 
 ## Intermediate: reliable persistence and conflict handling
 Use the dedicated SQL database; prove restart persistence. Run the two-writer check.
 Open the UI in two tabs: complete the same version in both; the second must show a
 conflict until Reload. Add editable titles with a retained draft and explicit compare.
+Design the idempotency tests here. Implement multi-user keys after the identity milestone
+below; a fixed synthetic owner is sufficient only for the local receipt fixture.
 Add an idempotency key for POST: same key+same payload replays one result; key+different
 payload returns conflict. Persist the key and created task atomically, and test retries
 after a committed response is lost. The baseline does not implement idempotent create.
@@ -26,7 +30,8 @@ Practice backup/restore into a NEW database and verify task counts/versions afte
 Document elapsed recovery time, tolerated data loss, deployment rollback compatibility and
 unexecuted checks. Infrastructure creation is optional and needs a separate owned sandbox.
 
-## Evidence sheet
-Runtime versions / storage mode / exact command / independent expected result / actual result /
-failure introduced / behavior after correction / remaining boundary. Passing baseline checks
-proves supplied local behaviors only; use new tests to demonstrate your extensions.
+## Optional notes
+Keep the command output or a short note when it helps reproduce a result. There is no
+required worksheet. Passing baseline checks proves supplied local behaviors only;
+use the independent cases above to check your own extensions. Name untested boundaries
+when discussing a release or recovery claim.

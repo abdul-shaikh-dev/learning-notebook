@@ -220,6 +220,14 @@
           "example": "const raw = \"25\";\nconst minutes = Number(raw);\nconsole.log(minutes + 5); // 30\nconsole.log(raw + 5);     // \"255\"\nconsole.log(0 === false); // false"
         },
         {
+          "title": "Enough syntax to write the first validator",
+          "paragraphs": [
+            "function parseMinutes(raw) declares an operation with an input named raw. Braces delimit its body. return sends a value back and ends that call; console.log displays a value instead. if (condition) runs its following statement only when the condition is true.",
+            "The expression condition ? first : second chooses one value. && requires both conditions to hold and skips its right side when the left is false. Read Number.isInteger(n) && n >= 0 ? n : null as: return n only when it is a nonnegative integer, otherwise return null. The later functions lesson expands this into reusable transformations."
+          ],
+          "example": "function nonblank(raw) {\n  if (raw.trim() === \"\") return null;\n  return raw.trim();\n}\nconsole.assert(nonblank(\"  SQL  \") === \"SQL\");\nconsole.assert(nonblank(\"  \") === null);"
+        },
+        {
           "title": "Pitfalls",
           "paragraphs": [
             "Treating every falsy value as missing rejects valid zero. Check for missing input separately from zero."
@@ -282,6 +290,14 @@
             "A learning tracker can store records once and derive completed titles or totals when needed. A derived array need not be another mutable source of truth."
           ],
           "example": "const lessons = [{id: 1, title: \"Types\", done: true}, {id: 2, title: \"Arrays\", done: false}];\nconst titles = lessons.filter(x => x.done).map(x => x.title);\nconsole.log(titles); // [\"Types\"]"
+        },
+        {
+          "title": "Read callbacks one element at a time",
+          "paragraphs": [
+            "x => x.done is a small function whose input is one record and whose result is its done field. filter calls it for each record and keeps records producing true. map calls its function for each retained record and collects the returned values. Neither operation deep-copies the objects.",
+            "reduce((sum, x) => sum + x.minutes, 0) starts sum at 0 and replaces it with the returned value after each item. With completed minutes 20 and 15, the accumulator becomes 20 then 35. An empty array leaves the initial 0 unchanged.",
+            "The spread form [...items] creates a new array containing the same items. In the next lesson, {...row, done: true} copies an object's fields and replaces done. Nested objects still remain shared; copy the particular nested object when changing it."
+          ]
         },
         {
           "title": "Pitfalls",
@@ -459,6 +475,13 @@
             "A cast such as JSON.parse(text) as Session skips all those checks. It can compile while minutes is \"twenty\". The lab rejects malformed values, preserves zero, trims identity text into a fresh value, and leaves the caller's object unchanged. Readonly helps prevent accidental writes in typed code, but is not a runtime freeze or an authorization rule."
           ],
           "example": "const result = parseSession({id: \" a \", minutes: 0, done: false});\nif (result.ok) console.log(result.value.minutes); // 0\nelse console.log(result.error);"
+        },
+        {
+          "title": "Prepare a versioned importer in small steps",
+          "paragraphs": [
+            "The foundation project returns a summary from a function; a React upload screen comes later. First parse text with JSON.parse inside try/catch, then narrow the resulting unknown. Check version before reading lessons. Reject arrays where an object is expected, and inspect each lesson's id, title and done before deriving a count.",
+            "Use a fresh Set to track IDs: seen.has(id) detects a duplicate and seen.add(id) records a new ID. For {version:1, lessons:[{id:\"a\", title:\"Types\", done:false}]}, the summary is total 1, complete 0. Empty lessons gives 0 and 0. The same ID twice must fail, even if its titles differ. Check these independently before looking at decodeSaved."
+          ]
         }
       ],
       "exercise": {

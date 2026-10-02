@@ -85,12 +85,17 @@
       ],
       "steps": [
         "Extract the bundle; sample-positions.csv and answers.md are at the financial-foundations-practice folder root.",
-        "Open the CSV in a spreadsheet. Preserve missing values as missing and keep short-position signs.",
+        "Start with the bond rows in the CSV after lessons 1–5. Preserve missing values and short-position signs. Use the model-input explanation in lesson 3 before interpreting swap and option rows.",
         "Compare like-for-like independent and front-office values; separate amount thresholds from evidence quality and stale-price review.",
         "Write your decisions before opening answers.md; compare the bond, swap and option interpretations."
       ],
       "commands": [],
-      "prerequisites": [],
+      "prerequisites": [
+        {
+          "label": "Sources, tolerances and exceptions",
+          "href": "course.html#lesson/5"
+        }
+      ],
       "notes": [
         "Synthetic educational positions, not market prices or trading advice. The CSV and worked answers are the downloadable exercise. The printable study pack is available separately through the finance reader.",
         "The amount trigger is strict greater-than: a difference equal to the threshold does not trigger it. Missing or stale evidence still needs review."
@@ -168,17 +173,14 @@
       ],
       "prerequisites": [
         {
-          "label": "Market data and models",
+          "label": "Market data and models, including the fixed-cash-flow example",
           "href": "course.html#lesson/3"
-        },
-        {
-          "label": "Fixed-cash-flow curve investigation",
-          "href": "index.html#resources/financial-foundations/daily-pnl-and-curves"
         }
       ],
       "notes": [
         "Paper/spreadsheet is sufficient; optional Python needs 3.11+.",
-        "Synthetic supplied factors, projections and accruals; no market calibration or production pricer."
+        "Synthetic supplied factors, projections and accruals; no market calibration or production pricer.",
+        "The daily-P&L and FX workbook is a later, separate investigation. It is not a prerequisite for this same-time swap comparison."
       ]
     }
   ],

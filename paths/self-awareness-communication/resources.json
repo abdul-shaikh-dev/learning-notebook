@@ -760,7 +760,7 @@
     {
       "id": "foundation",
       "title": "A factual reflection and a listening plan",
-      "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+      "goal": "Use the supplied fictional case. Try an answer aloud or in a short note before comparing with the worked example. The full worksheet is optional. Dana finds that two headings in a shared document changed overnight. The editor is unknown. Dana has ten free minutes before another commitment and wants to understand the change.",
       "fileIds": [
         "README",
         "foundation-project",
@@ -781,7 +781,7 @@
         "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
         "Open foundation-project.md.",
         "Separate observations and interpretations in a fictional case.",
-        "Write an open question and a checked paraphrase.",
+        "Plan a suitable time and a way to listen without assuming the other person’s motive.",
         "Name your purpose and a respectful limit.",
         "Compare the record with the exit criteria and revise any unsupported claim."
       ],
@@ -790,12 +790,17 @@
         "No runtime required. Keep any personal record private by default.",
         "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
       ],
-      "prerequisites": []
+      "prerequisites": [
+        {
+          "label": "Finish this stage through 7. Create conditions for attentive listening",
+          "href": "#topic/self-awareness-communication/listen-with-attention"
+        }
+      ]
     },
     {
       "id": "intermediate",
       "title": "A listening and feedback role-play",
-      "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+      "goal": "Use the supplied fictional case. Try an answer aloud or in a short note before comparing with the worked example. The full worksheet is optional. Role-play both sides, or practise with someone who agrees and may pause. Dana sees changed headings and assumes the whole introduction was replaced. The partner says only the headings were edited because readers could not find the dates.",
       "fileIds": [
         "README",
         "intermediate-project",
@@ -825,12 +830,17 @@
         "No runtime required. Keep any personal record private by default.",
         "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
       ],
-      "prerequisites": []
+      "prerequisites": [
+        {
+          "label": "Finish this stage through 14. Receive feedback by checking the example",
+          "href": "#topic/self-awareness-communication/receive-feedback"
+        }
+      ]
     },
     {
       "id": "advanced",
       "title": "A difficult-conversation plan and review",
-      "goal": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+      "goal": "Use the supplied fictional case. Try an answer aloud or in a short note before comparing with the worked example. The full worksheet is optional. Dana wants the document frozen today; Lee wants to revise its introduction. They are peers, and the shared purpose is accurate information by Friday noon. A full rewrite needs two hours; only thirty minutes remain. A factual correction needs twenty minutes. The organiser decides release scope.",
       "fileIds": [
         "README",
         "advanced-project",
@@ -859,7 +869,12 @@
         "No runtime required. Keep any personal record private by default.",
         "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
       ],
-      "prerequisites": []
+      "prerequisites": [
+        {
+          "label": "Finish this stage through 20. Review a conversation using observable evidence",
+          "href": "#topic/self-awareness-communication/conversation-review"
+        }
+      ]
     }
   ],
   "lessonTasks": {

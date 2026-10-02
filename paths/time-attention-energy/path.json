@@ -226,7 +226,7 @@
           "The schedule protects essential recovery and keeps uncertainty visible.",
           "An interruption record includes a usable next-step cue."
         ],
-        "solution": "For 240 available minutes, reserve 90 for essentials and transitions, 90 for a checked draft, 30 for practice and 30 for uncertainty. Optional formatting moves to another day. Record actual use without treating necessary care as failure.",
+        "solution": "For 240 available minutes, reserve 90 for essentials and transitions, 90 for a checked draft, 30 for practice and 30 for uncertainty. Optional formatting moves to another day. Record actual use without treating necessary care as failure. Return cue: draft.md, paragraph two checked; next verify paragraph three against the booking email.",
         "solutionFormat": "prose"
       }
     },
@@ -238,7 +238,7 @@
         "Estimates refer to comparable past durations and show variation.",
         "Focus blocks respect an agreed urgent communication route.",
         "The trial compares checked output, errors and context.",
-        "The weekly review defers or renegotiates work beyond capacity."
+        "The comparison supports one feasible next scheduling change and states what remains uncertain."
       ],
       "project": {
         "title": "A week of deliberate focus",
@@ -253,7 +253,7 @@
           "Estimates refer to comparable past durations and show variation.",
           "Focus blocks respect an agreed urgent communication route.",
           "The trial compares checked output, errors and context.",
-          "The weekly review defers or renegotiates work beyond capacity."
+          "The comparison supports one feasible next scheduling change and states what remains uncertain."
         ],
         "solution": "Use observed drafts of 70, 90 and 110 minutes rather than a 40-minute hope. Trial optional notification batching in four similar sessions. Record checked paragraphs and errors. A lighter workload confounds any improvement; keep conclusions local.",
         "solutionFormat": "prose"
@@ -560,7 +560,8 @@
           "title": "Understand and apply",
           "paragraphs": [
             "An interruption can be external, self-initiated or necessary. The cost includes finding the previous context again, not simply message-reading time. Research describes particular computing environments; it does not establish a universal number of minutes lost for every person and interruption.",
-            "Separate necessary support interruptions from optional alerts before designing a change. Eliminating a required support call may increase uninterrupted minutes while damaging a responsibility that matters more than the draft. For the supplied session, the resumption time is observed rather than borrowed from a popular average. Keep a brief record of what had to be reconstructed: the sentence, source or checking position. Then test a local intervention such as leaving a return cue. Comparing similar sessions helps you distinguish less reconstruction work from a simpler task or fewer required calls."
+            "Separate necessary support interruptions from optional alerts before designing a change. Eliminating a required support call may increase uninterrupted minutes while damaging a responsibility that matters more than the draft. For the supplied session, the resumption time is observed rather than borrowed from a popular average. Keep a brief record of what had to be reconstructed: the sentence, source or checking position. Then test a local intervention such as leaving a return cue. Comparing similar sessions helps you distinguish less reconstruction work from a simpler task or fewer required calls.",
+            "A return cue is a short note that lets you restart: name the file or page, the last checked step and the next action. For example: draft.md, paragraph two checked; next verify the date in paragraph three against the booking email. Save it before an interruption when feasible. The later return-cue lesson develops this into a handoff for longer gaps."
           ],
           "example": "During a 60-minute reading block, three alerts take 2 minutes each and each return takes 3 minutes. Observed disruption is 3 × (2 + 3) = 15 minutes, leaving 45 for reading. This is the recorded case, not a general interruption penalty.",
           "exampleFormat": "prose"
@@ -969,8 +970,8 @@
         }
       ],
       "exercise": {
-        "prompt": "Compare two synthetic sessions: 25-minute blocks finish 3 problems; 40-minute blocks finish 4 but leave two careless errors.",
-        "solution": "Record both output and accuracy. The longer block has more attempted work but only two clearly correct items if two are wrong. Try a review pause and compare again before selecting a default.",
+        "prompt": "Compare two synthetic sessions on similar problems checked with the same answer key: 25 minutes produces three correct answers; 40 minutes produces four answers, two incorrect. Compare correct output and choose a next trial.",
+        "solution": "The shorter session produces three correct answers; the longer produces two. This small comparison favours the shorter session for checked output, but does not establish a universal timer. Try a checking pause in another comparable longer session and record correct answers and comfort.",
         "solutionFormat": "prose",
         "checks": [
           "Distinguish attempted problems from accurate results.",

@@ -6,7 +6,7 @@
   "description": "Study contracts, composition, object creation, wrappers, lifecycle behavior and persistence in 24 lessons. Use three projects to compare named patterns with simpler designs.",
   "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
-    "Basic programming: functions, collections, exceptions and simple classes. Complete Python foundations first if these are unfamiliar.",
+    "Basic programming: functions, collections, exceptions and simple classes. Python learners should reach classes-and-dataclasses; the beginner foundation stage alone does not cover classes.",
     "Examples use Python 3.11+ and only the standard library; ideas transfer to C#, TypeScript and other languages."
   ],
   "outcomes": [
@@ -756,6 +756,13 @@
           ]
         },
         {
+          "title": "Trace construction separately from invocation",
+          "paragraphs": [
+            "Calling measured(formatter, sizes) creates wrapped and returns the function without formatting any titles yet. wrapped keeps access to those collaborators through a closure. Later format_titles([\"A\", \"BC\"]) invokes wrapped, which calls formatter once, records the returned length, then returns the same text.",
+            "@wraps copies useful function metadata; it does not call the formatter or catch errors. Two calls to measured can capture different recorders. This is why the recorder is supplied explicitly instead of shared through a global variable."
+          ]
+        },
+        {
           "title": "Collaboration",
           "paragraphs": [
             "measured wraps formatting with a size record while returning the original text. The assertions verify both the four-character result and the added observation."
@@ -1469,6 +1476,13 @@
           "paragraphs": [
             "Unit of Work coordinates changes belonging to one business operation and defines when they commit or roll back. Durable atomicity comes from the storage transaction, not the pattern name.",
             "A local copy-on-write model can teach commit boundaries. Make a working copy, modify it and replace the original only on success. This example is sequential and process-local. It is not a database, crash-safe journal or concurrency-control mechanism."
+          ]
+        },
+        {
+          "title": "What yield means inside this context manager",
+          "paragraphs": [
+            "@contextmanager turns this generator into a with-compatible resource. Entering with runs through the first yield and assigns its value to work. A successful body resumes after yield, allowing clear/update to publish. A body exception is raised at the suspended yield, so those following statements are skipped.",
+            "This example deliberately does not catch that exception. Catching and suppressing it would change the failure contract. If context managers are unfamiliar, the Python context-managers lesson traces yield, finally and propagation before storage is involved."
           ]
         },
         {

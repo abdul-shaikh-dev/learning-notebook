@@ -1,6 +1,6 @@
 # Observability & Performance practice
 
-Requirements: Python 3.10+ standard library, two terminals for interactive load runs. Extract all files into the same folder. No packages, credentials or paid services are needed.
+Requirements: Python 3.11+ standard library, two terminals for interactive load runs. Extract all files into the same folder. No packages, credentials or paid services are needed.
 
 ```
 python telemetry.test.py
@@ -22,7 +22,7 @@ Stop service.py with Ctrl+C. integration.test.py starts and terminates its own s
 
 benchmark.py checks equivalent outputs and times seven warmed repeated lookup batches. It excludes dictionary construction; add a separate end-to-end benchmark before claiming benefit for single-use indexes. It never asserts a universal speedup threshold.
 
-Foundation: define boundaries, interpret percentile and good-event checks. Intermediate: compare local distributions, calculate SLO budget use and design bounded labels. Advanced: produce a runbook, measure an optimisation with correctness checks and document pipeline loss/security policy.
+Foundation: define boundaries and interpret percentiles with `python telemetry.test.py AnalysisTests.test_nearest_rank AnalysisTests.test_does_not_mutate AnalysisTests.test_invalid`. Good-event checks follow in the intermediate SLO lessons. Intermediate: compare local distributions, calculate SLO budget use and design bounded labels. Advanced: produce a runbook, measure an optimisation with correctness checks and document pipeline loss/security policy.
 
 Execution scope: standard-library local HTTP, duration analysis, failure injection and lookup timing. OpenTelemetry SDK/collector deployment, real distributed propagation, backend retention, actual alert delivery, cloud infrastructure and production load are learner extensions and are not verified by these scripts.
 

@@ -133,7 +133,8 @@
         "Read README.md and milestones.md.",
         "Demonstrate a valid add and completion through React and .NET.",
         "Reject malformed data while preserving the draft.",
-        "Explain refresh versus process restart."
+        "Explain refresh versus process restart.",
+        "Build the Open minutes extension from first-slice. Check 25 for two open sessions of 25 and 0 minutes, then 0 after successful completion; a rejected update must keep 25."
       ],
       "commands": [
         {

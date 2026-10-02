@@ -424,6 +424,12 @@
           "paragraphs": [
             "A timeout means the caller did not receive a usable result before its deadline. It does not prove the server did nothing. DNS, connection establishment, TLS, queueing and database work need compatible budgets. Avoid logging credentials in URLs or request bodies. A browser CORS policy is not a substitute for server authorization; non-browser clients are not restricted by it."
           ]
+        },
+        {
+          "title": "Work out the unknown outcome first",
+          "paragraphs": [
+            "A lost response allows at least two explanations: the booking did not commit, or it committed and its reply was lost. Asking again with a new independent booking intent cannot distinguish them. A stable operation identifier lets a suitably designed server look up the original intent. This is a contract to request now; transactions and idempotency later explain how to implement it."
+          ]
         }
       ],
       "exercise": {
@@ -1022,6 +1028,12 @@
           "title": "Tradeoffs",
           "paragraphs": [
             "The conditional update and booking insert must share the same atomic boundary. Define cancellation, expiry and duplicate-operation behavior too. Deadlocks or serialization failures may require retrying the complete transaction from a safe boundary, with a bounded policy. Sending an email inside a database transaction cannot make the external email atomic with that transaction and may hold locks while the network stalls."
+          ]
+        },
+        {
+          "title": "Connect the timeline to the local test",
+          "paragraphs": [
+            "After predicting the one-seat outcome, run the selected BookingTests command in the intermediate practice card. The race case opens separate database connections, the rollback case injects a failure after the decrement, and the replay case keeps the request key unchanged. Read those assertions before the implementation. The same kit also contains outbox code; its delivery behavior belongs to the later outbox lesson."
           ]
         }
       ],

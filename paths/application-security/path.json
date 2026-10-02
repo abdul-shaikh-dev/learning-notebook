@@ -176,14 +176,13 @@
         }
       ],
       "exercise": {
-        "prompt": "Complete the worksheet for a title-update request and a login endpoint. Name one denial test for each.",
-        "solution": "For update, protect ownership/title integrity: reject foreign objects and owner/role fields before mutation. For login, protect account access and availability: verify credentials through a real adapter, throttle abuse and avoid account-enumerating responses. The local module tests policy but does not authenticate passwords.",
-        "solutionFormat": "prose",
+        "prompt": "Alice changes PATCH /documents/a to PATCH /documents/b. Document b belongs to Bob. Name the asset, unwanted change and one result that would show the server protected it.",
+        "solution": "The asset is Bob’s document and its title. Alice must not rename it. The server must deny the foreign update and leave Bob’s stored title unchanged; an error response alone would not prove the write was prevented. Login and request validation are separate boundaries introduced in the next lessons.",
         "checks": [
-          "Asset and unwanted action are concrete.",
-          "The boundary is named.",
-          "Each control has observable negative evidence."
-        ]
+          "Name the owner and requested action.",
+          "Check both denial and unchanged stored data."
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "What control addresses a guessed private document ID?",
@@ -347,14 +346,13 @@
         }
       ],
       "exercise": {
-        "prompt": "Add a delete action with an explicit policy and expand the matrix before implementing it. Test a same-subject cross-tenant request.",
-        "solution": "Decide exactly who may delete; unsupported actions remain denied until that policy exists. Add owner/nonowner, tenant, role, anonymous and missing-object cases for delete. Enforce the decision at the data-change boundary; do not merely add a delete button.",
-        "solutionFormat": "prose",
+        "prompt": "Predict read and update permission on document b for Alice/red/member, reviewer/red/reader and Bob/blue/member. Check authorized in the fixture. Then try the unsupported delete action.",
+        "solution": "Alice/red/member is denied both actions because she does not own b. The red reader may read but not update it. Bob/blue/member is denied because b is in red, despite the matching owner name. Delete is denied for all because it is unsupported. Optional extension: design delete rules before adding code.",
         "checks": [
-          "Matrix covers subject, tenant and action.",
-          "Unknown actions deny by default.",
-          "Denied reads reveal no object contents."
-        ]
+          "Include the permitted read so always-deny code would fail.",
+          "Apply tenant matching before owner or reader permission."
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Alice owns a blue-tenant document but has a red-tenant principal. Should ownership alone grant access?",
@@ -406,14 +404,13 @@
         }
       ],
       "exercise": {
-        "prompt": "Add a description field with a stated maximum length, and test missing/extra fields, wrong types, boundaries and normalization.",
-        "solution": "Define the schema first, deliberately allow the new field, and preserve rejection of owner/role/tenant. Add both accepted boundaries and one-past-limit failures. Apply only allowed fields after object authorization; never persist the whole request dictionary by default.",
-        "solutionFormat": "prose",
+        "prompt": "Predict parse_update for {\"title\":\" Notes \"}, {\"title\":\"\"}, {\"title\":\"x\" * 80}, {\"title\":\"x\" * 81} and {\"title\":\"Notes\",\"owner\":\"alice\"}. Run each in a practice copy and compare.",
+        "solution": "The first returns {\"title\":\"Notes\"}; empty text fails; 80 printable characters succeeds; 81 fails; the owner field fails even with a valid title. Optional extension: add an optional description string of at most 200 characters while still rejecting owner, tenant and role. Decide whether an empty description is allowed before implementing it.",
         "checks": [
-          "Unexpected privilege fields are rejected.",
-          "Boundary values and malformed shapes are tested.",
-          "Validation and permission remain separate checks."
-        ]
+          "Test valid boundaries as well as rejections.",
+          "Do not allow a privilege field merely because title is valid."
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Why reject owner in a title-update payload?",
@@ -458,14 +455,13 @@
         }
       ],
       "exercise": {
-        "prompt": "Add an idle timeout policy to a copy of the fixture. Specify how concurrent requests update last-use time and test expiry boundaries.",
-        "solution": "Store last-use and absolute expiry separately. Reject when either limit is reached, refresh only after valid use, and define atomic updates for a real shared store. Test old-token rotation, exactly-at-expiry, logout and privilege-change revocation. Do not label the local dictionary as distributed session evidence.",
-        "solutionFormat": "prose",
+        "prompt": "Create a session at time 1. Predict identity lookups at 300 and 301. In a fresh Sessions instance rotate a session at time 2, then try both the old and new IDs at time 3. Finally log out and retry the new ID.",
+        "solution": "At 300 the first session is valid; at 301 it raises PermissionError. Rotation invalidates the old ID and allows the new one at time 3. Logout invalidates the new ID too. Use injected time, not sleep. Optional extension after this works: add idle expiry without weakening the absolute expiry.",
         "checks": [
-          "Rotation invalidates the old session.",
-          "Expiry is tested at the exact boundary.",
-          "Logout revokes server state."
-        ]
+          "Check the exact expiry boundary.",
+          "Verify rotation and logout reject old authority while valid access still works."
+        ],
+        "solutionFormat": "prose"
       },
       "quiz": {
         "question": "Why does clearing a client-side logged-in flag not prove logout?",
@@ -1417,7 +1413,7 @@
           "Compare encoded HTML text and a literal injection-shaped SQL search.",
           "Verify rotation, exact expiry and logout.",
           "Reject missing/wrong/cross-session/malformed Unicode CSRF tokens.",
-          "Write a route contract identifying browser/HTTP tests still needed."
+          "Run the supplied loopback route tests, then identify browser and identity-provider checks still needed."
         ],
         "rubric": [
           "Synthetic attack strings remain data in the documented contexts.",
@@ -1425,7 +1421,7 @@
           "Expired/revoked sessions and wrong CSRF tokens fail.",
           "Local methods are not presented as browser or cryptographic integration."
         ],
-        "solution": "Use the bounded title parser, HTML text-node encoder and SQLite placeholder binding; do not reuse HTML escaping for other sinks. Control time explicitly for session rotation/expiry/logout. Session tokens are random and CSRF checks fail safely for malformed supplied text. Run the two suites and record expected versus observed results. HTTP route calls, cookie attributes and real browser requests remain separately verified extensions."
+        "solution": "Use the bounded title parser, HTML text-node encoder and SQLite placeholder binding; do not reuse HTML escaping for other sinks. Control time explicitly for session rotation/expiry/logout. Session tokens are random and CSRF checks fail safely for malformed supplied text. Run the two suites and record expected versus observed results. test_security_http.py checks the loopback route and persisted rows. Browser cookie behavior and real-provider authentication remain separate extensions."
       }
     },
     {
@@ -1446,7 +1442,7 @@
           "Run the entire local regression suite and OperationsTests.",
           "Document log fields and single-process rate-limit limitations.",
           "Map selected ASVS 5.0.0 controls to executed/unexecuted evidence.",
-          "For the required offline submission, document provider prerequisites and proposed negative tests without secrets; execute identity-provider-lab.md only as an opt-in training-tenant extension.",
+          "For optional offline practice, describe provider prerequisites and proposed negative tests without secrets; execute identity-provider-lab.md only as an opt-in training-tenant extension.",
           "Specify real issuer/audience/expiry/signature/correlation negative tests through maintained libraries.",
           "Write an incident/rotation plan with authorized containment and recovery."
         ],

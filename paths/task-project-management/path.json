@@ -560,7 +560,8 @@
           "title": "Understand and apply",
           "paragraphs": [
             "Decompose from the deliverable down to actions that can be owned and checked. Include review, handoff and support work. A tree makes coverage visible but does not establish execution order; dependencies require a separate view.",
-            "For each deliverable, identify the work needed to create, check and hand it over. Remove actions that contribute to none of the deliverables. Split work where someone can check a result, such as a confirmed venue or a reviewed invitation. Different pieces can have different owners and take different amounts of time. Add detail when someone lacks enough information to start or check the work; avoid maintaining a task tree larger than the project needs."
+            "For each deliverable, identify the work needed to create, check and hand it over. Remove actions that contribute to none of the deliverables. Split work where someone can check a result, such as a confirmed venue or a reviewed invitation. Different pieces can have different owners and take different amounts of time. Add detail when someone lacks enough information to start or check the work; avoid maintaining a task tree larger than the project needs.",
+            "An owner is the person responsible for moving an item forward and following up; they need not do every action themselves. Agree the owner rather than silently assigning someone. For the workshop, Sam coordinates the venue request and Lee coordinates the checked invitation."
           ],
           "example": "A reading-group launch has three deliverables: a confirmed room, a reading guide and a joining notice. Request the room booking, draft the guide’s questions and verify the notice’s details; add review and publication actions with owners.",
           "exampleFormat": "prose"
@@ -573,7 +574,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Plan a 60-minute beginner workshop for 20 people, with an exercise sheet and invitation. Break the workshop into three deliverables and list one action for each.",
+        "prompt": "Plan a 60-minute beginner workshop for 20 people, with an exercise sheet and invitation. Break the workshop into three deliverables and list one action for each. Include a check or handoff action before calling the plan complete.",
         "solution": "Venue arrangement: confirm capacity. Learning material: draft the exercise. Participation information: check and publish the invitation. Add review and delivery tasks before considering the decomposition complete.",
         "solutionFormat": "prose",
         "checks": [
@@ -1031,7 +1032,7 @@
       "id": "change",
       "title": "15. Handle new scope as a decision",
       "takeaway": "A new request changes cost, schedule, quality or benefit.",
-      "stage": "advanced",
+      "stage": "intermediate",
       "sections": [
         {
           "title": "Understand and apply",
@@ -1172,13 +1173,13 @@
         }
       ],
       "exercise": {
-        "prompt": "Transfer: all dates match, but the event is full and the form still reports successful registration. Change the completion criteria and next check.",
-        "solution": "Require the agreed sold-out or wait-list outcome when full, distinct from a confirmed place. Test the final available place and next attempt under the actual service's supported concurrency model. Correct dates do not establish a valid booking. Do not infer capacity guarantees from a visual mockup.",
+        "prompt": "Transfer: all dates match, but the event is full and the form still reports successful registration. The organiser permits a waiting list. Specify the expected outcome with one place left and with no places left, then describe a newcomer walkthrough. No software implementation is required.",
+        "solution": "With one place left, the next accepted attendee receives a confirmed place. With no places left, the next attendee sees that the event is full and can choose the waiting list; that is not a confirmed place. Walk through both supplied states with a fictional newcomer and check that the message makes the difference clear. This checks the specified experience; a real booking system needs separate implementation checks before its capacity guarantee can be accepted.",
         "solutionFormat": "prose",
         "checks": [
-          "Checks final-place and full-event boundary.",
-          "Distinguishes wait-list from confirmed booking.",
-          "Limits claims to supported system behavior."
+          "Describes both one-place-left and full-event outcomes.",
+          "Distinguishes waiting-list choice from a confirmed place.",
+          "Separates a fictional walkthrough from evidence about a running booking system."
         ]
       },
       "quiz": {

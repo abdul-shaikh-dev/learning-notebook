@@ -581,6 +581,13 @@
           "paragraphs": [
             "An event log is only as trustworthy as its write path, storage and access controls. The workshop list is in memory and is not a tamper-evident audit system. Avoid recording raw arguments or full source text by default. A crash between an external effect and event persistence still needs a receipt lookup; a missing log line does not prove no effect occurred."
           ]
+        },
+        {
+          "title": "Build the read-only subset in small steps",
+          "paragraphs": [
+            "Implement one successful read before adding a loop. Next reject an unknown tool and a forbidden lesson without invoking the handler. Then process a list of scripted proposals with a counter owned by your runtime. Count every proposal and stop at the configured maximum, including invalid proposals if your chosen policy permits continuing after rejection.",
+            "Use two read proposals with a maximum of one as the first loop test. Exactly one handler call may occur. Lesson 9 develops budgets and restore behavior further. Approval and fake writes belong to the next stage; the foundation runtime can finish with a read result and no save capability."
+          ]
         }
       ],
       "exercise": {
@@ -1013,6 +1020,12 @@
             "Walk through a save in four moments: the checkpoint says waiting; the user approves; the effect store commits the note and receipt; the checkpoint records completion. A crash after the third moment leaves durable business state ahead of durable run state. Resuming by blindly repeating the action risks duplication. Restoring only the checkpoint does not reconstruct what the effect store already did.",
             "Open persisted-run-lab.md and run its crash-before-checkpoint case. Predict the note count, checkpoint status and receipt lookup before reading the assertions. Recovery asks the effect store about the same operation identity, then updates the run. Change the payload while retaining that identity: the receipt fingerprint must reject it rather than treating it as the original request.",
             "For a changed case, crash before the effect commits. Recovery finds no local receipt and keeps the approval boundary. Absence is authoritative here because the local effect and receipt share a transaction; an external service with delayed lookup would require a different unknown-outcome policy."
+          ]
+        },
+        {
+          "title": "Test a restore before adding durable storage",
+          "paragraphs": [
+            "First stop an in-memory run while waiting for review and serialize its checkpoint. Restore into the same fake store and verify the used proposal count stays unchanged. The saved approval must not reappear. Only after this works should you attempt the SQLite extension below. It adds a storage boundary to an already understood lifecycle, rather than changing persistence and approval rules at once."
           ]
         }
       ],

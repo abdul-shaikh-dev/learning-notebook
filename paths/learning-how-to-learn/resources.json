@@ -87,8 +87,8 @@
       "commands": [],
       "prerequisites": [
         {
-          "label": "1. Choose a useful learning target",
-          "href": "#topic/learning-how-to-learn/learning-target"
+          "label": "Finish this stage through 6. Take a small baseline and stage check",
+          "href": "#topic/learning-how-to-learn/check-baseline"
         }
       ],
       "notes": [
@@ -121,8 +121,8 @@
       "commands": [],
       "prerequisites": [
         {
-          "label": "7. Explain connections in your own words",
-          "href": "#topic/learning-how-to-learn/explain-connections"
+          "label": "Finish this stage through 15. Build a flexible practice week",
+          "href": "#topic/learning-how-to-learn/plan-practice-week"
         }
       ],
       "notes": [
@@ -155,8 +155,8 @@
       "commands": [],
       "prerequisites": [
         {
-          "label": "15. Test transfer with changed cases",
-          "href": "#topic/learning-how-to-learn/transfer-cases"
+          "label": "Finish this stage through 20. Choose what to maintain and when to stop",
+          "href": "#topic/learning-how-to-learn/maintain-learning"
         }
       ],
       "notes": [
@@ -182,7 +182,7 @@
     "study-environment": "intermediate",
     "retain-useful-notes": "intermediate",
     "transfer-cases": "advanced",
-    "plan-practice-week": "advanced",
+    "plan-practice-week": "intermediate",
     "evaluate-advice": "advanced",
     "adapt-stalled-learning": "advanced",
     "delayed-demonstration": "advanced",

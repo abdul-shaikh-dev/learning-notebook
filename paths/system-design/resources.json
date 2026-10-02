@@ -90,8 +90,8 @@
       ],
       "prerequisites": [
         {
-          "label": "1. Start with users, boundaries and invariants",
-          "href": "#topic/system-design/requirements"
+          "label": "Finish this stage through 8. Indexes, storage and retention",
+          "href": "#topic/system-design/indexes-storage"
         }
       ],
       "notes": [
@@ -109,7 +109,10 @@
         "test_capacity_calculator-py",
         "design-workbook-md",
         "adr-template-md",
-        "README-md"
+        "README-md",
+        "practice-booking_lab-py",
+        "practice-test_booking_lab-py",
+        "practice-booking-lab-md"
       ],
       "steps": [
         "Extract the bundle and open system-design-practice. All listed files are flat at this folder root.",
@@ -129,12 +132,17 @@
           "label": "Run baseline tests from system-design-practice folder root",
           "command": "python -m unittest -v test_capacity_calculator.py",
           "expected": "The supplied regression suite should pass. Test your own changes separately."
+        },
+        {
+          "label": "Optional: observe transactions and key replay locally",
+          "command": "python -m unittest -v test_booking_lab.BookingTests.test_last_seat_race_uses_separate_connections test_booking_lab.BookingTests.test_response_loss_replay_and_intent_conflict test_booking_lab.BookingTests.test_second_write_failure_rolls_back_capacity",
+          "expected": "Three SQLite tests pass for the final seat, replay/conflict and rollback. Outbox relay behavior is studied in the advanced stage."
         }
       ],
       "prerequisites": [
         {
-          "label": "9. Scale application workers and balance load",
-          "href": "#topic/system-design/scaling"
+          "label": "Finish this stage through 16. Idempotency and uncertain outcomes",
+          "href": "#topic/system-design/idempotency"
         }
       ],
       "notes": [
@@ -181,8 +189,8 @@
       ],
       "prerequisites": [
         {
-          "label": "17. Deadlines, bounded retries and isolation",
-          "href": "#topic/system-design/resilience"
+          "label": "Finish this stage through 24. Test the design assumptions",
+          "href": "#topic/system-design/design-review"
         }
       ],
       "notes": [

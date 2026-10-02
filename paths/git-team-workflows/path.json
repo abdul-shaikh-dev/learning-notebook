@@ -195,6 +195,13 @@
             "If you expect the latest edit in the commit, stage it again and inspect the cached diff. Commit success alone says nothing about whether the intended contents were staged."
           ],
           "example": "git diff\ngit diff --cached\ngit show HEAD:notes.txt\n# Fixture assertion: HEAD is two while working tree is three."
+        },
+        {
+          "title": "Try a new prediction in the retained fixture",
+          "paragraphs": [
+            "The script has already performed its demonstration when it exits. Its evidence.json records the intermediate diffs; the final working file has been restored. To practice yourself, enter only the reported foundation repository and check git rev-parse --show-toplevel before editing.",
+            "Change notes.txt to four and stage it, then change it to five without staging again. Predict each diff before running git diff and git diff --cached. The cached diff ends at four; the ordinary diff compares four with five. You can verify this without making a commit or changing any existing project."
+          ]
         }
       ],
       "exercise": {
@@ -1158,6 +1165,12 @@
           "paragraphs": [
             "The evidence file gives the base, Alice, Bob, merged and repaired commit IDs. Compare the merged values8/6 with repaired6/6, and verify that the repaired candidate descends from both developers. A check run on Alice before the merge says nothing about Bob's newly combined capacity change.",
             "Run python semantic_merge.py --workspace-parent . to retain a fresh fixture for inspection, or its unittest for temporary verification. It never adopts an existing checkout. Change the scenario to batch4 and capacity6 as an independent valid merge, then check that your behavior test accepts that case without requiring a repair."
+          ]
+        },
+        {
+          "title": "Choose the operation before seeing the answer",
+          "paragraphs": [
+            "Work through four new decisions. A topic and main both contain useful commits you want to retain. A maintenance branch needs one independent fix but no other topic changes. Your unpublished topic needs the latest main as its base. A shared defect commit has useful commits after it. Choose an operation for each and name the result you would inspect. The worked answer below supplies the choices; no hosting account or publication is required."
           ]
         }
       ],

@@ -772,7 +772,12 @@
         "Score the rubric; revise missing criteria and preserve the evidence."
       ],
       "commands": [],
-      "prerequisites": [],
+      "prerequisites": [
+        {
+          "label": "Finish this stage through 7. Map dependencies before dates",
+          "href": "#topic/task-project-management/sequence"
+        }
+      ],
       "notes": [
         "All project cases are synthetic unless you elect to use an ordinary personal example.",
         "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
@@ -795,7 +800,8 @@
         "lab-html",
         "lab-js",
         "lab-css",
-        "lab-model-js"
+        "lab-model-js",
+        "change-worksheet"
       ],
       "steps": [
         "Open lab.html in your browser, or open the Practice studio link below. Switch among the five activities.",
@@ -806,7 +812,12 @@
         "Score the rubric; revise missing criteria and preserve the evidence."
       ],
       "commands": [],
-      "prerequisites": [],
+      "prerequisites": [
+        {
+          "label": "Finish this stage through 15. Handle new scope as a decision",
+          "href": "#topic/task-project-management/change"
+        }
+      ],
       "notes": [
         "All project cases are synthetic unless you elect to use an ordinary personal example.",
         "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."
@@ -819,7 +830,6 @@
       "fileIds": [
         "advanced-project",
         "README-md",
-        "change-worksheet",
         "metrics-worksheet",
         "review-worksheet",
         "retrospective-worksheet",
@@ -840,7 +850,12 @@
         "Score the rubric; revise missing criteria and preserve the evidence."
       ],
       "commands": [],
-      "prerequisites": [],
+      "prerequisites": [
+        {
+          "label": "Finish this stage through 21. Select a proportionate management system",
+          "href": "#topic/task-project-management/system-review"
+        }
+      ],
       "notes": [
         "All project cases are synthetic unless you elect to use an ordinary personal example.",
         "Practice entries stay in page memory and reset on reload. Export explicitly to keep them. Exported files can contain personal reflections. No server, account or automatic sync is used."

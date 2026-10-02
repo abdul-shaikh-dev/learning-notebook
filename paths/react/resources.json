@@ -152,7 +152,7 @@
       "steps": [
         "Extract the bundle and open react-practice. All listed files are flat at this folder root.",
         "Read README.md before running the references.",
-        "Run the reference and check its output. The foundation reference is the domain decoder and tests; implement the importer UI as your assessment.",
+        "Run the reference and check its output. The foundation reference is the domain decoder and tests; implement a pure importer function first. The UI belongs to the later components/forms stage.",
         "Convert an unknown JSON payload into a useful summary without trusting type assertions.",
         "Build the project described in the reader: Accept a versioned object containing unique lesson IDs, titles and completion booleans. Reject malformed JSON, duplicate IDs, blank titles and unsupported versions. Return a completion summary without modifying caller-owned records. Write repeatable valid and invalid-input tests.",
         "Check your result: Every malformed case produces an explicit failure. Zero and false are not treated as missing. Original data is unchanged. Explain where runtime validation ends and static typing begins.",
@@ -163,6 +163,11 @@
           "label": "Run reference from react-practice folder root",
           "command": "node --experimental-strip-types tracker-core.test.ts",
           "expected": "The domain regression checks finish successfully."
+        },
+        {
+          "label": "Install the pinned test/build tools once",
+          "command": "npm ci",
+          "expected": "Dependencies from package-lock.json are installed. Needed before the npm test/build commands below; the first install needs network access."
         },
         {
           "label": "Run the focused depth lab from the extracted bundle root",

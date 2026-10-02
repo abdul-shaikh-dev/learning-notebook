@@ -83,7 +83,12 @@
           "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
         }
       ],
-      "prerequisites": [],
+      "prerequisites": [
+        {
+          "label": "Finish this stage through 8. Variables, validation and outputs",
+          "href": "#topic/cloud-infrastructure/variables"
+        }
+      ],
       "notes": [
         "Python 3.11+ and standard library only.",
         "Optional external tools are separately documented and not included in the local verification claim."
@@ -129,7 +134,12 @@
           "expected": "Four PASS plan lines: create/2, no-op/0, update/2, delete-create/2. Only initial built-in local state is applied; no cloud provider runs."
         }
       ],
-      "prerequisites": [],
+      "prerequisites": [
+        {
+          "label": "Finish this stage through 16. Secret lifecycle and workload identity",
+          "href": "#topic/cloud-infrastructure/secrets"
+        }
+      ],
       "notes": [
         "Python 3.11+ and standard library only.",
         "Optional external tools are separately documented and not included in the local verification claim.",
@@ -168,7 +178,12 @@
           "expected": "All supplied unittest cases pass; no broker, cloud or identity provider is exercised."
         }
       ],
-      "prerequisites": [],
+      "prerequisites": [
+        {
+          "label": "Finish this stage through 22. Infrastructure launch decision",
+          "href": "#topic/cloud-infrastructure/launch-review"
+        }
+      ],
       "notes": [
         "Python 3.11+ and standard library only.",
         "Optional external tools are separately documented and not included in the local verification claim."

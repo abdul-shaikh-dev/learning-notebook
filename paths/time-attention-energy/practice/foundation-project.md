@@ -20,7 +20,7 @@ Score each criterion 0 (missing), 1 (partial) or 2 (supported). Revise any missi
 
 ## Worked synthetic approach
 
-For 240 available minutes, reserve 90 for essentials and transitions, 90 for a checked draft, 30 for practice and 30 for uncertainty. Optional formatting moves to another day. Record actual use without treating necessary care as failure.
+For 240 available minutes, reserve 90 for essentials and transitions, 90 for a checked draft, 30 for practice and 30 for uncertainty. Optional formatting moves to another day. Record actual use without treating necessary care as failure. Return cue: draft.md, paragraph two checked; next verify paragraph three against the booking email.
 
 ## Your evidence
 

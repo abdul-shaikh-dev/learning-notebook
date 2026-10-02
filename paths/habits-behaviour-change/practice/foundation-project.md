@@ -8,7 +8,13 @@ Complete the following requirements using the related numbered worksheets. Use a
 2. Record three opportunities with context, completion and constraints.
 3. Choose a recognised cue and a useful minimum.
 
-## Printable project record
+## Supplied fictional case
+
+Mira wants to find keys without searching. Monday she arrives with free hands and puts keys on the table; Tuesday she arrives carrying bags and leaves them in a coat; Wednesday she arrives with free hands and uses the existing door-side bowl.
+
+Try the task aloud or in a short note. The detailed record below is optional; use it only if it helps.
+
+## Optional printable project record
 
 Case and purpose: ________________________________________________
 
@@ -24,7 +30,7 @@ Next decision and review date: ____________________________________
 
 ## Worked fictional project
 
-Mira uses a keys-in-bowl target. She records available arrival opportunities, tries moving the bowl nearer the door, and keeps it if retrieval is easier. A missed arrival cue prompts a next-opportunity plan; a short log cannot prove automaticity or universal causation.
+Outcome: less searching before leaving. Controllable action: put keys in the reachable bowl when arriving. The three arrival opportunities produced table, coat and bowl placement; only Wednesday used the target. Carrying bags constrained Tuesday, so Mira checks whether she can put bags down safely before reaching the bowl. The useful minimum is storing the keys, not organising the whole hallway. This baseline describes three events and does not show automaticity.
 
 ## Exit criteria
 

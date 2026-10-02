@@ -121,17 +121,12 @@
           "label": "Extracted kit root · offline Python checks",
           "command": "python -m unittest -v test_release_app.py test_release_tools.py test_distinct_artifact_drill.py",
           "expected": "16 named local tests pass; this does not execute a Docker daemon or cluster."
-        },
-        {
-          "label": "Offline request-budget arithmetic",
-          "command": "python release_tools.py slo --total 10000 --errors 12 --target 0.999",
-          "expected": "allowed_bad 10, remaining -2, burn rate approximately 1.2 from supplied counts."
         }
       ],
       "prerequisites": [
         {
-          "label": "1. Define what a release promises",
-          "href": "#topic/delivery-operations/release-contract"
+          "label": "Finish this stage through 8. Inject configuration and handle process shutdown",
+          "href": "#topic/delivery-operations/runtime-configuration"
         }
       ],
       "notes": [
@@ -143,7 +138,7 @@
     {
       "id": "intermediate",
       "title": "Candidate release and full-stack integration plan",
-      "goal": "Promote a compatible local candidate and write the React/.NET/SQL staging walkthrough.",
+      "goal": "Promote a compatible local candidate. The React/.NET/SQL staging walkthrough is an optional follow-on.",
       "fileIds": [
         "release_app-py",
         "test_release_app-py",
@@ -166,8 +161,8 @@
         "Run offline checks and record actual runtime/results.",
         "If opted in, build/inspect the local Docker image and record user/health/digest.",
         "Create a genuine changed v2 artifact separately from a configured version-label simulation.",
-        "Use integration-runbook.md to plan/build React dist and publish the .NET API.",
-        "Specify real API persistence/auth integration and SQL migration permissions.",
+        "Optional full-stack track: use integration-runbook.md after completing React/.NET/SQL prerequisites.",
+        "For that optional track, specify API persistence/auth integration and SQL migration permissions.",
         "Write candidate health/user gates and compatible rollback steps.",
         "Review ci-example.yaml permissions and current action pinning before enabling it in a separate repository.",
         "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work.",
@@ -198,8 +193,8 @@
       ],
       "prerequisites": [
         {
-          "label": "9. Keep secrets out of artifacts and logs",
-          "href": "#topic/delivery-operations/secrets"
+          "label": "Finish this stage through 16. Roll back bytes without assuming data rollback",
+          "href": "#topic/delivery-operations/rollback"
         }
       ],
       "notes": [
@@ -261,8 +256,8 @@
       ],
       "prerequisites": [
         {
-          "label": "17. Log events without leaking payloads",
-          "href": "#topic/delivery-operations/structured-logs"
+          "label": "Finish this stage through 24. Document release tests and recovery steps",
+          "href": "#topic/delivery-operations/release-review"
         }
       ],
       "notes": [

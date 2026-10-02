@@ -10,7 +10,7 @@ python -B -m unittest -v test_security_lab.py test_security_http.py
 
 Expected: Ten methods pass, including loopback HTTP mutation denial and persisted-state checks. This does not execute a browser/provider or cryptographic validation.
 
-## Implement and submit
+## Optional practice
 
 1. Run the entire local regression suite and OperationsTests.
 2. Document log fields and single-process rate-limit limitations.

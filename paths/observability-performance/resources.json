@@ -99,9 +99,9 @@
       ],
       "commands": [
         {
-          "label": "Run local reference checks",
-          "command": "python telemetry.test.py\npython integration.test.py\npython benchmark.py",
-          "expected": "Seven analysis checks and real loopback HTTP integration pass; equivalent lookup implementations report repeated actual timings. Port 8891 must be free for integration.test.py."
+          "label": "Check foundation percentile reasoning",
+          "command": "python telemetry.test.py AnalysisTests.test_nearest_rank AnalysisTests.test_does_not_mutate AnalysisTests.test_invalid",
+          "expected": "Three tests pass for nearest rank, preserved inputs and invalid sample handling. SLO and HTTP experiments follow in the next stage."
         },
         {
           "label": "Optional mechanism drill (read its guide first)",
@@ -111,8 +111,8 @@
       ],
       "prerequisites": [
         {
-          "label": "1. Ask a question before adding telemetry",
-          "href": "#topic/observability-performance/questions-signals"
+          "label": "Finish this stage through 7. Traces, spans and the critical path",
+          "href": "#topic/observability-performance/trace-spans"
         }
       ],
       "notes": [
@@ -154,15 +154,20 @@
           "expected": "Seven analysis checks and real loopback HTTP integration pass; equivalent lookup implementations report repeated actual timings. Port 8891 must be free for integration.test.py."
         },
         {
-          "label": "Run bounded loopback experiment",
-          "command": "python service.py\n# In a second terminal: python load.py --profile healthy\npython load.py --profile slow",
-          "expected": "Each run records 20 requests, response durations and status codes; the slow profile raises tail latency. Stop service with Ctrl+C."
+          "label": "Terminal 1: start the local service",
+          "command": "python service.py",
+          "expected": "Service listens on loopback port 8891 until Ctrl+C. Keep this terminal open."
+        },
+        {
+          "label": "Terminal 2: compare the three profiles",
+          "command": "python load.py --profile healthy\npython load.py --profile slow\npython load.py --profile fail",
+          "expected": "Each command finishes after 20 requests. Fail reports four HTTP failures. Slow adds delay to every fifth response; actual timing varies. Stop terminal 1 with Ctrl+C afterward."
         }
       ],
       "prerequisites": [
         {
-          "label": "8. Propagate context across boundaries",
-          "href": "#topic/observability-performance/context-propagation"
+          "label": "Finish this stage through 14. Benchmark a hypothesis rather than a favourite optimisation",
+          "href": "#topic/observability-performance/benchmark-design"
         }
       ],
       "notes": [
@@ -213,8 +218,8 @@
       ],
       "prerequisites": [
         {
-          "label": "15. Profiling CPU work and waiting",
-          "href": "#topic/observability-performance/profiling"
+          "label": "Finish this stage through 21. Telemetry pipelines, reliability and release evidence",
+          "href": "#topic/observability-performance/telemetry-release"
         }
       ],
       "notes": [

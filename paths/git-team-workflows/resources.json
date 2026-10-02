@@ -77,10 +77,7 @@
         "sandbox-py",
         "test_sandbox-py",
         "README-md",
-        "release-review-md",
         "foundation-kit-md",
-        "intermediate-kit-md",
-        "advanced-kit-md",
         "review_roleplay-py"
       ],
       "steps": [
@@ -91,6 +88,7 @@
         "Predict ordinary and cached diffs for one -> staged two -> unstaged three.",
         "Verify committed contents independently with git show.",
         "Show that an untracked synthetic config file is ignored without claiming history erasure.",
+        "In the reported foundation repository, independently try staged four and unstaged five from the three-states lesson. Verify both diffs before comparing the explanation.",
         "Compare submitted evidence with the rubric: The two diff baselines and committed snapshot are correct. No existing repository or global config is changed. Ignore evidence uses check-ignore and ls-files. Report separates mechanical checks from release verification."
       ],
       "commands": [

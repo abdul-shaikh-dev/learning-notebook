@@ -297,7 +297,7 @@
         }
       ],
       "exercise": {
-        "prompt": "Reorganise 12 mixed lesson and file links into a course outline. Show how someone reaches a lab from both search and a lesson.",
+        "prompt": "Group these 12 items into a course outline: Values lesson, Conditions lesson, Loops lesson, Functions lesson, Files lesson, Tests lesson, Foundation project, Import project, Setup guide, Starter ZIP, Reference solutions, Test command guide. Show how a search for import and the Files lesson both lead to the Import project and its kit. You can sketch or rearrange text; no HTML is required yet.",
         "solution": "Group lessons by stage, keep the practice kit beside the exercise, and add a search result with course title and task context. The breadcrumb leads back to course overview. Use the same label and URL for a resource wherever it appears, rather than introducing multiple names for one download.",
         "solutionFormat": "prose",
         "checks": [
@@ -899,8 +899,8 @@
         }
       ],
       "exercise": {
-        "prompt": "Design a completion chart for three courses. Supply its title, units, summary and data table.",
-        "solution": "Label the chart Completed lessons, state the snapshot date, and report completed/total for each course. Use direct series labels and patterns as well as colour. The summary identifies the largest unfinished workload, while the table preserves exact values and denominators for comparison.",
+        "prompt": "Design a completion chart for Python 6 of 12 lessons, SQL 3 of 6, and React 8 of 20. Supply its title, units, summary and data table. Which two courses share a percentage, and which has the most unread lessons?",
+        "solution": "Python and SQL are both 50% complete, but have 6 and 3 unread lessons respectively. React is 40% complete with 12 unread lessons, the largest remaining workload. Show completed and total counts beside percentages and preserve those values in a table. Use direct labels and more than colour to identify each course. Choose and state the snapshot date for your own display.",
         "solutionFormat": "prose",
         "checks": [
           "Units and denominator are visible.",
@@ -1227,8 +1227,8 @@
         }
       ],
       "exercise": {
-        "prompt": "Complete the supplied audit checklist for the demo. Produce one reproducible issue and one confirmed passing task.",
-        "solution": "Record the tested browser, viewport, input method and exact steps. For a defect, state the user impact and attach the failing state rather than a vague rating. After fixing it, repeat the same steps and record the result. Mark screen-reader checks not executed if no screen reader was available.",
+        "prompt": "Check one complete add-and-preview journey using the supplied checklist. Report a confirmed passing task and any reproducible issue you actually find. If none appears, temporarily remove the title label in a copied demo to practise describing and repairing a known defect; do not invent an issue in the reference.",
+        "solution": "Use Tab to reach the title and Add button, submit a title, open Preview, then close it and check focus return. Record the environment and observed result. If using the deliberately removed label, identify the input's missing name, restore the label/for relationship and retest. Distinguish that injected exercise from a defect discovered in the supplied demo. Mark screen-reader checks unexecuted when unavailable.",
         "solutionFormat": "prose",
         "checks": [
           "Evidence is reproducible.",

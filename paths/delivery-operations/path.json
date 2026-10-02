@@ -6,7 +6,7 @@
   "description": "Practise releasing and recovering a service across 24 lessons. Use the local service to test health checks, schema compatibility and telemetry. The integration runbook applies those decisions to React, .NET and SQL Server.",
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
-    "Use the existing React (react), C#/.NET (dotnet), SQL Server (sql-server) and Networking & the Web (networking-web) paths for their application/data/network boundaries.",
+    "Basic HTTP, Python and terminal use for the local note-service track. React, C#/.NET and SQL Server are needed only for the optional full-stack integration runbook.",
     "Python 3.11+ and basic terminal use for the independent local lab; Docker is optional, no cloud account required."
   ],
   "outcomes": [
@@ -177,11 +177,11 @@
         }
       ],
       "exercise": {
-        "prompt": "Draw the four environment boundaries and mark where real customer data is forbidden.",
-        "solution": "Use temporary fixtures in tests, synthetic staging data and a production-only runtime identity. Never infer database identity from the frontend URL; inspect the server configuration without printing credentials.",
+        "prompt": "The browser loads from staging.example, but the API configuration points at the production database. Identify the unsafe boundary. For the local lab, name the endpoint, identity, data and configuration you would choose instead.",
+        "solution": "The API data connection crosses into production despite the staging frontend name. Use the documented loopback endpoint, the local lab process, a disposable SQLite file with synthetic notes, and explicit local configuration. The lab supplies no production credentials.",
         "checks": [
-          "Identify the actual database endpoint.",
-          "Keep test records synthetic."
+          "Trace the API database connection rather than infer it from the frontend URL.",
+          "Identify endpoint, identity, data and configuration separately."
         ],
         "solutionFormat": "prose"
       },
@@ -321,6 +321,12 @@
             "Passing checks that mirror only setup can hide missing behavior. Intentionally remove a readiness distinction or break parameterization in a copied lab, observe a specific failure and restore the implementation. Keep destructive experiments in the disposable practice copy."
           ],
           "example": "python -m unittest -v test_release_app.py test_release_tools.py test_distinct_artifact_drill.py\nGate examples: invalid body → 400; not-ready → 503; live → 200; distinct v2→v1 retains rows."
+        },
+        {
+          "title": "Read the local health result",
+          "paragraphs": [
+            "For the foundation project, /live returning 200 means the HTTP process responds. /ready checks the notes table and the synthetic gate before accepting work. When the gate is present, /live can stay 200 while /ready returns 503. A smoke check then creates and reads a synthetic note to test the user operation. The health-contracts lesson later examines deployment decisions."
+          ]
         }
       ],
       "exercise": {
@@ -1351,12 +1357,12 @@
       ],
       "project": {
         "title": "Candidate release and full-stack integration plan",
-        "brief": "Promote a compatible local candidate and write the React/.NET/SQL staging walkthrough.",
+        "brief": "Promote a compatible local candidate. The React/.NET/SQL staging walkthrough is an optional follow-on.",
         "requirements": [
           "If opted in, build/inspect the local Docker image and record user/health/digest.",
           "Create a genuine changed v2 artifact separately from a configured version-label simulation.",
-          "Use integration-runbook.md to plan/build React dist and publish the .NET API.",
-          "Specify real API persistence/auth integration and SQL migration permissions.",
+          "Optional full-stack track: use integration-runbook.md after completing React/.NET/SQL prerequisites.",
+          "For that optional track, specify API persistence/auth integration and SQL migration permissions.",
           "Write candidate health/user gates and compatible rollback steps.",
           "Review ci-example.yaml permissions and current action pinning before enabling it in a separate repository."
         ],

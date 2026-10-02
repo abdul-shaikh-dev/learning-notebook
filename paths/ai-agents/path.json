@@ -474,6 +474,13 @@
           "paragraphs": [
             "A proposal can be malformed or name an unavailable tool. A tool may fail after the proposal is valid. A final answer may cite a real ID while making an unsupported claim; ID checks establish provenance membership, not semantic correctness. Keep these failure layers separately testable."
           ]
+        },
+        {
+          "title": "Run a changed script without a model",
+          "paragraphs": [
+            "Save this as try_loop.py beside workshop.py in the extracted kit, then run python try_loop.py. ScriptedSource returns the proposals you supply in order. It does not decide what to search. The finish proposal also consumes one proposal from the budget. Change max_steps to 1 and predict why the same script can no longer complete."
+          ],
+          "example": "from workshop import ScriptedSource, run\nscript = [\n    {'kind': 'tool', 'name': 'search_lessons', 'args': {'query': 'functions'}},\n    {'kind': 'finish', 'answer': 'Functions group reusable behavior.', 'citations': ['PY-01']},\n]\nresult = run(ScriptedSource(script), max_steps=2)\nprint(result.status, result.citations)\n# completed ['PY-01']"
         }
       ],
       "exercise": {
@@ -567,7 +574,7 @@
           "title": "Follow one state field across a graph",
           "paragraphs": [
             "The research graph stores question, evidence, draft and attempts separately. Retrieval replaces evidence; drafting replaces the current draft and increases attempts; checking chooses either an exit or one bounded revision. A node returns an update for the fields it changes. If a draft field accumulates strings instead of replacing its value, the next check may inspect old text alongside the new answer.",
-            "Use the graph mode in local_framework_lab.py with its scripted draft source first. Read the update stream as node outputs, then compare the final state. Inject an unsupported citation into the first draft and a valid citation into the second. Expect two attempts. Make both drafts invalid and expect a rejected result, not a third attempt. These outcomes do not require an LLM to test."
+            "For now, trace the state updates on paper: empty evidence, retrieved evidence, first draft, checked outcome. The optional executable graph is introduced in lesson 24 with its own dependency setup. You do not need LangGraph installed to complete this state lesson."
           ]
         }
       ],
@@ -1332,6 +1339,13 @@
           "title": "Tradeoffs",
           "paragraphs": [
             "Small synthetic datasets are useful for development but may not represent real traffic. Record provenance, revisions and labeling rules. Protect personal data in production-derived cases. A pass on a scripted source checks harness behavior; a real model evaluation requires running the model on the dataset and measuring variation."
+          ]
+        },
+        {
+          "title": "Choose an unseen case before changing the code",
+          "paragraphs": [
+            "Use joins as the development case and functions as a separate case. Define what relevant evidence and supported claims mean for each before changing the retriever. Keep an absent topic too. If a change fixes joins but breaks functions or starts answering the absent topic, it has not improved the complete contract.",
+            "For scripted fixtures, you supply the answer as well as the proposal; these only check the runtime. To evaluate a real model, keep the questions and expected properties but let that model produce the proposals or draft. Score that output separately."
           ]
         }
       ],

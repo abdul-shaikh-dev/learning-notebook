@@ -113,22 +113,12 @@
         "setup-sql",
         "solutions-sql",
         "README-md",
-        "advanced-lab-sql",
-        "advanced-solutions-sql",
-        "concurrency-lab-md",
-        "concurrency-setup-sql",
-        "session-a-sql",
-        "session-b-sql",
-        "concurrency-reset-sql",
-        "query-store-lab-sql",
-        "concurrency-cleanup-sql",
-        "rounding-lab-sql",
         "engine-verification-md"
       ],
       "steps": [
         "Extract the bundle and open sql-server-practice. All listed files are flat at this folder root.",
         "Read README.md before running the references.",
-        "Open and execute setup.sql, then solutions.sql in the same SSMS query window. Expect five orders, due 390, matched payments 265, orphan payments 20 and net outstanding 125.",
+        "Run setup.sql in one SSMS query window. Attempt the report before opening solutions.sql. Expect five orders, due 390, matched payments 265, orphan 20 and net outstanding 125.",
         "Use the original setup.sql dataset to produce a customer/order report and a separate orphan-payment result.",
         "Build the project described in the reader: Preserve all five orders and report Dia as a customer with no order. Aggregate payment rows before joining; classify missing,paid,underpaid and overpaid. Reconcile incoming payments and known-order totals; include deterministic ordering.",
         "Check your result: Correctness:five order rows;matched paid 265;orphan 20;net outstanding 125. Reasoning:explain why direct payment joins can duplicate order values. Evidence:show queries, outputs and at least one deliberately wrong query corrected."
@@ -152,24 +142,14 @@
       "goal": "Deliver a small import prototype and a written contract that another developer could implement without inventing key or error behavior.",
       "fileIds": [
         "setup-sql",
-        "solutions-sql",
         "README-md",
-        "advanced-lab-sql",
-        "advanced-solutions-sql",
-        "concurrency-lab-md",
-        "concurrency-setup-sql",
-        "session-a-sql",
-        "session-b-sql",
-        "concurrency-reset-sql",
-        "query-store-lab-sql",
-        "concurrency-cleanup-sql",
         "rounding-lab-sql",
         "engine-verification-md"
       ],
       "steps": [
         "Extract the bundle and open sql-server-practice. All listed files are flat at this folder root.",
         "Read README.md before running the references.",
-        "Execute setup.sql in SSMS, then copy the intermediate stage replay solution from the reader into that same query window. Run it twice: first two inserts, then zero; target remains two events totaling 30. E1 changed to 11 is a conflict.",
+        "Run setup.sql in one SSMS window. Build the replay and conflict queries using the lesson examples before comparing the stage solution. Expect two inserts then zero, with two events totaling 30.",
         "Deliver a small import prototype and a written contract that another developer could implement without inventing key or error behavior.",
         "Build the project described in the reader: Define business keys, allowed amounts, currency, timestamp and correction semantics. Use typed parameters and an explicit transaction-ownership policy. Run the replay example twice and detect a changed E1 payload. Produce a latest-order-per-customer query preserving Dia and an index proposal for its access pattern.",
         "Check your result: Data integrity:two target events/30 after both identical passes;E1=11 is reported as conflict. Error behavior:unknown order failure is visible and leaves no open owned transaction. Design quality:does not claim NOT EXISTS alone prevents concurrent races. Evidence:documents expected results separately from results actually executed."
@@ -210,7 +190,7 @@
       "steps": [
         "Extract the bundle and open sql-server-practice. All listed files are flat at this folder root.",
         "Read README.md before running the references.",
-        "In the same SSMS query window execute setup.sql, advanced-lab.sql, then advanced-solutions.sql twice. Expect three inserts then zero, ledger total 215 and net outstanding 175; six raw rows split into 3 accepted, 1 duplicate, 1 invalid and 1 orphan.",
+        "Run setup.sql then advanced-lab.sql in the same SSMS window. Build and inspect classification first, then the loader. Compare advanced-solutions.sql after your attempt and run the loader twice.",
         "Treat the advanced fixture as an incoming payment service. Submit working SQL plus an operational design review; do not label unexecuted engine tests as passed.",
         "Build the project described in the reader: Load and reconcile advanced fixture;produce disposition and ledger evidence for initial run and replay. Demonstrate malformed input,unknown order,identical replay and conflicting event scenarios. Describe database transaction boundaries,unique constraints and cross-session tests required for concurrent loaders. Specify security role boundaries,backward-compatible migration steps and incident diagnostics. Define no more than three safe deadlock retries and a separate unknown-commit-outcome recovery path. Optional: use schema-permissions-lab.md in a disposable training database to demonstrate a permanent FK, an expand/backfill migration and read-only role denial; label this separately from required temporary-table evidence.",
         "Check your result: Correctness:raw 6=accepted 3+duplicate 1+invalid 1+orphan 1;ledger 215;net outstanding 175. Replay:zero new rows on the second identical input;no silent overwrite on conflict. Operations:bounded retries,explicit side-effect delivery and recoverable deployment. Distinguish source review and arithmetic checks from tests run against SQL Server for concurrency and durability.",

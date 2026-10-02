@@ -378,6 +378,14 @@
           "example": "rows = [('SQL', 20), ('Python', 10), ('React', 20)]\nprint(sorted(rows, key=lambda row: row[1]))\n# [('Python', 10), ('SQL', 20), ('React', 20)]"
         },
         {
+          "title": "Read a key function and a tie-break",
+          "paragraphs": [
+            "key receives a function, not its result. def duration(row): return row[1] and lambda row: row[1] express the same key here. sorted calls that function for each row and orders by its returned value.",
+            "A tuple key compares its first position first, then later positions only on ties. For (-priority, title), priority 3 gives -3 and sorts before priority 2 giving -2. Equal priorities then use title in ascending order. The original records are returned, not the key tuples."
+          ],
+          "example": "def duration(row):\n    return row[1]\nrows = [(\"SQL\", 20), (\"Python\", 10), (\"React\", 20)]\nassert sorted(rows, key=duration) == sorted(rows, key=lambda row: row[1])"
+        },
+        {
           "title": "Tradeoffs",
           "paragraphs": [
             "Never benchmark only already-sorted tiny inputs and conclude an algorithm is best. Include reversed input, duplicates and representative sizes."
@@ -476,6 +484,14 @@
       "stage": "intermediate",
       "takeaway": "An unbalanced BST preserves ordering; its cost depends on height.",
       "sections": [
+        {
+          "title": "Connect a tree picture to node references",
+          "paragraphs": [
+            "A node is a record containing a key and references to its left and right children. None means that child is absent. A class constructor uses self to attach these fields to the new object. Child references point to other nodes rather than copying their entire subtrees.",
+            "Before deletion, trace search only: compare with the current key, follow left for a smaller target or right for a larger one, and stop at equality or None. In the example, searching 7 visits 10 then 5 then None. The later linked-nodes lesson practises changing a single link before larger tree edits."
+          ],
+          "example": "class Node:\n    def __init__(self, key):\n        self.key = key\n        self.left = None\n        self.right = None\nroot = Node(10)\nroot.left = Node(5)\nroot.right = Node(20)\nassert root.left.key == 5\nassert root.left.right is None"
+        },
         {
           "title": "Contract and collaboration",
           "paragraphs": [
@@ -876,6 +892,13 @@
           "title": "Correctness and cost",
           "paragraphs": [
             "The max prevents the left edge moving backward. Expected time O(n) uses hashing assumptions; extra space depends on distinct characters. Python iterates Unicode code points, not user-perceived grapheme clusters. Define the character model for human-language applications."
+          ]
+        },
+        {
+          "title": "Trace the window before enumerating test inputs",
+          "paragraphs": [
+            "For abba, right=0 gives a and left=0. At right=1, ab has length 2. At right=2, the prior b at index 1 moves left to 2. At right=3, the prior a at 0 lies outside the current window, so left remains 2. Moving left back to 1 would incorrectly accept bba.",
+            "The exercise uses itertools.product(\"ab\", repeat=size) to generate every tuple of a/b choices of that length. For size 2 those tuples spell aa, ab, ba, bb. Join a tuple into text, then let the slower oracle examine every nonempty substring. The oracle is deliberately easier to check than the optimized window."
           ]
         }
       ],
@@ -1287,12 +1310,13 @@
       ],
       "project": {
         "title": "Study-event summarizer",
-        "brief": "Process a list of events and generate counts, repeated IDs and an undo history.",
+        "brief": "Process add and undo commands for study events. Build it independently using the concrete contract below.",
         "requirements": [
-          "Use a dictionary for counts and a set for seen IDs.",
-          "Define what an undo operation reverses.",
-          "Handle empty input and duplicate events explicitly.",
-          "Explain operation costs and memory growth."
+          "An add command supplies a nonempty event ID, topic and nonnegative integer minutes. Inputs meet these shape rules. Count accepted minutes per topic.",
+          "Ignore an add whose ID was accepted previously, even if that event was later undone. Undo reverses the most recent still-active accepted add; undo on an empty history does nothing.",
+          "Keep a topic in the totals once first accepted, including when its total returns to zero. Preserve caller-owned command data.",
+          "For add(a, Python, 20), add(b, SQL, 10), add(a, Python, 99), undo, expect {Python:20, SQL:0}. A second undo gives both totals zero; adding ID a again changes nothing.",
+          "Use separate totals, seen IDs and active history. Explain why removing an ID from history does not remove it from the seen set."
         ],
         "rubric": [
           "Counts match a hand-calculated fixture.",
@@ -1300,7 +1324,7 @@
           "No duplicate is silently counted as a new unique event.",
           "Complexity claims name their assumptions."
         ],
-        "solution": "Use a dictionary keyed by topic for totals, a set of event IDs to identify duplicates and a list as an undo stack. Record enough information to reverse each accepted event. Test empty input and two events with the same ID. Distinguish duplicate detection policy from arbitrary removal of equal monetary or time values."
+        "solution": "Scan commands once. For a new add ID, record the ID permanently, add minutes under its topic and push the accepted event onto a history list. Ignore duplicate IDs without pushing. Undo pops only the active history and subtracts that event's minutes while retaining the topic key. Empty undo is a no-op. This contract counts each ID at most once across the whole command stream, including after undo; it is not redo support."
       }
     },
     {

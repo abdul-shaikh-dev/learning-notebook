@@ -163,7 +163,7 @@
           "Counting sessions instead of summing durations.",
           "Using > and losing the threshold boundary."
         ],
-        "transfer": "Change the return value to include both qualifying count and total. What extra state is necessary?"
+        "transfer": "Return [qualifying_count, total] instead. For [5, 20, 15] with minimum 15 expect [2, 35]; for [] expect [0, 0]. Add tests for this new function separately from the original runner."
       },
       "references": [
         {
@@ -488,7 +488,7 @@
           "Subtracting in the opposite order.",
           "Comparing every reading with the first rather than the previous reading."
         ],
-        "transfer": "Reconstruct readings when given the first reading and this list of changes."
+        "transfer": "Reconstruct readings from their first value and changes. Starting at 8 with [4, -5] should return [8, 12, 7]; no changes should return [8]. Your new function still needs to return the initial reading."
       },
       "references": [
         {
@@ -553,7 +553,7 @@
           "Sorting removes the original order.",
           "Lowercasing changes the matching contract."
         ],
-        "transfer": "Keep the last occurrence of each label in the order those last occurrences appear."
+        "transfer": "Keep last occurrences in the order those last occurrences appear. For [\"a\", \"b\", \"a\", \"c\", \"b\"], expect [\"a\", \"c\", \"b\"]. For [] expect []. Compare your rule with the original first-occurrence result."
       },
       "references": [
         {
@@ -670,7 +670,7 @@
         "command": "python check.py column-totals",
         "hints": [
           "The output length is the length of the widest row.",
-          "You can grow the output when a row reaches a new column.",
+          "Visit one row at a time, then its values with enumerate. For [[2], [3, 4]], totals changes from [] to [2], then [5], then [5, 4]. Each row restarts its column index at zero.",
           "For each index and value, append a zero if needed, then add the value at that index."
         ],
         "solution": "def column_totals(rows: list[list[int]]) -> list[int]:\n    totals = []\n    for row in rows:\n        for index, value in enumerate(row):\n            if index == len(totals):\n                totals.append(0)\n            totals[index] += value\n    return totals\n",
@@ -813,7 +813,7 @@
           "Using >= makes the last tied label win.",
           "Selecting from partial counts can produce the wrong tie order."
         ],
-        "transfer": "Return all labels tied for first, once each, in first-occurrence order."
+        "transfer": "Return all labels tied for first, once each in first-occurrence order. For [\"b\", \"a\", \"a\", \"b\", \"c\"], expect [\"b\", \"a\"]; for [] expect []. Add your own tests because the original runner expects a single label."
       },
       "references": [
         {
@@ -1073,7 +1073,7 @@
           "Using this method with negative costs invalidates the elimination argument.",
           "Forgetting that zero-cost entries can extend a zero-budget stretch."
         ],
-        "transfer": "Now allow negative credits. Construct an example where this shrinking rule misses the best stretch before choosing another approach."
+        "transfer": "Allow negative credits. With [6, -2] and budget 4 the whole length 2 fits, but the current shrinking rule discards 6 too early. First write a simple all-stretches oracle that returns 2; compare another approach with it on small inputs."
       },
       "references": [
         {
@@ -1913,7 +1913,7 @@
         "hints": [
           "A task is ready when every prerequisite already appears in the completed set.",
           "Scan sorted task names for the first unfinished ready task, then repeat.",
-          "If no task is ready while unfinished tasks remain, return None."
+          "needed[task] <= done tests whether every prerequisite is in done; for sets, <= means subset, not a numeric comparison. If a full scan finds no ready task while unfinished tasks remain, return None."
         ],
         "solution": "def ready_order(tasks: list[str], requirements: list[list[str]]) -> list[str] | None:\n    needed = {task: set() for task in tasks}\n    for task, prerequisite in requirements:\n        needed[task].add(prerequisite)\n    ordered = sorted(tasks)\n    done = set()\n    result = []\n    while len(result) < len(tasks):\n        selected = None\n        for task in ordered:\n            if task not in done and needed[task] <= done:\n                selected = task\n                break\n        if selected is None:\n            return None\n        done.add(selected)\n        result.append(selected)\n    return result\n",
         "reasoning": [
@@ -1990,7 +1990,7 @@
           "Deducting before checking whether the whole order fits.",
           "Copying the dictionary is essential even though integer values themselves are immutable."
         ],
-        "transfer": "Allow each order to request several items atomically. Reject the whole order if any item is short."
+        "transfer": "Allow each order to request several distinct items atomically. With stock {\"pen\":2,\"pad\":0}, reject an order requesting one of each without consuming a pen; a following order for two pens must still succeed. Keep the original stock unchanged and add tests for the new order format."
       },
       "references": [
         {
@@ -2055,7 +2055,7 @@
           "Choosing shortest duration is not justified by the earliest-finish argument.",
           "Using this greedy rule for unequal session rewards can miss the best total reward."
         ],
-        "transfer": "Give sessions different integer rewards. Find a counterexample to this greedy rule, then design a method that compares taking and skipping each session."
+        "transfer": "Give sessions rewards: [0,2] rewards 1, [2,4] rewards 1, and [0,4] rewards 5. Earliest finish earns 2, while the long session earns 5. Define a state that compares taking and skipping sessions, then use exhaustive subsets as an oracle for small inputs."
       },
       "references": [
         {

@@ -238,7 +238,7 @@
           "paragraphs": [
             "These commands consume local machine resources and are optional; no cloud account or provider provisioning is needed. Install compatible current kubectl/kind/Docker tools yourself, record versions and check official version skew. A context name alone is not proof of endpoint identity; the guard also checks the API URL."
           ],
-          "example": "kind create cluster --name notebook-lab\nkubectl config current-context\n# Expected: kind-notebook-lab\n./lab.ps1 -Action Validate"
+          "example": "Optional cluster setup: follow README.md in order.\nCreate dedicated kind cluster -> build/load image -> ./lab.ps1 -Action Bootstrap\nThen ./lab.ps1 -Action Validate -> ./lab.ps1 -Action Apply\nValidate needs the namespace created by Bootstrap.\nOffline alternative: python -m unittest -v check_manifests.py"
         }
       ],
       "exercise": {
@@ -288,14 +288,22 @@
             "A selector is not a descriptive caption: changing a label can remove a Pod from service routing or controller ownership. Keep controller selectors stable and examine matching Pods/EndpointSlices when diagnosing a Service with no endpoints. The offline checker verifies these specific relationships, not cluster admission."
           ],
           "example": "Deployment selector: app=release-demo\nPod-template label: app=release-demo\nService selector: app=release-demo\nAll namespaced objects: notebook-lab"
+        },
+        {
+          "title": "Try a selector mismatch without a cluster",
+          "paragraphs": [
+            "Make a separate copy of the extracted practice folder. In workload.json find the Service object, then change only spec.selector.app to wrong. Run the single selector test below. It compares the Service selector with the Deployment and template labels, so the altered fixture must fail. Restore release-demo and require the check to pass. This tests a local contract; it does not send Kubernetes API requests."
+          ],
+          "example": "python -m unittest -v check_manifests.ManifestChecks.test_selectors_ports_and_security",
+          "exampleFormat": "prose"
         }
       ],
       "exercise": {
-        "prompt": "Change only the Service selector to app=wrong in a copy; predict the outcome.",
-        "solution": "The Service still exists but matches no supplied Pod labels, so it has no ready backend for this workload. Restore the selector and inspect EndpointSlices in the optional cluster drill.",
+        "prompt": "In a practice copy, change only the Service selector to app=wrong and run the named selector test. Predict the failed relationship before running; then restore it. What would the mismatch mean in a live cluster?",
+        "solution": "The offline test fails because the Service selector no longer matches the workload labels. Restoring release-demo makes the check pass. A live Service can still exist with that mismatch but has no selected backend for these Pods. Actual endpoints need a separate cluster observation.",
         "checks": [
-          "Compare selector to actual template labels.",
-          "Separate valid object from useful routing."
+          "Identify the exact Service selector field rather than edit the Pod labels too.",
+          "Show failure with the mismatch and success after restoring it."
         ],
         "solutionFormat": "prose"
       },
@@ -435,6 +443,12 @@
             "A Service object with no ready matching Pods cannot serve requests. DNS resolution alone also does not prove transport or application health. The local Job exercises actual in-cluster DNS/HTTP only when the learner runs it; the offline checker inspects selector/port consistency."
           ],
           "example": "Job → http://release-demo:8080/version\nService port8080 → targetPort http → containerPort8080\nPod replacement changes endpoint IP; Service name remains."
+        },
+        {
+          "title": "Locate the three port values",
+          "paragraphs": [
+            "In workload.json, find the Service port 8080, its targetPort string http, and the container port named http with value 8080. The string is a lookup by name, not another numeric port. An EndpointSlice records backend addresses and readiness for the Service. These records help distinguish a matching label from a backend that can actually receive traffic."
+          ]
         }
       ],
       "exercise": {

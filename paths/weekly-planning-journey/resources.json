@@ -99,8 +99,8 @@
       "commands": [],
       "prerequisites": [
         {
-          "label": "1. Meet a realistic week",
-          "href": "#topic/weekly-planning-journey/week-context"
+          "label": "Finish this stage through 6. Finish a baseline week plan",
+          "href": "#topic/weekly-planning-journey/baseline-plan-project"
         }
       ],
       "notes": [
@@ -133,8 +133,8 @@
       "commands": [],
       "prerequisites": [
         {
-          "label": "7. Add one small supporting habit",
-          "href": "#topic/weekly-planning-journey/supporting-habit"
+          "label": "Finish this stage through 11. Submit a revised week plan",
+          "href": "#topic/weekly-planning-journey/revised-plan-project"
         }
       ],
       "notes": [
@@ -165,8 +165,8 @@
       "commands": [],
       "prerequisites": [
         {
-          "label": "12. Collect light evidence through the week",
-          "href": "#topic/weekly-planning-journey/collect-week-evidence"
+          "label": "Finish this stage through 15. Make a usable plan for next week",
+          "href": "#topic/weekly-planning-journey/next-week-portfolio"
         }
       ],
       "notes": [

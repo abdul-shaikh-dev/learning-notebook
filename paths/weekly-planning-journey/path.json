@@ -440,7 +440,7 @@
         {
           "title": "Understand and try it",
           "paragraphs": [
-            "On Tuesday afternoon, a service issue requires three extra hours. It uses the entire three-hour reserve. On Wednesday, a two-hour urgent request arrives. The baseline cannot now fit unchanged; compare remaining hours and work before choosing a response.",
+            "On Tuesday afternoon, a service issue adds three work hours. It matches the original three-hour reserve in the weekly total, but Monday’s unused hour has already passed. Only two reserve hours remain usable. Wednesday adds a two-hour urgent request. Compare both the whole-week demand and the remaining day slots; the project kit supplies a routine-work deferral to resolve the timing gap.",
             "First distinguish a new fact from an emotion: the issue used three hours; Sam feels worried. Both matter, but only the first is a capacity calculation. The self-awareness-communication path supports noticing reactions and communicating clearly during changes."
           ]
         },
@@ -612,7 +612,7 @@
       ],
       "exercise": {
         "prompt": "Reconcile the revised 11 hours and explain one remaining risk.",
-        "solution": "Three service hours plus six shorter-pack hours plus two urgent-request hours equals 11. The eight originally planned event hours have been replaced by six, not added. No reserve remains; late names or another service issue could still require a new decision. Record the owner’s agreement and do not claim uncertainty has vanished.",
+        "solution": "Three service hours plus six shorter-pack hours plus two urgent-request hours equals 11. The eight originally planned event hours have been replaced by six, not added. No reserve remains; late names or another service issue could still require a new decision. Record the owner’s agreement and do not claim uncertainty has vanished. The day-level plan additionally defers one noncritical routine hour by agreement because Monday’s spare hour has elapsed.",
         "solutionFormat": "prose",
         "checks": [
           "Three service plus six pack plus two urgent hours equals 11 aggregate demand.",

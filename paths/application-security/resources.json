@@ -118,8 +118,8 @@
       ],
       "prerequisites": [
         {
-          "label": "1. Name assets, threats and trust boundaries",
-          "href": "#topic/application-security/assets-threats"
+          "label": "Finish this stage through 8. Use established password and MFA mechanisms",
+          "href": "#topic/application-security/passwords-mfa"
         }
       ],
       "notes": [
@@ -142,7 +142,9 @@
         "intermediate-kit-md",
         "advanced-kit-md",
         "security_http-py",
-        "test_security_http-py"
+        "test_security_http-py",
+        "depth-login-flow-lab-py",
+        "depth-depth-lab-md"
       ],
       "steps": [
         "Extract the full bundle into an empty folder; all listed files are flat at its root.",
@@ -153,7 +155,7 @@
         "Compare encoded HTML text and a literal injection-shaped SQL search.",
         "Verify rotation, exact expiry and logout.",
         "Reject missing/wrong/cross-session/malformed Unicode CSRF tokens.",
-        "Write a route contract identifying browser/HTTP tests still needed.",
+        "Run the supplied loopback route tests, then identify browser and identity-provider checks still needed.",
         "Compare submitted evidence with the rubric: Synthetic attack strings remain data in the documented contexts. SQL binding executes against a real in-memory SQLite fixture. Expired/revoked sessions and wrong CSRF tokens fail. Local methods are not presented as browser or cryptographic integration."
       ],
       "commands": [
@@ -161,12 +163,22 @@
           "label": "Run content and session defenses",
           "command": "python -B -m unittest -v test_security_lab.ValidationTests test_security_lab.SessionTests",
           "expected": "Five methods pass: content boundaries, HTML encoding, SQLite binding, session lifecycle and CSRF denials."
+        },
+        {
+          "label": "Optional: practise callback ordering locally",
+          "command": "python login_flow_lab.py",
+          "expected": "Three synthetic flow-binding tests pass. Code redemption and token validation still require a real provider/library integration."
+        },
+        {
+          "label": "Optional: connect policy to a local route",
+          "command": "python -B -m unittest -v test_security_http.py",
+          "expected": "The loopback mutation test denies invalid requests without changing persisted rows and permits the owner. Browser and provider behavior remain separate."
         }
       ],
       "prerequisites": [
         {
-          "label": "9. Verify CSRF at cookie-authenticated mutations",
-          "href": "#topic/application-security/csrf"
+          "label": "Finish this stage through 15. Verify tokens before trusting claims",
+          "href": "#topic/application-security/token-validation"
         }
       ],
       "notes": [
@@ -200,7 +212,7 @@
         "Run the entire local regression suite and OperationsTests.",
         "Document log fields and single-process rate-limit limitations.",
         "Map selected ASVS 5.0.0 controls to executed/unexecuted evidence.",
-        "For the required offline submission, document provider prerequisites and proposed negative tests without secrets; execute identity-provider-lab.md only as an opt-in training-tenant extension.",
+        "For optional offline practice, describe provider prerequisites and proposed negative tests without secrets; execute identity-provider-lab.md only as an opt-in training-tenant extension.",
         "Specify real issuer/audience/expiry/signature/correlation negative tests through maintained libraries.",
         "Write an incident/rotation plan with authorized containment and recovery.",
         "Compare submitted evidence with the rubric: No raw token, cookie, credential or private body enters evidence. Local test claims match their actual boundary. Provider and browser results are labeled unexecuted until observed. No fake JWT cryptography is implemented. The report rejects blanket ASVS certification and covers practical recovery.",
@@ -220,8 +232,8 @@
       ],
       "prerequisites": [
         {
-          "label": "16. Keep secrets out of source and routine evidence",
-          "href": "#topic/application-security/secrets"
+          "label": "Finish this stage through 21. Prepare a bounded response and secure recovery",
+          "href": "#topic/application-security/incident-recovery"
         }
       ],
       "notes": [

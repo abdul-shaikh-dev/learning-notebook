@@ -213,6 +213,13 @@
           "paragraphs": [
             "A byte-order mark can affect the first header; choose utf-8-sig only when it is part of the producer contract. Malformed encoding and extra fields should fail visibly, not turn into silent replacement characters."
           ]
+        },
+        {
+          "title": "Bound the input before parsing",
+          "paragraphs": [
+            "The foundation parser has a 256 KiB byte limit. Read one extra byte to tell an exactly full file from an oversized one. Decode only after that check. A separate row counter stops at record 1001. Bytes and rows limit different kinds of input; a file with one enormous field can violate the byte limit while containing one row."
+          ],
+          "example": "from pathlib import Path\nwith Path(\"sample_orders.csv\").open(\"rb\") as stream:\n    raw = stream.read(262144 + 1)\nif len(raw) > 262144:\n    raise ValueError(\"batch exceeds byte limit\")\ntext = raw.decode(\"utf-8\")"
         }
       ],
       "exercise": {
@@ -496,6 +503,13 @@
           "paragraphs": [
             "A transaction boundary does not include arbitrary external files or HTTP calls. Database durability depends on engine configuration and storage. SQLite is a local baseline, not evidence that SQL Server execution was tested."
           ]
+        },
+        {
+          "title": "Bind rows before adding replay logic",
+          "paragraphs": [
+            "The parser returns tuples in this order: order_id, customer_id, occurred_at, amount_cents. The four question marks in the INSERT stand for four values, supplied separately as tuples. They are not string-formatting slots. The table must already exist. In pipeline_lab.py, SCHEMA defines orders and runs; schema setup is separate from the data transaction.",
+            "Start by importing one valid batch into a disposable database. Next add a batch with a new order followed by a duplicate existing order. Verify the new order is absent after failure. Add the run marker only after this rollback behavior makes sense. The next lesson adds the identity check that decides whether to write at all."
+          ]
         }
       ],
       "exercise": {
@@ -550,6 +564,13 @@
           "title": "Canonicalization and retention",
           "paragraphs": [
             "The sample hashes exact bytes: equivalent CSV formatting produces a different fingerprint. A production canonicalization policy may differ and must be stable/versioned. Retention and concurrency must be considered when using replay keys."
+          ]
+        },
+        {
+          "title": "Trace the two parts of batch identity",
+          "paragraphs": [
+            "The caller chooses batch_id. The parser computes a fingerprint from the original file bytes. Store both. First import: the ID is absent, so insert the orders and run row together. Second import with the same ID and bytes: the stored fingerprint matches, so return replay. Same ID with changed bytes: reject the conflict before inserting anything.",
+            "For an independent case, change only a CSV line ending in a copy of the sample. Its parsed values can remain equal while its exact-byte fingerprint changes. Predict conflict under the same batch ID. A new batch ID is not a workaround for duplicate business order IDs; those remain unique too."
           ]
         }
       ],

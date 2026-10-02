@@ -611,6 +611,13 @@
           ]
         },
         {
+          "title": "Read the setup lines first",
+          "paragraphs": [
+            "import json makes the standard-library module available under the name json. from pathlib import Path imports one named tool, so the example calls Path directly. These imports use Python's built-in library; there is nothing to install.",
+            "with TemporaryDirectory() as folder creates a temporary folder, gives its name to folder, and removes it when the indented block ends. Keep writing and reading inside that block. Path(folder) / \"tasks.json\" joins path parts; this slash is a Path operation, not numeric division. The later context-managers lesson explains how cleanup works when an operation fails."
+          ]
+        },
+        {
           "title": "Example",
           "paragraphs": [
             "This example uses a temporary directory so it does not overwrite your own files. It writes a small session record, reads it back, and prints the recovered fields. In your project, choose a deliberate data path."
@@ -1170,6 +1177,14 @@
             "Avoid secrets and raw sensitive payloads in logs. Include safe identifiers/counts that explain which operation failed.",
             "Tests that only print or mirror a private helper can miss a broken contract. Demonstrate a relevant deliberate defect fails. Patch dependencies where the consumer looks them up, and keep ordinary pure-function tests on real code."
           ]
+        },
+        {
+          "title": "Replace one dependency to force a failure",
+          "paragraphs": [
+            "The storage exercise needs an error at a precise point, after preparing new data but before replacing old data. unittest.mock.patch temporarily replaces the looked-up function. side_effect makes each call raise the supplied exception; leaving with restores the real function.",
+            "Use this technique only at the dependency you want to fail. Keep validation and the function under test real. The small example below has no disk access; the later storage exercise applies the same pattern to os.replace and checks old file contents."
+          ],
+          "example": "from unittest.mock import patch\nimport os\n\ndef publish(source, target):\n    os.replace(source, target)\n\nwith patch(\"os.replace\", side_effect=OSError(\"injected\")) as replace:\n    try:\n        publish(\"prepared\", \"report\")\n    except OSError as error:\n        assert str(error) == \"injected\"\n    else:\n        raise AssertionError(\"failure was hidden\")\n    replace.assert_called_once_with(\"prepared\", \"report\")"
         }
       ],
       "exercise": {
@@ -1362,9 +1377,8 @@
         "starter": "# Implement the contract and failure checks.",
         "solution": "import json\ndef parse_limit(text):\n    if len(text.encode(\"utf-8\")) > 128:\n        raise ValueError(\"too large\")\n    value = json.loads(text)\n    if type(value) is not dict or set(value) != {\"limit\"}:\n        raise ValueError(\"invalid fields\")\n    count = value[\"limit\"]\n    if type(count) is not int or not 1 <= count <= 100:\n        raise ValueError(\"invalid limit\")\n    return count\nassert parse_limit('{\"limit\":1}') == 1\nassert parse_limit('{\"limit\":100}') == 100\nfor text in ['{\"limit\":true}', '{\"limit\":0}', '{\"limit\":2,\"extra\":1}', ' ' * 129]:\n    try:\n        parse_limit(text)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(\"bad input accepted\")\nprint(\"input boundary checks passed\")",
         "checks": [
-          "Run each assertion and explain why a failure would matter.",
-          "Run test_projects.py in the downloaded project folder.",
-          "Explain the input bounds and unsupported deployment guarantees."
+          "The valid limits 1 and 100 return unchanged; 0, True, extra fields and more than 128 UTF-8 bytes raise ValueError.",
+          "Add limit=101 and malformed JSON as independently expected failures. The supplied project suite checks the reference importer, not this function."
         ]
       },
       "quiz": {
@@ -1420,9 +1434,8 @@
         "starter": "# Implement the contract and failure checks.",
         "solution": "from pathlib import Path\nfrom tempfile import TemporaryDirectory, NamedTemporaryFile\nfrom unittest.mock import patch\nimport os\ndef save_text(path, text):\n    temporary = None\n    try:\n        with NamedTemporaryFile(\"w\", encoding=\"utf-8\", dir=path.parent, delete=False) as stream:\n            temporary = Path(stream.name)\n            stream.write(text)\n            stream.flush()\n            os.fsync(stream.fileno())\n        os.replace(temporary, path)\n    finally:\n        if temporary is not None and temporary.exists():\n            temporary.unlink()\nwith TemporaryDirectory() as folder:\n    path = Path(folder) / \"data.txt\"\n    path.write_text(\"old\", encoding=\"utf-8\")\n    with patch(\"os.replace\", side_effect=OSError(\"injected\")):\n        try:\n            save_text(path, \"new\")\n        except OSError:\n            pass\n        else:\n            raise AssertionError(\"failure hidden\")\n    assert path.read_text(encoding=\"utf-8\") == \"old\"\n    assert list(Path(folder).iterdir()) == [path]\nprint(\"replacement failure checks passed\")",
         "checks": [
-          "Run each assertion and explain why a failure would matter.",
-          "Run test_projects.py in the downloaded project folder.",
-          "Explain the input bounds and unsupported deployment guarantees."
+          "After injected replacement failure, the target still contains exactly old and its directory contains no abandoned temporary file.",
+          "Also save new successfully in a separate case and check the resulting bytes. Run the assertions against your own save_text before comparing the reference."
         ]
       },
       "quiz": {
@@ -1478,9 +1491,8 @@
         "starter": "# Implement the contract and failure checks.",
         "solution": "def import_and_publish(rows, publish):\n    ids = [row[\"id\"] for row in rows]\n    if len(set(ids)) != len(ids):\n        raise ValueError(\"duplicate id\")\n    publish(rows)\ncalls = []\nimport_and_publish([{\"id\": \"a\"}, {\"id\": \"b\"}], calls.append)\nassert len(calls) == 1\ncalls.clear()\ntry:\n    import_and_publish([{\"id\": \"a\"}, {\"id\": \"a\"}], calls.append)\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"duplicate accepted\")\nassert calls == []\nprint(\"commit policy checks passed\")",
         "checks": [
-          "Run each assertion and explain why a failure would matter.",
-          "Run test_projects.py in the downloaded project folder.",
-          "Explain the input bounds and unsupported deployment guarantees."
+          "Two unique IDs call publish exactly once; a duplicate ID raises ValueError and calls publish zero times.",
+          "Repeat those cases through your full importer with an existing report. Compare its exact bytes before and after rejection, then run the reference project tests separately."
         ]
       },
       "quiz": {

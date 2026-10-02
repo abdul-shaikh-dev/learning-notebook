@@ -60,7 +60,7 @@
     {
       "id": "foundation",
       "title": "Study-event summarizer",
-      "goal": "Process a list of events and generate counts, repeated IDs and an undo history.",
+      "goal": "Process add and undo commands for study events. Build it independently using the concrete contract below.",
       "fileIds": [
         "algorithms-py",
         "advanced_algorithms-py",
@@ -71,8 +71,8 @@
         "Extract the bundle and open data-structures-algorithms-practice. All listed files are flat at this folder root.",
         "Read the reference source and its input contracts before running its checks.",
         "Run the reference and check its output.",
-        "Process a list of events and generate counts, repeated IDs and an undo history.",
-        "Build the project described in the reader: Use a dictionary for counts and a set for seen IDs. Define what an undo operation reverses. Handle empty input and duplicate events explicitly. Explain operation costs and memory growth.",
+        "Process add and undo commands for study events. Build it independently using the concrete contract below.",
+        "Build the reader's event-command contract. Test the supplied a/b duplicate-and-undo fixture, then two undos followed by reuse of a. The algorithm download does not implement this project.",
         "Check your result: Counts match a hand-calculated fixture. Undo respects last-in-first-out order. No duplicate is silently counted as a new unique event. Complexity claims name their assumptions."
       ],
       "commands": [
@@ -115,7 +115,7 @@
         "Build the project described in the reader: Preserve isolated topics and neighbor-only vertices. Return an order satisfying every dependency or an explicit cycle error. Use BFS separately to explain reachability, not prerequisite completion. Test multiple valid orders without asserting one arbitrary sequence. Document complexity for your chosen representation.",
         "Check your result: Every edge is checked against the output order. Cycles fail reliably. Disconnected topics are not lost. Tests cover empty input, one vertex and shared prerequisites.",
         "Run the tree/DFS tests; explain successor deletion and verify a directed cycle witness edge by edge.",
-        "Run method-selection.md, then implement the one-discount route extension with an explicit state model."
+        "Use method-selection.md for the BFS and coin examples. Defer its weighted route extension until the advanced Dijkstra and algorithm-review lessons."
       ],
       "commands": [
         {

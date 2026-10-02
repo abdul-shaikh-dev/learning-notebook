@@ -195,6 +195,13 @@
           "example": "int count = 3;\ndecimal total = 10m;\nConsole.WriteLine(10 / count);\nConsole.WriteLine(total / count > 3m);\n// Expected: 3 then True"
         },
         {
+          "title": "Read the decision before running it",
+          "paragraphs": [
+            "An if condition goes in parentheses. Its true branch runs when TryParse succeeds; else runs when it fails. out int age declares the variable receiving the parsed integer. && evaluates its right side only after its left side succeeds, so the quantity check runs only after successful parsing.",
+            "$\"Quantity: {quantity}\" is an interpolated string: the braces insert the variable's value. These are the only new control-flow features needed for this exercise. The next lesson adds repeated work with foreach."
+          ]
+        },
+        {
           "title": "Null and input",
           "paragraphs": [
             "A nullable string, written string?, may contain no string. Console.ReadLine can return null when input ends, so validate before using it. The ?? operator supplies a fallback; ?. accesses a member only when the receiver exists.",
@@ -311,7 +318,8 @@
         {
           "title": "Choose return and failure contracts together",
           "paragraphs": [
-            "The focused HTTP client returns Session? because a documented404 means no session exists. A503 is not an empty result: it throws, so the caller can show a service problem without falsely claiming the record is absent. A successful response with minutes0 is valid and must not be confused with missing data.",
+            "This is an optional preview of the later integration-checks lab. Complete the small console exercise first; HttpClient adapters and their scripted handler are not foundation requirements.",
+            "The focused HTTP client returns Session? because a documented 404 means no session exists. A 503 is not an empty result: it throws, so the caller can show a service problem without falsely claiming the record is absent. A successful response with minutes 0 is valid and must not be confused with missing data.",
             "Its positive-ID precondition is checked before sending. The test counts handler calls and proves an invalid ID dispatches nothing. This combines two observations: the exception and the absence of an external attempt. A test checking only the exception could miss a method that sends first and rejects afterward."
           ]
         }
@@ -530,6 +538,7 @@
         {
           "title": "Cancellation is an observed asynchronous outcome",
           "paragraphs": [
+            "This is an optional preview of the later integration-checks lab. Complete the small console exercise first; HttpClient adapters and their scripted handler are not foundation requirements.",
             "The HTTP-boundary lab uses a TaskCompletionSource to confirm the handler has started, then cancels the caller token. The handler waits on a cancellable operation; the test awaits the task and observes OperationCanceledException. No guessed sleep duration is used to make the race seem reliable.",
             "Passing this check shows token propagation through this in-process adapter. It does not prove a remote service stopped work or rolled back a write. A caller cancelling after a remote commit can still have an unknown result. Distinguish cancelling the wait from undoing an operation."
           ]
@@ -810,6 +819,13 @@
       "takeaway": "HTTP endpoints translate requests into service calls and explicit responses.",
       "sections": [
         {
+          "title": "Trace the HTTP contract before sending requests",
+          "paragraphs": [
+            "The request method names the action and the URL names its target. GET /tasks asks for the collection. POST /tasks sends a JSON body with Content-Type: application/json. The response has a status, headers and a body; 201 means this endpoint created a task and Location names where it can be fetched.",
+            "A route is a method/path rule such as MapPost(\"/tasks\", ...). ASP.NET Core binds the body to TaskRequest and calls the handler. The handler validates before store.Add. An unknown ID reaches a different outcome from a blank title, which is why you inspect 404 versus 400 rather than only checking whether curl printed something."
+          ]
+        },
+        {
           "title": "A complete small API",
           "paragraphs": [
             "Create an empty ASP.NET Core project, then replace Program.cs with the code below. A GET reads data; a POST accepts a JSON request and returns 201 with a resource location. Request binding constructs the record from JSON.",
@@ -891,7 +907,7 @@
         {
           "title": "A successful status does not validate the response body",
           "paragraphs": [
-            "The client expects id7 and integer minutes0..1440. The handler returns200 with a missing minutes field, a wrong ID, negative minutes or numeric text. Each shape is rejected. A deserialized object with default values could otherwise turn missing data into a believable result.",
+            "The client expects id 7 and integer minutes 0..1440. The handler returns 200 with a missing minutes field, a wrong ID, negative minutes or numeric text. Each shape is rejected. A deserialized object with default values could otherwise turn missing data into a believable result.",
             "The reference allows extra JSON fields so the service can add fields without breaking this client. Duplicate properties follow the JSON parser's behavior. It is a teaching client for trusted service JSON, not a hardened arbitrary-input parser with byte limits. If the API requires exact fields or duplicate-key rejection, implement those rules and test them."
           ]
         }
@@ -1149,6 +1165,13 @@
           "example": "POST /tasks {\"title\":\"  Read  \"} -> 201 with title Read and done false\nGET /tasks/{id} -> 200\nPATCH /tasks/{id}/complete -> 204\nGET /tasks/{id} -> done true\nPATCH /tasks/999/complete -> 404"
         },
         {
+          "title": "Keep the simple endpoint separate from the versioned project",
+          "paragraphs": [
+            "The 204 completion fragment below is a smaller milestone for learning persistence. The stage project preserves the downloadable API's versioned contract: it accepts expectedVersion, returns the updated representation and rejects stale versions with 409. Do not replace that project endpoint with this unconditional update.",
+            "Build in three steps: first prove create and fetch across restart; then complete and fetch Done; then carry the client's original version through the conditional update taught in ef-evolution. Run the HTTP acceptance checks only against the matching versioned API contract. A passing 204 toy endpoint does not satisfy those checks."
+          ]
+        },
+        {
           "title": "Implement and verify deliberately",
           "paragraphs": [
             "Start from the preceding database lesson, remove duplicate in-memory routes and add Done to the entity before creating a fresh learning database or using a reviewed migration. Isolate title validation into a pure method and test blank, whitespace and valid input.",
@@ -1224,8 +1247,8 @@
         {
           "title": "Keep request failure and retry policy separate",
           "paragraphs": [
-            "One scripted503 produces one attempt and a propagated error. The adapter does not hide a retry loop. Retrying a read may be reasonable with a bounded deadline and transient-failure policy, but a write additionally needs an operation identity and reconciliation contract. The same helper should not silently retry every HttpRequestException.",
-            "As an extension, implement a bounded read retry that makes at most two attempts:503 then200 succeeds with two;503 twice fails with two;404 stays missing with one. Cancellation must prevent another attempt. The current reference has no retry, delay or total deadline policy, so passing it does not establish those behaviors."
+            "One scripted 503 produces one attempt and a propagated error. The adapter does not hide a retry loop. Retrying a read may be reasonable with a bounded deadline and transient-failure policy, but a write additionally needs an operation identity and reconciliation contract. The same helper should not silently retry every HttpRequestException.",
+            "As an extension, implement a bounded read retry that makes at most two attempts: 503 then 200 succeeds with two; 503 twice fails with two; 404 stays missing with one. Cancellation must prevent another attempt. The current reference has no retry, delay or total deadline policy, so passing it does not establish those behaviors."
           ]
         }
       ],

@@ -10,7 +10,7 @@ python -B -m unittest -v test_security_lab.AuthorizationTests
 
 Expected: Two methods pass: permission matrix/default denial and allowed-field/copy boundaries.
 
-## Implement and submit
+## Optional practice
 
 1. Run the AuthorizationTests suite.
 2. Explain the already-authenticated Principal boundary.

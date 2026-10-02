@@ -178,6 +178,13 @@
             "Check the connection and database before a query that changes data. Our examples use fixed synthetic data; matching a row count is evidence about this fixture, not proof that a production extract is complete. Closing the session removes its local temporary tables. Reopen setup.sql to get a fresh fixture."
           ],
           "example": ""
+        },
+        {
+          "title": "Write a small SELECT before counting rows",
+          "paragraphs": [
+            "Name the columns after SELECT and the table after FROM. A comma separates columns. ORDER BY names the column used to sort the result; ascending order is the default. The semicolon ends the statement. Start with one column, then add a second before attempting the customer exercise."
+          ],
+          "example": "SELECT OrderId FROM #LNOrders ORDER BY OrderId;\n-- 101, 102, 103, 104, 105"
         }
       ],
       "exercise": {
@@ -598,6 +605,13 @@
             "Identifiers such as table names cannot be supplied as ordinary value parameters. If identifiers must vary, use a controlled allowlist and appropriate quoting. Do not concatenate them from arbitrary input. Different parameter values can also have different selectivity: reusing a plan is not a guarantee of good performance."
           ],
           "example": ""
+        },
+        {
+          "title": "Bind a value to dynamic SQL",
+          "paragraphs": [
+            "sys.sp_executesql takes SQL text, a declaration of its parameters, then their values. The N prefix marks a Unicode string. The parameter name inside the SQL text must match the declaration. In this example @Customer is an int; changing its value does not change the SQL text. Adapt the pattern to a decimal amount for the exercise."
+          ],
+          "example": "EXEC sys.sp_executesql\n N'SELECT OrderId FROM #LNOrders WHERE CustomerId=@Customer ORDER BY OrderId;',\n N'@Customer int', @Customer=2;\n-- 103, 104"
         }
       ],
       "exercise": {
@@ -1675,6 +1689,13 @@
             "A join duplicates one 100-unit order and drops a different 100-unit order. The total remains correct, but the report is wrong. Reconcile business keys and multiplicity as well as aggregate amounts. Count source-only, target-only and duplicated IDs before declaring that a zero total difference means success.",
             "Construct this fixture using temporary tables in a separate query window: source IDs A=100, B=100, C=50; faulty output A=100, A=100, C=50. Both sums are 250 and both row counts are three. Group by ID to reveal A twice and B absent. Repair the join rather than applying DISTINCT blindly: legitimate equal-valued orders must remain separate.",
             "Transfer the test to a replayed batch: a second run must preserve the same IDs and values, while changed content under an existing batch identity must follow the explicit conflict policy. Submit actual engine output for these cases; source inspection does not establish isolation or rollback behaviour."
+          ]
+        },
+        {
+          "title": "Build the classifier before the loader",
+          "paragraphs": [
+            "First return RawRowId and ParsedAmount only. TRY_CONVERT returns NULL for a failed supported conversion; NULLIF turns a blank trimmed field into NULL before conversion. Next add the known-order join and classify invalid and orphan rows. Only then add ROW_NUMBER partitioned by EventId to distinguish repeated copies. Keep the within-key conflict rule ahead of the duplicate rule so conflicting copies do not become silently accepted duplicates.",
+            "Check the six dispositions before adding INSERT or BEGIN TRAN. The earlier CTE, window, CASE and replay lessons supply these separate parts. After the classification is correct, insert only accepted events, then test the second pass. This order gives a wrong classification a smaller place to hide."
           ]
         }
       ],

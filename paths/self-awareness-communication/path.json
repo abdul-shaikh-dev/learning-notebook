@@ -202,25 +202,25 @@
       "description": "A factual reflection and a listening plan",
       "exitCriteria": [
         "Separate observations and interpretations in a fictional case.",
-        "Write an open question and a checked paraphrase.",
+        "Plan a suitable time and a way to listen without assuming the other person’s motive.",
         "Name your purpose and a respectful limit.",
         "Preserve consent, practical limits and unresolved disagreement in the record."
       ],
       "project": {
         "title": "A factual reflection and a listening plan",
-        "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+        "brief": "Use the supplied fictional case. Try an answer aloud or in a short note before comparing with the worked example. The full worksheet is optional. Dana finds that two headings in a shared document changed overnight. The editor is unknown. Dana has ten free minutes before another commitment and wants to understand the change.",
         "requirements": [
           "Separate observations and interpretations in a fictional case.",
-          "Write an open question and a checked paraphrase.",
+          "Plan a suitable time and a way to listen without assuming the other person’s motive.",
           "Name your purpose and a respectful limit."
         ],
         "rubric": [
           "Separate observations and interpretations in a fictional case.",
-          "Write an open question and a checked paraphrase.",
+          "Plan a suitable time and a way to listen without assuming the other person’s motive.",
           "Name your purpose and a respectful limit.",
           "Preserve consent, practical limits and unresolved disagreement in the record."
         ],
-        "solution": "Dana and a fictional partner discuss a changed document. Dana distinguishes the actual changes from presumed motives, asks what happened, checks a summary and requests a stable version. They record a deadline and an unresolved introduction question; a respectful process does not guarantee agreement.",
+        "solution": "Dana separates the observed two changed headings from the guess that someone dismissed the work. She feels frustrated, but that feeling does not identify a motive. Her purpose is to understand the change before deciding what to do. She asks whether ten minutes now is convenient, puts other tasks aside and plans to listen without interrupting. If the timing does not suit, she arranges another time; no explanation has yet been established.",
         "solutionFormat": "prose"
       }
     },
@@ -236,7 +236,7 @@
       ],
       "project": {
         "title": "A listening and feedback role-play",
-        "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+        "brief": "Use the supplied fictional case. Try an answer aloud or in a short note before comparing with the worked example. The full worksheet is optional. Role-play both sides, or practise with someone who agrees and may pause. Dana sees changed headings and assumes the whole introduction was replaced. The partner says only the headings were edited because readers could not find the dates.",
         "requirements": [
           "Use a voluntary fictional role-play with permission to pause.",
           "Practise a question, paraphrase, clear request and feedback example.",
@@ -248,7 +248,7 @@
           "Record the partner's correction and revise the message.",
           "Preserve consent, practical limits and unresolved disagreement in the record."
         ],
-        "solution": "Dana and a fictional partner discuss a changed document. Dana distinguishes the actual changes from presumed motives, asks what happened, checks a summary and requests a stable version. They record a deadline and an unresolved introduction question; a respectful process does not guarantee agreement.",
+        "solution": "Dana asks, \"What were you trying to make easier?\" Her first summary is, \"You replaced the introduction because it was unclear?\" The partner corrects her: only the headings changed. Dana revises: \"You changed the headings to make the dates easier to find; the introduction is unchanged. Is that right?\" Feedback: \"When headings changed without a note, I rechecked the whole section.\" Request: \"Could you leave a short change note before tomorrow's review?\" The partner agrees to the note, not to freezing every edit. Either can pause the practice.",
         "solutionFormat": "prose"
       }
     },
@@ -264,7 +264,7 @@
       ],
       "project": {
         "title": "A difficult-conversation plan and review",
-        "brief": "Produce a practical written record using the stage worksheets; fictional examples are welcome.",
+        "brief": "Use the supplied fictional case. Try an answer aloud or in a short note before comparing with the worked example. The full worksheet is optional. Dana wants the document frozen today; Lee wants to revise its introduction. They are peers, and the shared purpose is accurate information by Friday noon. A full rewrite needs two hours; only thirty minutes remain. A factual correction needs twenty minutes. The organiser decides release scope.",
         "requirements": [
           "Map positions, concerns, constraints and power differences.",
           "Compare two options using agreed practical criteria.",
@@ -276,7 +276,7 @@
           "Record agreements, unresolved questions and an appropriate follow-up.",
           "Preserve consent, practical limits and unresolved disagreement in the record."
         ],
-        "solution": "Dana and a fictional partner discuss a changed document. Dana distinguishes the actual changes from presumed motives, asks what happened, checks a summary and requests a stable version. They record a deadline and an unresolved introduction question; a respectful process does not guarantee agreement.",
+        "solution": "Dana values a stable version; Lee wants clearer information. They compare a full rewrite and a twenty-minute factual correction against accuracy and the Friday deadline. The rewrite does not fit the thirty-minute window, so they propose the factual correction and ask the organiser to confirm scope. In the fictional outcome, the organiser agrees; Lee edits and Dana checks by 11:30. The introduction rewrite remains unresolved and is reviewed next Tuesday. Dana records that agreement and responsibility without claiming that both prefer the result or that a peer can unilaterally approve release.",
         "solutionFormat": "prose"
       }
     }

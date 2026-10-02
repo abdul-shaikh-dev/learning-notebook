@@ -10,18 +10,18 @@ python -B -m unittest -v test_security_lab.ValidationTests test_security_lab.Ses
 
 Expected: Five methods pass: content boundaries, HTML encoding, SQLite binding, session lifecycle and CSRF denials.
 
-## Implement and submit
+## Optional practice
 
 1. Run ValidationTests and SessionTests.
 2. Test malformed shapes, exact title boundaries and control characters.
 3. Compare encoded HTML text and a literal injection-shaped SQL search.
 4. Verify rotation, exact expiry and logout.
 5. Reject missing/wrong/cross-session/malformed Unicode CSRF tokens.
-6. Write a route contract identifying browser/HTTP tests still needed.
+6. Run `python -B -m unittest -v test_security_http.py`, then identify browser and provider checks still needed.
 
 ## Reference approach
 
-Use the bounded title parser, HTML text-node encoder and SQLite placeholder binding; do not reuse HTML escaping for other sinks. Control time explicitly for session rotation/expiry/logout. Session tokens are random and CSRF checks fail safely for malformed supplied text. Run the two suites and record expected versus observed results. HTTP route calls, cookie attributes and real browser requests remain separately verified extensions.
+Use the bounded title parser, HTML text-node encoder and SQLite placeholder binding; do not reuse HTML escaping for other sinks. Control time explicitly for session rotation/expiry/logout. Session tokens are random and CSRF checks fail safely for malformed supplied text. Run the two suites and record expected versus observed results. The loopback HTTP test checks route policy and persisted rows. Cookie behavior in a browser and real-provider authentication remain separate extensions.
 
 ## Evidence rubric
 

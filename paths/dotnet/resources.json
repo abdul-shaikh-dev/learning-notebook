@@ -82,19 +82,13 @@
         "Create the projects once using the commands below. On subsequent runs reuse the directories and skip dotnet new. For API checks, start a fresh server so the in-memory baseline is clean.",
         "Create a console program representing tasks, completing one, listing open tasks and proving validation with repeatable assertions.",
         "Build the project described in the reader: Task IDs are positive and titles are trimmed and nonblank. Completion changes only the intended task. An empty list and unknown ID have explicit behavior. Four or more assertions cover a normal case and boundary failures. Explain one nullable value and one disposable resource from your implementation.",
-        "Check your result: Correctness: expected output and assertions pass. Boundaries: blank title, invalid ID and missing lookup are handled deliberately. Design: presentation is separate from reusable task behavior. Explanation: learner can trace state changes and describe why validation lives at the boundary.",
-        "Use http-boundary.md to distinguish executable client-adapter checks from actual server and storage integration."
+        "Check your result: Correctness: expected output and assertions pass. Boundaries: blank title, invalid ID and missing lookup are handled deliberately. Design: presentation is separate from reusable task behavior. Explanation: learner can trace state changes and describe why validation lives at the boundary."
       ],
       "commands": [
         {
           "label": "PowerShell · kit root · SDK 10",
           "command": "dotnet new console -n Foundation -f net10.0\nCopy-Item ./foundation.cs ./Foundation/Program.cs\ndotnet run --project ./Foundation",
           "expected": "2: Practice; 3: Review; PASS: 4 foundation assertions."
-        },
-        {
-          "label": "Run the focused depth lab from the extracted bundle root",
-          "command": "dotnet run --project BoundaryChecks.csproj",
-          "expected": "PASS: HTTP adapter success, missing, malformed, failure and cancellation contracts. Requires the course .NET10 SDK."
         }
       ],
       "prerequisites": [
@@ -106,7 +100,8 @@
       "notes": [
         "Install the .NET 10 SDK. Commands below use PowerShell.",
         "The API reference is unauthenticated, loopback-only and memory-only. Persistence, EF migrations, authentication and operational delivery are assessment extensions. Repository verification targets .NET 10; the original package-free checks used .NET 9. The guided SQLite/TestHost checks are a separate executable extension.",
-        "Use the supplied code as a reference. Test your own project and report its results separately."
+        "Use the supplied code as a reference. Test your own project and report its results separately.",
+        "Finish the console notebook here. BoundaryChecks.csproj and http-boundary.md become useful after API contracts and integration-checks in the intermediate stage."
       ]
     },
     {
