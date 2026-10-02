@@ -94,7 +94,12 @@ html[data-theme=dark] :is(.map-route-picker p,.branch-programming .branch-next){
 /* Relationships remain readable when the spatial arrows are hidden. */
 .branch-lines>path.relationship-background{stroke-dasharray:7 5}
 .branch-lines>path.relationship-alternative{stroke-dasharray:2 5}
-.map-relationships{display:flex;flex-wrap:wrap;gap:16px 36px;border-top:1px solid var(--library-line,#b8c6c1);margin:20px 0 0;padding-top:14px;font-size:13px;line-height:1.6}
+.catalog .map-connections{border:0;border-top:1px solid var(--library-line,#b8c6c1);border-radius:0;background:transparent;padding:0;margin:16px 0 0;box-shadow:none}
+.map-connections>summary{cursor:pointer;min-height:44px;padding:12px 0;font-size:13px;font-weight:500;color:var(--library-muted);width:fit-content}
+.map-connections>summary:hover{color:var(--library-ink)}
+.map-connections>summary:focus-visible{outline:2px solid currentColor;outline-offset:4px;border-radius:2px}
+.map-connections>summary::marker{font-size:10px}
+.map-relationships{display:flex;flex-wrap:wrap;gap:16px 36px;margin:0;padding:4px 0 12px;font-size:14px;line-height:1.7}
 .map-relationships .relationship-group{flex:1 1 220px;min-width:0}
 .map-relationships dt{font-weight:650;display:flex;align-items:center;gap:8px}
 .map-relationships dt:before{content:'';width:24px;border-top:2px solid currentColor}
@@ -103,5 +108,7 @@ html[data-theme=dark] :is(.map-route-picker p,.branch-programming .branch-next){
 .map-relationships dd{margin:4px 0 0}.map-relationships ul{list-style:none;margin:0;padding:0}.map-relationships li{margin:5px 0}
 .map-relationships a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .relationship-to{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-html[data-theme=dark] .map-relationships{border-color:var(--night-line);color:var(--night-muted)}
+html[data-theme=dark] .catalog .map-connections{border-color:var(--night-line);background:transparent}
+html[data-theme=dark] :is(.map-relationships,.map-connections>summary){color:var(--night-muted)}
+html[data-theme=dark] .map-connections>summary:hover{color:var(--night-text)}
 @media(max-width:700px){.map-relationships{display:block}.map-relationships .relationship-group+.relationship-group{margin-top:14px}}

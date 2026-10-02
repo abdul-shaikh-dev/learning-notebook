@@ -61,3 +61,11 @@ assert(!node('learning-map').innerHTML.includes('#path/python'));
 preferences.set('learning-notebook:map-route','invalid');ctx.bindLibraryMap({querySelectorAll:()=>buttons});
 assert.equal(node('map-route').value,'all');
 console.log('PASS: focused routes, global search, restored selection and invalid preference fallback.');
+
+// Text relationships stay available without repeating the graph in the default view.
+const disclosureCount=(roadmap.match(/<details class="map-connections">/g)||[]).length;
+assert.equal(disclosureCount,vm.runInContext('LIBRARY_GRAPHS.filter(g=>g.edges.length).length',ctx));
+assert(!roadmap.includes('<details class="map-connections" open'));
+assert(roadmap.includes('View connections as text<span class="relationship-to"> for Programming &amp; AI</span>'));
+assert(!ctx.libraryMap('Python').includes('map-connections'),'Search results do not show empty relationship controls');
+console.log('PASS: collapsed native relationship disclosures retain every connection and route-specific labels.');
