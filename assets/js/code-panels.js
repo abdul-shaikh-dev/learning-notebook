@@ -45,7 +45,7 @@
    pre.dataset.codePanel='ready';pre.dataset.language=language;
    const panel=document.createElement('div');panel.className='code-panel';
    const header=document.createElement('div');header.className='code-panel-header';
-   const label=document.createElement('span');label.className='code-language';label.textContent=language==='plaintext'?'Example · plain text':labels[language];
+   const label=document.createElement('span');label.className='code-language';label.textContent=pre.dataset.codeLabel||(language==='plaintext'?'Example · plain text':labels[language]);
    const actions=document.createElement('div');actions.className='code-panel-actions no-print';
    const copy=document.createElement('button');copy.type='button';copy.textContent='Copy';copy.setAttribute('aria-label','Copy '+label.textContent+' example '+(index+1));
    const wrap=document.createElement('button');wrap.type='button';wrap.textContent='Wrap lines';wrap.setAttribute('aria-pressed','false');wrap.setAttribute('aria-label','Wrap lines in example '+(index+1));

@@ -40,6 +40,7 @@
   installState(); connection();
   function unavailable(text) {
     message(text, true);
+    if ($('pwa-version')) $('pwa-version').textContent = 'Version unavailable on this connection.';
     if (manager) manager.setAttribute('aria-busy', 'false');
     if ($('pwa-library-summary')) $('pwa-library-summary').textContent = 'Offline storage unavailable';
   }
@@ -83,6 +84,7 @@
   function element(tag, text, className) { const el = document.createElement(tag); if (text) el.textContent = text; if (className) el.className = className; return el; }
   function render(data) {
     knownStatus = data;
+    if ($('pwa-version')) $('pwa-version').textContent = 'Installed version: ' + data.version;
     if (!manager) return;
     const focus = document.activeElement, focusId = focus && focus.dataset.course, focusAction = focus && focus.dataset.action;
     manager.replaceChildren(); manager.setAttribute('aria-busy', 'false');
@@ -130,6 +132,7 @@
   if ($('pwa-refresh')) $('pwa-refresh').addEventListener('click', refresh);
   function updateNotice() {
     if (!registration.waiting || !registration.active || registration.active === registration.waiting || registration.active.state !== 'activated' || $('pwa-update-notice')) return;
+    if ($('pwa-update-status')) $('pwa-update-status').textContent = 'An update is ready. Choose Update notebook to apply it.';
     const notice = element('section', '', 'pwa-notice'); notice.id = 'pwa-update-notice'; notice.setAttribute('aria-label', 'Notebook update'); notice.setAttribute('role', 'status');
     notice.append(element('strong', 'A notebook update is ready'));
     notice.append(element('p', 'Apply the update and reload notebook tabs. Saved progress stays. Refresh offline course downloads afterward.'));
@@ -140,6 +143,14 @@
   navigator.serviceWorker.addEventListener('controllerchange', () => { if ((requestedUpdate || hadController) && !updateReloaded) { updateReloaded = true; location.reload(); } });
   navigator.serviceWorker.register(new URL('sw.js', root).href, {scope:root.href, updateViaCache:'none'}).then(async reg => {
     registration = reg; updateNotice();
+    const check = $('pwa-check-update');
+    if(check){check.disabled=false;check.addEventListener('click',async()=>{
+      check.disabled=true;$('pwa-update-status').textContent='Checking for updates…';
+      try{await reg.update();updateNotice();$('pwa-update-status').textContent=reg.waiting?'An update is ready. Choose Update notebook to apply it.':reg.installing?'Downloading an update…':'Update check finished. No new update was found.';}
+      catch{$('pwa-update-status').textContent='Could not check for updates. Reconnect and try again.';}
+      finally{check.disabled=false;}
+    });}
+
     const watch = worker => { if (!worker) return; if (worker.state === 'installed') updateNotice(); else worker.addEventListener('statechange', () => { if (worker.state === 'installed') updateNotice(); }); };
     reg.addEventListener('updatefound', () => watch(reg.installing)); watch(reg.installing);
     await Promise.race([navigator.serviceWorker.ready, new Promise((_, reject) => setTimeout(() => reject(new Error('Offline setup timed out.')), 45000))]); await refresh();

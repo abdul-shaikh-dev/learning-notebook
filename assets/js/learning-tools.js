@@ -27,7 +27,25 @@ function diagramView(l,print=false){
  return `<section ${print?'':'id="lesson-diagram"'} class="concept-diagram" aria-label="${escapeText(d.title)}"><h2>${escapeText(d.title)}</h2><p>${escapeText(d.summary)}</p><div class="mermaid-panel" data-mermaid-diagram="${escapeText(JSON.stringify(d))}"><div class="mermaid-toolbar no-print"><button class="quiet" data-mermaid-fit type="button" aria-pressed="false">Fit to screen</button><details class="diagram-downloads"><summary>Download diagram</summary><button class="quiet" data-mermaid-source type="button">Download Mermaid source</button><button class="quiet" data-mermaid-svg type="button" disabled>Download SVG</button></details></div><p class="mermaid-status" role="status">Preparing diagram…</p><p class="mermaid-hint">Scroll across wide diagrams, or choose Fit to screen.</p><div class="mermaid-view" tabindex="0" role="region" aria-label="${escapeText(d.title)} diagram; scroll horizontally if needed"></div></div>${alternative}<section class="walkthrough-reading"><h3>How it works</h3><ol>${d.steps.map(s=>`<li><strong>${escapeText(s.title)}</strong><p>${escapeText(s.explanation)}</p></li>`).join('')}</ol></section>${steps}</section>`;
 }
 function enhanceCodePanels(main,context=''){if(typeof NotebookCode!=='undefined'){NotebookCode.enhance(main,context);return;}main.querySelectorAll('pre').forEach((pre,index)=>{pre.tabIndex=0;pre.setAttribute('role','region');pre.setAttribute('aria-label',pre.classList.contains('folder-tree')?'Folder layout':'Code or command example '+(index+1)+'; scroll horizontally if needed');if(pre.classList.contains('folder-tree'))return;const tools=document.createElement('div');tools.className='code-tools no-print';const button=document.createElement('button');button.type='button';button.className='quiet';button.textContent='Copy code';button.setAttribute('aria-label','Copy code or command example '+(index+1));const status=document.createElement('span');status.setAttribute('role','status');button.addEventListener('click',async()=>{try{if(typeof navigator==='undefined'||!navigator.clipboard)throw Error();await navigator.clipboard.writeText(pre.textContent);status.textContent='Copied.';}catch{status.textContent='Copy unavailable. Select the code below and copy it manually.';pre.focus();}});tools.append(button,status);pre.before(tools);});}
+let stopLessonTracking;
+function trackLessonSection(main,l){
+ if(stopLessonTracking){stopLessonTracking();stopLessonTracking=null;}
+ if(!l||typeof requestAnimationFrame==='undefined')return;
+ const buttons=Array.from(main.querySelectorAll('.atlas-lesson-rail [data-jump]'));
+ const entries=buttons.map(button=>({button,target:document.getElementById(button.dataset.jump)})).filter(entry=>entry.target);
+ if(!entries.length)return;
+ let frame=0;
+ const update=()=>{frame=0;let current=entries[0];for(const entry of entries){if(entry.target.getBoundingClientRect().top<=120)current=entry;}
+  entries.forEach(entry=>{if(entry===current)entry.button.setAttribute('aria-current','location');else entry.button.removeAttribute('aria-current');});
+ };
+ const schedule=()=>{if(!frame)frame=requestAnimationFrame(update);};
+ window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);
+ const observer=typeof ResizeObserver==='undefined'?null:new ResizeObserver(schedule);observer?.observe(main);
+ stopLessonTracking=()=>{window.removeEventListener('scroll',schedule);window.removeEventListener('resize',schedule);if(frame)cancelAnimationFrame(frame);observer?.disconnect();};
+ update();
+}
 function bindLearningTools(main,p,l){
+ trackLessonSection(main,l);
   main.querySelectorAll('[data-jump]').forEach(button=>button.addEventListener('click',()=>{const target=document.getElementById(button.dataset.jump);if(target){target.tabIndex=-1;target.focus({preventScroll:true});target.scrollIntoView({block:'start'});}}));
   enhanceCodePanels(main,p?.id);
   bindVisualExplorer(l);
