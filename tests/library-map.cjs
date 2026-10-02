@@ -69,3 +69,17 @@ assert(!roadmap.includes('<details class="map-connections" open'));
 assert(roadmap.includes('View connections as text<span class="relationship-to"> for Programming &amp; AI</span>'));
 assert(!ctx.libraryMap('Python').includes('map-connections'),'Search results do not show empty relationship controls');
 console.log('PASS: collapsed native relationship disclosures retain every connection and route-specific labels.');
+// Sample every connector curve against every card interior, including its endpoints.
+for(const graph of vm.runInContext('LIBRARY_GRAPHS',ctx)){
+ for(const [a,b] of graph.edges){
+  const d=ctx.libraryConnector(graph,graph.nodes,graph.edges,a,b);
+  const v=d.match(/-?\d+(?:\.\d+)?/g).map(Number);
+  for(let step=0;step<=100;step++){
+   const t=step/100,u=1-t;
+   const x=u*u*u*v[0]+3*u*u*t*v[2]+3*u*t*t*v[4]+t*t*t*v[6];
+   const y=u*u*u*v[1]+3*u*u*t*v[3]+3*u*t*t*v[5]+t*t*t*v[7];
+   for(const [id,left,top] of graph.nodes)assert(!(x>left*10+.1&&x<(left+(graph.nodeWidth||30))*10-.1&&y>top+.1&&y<top+155.9),`${graph.id}: ${a} to ${b} crosses ${id}`);
+  }
+ }
+}
+console.log('PASS: every map connector stays outside every card interior.');
