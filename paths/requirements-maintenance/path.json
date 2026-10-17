@@ -552,7 +552,7 @@
         {
           "title": "The mechanism",
           "paragraphs": [
-            "The new tool accepts the exact header id,status,minutes. IDs are nonblank and unique; statuses are open, closed or cancelled; minutes are ASCII whole numbers from 0 to 1440. These choices make the teaching contract explicit. Another product might allow extra columns or decimal minutes, but it needs different examples and tests.",
+            "The new tool accepts the exact header line \"id,status,minutes\". IDs are nonblank and unique; statuses are open, closed or cancelled; minutes are ASCII whole numbers from 0 to 1440. These choices make the teaching contract explicit. Another product might allow extra columns or decimal minutes, but it needs different examples and tests.",
             "Validate every row before applying --status. Otherwise a malformed closed record disappears when the user asks for open tickets and the report appears trustworthy. The same input should not change from invalid to valid because of a display filter. Include line numbers in errors so the user can locate the problem without echoing an entire record."
           ]
         },

@@ -228,11 +228,11 @@
         "Extract all listed flat files together into a new practice folder.",
         "Read README.md and the workbook before any optional Docker/cluster command.",
         "Run offline checks and record actual runtime/results.",
-        "Define eligible/good events,target, window and budget policy.",
+        "Define eligible/good events, target, window and budget policy.",
         "Run bounded loopback timing and record model/errors/tail samples.",
         "Capture a supported SQLite snapshot and verify independent values.",
         "Distinguish the SQL Server recovery plan from SQLite test evidence.",
-        "Simulate the readiness gate,record impact/recovery and assign a follow-up.",
+        "Simulate the readiness gate, record impact/recovery and assign a follow-up.",
         "List real production proxy/identity/telemetry/data/failure-domain gaps.",
         "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work.",
         "Optional: read mechanism-lab.md and run the real mechanism drill if its prerequisites are available."

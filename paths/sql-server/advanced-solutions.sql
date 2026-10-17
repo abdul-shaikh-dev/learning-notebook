@@ -48,7 +48,7 @@ BEGIN CATCH
  IF XACT_STATE()<>0 ROLLBACK;
  THROW;
 END CATCH;
-SELECT @Inserted AS InsertedNow; --3 first pass;0 replay
+SELECT @Inserted AS InsertedNow; --3 first pass; 0 replay
 SELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;
 SELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215
 ;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)
@@ -57,5 +57,5 @@ SELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,
  CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'
  WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status
 FROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;
---Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.
---Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.
+--Five rows: 101 paid 0; 102 missing 50; 103 underpaid 10; 104 missing 120; 105 overpaid -5.
+--Due 390; paid 215; net outstanding 175. Raw row counts 6 = accepted 3 + duplicate 1 + invalid 1 + orphan 1.
