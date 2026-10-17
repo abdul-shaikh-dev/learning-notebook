@@ -171,3 +171,6 @@
 @media screen and (prefers-reduced-motion: reduce) {
   html[data-theme="dark"] .visual-table-scroll tr.is-changed td { animation: none; background: #193c30; }
 }
+@media screen {
+  html[data-theme="dark"] .visual-playback-panel { border-top-color: var(--night-line, #33424a); }
+}

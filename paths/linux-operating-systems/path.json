@@ -820,7 +820,7 @@
           "paragraphs": [
             "Use a with block around a report file so normal completion and exceptions both close it. A Linux process may continue reading an open file after its pathname is unlinked; the name and the open object have distinct lifetimes."
           ],
-          "example": "from pathlib import Path\nwith Path(\"backup.csv\").open(encoding=\"utf-8\") as stream:\n    print(stream.readline().strip())\nprint(stream.closed)\n# Expected: id,name then True"
+          "example": "from pathlib import Path\nwith Path(\"backup.csv\").open(encoding=\"utf-8\") as stream:\n    print(stream.readline().strip())\nprint(stream.closed)\n# Expected: \"id,name\" then True"
         },
         {
           "title": "Reclaiming space and closing resources",

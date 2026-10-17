@@ -1388,11 +1388,11 @@
         "title": "Operational release review",
         "brief": "Assemble a release record, synthetic incident timeline and recovery evidence without provisioning cloud services.",
         "requirements": [
-          "Define eligible/good events,target, window and budget policy.",
+          "Define eligible/good events, target, window and budget policy.",
           "Run bounded loopback timing and record model/errors/tail samples.",
           "Capture a supported SQLite snapshot and verify independent values.",
           "Distinguish the SQL Server recovery plan from SQLite test evidence.",
-          "Simulate the readiness gate,record impact/recovery and assign a follow-up.",
+          "Simulate the readiness gate, record impact/recovery and assign a follow-up.",
           "List real production proxy/identity/telemetry/data/failure-domain gaps."
         ],
         "rubric": [

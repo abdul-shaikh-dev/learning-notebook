@@ -24561,11 +24561,11 @@ const LEARNING_PATHS = [
           "title": "Operational release review",
           "brief": "Assemble a release record, synthetic incident timeline and recovery evidence without provisioning cloud services.",
           "requirements": [
-            "Define eligible/good events,target, window and budget policy.",
+            "Define eligible/good events, target, window and budget policy.",
             "Run bounded loopback timing and record model/errors/tail samples.",
             "Capture a supported SQLite snapshot and verify independent values.",
             "Distinguish the SQL Server recovery plan from SQLite test evidence.",
-            "Simulate the readiness gate,record impact/recovery and assign a follow-up.",
+            "Simulate the readiness gate, record impact/recovery and assign a follow-up.",
             "List real production proxy/identity/telemetry/data/failure-domain gaps."
           ],
           "rubric": [
@@ -24850,11 +24850,11 @@ const LEARNING_PATHS = [
             "Extract all listed flat files together into a new practice folder.",
             "Read README.md and the workbook before any optional Docker/cluster command.",
             "Run offline checks and record actual runtime/results.",
-            "Define eligible/good events,target, window and budget policy.",
+            "Define eligible/good events, target, window and budget policy.",
             "Run bounded loopback timing and record model/errors/tail samples.",
             "Capture a supported SQLite snapshot and verify independent values.",
             "Distinguish the SQL Server recovery plan from SQLite test evidence.",
-            "Simulate the readiness gate,record impact/recovery and assign a follow-up.",
+            "Simulate the readiness gate, record impact/recovery and assign a follow-up.",
             "List real production proxy/identity/telemetry/data/failure-domain gaps.",
             "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work.",
             "Optional: read mechanism-lab.md and run the real mechanism drill if its prerequisites are available."
@@ -39867,7 +39867,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Every local replica has its own scratch SQLite file. Use /version and health endpoints for replicated exercises; notes are not a shared durable service. A real stateful API needs an external data owner or a carefully designed single-writer storage pattern."
             ],
-            "example": "Desired:2 stateless web replicas\nObserved:1 replica running\nController attempts replacement; scheduler chooses a node; kubelet starts containers."
+            "example": "Desired: 2 stateless web replicas\nObserved: 1 replica running\nController attempts replacement; scheduler chooses a node; kubelet starts containers."
           }
         ],
         "exercise": {
@@ -41563,7 +41563,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Scheduling considers requests and additional placement conditions, not only current CPU percentage. One hundred millicores is 0.1 core. For CPU utilization HPA, missing requests can prevent a useful percentage calculation; arbitrary low requests can distort scaling signals."
             ],
-            "example": "Node free requested capacity:200mCPU\nPod request:300m → may remain Pending\nRunning Pod: CPU limit500m → throttling possible\nMemory beyond limit128Mi → OOM risk"
+            "example": "Node free requested capacity: 200m CPU\nPod request: 300m → may remain Pending\nRunning Pod: CPU limit 500m → throttling possible\nMemory beyond limit 128Mi → OOM risk"
           }
         ],
         "exercise": {
@@ -41576,7 +41576,7 @@ const LEARNING_PATHS = [
           "solutionFormat": "prose"
         },
         "quiz": {
-          "question": "What is100m CPU?",
+          "question": "What is 100m CPU?",
           "options": [
             "100 full CPU cores",
             "0.1 CPU core",
@@ -41629,7 +41629,7 @@ const LEARNING_PATHS = [
           "options": [
             "Yes, including schema rollback",
             "No; it reports progress failure for a release controller/operator to handle",
-            "It changes maxUnavailable to100%"
+            "It changes maxUnavailable to 100%"
           ],
           "correct": 1,
           "explanation": "progressDeadlineSeconds makes stalled progress visible through Deployment status. It does not automatically revert the release; a release controller or operator must decide and perform recovery."
@@ -42238,7 +42238,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Admission controls decide whether the Pod specification is allowed; they do not prove the base image has no vulnerabilities or that business authorization works. The baseline has no hostPath, privileged container or external load balancer. Read-only root needs compatible temp/cache/data paths and should be tested with the actual image."
             ],
-            "example": "USER10001 + runAsNonRoot\nallowPrivilegeEscalation:false\ncapabilities dropALL\nreadOnlyRootFilesystem:true\n/tmp is an explicit writable volume"
+            "example": "USER 10001 + runAsNonRoot\nallowPrivilegeEscalation: false\ncapabilities drop ALL\nreadOnlyRootFilesystem: true\n/tmp is an explicit writable volume"
           }
         ],
         "exercise": {
@@ -42465,7 +42465,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "This calculation is simplified; readiness, missing metrics, tolerance and controller behavior matter. More replicas cannot repair a serialized database bottleneck or create shared scratch data. Maintain queue/admission controls and measure actual latency/error improvements before trusting autoscaling as an availability mechanism."
             ],
-            "example": "request100m; observed60m → 60%utilization\n2 Pods averaging90% at60% target → rough desired ceil(2 × 90 / 60)=3\nBounds and stabilization then influence changes."
+            "example": "request 100m; observed 60m → 60% utilization\n2 Pods averaging 90% at 60% target → rough desired ceil(2 × 90 / 60)=3\nBounds and stabilization then influence changes."
           }
         ],
         "exercise": {
@@ -42563,7 +42563,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Pin a compatible Helm version, review actual generated defaults and compare the rendered workload with the known lab contract. No helm install command is required for offline study. If enabling the chart in the local cluster, preserve explicit context/namespace gates and local image settings; a default chart may select a different public image."
             ],
-            "example": "helm create lab-chart\n# Review generated Service,Deployment,values and remove unneeded defaults.\nhelm lint ./lab-chart\nhelm template release-demo ./lab-chart --namespace notebook-lab > rendered.yaml"
+            "example": "helm create lab-chart\n# Review generated Service, Deployment, values and remove unneeded defaults.\nhelm lint ./lab-chart\nhelm template release-demo ./lab-chart --namespace notebook-lab > rendered.yaml"
           }
         ],
         "exercise": {
@@ -42951,10 +42951,10 @@ const LEARNING_PATHS = [
           "title": "Object and reconciliation notebook",
           "brief": "Explain and optionally run the dedicated local workload without touching a shared cluster.",
           "requirements": [
-            "Run the8 service and4 offline manifest-contract checks.",
+            "Run the 8 service and 4 offline manifest-contract checks.",
             "Draw API→Deployment→ReplicaSet→Pod and Service→EndpointSlices.",
-            "Compare labels,selectors,ports and config lifecycle.",
-            "If opted in,create the named kind cluster, build/load image, Bootstrap namespace, server dry-run then Apply.",
+            "Compare labels, selectors, ports and config lifecycle.",
+            "If opted in, create the named kind cluster, build/load image, Bootstrap namespace, server dry-run then Apply.",
             "Capture desired/current/available counts and local health/version results."
           ],
           "rubric": [
@@ -42992,7 +42992,7 @@ const LEARNING_PATHS = [
             "Policy application is not called enforcement evidence.",
             "No production identity/cluster is reused."
           ],
-          "solution": "With 2 replicas, maxSurge 1 and maxUnavailable 0,expect spare capacity for a third candidate. ready 503 / live 200 should remove readiness without this condition triggering liveness restart. RBAC grants read/list/watch Pods/logs only; verify denies separately. Default kind does not prove NetworkPolicy enforcement; mark that check reviewed-only unless the plugin/client evidence exists."
+          "solution": "With 2 replicas, maxSurge 1 and maxUnavailable 0, expect spare capacity for a third candidate. ready 503 / live 200 should remove readiness without this condition triggering liveness restart. RBAC grants read/list/watch Pods/logs only; verify denies separately. Default kind does not prove NetworkPolicy enforcement; mark that check reviewed-only unless the plugin/client evidence exists."
         }
       },
       {
@@ -43267,10 +43267,10 @@ const LEARNING_PATHS = [
             "Extract all listed flat files together into a new practice folder.",
             "Read README.md and the workbook before any optional Docker/cluster command.",
             "Run offline checks and record actual runtime/results.",
-            "Run the8 service and4 offline manifest-contract checks.",
+            "Run the 8 service and 4 offline manifest-contract checks.",
             "Draw API→Deployment→ReplicaSet→Pod and Service→EndpointSlices.",
-            "Compare labels,selectors,ports and config lifecycle.",
-            "If opted in,create the named kind cluster, build/load image, Bootstrap namespace, server dry-run then Apply.",
+            "Compare labels, selectors, ports and config lifecycle.",
+            "If opted in, create the named kind cluster, build/load image, Bootstrap namespace, server dry-run then Apply.",
             "Capture desired/current/available counts and local health/version results.",
             "Compare the packet against the stage rubric; separate executed checks from reviewed or planned work."
           ],
@@ -43403,7 +43403,7 @@ const LEARNING_PATHS = [
             "Run offline checks and record actual runtime/results.",
             "Check storage class/access/reclaim assumptions and synthetic file retention after Pod replacement if opted in.",
             "Run bounded Job and capture completion/logs before TTL if opted in.",
-            "Review HPA metrics/requests and bounded 2..4 scaling;mark unavailable metrics honestly.",
+            "Review HPA metrics/requests and bounded 2..4 scaling; mark unavailable metrics honestly.",
             "Explain voluntary eviction versus node outage and rollout constraints.",
             "Render a learner-generated Helm chart and compare to known workload contracts.",
             "Draw GitOps drift/revert timeline without installing a controller.",
@@ -46387,7 +46387,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Use a with block around a report file so normal completion and exceptions both close it. A Linux process may continue reading an open file after its pathname is unlinked; the name and the open object have distinct lifetimes."
             ],
-            "example": "from pathlib import Path\nwith Path(\"backup.csv\").open(encoding=\"utf-8\") as stream:\n    print(stream.readline().strip())\nprint(stream.closed)\n# Expected: id,name then True"
+            "example": "from pathlib import Path\nwith Path(\"backup.csv\").open(encoding=\"utf-8\") as stream:\n    print(stream.readline().strip())\nprint(stream.closed)\n# Expected: \"id,name\" then True"
           },
           {
             "title": "Reclaiming space and closing resources",
@@ -53202,7 +53202,7 @@ const LEARNING_PATHS = [
             {
               "id": "n3",
               "label": "Validate exact schema",
-              "description": "Require object fields lesson:string and version:exact integer; boolean version is rejected."
+              "description": "Require object fields lesson (a string) and version (an exact integer); a boolean version is rejected."
             },
             {
               "id": "n4",
@@ -53243,7 +53243,7 @@ const LEARNING_PATHS = [
             },
             {
               "title": "Follow the transformation",
-              "explanation": "Require intended JSON media type and the 4096-byte teaching limit. Malformed JSON or decoding failure raises ProtocolError. Require object fields lesson:string and version:exact integer; boolean version is rejected.",
+              "explanation": "Require intended JSON media type and the 4096-byte teaching limit. Malformed JSON or decoding failure raises ProtocolError. Require object fields lesson (a string) and version (an exact integer); a boolean version is rejected.",
               "activeNodes": [
                 "n0",
                 "n1",
@@ -64675,7 +64675,7 @@ const LEARNING_PATHS = [
           {
             "title": "The mechanism",
             "paragraphs": [
-              "The new tool accepts the exact header id,status,minutes. IDs are nonblank and unique; statuses are open, closed or cancelled; minutes are ASCII whole numbers from 0 to 1440. These choices make the teaching contract explicit. Another product might allow extra columns or decimal minutes, but it needs different examples and tests.",
+              "The new tool accepts the exact header line \"id,status,minutes\". IDs are nonblank and unique; statuses are open, closed or cancelled; minutes are ASCII whole numbers from 0 to 1440. These choices make the teaching contract explicit. Another product might allow extra columns or decimal minutes, but it needs different examples and tests.",
               "Validate every row before applying --status. Otherwise a malformed closed record disappears when the user asks for open tickets and the report appears trustworthy. The same input should not change from invalid to valid because of a display filter. Include line numbers in errors so the user can locate the problem without echoing an entire record."
             ]
           },
@@ -70284,7 +70284,7 @@ const LEARNING_PATHS = [
           "checks": [
             "Exactly 5 order rows and 1 orphan row.",
             "Due 390, matched paid 265, net outstanding 125.",
-            "Status counts:paid 2,underpaid 1,missing 1,overpaid 1.",
+            "Status counts: paid 2, underpaid 1, missing 1, overpaid 1.",
             "All payment amounts 285 = matched 265 + orphan 20.",
             "A duplicate-event policy is described without silently using DISTINCT on monetary values."
           ]
@@ -70463,7 +70463,7 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Calculate three items priced at 0.335: compare rounding each item to two decimals before summing with rounding the total. Explain which rule a contract must specify.",
           "starter": "DECLARE @Unit decimal(12,3)=0.335;\nSELECT /* rounded line total */, /* rounded invoice total */;",
-          "solution": "DECLARE @Unit decimal(12,3)=0.335;\nSELECT CAST(@Unit AS decimal(12,2))*3 AS RoundedLines,\n CAST(@Unit*3 AS decimal(12,2)) AS RoundedInvoice;\n--1.02 and1.01",
+          "solution": "DECLARE @Unit decimal(12,3)=0.335;\nSELECT CAST(@Unit AS decimal(12,2))*3 AS RoundedLines,\n CAST(@Unit*3 AS decimal(12,2)) AS RoundedInvoice;\n--1.02 and 1.01",
           "checks": [
             "RoundedLines=1.02; RoundedInvoice=1.01.",
             "Explain that decimal precision does not decide the contractual rounding boundary."
@@ -70571,7 +70571,7 @@ const LEARNING_PATHS = [
               "The sample has five rows ordered by date then identifier. Its two-row sums are 100, 150, 130, 200 and 160. These are adjacent-order amounts across all customers; adding PARTITION BY CustomerId changes the question.",
               "A gaps-and-islands problem first defines adjacency, such as consecutive calendar days or consecutive event sequence numbers. Deduplicate to the intended grain before labelling islands. Otherwise repeated dates can create misleading sequence differences."
             ],
-            "example": "SELECT OrderId,OrderDate,Amount,\n LAG(Amount) OVER(ORDER BY OrderDate,OrderId) AS PreviousAmount,\n SUM(Amount) OVER(ORDER BY OrderDate,OrderId ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) AS TwoRows\nFROM #LNOrders ORDER BY OrderDate,OrderId;\n--TwoRows:100,150,130,200,160"
+            "example": "SELECT OrderId,OrderDate,Amount,\n LAG(Amount) OVER(ORDER BY OrderDate,OrderId) AS PreviousAmount,\n SUM(Amount) OVER(ORDER BY OrderDate,OrderId ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) AS TwoRows\nFROM #LNOrders ORDER BY OrderDate,OrderId;\n--TwoRows: 100, 150, 130, 200, 160"
           },
           {
             "title": "Tradeoffs",
@@ -70586,7 +70586,7 @@ const LEARNING_PATHS = [
           "starter": ";WITH Compared AS (SELECT CustomerId,OrderId,Amount, /* LAG */ AS PreviousAmount FROM #LNOrders)\nSELECT *,Amount-PreviousAmount AS Change FROM Compared ORDER BY CustomerId,OrderId;",
           "solution": ";WITH Compared AS (SELECT CustomerId,OrderId,Amount,LAG(Amount) OVER(PARTITION BY CustomerId ORDER BY OrderDate,OrderId) AS PreviousAmount FROM #LNOrders)\nSELECT CustomerId,OrderId,Amount,PreviousAmount,Amount-PreviousAmount AS Change FROM Compared ORDER BY CustomerId,OrderId;",
           "checks": [
-            "Customer 1:NULL then -50; customer 2:NULL then 40; customer 3:NULL.",
+            "Customer 1: NULL then -50; customer 2: NULL then 40; customer 3: NULL.",
             "Explain why the first difference stays NULL."
           ]
         },
@@ -70631,7 +70631,7 @@ const LEARNING_PATHS = [
               "This repeats the small index lab with explicit parameter types and a half-open date range. It is suitable for reading a plan, not proving speed. Record actual versus estimated rows and logical reads with the same parameters and fixture.",
               "On a large representative training dataset, compare a common customer with a rare one. A plan that works well for one distribution may be expensive for the other. Capture query, parameters, indexes, statistics state and compatibility level before drawing a conclusion."
             ],
-            "example": "IF OBJECT_ID('tempdb..#LNIndexLab') IS NOT NULL DROP TABLE #LNIndexLab;\nSELECT OrderId,CustomerId,OrderDate,Amount INTO #LNIndexLab FROM #LNOrders;\nCREATE INDEX IX_LNIndex_CustomerDate ON #LNIndexLab(CustomerId,OrderDate) INCLUDE(Amount);\nDECLARE @Customer int=2,@Start date='20260101',@End date='20260201';\nSET STATISTICS IO ON;\nSELECT OrderDate,Amount FROM #LNIndexLab\nWHERE CustomerId=@Customer AND OrderDate>=@Start AND OrderDate<@End;\nSET STATISTICS IO OFF;\n--80 and120; record actual reads and plan on your instance, do not invent them."
+            "example": "IF OBJECT_ID('tempdb..#LNIndexLab') IS NOT NULL DROP TABLE #LNIndexLab;\nSELECT OrderId,CustomerId,OrderDate,Amount INTO #LNIndexLab FROM #LNOrders;\nCREATE INDEX IX_LNIndex_CustomerDate ON #LNIndexLab(CustomerId,OrderDate) INCLUDE(Amount);\nDECLARE @Customer int=2,@Start date='20260101',@End date='20260201';\nSET STATISTICS IO ON;\nSELECT OrderDate,Amount FROM #LNIndexLab\nWHERE CustomerId=@Customer AND OrderDate>=@Start AND OrderDate<@End;\nSET STATISTICS IO OFF;\n--80 and 120; record actual reads and plan on your instance, do not invent them."
           },
           {
             "title": "Tradeoffs",
@@ -70713,7 +70713,7 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "After the worked example, call the procedure with nonexistent order 999 inside TRY/CATCH. Prove the work copy still has five rows and totals 391 after the earlier successful 81 update.",
           "starter": "BEGIN TRY EXEC #LNSafeAmount @OrderId=999,@NewAmount=10; END TRY\nBEGIN CATCH SELECT ERROR_NUMBER() AS ErrorNumber; END CATCH;\n--Inspect population and total.",
-          "solution": "BEGIN TRY EXEC #LNSafeAmount @OrderId=999,@NewAmount=10; END TRY\nBEGIN CATCH SELECT ERROR_NUMBER() AS ErrorNumber; END CATCH;\nSELECT COUNT(*) AS Rows,SUM(Amount) AS Total FROM #LNProcedureWork;\n--51102;5 rows;391.00",
+          "solution": "BEGIN TRY EXEC #LNSafeAmount @OrderId=999,@NewAmount=10; END TRY\nBEGIN CATCH SELECT ERROR_NUMBER() AS ErrorNumber; END CATCH;\nSELECT COUNT(*) AS Rows,SUM(Amount) AS Total FROM #LNProcedureWork;\n--Error 51102; 5 rows; 391.00",
           "checks": [
             "Run the worked example first.",
             "Error 51102; five rows; total 391; @@TRANCOUNT is zero after failure."
@@ -70760,7 +70760,7 @@ const LEARNING_PATHS = [
               "Run this snippet twice without replacing #LNReplayTarget. The first inserts two events; the second inserts none; the total stays 30. If you change E1 to 11, this simple loader skips it without detecting the conflict, demonstrating an intentional limitation.",
               "The advanced capstone adds explicit validation, conflict and replay checks. Keep source observations long enough to explain why a row was accepted, rejected, quarantined or already processed."
             ],
-            "example": "IF OBJECT_ID('tempdb..#LNReplayTarget') IS NULL\n CREATE TABLE #LNReplayTarget(EventId nvarchar(20) NOT NULL PRIMARY KEY,Amount decimal(12,2) NOT NULL);\nINSERT #LNReplayTarget(EventId,Amount)\nSELECT s.EventId,s.Amount FROM (VALUES(N'E1',CAST(10 AS decimal(12,2))),(N'E2',CAST(20 AS decimal(12,2)))) s(EventId,Amount)\nWHERE NOT EXISTS(SELECT 1 FROM #LNReplayTarget t WHERE t.EventId=s.EventId);\nSELECT @@ROWCOUNT AS InsertedNow;\nSELECT COUNT(*) AS Events,SUM(Amount) AS Total FROM #LNReplayTarget;\n--First run2, then0; target always2/30. Single-session demo only."
+            "example": "IF OBJECT_ID('tempdb..#LNReplayTarget') IS NULL\n CREATE TABLE #LNReplayTarget(EventId nvarchar(20) NOT NULL PRIMARY KEY,Amount decimal(12,2) NOT NULL);\nINSERT #LNReplayTarget(EventId,Amount)\nSELECT s.EventId,s.Amount FROM (VALUES(N'E1',CAST(10 AS decimal(12,2))),(N'E2',CAST(20 AS decimal(12,2)))) s(EventId,Amount)\nWHERE NOT EXISTS(SELECT 1 FROM #LNReplayTarget t WHERE t.EventId=s.EventId);\nSELECT @@ROWCOUNT AS InsertedNow;\nSELECT COUNT(*) AS Events,SUM(Amount) AS Total FROM #LNReplayTarget;\n--First run 2, then 0; target always 2/30. Single-session demo only."
           },
           {
             "title": "Tradeoffs",
@@ -70852,7 +70852,7 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Calculate the weighted mean for the synthetic plan records and write a three-step investigation that separates workload volume from per-execution regression.",
           "starter": "SELECT /* sum duration*count divided by total count */ FROM (VALUES(5.0,100),(50.0,2)) v(MeanMs,Executions);",
-          "solution": "SELECT SUM(MeanMs*Executions)/SUM(Executions) AS WeightedMeanMs\nFROM (VALUES(CAST(5 AS decimal(12,3)),100),(CAST(50 AS decimal(12,3)),2)) v(MeanMs,Executions);\n--approximately5.882353. Compare same intervals/parameters, row counts and waits before mitigation.",
+          "solution": "SELECT SUM(MeanMs*Executions)/SUM(Executions) AS WeightedMeanMs\nFROM (VALUES(CAST(5 AS decimal(12,3)),100),(CAST(50 AS decimal(12,3)),2)) v(MeanMs,Executions);\n--Approximately 5.882353. Compare same intervals/parameters, row counts and waits before mitigation.",
           "checks": [
             "Approximately 5.882 ms, allowing output-scale rounding.",
             "Investigation identifies query/parameters, interval counts and reads/waits.",
@@ -71320,7 +71320,7 @@ const LEARNING_PATHS = [
               "The two-session schedule shows a simple cycle. It is deliberately written as a reasoning artifact instead of a script that could leave sessions waiting. Draw the dependency edges and propose a consistent access order.",
               "If the operation also sends an email or calls a payment API, database rollback cannot undo that external side effect. Use a durable outbox or another explicit delivery/idempotency contract; a generic retry loop around all application code can duplicate effects."
             ],
-            "example": "--Reasoning exercise, NOT executable SQL and not an induced deadlock.\nSession A: BEGIN; lock order101; request order102.\nSession B: BEGIN; lock order102; request order101.\nA waits for B; B waits for A -> cycle.\nCandidate change: both sessions access101 then102 in a short transaction.\nStill test actual plans/lock resources: consistent logical ordering reduces risk,\nbut does not prove all deadlocks impossible."
+            "example": "--Reasoning exercise, NOT executable SQL and not an induced deadlock.\nSession A: BEGIN; lock order 101; request order 102.\nSession B: BEGIN; lock order 102; request order 101.\nA waits for B; B waits for A -> cycle.\nCandidate change: both sessions access 101 then 102 in a short transaction.\nStill test actual plans/lock resources: consistent logical ordering reduces risk,\nbut does not prove all deadlocks impossible."
           },
           {
             "title": "Tradeoffs",
@@ -71505,7 +71505,7 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Modify the example to reject a requested sort column of CustomerName. Explain why removing the allowlist and keeping QUOTENAME would weaken the contract.",
           "starter": "DECLARE @RequestedSort sysname=N'CustomerName';\n--Apply the same validation before building any statement.",
-          "solution": "DECLARE @RequestedSort sysname=N'CustomerName';\nIF @RequestedSort NOT IN(N'Amount',N'OrderId') OR @RequestedSort IS NULL\n THROW 51200,'Unsupported sort column.',1;\n--Expected51200. Quoting avoids identifier syntax injection; it does not authorize arbitrary columns.",
+          "solution": "DECLARE @RequestedSort sysname=N'CustomerName';\nIF @RequestedSort NOT IN(N'Amount',N'OrderId') OR @RequestedSort IS NULL\n THROW 51200,'Unsupported sort column.',1;\n--Expected error 51200. Quoting avoids identifier syntax injection; it does not authorize arbitrary columns.",
           "checks": [
             "Expected error 51200 before executing dynamic SQL.",
             "Distinguish value parameterization, identifier quoting and permission checks."
@@ -71702,7 +71702,7 @@ const LEARNING_PATHS = [
               "First pass: accepted 3, duplicate 1, orphan 1, invalid 1. The ledger receives E001=100, E002=70 and E003=45, totalling 215. Replay inserts zero and retains the same total. The report preserves all five orders; net outstanding is 175.",
               "Add a contradictory E002=75 as a separate raw row only in a disposable copy/session. Both E002 observations are classified as conflict, not resolved by picking the largest amount. If the original 70 was already loaded, quarantine does not retract it automatically: an authorized correction/reversal policy must reconcile the ledger and new evidence."
             ],
-            "example": "--In the same SSMS session:\n--1 Run setup.sql\n--2 Run advanced-lab.sql\n--3 Run advanced-solutions.sql twice\n--Verify first InsertedNow=3;second=0;ledger3/215;report5 rows/net175.\n--Read the downloadable solution for full classification and transaction SQL."
+            "example": "--In the same SSMS session:\n--1 Run setup.sql\n--2 Run advanced-lab.sql\n--3 Run advanced-solutions.sql twice\n--Verify: first run InsertedNow=3; second run 0; ledger 3/215; report 5 rows, net 175.\n--Read the downloadable solution for full classification and transaction SQL."
           },
           {
             "title": "Tradeoffs",
@@ -71744,7 +71744,7 @@ const LEARNING_PATHS = [
         "exercise": {
           "prompt": "Implement the classification and loader from the starter fixture before viewing advanced-solutions.sql. Provide two runs and a conflict-case explanation, plus a production-readiness gap list.",
           "starter": "--Preserve raw rows; parse safely; group by EventId for conflicts; rank exact copies;\n--classify; check existing ledger payloads; load unseen accepted keys atomically;\n--reconcile all orders; prove replay inserts0.",
-          "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN EXISTS (\n  SELECT 1 FROM #LNRawEvents other WHERE other.EventId=t.EventId\n  AND (other.OrderId<>t.OrderId\n   OR DATALENGTH(other.AmountText)<>DATALENGTH(t.AmountText)\n   OR CONVERT(varbinary(60),other.AmountText)<>CONVERT(varbinary(60),t.AmountText))\n ) THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,ParsedAmount AS NormalizedAmount,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n",
+          "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN EXISTS (\n  SELECT 1 FROM #LNRawEvents other WHERE other.EventId=t.EventId\n  AND (other.OrderId<>t.OrderId\n   OR DATALENGTH(other.AmountText)<>DATALENGTH(t.AmountText)\n   OR CONVERT(varbinary(60),other.AmountText)<>CONVERT(varbinary(60),t.AmountText))\n ) THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,ParsedAmount AS NormalizedAmount,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass; 0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows: 101 paid 0; 102 missing 50; 103 underpaid 10; 104 missing 120; 105 overpaid -5.\n--Due 390; paid 215; net outstanding 175. Raw row counts 6 = accepted 3 + duplicate 1 + invalid 1 + orphan 1.\n",
           "checks": [
             "All six raw rows are accounted for: three accepted, one duplicate, one invalid and one orphan.",
             "The first run inserts three rows. Repeating it inserts none, and the ledger still contains three rows totalling 215.",
@@ -71925,15 +71925,15 @@ const LEARNING_PATHS = [
           "brief": "Use the original setup.sql dataset to produce a customer/order report and a separate orphan-payment result.",
           "requirements": [
             "Preserve all five orders and report Dia as a customer with no order.",
-            "Aggregate payment rows before joining; classify missing,paid,underpaid and overpaid.",
+            "Aggregate payment rows before joining; classify missing, paid, underpaid and overpaid.",
             "Reconcile incoming payments and known-order totals; include deterministic ordering."
           ],
           "rubric": [
-            "Correctness:five order rows;matched paid 265;orphan 20;net outstanding 125.",
-            "Reasoning:explain why direct payment joins can duplicate order values.",
-            "Evidence:show queries, outputs and at least one deliberately wrong query corrected."
+            "Correctness: five order rows; matched paid 265; orphan 20; net outstanding 125.",
+            "Reasoning: explain why direct payment joins can duplicate order values.",
+            "Evidence: show queries, outputs and at least one deliberately wrong query corrected."
           ],
-          "solution": ";WITH Paid AS (\n SELECT OrderId,COUNT(*) AS PaymentCount,SUM(Amount) AS PaidAmount\n FROM #LNPayments GROUP BY OrderId\n)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing'\n      WHEN p.PaidAmount=o.Amount THEN 'paid'\n      WHEN p.PaidAmount<o.Amount THEN 'underpaid'\n      ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId\nORDER BY o.OrderId;\nSELECT p.PaymentId,p.OrderId,p.Amount FROM #LNPayments p\nWHERE NOT EXISTS (SELECT 1 FROM #LNOrders o WHERE o.OrderId=p.OrderId)\nORDER BY p.PaymentId;\n--Customer coverage: select all customers and use NOT EXISTS to identify Dia.\n--Accepted evidence:due390=paid265+net125;payments285=matched265+orphan20."
+          "solution": ";WITH Paid AS (\n SELECT OrderId,COUNT(*) AS PaymentCount,SUM(Amount) AS PaidAmount\n FROM #LNPayments GROUP BY OrderId\n)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing'\n      WHEN p.PaidAmount=o.Amount THEN 'paid'\n      WHEN p.PaidAmount<o.Amount THEN 'underpaid'\n      ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId\nORDER BY o.OrderId;\nSELECT p.PaymentId,p.OrderId,p.Amount FROM #LNPayments p\nWHERE NOT EXISTS (SELECT 1 FROM #LNOrders o WHERE o.OrderId=p.OrderId)\nORDER BY p.PaymentId;\n--Customer coverage: select all customers and use NOT EXISTS to identify Dia.\n--Accepted evidence: due 390 = paid 265 + net 125; payments 285 = matched 265 + orphan 20."
         }
       },
       {
@@ -71955,12 +71955,12 @@ const LEARNING_PATHS = [
             "Produce a latest-order-per-customer query preserving Dia and an index proposal for its access pattern."
           ],
           "rubric": [
-            "Data integrity:two target events/30 after both identical passes;E1=11 is reported as conflict.",
-            "Error behavior:unknown order failure is visible and leaves no open owned transaction.",
-            "Design quality:does not claim NOT EXISTS alone prevents concurrent races.",
-            "Evidence:documents expected results separately from results actually executed."
+            "Data integrity: two target events totalling 30 after both identical passes; E1=11 is reported as a conflict.",
+            "Error behavior: unknown order failure is visible and leaves no open owned transaction.",
+            "Design quality: does not claim NOT EXISTS alone prevents concurrent races.",
+            "Evidence: documents expected results separately from results actually executed."
           ],
-          "solution": "IF OBJECT_ID('tempdb..#LNReplayTarget') IS NULL\n CREATE TABLE #LNReplayTarget(EventId nvarchar(20) NOT NULL PRIMARY KEY,Amount decimal(12,2) NOT NULL);\nINSERT #LNReplayTarget(EventId,Amount)\nSELECT s.EventId,s.Amount FROM (VALUES(N'E1',CAST(10 AS decimal(12,2))),(N'E2',CAST(20 AS decimal(12,2)))) s(EventId,Amount)\nWHERE NOT EXISTS(SELECT 1 FROM #LNReplayTarget t WHERE t.EventId=s.EventId);\nSELECT @@ROWCOUNT AS InsertedNow;\nSELECT COUNT(*) AS Events,SUM(Amount) AS Total FROM #LNReplayTarget;\n--First run2, then0; target always2/30. Single-session demo only.\n\nSELECT s.EventId,t.Amount AS StoredAmount,s.Amount AS IncomingAmount\nFROM (VALUES(N'E1',CAST(11 AS decimal(12,2)))) s(EventId,Amount)\nJOIN #LNReplayTarget t ON t.EventId=s.EventId WHERE t.Amount<>s.Amount;\n--E1,10.00,11.00\n\nSELECT c.CustomerId, recent.OrderId, recent.Amount\nFROM #LNCustomers c\nOUTER APPLY (\n SELECT TOP(1) o.OrderId,o.Amount FROM #LNOrders o\n WHERE o.CustomerId=c.CustomerId ORDER BY o.OrderDate DESC,o.OrderId DESC\n) recent ORDER BY c.CustomerId;\n--1/102/50,2/104/120,3/105/40,4/NULL/NULL\n--Contract:source/event unique key;immutable accepted payload;governed revision for changes.\n--Procedure:own transaction or documented caller participation,never an accidental mixture."
+          "solution": "IF OBJECT_ID('tempdb..#LNReplayTarget') IS NULL\n CREATE TABLE #LNReplayTarget(EventId nvarchar(20) NOT NULL PRIMARY KEY,Amount decimal(12,2) NOT NULL);\nINSERT #LNReplayTarget(EventId,Amount)\nSELECT s.EventId,s.Amount FROM (VALUES(N'E1',CAST(10 AS decimal(12,2))),(N'E2',CAST(20 AS decimal(12,2)))) s(EventId,Amount)\nWHERE NOT EXISTS(SELECT 1 FROM #LNReplayTarget t WHERE t.EventId=s.EventId);\nSELECT @@ROWCOUNT AS InsertedNow;\nSELECT COUNT(*) AS Events,SUM(Amount) AS Total FROM #LNReplayTarget;\n--First run 2, then 0; target always 2/30. Single-session demo only.\n\nSELECT s.EventId,t.Amount AS StoredAmount,s.Amount AS IncomingAmount\nFROM (VALUES(N'E1',CAST(11 AS decimal(12,2)))) s(EventId,Amount)\nJOIN #LNReplayTarget t ON t.EventId=s.EventId WHERE t.Amount<>s.Amount;\n--E1,10.00,11.00\n\nSELECT c.CustomerId, recent.OrderId, recent.Amount\nFROM #LNCustomers c\nOUTER APPLY (\n SELECT TOP(1) o.OrderId,o.Amount FROM #LNOrders o\n WHERE o.CustomerId=c.CustomerId ORDER BY o.OrderDate DESC,o.OrderId DESC\n) recent ORDER BY c.CustomerId;\n--1/102/50,2/104/120,3/105/40,4/NULL/NULL\n--Contract: source/event unique key; immutable accepted payload; governed revision for changes.\n--Procedure: own transaction or documented caller participation, never an accidental mixture."
         }
       },
       {
@@ -71971,26 +71971,26 @@ const LEARNING_PATHS = [
           "Account for every raw row, demonstrate replay invariance and explain post-load conflict handling.",
           "Analyze a deadlock schedule and design bounded retries with unknown-outcome reconciliation.",
           "Explain Query Store evidence limitations and a weighted performance comparison.",
-          "Present least-privilege and migration plans with validation,rollback/recovery and concurrency test gaps."
+          "Present least-privilege and migration plans with validation, rollback/recovery and concurrency test gaps."
         ],
         "project": {
           "title": "Auditable ingestion service review",
           "brief": "Treat the advanced fixture as an incoming payment service. Submit working SQL plus an operational design review; do not label unexecuted engine tests as passed.",
           "requirements": [
-            "Load and reconcile advanced fixture;produce disposition and ledger evidence for initial run and replay.",
-            "Demonstrate malformed input,unknown order,identical replay and conflicting event scenarios.",
-            "Describe database transaction boundaries,unique constraints and cross-session tests required for concurrent loaders.",
-            "Specify security role boundaries,backward-compatible migration steps and incident diagnostics.",
+            "Load and reconcile advanced fixture; produce disposition and ledger evidence for initial run and replay.",
+            "Demonstrate malformed input, unknown order, identical replay and conflicting event scenarios.",
+            "Describe database transaction boundaries, unique constraints and cross-session tests required for concurrent loaders.",
+            "Specify security role boundaries, backward-compatible migration steps and incident diagnostics.",
             "Define no more than three safe deadlock retries and a separate unknown-commit-outcome recovery path.",
             "Optional: use schema-permissions-lab.md in a disposable training database to demonstrate a permanent FK, an expand/backfill migration and read-only role denial; label this separately from required temporary-table evidence."
           ],
           "rubric": [
-            "Correctness:raw 6=accepted 3+duplicate 1+invalid 1+orphan 1;ledger 215;net outstanding 175.",
-            "Replay:zero new rows on the second identical input;no silent overwrite on conflict.",
-            "Operations:bounded retries,explicit side-effect delivery and recoverable deployment.",
+            "Correctness: raw 6 = accepted 3 + duplicate 1 + invalid 1 + orphan 1; ledger 215; net outstanding 175.",
+            "Replay: zero new rows on the second identical input; no silent overwrite on conflict.",
+            "Operations: bounded retries, explicit side-effect delivery and recoverable deployment.",
             "Distinguish source review and arithmetic checks from tests run against SQL Server for concurrency and durability."
           ],
-          "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN EXISTS (\n  SELECT 1 FROM #LNRawEvents other WHERE other.EventId=t.EventId\n  AND (other.OrderId<>t.OrderId\n   OR DATALENGTH(other.AmountText)<>DATALENGTH(t.AmountText)\n   OR CONVERT(varbinary(60),other.AmountText)<>CONVERT(varbinary(60),t.AmountText))\n ) THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass;0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows:101 paid0;102 missing50;103 underpaid10;104 missing120;105 overpaid-5.\n--Due390;paid215;net outstanding175. Raw row counts6=accepted3+duplicate1+invalid1+orphan1.\n\n--Design review:permanent unique source/event keys;durable batch/disposition storage;\n--source-format rules;approved concurrent import strategy;client idempotency key;\n--least-privilege execution;expand/backfill/validate/contract migrations;\n--measured Query Store/plan evidence and supervised cross-session failure tests."
+          "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN EXISTS (\n  SELECT 1 FROM #LNRawEvents other WHERE other.EventId=t.EventId\n  AND (other.OrderId<>t.OrderId\n   OR DATALENGTH(other.AmountText)<>DATALENGTH(t.AmountText)\n   OR CONVERT(varbinary(60),other.AmountText)<>CONVERT(varbinary(60),t.AmountText))\n ) THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass; 0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows: 101 paid 0; 102 missing 50; 103 underpaid 10; 104 missing 120; 105 overpaid -5.\n--Due 390; paid 215; net outstanding 175. Raw row counts 6 = accepted 3 + duplicate 1 + invalid 1 + orphan 1.\n\n--Design review: permanent unique source/event keys; durable batch/disposition storage;\n--source-format rules; approved concurrent import strategy; client idempotency key;\n--least-privilege execution; expand/backfill/validate/contract migrations;\n--measured Query Store/plan evidence and supervised cross-session failure tests."
         }
       }
     ],
@@ -72116,8 +72116,8 @@ const LEARNING_PATHS = [
             "Read README.md before running the references.",
             "Run setup.sql in one SSMS query window. Attempt the report before opening solutions.sql. Expect five orders, due 390, matched payments 265, orphan 20 and net outstanding 125.",
             "Use the original setup.sql dataset to produce a customer/order report and a separate orphan-payment result.",
-            "Build the project described in the reader: Preserve all five orders and report Dia as a customer with no order. Aggregate payment rows before joining; classify missing,paid,underpaid and overpaid. Reconcile incoming payments and known-order totals; include deterministic ordering.",
-            "Check your result: Correctness:five order rows;matched paid 265;orphan 20;net outstanding 125. Reasoning:explain why direct payment joins can duplicate order values. Evidence:show queries, outputs and at least one deliberately wrong query corrected."
+            "Build the project described in the reader: Preserve all five orders and report Dia as a customer with no order. Aggregate payment rows before joining; classify missing, paid, underpaid and overpaid. Reconcile incoming payments and known-order totals; include deterministic ordering.",
+            "Check your result: Correctness: five order rows; matched paid 265; orphan 20; net outstanding 125. Reasoning: explain why direct payment joins can duplicate order values. Evidence: show queries, outputs and at least one deliberately wrong query corrected."
           ],
           "commands": [],
           "prerequisites": [
@@ -72148,7 +72148,7 @@ const LEARNING_PATHS = [
             "Run setup.sql in one SSMS window. Build the replay and conflict queries using the lesson examples before comparing the stage solution. Expect two inserts then zero, with two events totaling 30.",
             "Deliver a small import prototype and a written contract that another developer could implement without inventing key or error behavior.",
             "Build the project described in the reader: Define business keys, allowed amounts, currency, timestamp and correction semantics. Use typed parameters and an explicit transaction-ownership policy. Run the replay example twice and detect a changed E1 payload. Produce a latest-order-per-customer query preserving Dia and an index proposal for its access pattern.",
-            "Check your result: Data integrity:two target events/30 after both identical passes;E1=11 is reported as conflict. Error behavior:unknown order failure is visible and leaves no open owned transaction. Design quality:does not claim NOT EXISTS alone prevents concurrent races. Evidence:documents expected results separately from results actually executed."
+            "Check your result: Data integrity: two target events totalling 30 after both identical passes; E1=11 is reported as a conflict. Error behavior: unknown order failure is visible and leaves no open owned transaction. Design quality: does not claim NOT EXISTS alone prevents concurrent races. Evidence: documents expected results separately from results actually executed."
           ],
           "commands": [],
           "prerequisites": [
@@ -72188,8 +72188,8 @@ const LEARNING_PATHS = [
             "Read README.md before running the references.",
             "Run setup.sql then advanced-lab.sql in the same SSMS window. Build and inspect classification first, then the loader. Compare advanced-solutions.sql after your attempt and run the loader twice.",
             "Treat the advanced fixture as an incoming payment service. Submit working SQL plus an operational design review; do not label unexecuted engine tests as passed.",
-            "Build the project described in the reader: Load and reconcile advanced fixture;produce disposition and ledger evidence for initial run and replay. Demonstrate malformed input,unknown order,identical replay and conflicting event scenarios. Describe database transaction boundaries,unique constraints and cross-session tests required for concurrent loaders. Specify security role boundaries,backward-compatible migration steps and incident diagnostics. Define no more than three safe deadlock retries and a separate unknown-commit-outcome recovery path. Optional: use schema-permissions-lab.md in a disposable training database to demonstrate a permanent FK, an expand/backfill migration and read-only role denial; label this separately from required temporary-table evidence.",
-            "Check your result: Correctness:raw 6=accepted 3+duplicate 1+invalid 1+orphan 1;ledger 215;net outstanding 175. Replay:zero new rows on the second identical input;no silent overwrite on conflict. Operations:bounded retries,explicit side-effect delivery and recoverable deployment. Distinguish source review and arithmetic checks from tests run against SQL Server for concurrency and durability.",
+            "Build the project described in the reader: Load and reconcile advanced fixture; produce disposition and ledger evidence for initial run and replay. Demonstrate malformed input, unknown order, identical replay and conflicting event scenarios. Describe database transaction boundaries, unique constraints and cross-session tests required for concurrent loaders. Specify security role boundaries, backward-compatible migration steps and incident diagnostics. Define no more than three safe deadlock retries and a separate unknown-commit-outcome recovery path. Optional: use schema-permissions-lab.md in a disposable training database to demonstrate a permanent FK, an expand/backfill migration and read-only role denial; label this separately from required temporary-table evidence.",
+            "Check your result: Correctness: raw 6 = accepted 3 + duplicate 1 + invalid 1 + orphan 1; ledger 215; net outstanding 175. Replay: zero new rows on the second identical input; no silent overwrite on conflict. Operations: bounded retries, explicit side-effect delivery and recoverable deployment. Distinguish source review and arithmetic checks from tests run against SQL Server for concurrency and durability.",
             "Read concurrency-lab.md; explicitly opt in only on an authorized training instance, follow two-session isolation/lost-update/deadlock schedules, capture Query Store evidence, and perform guarded cleanup. Run rounding-lab.sql to show accepted normalization separately from rejection."
           ],
           "commands": [],

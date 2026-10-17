@@ -16,19 +16,19 @@ SELECT CustomerName FROM #LNCustomers WHERE Email IS NOT NULL ORDER BY CustomerI
 GO
 
 -- 3. Filter, calculate and sort deliberately
--- Expected: 104 =120.00 followed by101 =100.00. | Ordering makes TOP meaningful and deterministic for tied amounts.
+-- Expected: 104 =120.00 followed by 101 =100.00. | Ordering makes TOP meaningful and deterministic for tied amounts.
 SELECT TOP (2) OrderId, Amount FROM #LNOrders ORDER BY Amount DESC, OrderId;
 GO
 
 -- 4. Join without losing or multiplying records
--- Expected: Only4/Dia. | A LEFT JOIN with WHERE o.OrderId IS NULL is also correct.
+-- Expected: Only 4/Dia. | A LEFT JOIN with WHERE o.OrderId IS NULL is also correct.
 SELECT c.CustomerId, c.CustomerName FROM #LNCustomers c
 WHERE NOT EXISTS (SELECT 1 FROM #LNOrders o WHERE o.CustomerId=c.CustomerId)
 ORDER BY c.CustomerId;
 GO
 
 -- 5. Aggregate at a stated grain
--- Expected: Counts1:2,2:2,3:1,4:0. | Counts sum to5; customer population stays4.
+-- Expected: Counts 1:2, 2:2, 3:1, 4:0. | Counts sum to 5; customer population stays 4.
 SELECT c.CustomerId, COUNT(o.OrderId) AS Orders
 FROM #LNCustomers c LEFT JOIN #LNOrders o ON o.CustomerId=c.CustomerId
 GROUP BY c.CustomerId ORDER BY c.CustomerId;
@@ -48,7 +48,7 @@ SELECT CustomerId,OrderId FROM Ranked WHERE rn=1 ORDER BY CustomerId;
 GO
 
 -- 8. Use parameters and stored procedures
--- Expected: 101/100.00 and104/120.00. | @Minimum is declared and supplied separately from statement text.
+-- Expected: 101/100.00 and 104/120.00. | @Minimum is declared and supplied separately from statement text.
 EXEC sys.sp_executesql N'SELECT OrderId,Amount FROM #LNOrders WHERE Amount>=@Minimum ORDER BY OrderId;', N'@Minimum decimal(12,2)', @Minimum=90;
 GO
 
@@ -75,7 +75,7 @@ SELECT OrderId FROM #LNOrders WHERE OrderDate>='20260101' AND OrderDate<'2027010
 GO
 
 -- 12. Build an order-to-payment reconciliation
--- Expected: Exactly5 order rows and1 orphan row. | Due390, matched paid265, net outstanding125. | Status counts:paid2,underpaid1,missing1,overpaid1. | All payment amounts285 = matched265 + orphan20. | A duplicate-event policy is described without silently using DISTINCT on monetary values.
+-- Expected: Exactly 5 order rows and 1 orphan row. | Due 390, matched paid 265, net outstanding 125. | Status counts: paid 2, underpaid 1, missing 1, overpaid 1. | All payment amounts 285 = matched 265 + orphan 20. | A duplicate-event policy is described without silently using DISTINCT on monetary values.
 ;WITH Paid AS (
  SELECT OrderId,COUNT(*) AS PaymentCount,SUM(Amount) AS PaidAmount
  FROM #LNPayments GROUP BY OrderId

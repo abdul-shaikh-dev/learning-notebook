@@ -140,7 +140,7 @@
           "paragraphs": [
             "Every local replica has its own scratch SQLite file. Use /version and health endpoints for replicated exercises; notes are not a shared durable service. A real stateful API needs an external data owner or a carefully designed single-writer storage pattern."
           ],
-          "example": "Desired:2 stateless web replicas\nObserved:1 replica running\nController attempts replacement; scheduler chooses a node; kubelet starts containers."
+          "example": "Desired: 2 stateless web replicas\nObserved: 1 replica running\nController attempts replacement; scheduler chooses a node; kubelet starts containers."
         }
       ],
       "exercise": {
@@ -653,7 +653,7 @@
           "paragraphs": [
             "Scheduling considers requests and additional placement conditions, not only current CPU percentage. One hundred millicores is 0.1 core. For CPU utilization HPA, missing requests can prevent a useful percentage calculation; arbitrary low requests can distort scaling signals."
           ],
-          "example": "Node free requested capacity:200mCPU\nPod request:300m → may remain Pending\nRunning Pod: CPU limit500m → throttling possible\nMemory beyond limit128Mi → OOM risk"
+          "example": "Node free requested capacity: 200m CPU\nPod request: 300m → may remain Pending\nRunning Pod: CPU limit 500m → throttling possible\nMemory beyond limit 128Mi → OOM risk"
         }
       ],
       "exercise": {
@@ -666,7 +666,7 @@
         "solutionFormat": "prose"
       },
       "quiz": {
-        "question": "What is100m CPU?",
+        "question": "What is 100m CPU?",
         "options": [
           "100 full CPU cores",
           "0.1 CPU core",
@@ -719,7 +719,7 @@
         "options": [
           "Yes, including schema rollback",
           "No; it reports progress failure for a release controller/operator to handle",
-          "It changes maxUnavailable to100%"
+          "It changes maxUnavailable to 100%"
         ],
         "correct": 1,
         "explanation": "progressDeadlineSeconds makes stalled progress visible through Deployment status. It does not automatically revert the release; a release controller or operator must decide and perform recovery."
@@ -898,7 +898,7 @@
           "paragraphs": [
             "Admission controls decide whether the Pod specification is allowed; they do not prove the base image has no vulnerabilities or that business authorization works. The baseline has no hostPath, privileged container or external load balancer. Read-only root needs compatible temp/cache/data paths and should be tested with the actual image."
           ],
-          "example": "USER10001 + runAsNonRoot\nallowPrivilegeEscalation:false\ncapabilities dropALL\nreadOnlyRootFilesystem:true\n/tmp is an explicit writable volume"
+          "example": "USER 10001 + runAsNonRoot\nallowPrivilegeEscalation: false\ncapabilities drop ALL\nreadOnlyRootFilesystem: true\n/tmp is an explicit writable volume"
         }
       ],
       "exercise": {
@@ -1045,7 +1045,7 @@
           "paragraphs": [
             "This calculation is simplified; readiness, missing metrics, tolerance and controller behavior matter. More replicas cannot repair a serialized database bottleneck or create shared scratch data. Maintain queue/admission controls and measure actual latency/error improvements before trusting autoscaling as an availability mechanism."
           ],
-          "example": "request100m; observed60m → 60%utilization\n2 Pods averaging90% at60% target → rough desired ceil(2 × 90 / 60)=3\nBounds and stabilization then influence changes."
+          "example": "request 100m; observed 60m → 60% utilization\n2 Pods averaging 90% at 60% target → rough desired ceil(2 × 90 / 60)=3\nBounds and stabilization then influence changes."
         }
       ],
       "exercise": {
@@ -1143,7 +1143,7 @@
           "paragraphs": [
             "Pin a compatible Helm version, review actual generated defaults and compare the rendered workload with the known lab contract. No helm install command is required for offline study. If enabling the chart in the local cluster, preserve explicit context/namespace gates and local image settings; a default chart may select a different public image."
           ],
-          "example": "helm create lab-chart\n# Review generated Service,Deployment,values and remove unneeded defaults.\nhelm lint ./lab-chart\nhelm template release-demo ./lab-chart --namespace notebook-lab > rendered.yaml"
+          "example": "helm create lab-chart\n# Review generated Service, Deployment, values and remove unneeded defaults.\nhelm lint ./lab-chart\nhelm template release-demo ./lab-chart --namespace notebook-lab > rendered.yaml"
         }
       ],
       "exercise": {
@@ -1347,10 +1347,10 @@
         "title": "Object and reconciliation notebook",
         "brief": "Explain and optionally run the dedicated local workload without touching a shared cluster.",
         "requirements": [
-          "Run the8 service and4 offline manifest-contract checks.",
+          "Run the 8 service and 4 offline manifest-contract checks.",
           "Draw API→Deployment→ReplicaSet→Pod and Service→EndpointSlices.",
-          "Compare labels,selectors,ports and config lifecycle.",
-          "If opted in,create the named kind cluster, build/load image, Bootstrap namespace, server dry-run then Apply.",
+          "Compare labels, selectors, ports and config lifecycle.",
+          "If opted in, create the named kind cluster, build/load image, Bootstrap namespace, server dry-run then Apply.",
           "Capture desired/current/available counts and local health/version results."
         ],
         "rubric": [
@@ -1388,7 +1388,7 @@
           "Policy application is not called enforcement evidence.",
           "No production identity/cluster is reused."
         ],
-        "solution": "With 2 replicas, maxSurge 1 and maxUnavailable 0,expect spare capacity for a third candidate. ready 503 / live 200 should remove readiness without this condition triggering liveness restart. RBAC grants read/list/watch Pods/logs only; verify denies separately. Default kind does not prove NetworkPolicy enforcement; mark that check reviewed-only unless the plugin/client evidence exists."
+        "solution": "With 2 replicas, maxSurge 1 and maxUnavailable 0, expect spare capacity for a third candidate. ready 503 / live 200 should remove readiness without this condition triggering liveness restart. RBAC grants read/list/watch Pods/logs only; verify denies separately. Default kind does not prove NetworkPolicy enforcement; mark that check reviewed-only unless the plugin/client evidence exists."
       }
     },
     {
