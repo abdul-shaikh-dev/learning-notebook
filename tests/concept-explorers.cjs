@@ -15,6 +15,7 @@ assert(context.visualFrame(first,'sibling').includes('visual-level is-pair'));
 assert(context.visualFrame(second,'changed',first).includes('is-changed'),'state changes are highlighted');
 const lessonHtml=context.visualExplorerView({id:'deployments',visual:paths.find(p=>p.id==='kubernetes').lessons.find(l=>l.id==='deployments').visual});
 assert(lessonHtml.indexOf('id="visual-frame"')>lessonHtml.indexOf('class="visual-controls"'));
+assert(lessonHtml.indexOf('id="visual-frame"')<lessonHtml.indexOf('class="visual-playback"'),'optional playback follows the picture');
 assert(context.visualFrame(first,'order').indexOf('class="visual-diagram')<context.visualFrame(first,'order').indexOf('class="visual-explanation'),'diagram precedes explanation');
 const decorator=paths.find(p=>p.id==='design-patterns').lessons.find(l=>l.id==='decorator').visual.scenarios[0].steps.find(s=>s.edges.some(e=>e.from==='2'&&e.to==='1'));
 const cycleLayout=context.visualLayout(decorator.nodes,decorator.edges),cycleMarkup=context.visualFrame(decorator,'cycle');
