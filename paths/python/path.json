@@ -691,6 +691,7 @@
       "exercise": {
         "prompt": "Write format_label(topic, minutes) in helpers.py and import it in main.py. Compare your two files with the downloadable helpers.py and main.py, then run python main.py and import helpers from the prompt.",
         "starter": "# helpers.py: define format_label\n# main.py: import and call it",
+        "runLocally": "This exercise uses two files, helpers.py and main.py, so run it locally rather than in the browser.",
         "solution": "See practice/helpers.py and practice/main.py for the runnable two-file reference. The helper has no top-level print; main.py calls it only under __main__. Run python main.py to print functions: 20 min.",
         "checks": [
           "Running main.py prints functions: 20 min.",
@@ -1258,6 +1259,7 @@
       "exercise": {
         "prompt": "Collect two simulated I/O values with asyncio.TaskGroup, retaining task handles so output remains ordered. Run as a script with Python 3.11+.",
         "starter": "import asyncio\n\nasync def read_minutes(value):\n    await asyncio.sleep(0)  # Yield to another task without using a service.\n    return value\n\nasync def collect():\n    async with asyncio.TaskGroup() as group:\n        tasks = []\n        # TODO: for each value in [10, 20], create a task and save its handle.\n        # group.create_task(read_minutes(value)) returns that handle.\n    # TODO: after the group exits, return each task.result() in list order.\n    raise NotImplementedError\n\nvalues = asyncio.run(collect())\nassert values == [10, 20]\nassert sum(values) == 30\nprint(\"async checks passed\")",
+        "runLocally": "asyncio.run needs a browser feature the in-browser Python does not have, so copy this into a file and run it locally.",
         "solution": "import asyncio\nasync def read_minutes(value):\n    await asyncio.sleep(0)\n    return value\nasync def collect():\n    async with asyncio.TaskGroup() as group:\n        tasks = [group.create_task(read_minutes(v)) for v in [10, 20]]\n    return [task.result() for task in tasks]\nvalues = asyncio.run(collect())\nassert values == [10, 20] and sum(values) == 30\nprint(\"async checks passed\")",
         "checks": [
           "Run this as a .py script with Python 3.11+. The result must be [10, 20] with total 30, regardless of completion order.",
