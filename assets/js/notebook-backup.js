@@ -38,11 +38,18 @@ const NotebookBackup = (() => {
     return result;
   }
   // Checkpoint review: the first answer, its streak (0 after a miss, 1-4 correct in a row) and when it was given.
+  // Keys are "<lesson>", "<lesson>/<n>" (n 2-9) for extra lesson questions and "stage/<stage>/<n>" (n 1-9) for stage checks.
+  function checkpointKnown(id, path) {
+    const parts = id.split('/'), lesson = path.lessons.some(l => l.id === parts[0]);
+    if (parts.length === 1) return lesson;
+    if (parts.length === 2) return lesson && /^[2-9]$/.test(parts[1]);
+    return parts.length === 3 && parts[0] === 'stage' && /^[1-9]$/.test(parts[2]) && !!path.stages?.some(s => s.id === parts[1]);
+  }
   function checkpoints(value, path) {
     object(value, 'Checkpoint answers');
-    const allowed = path.lessons.map(l => l.id), result = {};
+    const result = {};
     for (const [id, entry] of Object.entries(value)) {
-      if (!allowed.includes(id)) fail('Checkpoint answers contain an unknown lesson.');
+      if (!checkpointKnown(id, path)) fail('Checkpoint answers contain an unknown question.');
       fields(entry, ['correct','streak','at'], 'Checkpoint answer');
       if (typeof entry.correct !== 'boolean' || !Number.isInteger(entry.streak) || entry.streak < 0 || entry.streak > 4 || entry.correct !== entry.streak > 0) fail('Checkpoint answer streak is invalid.');
       if (!Number.isInteger(entry.at) || entry.at <= 0 || entry.at > Date.now() + 864e5) fail('Checkpoint answer date is invalid.');

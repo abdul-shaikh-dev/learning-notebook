@@ -145,3 +145,9 @@ html[data-theme=dark] .catalog .review-card.is-quiet,html[data-theme=dark] .revi
 .review-schedule{margin-top:36px;padding-top:20px;border-top:1px solid var(--line)}.review-schedule h2{font-size:19px;margin:0 0 8px}.review-schedule ul{list-style:none;margin:0;padding:0}
 .review-schedule li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}.review-schedule li a{background:none;padding:0}.review-schedule li span{color:#526477;font-size:14px}
 html[data-theme=dark] .review-schedule li span{color:var(--night-muted)}
+
+/* Extra lesson questions and stage checks: each question sits apart from the one before, with its own feedback and review note. */
+.quiz-more{margin-top:22px;padding-top:18px;border-top:1px dashed var(--line)}.quiz-more>p:first-child{margin-top:0}
+.quiz-note{margin:6px 0 0;font-size:14px}.quiz-note:empty,.quiz-feedback:empty{display:none}
+.stage-check{margin:28px 0}.stage-check h3{margin:0 0 6px}.stage-check>.muted{margin:0 0 4px;font-size:15px}
+html[data-theme=dark] .quiz-note{color:var(--night-muted)}html[data-theme=dark] .quiz-more{border-top-color:var(--night-line)}

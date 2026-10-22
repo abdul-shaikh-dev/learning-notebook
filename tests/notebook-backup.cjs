@@ -272,6 +272,12 @@ test('checkpoint answers export only when present and merge by most recent answe
   assert.deepEqual(JSON.parse(env.data.get(rk('python'))),{first:{correct:false,streak:0,at:3000},second:{correct:false,streak:0,at:5000}});
   assert(env.api.view().includes('2 checkpoints answered'),'Saved progress counts checkpoint answers');
 });
+test('extra lesson questions and stage checks travel in backups',()=>{
+  const answers={'first/2':{correct:true,streak:1,at:1000},'stage/advanced/3':{correct:false,streak:0,at:2000}},env=make({[rk('python')]:JSON.stringify(answers)});
+  assert.deepEqual(JSON.parse(env.api.create()).progress.paths.python.checkpoints,answers);
+  const other=make();other.api.apply(other.api.plan(progress({paths:{python:{read:[],assessed:[],checkpoints:answers}}})));
+  assert.deepEqual(JSON.parse(other.data.get(rk('python'))),answers);
+});
 test('backups without checkpoint answers leave saved answers untouched',()=>{
   const saved=JSON.stringify({first:{correct:true,streak:1,at:1000}}),env=make({[rk('python')]:saved});
   env.api.apply(env.api.plan(incoming(env)));
@@ -279,7 +285,7 @@ test('backups without checkpoint answers leave saved answers untouched',()=>{
 });
 test('invalid checkpoint answers are rejected before anything is written',()=>{
   const env=make();
-  for(const bad of [{unknown:{correct:true,streak:1,at:1}},{first:{correct:true,streak:0,at:1}},{first:{correct:false,streak:2,at:1}},{first:{correct:true,streak:5,at:1}},{first:{correct:true,streak:1,at:Date.now()+3*864e5}},{first:{correct:true,streak:1,at:1,extra:1}}])
+  for(const bad of [{unknown:{correct:true,streak:1,at:1}},{'first/1':{correct:true,streak:1,at:1}},{'first/10':{correct:true,streak:1,at:1}},{'stage/missing/1':{correct:true,streak:1,at:1}},{'stage/foundation/0':{correct:true,streak:1,at:1}},{'stage/foundation':{correct:true,streak:1,at:1}},{first:{correct:true,streak:0,at:1}},{first:{correct:false,streak:2,at:1}},{first:{correct:true,streak:5,at:1}},{first:{correct:true,streak:1,at:Date.now()+3*864e5}},{first:{correct:true,streak:1,at:1,extra:1}}])
     assert.throws(()=>env.api.parse(envelope(progress({paths:{python:{read:[],assessed:[],checkpoints:bad}}}))),/Checkpoint/);
   assert.equal(env.writes.length,0);
 });

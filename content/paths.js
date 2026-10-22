@@ -59489,6 +59489,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does print(\"Hello\") show in the terminal?",
+            "options": [
+              "Hello",
+              "\"Hello\"",
+              "print(\"Hello\")"
+            ],
+            "correct": 0,
+            "explanation": "The quotation marks delimit the string in the source; they are not part of the output."
+          }
         ]
       },
       {
@@ -59645,7 +59657,19 @@ const LEARNING_PATHS = [
               "explanation": "The f-string produces Total: 100 minutes. Formatting does not turn the stored integer into a string."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What do 7 // 2 and 7 % 2 produce?",
+            "options": [
+              "3.5 and 1",
+              "3 and 1",
+              "3 and 0.5"
+            ],
+            "correct": 1,
+            "explanation": "// is floor division, giving 3; % gives the remainder, 1."
+          }
+        ]
       },
       {
         "id": "text-and-input",
@@ -59701,6 +59725,18 @@ const LEARNING_PATHS = [
             "section": "Strings",
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "name = \"  Ada \" is followed by a line containing only name.strip(). What is len(name) afterwards?",
+            "options": [
+              "3",
+              "4",
+              "6"
+            ],
+            "correct": 2,
+            "explanation": "Strings do not change in place. strip returns a new string, and this code never assigns it, so name still has 6 characters."
           }
         ]
       },
@@ -59863,7 +59899,19 @@ const LEARNING_PATHS = [
               "explanation": "A score below 50 reaches else and selects retry."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "With score = 50, which branch runs in: if score > 50 … elif score >= 50 … else …?",
+            "options": [
+              "The if branch",
+              "The elif branch",
+              "The else branch"
+            ],
+            "correct": 1,
+            "explanation": "50 > 50 is false and 50 >= 50 is true, so the elif branch is the first match. Boundary values show the difference between > and >=."
+          }
+        ]
       },
       {
         "id": "collections",
@@ -59919,6 +59967,18 @@ const LEARNING_PATHS = [
             "section": "Lists, sets and dictionaries",
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "first = [1, 2]; second = first; second.append(3). What is first now?",
+            "options": [
+              "[1, 2]",
+              "[1, 2, 3]",
+              "[3]"
+            ],
+            "correct": 1,
+            "explanation": "second = first gives the same list a second name, so appending through either name changes that one list. Use first.copy() for an independent list."
           }
         ]
       },
@@ -59991,6 +60051,18 @@ const LEARNING_PATHS = [
             "section": "for and range",
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In for index, label in enumerate([\"a\", \"b\"]), what is index when label is \"b\"?",
+            "options": [
+              "0",
+              "1",
+              "2"
+            ],
+            "correct": 1,
+            "explanation": "enumerate counts from zero, so \"a\" pairs with 0 and \"b\" with 1."
           }
         ]
       },
@@ -60164,7 +60236,19 @@ const LEARNING_PATHS = [
               "explanation": "The outer print displays 75. The next example, study_minutes(2, length=15), is a separate call with result 30."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "def add(item, items=[]): items.append(item); return items. After add(1), what does add(2) return?",
+            "options": [
+              "[2]",
+              "[1, 2]",
+              "None"
+            ],
+            "correct": 1,
+            "explanation": "The default list is created once, when the function is defined, so both calls append to the same list. Use None as the default and create a list inside the function."
+          }
+        ]
       },
       {
         "id": "errors",
@@ -60227,6 +60311,18 @@ const LEARNING_PATHS = [
             "section": "Exceptions and handling",
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Why avoid a bare except: around a calculation?",
+            "options": [
+              "It can hide programming errors and interrupt signals",
+              "Python refuses to run a bare except",
+              "It makes every call noticeably slower"
+            ],
+            "correct": 0,
+            "explanation": "A bare except catches everything, including mistakes you need to see and KeyboardInterrupt. Catch the narrow exception you know how to handle."
           }
         ]
       },
@@ -60391,7 +60487,19 @@ const LEARNING_PATHS = [
               "explanation": "json.loads decodes the recovered text; the example then reads its fields."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does json.loads(json.dumps({1: \"a\"})) return?",
+            "options": [
+              "{1: 'a'}",
+              "{'1': 'a'}",
+              "[1, 'a']"
+            ],
+            "correct": 1,
+            "explanation": "JSON object keys are always strings, so the integer key 1 comes back as the string '1'."
+          }
+        ]
       },
       {
         "id": "modules-and-environments",
@@ -60449,6 +60557,18 @@ const LEARNING_PATHS = [
             "section": "Creating virtual environments",
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does if __name__ == \"__main__\": stop from happening?",
+            "options": [
+              "Other modules importing the file",
+              "Errors inside the module's functions",
+              "Script entry code running when the file is imported"
+            ],
+            "correct": 2,
+            "explanation": "The guarded block runs only when the file is executed directly, so importing its functions does not also run the program."
           }
         ]
       },
@@ -60515,6 +60635,18 @@ const LEARNING_PATHS = [
             "section": "Test cases and assertions",
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A test calls the parser and prints the result. What is it missing?",
+            "options": [
+              "An assertion that checks the expected value",
+              "A live request to the real service",
+              "A longer network timeout"
+            ],
+            "correct": 0,
+            "explanation": "Printing does not check anything; the test passes whatever the parser returns. An assertion states the expected behavior."
           }
         ]
       },
@@ -60583,6 +60715,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "For the first version of the study log, which data structure is enough?",
+            "options": [
+              "A class hierarchy for each record type",
+              "A list of dictionaries",
+              "A database server"
+            ],
+            "correct": 1,
+            "explanation": "A list of dictionaries holds topic and minutes records. A class is optional, and a database is beyond this one-process version."
+          }
         ]
       },
       {
@@ -60640,6 +60784,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Why write items: list = field(default_factory=list) in a dataclass?",
+            "options": [
+              "Each instance gets its own new list",
+              "It checks that the list holds only integers",
+              "It freezes the list after construction"
+            ],
+            "correct": 0,
+            "explanation": "default_factory calls list() for every new instance. A plain = [] default is rejected because one list would be shared."
+          }
         ]
       },
       {
@@ -60696,6 +60852,18 @@ const LEARNING_PATHS = [
             "section": "Protocols",
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A class has every method a Protocol requires but does not inherit from it. Does a static checker accept it where the Protocol is expected?",
+            "options": [
+              "No; it must subclass the Protocol",
+              "Yes; protocols are matched by structure",
+              "Only when the Protocol is runtime_checkable"
+            ],
+            "correct": 1,
+            "explanation": "Protocols describe required operations, so any object that provides them fits. runtime_checkable only affects isinstance checks."
           }
         ]
       },
@@ -60832,7 +61000,19 @@ const LEARNING_PATHS = [
               "explanation": "list on that same stream has no remaining values."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "When does the body of a generator function start running?",
+            "options": [
+              "When the function is called",
+              "When the module is imported",
+              "When iteration asks for the first value"
+            ],
+            "correct": 2,
+            "explanation": "Calling a generator function only creates the generator object. Its body runs when next() or a for loop asks for a value, so its errors and effects can be delayed."
+          }
+        ]
       },
       {
         "id": "context-managers",
@@ -60988,7 +61168,19 @@ const LEARNING_PATHS = [
               "explanation": "The outer except observes ValueError and records caught."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "How many times should a @contextmanager function yield?",
+            "options": [
+              "Exactly once",
+              "Once per exception it handles",
+              "Twice: once for setup and once for cleanup"
+            ],
+            "correct": 0,
+            "explanation": "Code before the single yield acquires the resource; code after it, in finally, cleans up."
+          }
+        ]
       },
       {
         "id": "packaging-and-cli",
@@ -61156,7 +61348,19 @@ const LEARNING_PATHS = [
               "explanation": "Assert installed module location, CLI/help/errors and packaged-resource access."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "argparse reads --minutes with type=int. Which value is accepted by argparse but still needs a domain check?",
+            "options": [
+              "12",
+              "-5",
+              "abc"
+            ],
+            "correct": 1,
+            "explanation": "int(\"-5\") succeeds, so argparse accepts it; the rule that minutes are nonnegative is yours to check. argparse already rejects abc."
+          }
+        ]
       },
       {
         "id": "logging-and-test-design",
@@ -61219,6 +61423,18 @@ const LEARNING_PATHS = [
             "section": "Logging HOWTO",
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Where should unittest.mock.patch replace a dependency?",
+            "options": [
+              "Where the code under test looks it up",
+              "In the module that originally defined it, always",
+              "Globally, for every test module"
+            ],
+            "correct": 0,
+            "explanation": "patch replaces a name in one namespace. If the consumer imported the function into its own module, patch it there, and only for the test that needs the failure."
           }
         ]
       },
@@ -61291,6 +61507,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In what order does ThreadPoolExecutor.map return results?",
+            "options": [
+              "The order workers finish",
+              "The order of the inputs",
+              "No guaranteed order"
+            ],
+            "correct": 1,
+            "explanation": "map yields results in input order, even when later inputs finish first."
+          }
         ]
       },
       {
@@ -61347,6 +61575,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does Big-O describe?",
+            "options": [
+              "How cost grows as the input grows",
+              "The exact runtime on your machine",
+              "The memory one call allocates"
+            ],
+            "correct": 0,
+            "explanation": "Big-O describes growth, not seconds. Measure real workloads to learn actual runtimes."
+          }
         ]
       },
       {
@@ -61402,6 +61642,18 @@ const LEARNING_PATHS = [
             "section": "Warning: untrusted JSON resource consumption",
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Why read at most limit + 1 bytes from an input?",
+            "options": [
+              "json.loads needs one spare byte",
+              "To leave room for a trailing newline",
+              "To detect oversize input without loading all of it"
+            ],
+            "correct": 2,
+            "explanation": "If the extra byte arrives, the input is too large and can be rejected before a huge allocation. Checking size after reading everything is too late."
           }
         ]
       },
@@ -61568,7 +61820,19 @@ const LEARNING_PATHS = [
               "explanation": "The failure remains visible and finally removes an abandoned temporary file. The injected replacement failure test verifies old bytes survive."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Why close the temporary file before calling os.replace?",
+            "options": [
+              "Windows can refuse to replace using a file that is still open",
+              "Closing the file deletes it",
+              "os.replace accepts only closed file objects"
+            ],
+            "correct": 0,
+            "explanation": "On Windows an open file can block the replacement, and closing also ensures buffered data has been written. os.replace takes paths, not file objects."
+          }
+        ]
       },
       {
         "id": "robust-import-capstone",
@@ -61723,7 +61987,19 @@ const LEARNING_PATHS = [
               "explanation": "Publish the prepared report once; failed validation does not publish partial results."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "One record in a batch of 100 repeats an earlier id. What does the importer publish?",
+            "options": [
+              "The 99 valid records",
+              "Nothing; the batch is rejected",
+              "All 100 records with a warning"
+            ],
+            "correct": 1,
+            "explanation": "The batch must pass every record and batch invariant before one commit, so partial success never looks like a complete import."
+          }
+        ]
       }
     ],
     "stages": [
@@ -61750,7 +62026,39 @@ const LEARNING_PATHS = [
             "Explains that simple JSON persistence assumes one process."
           ],
           "solution": "\"\"\"Foundation reference: validated study records and topic totals.\"\"\"\nimport json\nfrom pathlib import Path\nfrom tempfile import TemporaryDirectory\n\ndef add_session(log, topic, minutes):\n    if not isinstance(topic, str) or not topic.strip():\n        raise ValueError(\"topic required\")\n    if type(minutes) is not int or minutes < 0:\n        raise ValueError(\"minutes must be a nonnegative integer\")\n    log.append({\"topic\": topic.strip(), \"minutes\": minutes})\n\ndef totals_by_topic(log):\n    totals = {}\n    for row in log:\n        totals[row[\"topic\"]] = totals.get(row[\"topic\"], 0) + row[\"minutes\"]\n    return totals\n\ndef demo():\n    log = []\n    add_session(log, \"Python\", 25)\n    add_session(log, \"Reading\", 10)\n    add_session(log, \"Python\", 15)\n    with TemporaryDirectory() as folder:\n        path = Path(folder) / \"study.json\"\n        path.write_text(json.dumps(log), encoding=\"utf-8\")\n        restored = json.loads(path.read_text(encoding=\"utf-8\"))\n        print(totals_by_topic(restored))\n\nif __name__ == \"__main__\":\n    demo()\n"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "def total(minutes): sum(minutes). What does total([10, 20]) return?",
+            "options": [
+              "30",
+              "None",
+              "[10, 20]"
+            ],
+            "correct": 1,
+            "explanation": "The function computes the sum but never returns it, so the call produces None."
+          },
+          {
+            "question": "A user adds a record with minutes = -5 to a valid saved log. What should the program do?",
+            "options": [
+              "Save it and fix it on the next load",
+              "Replace the log with an empty list",
+              "Reject it and leave the saved log unchanged"
+            ],
+            "correct": 2,
+            "explanation": "Validate before saving. An invalid record is reported and the existing log stays as it was."
+          },
+          {
+            "question": "A tuple such as (\"Python\", 20) is saved with json.dumps and read back with json.loads. What comes back?",
+            "options": [
+              "A list",
+              "A tuple",
+              "A string"
+            ],
+            "correct": 0,
+            "explanation": "JSON has arrays but no tuples, so the tuple is written as an array and read back as a list."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -61778,7 +62086,39 @@ const LEARNING_PATHS = [
             "Explains why a type hint is not schema validation."
           ],
           "solution": "\"\"\"Intermediate reference: typed value objects, JSON file summary CLI.\nRun: python intermediate_project.py --demo\nOr: python intermediate_project.py sessions.json\nReads existing input; it never rewrites that file.\n\"\"\"\nimport argparse\nfrom dataclasses import dataclass\nimport json\nimport logging\nfrom pathlib import Path\nfrom tempfile import TemporaryDirectory\n\nlogger = logging.getLogger(__name__)\n\n@dataclass(frozen=True)\nclass Session:\n    topic: str\n    minutes: int\n    def __post_init__(self):\n        if not isinstance(self.topic, str) or not 1 <= len(self.topic.strip()) <= 80:\n            raise ValueError(\"topic must contain 1 through 80 characters\")\n        if type(self.minutes) is not int or not 0 <= self.minutes <= 1440:\n            raise ValueError(\"minutes must be an integer from 0 through 1440\")\n        object.__setattr__(self, \"topic\", self.topic.strip())\n\ndef parse_sessions(value: object) -> list[Session]:\n    if type(value) is not list or len(value) > 1000:\n        raise ValueError(\"expected at most 1000 records\")\n    result = []\n    for row in value:\n        if type(row) is not dict or set(row) != {\"topic\", \"minutes\"}:\n            raise ValueError(\"expected topic and minutes fields\")\n        result.append(Session(row[\"topic\"], row[\"minutes\"]))\n    return result\n\ndef load_sessions(path: Path) -> list[Session]:\n    with path.open(\"rb\") as stream:\n        raw = stream.read(262145)\n    if len(raw) > 262144:\n        raise ValueError(\"input exceeds 256 KiB\")\n    return parse_sessions(json.loads(raw.decode(\"utf-8\")))\n\ndef totals_by_topic(sessions: list[Session]) -> dict[str, int]:\n    result: dict[str, int] = {}\n    for session in sessions:\n        result[session.topic] = result.get(session.topic, 0) + session.minutes\n    return result\n\ndef main(argv=None) -> int:\n    parser = argparse.ArgumentParser(description=\"Summarize a validated study-log JSON array\")\n    parser.add_argument(\"input\", type=Path, nargs=\"?\")\n    parser.add_argument(\"--demo\", action=\"store_true\")\n    args = parser.parse_args(argv)\n    if args.demo and args.input is not None:\n        parser.error(\"choose --demo or input, not both\")\n    if not args.demo and args.input is None:\n        parser.error(\"provide input or --demo\")\n    try:\n        if args.demo:\n            with TemporaryDirectory() as folder:\n                path = Path(folder) / \"sessions.json\"\n                path.write_text(json.dumps([{\"topic\":\"Python\",\"minutes\":25},{\"topic\":\"Python\",\"minutes\":15}]), encoding=\"utf-8\")\n                sessions = load_sessions(path)\n        else:\n            sessions = load_sessions(args.input)\n        print(json.dumps(totals_by_topic(sessions), sort_keys=True))\n        logger.info(\"summarized %d sessions\", len(sessions))\n        return 0\n    except (OSError, ValueError) as error:\n        logger.error(\"Cannot summarize: %s\", error)\n        return 1\n\nif __name__ == \"__main__\":\n    logging.basicConfig(level=logging.WARNING, format=\"%(levelname)s: %(message)s\")\n    raise SystemExit(main())\n"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "@dataclass class Session: minutes: int. What is Session(\"ten\").minutes?",
+            "options": [
+              "10",
+              "'ten'",
+              "It raises TypeError"
+            ],
+            "correct": 1,
+            "explanation": "The annotation is not enforced at runtime. Check types yourself, for example in __post_init__."
+          },
+          {
+            "question": "gen = (n for n in [1, 2, 3]); next(gen). What does list(gen) return now?",
+            "options": [
+              "[1, 2, 3]",
+              "[]",
+              "[2, 3]"
+            ],
+            "correct": 2,
+            "explanation": "A generator is one-pass. next already consumed 1, so list collects what remains."
+          },
+          {
+            "question": "A command-line tool receives --minutes -5. What should it do?",
+            "options": [
+              "Report the error and exit with a nonzero status",
+              "Print a warning and save the record",
+              "Exit with status 0 so scripts keep running"
+            ],
+            "correct": 0,
+            "explanation": "An expected input error is reported clearly, and a nonzero status tells the caller or script that the command failed."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -61808,7 +62148,39 @@ const LEARNING_PATHS = [
             "Documents trusted-directory, single-writer and power-loss limits; no unsupported production claim."
           ],
           "solution": "\"\"\"Advanced practice: bounded JSONL import, ordered workers and one replacement.\r\nOne writer, trusted local directory. No power-loss durability certification.\r\nRun python advanced_project.py --demo, or input.jsonl output.json --workers 2.\r\n\"\"\"\r\nimport argparse\r\nfrom concurrent.futures import ThreadPoolExecutor\r\nfrom dataclasses import dataclass, asdict\r\nimport json\r\nimport logging\r\nimport os\r\nfrom pathlib import Path\r\nfrom tempfile import TemporaryDirectory, NamedTemporaryFile\r\n\r\nMAX_BYTES = 262144\r\nMAX_RECORDS = 1000\r\nMAX_LINE_BYTES = 2048\r\nMAX_REPORT_BYTES = 1048576\r\nlogger = logging.getLogger(__name__)\r\n\r\n@dataclass(frozen=True)\r\nclass Session:\r\n    id: str\r\n    topic: str\r\n    minutes: int\r\n    def __post_init__(self):\r\n        if not isinstance(self.id, str) or not 1 <= len(self.id) <= 64 or self.id != self.id.strip():\r\n            raise ValueError(\"id must be 1 through 64 characters without edge spaces\")\r\n        if not isinstance(self.topic, str) or not 1 <= len(self.topic.strip()) <= 80:\r\n            raise ValueError(\"topic must contain 1 through 80 characters\")\r\n        if type(self.minutes) is not int or not 0 <= self.minutes <= 1440:\r\n            raise ValueError(\"minutes must be an integer from 0 through 1440\")\r\n        object.__setattr__(self, \"topic\", self.topic.strip())\r\n\r\ndef unique_object(pairs):\r\n    result = {}\r\n    for key, value in pairs:\r\n        if key in result:\r\n            raise ValueError(\"duplicate JSON key\")\r\n        result[key] = value\r\n    return result\r\n\r\ndef decode(text):\r\n    try:\r\n        return json.loads(text, object_pairs_hook=unique_object)\r\n    except RecursionError as error:\r\n        raise ValueError(\"JSON nesting too deep\") from error\r\n\r\ndef make_session(value):\r\n    if type(value) is not dict or set(value) != {\"id\", \"topic\", \"minutes\"}:\r\n        raise ValueError(\"record needs exactly id, topic and minutes\")\r\n    return Session(value[\"id\"], value[\"topic\"], value[\"minutes\"])\r\n\r\ndef bounded_read(path: Path, limit: int = MAX_BYTES) -> str:\r\n    with path.open(\"rb\") as stream:\r\n        raw = stream.read(limit + 1)\r\n    if len(raw) > limit:\r\n        raise ValueError(\"input exceeds byte limit\")\r\n    return raw.decode(\"utf-8\")\r\n\r\ndef parse_line(line: str) -> Session:\r\n    if len(line.encode(\"utf-8\")) > MAX_LINE_BYTES:\r\n        raise ValueError(\"record exceeds byte limit\")\r\n    return make_session(decode(line))\r\n\r\ndef validate_batch(records):\r\n    if len(records) > MAX_RECORDS:\r\n        raise ValueError(\"too many records\")\r\n    if len({record.id for record in records}) != len(records):\r\n        raise ValueError(\"duplicate session id\")\r\n\r\ndef read_batch(path: Path, workers: int = 1) -> list[Session]:\r\n    if type(workers) is not int or not 1 <= workers <= 8:\r\n        raise ValueError(\"workers must be 1 through 8\")\r\n    # JSONL delimiters are LF (optionally preceded by CR), not Unicode separators\r\n    # such as U+2028 that may legitimately occur inside a JSON string.\r\n    lines = bounded_read(path).split(\"\\n\")\r\n    if lines[-1] == \"\":\r\n        lines.pop()  # Empty input or one final newline is not a blank record.\r\n    lines = [line.removesuffix(\"\\r\") for line in lines]\r\n    if len(lines) > MAX_RECORDS:\r\n        raise ValueError(\"too many records\")\r\n    if any(not line.strip() for line in lines):\r\n        raise ValueError(\"blank records are not allowed\")\r\n    if workers == 1:\r\n        records = [parse_line(line) for line in lines]\r\n    else:\r\n        with ThreadPoolExecutor(max_workers=workers) as pool:\r\n            records = list(pool.map(parse_line, lines))\r\n    validate_batch(records)\r\n    return records\r\n\r\ndef summary(records):\r\n    totals = {}\r\n    for record in records:\r\n        totals[record.topic] = totals.get(record.topic, 0) + record.minutes\r\n    return totals\r\n\r\ndef atomic_write(path: Path, value) -> None:\r\n    # Prepare and bound the exact bytes the reader will receive before creating\r\n    # a temporary file or replacing prior output. UTF-8 avoids ASCII-escape\r\n    # expansion for non-ASCII topics appearing in both records and totals.\r\n    payload = (json.dumps(value, indent=2, sort_keys=True, allow_nan=False,\r\n                          ensure_ascii=False) + \"\\n\").encode(\"utf-8\")\r\n    if len(payload) > MAX_REPORT_BYTES:\r\n        raise ValueError(\"report exceeds byte limit\")\r\n    temporary = None\r\n    try:\r\n        with NamedTemporaryFile(\"wb\", dir=path.parent, delete=False) as stream:\r\n            temporary = Path(stream.name)\r\n            stream.write(payload)\r\n            stream.flush()\r\n            os.fsync(stream.fileno())\r\n        os.replace(temporary, path)\r\n    finally:\r\n        if temporary is not None and temporary.exists():\r\n            temporary.unlink()\r\n\r\ndef import_report(source: Path, target: Path, workers: int = 1):\r\n    if source.resolve() == target.resolve():\r\n        raise ValueError(\"input and report must be different files\")\r\n    records = read_batch(source, workers)\r\n    report = {\"version\": 1, \"sessions\": [asdict(r) for r in records], \"totals\": summary(records)}\r\n    atomic_write(target, report)\r\n    logger.info(\"imported %d records\", len(records))\r\n    return report\r\n\r\ndef load_report(path: Path):\r\n    value = decode(bounded_read(path, MAX_REPORT_BYTES))\r\n    if type(value) is not dict or set(value) != {\"version\", \"sessions\", \"totals\"}:\r\n        raise ValueError(\"invalid report fields\")\r\n    if type(value[\"version\"]) is not int or value[\"version\"] != 1:\r\n        raise ValueError(\"unsupported report version\")\r\n    if type(value[\"sessions\"]) is not list or len(value[\"sessions\"]) > MAX_RECORDS:\r\n        raise ValueError(\"invalid report records\")\r\n    records = [make_session(row) for row in value[\"sessions\"]]\r\n    validate_batch(records)\r\n    totals = value[\"totals\"]\r\n    if type(totals) is not dict or any(type(k) is not str or type(v) is not int for k, v in totals.items()):\r\n        raise ValueError(\"invalid totals\")\r\n    if totals != summary(records):\r\n        raise ValueError(\"totals do not match records\")\r\n    return records\r\n\r\ndef main(argv=None) -> int:\r\n    parser = argparse.ArgumentParser(description=\"Validate JSONL and publish one study report\")\r\n    parser.add_argument(\"input\", nargs=\"?\", type=Path)\r\n    parser.add_argument(\"output\", nargs=\"?\", type=Path)\r\n    parser.add_argument(\"--workers\", type=int, default=1)\r\n    parser.add_argument(\"--demo\", action=\"store_true\")\r\n    args = parser.parse_args(argv)\r\n    if args.demo and (args.input or args.output):\r\n        parser.error(\"choose --demo or two file paths\")\r\n    if not args.demo and (args.input is None or args.output is None):\r\n        parser.error(\"provide input and output, or --demo\")\r\n    try:\r\n        if args.demo:\r\n            with TemporaryDirectory() as folder:\r\n                source, target = Path(folder)/\"input.jsonl\", Path(folder)/\"report.json\"\r\n                rows = [{\"id\":\"a\",\"topic\":\"Python\",\"minutes\":25},{\"id\":\"b\",\"topic\":\"Python\",\"minutes\":15}]\r\n                source.write_text(\"\\n\".join(json.dumps(row) for row in rows), encoding=\"utf-8\")\r\n                import_report(source, target, args.workers)\r\n                print(json.dumps(summary(load_report(target)), sort_keys=True))\r\n        else:\r\n            report = import_report(args.input, args.output, args.workers)\r\n            print(json.dumps(report[\"totals\"], sort_keys=True))\r\n        return 0\r\n    except (OSError, ValueError) as error:\r\n        logger.error(\"Import failed: %s\", error)\r\n        return 1\r\n\r\nif __name__ == \"__main__\":\r\n    logging.basicConfig(level=logging.WARNING, format=\"%(levelname)s: %(message)s\")\r\n    raise SystemExit(main())\r\n"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A coroutine calls time.sleep(2). What happens to the other tasks on the event loop?",
+            "options": [
+              "They keep running on other threads",
+              "They wait, because the event loop is blocked",
+              "asyncio cancels the sleeping coroutine"
+            ],
+            "correct": 1,
+            "explanation": "Blocking code inside a coroutine stops the event loop. Use await asyncio.sleep, or run blocking work elsewhere."
+          },
+          {
+            "question": "A new aggregation is twice as fast but returns a different result for empty input. What is it?",
+            "options": [
+              "Not an optimization until the results match",
+              "An optimization with a known edge case",
+              "Acceptable, because the speedup was measured"
+            ],
+            "correct": 0,
+            "explanation": "Compare behavior on representative and edge inputs before timing; a fast wrong answer is not an improvement."
+          },
+          {
+            "question": "The importer rejects a batch. What should happen to the previous report file?",
+            "options": [
+              "It is replaced with an empty report",
+              "It stays unchanged",
+              "It is deleted so stale data cannot be read"
+            ],
+            "correct": 1,
+            "explanation": "Validation happens before the write path, and replacement is atomic, so a rejected batch leaves the earlier output intact."
+          }
+        ]
       }
     ],
     "downloads": [
