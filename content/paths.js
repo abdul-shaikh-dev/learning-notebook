@@ -40456,6 +40456,11 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Pod B is lost",
+                  "focus": [
+                    "pod-b",
+                    "pod-c",
+                    "controller-rs"
+                  ],
                   "explanation": "Once deletion/loss is observed, the ReplicaSet creates Pod C. Current count can return to two before availability does; C still needs scheduling, startup and readiness.",
                   "nodes": [
                     {
@@ -40519,6 +40524,11 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "New identity serves",
+                  "focus": [
+                    "pod-c",
+                    "controller-rs",
+                    "controller-deploy"
+                  ],
                   "explanation": "Pod C passes readiness, returning the modeled ready count to two. It does not inherit B's in-memory or scratch files merely because the controller replaced B.",
                   "nodes": [
                     {
@@ -40638,6 +40648,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Insufficient capacity",
+                  "focus": [
+                    "pod-c",
+                    "eligible-node"
+                  ],
                   "explanation": "C requests 500m CPU, but eligible nodes have only 300m allocatable headroom for this request. The scheduler leaves C Pending in this simplified capacity example.",
                   "nodes": [
                     {
@@ -40696,6 +40710,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Correct the constraint",
+                  "focus": [
+                    "eligible-node",
+                    "pod-c"
+                  ],
                   "explanation": "Add suitable capacity or review legitimate requests. A controller cannot manufacture resources. After capacity exists C can schedule, but readiness remains a separate check.",
                   "nodes": [
                     {
@@ -40896,6 +40914,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "B fails readiness",
+                  "focus": [
+                    "pod-b",
+                    "endpoints"
+                  ],
                   "explanation": "B's process still runs, but readiness fails. After endpoint state propagates, normal new Service traffic uses A; readiness failure alone is not a liveness restart.",
                   "nodes": [
                     {
@@ -40959,6 +40981,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "B returns ready",
+                  "focus": [
+                    "pod-b",
+                    "endpoints"
+                  ],
                   "explanation": "After B passes readiness and the endpoint update propagates, both Pods are eligible again. The diagram does not assert an exact traffic split.",
                   "nodes": [
                     {
@@ -41091,6 +41117,12 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Diagnose boundary",
+                  "focus": [
+                    "service",
+                    "pod-a",
+                    "pod-b"
+                  ],
+                  "focusLabel": "Check",
                   "explanation": "Compare Service selector with Pod labels and EndpointSlices. DNS success plus zero selected endpoints points to a backend-selection problem in this example.",
                   "nodes": [
                     {
@@ -41144,6 +41176,11 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Align intended labels",
+                  "focus": [
+                    "pod-a",
+                    "pod-b",
+                    "endpoints"
+                  ],
                   "explanation": "Correct the workload template labels while preserving its Deployment selector contract. Once matching ready Pods exist, endpoint updates make normal Service routing possible.",
                   "nodes": [
                     {
@@ -41710,6 +41747,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Candidate ready",
+                  "focus": [
+                    "version-v1",
+                    "version-v2"
+                  ],
                   "explanation": "Once v2 is available, the controller may reduce old replicas to one and grow new replicas to two. The second candidate still needs readiness.",
                   "nodes": [
                     {
@@ -41770,6 +41811,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Finish v2",
+                  "focus": [
+                    "version-v1",
+                    "version-v2"
+                  ],
                   "explanation": "When both v2 Pods are available the old ReplicaSet scales to zero. Compatibility must hold while versions coexist; readiness alone does not verify business correctness.",
                   "nodes": [
                     {
@@ -41881,6 +41926,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Deadline reports stall",
+                  "focus": [
+                    "controller-deploy"
+                  ],
                   "explanation": "After the configured 60-second period without rollout progress, the Deployment reports ProgressDeadlineExceeded. Kubernetes does not automatically undo the template change.",
                   "nodes": [
                     {
@@ -41931,6 +41979,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Choose recovery",
+                  "focus": [
+                    "controller-deploy",
+                    "version-v2"
+                  ],
                   "explanation": "Inspect probe/config/image evidence, then apply a fix or explicitly restore a known template. Here the operator chooses v1; wait for rollout status and validate the actual application.",
                   "nodes": [
                     {
@@ -68994,6 +69046,11 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Match each payment",
+                  "focus": [
+                    "join-201",
+                    "join-202",
+                    "order-104"
+                  ],
                   "explanation": "Order 101 has two matches, so its amount 100 appears twice. Order 104 has no match and is omitted.",
                   "nodes": [
                     {
@@ -69056,6 +69113,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Audit the totals",
+                  "focus": [
+                    "report-101",
+                    "report-104"
+                  ],
                   "explanation": "SUM(OrderAmount) is 200, not the input order total 220. The joined grain is payment match (plus unmatched orders for LEFT). Aggregate payments by OrderId before an order-grain report.",
                   "nodes": [
                     {
@@ -69196,6 +69257,11 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Match each payment",
+                  "focus": [
+                    "join-201",
+                    "join-202",
+                    "join-104"
+                  ],
                   "explanation": "Order 101 has two matches, so its amount 100 appears twice. Order 104 has no match and gains one NULL-extended row.",
                   "nodes": [
                     {
@@ -69269,6 +69335,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Audit the totals",
+                  "focus": [
+                    "report-101",
+                    "report-104"
+                  ],
                   "explanation": "SUM(OrderAmount) is 320, not the input order total 220. The joined grain is payment match (plus unmatched orders for LEFT). Aggregate payments by OrderId before an order-grain report.",
                   "nodes": [
                     {
@@ -69987,6 +70057,11 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Compare candidate work",
+                  "focus": [
+                    "seek-candidate",
+                    "scan-candidate"
+                  ],
+                  "focusLabel": "Compare",
                   "explanation": "The selective customer has 20 rows on two index leaf pages. The model counts three internal navigation visits plus two leaf visits; a full index scan visits all 1,000 leaves.",
                   "nodes": [
                     {
@@ -70029,6 +70104,7 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Inspect an actual plan",
+                  "focus": [],
                   "explanation": "A covered selective seek can avoid scanning unrelated rows; this model favors that access path. Verify estimates, actual rows and logical reads on representative data.",
                   "nodes": [
                     {
@@ -70131,6 +70207,11 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Compare candidate work",
+                  "focus": [
+                    "seek-candidate",
+                    "scan-candidate"
+                  ],
+                  "focusLabel": "Compare",
                   "explanation": "All 100,000 rows qualify. A scan reads 1,000 leaf pages sequentially; a seek with an unbounded range still visits all qualifying leaves.",
                   "nodes": [
                     {
@@ -70173,6 +70254,7 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Inspect an actual plan",
+                  "focus": [],
                   "explanation": "A broad scan can be sensible. Operator names alone do not establish quality: inspect total work, estimates, actual rows and logical reads before tuning.",
                   "nodes": [
                     {
@@ -71020,6 +71102,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "A updates and commits",
+                  "focus": [
+                    "session-a",
+                    "shared-row"
+                  ],
                   "explanation": "At t3 A sets amount 110 and advances revision to 2, then commits. Its WHERE Id=1 matches one row.",
                   "nodes": [
                     {
@@ -71057,6 +71143,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "B attempts stale write",
+                  "focus": [
+                    "session-b",
+                    "shared-row"
+                  ],
                   "explanation": "At t4 B uses WHERE Id=1: one row changes and commits 120/revision 3. A's replacement 110 is overwritten.",
                   "nodes": [
                     {
@@ -71179,6 +71269,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "A updates and commits",
+                  "focus": [
+                    "session-a",
+                    "shared-row"
+                  ],
                   "explanation": "At t3 A sets amount 110 and advances revision to 2, then commits. Its WHERE Revision=1 matches one row.",
                   "nodes": [
                     {
@@ -71216,6 +71310,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "B attempts stale write",
+                  "focus": [
+                    "session-b"
+                  ],
                   "explanation": "At t4 B uses WHERE Id=1 AND Revision=1: zero rows change. Reload and resolve the conflict; do not blindly repeat the stale decision.",
                   "nodes": [
                     {

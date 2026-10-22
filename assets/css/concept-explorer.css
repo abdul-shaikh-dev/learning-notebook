@@ -29,3 +29,5 @@
 .concrete-scene{margin:.8rem 0;min-width:0;max-width:100%}.concrete-scene button{min-height:44px}.concrete-scene :focus-visible{outline:3px solid #225d90;outline-offset:3px}@media print{.concrete-scene [data-scene-next]{display:none!important}}
 /* Playback is optional, so it follows the picture it controls. */
 .visual-playback-panel{margin-top:.9rem;border-top:1px solid #d5e1dd}
+/* Authored step focus: a text label and outline, shown with or without motion and in print. */
+[data-change]{position:relative;outline:2px solid #2d6a9f;outline-offset:2px}[data-change]::before{content:attr(data-change);position:absolute;top:-.75rem;right:.5rem;z-index:2;padding:.05rem .4rem;border-radius:4px;background:#1f4f7a;color:#fff;font:700 .7rem/1.4 system-ui,sans-serif;letter-spacing:.02em}svg [data-change]{outline:0}

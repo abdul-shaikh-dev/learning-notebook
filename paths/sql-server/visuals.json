@@ -91,6 +91,11 @@
           },
           {
             "title": "Match each payment",
+            "focus": [
+              "join-201",
+              "join-202",
+              "order-104"
+            ],
             "explanation": "Order 101 has two matches, so its amount 100 appears twice. Order 104 has no match and is omitted.",
             "nodes": [
               {
@@ -153,6 +158,10 @@
           },
           {
             "title": "Audit the totals",
+            "focus": [
+              "report-101",
+              "report-104"
+            ],
             "explanation": "SUM(OrderAmount) is 200, not the input order total 220. The joined grain is payment match (plus unmatched orders for LEFT). Aggregate payments by OrderId before an order-grain report.",
             "nodes": [
               {
@@ -293,6 +302,11 @@
           },
           {
             "title": "Match each payment",
+            "focus": [
+              "join-201",
+              "join-202",
+              "join-104"
+            ],
             "explanation": "Order 101 has two matches, so its amount 100 appears twice. Order 104 has no match and gains one NULL-extended row.",
             "nodes": [
               {
@@ -366,6 +380,10 @@
           },
           {
             "title": "Audit the totals",
+            "focus": [
+              "report-101",
+              "report-104"
+            ],
             "explanation": "SUM(OrderAmount) is 320, not the input order total 220. The joined grain is payment match (plus unmatched orders for LEFT). Aggregate payments by OrderId before an order-grain report.",
             "nodes": [
               {
@@ -480,6 +498,10 @@
           },
           {
             "title": "A updates and commits",
+            "focus": [
+              "session-a",
+              "shared-row"
+            ],
             "explanation": "At t3 A sets amount 110 and advances revision to 2, then commits. Its WHERE Id=1 matches one row.",
             "nodes": [
               {
@@ -517,6 +539,10 @@
           },
           {
             "title": "B attempts stale write",
+            "focus": [
+              "session-b",
+              "shared-row"
+            ],
             "explanation": "At t4 B uses WHERE Id=1: one row changes and commits 120/revision 3. A's replacement 110 is overwritten.",
             "nodes": [
               {
@@ -639,6 +665,10 @@
           },
           {
             "title": "A updates and commits",
+            "focus": [
+              "session-a",
+              "shared-row"
+            ],
             "explanation": "At t3 A sets amount 110 and advances revision to 2, then commits. Its WHERE Revision=1 matches one row.",
             "nodes": [
               {
@@ -676,6 +706,9 @@
           },
           {
             "title": "B attempts stale write",
+            "focus": [
+              "session-b"
+            ],
             "explanation": "At t4 B uses WHERE Id=1 AND Revision=1: zero rows change. Reload and resolve the conflict; do not blindly repeat the stale decision.",
             "nodes": [
               {
@@ -806,6 +839,11 @@
           },
           {
             "title": "Compare candidate work",
+            "focus": [
+              "seek-candidate",
+              "scan-candidate"
+            ],
+            "focusLabel": "Compare",
             "explanation": "The selective customer has 20 rows on two index leaf pages. The model counts three internal navigation visits plus two leaf visits; a full index scan visits all 1,000 leaves.",
             "nodes": [
               {
@@ -848,6 +886,7 @@
           },
           {
             "title": "Inspect an actual plan",
+            "focus": [],
             "explanation": "A covered selective seek can avoid scanning unrelated rows; this model favors that access path. Verify estimates, actual rows and logical reads on representative data.",
             "nodes": [
               {
@@ -950,6 +989,11 @@
           },
           {
             "title": "Compare candidate work",
+            "focus": [
+              "seek-candidate",
+              "scan-candidate"
+            ],
+            "focusLabel": "Compare",
             "explanation": "All 100,000 rows qualify. A scan reads 1,000 leaf pages sequentially; a seek with an unbounded range still visits all qualifying leaves.",
             "nodes": [
               {
@@ -992,6 +1036,7 @@
           },
           {
             "title": "Inspect an actual plan",
+            "focus": [],
             "explanation": "A broad scan can be sensible. Operator names alone do not establish quality: inspect total work, estimates, actual rows and logical reads before tuning.",
             "nodes": [
               {
