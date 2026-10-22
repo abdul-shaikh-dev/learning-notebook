@@ -16,6 +16,7 @@ require('./resource-navigation.cjs');
 
 require('./notebook-search.cjs');
 require('./notebook-backup.cjs');
+require('./notebook-review.cjs');
 
 require('./navigation-links.cjs');
 

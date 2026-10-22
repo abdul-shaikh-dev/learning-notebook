@@ -10,6 +10,7 @@ const NotebookBackup = (() => {
   const challengeKey = id => 'learning-notebook:challenges:' + id + ':v1';
   const challengeLessons = path => path.lessons.filter(l => l.exercise?.challenge);
   const assessment = id => 'learning-notebook:path:' + id + ':assessments:v1';
+  const checkpointKey = id => 'learning-notebook:path:' + id + ':checkpoints:v1';
   const courses = () => LEARNING_PATHS.filter(p => p.status === 'ready' && Array.isArray(p.lessons));
   const fail = message => { throw new Error(message); };
   function object(value, label) {
@@ -33,6 +34,19 @@ const NotebookBackup = (() => {
       if (typeof attempt.code !== 'string' || attempt.code.length > 20000) fail('Challenge code must be text of at most 20,000 characters.');
       if (!['not-started','attempted','solved'].includes(attempt.status)) fail('Challenge status is invalid.');
       result[id] = {code:attempt.code,status:attempt.status};
+    }
+    return result;
+  }
+  // Checkpoint review: the first answer, its streak (0 after a miss, 1-4 correct in a row) and when it was given.
+  function checkpoints(value, path) {
+    object(value, 'Checkpoint answers');
+    const allowed = path.lessons.map(l => l.id), result = {};
+    for (const [id, entry] of Object.entries(value)) {
+      if (!allowed.includes(id)) fail('Checkpoint answers contain an unknown lesson.');
+      fields(entry, ['correct','streak','at'], 'Checkpoint answer');
+      if (typeof entry.correct !== 'boolean' || !Number.isInteger(entry.streak) || entry.streak < 0 || entry.streak > 4 || entry.correct !== entry.streak > 0) fail('Checkpoint answer streak is invalid.');
+      if (!Number.isInteger(entry.at) || entry.at <= 0 || entry.at > Date.now() + 864e5) fail('Checkpoint answer date is invalid.');
+      result[id] = {correct:entry.correct,streak:entry.streak,at:entry.at};
     }
     return result;
   }
@@ -73,11 +87,12 @@ const NotebookBackup = (() => {
     for (const [id, entry] of Object.entries(value.paths)) {
       const path = courses().find(p => p.id === id);
       if (!path) fail('This backup contains a course not available in this notebook version.');
-      fields(entry, ['read','assessed', ...(challengeLessons(path).length ? ['challenges'] : [])], 'Course progress');
+      fields(entry, ['read','assessed','checkpoints', ...(challengeLessons(path).length ? ['challenges'] : [])], 'Course progress');
       paths[id] = {
         read:ids(entry.read, path.lessons.map(l=>l.id), path.title + ' readings'),
         assessed:ids(entry.assessed, (path.stages || []).map(s=>s.id), path.title + ' projects'),
-        ...(own(entry,'challenges') ? {challenges:challenges(entry.challenges,path)} : {})
+        ...(own(entry,'challenges') ? {challenges:challenges(entry.challenges,path)} : {}),
+        ...(own(entry,'checkpoints') ? {checkpoints:checkpoints(entry.checkpoints,path)} : {})
       };
     }
     return {paths,financial:value.financial == null ? null : finance(value.financial),
@@ -120,6 +135,8 @@ const NotebookBackup = (() => {
         const attempts = get(challengeKey(path.id), path.title + ' challenge progress');
         result.paths[path.id].challenges = attempts === null ? {} : challenges(attempts,path);
       }
+      const answers = get(checkpointKey(path.id), path.title + ' checkpoint answers');
+      if (answers !== null && Object.keys(object(answers, path.title + ' checkpoint answers')).length) result.paths[path.id].checkpoints = checkpoints(answers,path);
     }
     const financial = get(FINANCE,'Financial progress');
     if (financial !== null) result.financial = finance(financial);
@@ -139,6 +156,12 @@ const NotebookBackup = (() => {
       const a = current.paths[path.id] || {read:[],assessed:[]}, b = imported.paths[path.id] || {read:[],assessed:[]};
       result.paths[path.id] = {read:union(a.read,b.read),assessed:union(a.assessed,b.assessed)};
       if (challengeLessons(path).length) result.paths[path.id].challenges = {...b.challenges,...a.challenges};
+      // The more recent answer reflects current recall; this browser wins a tie.
+      if (a.checkpoints || b.checkpoints) {
+        const answers = {...b.checkpoints};
+        for (const [id, entry] of Object.entries(a.checkpoints || {})) if (!answers[id] || entry.at >= answers[id].at) answers[id] = entry;
+        result.paths[path.id].checkpoints = answers;
+      }
     }
     const a = current.financial, b = imported.financial;
     if (!a || !b) result.financial = a || b;
@@ -161,6 +184,7 @@ const NotebookBackup = (() => {
       writes.push([key(path.id),JSON.stringify(after.paths[path.id].read)],
                   [assessment(path.id),JSON.stringify(after.paths[path.id].assessed)]);
       if (own(incoming.paths[path.id],'challenges')) writes.push([challengeKey(path.id),JSON.stringify(after.paths[path.id].challenges)]);
+      if (own(incoming.paths[path.id],'checkpoints')) writes.push([checkpointKey(path.id),JSON.stringify(after.paths[path.id].checkpoints)]);
     }
     if (incoming.financial !== null) writes.push([FINANCE,JSON.stringify(after.financial)]);
     if (!current.progress.lastLesson && incoming.lastLesson) writes.push([LAST,JSON.stringify(incoming.lastLesson)]);
@@ -194,6 +218,7 @@ const NotebookBackup = (() => {
     const all = courses().map(path => ({id:path.id,title:path.title,
       read:value.paths[path.id]?.read.length || 0, checks:value.paths[path.id]?.assessed.length || 0,
       total:path.lessons.length,
+      answers:Object.keys(value.paths[path.id]?.checkpoints || {}).length,
       drafts:Object.keys(value.paths[path.id]?.challenges || {}).length,
       attempted:Object.values(value.paths[path.id]?.challenges || {}).filter(a=>a.status==='attempted').length,
       solved:Object.values(value.paths[path.id]?.challenges || {}).filter(a=>a.status==='solved').length}));
@@ -203,9 +228,9 @@ const NotebookBackup = (() => {
       checks:Object.values(value.financial?.study || {}).filter(s=>s.checked).length});
     return all;
   }
-  const count = row => `${row.read} read · ${row.checks} self-checked` + (row.drafts ? ` · ${row.drafts} code drafts · ${row.attempted} attempted · ${row.solved} solved` : '');
+  const count = row => `${row.read} read · ${row.checks} self-checked` + (row.answers ? ` · ${row.answers} checkpoints answered` : '') + (row.drafts ? ` · ${row.drafts} code drafts · ${row.attempted} attempted · ${row.solved} solved` : '');
   function summary(value) {
-    const all = rows(value), active = all.filter(row=>row.read || row.checks || row.drafts);
+    const all = rows(value), active = all.filter(row=>row.read || row.checks || row.answers || row.drafts);
     const list = items => '<ul class="backup-counts">'+items.map(row=>'<li><strong>'+esc(row.title)+'</strong><span>'+esc(count(row))+' · '+row.total+' lessons</span></li>').join('')+'</ul>';
     return '<p>'+all.reduce((n,row)=>n+row.read,0)+' lessons read. Saved progress across '+active.length+' '+(active.length===1?'path':'paths')+'.</p>'+(active.length?list(active):'<p>No saved progress yet. Mark a lesson read or start a challenge to record your progress.</p>')+'<details><summary>All learning paths</summary>'+list(all)+'</details>';
   }
@@ -227,7 +252,7 @@ const NotebookBackup = (() => {
       after.map((row,i)=>'<tr><th scope="row">'+esc(row.title)+'</th><td>'+esc(count(before[i]))+'</td><td>'+esc(count(incoming[i]))+'</td><td>'+esc(count(row))+'</td></tr>').join('')+'</tbody></table></div>'+
       '<p>Financial quiz answers after merge: '+Object.keys(value.after.financial?.answers || {}).length+'. Conflicting answers kept from this browser: '+conflicts+'.</p>'+
       '<p>Conflicting challenge drafts kept from this browser: '+challengeConflicts+'.</p>'+
-      '<p>Read lessons and self-checks are combined. Missing challenge drafts are imported. Existing local code, challenge status, quiz answers and last-opened locations win conflicts. Nothing is marked unread or reset.</p>';
+      '<p>Read lessons and self-checks are combined. Missing challenge drafts are imported. Existing local code, challenge status, quiz answers and last-opened locations win conflicts. For review checkpoints, the more recent answer is kept. Nothing is marked unread or reset.</p>';
   }
   function view() {
     let saved;
@@ -241,7 +266,7 @@ const NotebookBackup = (() => {
       '<h2>Restore from a file</h2><p>Import combines completed readings and self-checks with your current progress. Missing challenge drafts are added. Local code, challenge status and quiz answers win conflicts. Nothing is reset.</p>'+
       '<label for="nb-file">Choose a Learning Notebook JSON backup (up to 1 MB)</label><input id="nb-file" type="file" accept=".json,application/json">'+
       '<div id="nb-preview" aria-live="polite"></div><div class="backup-actions"><button type="button" class="primary" id="nb-apply" disabled>Merge reviewed progress</button></div>'+
-      '<p id="nb-status" role="status" aria-live="polite"></p><p class="muted">Backups contain completion choices, financial quiz answers, and code and status saved in the challenge editor. They do not include course content or downloaded practice files. An older finance-only backup can also be merged. Journey/lab slider positions are temporary and are not stored as progress.</p></section>';
+      '<p id="nb-status" role="status" aria-live="polite"></p><p class="muted">Backups contain completion choices, checkpoint answers for review, financial quiz answers, and code and status saved in the challenge editor. They do not include course content or downloaded practice files. An older finance-only backup can also be merged. Journey/lab slider positions are temporary and are not stored as progress.</p></section>';
   }
   function bind(main) {
     const get = id => main.querySelector('#'+id), status = get('nb-status'), input = get('nb-file'), button = get('nb-apply');
