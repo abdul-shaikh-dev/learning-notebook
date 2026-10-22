@@ -52,6 +52,9 @@
           },
           {
             "title": "Replace one record",
+            "focus": [
+              "components-app"
+            ],
             "explanation": "App creates updated data with the types record renamed to Data types. The children do not mutate their received props.",
             "nodes": [
               {
@@ -94,6 +97,9 @@
           },
           {
             "title": "Render the new props",
+            "focus": [
+              "components-types"
+            ],
             "explanation": "The next render supplies Data types to the row with key types. The state row still receives State; the key itself is not a title prop.",
             "nodes": [
               {
@@ -184,6 +190,10 @@
           },
           {
             "title": "Invoke the callback",
+            "focus": [
+              "components-types",
+              "components-app"
+            ],
             "explanation": "Clicking the types row calls onComplete. App receives the intent for types; the row does not assign to props.done.",
             "nodes": [
               {
@@ -226,6 +236,10 @@
           },
           {
             "title": "Parent renders new data",
+            "focus": [
+              "components-app",
+              "components-types"
+            ],
             "explanation": "App replaces the changed record and requests a render. The types row now receives done=true; state stays incomplete.",
             "nodes": [
               {
@@ -332,6 +346,11 @@
           },
           {
             "title": "Queue three replacements",
+            "focus": [
+              "state-update-0",
+              "state-update-1",
+              "state-update-2"
+            ],
             "explanation": "Each setCount(count + 1) evaluates to setCount(1). Calling the setter does not change count in the current handler.",
             "nodes": [
               {
@@ -377,6 +396,10 @@
           },
           {
             "title": "Next render shows one",
+            "focus": [
+              "state-snapshot",
+              "state-screen"
+            ],
             "explanation": "After the event, React processes the replacements and renders count=1. Three identical replacements did not add three.",
             "nodes": [
               {
@@ -478,6 +501,11 @@
           },
           {
             "title": "Queue three functions",
+            "focus": [
+              "state-update-0",
+              "state-update-1",
+              "state-update-2"
+            ],
             "explanation": "Each setCount(c => c + 1) queues a pure updater. Each updater receives the previous queued result rather than this handler's count.",
             "nodes": [
               {
@@ -523,6 +551,10 @@
           },
           {
             "title": "Next render shows three",
+            "focus": [
+              "state-snapshot",
+              "state-screen"
+            ],
             "explanation": "The composed updater result is three. Updaters must remain pure because React may call them again during development checks.",
             "nodes": [
               {
@@ -646,6 +678,11 @@
           },
           {
             "title": "Selection changes to B",
+            "focus": [
+              "effects-selection",
+              "effects-effect",
+              "effects-roomA"
+            ],
             "explanation": "Before setting up B, React runs A's cleanup. A1 closes; the cleanup uses its captured connection, not the new room's connection.",
             "nodes": [
               {
@@ -691,6 +728,9 @@
           },
           {
             "title": "Set up B and later unmount",
+            "focus": [
+              "effects-roomB"
+            ],
             "explanation": "Setup opens B1. When the component unmounts its returned cleanup closes B1; neither room retains an active subscription.",
             "nodes": [
               {
@@ -787,6 +827,10 @@
           },
           {
             "title": "Switch to B",
+            "focus": [
+              "effects-roomA"
+            ],
+            "focusLabel": "Still open",
             "explanation": "React has no returned cleanup to call. Setup for B opens B1 while A1 remains subscribed, so old-room events can still arrive.",
             "nodes": [
               {
@@ -832,6 +876,11 @@
           },
           {
             "title": "Unmount leaves resources",
+            "focus": [
+              "effects-roomA",
+              "effects-roomB"
+            ],
+            "focusLabel": "Leaked",
             "explanation": "Unmount alone cannot disconnect a resource the Effect never cleans up. Both connections remain in this faulty model. Strict Mode's extra setup cycle helps expose the defect.",
             "nodes": [
               {
@@ -935,6 +984,10 @@
           },
           {
             "title": "Select B; B resolves first",
+            "focus": [
+              "race-reqB",
+              "race-screen"
+            ],
             "explanation": "Selection changes to B and B returns data first. The screen briefly shows the correct B data, while A is still pending.",
             "nodes": [
               {
@@ -985,6 +1038,10 @@
           },
           {
             "title": "A arrives late",
+            "focus": [
+              "race-reqA",
+              "race-screen"
+            ],
             "explanation": "A's obsolete callback overwrites the view. The heading still says B but the body shows A: a stale-result bug.",
             "nodes": [
               {
@@ -1081,6 +1138,11 @@
           },
           {
             "title": "Cleanup A; resolve B",
+            "focus": [
+              "race-reqA",
+              "race-reqB",
+              "race-screen"
+            ],
             "explanation": "Changing to B runs A's cleanup: active=false and abort requested. B has its own active flag, resolves, and commits B data.",
             "nodes": [
               {
@@ -1131,6 +1193,9 @@
           },
           {
             "title": "Late A is ignored",
+            "focus": [
+              "race-reqA"
+            ],
             "explanation": "The adapter ignores abort and A still resolves. Its callback sees active=false and skips setView, preserving B. A late failure is ignored by the same guard.",
             "nodes": [
               {

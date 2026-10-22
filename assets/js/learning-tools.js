@@ -66,8 +66,9 @@ function visualLayout(nodes,edges){
  levels.forEach((group,col)=>group.forEach((n,row)=>positions[n.id]={x:24+col*262,y:24+(row+(rows-group.length)/2)*122}));
  return {levels,positions,width:Math.max(320,levels.length*262+24),height:rows*122+24};
 }
-// Authored focus names drawn motion keys without their renderer prefix (pod-b, join-104); steps without focus keep the generic change cue.
-function focusMarkup(html,step,priorHtml){const focus=Array.isArray(step.focus)?new Set(step.focus):null;if(!focus?.size)return html;const key=v=>v.slice(v.indexOf('-')+1),prior=new Set([...String(priorHtml||'').matchAll(/data-motion-node="([^"]+)"/g)].map(m=>key(m[1])));return html.replace(/data-motion-node="([^"]+)"/g,(m,v)=>focus.has(key(v))?`${m} data-change="${escapeText(step.focusLabel||(prior.has(key(v))?'Changed':'New'))}"`:m);}
+// Authored focus names drawn motion keys, whole (emitted-B) or without their renderer prefix (pod-b, join-104); steps without focus keep the generic change cue.
+function focusMatch(focus,v){const short=v.slice(v.indexOf('-')+1);return focus.has(v)?v:focus.has(short)?short:null;}
+function focusMarkup(html,step,priorHtml){const focus=Array.isArray(step.focus)?new Set(step.focus):null;if(!focus?.size)return html;const prior=new Set([...String(priorHtml||'').matchAll(/data-motion-node="([^"]+)"/g)].map(m=>focusMatch(focus,m[1])).filter(Boolean));return html.replace(/data-motion-node="([^"]+)"/g,(m,v)=>{const k=focusMatch(focus,v);return k?`${m} data-change="${escapeText(step.focusLabel||(prior.has(k)?'Changed':'New'))}"`:m;});}
 function visualFrame(step,key,previous,lessonKey="",meta={}){
  const esc=escapeText,nodes=step.nodes||[],edges=step.edges||[],byId=Object.fromEntries(nodes.map(n=>[n.id,n])),layout=visualLayout(nodes,edges);
  const wrap=(s,max)=>{const lines=[''];String(s).split(' ').forEach(w=>{if((lines.at(-1)+' '+w).trim().length>max&&lines.at(-1))lines.push(w);else lines[lines.length-1]=(lines.at(-1)+' '+w).trim();});return lines;};

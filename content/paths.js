@@ -9021,6 +9021,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Assign second = first",
+                  "focus": [
+                    "objects-second"
+                  ],
                   "explanation": "Assignment copies the reference, so both variables name the same object. It does not clone TaskItem.",
                   "nodes": [
                     {
@@ -9063,6 +9066,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Call second.Complete()",
+                  "focus": [
+                    "objects-one",
+                    "objects-first"
+                  ],
                   "explanation": "Complete changes object #1. Reading first.Done now returns true because first still names that object.",
                   "nodes": [
                     {
@@ -9156,6 +9163,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Copy selected data",
+                  "focus": [
+                    "objects-two",
+                    "objects-second"
+                  ],
                   "explanation": "second = new TaskItem(first.Title) creates object #2 with its own Done property. Copy semantics must be chosen deliberately.",
                   "nodes": [
                     {
@@ -9206,6 +9217,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Complete only the copy",
+                  "focus": [
+                    "objects-two",
+                    "objects-second"
+                  ],
                   "explanation": "second.Complete() changes #2. #1 remains incomplete. Shared nested mutable references would require their own copying decision.",
                   "nodes": [
                     {
@@ -9593,6 +9608,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Request cancellation",
+                  "focus": [
+                    "async-token",
+                    "async-wait"
+                  ],
                   "explanation": "Cancel marks the token as requested. The delay observes the request and completes as canceled rather than returning a value.",
                   "nodes": [
                     {
@@ -9643,6 +9662,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Observe at the boundary",
+                  "focus": [
+                    "async-caller",
+                    "async-method"
+                  ],
                   "explanation": "The caller catches OperationCanceledException for this canceled operation. LoadAsync never reaches return 42.",
                   "nodes": [
                     {
@@ -9744,6 +9767,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Request is ignored here",
+                  "focus": [
+                    "async-token"
+                  ],
                   "explanation": "Cancel sets the caller's token, but this delay has no connection to it. Requesting cancellation alone cannot stop arbitrary code.",
                   "nodes": [
                     {
@@ -9794,6 +9820,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Wait finishes normally",
+                  "focus": [
+                    "async-method",
+                    "async-caller"
+                  ],
                   "explanation": "After the delay, this method returns 42. Passing a token parameter is insufficient unless downstream operations observe it.",
                   "nodes": [
                     {
@@ -10328,6 +10358,11 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "First resolution",
+                  "focus": [
+                    "di-S1",
+                    "di-C1",
+                    "di-T1"
+                  ],
                   "explanation": "The container creates singleton S1, scoped C1 and transient T1 on their first resolutions.",
                   "nodes": [
                     {
@@ -10383,6 +10418,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Second resolution",
+                  "focus": [
+                    "di-T2"
+                  ],
                   "explanation": "In scope A, singleton and scoped identities repeat. Transient resolution creates T2; it does not reuse T1.",
                   "nodes": [
                     {
@@ -10499,6 +10537,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Request A ends",
+                  "focus": [
+                    "di-request-A",
+                    "di-C1"
+                  ],
                   "explanation": "Scope A ends; container-owned scoped services are disposed. The singleton stays with the root provider. This trace stops using T1.",
                   "nodes": [
                     {
@@ -10538,6 +10580,11 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Request B resolves",
+                  "focus": [
+                    "di-request-B",
+                    "di-C2",
+                    "di-T2"
+                  ],
                   "explanation": "Scope B gets C2 and a new transient T2, but the root singleton remains S1. A singleton must not capture a scoped DbContext.",
                   "nodes": [
                     {
@@ -11385,6 +11432,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Require write permission",
+                  "focus": [
+                    "auth-policy"
+                  ],
                   "explanation": "Subject A has tasks.write, so the policy passes. That permission alone does not establish ownership of task 7.",
                   "nodes": [
                     {
@@ -11435,6 +11485,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Check owner and mutate",
+                  "focus": [
+                    "auth-owner",
+                    "auth-response"
+                  ],
                   "explanation": "The trusted subject matches OwnerId. The endpoint applies the validated write and returns the chosen successful response.",
                   "nodes": [
                     {
@@ -11531,6 +11585,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Coarse policy still passes",
+                  "focus": [
+                    "auth-policy"
+                  ],
                   "explanation": "B also has tasks.write. Letting the write proceed here would expose A's resource; the endpoint still checks the owner.",
                   "nodes": [
                     {
@@ -11576,6 +11633,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Deny without modifying",
+                  "focus": [
+                    "auth-owner",
+                    "auth-response"
+                  ],
                   "explanation": "B does not match owner A. This API returns 404 consistently; the stored task stays unchanged. Invalid identity instead stops at authentication (401), and missing write permission stops at policy (403).",
                   "nodes": [
                     {
@@ -18456,6 +18517,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "First removal",
+                  "focus": [
+                    "C"
+                  ],
                   "explanation": "C leaves first under LIFO.",
                   "nodes": [
                     {
@@ -18487,6 +18551,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Drain the collection",
+                  "focus": [
+                    "B",
+                    "A"
+                  ],
                   "explanation": "The complete departure order is C → B → A.",
                   "nodes": [
                     {
@@ -18562,6 +18630,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "First removal",
+                  "focus": [
+                    "A"
+                  ],
                   "explanation": "A leaves first under FIFO.",
                   "nodes": [
                     {
@@ -18593,6 +18664,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Drain the collection",
+                  "focus": [
+                    "B",
+                    "C"
+                  ],
                   "explanation": "The complete departure order is A → B → C.",
                   "nodes": [
                     {
@@ -18920,6 +18995,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Insert item 2",
+                  "focus": [
+                    "value-3"
+                  ],
                   "explanation": "Insert 3 into the sorted prefix, shifting 1 larger item(s) right.",
                   "nodes": [
                     {
@@ -18963,6 +19041,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Insert item 3",
+                  "focus": [
+                    "value-2"
+                  ],
                   "explanation": "Insert 2 into the sorted prefix, shifting 2 larger item(s) right.",
                   "nodes": [
                     {
@@ -19006,6 +19087,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Insert item 4",
+                  "focus": [
+                    "value-1"
+                  ],
                   "explanation": "Insert 1 into the sorted prefix, shifting 3 larger item(s) right.",
                   "nodes": [
                     {
@@ -19098,6 +19182,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Insert item 2",
+                  "focus": [
+                    "value-3"
+                  ],
                   "explanation": "Insert 3 into the sorted prefix, shifting 0 larger item(s) right.",
                   "nodes": [
                     {
@@ -19141,6 +19228,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Insert item 3",
+                  "focus": [
+                    "value-2"
+                  ],
                   "explanation": "Insert 2 into the sorted prefix, shifting 1 larger item(s) right.",
                   "nodes": [
                     {
@@ -19184,6 +19274,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Insert item 4",
+                  "focus": [
+                    "value-4"
+                  ],
                   "explanation": "Insert 4 into the sorted prefix, shifting 0 larger item(s) right.",
                   "nodes": [
                     {
@@ -19353,6 +19446,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Return from left leaf",
+                  "focus": [
+                    "emitted-B"
+                  ],
                   "explanation": "B has no children, so its recursive call returns to A.",
                   "nodes": [
                     {
@@ -19410,6 +19506,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Finish the right subtree",
+                  "focus": [
+                    "emitted-C"
+                  ],
                   "explanation": "C returns to A, then the root call finishes.",
                   "nodes": [
                     {
@@ -19530,6 +19629,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Return from left leaf",
+                  "focus": [
+                    "emitted-B"
+                  ],
                   "explanation": "B has no children, so its recursive call returns to A.",
                   "nodes": [
                     {
@@ -19587,6 +19689,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Finish the right subtree",
+                  "focus": [
+                    "emitted-C",
+                    "emitted-A"
+                  ],
                   "explanation": "C returns to A, then the root call finishes.",
                   "nodes": [
                     {
@@ -19776,6 +19882,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Compare with 3",
+                  "focus": [
+                    "3"
+                  ],
                   "explanation": "Target 6 is greater than 3: follow its right child.",
                   "nodes": [
                     {
@@ -19831,6 +19940,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Compare with 6",
+                  "focus": [
+                    "6"
+                  ],
                   "explanation": "The key matches. Return this node.",
                   "nodes": [
                     {
@@ -19949,6 +20061,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Compare with 3",
+                  "focus": [
+                    "3"
+                  ],
                   "explanation": "Target 5 is greater than 3: follow its right child.",
                   "nodes": [
                     {
@@ -20004,6 +20119,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Compare with 6",
+                  "focus": [
+                    "6"
+                  ],
                   "explanation": "5 is less than 6, but 6 has no left child. The search ends.",
                   "nodes": [
                     {
@@ -20191,6 +20309,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Expand A",
+                  "focus": [
+                    "graph-B",
+                    "queue-B"
+                  ],
                   "explanation": "Remove A and discover B. Record B’s parent as A.",
                   "nodes": [
                     {
@@ -20252,6 +20374,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Expand B",
+                  "focus": [
+                    "graph-C"
+                  ],
                   "explanation": "Discover C from B, record its parent, and reconstruct A → B → C.",
                   "nodes": [
                     {
@@ -20371,6 +20496,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Expand A",
+                  "focus": [
+                    "graph-B",
+                    "queue-B"
+                  ],
                   "explanation": "Remove A and discover B. Record B’s parent as A.",
                   "nodes": [
                     {
@@ -20427,6 +20556,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Expand B",
+                  "focus": [
+                    "graph-C"
+                  ],
                   "explanation": "B has no undiscovered neighbors. The queue empties without discovering C.",
                   "nodes": [
                     {
@@ -20693,6 +20825,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Follow one link",
+                  "focus": [
+                    "B"
+                  ],
                   "explanation": "Read A.next to reach B; a linked list does not provide constant-time access by index.",
                   "nodes": [
                     {
@@ -20735,6 +20870,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Reach the tail",
+                  "focus": [
+                    "C"
+                  ],
                   "explanation": "Read B.next to reach C. C.next is null, so traversal finishes.",
                   "nodes": [
                     {
@@ -20820,6 +20958,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Link X first",
+                  "focus": [
+                    "X"
+                  ],
                   "explanation": "Set X.next = A.next, preserving access to B.",
                   "nodes": [
                     {
@@ -20862,6 +21003,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Reconnect A",
+                  "focus": [
+                    "A"
+                  ],
                   "explanation": "Set A.next = X. The chain is now A → X → B, with no nodes lost.",
                   "nodes": [
                     {
@@ -25570,6 +25714,7 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Evaluate keys",
+                  "focus": [],
                   "explanation": "sorted evaluates the selected key for each record. Title keys compare alphabetically; numeric keys compare durations.",
                   "nodes": [
                     {
@@ -25612,6 +25757,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Return new ordering",
+                  "focus": [
+                    "record-API",
+                    "record-SQL"
+                  ],
                   "explanation": "The workflow returns a new list ordered API, SQL. The duration policy changes order; neither policy mutates the input.",
                   "nodes": [
                     {
@@ -25697,6 +25846,7 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Evaluate keys",
+                  "focus": [],
                   "explanation": "sorted evaluates the selected key for each record. Title keys compare alphabetically; numeric keys compare durations.",
                   "nodes": [
                     {
@@ -25739,6 +25889,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Return new ordering",
+                  "focus": [
+                    "record-SQL",
+                    "record-API"
+                  ],
                   "explanation": "The workflow returns a new list ordered SQL, API. The duration policy changes order; neither policy mutates the input.",
                   "nodes": [
                     {
@@ -26199,6 +26353,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Check source meaning",
+                  "focus": [
+                    "seconds"
+                  ],
+                  "focusLabel": "Check",
                   "explanation": "An exact nonnegative int is required: bool and nonintegers also fail. 125 passes validation.",
                   "nodes": [
                     {
@@ -26236,6 +26394,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Return or propagate",
+                  "focus": [
+                    "minutes"
+                  ],
                   "explanation": "Floor conversion intentionally discards 5 seconds.",
                   "nodes": [
                     {
@@ -26321,6 +26482,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Check source meaning",
+                  "focus": [
+                    "seconds"
+                  ],
+                  "focusLabel": "Check",
                   "explanation": "An exact nonnegative int is required: bool and nonintegers also fail. -1 fails before any conversion.",
                   "nodes": [
                     {
@@ -26358,6 +26523,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Return or propagate",
+                  "focus": [
+                    "minutes"
+                  ],
                   "explanation": "No fabricated minute value is returned. ValueError reaches the caller; upstream data must be corrected.",
                   "nodes": [
                     {
@@ -26662,6 +26830,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Delegate once",
+                  "focus": [
+                    "formatter-output"
+                  ],
                   "explanation": "The wrapper calls the formatter exactly once. It returns A,BC, four characters including the comma.",
                   "nodes": [
                     {
@@ -26704,6 +26875,7 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Unwind to caller",
+                  "focus": [],
                   "explanation": "After successful return, append(4) runs and the same text returns.",
                   "nodes": [
                     {
@@ -26784,6 +26956,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Delegate once",
+                  "focus": [
+                    "formatter-output"
+                  ],
                   "explanation": "The wrapper calls the formatter exactly once. It raises before a text value exists; append has not run.",
                   "nodes": [
                     {
@@ -26826,6 +27001,7 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Unwind to caller",
+                  "focus": [],
                   "explanation": "The exception unwinds through the wrapper unchanged. sizes remains empty because success recording is skipped.",
                   "nodes": [
                     {
@@ -27315,6 +27491,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Deliver to Badge",
+                  "focus": [
+                    "badge"
+                  ],
                   "explanation": "A synchronous lesson-completed event calls Badge first. Badge succeeds; delivery may continue.",
                   "nodes": [
                     {
@@ -27352,6 +27531,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Finish publication",
+                  "focus": [
+                    "counter"
+                  ],
                   "explanation": "Counter runs next and publication returns.",
                   "nodes": [
                     {
@@ -27437,6 +27619,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Deliver to Badge",
+                  "focus": [
+                    "badge"
+                  ],
                   "explanation": "A synchronous lesson-completed event calls Badge first. Badge raises ValueError; fail-fast policy stops iteration.",
                   "nodes": [
                     {
@@ -27474,6 +27659,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Finish publication",
+                  "focus": [
+                    "counter"
+                  ],
+                  "focusLabel": "Skipped",
                   "explanation": "Counter is skipped and the exception reaches the publisher caller. Registration does not guarantee delivery.",
                   "nodes": [
                     {
@@ -36833,6 +37022,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Replace one record",
+                  "focus": [
+                    "components-app"
+                  ],
                   "explanation": "App creates updated data with the types record renamed to Data types. The children do not mutate their received props.",
                   "nodes": [
                     {
@@ -36875,6 +37067,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Render the new props",
+                  "focus": [
+                    "components-types"
+                  ],
                   "explanation": "The next render supplies Data types to the row with key types. The state row still receives State; the key itself is not a title prop.",
                   "nodes": [
                     {
@@ -36965,6 +37160,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Invoke the callback",
+                  "focus": [
+                    "components-types",
+                    "components-app"
+                  ],
                   "explanation": "Clicking the types row calls onComplete. App receives the intent for types; the row does not assign to props.done.",
                   "nodes": [
                     {
@@ -37007,6 +37206,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Parent renders new data",
+                  "focus": [
+                    "components-app",
+                    "components-types"
+                  ],
                   "explanation": "App replaces the changed record and requests a render. The types row now receives done=true; state stays incomplete.",
                   "nodes": [
                     {
@@ -37294,6 +37497,11 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Queue three replacements",
+                  "focus": [
+                    "state-update-0",
+                    "state-update-1",
+                    "state-update-2"
+                  ],
                   "explanation": "Each setCount(count + 1) evaluates to setCount(1). Calling the setter does not change count in the current handler.",
                   "nodes": [
                     {
@@ -37339,6 +37547,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Next render shows one",
+                  "focus": [
+                    "state-snapshot",
+                    "state-screen"
+                  ],
                   "explanation": "After the event, React processes the replacements and renders count=1. Three identical replacements did not add three.",
                   "nodes": [
                     {
@@ -37440,6 +37652,11 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Queue three functions",
+                  "focus": [
+                    "state-update-0",
+                    "state-update-1",
+                    "state-update-2"
+                  ],
                   "explanation": "Each setCount(c => c + 1) queues a pure updater. Each updater receives the previous queued result rather than this handler's count.",
                   "nodes": [
                     {
@@ -37485,6 +37702,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Next render shows three",
+                  "focus": [
+                    "state-snapshot",
+                    "state-screen"
+                  ],
                   "explanation": "The composed updater result is three. Updaters must remain pure because React may call them again during development checks.",
                   "nodes": [
                     {
@@ -37815,6 +38036,11 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Selection changes to B",
+                  "focus": [
+                    "effects-selection",
+                    "effects-effect",
+                    "effects-roomA"
+                  ],
                   "explanation": "Before setting up B, React runs A's cleanup. A1 closes; the cleanup uses its captured connection, not the new room's connection.",
                   "nodes": [
                     {
@@ -37860,6 +38086,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Set up B and later unmount",
+                  "focus": [
+                    "effects-roomB"
+                  ],
                   "explanation": "Setup opens B1. When the component unmounts its returned cleanup closes B1; neither room retains an active subscription.",
                   "nodes": [
                     {
@@ -37956,6 +38185,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Switch to B",
+                  "focus": [
+                    "effects-roomA"
+                  ],
+                  "focusLabel": "Still open",
                   "explanation": "React has no returned cleanup to call. Setup for B opens B1 while A1 remains subscribed, so old-room events can still arrive.",
                   "nodes": [
                     {
@@ -38001,6 +38234,11 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Unmount leaves resources",
+                  "focus": [
+                    "effects-roomA",
+                    "effects-roomB"
+                  ],
+                  "focusLabel": "Leaked",
                   "explanation": "Unmount alone cannot disconnect a resource the Effect never cleans up. Both connections remain in this faulty model. Strict Mode's extra setup cycle helps expose the defect.",
                   "nodes": [
                     {
@@ -38647,6 +38885,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Select B; B resolves first",
+                  "focus": [
+                    "race-reqB",
+                    "race-screen"
+                  ],
                   "explanation": "Selection changes to B and B returns data first. The screen briefly shows the correct B data, while A is still pending.",
                   "nodes": [
                     {
@@ -38697,6 +38939,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "A arrives late",
+                  "focus": [
+                    "race-reqA",
+                    "race-screen"
+                  ],
                   "explanation": "A's obsolete callback overwrites the view. The heading still says B but the body shows A: a stale-result bug.",
                   "nodes": [
                     {
@@ -38793,6 +39039,11 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Cleanup A; resolve B",
+                  "focus": [
+                    "race-reqA",
+                    "race-reqB",
+                    "race-screen"
+                  ],
                   "explanation": "Changing to B runs A's cleanup: active=false and abort requested. B has its own active flag, resolves, and commits B data.",
                   "nodes": [
                     {
@@ -38843,6 +39094,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Late A is ignored",
+                  "focus": [
+                    "race-reqA"
+                  ],
                   "explanation": "The adapter ignores abort and A still resolves. Its callback sees active=false and skips setView, preserving B. A late failure is ignored by the same guard.",
                   "nodes": [
                     {
@@ -72862,6 +73116,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Authorize and commit",
+                  "focus": [
+                    "api-hop",
+                    "db-row"
+                  ],
                   "explanation": "At 120 ms the API authenticates the learner and checks record ownership. At 180 ms a transaction commits version 8.",
                   "nodes": [
                     {
@@ -72904,6 +73162,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Return the outcome",
+                  "focus": [
+                    "browser"
+                  ],
                   "explanation": "At 220 ms the browser receives 200 with version 8. A transport connection alone was never the completion criterion.",
                   "nodes": [
                     {
@@ -72994,6 +73255,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Commit survives reply loss",
+                  "focus": [
+                    "db-row",
+                    "browser"
+                  ],
                   "explanation": "Version 8 commits at 180 ms, but a connection failure prevents delivery of the response. Timeout is an uncertain outcome, not evidence of rollback.",
                   "nodes": [
                     {
@@ -73036,6 +73301,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Resolve uncertainty",
+                  "focus": [
+                    "browser"
+                  ],
                   "explanation": "At 500 ms stop waiting. An authorized follow-up read returns version 8; conflicting edits still require version checks. No blind claim that the write failed.",
                   "nodes": [
                     {
@@ -73623,6 +73891,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Commit result",
+                  "focus": [
+                    "store-lane"
+                  ],
                   "explanation": "The worker creates a deterministic output and atomically stores J42=complete with its reference. External email or payments would need their own duplicate protection.",
                   "nodes": [
                     {
@@ -73660,6 +73931,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Acknowledge",
+                  "focus": [
+                    "queue-lane"
+                  ],
                   "explanation": "Only after the durable result exists does the worker acknowledge. The queue can retire this delivery.",
                   "nodes": [
                     {
@@ -73745,6 +74019,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Redelivery",
+                  "focus": [
+                    "queue-lane",
+                    "worker-lane"
+                  ],
                   "explanation": "After the chosen 30-second visibility window, J42 is delivered again. The replacement worker checks durable identity before applying effects.",
                   "nodes": [
                     {
@@ -73787,6 +74065,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Reuse and acknowledge",
+                  "focus": [
+                    "queue-lane",
+                    "worker-lane"
+                  ],
                   "explanation": "The worker reuses the existing result and acknowledges. Unique identity plus atomic state prevents a second result in this model; it does not promise exactly-once external effects.",
                   "nodes": [
                     {
@@ -74584,6 +74866,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Back off once",
+                  "focus": [
+                    "retry-owner"
+                  ],
                   "explanation": "Wait 50 ms. At t=200 ms the second attempt starts with 400 ms left. This illustrated wait is one sampled jitter value, not a global synchronized schedule.",
                   "nodes": [
                     {
@@ -74621,6 +74906,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Return success",
+                  "focus": [
+                    "caller",
+                    "dependency"
+                  ],
                   "explanation": "Attempt 2 completes in 80 ms. Total modeled elapsed time is 280 ms; no third attempt is needed.",
                   "nodes": [
                     {
@@ -74706,6 +74995,9 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Final bounded attempt",
+                  "focus": [
+                    "retry-owner"
+                  ],
                   "explanation": "Wait 100 ms, then attempt 3 starts at t=450 ms. Its timeout is min(150 ms, remaining 150 ms). No nested retry layer is allowed in this model.",
                   "nodes": [
                     {
@@ -74743,6 +75035,10 @@ const LEARNING_PATHS = [
                 },
                 {
                   "title": "Stop at deadline",
+                  "focus": [
+                    "caller",
+                    "retry-owner"
+                  ],
                   "explanation": "At 600 ms the final attempt times out. Return a controlled failure and release the concurrency slot; cancellation cannot guarantee the dependency never applied an effect.",
                   "nodes": [
                     {

@@ -52,6 +52,7 @@
           },
           {
             "title": "Evaluate keys",
+            "focus": [],
             "explanation": "sorted evaluates the selected key for each record. Title keys compare alphabetically; numeric keys compare durations.",
             "nodes": [
               {
@@ -94,6 +95,10 @@
           },
           {
             "title": "Return new ordering",
+            "focus": [
+              "record-API",
+              "record-SQL"
+            ],
             "explanation": "The workflow returns a new list ordered API, SQL. The duration policy changes order; neither policy mutates the input.",
             "nodes": [
               {
@@ -179,6 +184,7 @@
           },
           {
             "title": "Evaluate keys",
+            "focus": [],
             "explanation": "sorted evaluates the selected key for each record. Title keys compare alphabetically; numeric keys compare durations.",
             "nodes": [
               {
@@ -221,6 +227,10 @@
           },
           {
             "title": "Return new ordering",
+            "focus": [
+              "record-SQL",
+              "record-API"
+            ],
             "explanation": "The workflow returns a new list ordered SQL, API. The duration policy changes order; neither policy mutates the input.",
             "nodes": [
               {
@@ -313,6 +323,10 @@
           },
           {
             "title": "Check source meaning",
+            "focus": [
+              "seconds"
+            ],
+            "focusLabel": "Check",
             "explanation": "An exact nonnegative int is required: bool and nonintegers also fail. 125 passes validation.",
             "nodes": [
               {
@@ -350,6 +364,9 @@
           },
           {
             "title": "Return or propagate",
+            "focus": [
+              "minutes"
+            ],
             "explanation": "Floor conversion intentionally discards 5 seconds.",
             "nodes": [
               {
@@ -435,6 +452,10 @@
           },
           {
             "title": "Check source meaning",
+            "focus": [
+              "seconds"
+            ],
+            "focusLabel": "Check",
             "explanation": "An exact nonnegative int is required: bool and nonintegers also fail. -1 fails before any conversion.",
             "nodes": [
               {
@@ -472,6 +493,9 @@
           },
           {
             "title": "Return or propagate",
+            "focus": [
+              "minutes"
+            ],
             "explanation": "No fabricated minute value is returned. ValueError reaches the caller; upstream data must be corrected.",
             "nodes": [
               {
@@ -559,6 +583,9 @@
           },
           {
             "title": "Delegate once",
+            "focus": [
+              "formatter-output"
+            ],
             "explanation": "The wrapper calls the formatter exactly once. It returns A,BC, four characters including the comma.",
             "nodes": [
               {
@@ -601,6 +628,7 @@
           },
           {
             "title": "Unwind to caller",
+            "focus": [],
             "explanation": "After successful return, append(4) runs and the same text returns.",
             "nodes": [
               {
@@ -681,6 +709,9 @@
           },
           {
             "title": "Delegate once",
+            "focus": [
+              "formatter-output"
+            ],
             "explanation": "The wrapper calls the formatter exactly once. It raises before a text value exists; append has not run.",
             "nodes": [
               {
@@ -723,6 +754,7 @@
           },
           {
             "title": "Unwind to caller",
+            "focus": [],
             "explanation": "The exception unwinds through the wrapper unchanged. sizes remains empty because success recording is skipped.",
             "nodes": [
               {
@@ -815,6 +847,9 @@
           },
           {
             "title": "Deliver to Badge",
+            "focus": [
+              "badge"
+            ],
             "explanation": "A synchronous lesson-completed event calls Badge first. Badge succeeds; delivery may continue.",
             "nodes": [
               {
@@ -852,6 +887,9 @@
           },
           {
             "title": "Finish publication",
+            "focus": [
+              "counter"
+            ],
             "explanation": "Counter runs next and publication returns.",
             "nodes": [
               {
@@ -937,6 +975,9 @@
           },
           {
             "title": "Deliver to Badge",
+            "focus": [
+              "badge"
+            ],
             "explanation": "A synchronous lesson-completed event calls Badge first. Badge raises ValueError; fail-fast policy stops iteration.",
             "nodes": [
               {
@@ -974,6 +1015,10 @@
           },
           {
             "title": "Finish publication",
+            "focus": [
+              "counter"
+            ],
+            "focusLabel": "Skipped",
             "explanation": "Counter is skipped and the exception reaches the publisher caller. Registration does not guarantee delivery.",
             "nodes": [
               {
