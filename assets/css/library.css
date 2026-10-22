@@ -133,3 +133,15 @@ html[data-theme=dark] .catalog :is(.branch-stop,.map-results) .map-node.is-start
 html[data-theme=dark] .catalog :is(.map-node:not(.is-started),.catalog-item:not(.is-started)) :is(.subject-symbol,.catalog-subject){background:transparent!important;color:var(--night-muted)!important;box-shadow:inset 0 0 0 1px var(--night-line)}
 html[data-theme=dark] .catalog-item.is-started .catalog-subject{background:var(--night-hover);color:var(--night-accent)}
 html[data-theme=dark] :is(.catalog-name :is(a,span),.catalog-item.is-started .catalog-progress){color:var(--night-text)}html[data-theme=dark] :is(.catalog-group h3,.catalog-name small,.catalog-progress,.catalog-item.is-planned .catalog-name span){color:var(--night-muted)}html[data-theme=dark] .catalog-next{color:var(--night-accent)}html[data-theme=dark] .catalog-progress .node-progress{background:var(--night-line)}html[data-theme=dark] .catalog-item.is-started .catalog-progress .node-progress>span{background:var(--night-accent)}
+
+/* Review: the home card pairs with the resume card; the page reuses lesson checkpoint styles. */
+.catalog .review-card.is-quiet{margin:-14px 0 28px;font-size:14px;color:#425466}.catalog .review-card.is-quiet p{margin:0}
+.review-page{max-width:760px}.review-list{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:20px}
+.review-item h2{font-size:19px;line-height:1.4;margin:6px 0 12px}.review-source{margin:0;font-size:14px}.review-source a{background:none;padding:0}
+.review-missed{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;background:#fbeee0;color:#7a3e0c;font-size:14px;font-weight:600}
+.review-note{margin:6px 0 0;font-size:14px}.review-note:empty,.review-feedback:empty{display:none}
+html[data-theme=dark] .catalog .review-card.is-quiet,html[data-theme=dark] .review-note{color:var(--night-muted)}html[data-theme=dark] .review-missed{background:#4a3520;color:#f1c99c}
+.review-undo{margin-left:4px;min-height:24px}
+.review-schedule{margin-top:36px;padding-top:20px;border-top:1px solid var(--line)}.review-schedule h2{font-size:19px;margin:0 0 8px}.review-schedule ul{list-style:none;margin:0;padding:0}
+.review-schedule li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}.review-schedule li a{background:none;padding:0}.review-schedule li span{color:#526477;font-size:14px}
+html[data-theme=dark] .review-schedule li span{color:var(--night-muted)}
