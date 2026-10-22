@@ -71,8 +71,11 @@ self.addEventListener('message',event=>{
 });
 async function cached(file){
  const url=absolute(file),shell=await (await caches.open(SHELL)).match(url);if(shell)return shell;
- const owner=CONFIG.courses.find(c=>c.files.includes(file));if(!owner)return;
- const r=await record(owner.id);if(r?.version===(owner.version||CONFIG.version))return (await caches.open(r.cache)).match(url);
+ // A file can belong to several courses (the Python runtime); any saved owner can serve it.
+ for(const owner of CONFIG.courses.filter(c=>c.files.includes(file))){
+  const r=await record(owner.id);if(r?.version!==(owner.version||CONFIG.version))continue;
+  const hit=await (await caches.open(r.cache)).match(url);if(hit)return hit;
+ }
 }
 self.addEventListener('fetch',event=>{
  const url=new URL(event.request.url);if(event.request.method!=='GET'||url.origin!==BASE.origin||!url.pathname.startsWith(BASE.pathname))return;

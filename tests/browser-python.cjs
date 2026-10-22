@@ -20,5 +20,22 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
   ['def another(a,b): return 0',/Define sum_approved/],
   ['raise SystemExit()',/SystemExit/]
  ]){const result=await run(code,problem);assert.equal(result.ok,false);assert.match(result.text,match);}
- console.log('PASS: real browser Python runtime executes all 30 references / 192 cases and rejects wrong answers, types, mutation, syntax, missing functions and SystemExit.');
+ // Lesson starters run as scripts: every runnable Python course solution must finish cleanly in the browser runtime.
+ const runCode=async code=>{const messages=[],self={postMessage:data=>messages.push(data)};vm.runInNewContext(source,{self,importScripts:()=>{},loadPyodide:async()=>py,JSON,String});await self.onmessage({data:{mode:'run',runtime,code}});return messages.at(-1);};
+ const course=require(path.resolve('scripts/manifest.cjs')).readPaths().find(p=>p.id==='python').lessons;
+ const runnable=course.filter(l=>!l.exercise.runLocally&&l.exercise.solutionFormat!=='prose');
+ assert.equal(runnable.length,21,'Two lessons are marked to run locally');
+ for(const l of runnable){const r=await runCode(l.exercise.solution);assert.equal(r.ok,true,l.id+': '+r.error);assert.ok(r.output,l.id+': the reference prints its result');}
+ for(const [code,check] of [
+  ['print("a")\nprint("b")',r=>r.ok&&r.output==='a\nb\n'&&!r.error],
+  ['x = 1',r=>r.ok&&r.output===''],
+  ['print("x"*30000)',r=>r.ok&&r.truncated&&r.output.length===20000],
+  ['import sys; sys.exit(0)',r=>r.ok&&!r.error],
+  ['raise SystemExit(3)',r=>!r.ok&&r.error==='Exited with status 3.'],
+  ['input("name? ")',r=>!r.ok&&/EOFError/.test(r.error)&&/Assign a value instead/.test(r.error)],
+  ['def f():\n    return 1/0\nprint("before")\nf()',r=>!r.ok&&r.output==='before\n'&&/line 4/.test(r.error)&&r.error.includes('line 2, in f\n    return 1/0')&&/ZeroDivisionError/.test(r.error)&&!/exec|<string>/.test(r.error)],
+  ['def broken(',r=>!r.ok&&/SyntaxError/.test(r.error)],
+  ['import sys; print("oops", file=sys.stderr)',r=>r.ok&&r.output==='oops\n']
+ ]){const r=await runCode(code);assert.ok(check(r),code+' -> '+JSON.stringify(r));}
+ console.log('PASS: real browser Python runtime executes all 30 references / 192 cases and rejects wrong answers, types, mutation, syntax, missing functions and SystemExit; runs 21 Python course references as scripts with bounded output, exit codes, no stdin and learner-only tracebacks.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

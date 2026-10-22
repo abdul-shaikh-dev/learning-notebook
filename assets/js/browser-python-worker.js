@@ -1,9 +1,46 @@
-/* One fresh worker per attempt. Terminating it also stops an infinite Python loop. */
+/* One fresh worker per attempt or run. Terminating it also stops an infinite Python loop. */
 self.onmessage=async ({data})=>{
  try{
   importScripts(data.runtime+'pyodide.js');
   const py=await loadPyodide({indexURL:data.runtime,stdout:()=>{},stderr:()=>{}});
   self.postMessage({type:'ready'});
+  // Lesson starters: run as a script, keep at most 20,000 characters of output and show only the learner's frames.
+  if(data.mode==='run'){
+   py.globals.set('_code',data.code);
+   const output=py.runPython(String.raw`
+import json, contextlib, traceback, sys, io
+LIMIT=20000
+class Capped:
+    def __init__(self): self.parts=[]; self.size=0; self.cut=False
+    def write(self, value):
+        room=LIMIT-self.size
+        if room>0:
+            self.parts.append(value[:room]); self.size+=min(len(value),room)
+        if len(value)>max(room,0): self.cut=True
+        return len(value)
+    def flush(self): pass
+out=Capped()
+sys.stdin=io.StringIO('')
+import linecache
+linecache.cache['main.py']=(len(_code),None,_code.splitlines(True),'main.py')
+def run():
+    try:
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(out):
+            exec(compile(_code,'main.py','exec'),{'__name__':'__main__'})
+        return True,''
+    except SystemExit as error:
+        if error.code in (None,0): return True,''
+        return False,'Exited with status '+repr(error.code)+'.'
+    except BaseException as error:
+        frames=[f for f in traceback.extract_tb(error.__traceback__) if f.filename=='main.py']
+        hint='\ninput() has nothing to read here. Assign a value instead.' if isinstance(error,EOFError) else ''
+        return False,('Traceback (most recent call last):\n'+''.join(traceback.format_list(frames)) if frames else '')+''.join(traceback.format_exception_only(type(error),error)).rstrip()+hint
+ok,problem=run()
+json.dumps({'ok':ok,'output':''.join(out.parts),'truncated':out.cut,'error':problem[-3000:]})
+`);
+   self.postMessage({type:'result',...JSON.parse(output)});
+   return;
+  }
   py.globals.set('_payload',JSON.stringify({code:data.code,...data.problem}));
   const result=py.runPython(String.raw`
 import json, copy, contextlib

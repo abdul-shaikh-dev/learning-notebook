@@ -4,7 +4,9 @@ function configFor(root,files){
  const inventory={};for(const file of [...new Set(files)].sort()){const data=fs.readFileSync(path.join(root,file));inventory[file]={hash:crypto.createHash('sha256').update(data).digest('hex'),bytes:data.length};}
  const shell=Object.keys(inventory).filter(f=>f.startsWith('assets/')||['index.html','offline.html','manifest.webmanifest','content/catalog.js','content/search.js'].includes(f));
  const courses=readPaths().filter(p=>p.status==='ready').map(p=>{
-  const own=[...new Set(['content/courses/'+p.id+'.js',...p.publicFiles.map(f=>'paths/'+p.id+'/'+f),...(p.id==='financial-foundations'?['course.html','handbook.html','practice/sample-positions.csv','practice/answers.md']:[])])];
+  // The Python course runs its starters with the runtime published by Python Problem Solving.
+  const shared=p.id==='python'?(readPaths().find(x=>x.id==='python-problem-solving')?.publicFiles||[]).filter(f=>f.startsWith('runtime/')).map(f=>'paths/python-problem-solving/'+f):[];
+  const own=[...new Set(['content/courses/'+p.id+'.js',...p.publicFiles.map(f=>'paths/'+p.id+'/'+f),...shared,...(p.id==='financial-foundations'?['course.html','handbook.html','practice/sample-positions.csv','practice/answers.md']:[])])];
   for(const f of own)if(!inventory[f])throw Error('Offline file is not published: '+f);
   const version=crypto.createHash('sha256').update(JSON.stringify(own.map(f=>[f,inventory[f].hash]))).digest('hex').slice(0,16);
   return {id:p.id,title:p.title,version,files:own,bytes:own.reduce((n,f)=>n+inventory[f].bytes,0)};

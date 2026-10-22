@@ -7,7 +7,7 @@ const NotebookPractice=(()=>{
  function entry(p,l){const value=read(p.id)[l.id];return value&&typeof value.code==='string'&&value.code.length<=20000&&statuses.includes(value.status)?value:{code:l.exercise.starter,status:'not-started'};}
  function view(p,l){const value=entry(p,l);return `<div class="browser-practice"><label for="challenge-code">Your Python code</label><textarea id="challenge-code" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="20000" aria-describedby="challenge-editor-help">${escapeText(value.code)}</textarea><p id="challenge-editor-help">Ctrl+Enter runs the tests. Tab moves to the next control. Code runs in your browser; the first run loads about 12 MB of Python files.</p><div class="practice-actions"><button type="button" class="primary" id="challenge-run">Run tests</button><button type="button" id="challenge-stop" disabled>Stop</button><button type="button" id="challenge-download">Download my code</button></div><div id="challenge-result" role="status" aria-live="polite">Ready when you are.</div><div class="practice-progress"><label for="challenge-status">Practice status</label><select id="challenge-status">${statuses.map(s=>`<option value="${s}"${s===value.status?' selected':''}>${s==='not-started'?'Not started':s==='attempted'?'Attempted':'Solved'}</option>`).join('')}</select></div><p class="practice-note">Passing tests marks this solved. You can also update the status after working locally. Editing a solution marks it attempted. Reading progress stays separate.</p><p id="challenge-save" role="status">Drafts and practice status stay in this browser and are included in progress backups.</p><p class="practice-note">For offline tests, save this course from <a href="offline.html?course=python-problem-solving">Offline &amp; install</a>. Only the bundled Python standard library is available. Printed output is suppressed; return your answer.</p></div>`;}
  function overview(p){if(!p.lessons?.some(l=>l.exercise?.challenge))return '';const saved=read(p.id),lessons=p.lessons.filter(l=>l.exercise?.challenge);const solved=lessons.filter(l=>saved[l.id]?.status==='solved').length,attempted=lessons.filter(l=>saved[l.id]?.status==='attempted').length;return `<p class="practice-overview">Practice: ${solved} solved · ${attempted} attempted · ${lessons.length-solved-attempted} not started. Reading is tracked separately.</p>`;}
- function bind(p,l){dispose();dispose=()=>{};if(!p||!l?.exercise?.challenge)return;
+ function bind(p,l){dispose();dispose=()=>{};if(runnable(p,l)){bindRunner(p,l);return;}if(!p||!l?.exercise?.challenge)return;
   const code=document.getElementById('challenge-code');if(!code)return;
   const run=document.getElementById('challenge-run'),stop=document.getElementById('challenge-stop'),status=document.getElementById('challenge-status'),result=document.getElementById('challenge-result'),saved=document.getElementById('challenge-save');
   let worker=null,timer=null,controller=null,active=true;
@@ -40,6 +40,40 @@ const NotebookPractice=(()=>{
   code.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key==='Enter'){event.preventDefault();if(!run.disabled)run.click();}});
   document.getElementById('challenge-download').addEventListener('click',()=>{const url=URL.createObjectURL(new Blob([code.value+'\n'],{type:'text/x-python'})),a=document.createElement('a');a.href=url;a.download=l.id+'.py';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
  }
+ // Python course starters run in the same fresh-worker sandbox as challenges, without tests or saved drafts.
+ const runtime=()=>new URL('paths/python-problem-solving/runtime/',document.baseURI).href;
+ const draftKey=(p,l)=>'learning-notebook:runner:'+p.id+':'+l.id;
+ const runnable=(p,l)=>p?.id==='python'&&!!l?.exercise?.starter&&!l.exercise.challenge&&!l.exercise.runLocally;
+ function runner(p,l){
+  const e=l.exercise,local=`<pre class="example" data-language="python" data-code-label="Python starter"><code>${escapeText(e.starter)}</code></pre>`;
+  if(!runnable(p,l))return `<p>${escapeText(e.runLocally||'Copy into a Python file and run locally.')}</p>${local}`;
+  let code=e.starter;try{code=sessionStorage.getItem(draftKey(p,l))??e.starter;}catch{}
+  return `<div class="browser-practice python-runner"><label for="runner-code">Python starter</label><textarea id="runner-code" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="20000" aria-describedby="runner-help">${escapeText(code)}</textarea><p id="runner-help">Edit and run it here, or copy it into a Python file and run it locally. Ctrl+Enter runs; Tab moves to the next control. Only the standard library is available, input() has nothing to read, and the first run loads about 12 MB. Edits last until you close this tab.</p><div class="practice-actions"><button type="button" class="primary" id="runner-run">Run</button><button type="button" id="runner-stop" disabled>Stop</button><button type="button" id="runner-reset">Reset to starter</button></div><div id="runner-output" role="status" aria-live="polite" tabindex="0" aria-label="Output">Output appears here.</div><p class="practice-note">To run this offline, save the Python course from <a href="offline.html?course=python">Offline &amp; install</a>.</p></div>`;
+ }
+ function outputText(r){const text=(r.output||'')+(r.truncated?'\n… Output stopped after 20,000 characters.':'')+(r.error?(r.output?'\n':'')+r.error:'');return text||'Finished with no output. Use print() to see values.';}
+ function bindRunner(p,l){
+  const code=document.getElementById('runner-code');if(!code)return;
+  const run=document.getElementById('runner-run'),stop=document.getElementById('runner-stop'),reset=document.getElementById('runner-reset'),output=document.getElementById('runner-output');
+  let worker=null,timer=null,active=true;
+  const end=()=>{if(worker)worker.terminate();worker=null;clearTimeout(timer);timer=null;run.disabled=false;stop.disabled=true;code.readOnly=false;};
+  dispose=()=>{active=false;end();};
+  code.addEventListener('input',()=>{try{sessionStorage.setItem(draftKey(p,l),code.value);}catch{}});
+  reset.addEventListener('click',()=>{end();code.value=l.exercise.starter;try{sessionStorage.removeItem(draftKey(p,l));}catch{}output.textContent='Starter restored.';});
+  stop.addEventListener('click',()=>{end();output.textContent='Stopped. Your code is still here; revise it and run again.';});
+  run.addEventListener('click',()=>{
+   end();run.disabled=true;stop.disabled=false;code.readOnly=true;output.textContent='Loading Python…';
+   timer=setTimeout(()=>{end();output.textContent='Python could not start within 60 seconds. Retry online, or copy the code and run it locally.';},60000);
+   const current=new Worker(new URL('assets/js/browser-python-worker.js',document.baseURI));worker=current;
+   current.onmessage=({data})=>{
+    if(!active||worker!==current)return;
+    if(data.type==='ready'){clearTimeout(timer);output.textContent='Running…';timer=setTimeout(()=>{end();output.textContent='Stopped after 5 seconds. Check for a loop that never ends, or try a smaller amount of work.';},5000);return;}
+    output.textContent=data.type==='result'?outputText(data):'Python could not run: '+data.text+'\nRetry, or copy the code and run it locally.';end();
+   };
+   current.onerror=()=>{if(worker!==current)return;output.textContent='Python could not load. Retry online, or copy the code and run it locally.';end();};
+   current.postMessage({mode:'run',code:code.value,runtime:runtime()});
+  });
+  code.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key==='Enter'){event.preventDefault();if(!run.disabled)run.click();}});
+ }
  function badge(p,l){if(!l.exercise?.challenge)return '';const status=entry(p,l).status;return '<span class="practice-badge">'+(status==='solved'?'Solved':status==='attempted'?'Attempted':'Not started')+'</span>';}
- return {view,bind,overview,badge,read,entry,key,cleanup:()=>dispose()};
+ return {view,bind,runner,outputText,overview,badge,read,entry,key,cleanup:()=>dispose()};
 })();

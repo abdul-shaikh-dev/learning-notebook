@@ -9,10 +9,10 @@ class Storage{
  async open(name){if(!this.data.has(name))this.data.set(name,new Map());const map=this.data.get(name),url=k=>typeof k==='string'?k:k.url;return {put:async(k,v)=>{map.set(url(k),v.clone());},match:async k=>map.get(url(k))?.clone(),delete:async k=>map.delete(url(k)),keys:async()=>[...map.keys()].map(url=>new Request(url))};}
  async delete(name){this.deleted.push(name);return this.data.delete(name);}
 }
-function worker(version='one',storage=new Storage(),courseVersion){
+function worker(version='one',storage=new Storage(),courseVersion,tweak){
  const listeners={},state={offline:false,bad:null,claims:0,activations:0,requests:[]};
  const self={location:{href:base+'sw.js'},addEventListener:(t,f)=>listeners[t]=f,clients:{claim:async()=>state.claims++},skipWaiting:async()=>state.activations++};
- const settings=config(version);if(courseVersion)settings.courses.forEach(c=>c.version=courseVersion);
+ const settings=config(version);if(courseVersion)settings.courses.forEach(c=>c.version=courseVersion);if(tweak)tweak(settings);
  const context=vm.createContext({self,caches:storage,Response,Request,URL,AbortSignal,crypto:crypto.webcrypto,fetch:async input=>{const url=typeof input==='string'?input:input.url;state.requests.push(url);if(state.offline)throw Error('network unavailable');const file=new URL(url).pathname.slice('/learning-notebook/'.length);return new Response(state.bad===file?'corrupt':bodies[file]||'online',{status:200});}});
  vm.runInContext(template.replace('__PWA_CONFIG__',JSON.stringify(settings)),context);
  async function event(type,extras={}){let pending;listeners[type]({...extras,waitUntil:p=>pending=p});if(pending)await pending;}
@@ -29,6 +29,11 @@ function worker(version='one',storage=new Storage(),courseVersion){
  const writes=new Map(),fakeFs={readFileSync:(f,enc)=>{const b=data.get(f);if(!b)throw Error('Missing fixture '+f);return enc?b.toString():b;},writeFileSync:(f,s)=>writes.set(f,s)};
  const mod={exports:{}};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../scripts/pwa-build.cjs'),'utf8'),{module:mod,require:id=>id==='node:fs'?fakeFs:id==='./manifest.cjs'?{readPaths:()=>ready}:require(id)});
  const first=mod.exports.configFor(root,files),again=mod.exports.configFor(root,[...files].reverse());assert.equal(first.version,again.version);assert.equal(first.courses.length,2);assert.ok(first.shell.includes('assets/app.js'));assert.ok(!first.shell.includes('paths/python/practice.zip'));assert.ok(first.courses.find(c=>c.id==='financial-foundations').files.includes('handbook.html'));assert.throws(()=>mod.exports.configFor(root,files.filter(f=>f!=='paths/python/practice.zip')),/not published/);
+ {const withRuntime=[...ready,{id:'python-problem-solving',title:'Problems',status:'ready',publicFiles:['runtime/pyodide.js','practice/cases.json']}],extra=['content/courses/python-problem-solving.js','paths/python-problem-solving/runtime/pyodide.js','paths/python-problem-solving/practice/cases.json'];
+  for(const x of extra)data.set(path.join(root,x),Buffer.from(x));
+  const shared={exports:{}};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../scripts/pwa-build.cjs'),'utf8'),{module:shared,require:id=>id==='node:fs'?fakeFs:id==='./manifest.cjs'?{readPaths:()=>withRuntime}:require(id)});
+  const c=shared.exports.configFor(root,[...files,...extra]).courses,python=c.find(x=>x.id==='python').files;
+  assert.ok(python.includes('paths/python-problem-solving/runtime/pyodide.js')&&!python.includes('paths/python-problem-solving/practice/cases.json'),'Python course saves the runtime only');}
  mod.exports.buildPwa(root,'output',files);assert.ok(!writes.get(path.join('output','sw.js')).includes('__PWA_CONFIG__'));data.set(path.join(root,'assets/app.js'),Buffer.from('changed-ui'));const ui=mod.exports.configFor(root,files);assert.notEqual(ui.version,first.version);assert.equal(ui.courses[0].version,first.courses[0].version);data.set(path.join(root,'paths/python/practice.zip'),Buffer.from('changed-course'));const changed=mod.exports.configFor(root,files);assert.notEqual(changed.courses[0].version,first.courses[0].version);
 }
 (async()=>{
@@ -57,7 +62,13 @@ function worker(version='one',storage=new Storage(),courseVersion){
  const commit=worker();await commit.message('SAVE_COURSE','python');const committedRegistry=await commit.storage.open(prefix+'downloads');const old=await (await committedRegistry.match(key)).json();const originalDelete=commit.storage.delete.bind(commit.storage);commit.storage.delete=async name=>{if(name===old.cache)throw Error('cleanup unavailable');return originalDelete(name);};assert.equal((await commit.message('SAVE_COURSE','python')).at(-1).ok,true);assert.equal((await commit.status()).courses[0].saved,true);
  // Eviction of shared shell files invalidates offline readiness; save repairs them.
  const evicted=worker();await evicted.event('install');await evicted.message('SAVE_COURSE','python');await evicted.storage.delete(prefix+'shell:one');assert.equal((await evicted.status()).courses[0].saved,false);assert.equal((await evicted.status()).shellReady,false);await evicted.message('SAVE_COURSE','python');assert.equal((await evicted.status()).courses[0].saved,true);
- console.log('PWA worker: integrity, rollback, atomic downloads, scope isolation, updates and offline routing verified.');
+ // A file listed by two courses (the shared Python runtime) is served offline when either course is saved.
+ {bodies['paths/shared/runtime.js']='runtime';
+  const shared=worker('shared',new Storage(),undefined,s=>s.courses.forEach(c=>c.files.push('paths/shared/runtime.js')));await shared.event('install');
+  assert.equal((await shared.message('SAVE_COURSE','react')).at(-1).ok,true);shared.state.offline=true;
+  assert.equal(await (await shared.fetch('paths/shared/runtime.js')).text(),'runtime','The second owner serves the shared file');
+  delete bodies['paths/shared/runtime.js'];}
+ console.log('PWA worker: integrity, rollback, atomic downloads, scope isolation, updates, offline routing and files shared between courses verified.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
 
 // A first install is not an update; only a distinct waiting worker behind an active one is.
