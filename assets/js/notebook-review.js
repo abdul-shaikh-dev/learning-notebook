@@ -35,7 +35,27 @@ const NotebookReview = (() => {
     else entry = {correct:true,streak:before?.correct ? before.streak + 1 : 1,at:now};
     try { localStorage.setItem(key(path.id), JSON.stringify({...saved,[lesson.id]:entry})); }
     catch { return {saved:false,entry}; }
-    return {saved:true,entry};
+    return {saved:true,entry,previous:before || null};
+  }
+  // Undo restores what was saved before a mis-click, so the next choice counts instead.
+  function undo(path, lesson, previous) {
+    const saved = read(path.id);
+    if (previous) saved[lesson.id] = previous; else delete saved[lesson.id];
+    try { localStorage.setItem(key(path.id), JSON.stringify(saved)); return true; }
+    catch { return false; }
+  }
+  // Shows where the answer went, with an undo for mis-clicks; reset() lets the next choice be saved.
+  function showNote(element, path, lesson, result, reset, now = Date.now()) {
+    if (!element) return;
+    element.textContent = note(result, now);
+    if (!result.saved || typeof document === 'undefined' || !element.append) return;
+    const button = document.createElement('button');
+    button.type = 'button'; button.className = 'text-action review-undo'; button.textContent = 'Undo: I chose by mistake';
+    button.addEventListener('click', () => {
+      element.textContent = undo(path, lesson, result.previous) ? 'Answer removed. Your next choice will be saved.' : 'This browser could not remove the answer.';
+      reset();
+    });
+    element.append(' ', button);
   }
   function note(result, now = Date.now()) {
     if (!result.saved) return 'This browser could not save the answer for review.';
@@ -64,20 +84,24 @@ const NotebookReview = (() => {
   function card(now = Date.now()) {
     const all = items(now), due = all.filter(item => item.ready);
     if (!all.length) return '';
-    if (!due.length) return '<section class="review-card is-quiet" aria-label="Review"><p><strong>Review</strong> · Nothing due. The next question returns ' + when(all.reduce((t,item) => Math.min(t,item.due), Infinity), now) + '.</p></section>';
+    if (!due.length) return '<section class="review-card is-quiet" aria-label="Review"><p><strong>Review</strong> · Nothing due. ' + all.length + (all.length === 1 ? ' question is' : ' questions are') + ' scheduled; the next returns ' + when(all.reduce((t,item) => Math.min(t,item.due), Infinity), now) + '. <a href="#review">See the schedule</a></p></section>';
     const missed = due.filter(item => !item.entry.correct).length, paths = new Set(due.map(item => item.path.id)).size;
     return '<section class="resume-card review-card" aria-labelledby="review-card-title"><div><p>Review</p><h2 id="review-card-title">' + due.length + (due.length === 1 ? ' question' : ' questions') + ' to review</h2><small>' +
       (missed ? missed + ' missed · ' : '') + 'From ' + paths + (paths === 1 ? ' course' : ' courses') + '</small></div><a href="#review">Start review <span aria-hidden="true">→</span></a></section>';
   }
   function view(now = Date.now()) {
     const due = dueItems(now), shown = due.filter(item => item.lesson?.quiz).slice(0, LIMIT);
-    const upcoming = items(now).filter(item => !item.ready).length;
+    const upcoming = items(now).filter(item => !item.ready).sort((a,b) => a.due - b.due);
     const head = '<a href="#">← All learning paths</a><h1>Review</h1><p class="intro">Questions you missed come first, then questions due again. Answer from memory before opening the lesson.</p>';
-    if (!shown.length) return '<section class="review-page">' + head + '<p role="status">Nothing to review right now.' + (upcoming ? ' ' + upcoming + (upcoming === 1 ? ' question returns' : ' questions return') + ' later.' : ' Answer a lesson checkpoint to start your review list.') + '</p></section>';
+    // The schedule needs only catalog titles, so it never loads course content.
+    const schedule = upcoming.length ? '<section class="review-schedule" aria-labelledby="review-schedule-title"><h2 id="review-schedule-title">Coming up</h2><ul>' + upcoming.slice(0, 20).map(item =>
+      '<li><a href="#topic/' + esc(item.path.id) + '/' + esc(item.lesson.id) + '">' + esc(item.path.title) + ' · ' + esc(plainTitle(item.lesson.title)) + '</a><span>Returns ' + when(item.due, now) + '</span></li>').join('') + '</ul>' +
+      (upcoming.length > 20 ? '<p class="muted">And ' + (upcoming.length - 20) + ' more.</p>' : '') + '</section>' : '';
+    if (!shown.length) return '<section class="review-page">' + head + '<p role="status">Nothing to review right now.' + (upcoming.length ? '' : ' Answer a lesson checkpoint to start your review list.') + '</p>' + schedule + '</section>';
     return '<section class="review-page">' + head + '<p class="muted">' + shown.length + ' of ' + due.length + ' due questions shown.</p><ol class="review-list">' + shown.map((item, i) =>
       '<li class="quiz review-item" data-review="' + i + '"><p class="review-source"><a href="#topic/' + esc(item.path.id) + '/' + esc(item.lesson.id) + '">' + esc(item.path.title) + ' · ' + esc(plainTitle(item.lesson.title)) + '</a>' + (item.entry.correct ? '' : ' <span class="review-missed">Missed</span>') + '</p>' +
       '<h2 id="review-question-' + i + '">' + esc(item.lesson.quiz.question) + '</h2><div role="group" aria-labelledby="review-question-' + i + '">' + quizChoices(item.path, item.lesson).map(c => '<button class="option" type="button" data-review-choice="' + c.index + '">' + esc(c.text) + '</button>').join('') + '</div>' +
-      '<p class="review-feedback" role="status"></p><p class="review-note muted"></p></li>').join('') + '</ol></section>';
+      '<p class="review-feedback" role="status"></p><p class="review-note muted"></p></li>').join('') + '</ol>' + schedule + '</section>';
   }
   function bind(main, now = () => Date.now()) {
     const shown = dueItems(now()).filter(item => item.lesson?.quiz).slice(0, LIMIT);
@@ -90,9 +114,9 @@ const NotebookReview = (() => {
         row.querySelector('.review-feedback').textContent = (correct ? 'Correct. ' : 'Not quite. ') + item.lesson.quiz.explanation;
         if (answered) return;
         answered = true;
-        row.querySelector('.review-note').textContent = note(record(item.path, item.lesson, correct, now()), now());
+        showNote(row.querySelector('.review-note'), item.path, item.lesson, record(item.path, item.lesson, correct, now()), () => { answered = false; }, now());
       }));
     });
   }
-  return {key,valid,read,record,note,dueAt,items,dueCourses,card,view,bind,INTERVALS};
+  return {key,valid,read,record,undo,note,showNote,dueAt,items,dueCourses,card,view,bind,INTERVALS};
 })();

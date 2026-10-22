@@ -31,7 +31,7 @@ const key=id=>'learning-notebook:path:'+id+':checkpoints:v1';
 // Home card states.
 {assert.equal(make().R.card(T0),'','No card before any checkpoint is answered');
  const quiet=make({[key('sql')]:JSON.stringify({joins:{correct:true,streak:1,at:T0}})}).R.card(T0+DAY/2);
- assert(quiet.includes('is-quiet')&&quiet.includes('Nothing due')&&quiet.includes('tomorrow')&&!quiet.includes('href'));
+ assert(quiet.includes('is-quiet')&&quiet.includes('Nothing due')&&quiet.includes('1 question is scheduled; the next returns tomorrow')&&quiet.includes('href="#review"'),'The quiet card links to the schedule');
  const due=make({[key('python')]:JSON.stringify({dicts:{correct:false,streak:0,at:T0}}),[key('sql')]:JSON.stringify({joins:{correct:true,streak:1,at:T0-2*DAY}})}).R.card(T0);
  assert(due.includes('2 questions to review')&&due.includes('1 missed')&&due.includes('From 2 courses')&&due.includes('href="#review"'));}
 // Review page: due questions only, escaped, linked to the lesson; the first answer is saved, later clicks only explain.
@@ -48,8 +48,22 @@ const key=id=>'learning-notebook:path:'+id+':checkpoints:v1';
  buttons[0].click();assert.equal(feedback.textContent,'Correct. Because <b>keys</b>?.');assert.equal(note.textContent,'Saved for review. It returns in 1 day.');
  const first=data.get(key('python'));buttons[1].click();
  assert.equal(feedback.textContent,'Not quite. Because <b>keys</b>?.');assert.equal(data.get(key('python')),first,'Only the first answer is saved');
- assert(R.view(T0+DAY/2).includes('Nothing to review right now. 2 questions return later.'));
+ const empty=R.view(T0+DAY/2);
+ assert(empty.includes('Nothing to review right now.</p>')&&empty.includes('<h2 id="review-schedule-title">Coming up</h2>'),'The schedule shows when nothing is due');
+ assert(empty.indexOf('Python · Repeat work with loops')<empty.indexOf('Python · Store related values')&&empty.includes('Returns tomorrow'),'Upcoming questions are listed soonest first');
  assert(make().R.view(T0).includes('Answer a lesson checkpoint to start your review list.'));}
+// Undo after a mis-click restores the earlier record (or removes a first answer) and lets the next choice count.
+{const {R,data,ctx,path}=make({[key('python')]:JSON.stringify({dicts:{correct:false,streak:0,at:T0}})}),p=path('python');
+ const made=[];ctx.document={createElement:()=>{const b={listeners:[],addEventListener(t,f){this.listeners.push(f);},click(){this.listeners.forEach(f=>f());}};made.push(b);return b;}};
+ const el={textContent:'',parts:[],append(...x){this.parts.push(...x);}};let resets=0;
+ R.showNote(el,p,p.lessons[0],R.record(p,p.lessons[0],false,T0),()=>resets++,T0);
+ assert.equal(made[0].textContent,'Undo: I chose by mistake');made[0].click();
+ assert.equal(el.textContent,'Answer removed. Your next choice will be saved.');assert.equal(resets,1);
+ assert(!('loops' in JSON.parse(data.get(key('python')))),'A first answer is removed');
+ const r=R.record(p,p.lessons[1],true,T0+1);assert.equal(R.undo(p,p.lessons[1],r.previous),true);
+ assert.deepEqual(JSON.parse(data.get(key('python'))).dicts,{correct:false,streak:0,at:T0},'An earlier record is restored');
+ const quiet={textContent:'',append(){throw Error('no undo after a failed save');}};R.showNote(quiet,p,p.lessons[0],{saved:false,entry:{correct:true,streak:1,at:T0}},()=>{},T0);
+ assert.equal(quiet.textContent,'This browser could not save the answer for review.');}
 // Storage failure is reported, not hidden.
 {const {R,path}=make({},true),p=path('sql');assert.equal(R.note(R.record(p,p.lessons[0],true,T0),T0),'This browser could not save the answer for review.');}
 // The loader fetches only the courses with due questions, once each.
@@ -58,4 +72,4 @@ const key=id=>'learning-notebook:path:'+id+':checkpoints:v1';
  vm.runInContext(fs.readFileSync('assets/js/notebook-loader.js','utf8')+';this.loader=NotebookLoader;',ctx);
  assert.equal(ctx.loader.prepare('review',undefined,()=>{}),true);assert.deepEqual([...requests.map(s=>s.src)],['content/courses/sql.js']);
  ctx.loader.register({id:'sql'});assert.equal(ctx.loader.prepare('review',undefined,()=>{}),false,'Loaded courses need no request');}
-console.log('PASS: checkpoint review schedule, retirement, ordering, corrupt storage, home card, escaped review page, first-answer saving, storage failure and on-demand loading.');
+console.log('PASS: checkpoint review schedule, retirement, ordering, corrupt storage, home card, escaped review page, first-answer saving, mis-click undo, upcoming schedule, storage failure and on-demand loading.');
