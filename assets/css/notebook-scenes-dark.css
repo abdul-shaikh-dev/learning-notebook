@@ -174,3 +174,7 @@
 @media screen {
   html[data-theme="dark"] .visual-playback-panel { border-top-color: var(--night-line, #33424a); }
 }
+@media screen {
+  html[data-theme="dark"] [data-change] { outline-color: #8fc1ea; }
+  html[data-theme="dark"] [data-change]::before { background: #8fc1ea; color: #0e2233; }
+}

@@ -24,6 +24,7 @@ require('./library-map.cjs');
 require('./assessment-sources.cjs');
 
 require('./concept-explorers.cjs');
+require('./explorer-focus.cjs');
 
 require('./code-panels.cjs');
 require('./visual-playback.cjs');

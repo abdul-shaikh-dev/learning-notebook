@@ -65,6 +65,11 @@
           },
           {
             "title": "Pod B is lost",
+            "focus": [
+              "pod-b",
+              "pod-c",
+              "controller-rs"
+            ],
             "explanation": "Once deletion/loss is observed, the ReplicaSet creates Pod C. Current count can return to two before availability does; C still needs scheduling, startup and readiness.",
             "nodes": [
               {
@@ -128,6 +133,11 @@
           },
           {
             "title": "New identity serves",
+            "focus": [
+              "pod-c",
+              "controller-rs",
+              "controller-deploy"
+            ],
             "explanation": "Pod C passes readiness, returning the modeled ready count to two. It does not inherit B's in-memory or scratch files merely because the controller replaced B.",
             "nodes": [
               {
@@ -247,6 +257,10 @@
           },
           {
             "title": "Insufficient capacity",
+            "focus": [
+              "pod-c",
+              "eligible-node"
+            ],
             "explanation": "C requests 500m CPU, but eligible nodes have only 300m allocatable headroom for this request. The scheduler leaves C Pending in this simplified capacity example.",
             "nodes": [
               {
@@ -305,6 +319,10 @@
           },
           {
             "title": "Correct the constraint",
+            "focus": [
+              "eligible-node",
+              "pod-c"
+            ],
             "explanation": "Add suitable capacity or review legitimate requests. A controller cannot manufacture resources. After capacity exists C can schedule, but readiness remains a separate check.",
             "nodes": [
               {
@@ -450,6 +468,10 @@
           },
           {
             "title": "B fails readiness",
+            "focus": [
+              "pod-b",
+              "endpoints"
+            ],
             "explanation": "B's process still runs, but readiness fails. After endpoint state propagates, normal new Service traffic uses A; readiness failure alone is not a liveness restart.",
             "nodes": [
               {
@@ -513,6 +535,10 @@
           },
           {
             "title": "B returns ready",
+            "focus": [
+              "pod-b",
+              "endpoints"
+            ],
             "explanation": "After B passes readiness and the endpoint update propagates, both Pods are eligible again. The diagram does not assert an exact traffic split.",
             "nodes": [
               {
@@ -645,6 +671,12 @@
           },
           {
             "title": "Diagnose boundary",
+            "focus": [
+              "service",
+              "pod-a",
+              "pod-b"
+            ],
+            "focusLabel": "Check",
             "explanation": "Compare Service selector with Pod labels and EndpointSlices. DNS success plus zero selected endpoints points to a backend-selection problem in this example.",
             "nodes": [
               {
@@ -698,6 +730,11 @@
           },
           {
             "title": "Align intended labels",
+            "focus": [
+              "pod-a",
+              "pod-b",
+              "endpoints"
+            ],
             "explanation": "Correct the workload template labels while preserving its Deployment selector contract. Once matching ready Pods exist, endpoint updates make normal Service routing possible.",
             "nodes": [
               {
@@ -840,6 +877,10 @@
           },
           {
             "title": "Candidate ready",
+            "focus": [
+              "version-v1",
+              "version-v2"
+            ],
             "explanation": "Once v2 is available, the controller may reduce old replicas to one and grow new replicas to two. The second candidate still needs readiness.",
             "nodes": [
               {
@@ -900,6 +941,10 @@
           },
           {
             "title": "Finish v2",
+            "focus": [
+              "version-v1",
+              "version-v2"
+            ],
             "explanation": "When both v2 Pods are available the old ReplicaSet scales to zero. Compatibility must hold while versions coexist; readiness alone does not verify business correctness.",
             "nodes": [
               {
@@ -1011,6 +1056,9 @@
           },
           {
             "title": "Deadline reports stall",
+            "focus": [
+              "controller-deploy"
+            ],
             "explanation": "After the configured 60-second period without rollout progress, the Deployment reports ProgressDeadlineExceeded. Kubernetes does not automatically undo the template change.",
             "nodes": [
               {
@@ -1061,6 +1109,10 @@
           },
           {
             "title": "Choose recovery",
+            "focus": [
+              "controller-deploy",
+              "version-v2"
+            ],
             "explanation": "Inspect probe/config/image evidence, then apply a fix or explicitly restore a known template. Here the operator chooses v1; wait for rollout status and validate the actual application.",
             "nodes": [
               {

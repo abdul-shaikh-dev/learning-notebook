@@ -22,3 +22,13 @@ Renderers receive the authored snapshot plus `{scenario, scenarioIndex, index, p
 The shared controller owns playback, manual steps, reduced-motion handling and focus restoration. An optional `data-scene-next` button advances the teaching sequence, not a live external operation. Preserve all explanations, source tables, connection descriptions and model boundaries below the scene. Wide diagrams need keyboard-accessible scroll regions and a mobile scroll cue. Print hides interactive scene actions.
 
 Run `node tests/verify.cjs` and `node scripts/build-pages.cjs`. `tests/concrete-scenes.cjs` renders all 164 snapshots and checks scene coverage, text preservation and unique print IDs. Browser-check any new scene at desktop and phone widths, including alternative scenarios and final states.
+
+## Step focus
+
+Every step after a scenario's first can name what it is about with `focus`: a list of the motion keys drawn for that step, without the renderer prefix (`pod-b` for `data-motion-node="infra-pod-b"`, `join-104`, `session-b`). The reader labels exactly those elements, "New" when the key was not drawn in the previous step and "Changed" otherwise, with an outline. The label is static text: it appears with reduced motion, in dark mode and in printed packs. Motion, when allowed, fades in only focused elements.
+
+Choose the change the explanation is about, not every element whose wording differs; most snapshots reword unchanged objects. Mark consequences only when the step teaches them, and leave unchanged state unmarked when its stability is the lesson. Use `"focus": []` when a step changes only commentary. When a step directs attention without a state change, add a short `focusLabel` such as "Check" or "Compare" (12 characters at most).
+
+Steps without `focus` keep the earlier generic change cue. `tests/explorer-focus.cjs` renders each focused step, rejects keys that are not drawn, keeps scenario openings unmarked and requires focus on every later Kubernetes and SQL Server step. Add a path to its `REVIEWED` list once all of that path's explorer steps are authored.
+
+2026-10-22: authored focus for the six Kubernetes and SQL Server explorers (24 transitions; two commentary-only steps use `[]`).
