@@ -52,6 +52,9 @@
           },
           {
             "title": "Follow one link",
+            "focus": [
+              "B"
+            ],
             "explanation": "Read A.next to reach B; a linked list does not provide constant-time access by index.",
             "nodes": [
               {
@@ -94,6 +97,9 @@
           },
           {
             "title": "Reach the tail",
+            "focus": [
+              "C"
+            ],
             "explanation": "Read B.next to reach C. C.next is null, so traversal finishes.",
             "nodes": [
               {
@@ -179,6 +185,9 @@
           },
           {
             "title": "Link X first",
+            "focus": [
+              "X"
+            ],
             "explanation": "Set X.next = A.next, preserving access to B.",
             "nodes": [
               {
@@ -221,6 +230,9 @@
           },
           {
             "title": "Reconnect A",
+            "focus": [
+              "A"
+            ],
             "explanation": "Set A.next = X. The chain is now A → X → B, with no nodes lost.",
             "nodes": [
               {
@@ -322,6 +334,9 @@
           },
           {
             "title": "First removal",
+            "focus": [
+              "C"
+            ],
             "explanation": "C leaves first under LIFO.",
             "nodes": [
               {
@@ -353,6 +368,10 @@
           },
           {
             "title": "Drain the collection",
+            "focus": [
+              "B",
+              "A"
+            ],
             "explanation": "The complete departure order is C → B → A.",
             "nodes": [
               {
@@ -428,6 +447,9 @@
           },
           {
             "title": "First removal",
+            "focus": [
+              "A"
+            ],
             "explanation": "A leaves first under FIFO.",
             "nodes": [
               {
@@ -459,6 +481,10 @@
           },
           {
             "title": "Drain the collection",
+            "focus": [
+              "B",
+              "C"
+            ],
             "explanation": "The complete departure order is A → B → C.",
             "nodes": [
               {
@@ -552,6 +578,9 @@
           },
           {
             "title": "Return from left leaf",
+            "focus": [
+              "emitted-B"
+            ],
             "explanation": "B has no children, so its recursive call returns to A.",
             "nodes": [
               {
@@ -609,6 +638,9 @@
           },
           {
             "title": "Finish the right subtree",
+            "focus": [
+              "emitted-C"
+            ],
             "explanation": "C returns to A, then the root call finishes.",
             "nodes": [
               {
@@ -729,6 +761,9 @@
           },
           {
             "title": "Return from left leaf",
+            "focus": [
+              "emitted-B"
+            ],
             "explanation": "B has no children, so its recursive call returns to A.",
             "nodes": [
               {
@@ -786,6 +821,10 @@
           },
           {
             "title": "Finish the right subtree",
+            "focus": [
+              "emitted-C",
+              "emitted-A"
+            ],
             "explanation": "C returns to A, then the root call finishes.",
             "nodes": [
               {
@@ -899,6 +938,9 @@
           },
           {
             "title": "Insert item 2",
+            "focus": [
+              "value-3"
+            ],
             "explanation": "Insert 3 into the sorted prefix, shifting 1 larger item(s) right.",
             "nodes": [
               {
@@ -942,6 +984,9 @@
           },
           {
             "title": "Insert item 3",
+            "focus": [
+              "value-2"
+            ],
             "explanation": "Insert 2 into the sorted prefix, shifting 2 larger item(s) right.",
             "nodes": [
               {
@@ -985,6 +1030,9 @@
           },
           {
             "title": "Insert item 4",
+            "focus": [
+              "value-1"
+            ],
             "explanation": "Insert 1 into the sorted prefix, shifting 3 larger item(s) right.",
             "nodes": [
               {
@@ -1077,6 +1125,9 @@
           },
           {
             "title": "Insert item 2",
+            "focus": [
+              "value-3"
+            ],
             "explanation": "Insert 3 into the sorted prefix, shifting 0 larger item(s) right.",
             "nodes": [
               {
@@ -1120,6 +1171,9 @@
           },
           {
             "title": "Insert item 3",
+            "focus": [
+              "value-2"
+            ],
             "explanation": "Insert 2 into the sorted prefix, shifting 1 larger item(s) right.",
             "nodes": [
               {
@@ -1163,6 +1217,9 @@
           },
           {
             "title": "Insert item 4",
+            "focus": [
+              "value-4"
+            ],
             "explanation": "Insert 4 into the sorted prefix, shifting 0 larger item(s) right.",
             "nodes": [
               {
@@ -1280,6 +1337,10 @@
           },
           {
             "title": "Expand A",
+            "focus": [
+              "graph-B",
+              "queue-B"
+            ],
             "explanation": "Remove A and discover B. Record B’s parent as A.",
             "nodes": [
               {
@@ -1341,6 +1402,9 @@
           },
           {
             "title": "Expand B",
+            "focus": [
+              "graph-C"
+            ],
             "explanation": "Discover C from B, record its parent, and reconstruct A → B → C.",
             "nodes": [
               {
@@ -1460,6 +1524,10 @@
           },
           {
             "title": "Expand A",
+            "focus": [
+              "graph-B",
+              "queue-B"
+            ],
             "explanation": "Remove A and discover B. Record B’s parent as A.",
             "nodes": [
               {
@@ -1516,6 +1584,9 @@
           },
           {
             "title": "Expand B",
+            "focus": [
+              "graph-C"
+            ],
             "explanation": "B has no undiscovered neighbors. The queue empties without discovering C.",
             "nodes": [
               {
@@ -1636,6 +1707,9 @@
           },
           {
             "title": "Compare with 3",
+            "focus": [
+              "3"
+            ],
             "explanation": "Target 6 is greater than 3: follow its right child.",
             "nodes": [
               {
@@ -1691,6 +1765,9 @@
           },
           {
             "title": "Compare with 6",
+            "focus": [
+              "6"
+            ],
             "explanation": "The key matches. Return this node.",
             "nodes": [
               {
@@ -1809,6 +1886,9 @@
           },
           {
             "title": "Compare with 3",
+            "focus": [
+              "3"
+            ],
             "explanation": "Target 5 is greater than 3: follow its right child.",
             "nodes": [
               {
@@ -1864,6 +1944,9 @@
           },
           {
             "title": "Compare with 6",
+            "focus": [
+              "6"
+            ],
             "explanation": "5 is less than 6, but 6 has no left child. The search ends.",
             "nodes": [
               {

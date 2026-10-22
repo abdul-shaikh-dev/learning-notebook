@@ -47,6 +47,9 @@
           },
           {
             "title": "Assign second = first",
+            "focus": [
+              "objects-second"
+            ],
             "explanation": "Assignment copies the reference, so both variables name the same object. It does not clone TaskItem.",
             "nodes": [
               {
@@ -89,6 +92,10 @@
           },
           {
             "title": "Call second.Complete()",
+            "focus": [
+              "objects-one",
+              "objects-first"
+            ],
             "explanation": "Complete changes object #1. Reading first.Done now returns true because first still names that object.",
             "nodes": [
               {
@@ -182,6 +189,10 @@
           },
           {
             "title": "Copy selected data",
+            "focus": [
+              "objects-two",
+              "objects-second"
+            ],
             "explanation": "second = new TaskItem(first.Title) creates object #2 with its own Done property. Copy semantics must be chosen deliberately.",
             "nodes": [
               {
@@ -232,6 +243,10 @@
           },
           {
             "title": "Complete only the copy",
+            "focus": [
+              "objects-two",
+              "objects-second"
+            ],
             "explanation": "second.Complete() changes #2. #1 remains incomplete. Shared nested mutable references would require their own copying decision.",
             "nodes": [
               {
@@ -340,6 +355,11 @@
           },
           {
             "title": "First resolution",
+            "focus": [
+              "di-S1",
+              "di-C1",
+              "di-T1"
+            ],
             "explanation": "The container creates singleton S1, scoped C1 and transient T1 on their first resolutions.",
             "nodes": [
               {
@@ -395,6 +415,9 @@
           },
           {
             "title": "Second resolution",
+            "focus": [
+              "di-T2"
+            ],
             "explanation": "In scope A, singleton and scoped identities repeat. Transient resolution creates T2; it does not reuse T1.",
             "nodes": [
               {
@@ -511,6 +534,10 @@
           },
           {
             "title": "Request A ends",
+            "focus": [
+              "di-request-A",
+              "di-C1"
+            ],
             "explanation": "Scope A ends; container-owned scoped services are disposed. The singleton stays with the root provider. This trace stops using T1.",
             "nodes": [
               {
@@ -550,6 +577,11 @@
           },
           {
             "title": "Request B resolves",
+            "focus": [
+              "di-request-B",
+              "di-C2",
+              "di-T2"
+            ],
             "explanation": "Scope B gets C2 and a new transient T2, but the root singleton remains S1. A singleton must not capture a scoped DbContext.",
             "nodes": [
               {
@@ -679,6 +711,10 @@
           },
           {
             "title": "Request cancellation",
+            "focus": [
+              "async-token",
+              "async-wait"
+            ],
             "explanation": "Cancel marks the token as requested. The delay observes the request and completes as canceled rather than returning a value.",
             "nodes": [
               {
@@ -729,6 +765,10 @@
           },
           {
             "title": "Observe at the boundary",
+            "focus": [
+              "async-caller",
+              "async-method"
+            ],
             "explanation": "The caller catches OperationCanceledException for this canceled operation. LoadAsync never reaches return 42.",
             "nodes": [
               {
@@ -830,6 +870,9 @@
           },
           {
             "title": "Request is ignored here",
+            "focus": [
+              "async-token"
+            ],
             "explanation": "Cancel sets the caller's token, but this delay has no connection to it. Requesting cancellation alone cannot stop arbitrary code.",
             "nodes": [
               {
@@ -880,6 +923,10 @@
           },
           {
             "title": "Wait finishes normally",
+            "focus": [
+              "async-method",
+              "async-caller"
+            ],
             "explanation": "After the delay, this method returns 42. Passing a token parameter is insufficient unless downstream operations observe it.",
             "nodes": [
               {
@@ -994,6 +1041,9 @@
           },
           {
             "title": "Require write permission",
+            "focus": [
+              "auth-policy"
+            ],
             "explanation": "Subject A has tasks.write, so the policy passes. That permission alone does not establish ownership of task 7.",
             "nodes": [
               {
@@ -1044,6 +1094,10 @@
           },
           {
             "title": "Check owner and mutate",
+            "focus": [
+              "auth-owner",
+              "auth-response"
+            ],
             "explanation": "The trusted subject matches OwnerId. The endpoint applies the validated write and returns the chosen successful response.",
             "nodes": [
               {
@@ -1140,6 +1194,9 @@
           },
           {
             "title": "Coarse policy still passes",
+            "focus": [
+              "auth-policy"
+            ],
             "explanation": "B also has tasks.write. Letting the write proceed here would expose A's resource; the endpoint still checks the owner.",
             "nodes": [
               {
@@ -1185,6 +1242,10 @@
           },
           {
             "title": "Deny without modifying",
+            "focus": [
+              "auth-owner",
+              "auth-response"
+            ],
             "explanation": "B does not match owner A. This API returns 404 consistently; the stored task stays unchanged. Invalid identity instead stops at authentication (401), and missing write permission stops at policy (403).",
             "nodes": [
               {

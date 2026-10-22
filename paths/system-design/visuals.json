@@ -57,6 +57,10 @@
           },
           {
             "title": "Authorize and commit",
+            "focus": [
+              "api-hop",
+              "db-row"
+            ],
             "explanation": "At 120 ms the API authenticates the learner and checks record ownership. At 180 ms a transaction commits version 8.",
             "nodes": [
               {
@@ -99,6 +103,9 @@
           },
           {
             "title": "Return the outcome",
+            "focus": [
+              "browser"
+            ],
             "explanation": "At 220 ms the browser receives 200 with version 8. A transport connection alone was never the completion criterion.",
             "nodes": [
               {
@@ -189,6 +196,10 @@
           },
           {
             "title": "Commit survives reply loss",
+            "focus": [
+              "db-row",
+              "browser"
+            ],
             "explanation": "Version 8 commits at 180 ms, but a connection failure prevents delivery of the response. Timeout is an uncertain outcome, not evidence of rollback.",
             "nodes": [
               {
@@ -231,6 +242,9 @@
           },
           {
             "title": "Resolve uncertainty",
+            "focus": [
+              "browser"
+            ],
             "explanation": "At 500 ms stop waiting. An authorized follow-up read returns version 8; conflicting edits still require version checks. No blind claim that the write failed.",
             "nodes": [
               {
@@ -334,6 +348,9 @@
           },
           {
             "title": "Commit result",
+            "focus": [
+              "store-lane"
+            ],
             "explanation": "The worker creates a deterministic output and atomically stores J42=complete with its reference. External email or payments would need their own duplicate protection.",
             "nodes": [
               {
@@ -371,6 +388,9 @@
           },
           {
             "title": "Acknowledge",
+            "focus": [
+              "queue-lane"
+            ],
             "explanation": "Only after the durable result exists does the worker acknowledge. The queue can retire this delivery.",
             "nodes": [
               {
@@ -456,6 +476,10 @@
           },
           {
             "title": "Redelivery",
+            "focus": [
+              "queue-lane",
+              "worker-lane"
+            ],
             "explanation": "After the chosen 30-second visibility window, J42 is delivered again. The replacement worker checks durable identity before applying effects.",
             "nodes": [
               {
@@ -498,6 +522,10 @@
           },
           {
             "title": "Reuse and acknowledge",
+            "focus": [
+              "queue-lane",
+              "worker-lane"
+            ],
             "explanation": "The worker reuses the existing result and acknowledges. Unique identity plus atomic state prevents a second result in this model; it does not promise exactly-once external effects.",
             "nodes": [
               {
@@ -601,6 +629,9 @@
           },
           {
             "title": "Back off once",
+            "focus": [
+              "retry-owner"
+            ],
             "explanation": "Wait 50 ms. At t=200 ms the second attempt starts with 400 ms left. This illustrated wait is one sampled jitter value, not a global synchronized schedule.",
             "nodes": [
               {
@@ -638,6 +669,10 @@
           },
           {
             "title": "Return success",
+            "focus": [
+              "caller",
+              "dependency"
+            ],
             "explanation": "Attempt 2 completes in 80 ms. Total modeled elapsed time is 280 ms; no third attempt is needed.",
             "nodes": [
               {
@@ -723,6 +758,9 @@
           },
           {
             "title": "Final bounded attempt",
+            "focus": [
+              "retry-owner"
+            ],
             "explanation": "Wait 100 ms, then attempt 3 starts at t=450 ms. Its timeout is min(150 ms, remaining 150 ms). No nested retry layer is allowed in this model.",
             "nodes": [
               {
@@ -760,6 +798,10 @@
           },
           {
             "title": "Stop at deadline",
+            "focus": [
+              "caller",
+              "retry-owner"
+            ],
             "explanation": "At 600 ms the final attempt times out. Return a controlled failure and release the concurrency slot; cancellation cannot guarantee the dependency never applied an effect.",
             "nodes": [
               {
