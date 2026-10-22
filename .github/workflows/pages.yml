@@ -121,9 +121,37 @@ jobs:
       - name: Run data analysis and machine learning practice suites
         run: python scripts/verify-data-science.py
 
+  sql-server:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+      # A throwaway Developer edition container with a per-run SA password; the image's own sqlcmd runs the script.
+      - name: Start a disposable SQL Server container
+        run: |
+          password="Ln1-$(openssl rand -hex 16)"
+          echo "::add-mask::$password"
+          echo "SQLCMDPASSWORD=$password" >> "$GITHUB_ENV"
+          docker run -d --name sql -e ACCEPT_EULA=Y -e MSSQL_PID=Developer -e "MSSQL_SA_PASSWORD=$password" -v /tmp:/tmp mcr.microsoft.com/mssql/server:2022-latest
+          printf '#!/bin/sh\nexec docker exec -u 0 -e SQLCMDPASSWORD sql /opt/mssql-tools18/bin/sqlcmd "$@"\n' > "$RUNNER_TEMP/sqlcmd"
+          chmod +x "$RUNNER_TEMP/sqlcmd"
+          for attempt in $(seq 60); do
+            if SQLCMDPASSWORD="$password" "$RUNNER_TEMP/sqlcmd" -S localhost -U sa -C -l 2 -Q "SELECT 1" > /dev/null 2>&1; then exit 0; fi
+            sleep 2
+          done
+          docker logs sql | tail -40
+          exit 1
+      - name: Run the SQL conflict classification tests
+        env:
+          TMPDIR: /tmp
+        run: python -B tests/sql-conflicts.py --server localhost --user sa --trust-server-certificate --sqlcmd "$RUNNER_TEMP/sqlcmd"
+
   deploy:
     if: github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/main'
-    needs: [build, python, react, dotnet, fullstack, data-science]
+    needs: [build, python, react, dotnet, fullstack, data-science, sql-server]
     runs-on: ubuntu-latest
     permissions:
       pages: write

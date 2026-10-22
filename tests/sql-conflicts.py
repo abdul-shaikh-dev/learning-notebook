@@ -2,10 +2,13 @@ r"""Opt-in SQL Server regression; only connection-local temporary tables in temp
 
 Run: python tests/sql-conflicts.py --server .\SQLEXPRESS
 Requires sqlcmd on PATH and Windows authentication to an authorized training server.
+For a disposable container use SQL authentication: --user sa --trust-server-certificate,
+with the password in the SQLCMDPASSWORD environment variable (never on the command line).
 No databases or permanent tables are created, altered or removed.
 """
 import argparse
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -51,12 +54,17 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--server', required=True)
     parser.add_argument('--sqlcmd', default=shutil.which('sqlcmd'))
+    parser.add_argument('--user', help='SQL login; sqlcmd reads its password from SQLCMDPASSWORD')
+    parser.add_argument('--trust-server-certificate', action='store_true', help='accept a self-signed certificate, as a local container uses')
     args = parser.parse_args()
     if not args.sqlcmd: parser.error('sqlcmd is required')
+    if args.user and not os.environ.get('SQLCMDPASSWORD'): parser.error('set SQLCMDPASSWORD for --user')
+    login = ['-U', args.user] if args.user else ['-E']
+    # Windows sqlcmd needs the UTF-8 code page named; Linux sqlcmd reads UTF-8 already.
     with tempfile.TemporaryDirectory(prefix='notebook-sql-conflicts-') as folder:
         file = Path(folder) / 'verify.sql'
         file.write_text(script(ROOT), encoding='utf-8')
-        result = subprocess.run([args.sqlcmd, '-S', args.server, '-E', '-d', 'tempdb', '-l', '5', '-t', '30', '-b', '-f', '65001', '-i', str(file)], text=True, capture_output=True, timeout=90)
+        result = subprocess.run([args.sqlcmd, '-S', args.server, *login, *(['-C'] if args.trust_server_certificate else []), '-d', 'tempdb', '-l', '5', '-t', '30', '-b', *(['-f', '65001'] if os.name == 'nt' else []), '-i', str(file)], text=True, capture_output=True, timeout=90)
         if result.returncode:
             print(result.stdout, result.stderr)
             raise SystemExit(result.returncode)
