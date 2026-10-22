@@ -26,7 +26,7 @@ ctx.LEARNING_PATHS.push({id:'new-path',title:'New subject',status:'ready',catego
 console.log('PASS: visual map course coverage, filtering, progress integrity, map/list switching and session preference.');
 
 const roadmap=ctx.libraryMap();
-assert.equal((roadmap.match(/class="map-node"/g)||[]).length,paths.filter(p=>p.status==='ready').length,'Each ready course including the new path appears once');
+assert.equal((roadmap.match(/class="map-node[ "]/g)||[]).length,paths.filter(p=>p.status==='ready').length,'Each ready course including the new path appears once');
 assert.equal((roadmap.match(/marker-end=/g)||[]).length,vm.runInContext('LIBRARY_GRAPHS.reduce((n,g)=>n+g.edges.filter(([a,b])=>LEARNING_PATHS.some(p=>p.id===a&&p.status==="ready")&&LEARNING_PATHS.some(p=>p.id===b&&p.status==="ready")).length,0)',ctx),'All available graph relationships render');
 assert.ok(roadmap.includes('aria-label="Course relationships"'),'Relationships have a visible text equivalent');
 for(const label of ['Suggested order','Useful background','Alternative direction'])assert.ok(roadmap.includes('<dt>'+label+'</dt>'));
@@ -36,10 +36,10 @@ assert(graph.edges.some(([a,b,type])=>a==='python'&&b==='design-patterns'&&type=
 assert(roadmap.includes('class="relationship-background" d='));
 assert(roadmap.includes('class="relationship-alternative" d='));
 assert.ok(!ctx.libraryMap('Python').includes('marker-end='),'Filtering never implies relationships between missing nodes');
-assert.equal((ctx.libraryMap('Python').match(/class="map-node"/g)||[]).length,new Set(paths.filter(p=>p.status==='ready'&&[p.title,p.category,p.description].join(' ').toLowerCase().includes('python')).map(p=>p.id)).size);
+assert.equal((ctx.libraryMap('Python').match(/class="map-node[ "]/g)||[]).length,new Set(paths.filter(p=>p.status==='ready'&&[p.title,p.category,p.description].join(' ').toLowerCase().includes('python')).map(p=>p.id)).size);
 console.log('PASS: unique roadmap nodes, directed connections, accessible relationship text and filtered graph fallback.');
 
-for(const render of [ctx.cards,ctx.libraryMap]){
+for(const render of [ctx.cards,ctx.libraryMap,ctx.libraryList]){
  const filtered=render('Python');
  assert(filtered.indexOf('#path/python') < filtered.indexOf('#path/agent-harnesses'),'Exact course title precedes matches in descriptions');
 }
@@ -83,3 +83,15 @@ for(const graph of vm.runInContext('LIBRARY_GRAPHS',ctx)){
  }
 }
 console.log('PASS: every map connector stays outside every card interior.');
+// The List view groups by progress and offers the next unread lesson; search keeps relevance order.
+{const python=paths.find(p=>p.id==='python'),list=ctx.libraryList();
+ store.set('learning-notebook:path:python:v1',JSON.stringify(python.lessons.slice(0,2).map(l=>l.id)));
+ const grouped=ctx.libraryList(),started=grouped.split('<h3>Not started')[0];
+ assert(started.includes('<h3>In progress <span>')&&started.includes('#path/python')&&!started.includes('#path/sql-server'),'Started courses come first');
+ assert(started.includes('href="#topic/python/'+python.lessons[2].id+'"'),'Next unread lesson is linked');
+ assert(ctx.libraryNode(python).includes('class="map-node is-started"')&&!ctx.libraryNode(paths.find(p=>p.id==='sql-server')).includes('is-started'),'Map emphasises started courses only');
+ store.set('learning-notebook:path:python:v1',JSON.stringify(python.lessons.map(l=>l.id)));
+ assert(ctx.libraryList().includes('All '+python.lessons.length+' read')&&!ctx.libraryList().includes('#topic/python/'),'Finished courses offer no next lesson');
+ assert(!ctx.libraryList('Python').includes('<h3>'),'Search results are not grouped');
+ for(const p of paths.filter(p=>p.status==='ready'))assert(list.includes(p.href||'#path/'+p.id),p.id);}
+console.log('PASS: progress-led list groups, next unread lesson, finished courses, ungrouped search and started map cards.');

@@ -59,11 +59,11 @@ body:has(.library-hero){background:#f7f8f5}
 .library-filter{margin:16px 0}.library-filter label,.library-filter p{font-size:14px}.library-filter input::placeholder{color:#526477;opacity:1}
 .roadmap-legend{padding:12px 22px}.branch-section{padding:22px}.branch-section .branch-heading h3{font-size:21px}.branch-section .branch-heading p{margin-bottom:14px;color:var(--library-muted)}
 .catalog .branch-stop .map-node{height:156px;min-height:156px;box-sizing:border-box;gap:8px;padding:14px 16px}
-.map-node[data-subject]{--route-color:#24634e;--route-tint:#e6f2eb}
-.map-node[data-subject="sql-server"],.map-node[data-subject="react"]{--route-color:#244f86;--route-tint:#e9f0fc}
-.map-node[data-subject="dotnet"],.map-node[data-subject="ai-agents"]{--route-color:#63417e;--route-tint:#f0eaf8}
-.map-node[data-subject="system-design"],.map-node[data-subject="agent-harnesses"]{--route-color:#155e69;--route-tint:#e2f2f4}
-.map-node[data-subject="financial-foundations"]{--route-color:#775019;--route-tint:#f8edda}
+:is(.map-node,.catalog-item)[data-subject]{--route-color:#24634e;--route-tint:#e6f2eb}
+:is(.map-node,.catalog-item)[data-subject="sql-server"],:is(.map-node,.catalog-item)[data-subject="react"]{--route-color:#244f86;--route-tint:#e9f0fc}
+:is(.map-node,.catalog-item)[data-subject="dotnet"],:is(.map-node,.catalog-item)[data-subject="ai-agents"]{--route-color:#63417e;--route-tint:#f0eaf8}
+:is(.map-node,.catalog-item)[data-subject="system-design"],:is(.map-node,.catalog-item)[data-subject="agent-harnesses"]{--route-color:#155e69;--route-tint:#e2f2f4}
+:is(.map-node,.catalog-item)[data-subject="financial-foundations"]{--route-color:#775019;--route-tint:#f8edda}
 .map-node .subject-symbol{width:36px;height:36px;padding:7px;background:var(--route-tint);color:var(--route-color)}
 .subject-symbol svg{width:22px;height:22px}.map-node strong{font-size:16px}.map-node .node-meta{font-size:14px;color:var(--library-muted,#425466)}
 .node-progress{height:5px;background:#b9c8c2}.map-node .node-progress>span{background:var(--route-color)}
@@ -73,7 +73,7 @@ body:has(.library-hero){background:#f7f8f5}
 @media(max-width:900px){.catalog .branch-stop .map-node{height:auto;min-height:112px;padding:16px}.branch-next{font-size:14px;color:#425466}.branch-nodes{gap:16px}.branch-canvas{margin-top:16px}}
 @media(max-width:700px){.catalog:has(.library-hero){padding:22px 18px 32px}.library-hero{padding-bottom:20px}.library-hero h1{font-size:30px;max-width:17ch}.library-summary{font-size:14px}.catalog:has(.library-hero) .resume-card{flex-direction:column;align-items:stretch;gap:16px;padding:20px;margin-bottom:20px}.resume-card h2{font-size:20px}.catalog:has(.library-hero) .resume-card a{white-space:normal}.library-filter p{margin-bottom:0}.branch-section{padding:18px}.roadmap-legend{padding:12px 18px}.map-node strong{font-size:16px}.independent-paths .map-results{margin-top:12px}}
 
-.map-node[data-subject="application-security"]{--route-color:#63417e;--route-tint:#f0eaf8}.map-node[data-subject="networking-web"],.map-node[data-subject="delivery-operations"],.map-node[data-subject="kubernetes"]{--route-color:#244f86;--route-tint:#e9f0fc}
+:is(.map-node,.catalog-item)[data-subject="application-security"]{--route-color:#63417e;--route-tint:#f0eaf8}:is(.map-node,.catalog-item)[data-subject="networking-web"],:is(.map-node,.catalog-item)[data-subject="delivery-operations"],:is(.map-node,.catalog-item)[data-subject="kubernetes"]{--route-color:#244f86;--route-tint:#e9f0fc}
 
 /* Route focus controls keep a growing library navigable. */
 .map-route-picker{display:grid;grid-template-columns:auto minmax(220px,360px) 1fr;gap:12px 20px;align-items:center;padding:16px 0;margin-top:12px;border-bottom:1px solid var(--library-line)}
@@ -112,3 +112,24 @@ html[data-theme=dark] .catalog .map-connections{border-color:var(--night-line);b
 html[data-theme=dark] :is(.map-relationships,.map-connections>summary){color:var(--night-muted)}
 html[data-theme=dark] .map-connections>summary:hover{color:var(--night-text)}
 @media(max-width:700px){.map-relationships{display:block}.map-relationships .relationship-group+.relationship-group{margin-top:14px}}
+
+/* Progress-led catalog: started courses carry their route colour; unstarted ones recede without losing text contrast. */
+.catalog :is(.branch-stop,.map-results) .map-node.is-started{border-color:var(--route-color);box-shadow:inset 0 3px 0 var(--route-color)}
+.catalog :is(.branch-stop,.map-results) .map-node:not(.is-started):not(:hover){border-color:#c8d5ce}.catalog .map-node:not(.is-started) .subject-symbol{background:transparent;color:#5c7167;box-shadow:inset 0 0 0 1px #d3ddd8}
+/* Compact List view: one scannable row per course, grouped by progress. */
+.library-list{margin-top:8px}.catalog-group{margin:0 0 28px}
+.catalog-group h3{display:flex;align-items:baseline;gap:8px;margin:0 0 6px;font-size:14px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#425466}.catalog-group h3 span{font-weight:400}
+.catalog-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.catalog-item{display:grid;grid-template-columns:32px minmax(0,1.3fr) minmax(130px,.6fr) minmax(0,1.3fr);align-items:center;gap:4px 16px;min-height:60px;padding:8px 4px;border-bottom:1px solid var(--line)}
+.catalog-item .catalog-subject{display:grid;place-items:center;width:32px;height:32px;border-radius:6px;color:#5c7167;box-shadow:inset 0 0 0 1px #d3ddd8}.catalog-item .catalog-subject svg{width:18px;height:18px}
+.catalog-item.is-started .catalog-subject{background:var(--route-tint);color:var(--route-color);box-shadow:none}
+.catalog-name{display:flex;flex-direction:column;min-width:0}.catalog-name :is(a,span){display:inline-flex;align-items:center;min-height:24px;font-size:16px;font-weight:600;color:#142d31;text-decoration:none}.catalog-name a:hover{text-decoration:underline}.catalog-name small{font-size:14px;color:#526477}
+.catalog-progress{display:flex;flex-direction:column;gap:6px;font-size:14px;color:#526477}.catalog-item.is-started .catalog-progress{color:#142d31}.catalog-progress .node-progress{height:4px;background:#dbe3df}
+.catalog-next{display:flex;align-items:baseline;gap:6px;min-height:24px;padding:6px 0;font-size:14px;color:#244b36;text-decoration:none}.catalog-next span{flex:none;font-weight:600}.catalog-next:hover{text-decoration:underline}
+.catalog-item.is-planned .catalog-name span{color:#526477;font-weight:500}
+.catalog-item a,.catalog-item a:hover{background:none;padding:0;border-radius:2px}.catalog-item a:focus-visible{outline:3px solid #246bba;outline-offset:3px}
+@media(max-width:700px){.catalog-item{grid-template-columns:32px minmax(0,1fr);padding:12px 0;align-items:start}.catalog-item>:not(.catalog-subject){grid-column:2}.catalog-progress{flex-direction:row;align-items:center;gap:10px}.catalog-progress .node-progress{flex:1;max-width:160px}.catalog-next{min-height:44px;align-items:center;padding:0}}
+html[data-theme=dark] .catalog :is(.branch-stop,.map-results) .map-node.is-started{border-color:var(--night-accent);box-shadow:inset 0 3px 0 var(--night-accent)}
+html[data-theme=dark] .catalog :is(.map-node:not(.is-started),.catalog-item:not(.is-started)) :is(.subject-symbol,.catalog-subject){background:transparent!important;color:var(--night-muted)!important;box-shadow:inset 0 0 0 1px var(--night-line)}
+html[data-theme=dark] .catalog-item.is-started .catalog-subject{background:var(--night-hover);color:var(--night-accent)}
+html[data-theme=dark] :is(.catalog-name :is(a,span),.catalog-item.is-started .catalog-progress){color:var(--night-text)}html[data-theme=dark] :is(.catalog-group h3,.catalog-name small,.catalog-progress,.catalog-item.is-planned .catalog-name span){color:var(--night-muted)}html[data-theme=dark] .catalog-next{color:var(--night-accent)}html[data-theme=dark] .catalog-progress .node-progress{background:var(--night-line)}html[data-theme=dark] .catalog-item.is-started .catalog-progress .node-progress>span{background:var(--night-accent)}
