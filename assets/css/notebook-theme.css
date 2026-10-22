@@ -80,9 +80,9 @@ html[data-theme=dark] .theme-toggle .theme-sun{display:block}
  html[data-theme=dark] .library-view-switch button[aria-pressed=true]{background:var(--night-raised)!important;color:#f1f4f2!important;outline:1px solid #56666e}
  html[data-theme=dark] .finance-course #nav a[aria-current=page]{background:#263d31;color:#c1dfcc;outline:1px solid #496656}
  html[data-theme=dark] .subject-symbol{background:#283a32!important;color:#b7d6c3!important}
- html[data-theme=dark] .map-node[data-subject=dotnet] .subject-symbol,html[data-theme=dark] .map-node[data-subject=ai-agents] .subject-symbol{background:#373044!important;color:#d1bee5!important}
- html[data-theme=dark] .map-node[data-subject=react] .subject-symbol,html[data-theme=dark] .map-node[data-subject=sql-server] .subject-symbol{background:#273946!important;color:#b0cfe5!important}
- html[data-theme=dark] .map-node[data-subject=financial-foundations] .subject-symbol{background:#3b3528!important;color:#e2ca99!important}
+ html[data-theme=dark] :is(.map-node,.catalog-item)[data-subject=dotnet] .subject-symbol,html[data-theme=dark] :is(.map-node,.catalog-item)[data-subject=ai-agents] .subject-symbol{background:#373044!important;color:#d1bee5!important}
+ html[data-theme=dark] :is(.map-node,.catalog-item)[data-subject=react] .subject-symbol,html[data-theme=dark] :is(.map-node,.catalog-item)[data-subject=sql-server] .subject-symbol{background:#273946!important;color:#b0cfe5!important}
+ html[data-theme=dark] :is(.map-node,.catalog-item)[data-subject=financial-foundations] .subject-symbol{background:#3b3528!important;color:#e2ca99!important}
  html[data-theme=dark] .node-progress{background:#414d54}
  html[data-theme=dark] .node-progress>span{background:#8bb69d}
  html[data-theme=dark] .code-panel{background:#101417;border:1px solid #39464d}
