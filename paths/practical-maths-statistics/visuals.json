@@ -1,0 +1,478 @@
+{
+  "mean-median-and-outliers": {
+    "title": "Watch one value move the mean",
+    "intro": "Add a slow request, then a missing one, and see which summary moves.",
+    "scope": "Fictional latencies in milliseconds, from the lesson's worked example. Summaries of the values shown, not estimates for a wider population.",
+    "sources": [
+      {
+        "title": "Python statistics module: mean and median",
+        "url": "https://docs.python.org/3/library/statistics.html"
+      }
+    ],
+    "scenarios": [
+      {
+        "id": "outlier",
+        "label": "A slow request arrives",
+        "steps": [
+          {
+            "title": "Four typical requests",
+            "explanation": "Four requests each take 10 ms. With identical values, the mean and the median are both 10 ms.",
+            "nodes": [
+              {
+                "id": "obs",
+                "label": "Observations",
+                "detail": "10, 10, 10, 10 ms · n = 4",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "mean",
+                "label": "Mean",
+                "detail": "40 / 4 = 10 ms",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "median",
+                "label": "Median",
+                "detail": "Middle of 4 sorted values: 10 ms",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "obs",
+                "to": "mean",
+                "label": "sum ÷ count"
+              },
+              {
+                "from": "obs",
+                "to": "median",
+                "label": "sort, take the middle"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Latencies (ms)",
+                "columns": [
+                  "Request",
+                  "Latency (ms)"
+                ],
+                "rows": [
+                  [
+                    "A",
+                    "10"
+                  ],
+                  [
+                    "B",
+                    "10"
+                  ],
+                  [
+                    "C",
+                    "10"
+                  ],
+                  [
+                    "D",
+                    "10"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "A 100 ms request arrives",
+            "focus": [
+              "obs-e",
+              "mean"
+            ],
+            "explanation": "The total rises to 140 ms across 5 requests, so the mean moves to 28 ms. The middle sorted value is still 10 ms, so the median does not move.",
+            "nodes": [
+              {
+                "id": "obs",
+                "label": "Observations",
+                "detail": "10, 10, 10, 10, 100 ms · n = 5",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "mean",
+                "label": "Mean",
+                "detail": "140 / 5 = 28 ms",
+                "x": 390,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "median",
+                "label": "Median",
+                "detail": "Middle of 5 sorted values: 10 ms",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "obs",
+                "to": "mean",
+                "label": "sum ÷ count"
+              },
+              {
+                "from": "obs",
+                "to": "median",
+                "label": "sort, take the middle"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Latencies (ms)",
+                "columns": [
+                  "Request",
+                  "Latency (ms)"
+                ],
+                "rows": [
+                  [
+                    "A",
+                    "10"
+                  ],
+                  [
+                    "B",
+                    "10"
+                  ],
+                  [
+                    "C",
+                    "10"
+                  ],
+                  [
+                    "D",
+                    "10"
+                  ],
+                  [
+                    "E",
+                    "100"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Report both, with n",
+            "focus": [
+              "mean",
+              "median"
+            ],
+            "focusLabel": "Compare",
+            "explanation": "Both numbers are correct. The mean reflects the slow request; the median describes the typical one. Report both with units and n = 5, and keep the slow request: it may matter more than the typical delay.",
+            "nodes": [
+              {
+                "id": "obs",
+                "label": "Observations",
+                "detail": "10, 10, 10, 10, 100 ms · n = 5",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "mean",
+                "label": "Mean",
+                "detail": "28 ms: reflects the slow request",
+                "x": 390,
+                "y": 50,
+                "tone": "success"
+              },
+              {
+                "id": "median",
+                "label": "Median",
+                "detail": "10 ms: the typical request",
+                "x": 740,
+                "y": 50,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "obs",
+                "to": "mean",
+                "label": "sum ÷ count"
+              },
+              {
+                "from": "obs",
+                "to": "median",
+                "label": "sort, take the middle"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Latencies (ms)",
+                "columns": [
+                  "Request",
+                  "Latency (ms)"
+                ],
+                "rows": [
+                  [
+                    "A",
+                    "10"
+                  ],
+                  [
+                    "B",
+                    "10"
+                  ],
+                  [
+                    "C",
+                    "10"
+                  ],
+                  [
+                    "D",
+                    "10"
+                  ],
+                  [
+                    "E",
+                    "100"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "missing",
+        "label": "A duration is missing",
+        "steps": [
+          {
+            "title": "One duration was not recorded",
+            "explanation": "Request E has no recorded duration. A missing value is unknown; it is not a request that took 0 ms.",
+            "nodes": [
+              {
+                "id": "obs",
+                "label": "Observations",
+                "detail": "10, 10, 10, 10 ms · E missing",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "mean",
+                "label": "Mean",
+                "detail": "40 / 4 = 10 ms",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "median",
+                "label": "Median",
+                "detail": "Middle of 4 sorted values: 10 ms",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "obs",
+                "to": "mean",
+                "label": "sum ÷ count"
+              },
+              {
+                "from": "obs",
+                "to": "median",
+                "label": "sort, take the middle"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Latencies (ms)",
+                "columns": [
+                  "Request",
+                  "Latency (ms)"
+                ],
+                "rows": [
+                  [
+                    "A",
+                    "10"
+                  ],
+                  [
+                    "B",
+                    "10"
+                  ],
+                  [
+                    "C",
+                    "10"
+                  ],
+                  [
+                    "D",
+                    "10"
+                  ],
+                  [
+                    "E",
+                    "missing"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Wrong: enter the gap as 0",
+            "focus": [
+              "obs-e",
+              "mean"
+            ],
+            "explanation": "Writing 0 for E adds a measurement that never happened. The mean drops to 8 ms because the same total is now shared by 5 requests. The median stays 10 ms.",
+            "nodes": [
+              {
+                "id": "obs",
+                "label": "Observations",
+                "detail": "0, 10, 10, 10, 10 ms · n = 5",
+                "x": 40,
+                "y": 50,
+                "tone": "warning"
+              },
+              {
+                "id": "mean",
+                "label": "Mean",
+                "detail": "40 / 5 = 8 ms",
+                "x": 390,
+                "y": 50,
+                "tone": "warning"
+              },
+              {
+                "id": "median",
+                "label": "Median",
+                "detail": "Middle of 5 sorted values: 10 ms",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "obs",
+                "to": "mean",
+                "label": "sum ÷ count"
+              },
+              {
+                "from": "obs",
+                "to": "median",
+                "label": "sort, take the middle"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Latencies (ms)",
+                "columns": [
+                  "Request",
+                  "Latency (ms)"
+                ],
+                "rows": [
+                  [
+                    "A",
+                    "10"
+                  ],
+                  [
+                    "B",
+                    "10"
+                  ],
+                  [
+                    "C",
+                    "10"
+                  ],
+                  [
+                    "D",
+                    "10"
+                  ],
+                  [
+                    "E",
+                    "0 (entered for missing)"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Right: keep it missing and say so",
+            "focus": [
+              "obs-e",
+              "mean"
+            ],
+            "explanation": "The summaries use the 4 measured requests, so the mean and the median are both 10 ms. The report states that 1 duration is missing, so a reader knows they describe 4 of 5 requests.",
+            "nodes": [
+              {
+                "id": "obs",
+                "label": "Observations",
+                "detail": "n = 4 measured · 1 missing, reported",
+                "x": 40,
+                "y": 50,
+                "tone": "success"
+              },
+              {
+                "id": "mean",
+                "label": "Mean",
+                "detail": "40 / 4 = 10 ms",
+                "x": 390,
+                "y": 50,
+                "tone": "success"
+              },
+              {
+                "id": "median",
+                "label": "Median",
+                "detail": "Middle of 4 sorted values: 10 ms",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "obs",
+                "to": "mean",
+                "label": "sum ÷ count"
+              },
+              {
+                "from": "obs",
+                "to": "median",
+                "label": "sort, take the middle"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Latencies (ms)",
+                "columns": [
+                  "Request",
+                  "Latency (ms)"
+                ],
+                "rows": [
+                  [
+                    "A",
+                    "10"
+                  ],
+                  [
+                    "B",
+                    "10"
+                  ],
+                  [
+                    "C",
+                    "10"
+                  ],
+                  [
+                    "D",
+                    "10"
+                  ],
+                  [
+                    "E",
+                    "missing"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

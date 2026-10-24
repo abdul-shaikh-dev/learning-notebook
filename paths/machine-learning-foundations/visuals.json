@@ -1,0 +1,699 @@
+{
+  "threshold-policy": {
+    "title": "Move the threshold, count the mistakes",
+    "intro": "Score four validation tickets, compare three thresholds by an agreed cost, then evaluate the frozen choice once on the test.",
+    "scope": "Fictional scores and labels. The cost 4 × FN + FP and the thresholds 0.3, 0.5 and 0.7 are the lesson's teaching policy, not a recommendation. A ticket is flagged when its score is at or above the threshold.",
+    "sources": [
+      {
+        "title": "scikit-learn: Tuning the decision threshold for class prediction",
+        "url": "https://scikit-learn.org/stable/modules/classification_threshold.html"
+      },
+      {
+        "title": "scikit-learn: Metrics and scoring",
+        "url": "https://scikit-learn.org/stable/modules/model_evaluation.html"
+      }
+    ],
+    "scenarios": [
+      {
+        "id": "validation",
+        "label": "Choose on validation",
+        "steps": [
+          {
+            "title": "Threshold 0.5",
+            "explanation": "At 0.5, V1 and V2 are flagged. V1 needs help (a true positive) and V2 is fine (a false positive). V3 needs help but is missed (a false negative). Cost = 4 × 1 + 1 = 5.",
+            "nodes": [
+              {
+                "id": "set",
+                "label": "Validation tickets",
+                "detail": "4 tickets: 2 need help, 2 are fine",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "rule",
+                "label": "Threshold 0.5",
+                "detail": "Flags V1, V2",
+                "x": 390,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "counts",
+                "label": "Confusion counts",
+                "detail": "TP 1 · FP 1 · FN 1 · TN 1 · cost 5",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "set",
+                "to": "rule",
+                "label": "score each ticket"
+              },
+              {
+                "from": "rule",
+                "to": "counts",
+                "label": "compare with truth"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Tickets",
+                "columns": [
+                  "Ticket",
+                  "Score",
+                  "Truth",
+                  "Decision"
+                ],
+                "rows": [
+                  [
+                    "V1",
+                    "0.8",
+                    "Needs help",
+                    "Flag"
+                  ],
+                  [
+                    "V2",
+                    "0.6",
+                    "Fine",
+                    "Flag"
+                  ],
+                  [
+                    "V3",
+                    "0.4",
+                    "Needs help",
+                    "No flag"
+                  ],
+                  [
+                    "V4",
+                    "0.2",
+                    "Fine",
+                    "No flag"
+                  ]
+                ]
+              },
+              {
+                "caption": "Rule",
+                "columns": [
+                  "Threshold",
+                  "Cost = 4 × FN + FP"
+                ],
+                "rows": [
+                  [
+                    "0.5",
+                    "5"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Raise it to 0.7",
+            "focus": [
+              "threshold",
+              "ticket-V2",
+              "cost"
+            ],
+            "explanation": "At 0.7 only V1 is flagged. The false positive disappears, but V3 is still missed, so cost = 4 × 1 + 0 = 4.",
+            "nodes": [
+              {
+                "id": "set",
+                "label": "Validation tickets",
+                "detail": "4 tickets: 2 need help, 2 are fine",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "rule",
+                "label": "Threshold 0.7",
+                "detail": "Flags V1",
+                "x": 390,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "counts",
+                "label": "Confusion counts",
+                "detail": "TP 1 · FP 0 · FN 1 · TN 2 · cost 4",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "set",
+                "to": "rule",
+                "label": "score each ticket"
+              },
+              {
+                "from": "rule",
+                "to": "counts",
+                "label": "compare with truth"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Tickets",
+                "columns": [
+                  "Ticket",
+                  "Score",
+                  "Truth",
+                  "Decision"
+                ],
+                "rows": [
+                  [
+                    "V1",
+                    "0.8",
+                    "Needs help",
+                    "Flag"
+                  ],
+                  [
+                    "V2",
+                    "0.6",
+                    "Fine",
+                    "No flag"
+                  ],
+                  [
+                    "V3",
+                    "0.4",
+                    "Needs help",
+                    "No flag"
+                  ],
+                  [
+                    "V4",
+                    "0.2",
+                    "Fine",
+                    "No flag"
+                  ]
+                ]
+              },
+              {
+                "caption": "Rule",
+                "columns": [
+                  "Threshold",
+                  "Cost = 4 × FN + FP"
+                ],
+                "rows": [
+                  [
+                    "0.7",
+                    "4"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Lower it to 0.3",
+            "focus": [
+              "threshold",
+              "ticket-V2",
+              "ticket-V3",
+              "cost"
+            ],
+            "explanation": "At 0.3, V3 is caught as well. Lowering the threshold cannot reduce recall on these rows; here it removes the costly miss, so cost = 4 × 0 + 1 = 1, the lowest of the three.",
+            "nodes": [
+              {
+                "id": "set",
+                "label": "Validation tickets",
+                "detail": "4 tickets: 2 need help, 2 are fine",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "rule",
+                "label": "Threshold 0.3",
+                "detail": "Flags V1, V2, V3",
+                "x": 390,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "counts",
+                "label": "Confusion counts",
+                "detail": "TP 2 · FP 1 · FN 0 · TN 1 · cost 1",
+                "x": 740,
+                "y": 50,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "set",
+                "to": "rule",
+                "label": "score each ticket"
+              },
+              {
+                "from": "rule",
+                "to": "counts",
+                "label": "compare with truth"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Tickets",
+                "columns": [
+                  "Ticket",
+                  "Score",
+                  "Truth",
+                  "Decision"
+                ],
+                "rows": [
+                  [
+                    "V1",
+                    "0.8",
+                    "Needs help",
+                    "Flag"
+                  ],
+                  [
+                    "V2",
+                    "0.6",
+                    "Fine",
+                    "Flag"
+                  ],
+                  [
+                    "V3",
+                    "0.4",
+                    "Needs help",
+                    "Flag"
+                  ],
+                  [
+                    "V4",
+                    "0.2",
+                    "Fine",
+                    "No flag"
+                  ]
+                ]
+              },
+              {
+                "caption": "Rule",
+                "columns": [
+                  "Threshold",
+                  "Cost = 4 × FN + FP"
+                ],
+                "rows": [
+                  [
+                    "0.3",
+                    "1"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Freeze 0.3, then test once",
+            "focus": [
+              "ticket-T2",
+              "cost"
+            ],
+            "explanation": "The rule is fixed at 0.3 before the test is opened. On four test tickets it flags T1 and T3 and misses T2, so cost = 5, worse than validation's 1. Report it: it estimates how the frozen rule may do on new tickets.",
+            "nodes": [
+              {
+                "id": "set",
+                "label": "Test tickets",
+                "detail": "4 tickets: 2 need help, 2 are fine",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "rule",
+                "label": "Threshold 0.3",
+                "detail": "Flags T1, T3",
+                "x": 390,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "counts",
+                "label": "Confusion counts",
+                "detail": "TP 1 · FP 1 · FN 1 · TN 1 · cost 5",
+                "x": 740,
+                "y": 50,
+                "tone": "warning"
+              }
+            ],
+            "edges": [
+              {
+                "from": "set",
+                "to": "rule",
+                "label": "score each ticket"
+              },
+              {
+                "from": "rule",
+                "to": "counts",
+                "label": "compare with truth"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Tickets",
+                "columns": [
+                  "Ticket",
+                  "Score",
+                  "Truth",
+                  "Decision"
+                ],
+                "rows": [
+                  [
+                    "T1",
+                    "0.9",
+                    "Needs help",
+                    "Flag"
+                  ],
+                  [
+                    "T2",
+                    "0.25",
+                    "Needs help",
+                    "No flag"
+                  ],
+                  [
+                    "T3",
+                    "0.45",
+                    "Fine",
+                    "Flag"
+                  ],
+                  [
+                    "T4",
+                    "0.1",
+                    "Fine",
+                    "No flag"
+                  ]
+                ]
+              },
+              {
+                "caption": "Rule",
+                "columns": [
+                  "Threshold",
+                  "Cost = 4 × FN + FP"
+                ],
+                "rows": [
+                  [
+                    "0.3",
+                    "5"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "retune",
+        "label": "Retune on the test",
+        "steps": [
+          {
+            "title": "The frozen rule on the test",
+            "explanation": "The rule chosen on validation, 0.3, flags T1 and T3 and misses T2. Test cost = 4 × 1 + 1 = 5.",
+            "nodes": [
+              {
+                "id": "set",
+                "label": "Test tickets",
+                "detail": "4 tickets: 2 need help, 2 are fine",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "rule",
+                "label": "Threshold 0.3",
+                "detail": "Flags T1, T3",
+                "x": 390,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "counts",
+                "label": "Confusion counts",
+                "detail": "TP 1 · FP 1 · FN 1 · TN 1 · cost 5",
+                "x": 740,
+                "y": 50,
+                "tone": "warning"
+              }
+            ],
+            "edges": [
+              {
+                "from": "set",
+                "to": "rule",
+                "label": "score each ticket"
+              },
+              {
+                "from": "rule",
+                "to": "counts",
+                "label": "compare with truth"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Tickets",
+                "columns": [
+                  "Ticket",
+                  "Score",
+                  "Truth",
+                  "Decision"
+                ],
+                "rows": [
+                  [
+                    "T1",
+                    "0.9",
+                    "Needs help",
+                    "Flag"
+                  ],
+                  [
+                    "T2",
+                    "0.25",
+                    "Needs help",
+                    "No flag"
+                  ],
+                  [
+                    "T3",
+                    "0.45",
+                    "Fine",
+                    "Flag"
+                  ],
+                  [
+                    "T4",
+                    "0.1",
+                    "Fine",
+                    "No flag"
+                  ]
+                ]
+              },
+              {
+                "caption": "Rule",
+                "columns": [
+                  "Threshold",
+                  "Cost = 4 × FN + FP"
+                ],
+                "rows": [
+                  [
+                    "0.3",
+                    "5"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Wrong: lower it after seeing the test",
+            "focus": [
+              "threshold",
+              "ticket-T2",
+              "cost"
+            ],
+            "explanation": "Lowering the threshold to 0.2 after seeing the miss catches T2, and the test cost drops to 1. The test has now chosen the rule.",
+            "nodes": [
+              {
+                "id": "set",
+                "label": "Test tickets",
+                "detail": "4 tickets: 2 need help, 2 are fine",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "rule",
+                "label": "Threshold 0.2",
+                "detail": "Flags T1, T2, T3",
+                "x": 390,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "counts",
+                "label": "Confusion counts",
+                "detail": "TP 2 · FP 1 · FN 0 · TN 1 · cost 1",
+                "x": 740,
+                "y": 50,
+                "tone": "warning"
+              }
+            ],
+            "edges": [
+              {
+                "from": "set",
+                "to": "rule",
+                "label": "score each ticket"
+              },
+              {
+                "from": "rule",
+                "to": "counts",
+                "label": "compare with truth"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Tickets",
+                "columns": [
+                  "Ticket",
+                  "Score",
+                  "Truth",
+                  "Decision"
+                ],
+                "rows": [
+                  [
+                    "T1",
+                    "0.9",
+                    "Needs help",
+                    "Flag"
+                  ],
+                  [
+                    "T2",
+                    "0.25",
+                    "Needs help",
+                    "Flag"
+                  ],
+                  [
+                    "T3",
+                    "0.45",
+                    "Fine",
+                    "Flag"
+                  ],
+                  [
+                    "T4",
+                    "0.1",
+                    "Fine",
+                    "No flag"
+                  ]
+                ]
+              },
+              {
+                "caption": "Rule",
+                "columns": [
+                  "Threshold",
+                  "Cost = 4 × FN + FP"
+                ],
+                "rows": [
+                  [
+                    "0.2",
+                    "1"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "The test is no longer untouched",
+            "focus": [
+              "cost"
+            ],
+            "focusLabel": "Check",
+            "explanation": "Cost 1 is now a tuned result, not an estimate for new tickets. To change the rule, go back to validation data, choose again, and evaluate on data the choice has not seen.",
+            "nodes": [
+              {
+                "id": "set",
+                "label": "Test tickets",
+                "detail": "4 tickets: 2 need help, 2 are fine",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "rule",
+                "label": "Threshold 0.2",
+                "detail": "Flags T1, T2, T3",
+                "x": 390,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "counts",
+                "label": "Confusion counts",
+                "detail": "TP 2 · FP 1 · FN 0 · TN 1 · cost 1",
+                "x": 740,
+                "y": 50,
+                "tone": "warning"
+              }
+            ],
+            "edges": [
+              {
+                "from": "set",
+                "to": "rule",
+                "label": "score each ticket"
+              },
+              {
+                "from": "rule",
+                "to": "counts",
+                "label": "compare with truth"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Tickets",
+                "columns": [
+                  "Ticket",
+                  "Score",
+                  "Truth",
+                  "Decision"
+                ],
+                "rows": [
+                  [
+                    "T1",
+                    "0.9",
+                    "Needs help",
+                    "Flag"
+                  ],
+                  [
+                    "T2",
+                    "0.25",
+                    "Needs help",
+                    "Flag"
+                  ],
+                  [
+                    "T3",
+                    "0.45",
+                    "Fine",
+                    "Flag"
+                  ],
+                  [
+                    "T4",
+                    "0.1",
+                    "Fine",
+                    "No flag"
+                  ]
+                ]
+              },
+              {
+                "caption": "Rule",
+                "columns": [
+                  "Threshold",
+                  "Cost = 4 × FN + FP"
+                ],
+                "rows": [
+                  [
+                    "0.2",
+                    "1"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -15087,7 +15087,468 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Split tickets by team, then weight the rate",
+          "intro": "Follow ten tickets through groupby, then compare a ticket-weighted rate with an average of team rates.",
+          "scope": "Fictional tickets from the lesson's worked example: team A has 1 breach in 2 tickets and team B 1 in 8. Breach flags are already validated as 0 or 1.",
+          "sources": [
+            {
+              "title": "pandas user guide: Group by: split-apply-combine",
+              "url": "https://pandas.pydata.org/docs/user_guide/groupby.html"
+            }
+          ],
+          "scenarios": [
+            {
+              "id": "weighted",
+              "label": "Weight by tickets",
+              "steps": [
+                {
+                  "title": "Ten ticket rows",
+                  "explanation": "Each row is one ticket with its team and a breach flag of 0 or 1. Two tickets breached: T1 in team A and T3 in team B.",
+                  "nodes": [
+                    {
+                      "id": "rows",
+                      "label": "Ticket rows",
+                      "detail": "10 rows: team and breach flag (0 or 1)",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "split",
+                      "label": "groupby(\"team\")",
+                      "detail": "Not applied yet",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "all",
+                      "label": "Overall rate",
+                      "detail": "Not calculated yet",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "rows",
+                      "to": "split",
+                      "label": "split by team"
+                    },
+                    {
+                      "from": "split",
+                      "to": "all",
+                      "label": "combine"
+                    }
+                  ]
+                },
+                {
+                  "title": "Split by team",
+                  "focus": [
+                    "group-A",
+                    "group-B"
+                  ],
+                  "explanation": "groupby(\"team\") puts every row in its team's group: 2 rows for team A and 8 for team B. No row is copied or dropped.",
+                  "nodes": [
+                    {
+                      "id": "rows",
+                      "label": "Ticket rows",
+                      "detail": "Each row goes to exactly one group",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "split",
+                      "label": "groupby(\"team\")",
+                      "detail": "A: 2 rows · B: 8 rows",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "all",
+                      "label": "Overall rate",
+                      "detail": "Not calculated yet",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "rows",
+                      "to": "split",
+                      "label": "split by team"
+                    },
+                    {
+                      "from": "split",
+                      "to": "all",
+                      "label": "combine"
+                    }
+                  ]
+                },
+                {
+                  "title": "Aggregate each group",
+                  "focus": [
+                    "agg-A",
+                    "agg-B"
+                  ],
+                  "explanation": "size counts each team's tickets, sum counts its breaches, and the mean of the 0/1 flags is its breach rate. Show the count beside each rate: team A's 50% rests on only 2 tickets.",
+                  "nodes": [
+                    {
+                      "id": "a",
+                      "label": "Team A",
+                      "detail": "1 breach in 2 tickets: 50%",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "b",
+                      "label": "Team B",
+                      "detail": "1 breach in 8 tickets: 12.5%",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "all",
+                      "label": "Overall rate",
+                      "detail": "Not calculated yet",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "a",
+                      "to": "all",
+                      "label": "breaches and tickets"
+                    },
+                    {
+                      "from": "b",
+                      "to": "all",
+                      "label": "breaches and tickets"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Per-team summary",
+                      "columns": [
+                        "Team",
+                        "Tickets (size)",
+                        "Breaches (sum)",
+                        "Breach rate (mean)"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "2",
+                          "1",
+                          "50%"
+                        ],
+                        [
+                          "B",
+                          "8",
+                          "1",
+                          "12.5%"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Combine with ticket weights",
+                  "focus": [
+                    "overall"
+                  ],
+                  "explanation": "Add the breaches and the tickets across teams before dividing: 2 / 10 = 20%. Every ticket counts once, so each team counts in proportion to its tickets.",
+                  "nodes": [
+                    {
+                      "id": "a",
+                      "label": "Team A",
+                      "detail": "1 breach in 2 tickets: 50%",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "b",
+                      "label": "Team B",
+                      "detail": "1 breach in 8 tickets: 12.5%",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "all",
+                      "label": "Overall ticket rate",
+                      "detail": "2 breaches / 10 tickets = 20%",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "a",
+                      "to": "all",
+                      "label": "breaches and tickets"
+                    },
+                    {
+                      "from": "b",
+                      "to": "all",
+                      "label": "breaches and tickets"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Per-team summary",
+                      "columns": [
+                        "Team",
+                        "Tickets (size)",
+                        "Breaches (sum)",
+                        "Breach rate (mean)"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "2",
+                          "1",
+                          "50%"
+                        ],
+                        [
+                          "B",
+                          "8",
+                          "1",
+                          "12.5%"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "unweighted",
+              "label": "Average the team rates",
+              "steps": [
+                {
+                  "title": "Two team rates",
+                  "explanation": "The per-team summary is the same as before: 50% for team A and 12.5% for team B.",
+                  "nodes": [
+                    {
+                      "id": "a",
+                      "label": "Team A",
+                      "detail": "1 breach in 2 tickets: 50%",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "b",
+                      "label": "Team B",
+                      "detail": "1 breach in 8 tickets: 12.5%",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "all",
+                      "label": "Overall rate",
+                      "detail": "Not calculated yet",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "a",
+                      "to": "all",
+                      "label": "team rate"
+                    },
+                    {
+                      "from": "b",
+                      "to": "all",
+                      "label": "team rate"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Per-team summary",
+                      "columns": [
+                        "Team",
+                        "Tickets (size)",
+                        "Breaches (sum)",
+                        "Breach rate (mean)"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "2",
+                          "1",
+                          "50%"
+                        ],
+                        [
+                          "B",
+                          "8",
+                          "1",
+                          "12.5%"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Wrong: average the two rates",
+                  "focus": [
+                    "overall"
+                  ],
+                  "explanation": "Averaging the two rates gives each team equal weight, so team A's 2 tickets count as much as team B's 8. The result is 31.25%, although only 2 of the 10 tickets breached.",
+                  "nodes": [
+                    {
+                      "id": "a",
+                      "label": "Team A",
+                      "detail": "1 breach in 2 tickets: 50%",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "b",
+                      "label": "Team B",
+                      "detail": "1 breach in 8 tickets: 12.5%",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "all",
+                      "label": "Mean of team rates",
+                      "detail": "(50% + 12.5%) / 2 = 31.25%",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "warning"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "a",
+                      "to": "all",
+                      "label": "team rate"
+                    },
+                    {
+                      "from": "b",
+                      "to": "all",
+                      "label": "team rate"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Per-team summary",
+                      "columns": [
+                        "Team",
+                        "Tickets (size)",
+                        "Breaches (sum)",
+                        "Breach rate (mean)"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "2",
+                          "1",
+                          "50%"
+                        ],
+                        [
+                          "B",
+                          "8",
+                          "1",
+                          "12.5%"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Right: count the tickets",
+                  "focus": [
+                    "overall"
+                  ],
+                  "explanation": "The overall ticket rate divides total breaches by total tickets: 2 / 10 = 20%. A mean of team rates answers a different question, about the typical team, and needs that label.",
+                  "nodes": [
+                    {
+                      "id": "a",
+                      "label": "Team A",
+                      "detail": "1 breach in 2 tickets: 50%",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "b",
+                      "label": "Team B",
+                      "detail": "1 breach in 8 tickets: 12.5%",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "all",
+                      "label": "Overall ticket rate",
+                      "detail": "2 breaches / 10 tickets = 20%",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "a",
+                      "to": "all",
+                      "label": "breaches and tickets"
+                    },
+                    {
+                      "from": "b",
+                      "to": "all",
+                      "label": "breaches and tickets"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Per-team summary",
+                      "columns": [
+                        "Team",
+                        "Tickets (size)",
+                        "Breaches (sum)",
+                        "Breach rate (mean)"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "2",
+                          "1",
+                          "50%"
+                        ],
+                        [
+                          "B",
+                          "8",
+                          "1",
+                          "12.5%"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "joins-and-cardinality",
@@ -48891,7 +49352,704 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Decision threshold selection on validation data. Fictional examples do not establish real-service performance."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Move the threshold, count the mistakes",
+          "intro": "Score four validation tickets, compare three thresholds by an agreed cost, then evaluate the frozen choice once on the test.",
+          "scope": "Fictional scores and labels. The cost 4 × FN + FP and the thresholds 0.3, 0.5 and 0.7 are the lesson's teaching policy, not a recommendation. A ticket is flagged when its score is at or above the threshold.",
+          "sources": [
+            {
+              "title": "scikit-learn: Tuning the decision threshold for class prediction",
+              "url": "https://scikit-learn.org/stable/modules/classification_threshold.html"
+            },
+            {
+              "title": "scikit-learn: Metrics and scoring",
+              "url": "https://scikit-learn.org/stable/modules/model_evaluation.html"
+            }
+          ],
+          "scenarios": [
+            {
+              "id": "validation",
+              "label": "Choose on validation",
+              "steps": [
+                {
+                  "title": "Threshold 0.5",
+                  "explanation": "At 0.5, V1 and V2 are flagged. V1 needs help (a true positive) and V2 is fine (a false positive). V3 needs help but is missed (a false negative). Cost = 4 × 1 + 1 = 5.",
+                  "nodes": [
+                    {
+                      "id": "set",
+                      "label": "Validation tickets",
+                      "detail": "4 tickets: 2 need help, 2 are fine",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "rule",
+                      "label": "Threshold 0.5",
+                      "detail": "Flags V1, V2",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "counts",
+                      "label": "Confusion counts",
+                      "detail": "TP 1 · FP 1 · FN 1 · TN 1 · cost 5",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "set",
+                      "to": "rule",
+                      "label": "score each ticket"
+                    },
+                    {
+                      "from": "rule",
+                      "to": "counts",
+                      "label": "compare with truth"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Tickets",
+                      "columns": [
+                        "Ticket",
+                        "Score",
+                        "Truth",
+                        "Decision"
+                      ],
+                      "rows": [
+                        [
+                          "V1",
+                          "0.8",
+                          "Needs help",
+                          "Flag"
+                        ],
+                        [
+                          "V2",
+                          "0.6",
+                          "Fine",
+                          "Flag"
+                        ],
+                        [
+                          "V3",
+                          "0.4",
+                          "Needs help",
+                          "No flag"
+                        ],
+                        [
+                          "V4",
+                          "0.2",
+                          "Fine",
+                          "No flag"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Rule",
+                      "columns": [
+                        "Threshold",
+                        "Cost = 4 × FN + FP"
+                      ],
+                      "rows": [
+                        [
+                          "0.5",
+                          "5"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Raise it to 0.7",
+                  "focus": [
+                    "threshold",
+                    "ticket-V2",
+                    "cost"
+                  ],
+                  "explanation": "At 0.7 only V1 is flagged. The false positive disappears, but V3 is still missed, so cost = 4 × 1 + 0 = 4.",
+                  "nodes": [
+                    {
+                      "id": "set",
+                      "label": "Validation tickets",
+                      "detail": "4 tickets: 2 need help, 2 are fine",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "rule",
+                      "label": "Threshold 0.7",
+                      "detail": "Flags V1",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "counts",
+                      "label": "Confusion counts",
+                      "detail": "TP 1 · FP 0 · FN 1 · TN 2 · cost 4",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "set",
+                      "to": "rule",
+                      "label": "score each ticket"
+                    },
+                    {
+                      "from": "rule",
+                      "to": "counts",
+                      "label": "compare with truth"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Tickets",
+                      "columns": [
+                        "Ticket",
+                        "Score",
+                        "Truth",
+                        "Decision"
+                      ],
+                      "rows": [
+                        [
+                          "V1",
+                          "0.8",
+                          "Needs help",
+                          "Flag"
+                        ],
+                        [
+                          "V2",
+                          "0.6",
+                          "Fine",
+                          "No flag"
+                        ],
+                        [
+                          "V3",
+                          "0.4",
+                          "Needs help",
+                          "No flag"
+                        ],
+                        [
+                          "V4",
+                          "0.2",
+                          "Fine",
+                          "No flag"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Rule",
+                      "columns": [
+                        "Threshold",
+                        "Cost = 4 × FN + FP"
+                      ],
+                      "rows": [
+                        [
+                          "0.7",
+                          "4"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Lower it to 0.3",
+                  "focus": [
+                    "threshold",
+                    "ticket-V2",
+                    "ticket-V3",
+                    "cost"
+                  ],
+                  "explanation": "At 0.3, V3 is caught as well. Lowering the threshold cannot reduce recall on these rows; here it removes the costly miss, so cost = 4 × 0 + 1 = 1, the lowest of the three.",
+                  "nodes": [
+                    {
+                      "id": "set",
+                      "label": "Validation tickets",
+                      "detail": "4 tickets: 2 need help, 2 are fine",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "rule",
+                      "label": "Threshold 0.3",
+                      "detail": "Flags V1, V2, V3",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "counts",
+                      "label": "Confusion counts",
+                      "detail": "TP 2 · FP 1 · FN 0 · TN 1 · cost 1",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "set",
+                      "to": "rule",
+                      "label": "score each ticket"
+                    },
+                    {
+                      "from": "rule",
+                      "to": "counts",
+                      "label": "compare with truth"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Tickets",
+                      "columns": [
+                        "Ticket",
+                        "Score",
+                        "Truth",
+                        "Decision"
+                      ],
+                      "rows": [
+                        [
+                          "V1",
+                          "0.8",
+                          "Needs help",
+                          "Flag"
+                        ],
+                        [
+                          "V2",
+                          "0.6",
+                          "Fine",
+                          "Flag"
+                        ],
+                        [
+                          "V3",
+                          "0.4",
+                          "Needs help",
+                          "Flag"
+                        ],
+                        [
+                          "V4",
+                          "0.2",
+                          "Fine",
+                          "No flag"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Rule",
+                      "columns": [
+                        "Threshold",
+                        "Cost = 4 × FN + FP"
+                      ],
+                      "rows": [
+                        [
+                          "0.3",
+                          "1"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Freeze 0.3, then test once",
+                  "focus": [
+                    "ticket-T2",
+                    "cost"
+                  ],
+                  "explanation": "The rule is fixed at 0.3 before the test is opened. On four test tickets it flags T1 and T3 and misses T2, so cost = 5, worse than validation's 1. Report it: it estimates how the frozen rule may do on new tickets.",
+                  "nodes": [
+                    {
+                      "id": "set",
+                      "label": "Test tickets",
+                      "detail": "4 tickets: 2 need help, 2 are fine",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "rule",
+                      "label": "Threshold 0.3",
+                      "detail": "Flags T1, T3",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "counts",
+                      "label": "Confusion counts",
+                      "detail": "TP 1 · FP 1 · FN 1 · TN 1 · cost 5",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "warning"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "set",
+                      "to": "rule",
+                      "label": "score each ticket"
+                    },
+                    {
+                      "from": "rule",
+                      "to": "counts",
+                      "label": "compare with truth"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Tickets",
+                      "columns": [
+                        "Ticket",
+                        "Score",
+                        "Truth",
+                        "Decision"
+                      ],
+                      "rows": [
+                        [
+                          "T1",
+                          "0.9",
+                          "Needs help",
+                          "Flag"
+                        ],
+                        [
+                          "T2",
+                          "0.25",
+                          "Needs help",
+                          "No flag"
+                        ],
+                        [
+                          "T3",
+                          "0.45",
+                          "Fine",
+                          "Flag"
+                        ],
+                        [
+                          "T4",
+                          "0.1",
+                          "Fine",
+                          "No flag"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Rule",
+                      "columns": [
+                        "Threshold",
+                        "Cost = 4 × FN + FP"
+                      ],
+                      "rows": [
+                        [
+                          "0.3",
+                          "5"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "retune",
+              "label": "Retune on the test",
+              "steps": [
+                {
+                  "title": "The frozen rule on the test",
+                  "explanation": "The rule chosen on validation, 0.3, flags T1 and T3 and misses T2. Test cost = 4 × 1 + 1 = 5.",
+                  "nodes": [
+                    {
+                      "id": "set",
+                      "label": "Test tickets",
+                      "detail": "4 tickets: 2 need help, 2 are fine",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "rule",
+                      "label": "Threshold 0.3",
+                      "detail": "Flags T1, T3",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "counts",
+                      "label": "Confusion counts",
+                      "detail": "TP 1 · FP 1 · FN 1 · TN 1 · cost 5",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "warning"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "set",
+                      "to": "rule",
+                      "label": "score each ticket"
+                    },
+                    {
+                      "from": "rule",
+                      "to": "counts",
+                      "label": "compare with truth"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Tickets",
+                      "columns": [
+                        "Ticket",
+                        "Score",
+                        "Truth",
+                        "Decision"
+                      ],
+                      "rows": [
+                        [
+                          "T1",
+                          "0.9",
+                          "Needs help",
+                          "Flag"
+                        ],
+                        [
+                          "T2",
+                          "0.25",
+                          "Needs help",
+                          "No flag"
+                        ],
+                        [
+                          "T3",
+                          "0.45",
+                          "Fine",
+                          "Flag"
+                        ],
+                        [
+                          "T4",
+                          "0.1",
+                          "Fine",
+                          "No flag"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Rule",
+                      "columns": [
+                        "Threshold",
+                        "Cost = 4 × FN + FP"
+                      ],
+                      "rows": [
+                        [
+                          "0.3",
+                          "5"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Wrong: lower it after seeing the test",
+                  "focus": [
+                    "threshold",
+                    "ticket-T2",
+                    "cost"
+                  ],
+                  "explanation": "Lowering the threshold to 0.2 after seeing the miss catches T2, and the test cost drops to 1. The test has now chosen the rule.",
+                  "nodes": [
+                    {
+                      "id": "set",
+                      "label": "Test tickets",
+                      "detail": "4 tickets: 2 need help, 2 are fine",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "rule",
+                      "label": "Threshold 0.2",
+                      "detail": "Flags T1, T2, T3",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "counts",
+                      "label": "Confusion counts",
+                      "detail": "TP 2 · FP 1 · FN 0 · TN 1 · cost 1",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "warning"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "set",
+                      "to": "rule",
+                      "label": "score each ticket"
+                    },
+                    {
+                      "from": "rule",
+                      "to": "counts",
+                      "label": "compare with truth"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Tickets",
+                      "columns": [
+                        "Ticket",
+                        "Score",
+                        "Truth",
+                        "Decision"
+                      ],
+                      "rows": [
+                        [
+                          "T1",
+                          "0.9",
+                          "Needs help",
+                          "Flag"
+                        ],
+                        [
+                          "T2",
+                          "0.25",
+                          "Needs help",
+                          "Flag"
+                        ],
+                        [
+                          "T3",
+                          "0.45",
+                          "Fine",
+                          "Flag"
+                        ],
+                        [
+                          "T4",
+                          "0.1",
+                          "Fine",
+                          "No flag"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Rule",
+                      "columns": [
+                        "Threshold",
+                        "Cost = 4 × FN + FP"
+                      ],
+                      "rows": [
+                        [
+                          "0.2",
+                          "1"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "The test is no longer untouched",
+                  "focus": [
+                    "cost"
+                  ],
+                  "focusLabel": "Check",
+                  "explanation": "Cost 1 is now a tuned result, not an estimate for new tickets. To change the rule, go back to validation data, choose again, and evaluate on data the choice has not seen.",
+                  "nodes": [
+                    {
+                      "id": "set",
+                      "label": "Test tickets",
+                      "detail": "4 tickets: 2 need help, 2 are fine",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "rule",
+                      "label": "Threshold 0.2",
+                      "detail": "Flags T1, T2, T3",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "counts",
+                      "label": "Confusion counts",
+                      "detail": "TP 2 · FP 1 · FN 0 · TN 1 · cost 1",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "warning"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "set",
+                      "to": "rule",
+                      "label": "score each ticket"
+                    },
+                    {
+                      "from": "rule",
+                      "to": "counts",
+                      "label": "compare with truth"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Tickets",
+                      "columns": [
+                        "Ticket",
+                        "Score",
+                        "Truth",
+                        "Decision"
+                      ],
+                      "rows": [
+                        [
+                          "T1",
+                          "0.9",
+                          "Needs help",
+                          "Flag"
+                        ],
+                        [
+                          "T2",
+                          "0.25",
+                          "Needs help",
+                          "Flag"
+                        ],
+                        [
+                          "T3",
+                          "0.45",
+                          "Fine",
+                          "Flag"
+                        ],
+                        [
+                          "T4",
+                          "0.1",
+                          "Fine",
+                          "No flag"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Rule",
+                      "columns": [
+                        "Threshold",
+                        "Cost = 4 × FN + FP"
+                      ],
+                      "rows": [
+                        [
+                          "0.2",
+                          "1"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "reproduce-an-experiment",
@@ -58320,7 +59478,483 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Watch one value move the mean",
+          "intro": "Add a slow request, then a missing one, and see which summary moves.",
+          "scope": "Fictional latencies in milliseconds, from the lesson's worked example. Summaries of the values shown, not estimates for a wider population.",
+          "sources": [
+            {
+              "title": "Python statistics module: mean and median",
+              "url": "https://docs.python.org/3/library/statistics.html"
+            }
+          ],
+          "scenarios": [
+            {
+              "id": "outlier",
+              "label": "A slow request arrives",
+              "steps": [
+                {
+                  "title": "Four typical requests",
+                  "explanation": "Four requests each take 10 ms. With identical values, the mean and the median are both 10 ms.",
+                  "nodes": [
+                    {
+                      "id": "obs",
+                      "label": "Observations",
+                      "detail": "10, 10, 10, 10 ms · n = 4",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "mean",
+                      "label": "Mean",
+                      "detail": "40 / 4 = 10 ms",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "median",
+                      "label": "Median",
+                      "detail": "Middle of 4 sorted values: 10 ms",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "obs",
+                      "to": "mean",
+                      "label": "sum ÷ count"
+                    },
+                    {
+                      "from": "obs",
+                      "to": "median",
+                      "label": "sort, take the middle"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Latencies (ms)",
+                      "columns": [
+                        "Request",
+                        "Latency (ms)"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "10"
+                        ],
+                        [
+                          "B",
+                          "10"
+                        ],
+                        [
+                          "C",
+                          "10"
+                        ],
+                        [
+                          "D",
+                          "10"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "A 100 ms request arrives",
+                  "focus": [
+                    "obs-e",
+                    "mean"
+                  ],
+                  "explanation": "The total rises to 140 ms across 5 requests, so the mean moves to 28 ms. The middle sorted value is still 10 ms, so the median does not move.",
+                  "nodes": [
+                    {
+                      "id": "obs",
+                      "label": "Observations",
+                      "detail": "10, 10, 10, 10, 100 ms · n = 5",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "mean",
+                      "label": "Mean",
+                      "detail": "140 / 5 = 28 ms",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "active"
+                    },
+                    {
+                      "id": "median",
+                      "label": "Median",
+                      "detail": "Middle of 5 sorted values: 10 ms",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "obs",
+                      "to": "mean",
+                      "label": "sum ÷ count"
+                    },
+                    {
+                      "from": "obs",
+                      "to": "median",
+                      "label": "sort, take the middle"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Latencies (ms)",
+                      "columns": [
+                        "Request",
+                        "Latency (ms)"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "10"
+                        ],
+                        [
+                          "B",
+                          "10"
+                        ],
+                        [
+                          "C",
+                          "10"
+                        ],
+                        [
+                          "D",
+                          "10"
+                        ],
+                        [
+                          "E",
+                          "100"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Report both, with n",
+                  "focus": [
+                    "mean",
+                    "median"
+                  ],
+                  "focusLabel": "Compare",
+                  "explanation": "Both numbers are correct. The mean reflects the slow request; the median describes the typical one. Report both with units and n = 5, and keep the slow request: it may matter more than the typical delay.",
+                  "nodes": [
+                    {
+                      "id": "obs",
+                      "label": "Observations",
+                      "detail": "10, 10, 10, 10, 100 ms · n = 5",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "mean",
+                      "label": "Mean",
+                      "detail": "28 ms: reflects the slow request",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "median",
+                      "label": "Median",
+                      "detail": "10 ms: the typical request",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "success"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "obs",
+                      "to": "mean",
+                      "label": "sum ÷ count"
+                    },
+                    {
+                      "from": "obs",
+                      "to": "median",
+                      "label": "sort, take the middle"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Latencies (ms)",
+                      "columns": [
+                        "Request",
+                        "Latency (ms)"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "10"
+                        ],
+                        [
+                          "B",
+                          "10"
+                        ],
+                        [
+                          "C",
+                          "10"
+                        ],
+                        [
+                          "D",
+                          "10"
+                        ],
+                        [
+                          "E",
+                          "100"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "missing",
+              "label": "A duration is missing",
+              "steps": [
+                {
+                  "title": "One duration was not recorded",
+                  "explanation": "Request E has no recorded duration. A missing value is unknown; it is not a request that took 0 ms.",
+                  "nodes": [
+                    {
+                      "id": "obs",
+                      "label": "Observations",
+                      "detail": "10, 10, 10, 10 ms · E missing",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "mean",
+                      "label": "Mean",
+                      "detail": "40 / 4 = 10 ms",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "neutral"
+                    },
+                    {
+                      "id": "median",
+                      "label": "Median",
+                      "detail": "Middle of 4 sorted values: 10 ms",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "obs",
+                      "to": "mean",
+                      "label": "sum ÷ count"
+                    },
+                    {
+                      "from": "obs",
+                      "to": "median",
+                      "label": "sort, take the middle"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Latencies (ms)",
+                      "columns": [
+                        "Request",
+                        "Latency (ms)"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "10"
+                        ],
+                        [
+                          "B",
+                          "10"
+                        ],
+                        [
+                          "C",
+                          "10"
+                        ],
+                        [
+                          "D",
+                          "10"
+                        ],
+                        [
+                          "E",
+                          "missing"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Wrong: enter the gap as 0",
+                  "focus": [
+                    "obs-e",
+                    "mean"
+                  ],
+                  "explanation": "Writing 0 for E adds a measurement that never happened. The mean drops to 8 ms because the same total is now shared by 5 requests. The median stays 10 ms.",
+                  "nodes": [
+                    {
+                      "id": "obs",
+                      "label": "Observations",
+                      "detail": "0, 10, 10, 10, 10 ms · n = 5",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "mean",
+                      "label": "Mean",
+                      "detail": "40 / 5 = 8 ms",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "warning"
+                    },
+                    {
+                      "id": "median",
+                      "label": "Median",
+                      "detail": "Middle of 5 sorted values: 10 ms",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "obs",
+                      "to": "mean",
+                      "label": "sum ÷ count"
+                    },
+                    {
+                      "from": "obs",
+                      "to": "median",
+                      "label": "sort, take the middle"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Latencies (ms)",
+                      "columns": [
+                        "Request",
+                        "Latency (ms)"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "10"
+                        ],
+                        [
+                          "B",
+                          "10"
+                        ],
+                        [
+                          "C",
+                          "10"
+                        ],
+                        [
+                          "D",
+                          "10"
+                        ],
+                        [
+                          "E",
+                          "0 (entered for missing)"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Right: keep it missing and say so",
+                  "focus": [
+                    "obs-e",
+                    "mean"
+                  ],
+                  "explanation": "The summaries use the 4 measured requests, so the mean and the median are both 10 ms. The report states that 1 duration is missing, so a reader knows they describe 4 of 5 requests.",
+                  "nodes": [
+                    {
+                      "id": "obs",
+                      "label": "Observations",
+                      "detail": "n = 4 measured · 1 missing, reported",
+                      "x": 40,
+                      "y": 50,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "mean",
+                      "label": "Mean",
+                      "detail": "40 / 4 = 10 ms",
+                      "x": 390,
+                      "y": 50,
+                      "tone": "success"
+                    },
+                    {
+                      "id": "median",
+                      "label": "Median",
+                      "detail": "Middle of 4 sorted values: 10 ms",
+                      "x": 740,
+                      "y": 50,
+                      "tone": "neutral"
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "obs",
+                      "to": "mean",
+                      "label": "sum ÷ count"
+                    },
+                    {
+                      "from": "obs",
+                      "to": "median",
+                      "label": "sort, take the middle"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Latencies (ms)",
+                      "columns": [
+                        "Request",
+                        "Latency (ms)"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "10"
+                        ],
+                        [
+                          "B",
+                          "10"
+                        ],
+                        [
+                          "C",
+                          "10"
+                        ],
+                        [
+                          "D",
+                          "10"
+                        ],
+                        [
+                          "E",
+                          "missing"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "variance-and-spread",
