@@ -1,0 +1,90 @@
+{
+  "lessons": {
+    "run-a-program": [
+      {"question": "What does print(\"Hello\") show in the terminal?", "options": ["Hello", "\"Hello\"", "print(\"Hello\")"], "correct": 0, "explanation": "The quotation marks delimit the string in the source; they are not part of the output."}
+    ],
+    "values-and-names": [
+      {"question": "What do 7 // 2 and 7 % 2 produce?", "options": ["3.5 and 1", "3 and 1", "3 and 0.5"], "correct": 1, "explanation": "// is floor division, giving 3; % gives the remainder, 1."}
+    ],
+    "text-and-input": [
+      {"question": "name = \"  Ada \" is followed by a line containing only name.strip(). What is len(name) afterwards?", "options": ["3", "4", "6"], "correct": 2, "explanation": "Strings do not change in place. strip returns a new string, and this code never assigns it, so name still has 6 characters."}
+    ],
+    "conditions": [
+      {"question": "With score = 50, which branch runs in: if score > 50 … elif score >= 50 … else …?", "options": ["The if branch", "The elif branch", "The else branch"], "correct": 1, "explanation": "50 > 50 is false and 50 >= 50 is true, so the elif branch is the first match. Boundary values show the difference between > and >=."}
+    ],
+    "collections": [
+      {"question": "first = [1, 2]; second = first; second.append(3). What is first now?", "options": ["[1, 2]", "[1, 2, 3]", "[3]"], "correct": 1, "explanation": "second = first gives the same list a second name, so appending through either name changes that one list. Use first.copy() for an independent list."}
+    ],
+    "loops": [
+      {"question": "In for index, label in enumerate([\"a\", \"b\"]), what is index when label is \"b\"?", "options": ["0", "1", "2"], "correct": 1, "explanation": "enumerate counts from zero, so \"a\" pairs with 0 and \"b\" with 1."}
+    ],
+    "functions": [
+      {"question": "def add(item, items=[]): items.append(item); return items. After add(1), what does add(2) return?", "options": ["[2]", "[1, 2]", "None"], "correct": 1, "explanation": "The default list is created once, when the function is defined, so both calls append to the same list. Use None as the default and create a list inside the function."}
+    ],
+    "errors": [
+      {"question": "Why avoid a bare except: around a calculation?", "options": ["It can hide programming errors and interrupt signals", "Python refuses to run a bare except", "It makes every call noticeably slower"], "correct": 0, "explanation": "A bare except catches everything, including mistakes you need to see and KeyboardInterrupt. Catch the narrow exception you know how to handle."}
+    ],
+    "files-and-json": [
+      {"question": "What does json.loads(json.dumps({1: \"a\"})) return?", "options": ["{1: 'a'}", "{'1': 'a'}", "[1, 'a']"], "correct": 1, "explanation": "JSON object keys are always strings, so the integer key 1 comes back as the string '1'."}
+    ],
+    "modules-and-environments": [
+      {"question": "What does if __name__ == \"__main__\": stop from happening?", "options": ["Other modules importing the file", "Errors inside the module's functions", "Script entry code running when the file is imported"], "correct": 2, "explanation": "The guarded block runs only when the file is executed directly, so importing its functions does not also run the program."}
+    ],
+    "testing-and-api-boundaries": [
+      {"question": "A test calls the parser and prints the result. What is it missing?", "options": ["An assertion that checks the expected value", "A live request to the real service", "A longer network timeout"], "correct": 0, "explanation": "Printing does not check anything; the test passes whatever the parser returns. An assertion states the expected behavior."}
+    ],
+    "study-log-capstone": [
+      {"question": "For the first version of the study log, which data structure is enough?", "options": ["A class hierarchy for each record type", "A list of dictionaries", "A database server"], "correct": 1, "explanation": "A list of dictionaries holds topic and minutes records. A class is optional, and a database is beyond this one-process version."}
+    ],
+    "classes-and-dataclasses": [
+      {"question": "Why write items: list = field(default_factory=list) in a dataclass?", "options": ["Each instance gets its own new list", "It checks that the list holds only integers", "It freezes the list after construction"], "correct": 0, "explanation": "default_factory calls list() for every new instance. A plain = [] default is rejected because one list would be shared."}
+    ],
+    "typing-and-protocols": [
+      {"question": "A class has every method a Protocol requires but does not inherit from it. Does a static checker accept it where the Protocol is expected?", "options": ["No; it must subclass the Protocol", "Yes; protocols are matched by structure", "Only when the Protocol is runtime_checkable"], "correct": 1, "explanation": "Protocols describe required operations, so any object that provides them fits. runtime_checkable only affects isinstance checks."}
+    ],
+    "iterators-and-generators": [
+      {"question": "When does the body of a generator function start running?", "options": ["When the function is called", "When the module is imported", "When iteration asks for the first value"], "correct": 2, "explanation": "Calling a generator function only creates the generator object. Its body runs when next() or a for loop asks for a value, so its errors and effects can be delayed."}
+    ],
+    "context-managers": [
+      {"question": "How many times should a @contextmanager function yield?", "options": ["Exactly once", "Once per exception it handles", "Twice: once for setup and once for cleanup"], "correct": 0, "explanation": "Code before the single yield acquires the resource; code after it, in finally, cleans up."}
+    ],
+    "packaging-and-cli": [
+      {"question": "argparse reads --minutes with type=int. Which value is accepted by argparse but still needs a domain check?", "options": ["12", "-5", "abc"], "correct": 1, "explanation": "int(\"-5\") succeeds, so argparse accepts it; the rule that minutes are nonnegative is yours to check. argparse already rejects abc."}
+    ],
+    "logging-and-test-design": [
+      {"question": "Where should unittest.mock.patch replace a dependency?", "options": ["Where the code under test looks it up", "In the module that originally defined it, always", "Globally, for every test module"], "correct": 0, "explanation": "patch replaces a name in one namespace. If the consumer imported the function into its own module, patch it there, and only for the test that needs the failure."}
+    ],
+    "concurrency-models": [
+      {"question": "In what order does ThreadPoolExecutor.map return results?", "options": ["The order workers finish", "The order of the inputs", "No guaranteed order"], "correct": 1, "explanation": "map yields results in input order, even when later inputs finish first."}
+    ],
+    "profiling-and-complexity": [
+      {"question": "What does Big-O describe?", "options": ["How cost grows as the input grows", "The exact runtime on your machine", "The memory one call allocates"], "correct": 0, "explanation": "Big-O describes growth, not seconds. Measure real workloads to learn actual runtimes."}
+    ],
+    "security-and-input-boundaries": [
+      {"question": "Why read at most limit + 1 bytes from an input?", "options": ["json.loads needs one spare byte", "To leave room for a trailing newline", "To detect oversize input without loading all of it"], "correct": 2, "explanation": "If the extra byte arrives, the input is too large and can be rejected before a huge allocation. Checking size after reading everything is too late."}
+    ],
+    "robust-storage": [
+      {"question": "Why close the temporary file before calling os.replace?", "options": ["Windows can refuse to replace using a file that is still open", "Closing the file deletes it", "os.replace accepts only closed file objects"], "correct": 0, "explanation": "On Windows an open file can block the replacement, and closing also ensures buffered data has been written. os.replace takes paths, not file objects."}
+    ],
+    "robust-import-capstone": [
+      {"question": "One record in a batch of 100 repeats an earlier id. What does the importer publish?", "options": ["The 99 valid records", "Nothing; the batch is rejected", "All 100 records with a warning"], "correct": 1, "explanation": "The batch must pass every record and batch invariant before one commit, so partial success never looks like a complete import."}
+    ]
+  },
+  "stages": {
+    "foundation": [
+      {"question": "def total(minutes): sum(minutes). What does total([10, 20]) return?", "options": ["30", "None", "[10, 20]"], "correct": 1, "explanation": "The function computes the sum but never returns it, so the call produces None."},
+      {"question": "A user adds a record with minutes = -5 to a valid saved log. What should the program do?", "options": ["Save it and fix it on the next load", "Replace the log with an empty list", "Reject it and leave the saved log unchanged"], "correct": 2, "explanation": "Validate before saving. An invalid record is reported and the existing log stays as it was."},
+      {"question": "A tuple such as (\"Python\", 20) is saved with json.dumps and read back with json.loads. What comes back?", "options": ["A list", "A tuple", "A string"], "correct": 0, "explanation": "JSON has arrays but no tuples, so the tuple is written as an array and read back as a list."}
+    ],
+    "intermediate": [
+      {"question": "@dataclass class Session: minutes: int. What is Session(\"ten\").minutes?", "options": ["10", "'ten'", "It raises TypeError"], "correct": 1, "explanation": "The annotation is not enforced at runtime. Check types yourself, for example in __post_init__."},
+      {"question": "gen = (n for n in [1, 2, 3]); next(gen). What does list(gen) return now?", "options": ["[1, 2, 3]", "[]", "[2, 3]"], "correct": 2, "explanation": "A generator is one-pass. next already consumed 1, so list collects what remains."},
+      {"question": "A command-line tool receives --minutes -5. What should it do?", "options": ["Report the error and exit with a nonzero status", "Print a warning and save the record", "Exit with status 0 so scripts keep running"], "correct": 0, "explanation": "An expected input error is reported clearly, and a nonzero status tells the caller or script that the command failed."}
+    ],
+    "advanced": [
+      {"question": "A coroutine calls time.sleep(2). What happens to the other tasks on the event loop?", "options": ["They keep running on other threads", "They wait, because the event loop is blocked", "asyncio cancels the sleeping coroutine"], "correct": 1, "explanation": "Blocking code inside a coroutine stops the event loop. Use await asyncio.sleep, or run blocking work elsewhere."},
+      {"question": "A new aggregation is twice as fast but returns a different result for empty input. What is it?", "options": ["Not an optimization until the results match", "An optimization with a known edge case", "Acceptable, because the speedup was measured"], "correct": 0, "explanation": "Compare behavior on representative and edge inputs before timing; a fast wrong answer is not an improvement."},
+      {"question": "The importer rejects a batch. What should happen to the previous report file?", "options": ["It is replaced with an empty report", "It stays unchanged", "It is deleted so stale data cannot be read"], "correct": 1, "explanation": "Validation happens before the write path, and replacement is atomic, so a rejected batch leaves the earlier output intact."}
+    ]
+  }
+}
