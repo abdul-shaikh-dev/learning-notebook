@@ -1,0 +1,39 @@
+.scene-data{color:#193d32}.scene-data h4{margin:.3rem 0 .6rem;font-size:1rem}
+.data-caption{display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:baseline;border-bottom:1px solid #bdd0c6;padding-bottom:.7rem;margin-bottom:1rem}.data-caption span{font-size:.9rem;max-width:60ch}
+.data-notes{list-style:none;margin:1rem 0 0;padding:0;font-size:.9rem;line-height:1.5}.data-notes li{margin:.35rem 0}.scene-data .tone-warning,.scene-data .is-invalid{color:#823b27}
+.data-action{min-height:44px;margin-top:1rem}
+/* Mean and median: dots on a 0-to-max axis, equal values stacked; markers name both summaries in text. */
+.stat-plot{position:relative;margin:0 26px;padding:2.4rem 0 3.2rem}.stat-dots{list-style:none;margin:0;padding:0;position:relative;height:150px;border-bottom:2px solid #5d7f6d}
+.stat-dot{position:absolute;left:var(--x);bottom:calc(var(--level)*34px + 4px);transform:translateX(-50%);width:30px;height:30px;border-radius:50%;background:#dbe8ef;border:2px solid #4d7690;display:grid;place-items:center;font:600 .8rem ui-monospace,monospace;transition:left .5s ease,bottom .5s ease}
+.stat-dot.is-entered{background:#fbeee0;border-color:#a8652a;border-style:dashed}
+.stat-axis{position:relative;height:1.4rem;font-size:.8rem}.stat-axis span{position:absolute;left:var(--x);transform:translateX(-50%);top:.2rem}
+.stat-marker{position:absolute;left:var(--x);margin:0;transform:translateX(-50%);white-space:nowrap;font-size:.85rem;font-weight:600;padding:.15rem .5rem;border-radius:4px;transition:left .5s ease}
+.stat-marker::after{content:"";position:absolute;left:50%;width:2px;background:currentColor}
+.stat-marker.is-median{top:0;background:#e6efda}.stat-marker.is-median::after{top:100%;height:.6rem}
+.stat-marker.is-mean{bottom:0;background:#f6e6c8;color:#5b3d07}.stat-marker.is-mean::after{bottom:100%;height:1.8rem}
+.stat-missing{margin:.4rem 0;font-size:.9rem}.stat-missing span{display:inline-grid;place-items:center;width:30px;height:30px;border:2px dashed #7c8b84;border-radius:50%;font:600 .8rem ui-monospace,monospace;margin-left:.3rem}
+.stat-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;margin:1rem 0 0}.stat-summary div{background:#fff;border:1px solid #bad0c4;border-radius:5px;padding:.6rem .8rem}.stat-summary dt{font-size:.8rem}.stat-summary dd{margin:0;font:700 1.2rem ui-monospace,monospace}
+/* groupby: ticket chips carry their team and outcome as text. */
+.rate-call code{display:inline-block;padding:.5rem .7rem;background:#183d32;color:#f2f7ef;border-radius:4px;font-size:.85rem;overflow-wrap:anywhere}.rate-call{margin:0 0 1rem}
+.rate-table ol,.rate-group ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.45rem}
+.rate-ticket{display:grid;grid-template-columns:auto auto;gap:0 .4rem;padding:.35rem .55rem;background:#fff;border:1px solid #9db4a6;border-radius:5px;font-size:.8rem;min-width:84px}.rate-ticket b{font-family:ui-monospace,monospace}.rate-ticket span:last-child{grid-column:1/-1}
+.rate-ticket.is-breach{background:#fbeee0;border-color:#a8652a;border-width:2px}
+.rate-groups{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:1rem}.rate-group{padding:.7rem .8rem;border:1px solid #8eaa9b;border-radius:6px;background:#f6f8f4;min-width:0}
+.rate-aggregate{margin:.7rem 0 0;padding-top:.6rem;border-top:1px solid #bad0c4;font-weight:600;font-size:.9rem}
+.rate-overall{display:flex;flex-wrap:wrap;gap:.3rem 1rem;align-items:baseline;margin-top:1rem;padding:.8rem 1rem;border:2px solid #4f8a68;border-radius:6px;background:#fff}.rate-overall span{font-size:.9rem}.rate-overall strong{font:700 1.1rem ui-monospace,monospace}
+.rate-overall.is-invalid{border-color:#a8652a;border-style:dashed}
+/* Threshold: two labelled lanes on a 0-1 score axis; the shaded side of the line is flagged. */
+.ml-plot{position:relative;margin:0 18px;padding-top:1.8rem}
+.ml-flagged{position:absolute;left:var(--x);right:-18px;top:0;bottom:1.4rem;background:repeating-linear-gradient(135deg,#e6efda 0 8px,#f1f6ea 8px 16px);transition:left .5s ease}.ml-flagged span{position:absolute;top:.2rem;right:.4rem;font-size:.8rem;font-weight:600}
+.ml-threshold{position:absolute;left:var(--x);top:0;bottom:1.4rem;width:3px;background:#183d32;transition:left .5s ease}.ml-threshold span{position:absolute;top:0;left:.3rem;font:700 .85rem ui-monospace,monospace}
+.ml-lane{position:relative;height:86px;border-bottom:1px solid #bad0c4}.ml-lane-label{position:absolute;left:-18px;top:.2rem;font-size:.8rem;font-weight:600;padding:0 .3rem;background:rgba(255,255,255,.8)}
+.ml-lane ol{list-style:none;margin:0;padding:0}.ml-ticket{position:absolute;left:var(--x);top:36px;transform:translateX(-50%);display:grid;justify-items:center;font-size:.75rem;transition:left .5s ease}
+.ml-ticket b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#fff;border:2px solid #4d7690;font-family:ui-monospace,monospace}.ml-ticket span{white-space:nowrap;font-weight:600}
+.ml-ticket.is-fn b,.ml-ticket.is-fp b{border-color:#a8652a;border-style:dashed}
+.ml-axis{position:relative;height:1.4rem;font-size:.8rem}.ml-axis span{position:absolute;left:var(--x);transform:translateX(-50%);top:.2rem}
+.ml-results{display:flex;flex-wrap:wrap;gap:1rem;align-items:stretch;margin-top:1rem}
+.ml-confusion{border-collapse:collapse;font-size:.9rem;background:#fff}.ml-confusion caption{text-align:left;font-weight:600;padding-bottom:.3rem}.ml-confusion :is(th,td){border:1px solid #bad0c4;padding:.4rem .7rem;text-align:left}.ml-confusion td{font-family:ui-monospace,monospace}
+.ml-cost{display:grid;align-content:center;gap:.2rem;padding:.7rem 1rem;border:2px solid #4f8a68;border-radius:6px;background:#fff}.ml-cost span{font-size:.85rem}.ml-cost strong{font:700 1.1rem ui-monospace,monospace}
+@media(max-width:640px){.rate-groups{grid-template-columns:1fr}.stat-summary{gap:.4rem}.stat-summary div{padding:.5rem}.ml-lane{height:92px}.ml-ticket span{font-size:.7rem}}
+@media(prefers-reduced-motion:reduce){.scene-data *{animation:none!important;transition:none!important}}
+@media print{.data-action{display:none!important}}

@@ -3,7 +3,7 @@ process.chdir(process.env.LEARNING_REPO||path.resolve(__dirname,'..'));
 const paths=require(path.resolve('scripts/manifest.cjs')).readPaths();
 const context={escapeText:s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;'),document:{getElementById:()=>null}};
 context.window=context;context.globalThis=context;vm.createContext(context);
-for(const f of ['concrete-scenes','scenes-infra','scenes-apps','scenes-dsa','scenes-patterns','learning-tools'])vm.runInContext(fs.readFileSync(`assets/js/${f}.js`,'utf8'),context);
+for(const f of ['concrete-scenes','scenes-infra','scenes-apps','scenes-dsa','scenes-patterns','scenes-data','learning-tools'])vm.runInContext(fs.readFileSync(`assets/js/${f}.js`,'utf8'),context);
 // A focus key names one drawn element, whole or without its renderer prefix.
 const short=v=>v.slice(v.indexOf('-')+1),matches=(k,v)=>v===k||short(v)===k,drawn=html=>[...html.matchAll(/data-motion-node="([^"]+)"/g)].map(m=>m[1]);
 const marks=html=>Object.fromEntries([...html.matchAll(/data-motion-node="([^"]+)" data-change="([^"]+)"/g)].map(m=>[short(m[1]),m[2]]));

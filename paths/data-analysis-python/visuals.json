@@ -1,0 +1,463 @@
+{
+  "group-and-denominators": {
+    "title": "Split tickets by team, then weight the rate",
+    "intro": "Follow ten tickets through groupby, then compare a ticket-weighted rate with an average of team rates.",
+    "scope": "Fictional tickets from the lesson's worked example: team A has 1 breach in 2 tickets and team B 1 in 8. Breach flags are already validated as 0 or 1.",
+    "sources": [
+      {
+        "title": "pandas user guide: Group by: split-apply-combine",
+        "url": "https://pandas.pydata.org/docs/user_guide/groupby.html"
+      }
+    ],
+    "scenarios": [
+      {
+        "id": "weighted",
+        "label": "Weight by tickets",
+        "steps": [
+          {
+            "title": "Ten ticket rows",
+            "explanation": "Each row is one ticket with its team and a breach flag of 0 or 1. Two tickets breached: T1 in team A and T3 in team B.",
+            "nodes": [
+              {
+                "id": "rows",
+                "label": "Ticket rows",
+                "detail": "10 rows: team and breach flag (0 or 1)",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "split",
+                "label": "groupby(\"team\")",
+                "detail": "Not applied yet",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "all",
+                "label": "Overall rate",
+                "detail": "Not calculated yet",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "rows",
+                "to": "split",
+                "label": "split by team"
+              },
+              {
+                "from": "split",
+                "to": "all",
+                "label": "combine"
+              }
+            ]
+          },
+          {
+            "title": "Split by team",
+            "focus": [
+              "group-A",
+              "group-B"
+            ],
+            "explanation": "groupby(\"team\") puts every row in its team's group: 2 rows for team A and 8 for team B. No row is copied or dropped.",
+            "nodes": [
+              {
+                "id": "rows",
+                "label": "Ticket rows",
+                "detail": "Each row goes to exactly one group",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "split",
+                "label": "groupby(\"team\")",
+                "detail": "A: 2 rows · B: 8 rows",
+                "x": 390,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "all",
+                "label": "Overall rate",
+                "detail": "Not calculated yet",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "rows",
+                "to": "split",
+                "label": "split by team"
+              },
+              {
+                "from": "split",
+                "to": "all",
+                "label": "combine"
+              }
+            ]
+          },
+          {
+            "title": "Aggregate each group",
+            "focus": [
+              "agg-A",
+              "agg-B"
+            ],
+            "explanation": "size counts each team's tickets, sum counts its breaches, and the mean of the 0/1 flags is its breach rate. Show the count beside each rate: team A's 50% rests on only 2 tickets.",
+            "nodes": [
+              {
+                "id": "a",
+                "label": "Team A",
+                "detail": "1 breach in 2 tickets: 50%",
+                "x": 40,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "b",
+                "label": "Team B",
+                "detail": "1 breach in 8 tickets: 12.5%",
+                "x": 390,
+                "y": 50,
+                "tone": "active"
+              },
+              {
+                "id": "all",
+                "label": "Overall rate",
+                "detail": "Not calculated yet",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "a",
+                "to": "all",
+                "label": "breaches and tickets"
+              },
+              {
+                "from": "b",
+                "to": "all",
+                "label": "breaches and tickets"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Per-team summary",
+                "columns": [
+                  "Team",
+                  "Tickets (size)",
+                  "Breaches (sum)",
+                  "Breach rate (mean)"
+                ],
+                "rows": [
+                  [
+                    "A",
+                    "2",
+                    "1",
+                    "50%"
+                  ],
+                  [
+                    "B",
+                    "8",
+                    "1",
+                    "12.5%"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Combine with ticket weights",
+            "focus": [
+              "overall"
+            ],
+            "explanation": "Add the breaches and the tickets across teams before dividing: 2 / 10 = 20%. Every ticket counts once, so each team counts in proportion to its tickets.",
+            "nodes": [
+              {
+                "id": "a",
+                "label": "Team A",
+                "detail": "1 breach in 2 tickets: 50%",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "b",
+                "label": "Team B",
+                "detail": "1 breach in 8 tickets: 12.5%",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "all",
+                "label": "Overall ticket rate",
+                "detail": "2 breaches / 10 tickets = 20%",
+                "x": 740,
+                "y": 50,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "a",
+                "to": "all",
+                "label": "breaches and tickets"
+              },
+              {
+                "from": "b",
+                "to": "all",
+                "label": "breaches and tickets"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Per-team summary",
+                "columns": [
+                  "Team",
+                  "Tickets (size)",
+                  "Breaches (sum)",
+                  "Breach rate (mean)"
+                ],
+                "rows": [
+                  [
+                    "A",
+                    "2",
+                    "1",
+                    "50%"
+                  ],
+                  [
+                    "B",
+                    "8",
+                    "1",
+                    "12.5%"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "unweighted",
+        "label": "Average the team rates",
+        "steps": [
+          {
+            "title": "Two team rates",
+            "explanation": "The per-team summary is the same as before: 50% for team A and 12.5% for team B.",
+            "nodes": [
+              {
+                "id": "a",
+                "label": "Team A",
+                "detail": "1 breach in 2 tickets: 50%",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "b",
+                "label": "Team B",
+                "detail": "1 breach in 8 tickets: 12.5%",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "all",
+                "label": "Overall rate",
+                "detail": "Not calculated yet",
+                "x": 740,
+                "y": 50,
+                "tone": "neutral"
+              }
+            ],
+            "edges": [
+              {
+                "from": "a",
+                "to": "all",
+                "label": "team rate"
+              },
+              {
+                "from": "b",
+                "to": "all",
+                "label": "team rate"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Per-team summary",
+                "columns": [
+                  "Team",
+                  "Tickets (size)",
+                  "Breaches (sum)",
+                  "Breach rate (mean)"
+                ],
+                "rows": [
+                  [
+                    "A",
+                    "2",
+                    "1",
+                    "50%"
+                  ],
+                  [
+                    "B",
+                    "8",
+                    "1",
+                    "12.5%"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Wrong: average the two rates",
+            "focus": [
+              "overall"
+            ],
+            "explanation": "Averaging the two rates gives each team equal weight, so team A's 2 tickets count as much as team B's 8. The result is 31.25%, although only 2 of the 10 tickets breached.",
+            "nodes": [
+              {
+                "id": "a",
+                "label": "Team A",
+                "detail": "1 breach in 2 tickets: 50%",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "b",
+                "label": "Team B",
+                "detail": "1 breach in 8 tickets: 12.5%",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "all",
+                "label": "Mean of team rates",
+                "detail": "(50% + 12.5%) / 2 = 31.25%",
+                "x": 740,
+                "y": 50,
+                "tone": "warning"
+              }
+            ],
+            "edges": [
+              {
+                "from": "a",
+                "to": "all",
+                "label": "team rate"
+              },
+              {
+                "from": "b",
+                "to": "all",
+                "label": "team rate"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Per-team summary",
+                "columns": [
+                  "Team",
+                  "Tickets (size)",
+                  "Breaches (sum)",
+                  "Breach rate (mean)"
+                ],
+                "rows": [
+                  [
+                    "A",
+                    "2",
+                    "1",
+                    "50%"
+                  ],
+                  [
+                    "B",
+                    "8",
+                    "1",
+                    "12.5%"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "title": "Right: count the tickets",
+            "focus": [
+              "overall"
+            ],
+            "explanation": "The overall ticket rate divides total breaches by total tickets: 2 / 10 = 20%. A mean of team rates answers a different question, about the typical team, and needs that label.",
+            "nodes": [
+              {
+                "id": "a",
+                "label": "Team A",
+                "detail": "1 breach in 2 tickets: 50%",
+                "x": 40,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "b",
+                "label": "Team B",
+                "detail": "1 breach in 8 tickets: 12.5%",
+                "x": 390,
+                "y": 50,
+                "tone": "neutral"
+              },
+              {
+                "id": "all",
+                "label": "Overall ticket rate",
+                "detail": "2 breaches / 10 tickets = 20%",
+                "x": 740,
+                "y": 50,
+                "tone": "success"
+              }
+            ],
+            "edges": [
+              {
+                "from": "a",
+                "to": "all",
+                "label": "breaches and tickets"
+              },
+              {
+                "from": "b",
+                "to": "all",
+                "label": "breaches and tickets"
+              }
+            ],
+            "tables": [
+              {
+                "caption": "Per-team summary",
+                "columns": [
+                  "Team",
+                  "Tickets (size)",
+                  "Breaches (sum)",
+                  "Breach rate (mean)"
+                ],
+                "rows": [
+                  [
+                    "A",
+                    "2",
+                    "1",
+                    "50%"
+                  ],
+                  [
+                    "B",
+                    "8",
+                    "1",
+                    "12.5%"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

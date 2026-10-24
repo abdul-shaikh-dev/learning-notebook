@@ -1,6 +1,6 @@
 /* Scene palettes follow the notebook theme. Screen-only rules preserve print output. */
 @media screen {
-  html[data-theme="dark"] :is(.visual-explorer, .scene-apps, .scene-dsa, .scene-infra, .scene-patterns) {
+  html[data-theme="dark"] :is(.visual-explorer, .scene-apps, .scene-dsa, .scene-infra, .scene-patterns, .scene-data) {
     --scene-blue: #1c3648;
     --scene-blue-text: #b8ddf8;
     --scene-blue-line: #70acd3;
@@ -167,6 +167,23 @@
   html[data-theme="dark"] .pattern-delivery-order { border-color: var(--scene-green-line); }
   html[data-theme="dark"] .pattern-medal { color: var(--night-muted, #aab6bd); border-color: #8298a1; }
   html[data-theme="dark"] .pattern-medal.is-earned { background: var(--scene-green); border-color: var(--scene-green-line); color: var(--scene-green-text); }
+
+  /* Data scenes: statistics, groupby rates and thresholds. */
+  html[data-theme="dark"] .data-caption, html[data-theme="dark"] .scene-data :is(.rate-aggregate, .ml-lane, .ml-confusion th, .ml-confusion td) { border-color: var(--night-line, #3b464c); }
+  html[data-theme="dark"] .scene-data :is(.tone-warning, .is-invalid) { color: var(--scene-red-text); }
+  html[data-theme="dark"] .scene-data :is(.stat-summary div, .rate-ticket, .rate-overall, .ml-confusion, .ml-cost, .ml-ticket b) { background: var(--night-bg, #111517); border-color: #8298a1; }
+  html[data-theme="dark"] .stat-dots { border-color: #8298a1; }
+  html[data-theme="dark"] .stat-dot { background: var(--scene-blue); border-color: var(--scene-blue-line); color: var(--scene-blue-text); }
+  html[data-theme="dark"] .scene-data :is(.stat-dot.is-entered, .rate-ticket.is-breach) { background: var(--scene-amber); border-color: var(--scene-amber-line); color: var(--scene-amber-text); }
+  html[data-theme="dark"] .stat-marker.is-median { background: var(--scene-green); color: var(--scene-green-text); }
+  html[data-theme="dark"] .stat-marker.is-mean { background: var(--scene-amber); color: var(--scene-amber-text); }
+  html[data-theme="dark"] .stat-missing span { border-color: #8298a1; }
+  html[data-theme="dark"] .rate-group { background: var(--night-raised, #252c30); border-color: #8298a1; }
+  html[data-theme="dark"] .scene-data :is(.rate-overall:not(.is-invalid), .ml-cost) { border-color: var(--scene-green-line); }
+  html[data-theme="dark"] .rate-overall.is-invalid, html[data-theme="dark"] .scene-data :is(.ml-ticket.is-fn, .ml-ticket.is-fp) b { border-color: var(--scene-amber-line); }
+  html[data-theme="dark"] .ml-flagged { background: repeating-linear-gradient(135deg, #1d3a2e 0 8px, #172b24 8px 16px); }
+  html[data-theme="dark"] .ml-threshold { background: var(--scene-green-text); }
+  html[data-theme="dark"] .ml-lane-label { background: rgba(17, 21, 23, .85); }
 }
 @media screen and (prefers-reduced-motion: reduce) {
   html[data-theme="dark"] .visual-table-scroll tr.is-changed td { animation: none; background: #193c30; }
