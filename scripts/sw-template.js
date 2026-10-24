@@ -1,6 +1,7 @@
 /* Build injects an integrity-checked, scope-relative publication inventory. */
 const CONFIG = __PWA_CONFIG__;
 const BASE=new URL('./',self.location.href);
+const say=text=>Object.assign(Error(text),{friendly:true});
 const PREFIX='learning-notebook:'+encodeURIComponent(BASE.pathname)+':';
 const SHELL=PREFIX+'shell:'+CONFIG.version,REGISTRY=PREFIX+'downloads';
 const locks=new Map();
@@ -10,8 +11,8 @@ const course=id=>CONFIG.courses.find(c=>c.id===id);
 async function digest(bytes){return [...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(n=>n.toString(16).padStart(2,'0')).join('');}
 async function verified(file){
  const response=await fetch(absolute(file),{cache:'reload',signal:AbortSignal.timeout(30000)});
- if(!response.ok||response.type==='opaque')throw Error('A file could not be downloaded. Check your connection and try again.');
- if(await digest(await response.clone().arrayBuffer())!==CONFIG.files[file].hash)throw Error('The notebook changed during download. Apply the available update, then try again.');
+ if(!response.ok||response.type==='opaque')throw say('A file could not be downloaded. Check your connection and try again.');
+ if(await digest(await response.clone().arrayBuffer())!==CONFIG.files[file].hash)throw say('The notebook changed during download. Apply the available update, then try again.');
  return response;
 }
 async function fill(name,files,progress){
@@ -32,22 +33,22 @@ async function status(){
 }
 function serial(id,work){const previous=locks.get(id)||Promise.resolve();const next=previous.catch(()=>{}).then(work);locks.set(id,next);return next.finally(()=>{if(locks.get(id)===next)locks.delete(id);});}
 async function save(id,progress){
- const c=course(id);if(!c)throw Error('Unknown learning path.');
+ const c=course(id);if(!c)throw say('Unknown learning path.');
  return serial(id,async()=>{
   if(!await complete(SHELL,CONFIG.shell))await fill(SHELL,CONFIG.shell,progress);
   const revision=c.version||CONFIG.version;
   const name=PREFIX+'course:'+id+':'+revision+':'+crypto.randomUUID();let committed=false;
   try{
    await fill(name,c.files,progress);
-   if(!await complete(name,c.files))throw Error('Download is incomplete. Please try again.');
+   if(!await complete(name,c.files))throw say('Download is incomplete. Please try again.');
    const previous=await record(id);
    await (await caches.open(REGISTRY)).put(registryKey(id),new Response(JSON.stringify({version:revision,cache:name}),{headers:{'Content-Type':'application/json'}}));
    committed=true;
    if(previous?.cache&&previous.cache!==name)await caches.delete(previous.cache).catch(()=>{});
-  }catch(error){if(!committed)await caches.delete(name);if(error?.name==='QuotaExceededError')throw Error('Not enough browser storage. Remove an offline course and try again.');throw error;}
+  }catch(error){if(!committed)await caches.delete(name);if(error?.name==='QuotaExceededError')throw say('Not enough browser storage. Remove an offline course and try again.');throw error;}
  });
 }
-async function remove(id){if(!course(id))throw Error('Unknown learning path.');return serial(id,async()=>{const saved=await record(id);await (await caches.open(REGISTRY)).delete(registryKey(id));if(saved?.cache)await caches.delete(saved.cache);});}
+async function remove(id){if(!course(id))throw say('Unknown learning path.');return serial(id,async()=>{const saved=await record(id);await (await caches.open(REGISTRY)).delete(registryKey(id));if(saved?.cache)await caches.delete(saved.cache);});}
 self.addEventListener('install',event=>event.waitUntil((async()=>{try{await fill(SHELL,CONFIG.shell);}catch(error){await caches.delete(SHELL);throw error;}})()));
 self.addEventListener('activate',event=>event.waitUntil((async()=>{
  // Delete only this notebook's obsolete shell caches. Course selections survive updates.
@@ -65,9 +66,9 @@ self.addEventListener('message',event=>{
  event.waitUntil((async()=>{try{
   if(message.type==='SAVE_COURSE')await save(message.id,(done,total)=>port.postMessage({progress:{done,total}}));
   else if(message.type==='REMOVE_COURSE')await remove(message.id);
-  else if(message.type!=='STATUS')throw Error('Unknown offline action.');
+  else if(message.type!=='STATUS')throw say('Unknown offline action.');
   port.postMessage({ok:true,data:await status()});
- }catch(error){port.postMessage({ok:false,error:error.message||'Offline storage is unavailable.'});}})());
+ }catch(error){port.postMessage({ok:false,error:error?.friendly?error.message:'Offline storage could not complete this request.'});}})());
 });
 async function cached(file){
  const url=absolute(file),shell=await (await caches.open(SHELL)).match(url);if(shell)return shell;

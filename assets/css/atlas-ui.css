@@ -139,4 +139,8 @@ html[data-theme=dark] .path-details{border-color:var(--night-line)}
 }
 
 @media(max-width:700px){.notebook-nav .nav-detail{display:none}body:has(.catalog)>header .notebook-nav{flex-wrap:nowrap}.catalog .search-filter-disclosure{padding:0;border:0;background:transparent}.catalog .search-filter-disclosure>summary{padding:4px 0}}
-.notebook-nav .nav-detail{margin-inline-start:.25em}
+.notebook-nav .nav-detail{margin-inline-start:.25em;font-size:inherit;font-weight:inherit;color:inherit}
+/* Header links: both words share one size, so they sit on one line together. */
+.notebook-nav a:has(.nav-detail){justify-content:center}
+/* The pressed view button has its own outline, so focus needs a stronger rule. */
+.catalog .library-view-switch button[aria-pressed]:focus-visible{outline:3px solid #a04425;outline-offset:2px}
