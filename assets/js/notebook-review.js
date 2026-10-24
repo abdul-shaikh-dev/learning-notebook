@@ -112,7 +112,7 @@ const NotebookReview = (() => {
   function view(now = Date.now()) {
     const due = dueItems(now), shown = due.filter(item => item.question.quiz).slice(0, LIMIT);
     const upcoming = items(now).filter(item => !item.ready).sort((a,b) => a.due - b.due);
-    const head = '<a href="#">← All learning paths</a><h1>Review</h1><p class="intro">Questions you missed come first, then questions due again. Answer from memory before opening the lesson.</p>';
+    const head = '<a class="back-link" href="#">← All learning paths</a><h1>Review</h1><p class="intro">Questions you missed come first, then questions due again. Answer from memory before opening the lesson.</p>';
     // The schedule needs only catalog titles, so it never loads course content.
     const schedule = upcoming.length ? '<section class="review-schedule" aria-labelledby="review-schedule-title"><h2 id="review-schedule-title">Coming up</h2><ul>' + upcoming.slice(0, 20).map(item =>
       '<li><a href="' + esc(item.question.href) + '">' + esc(item.path.title) + ' · ' + esc(item.question.title) + '</a><span>Returns ' + when(item.due, now) + '</span></li>').join('') + '</ul>' +

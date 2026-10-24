@@ -39,6 +39,8 @@ jobs:
         run: |
           node verify.cjs
           node tests/browser-python.cjs
+      - name: Check contrast, target size and keyboard focus in Chrome
+        run: node tests/ui-audit.cjs
       - name: Verify Kubernetes context guard without a cluster
         shell: pwsh
         run: ./paths/kubernetes/practice/test_lab_guard.ps1

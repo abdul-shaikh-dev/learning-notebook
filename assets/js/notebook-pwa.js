@@ -2,6 +2,9 @@
 (function () {
   'use strict';
   if (typeof document === 'undefined' || typeof navigator === 'undefined') return;
+  // Only messages written for learners are shown; browser exceptions get plain text and stay in the console.
+  const notice = text => Object.assign(new Error(text), {friendly: true});
+  const plain = (error, fallback) => { if (error?.friendly) return error.message; if (error) console.warn(error); return fallback; };
   const script = document.currentScript;
   const root = new URL('../../', script && script.src ? script.src : new URL('assets/js/notebook-pwa.js', location.href));
   const manager = document.getElementById('pwa-course-list');
@@ -58,24 +61,24 @@
     if(!status){status=document.createElement('p');status.id='pwa-download-status';status.setAttribute('role','status');link.after(status);}
     status.textContent='Preparing download…';
     try{
-      const response=await fetch(url.href);if(!response.ok)throw Error('This file is not available offline. Save its course from Offline & install, then try again.');
+      const response=await fetch(url.href);if(!response.ok)throw notice('This file is not available offline. Save its course from Offline & install, then try again.');
       const blob=URL.createObjectURL(await response.blob()),download=document.createElement('a');
       const filename=link.getAttribute('download')||decodeURIComponent(url.pathname.split('/').pop());
       download.href=blob;download.download=filename;download.click();setTimeout(()=>URL.revokeObjectURL(blob),60000);
       status.textContent='Download ready: '+filename;
-    }catch(error){status.textContent=error.message||'Download unavailable. Reconnect and try again.';}
+    }catch(error){status.textContent=plain(error,'Download unavailable. Reconnect and try again.');}
   });
   function request(type, id, onProgress) {
     return new Promise((resolve, reject) => {
       const worker = registration && registration.active;
-      if (!worker) { reject(new Error('Offline storage is still starting. Wait a moment, then refresh status.')); return; }
+      if (!worker) { reject(notice('Offline storage is still starting. Wait a moment, then refresh status.')); return; }
       const channel = new MessageChannel(); let timer;
       const finish = (error, data) => { clearTimeout(timer); channel.port1.close(); error ? reject(error) : resolve(data); };
-      const reset = () => { clearTimeout(timer); timer = setTimeout(() => finish(new Error('The download stopped responding. Refresh status before trying again.')), 120000); };
+      const reset = () => { clearTimeout(timer); timer = setTimeout(() => finish(notice('The download stopped responding. Refresh status before trying again.')), 120000); };
       channel.port1.onmessage = event => {
         const result = event.data || {};
         if (result.progress) { reset(); if (onProgress) onProgress(result.progress); return; }
-        finish(result.ok ? null : new Error(result.error || 'Offline storage could not complete this request.'), result.data);
+        finish(result.ok ? null : notice(result.error || 'Offline storage could not complete this request.'), result.data);
       };
       reset(); worker.postMessage({type, id}, [channel.port2]);
     });
@@ -122,12 +125,12 @@
     try {
       const data = await request(type, course.id, state => { progress.max = state.total || 1; progress.value = state.done || 0; progress.setAttribute('aria-valuetext', state.done + ' of ' + state.total + ' files'); });
       busy = false; render(data); restoreFocus(); message(type === 'SAVE_COURSE' ? course.title + ' is ready offline.' : course.title + ' download removed. Your reading progress is unchanged.');
-    } catch (error) { busy = false; render(knownStatus); restoreFocus(); message(error.message + ' Check your connection and available storage, then refresh status.', true); }
+    } catch (error) { busy = false; render(knownStatus); restoreFocus(); message(plain(error, 'Offline storage could not finish this request.') + ' Check your connection and available storage, then refresh status.', true); }
   }
   async function refresh() {
     if (busy || !manager) return;
     try { render(await request('STATUS')); message(''); }
-    catch (error) { unavailable(error.message); if ($('pwa-refresh')) $('pwa-refresh').disabled = false; }
+    catch (error) { unavailable(plain(error, 'Offline storage is unavailable right now. Reload this page to try again.')); if ($('pwa-refresh')) $('pwa-refresh').disabled = false; }
   }
   if ($('pwa-refresh')) $('pwa-refresh').addEventListener('click', refresh);
   function updateNotice() {
@@ -153,8 +156,8 @@
 
     const watch = worker => { if (!worker) return; if (worker.state === 'installed') updateNotice(); else worker.addEventListener('statechange', () => { if (worker.state === 'installed') updateNotice(); }); };
     reg.addEventListener('updatefound', () => watch(reg.installing)); watch(reg.installing);
-    await Promise.race([navigator.serviceWorker.ready, new Promise((_, reject) => setTimeout(() => reject(new Error('Offline setup timed out.')), 45000))]); await refresh();
-  }).catch(error => unavailable('Offline setup could not finish. Reconnect and reload this page. ' + error.message));
+    await Promise.race([navigator.serviceWorker.ready, new Promise((_, reject) => setTimeout(() => reject(notice('Offline setup took too long.')), 45000))]); await refresh();
+  }).catch(error => unavailable('Offline setup could not finish. ' + (error?.friendly ? error.message + ' ' : (console.warn(error), '')) + 'Reconnect and reload this page.'));
 })();
 
 

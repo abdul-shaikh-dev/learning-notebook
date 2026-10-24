@@ -68,6 +68,9 @@ function worker(version='one',storage=new Storage(),courseVersion,tweak){
   assert.equal((await shared.message('SAVE_COURSE','react')).at(-1).ok,true);shared.state.offline=true;
   assert.equal(await (await shared.fetch('paths/shared/runtime.js')).text(),'runtime','The second owner serves the shared file');
   delete bodies['paths/shared/runtime.js'];}
+ // Learners see the worker's own sentences; a browser exception becomes one plain sentence.
+ {const bad=worker();bad.state.bad='paths/python/practice.zip';const failed=(await bad.message('SAVE_COURSE','python')).at(-1);assert.equal(failed.ok,false);assert.match(failed.error,/changed during download/);
+  const raw=worker();raw.state.offline=true;const lost=(await raw.message('SAVE_COURSE','python')).at(-1);assert.equal(lost.ok,false);assert.equal(lost.error,'Offline storage could not complete this request.');assert.ok(!/network unavailable/.test(lost.error));}
  console.log('PWA worker: integrity, rollback, atomic downloads, scope isolation, updates, offline routing and files shared between courses verified.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
 
@@ -80,4 +83,13 @@ function worker(version='one',storage=new Storage(),courseVersion,tweak){
  context.registration.active={state:'activating'};vm.runInContext('updateNotice()',context);assert.equal(appended,0);
  context.registration.active={state:'activated'};vm.runInContext('updateNotice()',context);assert.equal(appended,1);
  context.registration.waiting=context.registration.active;vm.runInContext('updateNotice()',context);assert.equal(appended,1);
+}
+// The page shows its own notices word for word and replaces browser exceptions with the given sentence.
+{
+ const ui=fs.readFileSync(require('node:path').join(__dirname,'../assets/js/notebook-pwa.js'),'utf8').replace(/\r\n/g,'\n');
+ const start=ui.indexOf('  const notice = '),helpers=ui.slice(start,ui.indexOf('\n',ui.indexOf('  const plain = ',start)));
+ const warned=[],context=vm.createContext({console:{warn:e=>warned.push(e)}});vm.runInContext(helpers+';globalThis.notice=notice;globalThis.plain=plain;',context);
+ assert.equal(context.plain(context.notice('This file is not available offline.'),'fallback'),'This file is not available offline.');
+ assert.equal(context.plain(new TypeError('Failed to fetch'),'Download unavailable.'),'Download unavailable.');assert.equal(warned.length,1);
+ assert.equal(context.plain(undefined,'Download unavailable.'),'Download unavailable.');
 }
