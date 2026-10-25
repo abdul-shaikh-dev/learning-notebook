@@ -1,0 +1,91 @@
+/* Design tokens: the only place colours, type sizes and spacing are defined.
+   Every other stylesheet uses these custom properties. Dark values follow the theme switch. */
+:root{
+ color-scheme:light;
+ /* Surfaces and text */
+ --page:#f3f5f1;
+ --surface:#ffffff;
+ --sunken:#e7ece5;
+ --raised:#edf1ea;
+ --text:#16302a;
+ --muted:#4c5f57;
+ --line:#ccd7cf;
+ --control:#7a8c83;
+ /* Brand and actions */
+ --brand:#183731;
+ --brand-hover:#244c43;
+ --on-brand:#ffffff;
+ --highlight:#d0f27b;
+ --on-highlight:#183731;
+ --link:#1e5c8c;
+ /* The logo keeps its colours in both themes. */
+ --logo-bg:#183731;
+ --logo-text:#d0f27b;
+ /* A dark feature panel, such as a "start here" card, in both themes. */
+ --feature-bg:#183731;
+ --on-feature:#ffffff;
+ --focus:#b4400f;
+ --code-bg:#eef2ec;
+ --code-header:#e2e8df;
+ --shadow:0 1px 2px rgb(16 32 26 / 6%),0 6px 20px rgb(16 32 26 / 6%);
+ /* Syntax highlighting, readable on --code-bg */
+ --syntax-keyword:#6b3fa0;--syntax-string:#2f6b1e;--syntax-number:#9a4f00;--syntax-comment:#56655d;--syntax-title:#1a5f8a;--syntax-type:#7a5a00;--syntax-variable:#a3361f;--syntax-meta:#2f6a6e;
+ /* Tones: a soft fill, a mid line and a text shade per family. Status colours are aliases. */
+ --green-bg:#e1f0e6;--green-line:#6ca886;--green-text:#1d6b47;
+ --blue-bg:#e3eef8;--blue-line:#6c95bd;--blue-text:#1e5c8c;
+ --amber-bg:#fbefd9;--amber-line:#c08b42;--amber-text:#8a5300;
+ --red-bg:#fbe6e0;--red-line:#d08a7c;--red-text:#a3361f;
+ --purple-bg:#efe8f7;--purple-line:#9a82bd;--purple-text:#5e4385;
+ --success:var(--green-text);--success-bg:var(--green-bg);
+ --warning:var(--amber-text);--warning-bg:var(--amber-bg);
+ --danger:var(--red-text);--danger-bg:var(--red-bg);
+ /* Type: one heading family, one text family, eight sizes */
+ --font-heading:Georgia,'Iowan Old Style','Times New Roman',serif;
+ --font-text:'Segoe UI',system-ui,-apple-system,sans-serif;
+ --font-code:ui-monospace,'Cascadia Code',Consolas,monospace;
+ --size-meta:13px;
+ --size-small:15px;
+ --size-body:17px;
+ --size-label:18px;
+ --size-sub:22px;
+ --size-section:28px;
+ --size-title:36px;
+ --size-display:48px;
+ /* Space, radius */
+ --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--space-8:64px;--space-9:96px;
+ --radius-control:6px;
+ --radius-card:12px;
+ --focus-ring:3px solid var(--focus);
+}
+@media(max-width:700px){:root{--size-title:30px;--size-display:36px;--size-section:24px;--size-sub:20px}}
+html[data-theme=dark]{
+ color-scheme:dark;
+ --page:#101513;
+ --surface:#171e1b;
+ --sunken:#0b0f0d;
+ --raised:#222b27;
+ --text:#e2e9e4;
+ --muted:#a3b2aa;
+ --line:#33403a;
+ --control:#6e7f77;
+ --brand:#c9ea7a;
+ --brand-hover:#d8f29a;
+ --on-brand:#132a22;
+ --highlight:#c9ea7a;
+ --on-highlight:#132a22;
+ --link:#8cc4f0;
+ --focus:#f0c67e;
+ --code-bg:#0f1714;
+ --code-header:#1d2622;
+ --feature-bg:#1f3d33;
+ --on-feature:#e2e9e4;
+ --shadow:none;
+ --syntax-keyword:#d5b7ff;--syntax-string:#b7e28c;--syntax-number:#ffca8a;--syntax-comment:#a6bcae;--syntax-title:#8ed8f5;--syntax-type:#f3d988;--syntax-variable:#efb3b8;--syntax-meta:#a8d8dc;
+ --green-bg:#193c30;--green-line:#6cba90;--green-text:#ade1c3;
+ --blue-bg:#1c3648;--blue-line:#70acd3;--blue-text:#b8ddf8;
+ --amber-bg:#44351e;--amber-line:#d0a15b;--amber-text:#f2d292;
+ --red-bg:#492b2b;--red-line:#d89089;--red-text:#f3b8ac;
+ --purple-bg:#33284a;--purple-line:#a58bcb;--purple-text:#d5c3f2;
+}
+/* Print always uses the light values. */
+@media print{html[data-theme=dark]{color-scheme:light;--page:#fff;--surface:#fff;--sunken:#f3f5f1;--raised:#f3f5f1;--text:#000;--muted:#333;--line:#bbb;--control:#777;--brand:#183731;--on-brand:#fff;--highlight:#d0f27b;--on-highlight:#183731;--link:#1e5c8c;--code-bg:#f3f5f1;--green-bg:#e1f0e6;--green-line:#6ca886;--green-text:#1d6b47;--blue-bg:#e3eef8;--blue-line:#6c95bd;--blue-text:#1e5c8c;--amber-bg:#fbefd9;--amber-line:#c08b42;--amber-text:#8a5300;--red-bg:#fbe6e0;--red-line:#d08a7c;--red-text:#a3361f;--purple-bg:#efe8f7;--purple-line:#9a82bd;--purple-text:#5e4385}}
