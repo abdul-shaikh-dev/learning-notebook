@@ -57,6 +57,6 @@ function harness(initial){
   assert.match(course,/<div class="study-tools-content">[\s\S]*?<a class="file-link" href="offline.html\?course=financial-foundations">Offline &amp; install<\/a>/);
   assert.match(app,/document.querySelector\('\.course-menu'\)\.open=!smallScreen.matches/);
   assert.doesNotMatch(course,/id="(?:export|restore|import)"/);
-  assert.match(course,/<a href="index.html#backup">Progress &amp; backups<\/a>/);
+  assert.match(course,/<a href="index.html#backup" aria-label="Progress &amp; backups">Progress<span class="nav-detail"> &amp; backups<\/span><\/a>/);
   console.log('PASS: finance study persistence, transactional restore (failure/success/invalid), route focus and reading-first navigation.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

@@ -95,6 +95,8 @@ node scripts/build-pages.cjs
 
 After changing page styles or markup, run `node tests/ui-audit.cjs`. It opens every page type in headless Chrome, in light and dark mode at desktop and phone widths, and fails on text below WCAG contrast, targets below 24px (with the WCAG spacing and in-text exceptions), and keyboard focus without a visible ring. Set `CHROME_PATH` if Chrome is not in its usual place.
 
+Colours, type and spacing come from the tokens described in [docs/design-system.md](docs/design-system.md); `node verify.cjs` rejects hard-coded values in other stylesheets.
+
 If editing problem-solving challenges, first run `python scripts/sync-problem-solving.py` to rebuild the lessons, starters, references and test cases from `paths/python-problem-solving/challenges.json`. Extract practice downloads into a separate learner folder before editing attempts. If editing the shared personal studio, first run `node scripts/sync-personal-studio.cjs`. If editing the canonical financial CSV or answer key, first run `node scripts/sync-finance.cjs`. Commit the source and its regenerated outputs together.
 
 Executable workshop checks are separate from site/content checks:
