@@ -10,12 +10,12 @@ for(const query of [' Kubernetes ','\tKuBeRnEtEs\n']){
  for(const listener of input.listeners.input)listener({target:input});
  assert.ok(node('learning-map').innerHTML.includes('#path/kubernetes'));
  assert.ok(node('path-list').innerHTML.includes('#path/kubernetes'));
- assert.equal(node('path-count').textContent,'1 matching paths · '+paths.length+' total');
+ assert.equal(node('path-count').textContent,'1 matching path · '+paths.length+' total');
 }
 const input=node('path-search');input.value='   ';
 for(const listener of input.listeners.input)listener({target:input});
 assert.equal(node('path-count').textContent,paths.length+' paths shown · '+paths.length+' total');
-const html=node('main').innerHTML;assert.ok(html.includes('Your learning map'));assert.ok(html.includes(paths.reduce((sum,p)=>sum+(Array.isArray(p.lessons)?p.lessons.length:Number(p.lessons)||0),0)+' lessons'));
+const html=node('main').innerHTML;assert.ok(html.indexOf('Your learning notebook')<html.indexOf('Browse courses'));assert.ok(html.includes('<div id="learning-map" hidden>'),'The map is shown on request');assert.ok(html.includes(paths.reduce((sum,p)=>sum+(Array.isArray(p.lessons)?p.lessons.length:Number(p.lessons)||0),0)+' lessons'));
 for(const p of paths.filter(p=>p.status==='ready'))assert.ok(html.includes(p.href||'#path/'+p.id),p.id);
 const buttons=['map','list'].map(view=>({dataset:{libraryView:view},setAttribute(k,v){this[k]=v;},addEventListener(k,v){this[k]=v;}}));
 ctx.bindLibraryMap({querySelectorAll:()=>buttons});buttons[1].click();assert.equal(node('learning-map').hidden,true);assert.equal(node('path-list').hidden,false);assert.equal(buttons[1]['aria-pressed'],'true');ctx.bindLibraryMap({querySelectorAll:()=>buttons});assert.equal(node('learning-map').hidden,true,'View preference survives returning');buttons[0].click();assert.equal(node('path-list').hidden,true);
@@ -83,15 +83,30 @@ for(const graph of vm.runInContext('LIBRARY_GRAPHS',ctx)){
  }
 }
 console.log('PASS: every map connector stays outside every card interior.');
-// The List view groups by progress and offers the next unread lesson; search keeps relevance order.
+// Browse groups courses by route; the home page leads with started courses and their next unread lesson.
 {const python=paths.find(p=>p.id==='python'),list=ctx.libraryList();
+ for(const p of paths.filter(p=>p.status==='ready'))assert(list.includes(p.href||'#path/'+p.id),p.id);
+ assert(list.includes('<details class="route-group" data-route="programming" open>'),'Wide screens open every route');
+ assert(!ctx.libraryList('',true).includes(' open>'),'Phones start with every route closed');
+ vm.runInContext('libraryOpenRoutes.set("programming",false)',ctx);
+ assert(!ctx.libraryList().includes('data-route="programming" open'),'A route the learner closed stays closed');
+ vm.runInContext('libraryOpenRoutes.clear()',ctx);
+ assert(!ctx.libraryList('Python').includes('<details'),'Search results are not grouped');
+ store.delete('valuation-lab-v1');store.delete('learning-notebook:path:python:v1');
+ const fresh=ctx.libraryToday();
+ assert(fresh.includes('Where to start')&&fresh.includes('href="#path/python"'),'A new learner gets starting points');
  store.set('learning-notebook:path:python:v1',JSON.stringify(python.lessons.slice(0,2).map(l=>l.id)));
- const grouped=ctx.libraryList(),started=grouped.split('<h3>Not started')[0];
- assert(started.includes('<h3>In progress <span>')&&started.includes('#path/python')&&!started.includes('#path/sql-server'),'Started courses come first');
- assert(started.includes('href="#topic/python/'+python.lessons[2].id+'"'),'Next unread lesson is linked');
- assert(ctx.libraryNode(python).includes('class="map-node is-started"')&&!ctx.libraryNode(paths.find(p=>p.id==='sql-server')).includes('is-started'),'Map emphasises started courses only');
+ const today=ctx.libraryToday();
+ assert(today.includes('Pick up where you left off')&&today.includes('href="#topic/python/'+python.lessons[2].id+'"'),'A started course links its next unread lesson');
+ assert(ctx.libraryList().includes('class="course-card is-started" data-subject="python"')&&ctx.libraryList().includes('2 of '+python.lessons.length+' read'),'Browse cards show progress');
+ assert(ctx.libraryList('',true).includes('6 courses · 1 started'),'Closed routes still report progress');
+ assert(ctx.learningLibraryView().includes('1 in progress'));
+ store.set('learning-notebook:last-lesson:v1',JSON.stringify({path:'python',lesson:python.lessons[1].id}));
+ const resumed=ctx.libraryToday();
+ assert(resumed.includes('class="resume-card"')&&!resumed.includes('<h3 class="today-label">'),'The resumed course is not repeated as a row');
+ store.delete('learning-notebook:last-lesson:v1');
  store.set('learning-notebook:path:python:v1',JSON.stringify(python.lessons.map(l=>l.id)));
- assert(ctx.libraryList().includes('All '+python.lessons.length+' read')&&!ctx.libraryList().includes('#topic/python/'),'Finished courses offer no next lesson');
- assert(!ctx.libraryList('Python').includes('<h3>'),'Search results are not grouped');
- for(const p of paths.filter(p=>p.status==='ready'))assert(list.includes(p.href||'#path/'+p.id),p.id);}
-console.log('PASS: progress-led list groups, next unread lesson, finished courses, ungrouped search and started map cards.');
+ assert(ctx.libraryList().includes('All '+python.lessons.length+' read')&&!ctx.libraryToday().includes('#topic/python/'),'Finished courses offer no next lesson');
+ assert.equal(ctx.libraryLine({description:'Learn C# and build tested APIs. Practise cancellation.'}),'Learn C# and build tested APIs.');
+ assert.equal(ctx.libraryLine({description:'Version 1.5 matters. Then more.'}),'Version 1.5 matters.');}
+console.log('PASS: route-grouped browse list, closed routes on phones, remembered groups, starting points, next unread lesson, resume without repeats and finished courses.');

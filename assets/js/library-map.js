@@ -49,19 +49,36 @@ Object.assign(LIBRARY_ICONS,{
 LIBRARY_ICONS['python-problem-solving']=LIBRARY_ICONS.python;
 function libraryProgress(p){let done=0,next=null;const total=Array.isArray(p.lessons)?p.lessons.length:Number(p.lessons)||0;try{if(p.id==='financial-foundations'){const s=JSON.parse(localStorage.getItem('valuation-lab-v1')||'{}');done=new Set((s.done||[]).filter(n=>Number.isInteger(n)&&n>=1&&n<=18)).size+new Set((s.starterDone||[]).filter(n=>Number.isInteger(n)&&n>=1&&n<=6)).size;}else{const read=new Set(completed(p.id));done=p.lessons.filter(l=>read.has(l.id)).length;next=p.lessons.find(l=>!read.has(l.id))||null;}}catch{}return {done,total,next,percent:total?Math.round(done/total*100):0};}
 function libraryNode(p){const [symbol,label]=LIBRARY_LABELS[p.id]||['↗',p.title],progress=libraryProgress(p);return `<a class="map-node${progress.done?' is-started':''}" data-subject="${escapeText(p.id)}" href="${escapeText(p.href||'#path/'+p.id)}" aria-label="Open ${escapeText(p.title)} · ${progress.done} of ${progress.total} lessons read"><span class="map-node-top"><span class="subject-symbol" aria-hidden="true">${LIBRARY_ICONS[p.id]||escapeText(symbol)}</span><span class="node-open" aria-hidden="true">↗</span></span><strong>${escapeText(p.title)}</strong><span class="node-meta">${progress.done?progress.done+' / '+progress.total+' lessons read':progress.total+' lessons · Not started'}</span>${progress.done?`<span class="node-progress" aria-hidden="true"><span style="width:${progress.percent}%"></span></span>`:''}</a>`;}
-// The List view is for returning: started courses first, each with its next unread lesson.
+// In-progress rows show where the learner is and link the next unread lesson.
 function libraryFamily(p){return LIBRARY_GRAPHS.find(g=>g.nodes.some(n=>n[0]===p.id))?.name||p.category;}
 function libraryRow(p,progress){const ready=p.status==='ready',started=ready&&progress.done>0,href=escapeText(p.href||'#path/'+p.id);
  const status=!ready?'Coming later':!started?progress.total+' lessons':progress.done===progress.total?'All '+progress.total+' read':progress.done+' of '+progress.total+' read';
  const next=!started||progress.done===progress.total?'':progress.next?`<a class="catalog-next" href="${lessonRoute(p,progress.next)}"><span>Next</span> ${escapeText(progress.next.title.replace(/^\d+\.\s*/,''))}</a>`:`<a class="catalog-next" href="${href}"><span>Next</span> Continue the course</a>`;
  return `<li class="catalog-item${started?' is-started':''}${ready?'':' is-planned'}" data-subject="${escapeText(p.id)}"><span class="catalog-subject" aria-hidden="true">${LIBRARY_ICONS[p.id]||'↗'}</span><div class="catalog-name">${ready?`<a href="${href}">${escapeText(p.title)}</a>`:`<span>${escapeText(p.title)}</span>`}<small>${escapeText(libraryFamily(p))}</small></div><div class="catalog-progress"><span>${status}</span>${started?`<span class="node-progress" aria-hidden="true"><span style="width:${progress.percent}%"></span></span>`:''}</div>${next}</li>`;}
-function libraryList(query=''){
- const matching=rankedPaths(LEARNING_PATHS,query).map(p=>[p,libraryProgress(p)]);
- if(!matching.length)return '<p role="status">No matching learning paths. Try a broader topic.</p>';
- const rows=items=>`<ul class="catalog-list">${items.map(([p,progress])=>libraryRow(p,progress)).join('')}</ul>`;
- if(query.trim())return rows(matching);
- const groups=[['In progress',matching.filter(([p,x])=>p.status==='ready'&&x.done)],['Not started',matching.filter(([p,x])=>p.status==='ready'&&!x.done)],['Planned',matching.filter(([p])=>p.status!=='ready')]];
- return groups.filter(([,items])=>items.length).map(([name,items])=>`<section class="catalog-group"><h3>${name} <span>${items.length}</span></h3>${rows(items)}</section>`).join('');
+// Browse cards carry the first sentence of the description and the learner's progress.
+function libraryLine(p){const text=String(p.description||'');return (text.match(/^.*?[.!?](?=\s|$)/)||[text])[0];}
+function libraryCard(p,progress){const ready=p.status==='ready',started=ready&&progress.done>0,href=escapeText(p.href||'#path/'+p.id);
+ const status=!ready?'Coming later':!started?progress.total+' lessons':progress.done===progress.total?'All '+progress.total+' read':progress.done+' of '+progress.total+' read';
+ const body=`<span class="catalog-subject" aria-hidden="true">${LIBRARY_ICONS[p.id]||'↗'}</span><span class="course-text"><strong>${escapeText(p.title)}</strong><span class="course-line">${escapeText(libraryLine(p))}</span></span><span class="course-status">${status}${started?`<span class="node-progress" aria-hidden="true"><span style="width:${progress.percent}%"></span></span>`:''}</span>`;
+ return `<li class="course-card${started?' is-started':''}${ready?'':' is-planned'}" data-subject="${escapeText(p.id)}">${ready?`<a href="${href}">${body}</a>`:`<div>${body}</div>`}</li>`;}
+// Routes group the list; on a phone they start closed, since started courses already lead the page.
+const libraryOpenRoutes=new Map();
+function libraryCompact(){try{return !!window.matchMedia&&window.matchMedia('(max-width: 700px)').matches;}catch{return false;}}
+function libraryRoutes(){
+ const known=new Set(LIBRARY_GRAPHS.flatMap(g=>g.nodes.map(n=>n[0]))),find=id=>LEARNING_PATHS.find(p=>p.id===id&&p.status==='ready');
+ const routes=LIBRARY_GRAPHS.map(g=>({id:g.id,name:g.name,description:g.description,paths:g.nodes.map(n=>find(n[0])).filter(Boolean)}));
+ routes.push({id:'independent',name:'Finance & other subjects',description:'Independent paths you can begin at any time.',paths:LEARNING_PATHS.filter(p=>p.status==='ready'&&!known.has(p.id))});
+ routes.push({id:'planned',name:'Planned',description:'Courses that are not ready yet.',paths:LEARNING_PATHS.filter(p=>p.status!=='ready')});
+ return routes.filter(r=>r.paths.length);
+}
+function libraryList(query='',compact=false){
+ const cards=items=>`<ul class="course-grid">${items.map(p=>libraryCard(p,libraryProgress(p))).join('')}</ul>`;
+ if(query.trim()){const matching=rankedPaths(LEARNING_PATHS,query);return matching.length?cards(matching):'<p role="status">No matching learning paths. Try a broader topic.</p>';}
+ return libraryRoutes().map(r=>{
+  const progress=r.paths.map(libraryProgress),started=progress.filter(x=>x.done).length;
+  const open=libraryOpenRoutes.has(r.id)?libraryOpenRoutes.get(r.id):!compact;
+  return `<details class="route-group" data-route="${r.id}"${open?' open':''}><summary><strong class="route-title">${escapeText(r.name)}</strong><span class="route-meta">${r.paths.length} ${r.paths.length===1?'course':'courses'}${started?' · '+started+' started':''}<span class="route-names"> · ${escapeText(r.paths.map(p=>p.title).join(', '))}</span></span></summary><p class="route-description">${escapeText(r.description)}</p>${cards(r.paths)}</details>`;
+ }).join('');
 }
 // Use the empty row gap for downward connections, with separate arrival ports.
 function libraryConnector(graph,nodes,edges,a,b){
@@ -94,29 +111,47 @@ function libraryMap(query='',route='all'){
  const graphs=LIBRARY_GRAPHS.filter(g=>route==='all'||g.id===route);
  return `<div class="roadmap-legend"><span aria-hidden="true">↗</span> Open any course. Solid arrows suggest an order; dashed arrows show useful background; dotted arrows offer another direction. No course is locked.</div>`+graphs.map(g=>libraryGraph(g,ready)).join('')+(extra.length&&(route==='all'||route==='independent')?`<section class="branch-section independent-paths"><div class="branch-heading"><h3>Finance & other subjects</h3><p>Independent paths you can begin at any time.</p></div><ul class="map-results">${extra.map(p=>'<li class="route-amber">'+libraryNode(p)+'</li>').join('')}</ul></section>`:'');
 }
-function learningLibraryView(){const ready=LEARNING_PATHS.filter(p=>p.status==='ready');const total=ready.reduce((n,p)=>n+libraryProgress(p).total,0);return `${resumeView()}${typeof NotebookReview!=='undefined'?NotebookReview.card():''}<div class="library-hero"><div><h1>Your learning notebook</h1><p class="library-summary">${ready.length} learning paths <span aria-hidden="true">·</span> ${total} lessons</p></div></div><section id="learning-explorer" class="library-explorer" aria-labelledby="explorer-title"><div class="explorer-heading"><div><h2 id="explorer-title">Your learning map</h2></div><div class="library-view-switch" role="group" aria-label="Library view"><button type="button" data-library-view="map" aria-pressed="true">Map</button><button type="button" data-library-view="list" aria-pressed="false">List</button></div></div><p class="map-guidance" id="map-guidance">Choose a route, then open a course. Search finds paths across the whole notebook.</p><div class="map-route-picker" id="map-route-picker"><label for="map-route">Focus on a route</label><select id="map-route"><option value="all">All routes</option>${LIBRARY_GRAPHS.map(g=>`<option value="${g.id}">${escapeText(g.name)} · ${g.nodes.length} paths</option>`).join('')}<option value="independent">Finance &amp; other subjects</option></select><p id="route-summary" role="status" aria-live="polite">Choose a route to see fewer paths at once.</p></div><div class="library-filter"><label for="path-search">Find a learning path<input class="search" id="path-search" type="search" placeholder="Filter paths, e.g. Python or SQL"></label><p id="path-count" role="status" aria-live="polite">${ready.length} available${LEARNING_PATHS.some(p=>p.status!=='ready')?' · '+LEARNING_PATHS.filter(p=>p.status!=='ready').length+' planned':''}</p></div><div id="learning-map">${libraryMap()}</div><div class="library-list" id="path-list" hidden>${libraryList()}</div></section>${atlasLibraryFeature()}<div class="library-footer-tools"><div><h2>Keep your place.</h2><p>Move your progress between devices with one backup file.</p></div><a class="download-action" href="#backup">Progress & backups <span aria-hidden="true">↗</span></a></div>`;}
+// The home page leads with the learner's next action, then lets them browse.
+const LIBRARY_STARTS=[['New to programming','python'],['Building web applications','dotnet'],['Exploring AI applications','ai-agents'],['Planning your study time','time-attention-energy']];
+function libraryStarted(){let last=null;try{last=JSON.parse(localStorage.getItem('learning-notebook:last-lesson:v1'))?.path;}catch{}
+ return LEARNING_PATHS.filter(p=>p.status==='ready').map(p=>[p,libraryProgress(p)]).filter(([,x])=>x.done&&x.done<x.total).sort((a,b)=>(b[0].id===last)-(a[0].id===last)||b[1].percent-a[1].percent);}
+function libraryToday(){
+ const resume=resumeView(),review=typeof NotebookReview!=='undefined'?NotebookReview.card():'';
+ let last=null;try{last=JSON.parse(localStorage.getItem('learning-notebook:last-lesson:v1'))?.path;}catch{}
+ const started=libraryStarted().filter(([p])=>!(resume&&p.id===last)),shown=started.slice(0,4);
+ if(!resume&&!review&&!started.length){
+  const starts=LIBRARY_STARTS.map(([why,id])=>[why,LEARNING_PATHS.find(p=>p.id===id&&p.status==='ready')]).filter(([,p])=>p);
+  return starts.length?`<section class="home-today home-start" aria-labelledby="today-title"><h2 id="today-title">Where to start</h2><p class="today-note">Every course is open. Pick one that matches what you want to do; your progress stays in this browser.</p><ul class="start-grid">${starts.map(([why,p])=>`<li><a href="${escapeText(p.href||'#path/'+p.id)}"><small>${why}</small><strong>${escapeText(p.title)}</strong><span>${escapeText(libraryLine(p))}</span></a></li>`).join('')}</ul></section>`:'';
+ }
+ const quiet=review.includes('is-quiet');
+ const more=started.length>shown.length?`<p class="today-more">${started.length-shown.length} more started ${started.length-shown.length===1?'course is':'courses are'} marked in the list below.</p>`:'';
+ return `<section class="home-today" aria-labelledby="today-title"><h2 id="today-title">Pick up where you left off</h2>${resume||(!quiet&&review)?`<div class="today-actions">${resume}${quiet?'':review}</div>`:''}${shown.length?`<h3 class="today-label">In progress</h3><ul class="catalog-list">${shown.map(([p,x])=>libraryRow(p,x)).join('')}</ul>`:''}${more}${quiet?review:''}</section>`;
+}
+function learningLibraryView(){const ready=LEARNING_PATHS.filter(p=>p.status==='ready');const total=ready.reduce((n,p)=>n+libraryProgress(p).total,0);const started=libraryStarted().length;
+ return `<div class="library-hero"><h1>Your learning notebook</h1><p class="library-summary">${ready.length} learning paths <span aria-hidden="true">·</span> ${total} lessons${started?` <span aria-hidden="true">·</span> ${started} in progress`:''}</p></div>${libraryToday()}<section id="learning-explorer" class="library-explorer" aria-labelledby="explorer-title"><div class="explorer-heading"><h2 id="explorer-title">Browse courses</h2><p id="path-count" role="status" aria-live="polite">${ready.length} available${LEARNING_PATHS.some(p=>p.status!=='ready')?' · '+LEARNING_PATHS.filter(p=>p.status!=='ready').length+' planned':''}</p></div><div class="explorer-toolbar"><div class="library-filter"><label for="path-search">Find a course</label><input class="search" id="path-search" type="search" placeholder="Python, SQL, testing…"></div><div class="map-route-picker" id="map-route-picker" hidden><label for="map-route">Route</label><select id="map-route"><option value="all">All routes</option>${LIBRARY_GRAPHS.map(g=>`<option value="${g.id}">${escapeText(g.name)} · ${g.nodes.length} paths</option>`).join('')}<option value="independent">Finance &amp; other subjects</option></select></div><div class="library-view-switch" role="group" aria-label="Show courses as"><button type="button" data-library-view="list" aria-pressed="true">List</button><button type="button" data-library-view="map" aria-pressed="false">Map</button></div></div><p class="map-guidance" id="map-guidance" role="status" aria-live="polite">Grouped by route. Open any course; none is locked.</p><div class="library-list" id="path-list">${libraryList('',libraryCompact())}</div><div id="learning-map" hidden>${libraryMap()}</div></section>${atlasLibraryFeature()}<div class="library-footer-tools"><div><h2>Keep your place.</h2><p>Move your progress between devices with one backup file.</p></div><a class="download-action" href="#backup">Progress & backups <span aria-hidden="true">↗</span></a></div>`;}
 function bindLibraryMap(main){
  const map=document.getElementById('learning-map');if(!map)return;
  const list=document.getElementById('path-list'),input=document.getElementById('path-search'),buttons=main.querySelectorAll('[data-library-view]');
  const route=document.getElementById('map-route'),picker=document.getElementById('map-route-picker');
  const validRoute=value=>value==='independent'||LIBRARY_GRAPHS.some(g=>g.id===value)?value:'all';
  try{route.value=validRoute(sessionStorage.getItem('learning-notebook:map-route'));}catch{route.value='all';}
+ // Remember groups the learner opened or closed while they filter or switch views.
+ list.addEventListener('toggle',e=>{const group=e.target.closest?.('.route-group');if(group)libraryOpenRoutes.set(group.dataset.route,group.open);},true);
  const update=()=>{
   const searching=!!input.value.trim(),isMap=!map.hidden;
   map.innerHTML=libraryMap(input.value,route.value);
-  list.innerHTML=libraryList(input.value);
+  list.innerHTML=libraryList(input.value,libraryCompact());
   const ready=LEARNING_PATHS.filter(p=>p.status==='ready'),known=new Set(LIBRARY_GRAPHS.flatMap(g=>g.nodes.map(n=>n[0])));
-  const shown=searching?rankedPaths(ready,input.value).length:!isMap||route.value==='all'?ready.length:route.value==='independent'?ready.filter(p=>!known.has(p.id)).length:LIBRARY_GRAPHS.find(g=>g.id===route.value).nodes.filter(n=>ready.some(p=>p.id===n[0])).length;
-  document.getElementById('path-count').textContent=shown+(searching?' matching paths':' paths shown')+' · '+LEARNING_PATHS.length+' total';
+  const shown=searching?rankedPaths(isMap?ready:LEARNING_PATHS,input.value).length:!isMap||route.value==='all'?(isMap?ready:LEARNING_PATHS).length:route.value==='independent'?ready.filter(p=>!known.has(p.id)).length:LIBRARY_GRAPHS.find(g=>g.id===route.value).nodes.filter(n=>ready.some(p=>p.id===n[0])).length;
+  document.getElementById('path-count').textContent=shown+(searching?(shown===1?' matching path':' matching paths'):' paths shown')+' · '+LEARNING_PATHS.length+' total';
   picker.hidden=!isMap;
   route.disabled=searching;
-  document.getElementById('route-summary').textContent=searching?'Search covers all routes. Clear it to return to your selected route.':route.value==='all'?'Choose a route to see fewer paths at once.':'Showing '+(LIBRARY_GRAPHS.find(g=>g.id===route.value)?.name||'Finance & other subjects')+'. Choose All routes to see the whole notebook.';
-  document.getElementById('map-guidance').textContent=searching?'Matching courses across all routes.':isMap?'Choose a route, then open a course. Search finds paths across the whole notebook.':'Browse every subject. Open a path for lessons, visual examples and practice files.';
+  document.getElementById('map-guidance').textContent=searching?'Matching courses across all routes.':!isMap?'Grouped by route. Open any course; none is locked.':route.value==='all'?'Solid arrows suggest an order, dashed arrows show useful background and dotted arrows offer another direction. Choose a route to see fewer paths.':'Showing '+(LIBRARY_GRAPHS.find(g=>g.id===route.value)?.name||'Finance & other subjects')+'. Choose All routes to see the whole notebook.';
  };
- const select=view=>{const isMap=view!=='list';map.hidden=!isMap;list.hidden=isMap;document.getElementById('explorer-title').textContent=isMap?'Your learning map':'All learning paths';buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.libraryView===(isMap?'map':'list'))));update();};
+ const select=view=>{const isMap=view==='map';map.hidden=!isMap;list.hidden=isMap;buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.libraryView===(isMap?'map':'list'))));update();};
  buttons.forEach(button=>button.addEventListener('click',()=>{select(button.dataset.libraryView);try{sessionStorage.setItem('learning-notebook:library-view',button.dataset.libraryView);}catch{}}));
  route.addEventListener('change',()=>{route.value=validRoute(route.value);update();try{sessionStorage.setItem('learning-notebook:map-route',route.value);}catch{}});
- try{select(sessionStorage.getItem('learning-notebook:library-view'));}catch{select('map');}
+ try{select(sessionStorage.getItem('learning-notebook:library-view'));}catch{select('list');}
  input.addEventListener('input',update);
 }
 
