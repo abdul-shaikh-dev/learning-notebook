@@ -85,7 +85,7 @@
           "title": "How it works",
           "paragraphs": [
             "A proposition has a truth value. For a download rule, let A mean that the account is active and B mean that the file is public. A and B permits a download only when both statements are true. A or B permits either statement or both. Write the four possible input pairs to check the rule before using it in code.",
-            "Negation changes true to false and false to true. The rule not (A and B) is equivalent to (not A) or (not B). It is not equivalent to (not A) and (not B). With Boolean inputs these expressions form a truth table; with other Python objects, and and or can return an operand rather than a bool."
+            "Negation changes true to false and false to true. The rule not (A and B) is equivalent to (not A) or (not B). It is not equivalent to (not A) and (not B). With Boolean inputs these expressions form a truth table; with other Python objects, `and` and `or` can return an operand rather than a `bool`."
           ]
         },
         {
@@ -868,7 +868,7 @@
         {
           "title": "How it works",
           "paragraphs": [
-            "A real vector is an ordered list of numbers. For a document, [word_count, link_count] is a different representation from [link_count, word_count]. Equal lengths are necessary for addition, but matching coordinate meanings are necessary for a useful result.",
+            "A real vector is an ordered list of numbers. For a document, `[word_count, link_count]` is a different representation from `[link_count, word_count]`. Equal lengths are necessary for addition, but matching coordinate meanings are necessary for a useful result.",
             "Vector addition combines corresponding coordinates. Multiplying by a scalar multiplies every coordinate by the same number. The Euclidean length is sqrt(sum(x*x)). Using that length to compare heterogeneous features can make a large-unit feature dominate, so choose a representation before interpreting distance."
           ]
         },

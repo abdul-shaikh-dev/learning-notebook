@@ -87,7 +87,7 @@
         {
           "title": "Orders and daily revenue",
           "paragraphs": [
-            "For a learning-sales dataset, one row is one order identified by order_id. A dashboard asking daily revenue needs a transformation that groups orders by day. Counting joined order lines as orders double-counts purchases unless the grain is handled explicitly."
+            "For a learning-sales dataset, one row is one order identified by `order_id`. A dashboard asking daily revenue needs a transformation that groups orders by day. Counting joined order lines as orders double-counts purchases unless the grain is handled explicitly."
           ],
           "example": "order_id,customer_id,occurred_at,amount_cents\no1,c1,2026-09-01T10:00:00Z,1250\no2,c1,2026-09-01T11:00:00Z,750\n# Two orders; total 2000 cents for the day."
         },
@@ -198,7 +198,7 @@
         {
           "title": "CSV structure and encoding",
           "paragraphs": [
-            "CSV permits quoted delimiters and embedded newlines, so split(\",\") is not a general parser. Agree encoding, delimiter, headers and newline handling with the producer. Python csv.DictReader maps named fields; open(..., newline=\"\", encoding=\"utf-8\") supports its newline handling."
+            "CSV permits quoted delimiters and embedded newlines, so `split(\",\")` is not a general parser. Agree encoding, delimiter, headers and newline handling with the producer. Python `csv.DictReader` maps named fields; `open(..., newline=\"\", encoding=\"utf-8\")` supports its newline handling."
           ]
         },
         {
@@ -266,7 +266,7 @@
         {
           "title": "Integer cents and UTC fields",
           "paragraphs": [
-            "amount_cents=\"1250\" becomes integer 1250; \"12.50\" violates this cents contract. customer_id must be a nonblank bounded identifier. Timestamps must be aware UTC values in this reference. Reject duplicate headers and extra columns."
+            "`amount_cents=\"1250\"` becomes integer 1250; \"12.50\" violates this cents contract. `customer_id` must be a nonblank bounded identifier. Timestamps must be aware UTC values in this reference. Reject duplicate headers and extra columns."
           ],
           "example": "def cents(value):\n    if not value.isascii() or not value.isdigit():\n        raise ValueError(\"expected nonnegative integer cents\")\n    return int(value)\nprint(cents(\"1250\"))\n# Expected 1250; cents(\"12.50\") raises ValueError."
         },
@@ -494,7 +494,7 @@
           "title": "Rollback after a uniqueness conflict",
           "paragraphs": [
             "The reference inserts two orders and a run identity together. A uniqueness conflict on a later row rolls back earlier writes and the run marker. Queries after failure should find the prior data unchanged. The connection is explicitly closed in finally.",
-            "This snippet assumes the reference connection's default legacy transaction control: INSERT opens a transaction. The connection context commits or rolls back an open transaction; it does not itself begin one. With autocommit=True, the context does not make these writes atomic. Set the transaction policy deliberately."
+            "This snippet assumes the reference connection's default legacy transaction control: `INSERT` opens a transaction. The connection context commits or rolls back an open transaction; it does not itself begin one. With `autocommit=True`, the context does not make these writes atomic. Set the transaction policy deliberately."
           ],
           "example": "with connection:\n    connection.executemany(\n        \"INSERT INTO orders VALUES (?, ?, ?, ?)\", rows)\n# Assumes transaction-enabled connection; INSERT opens the transaction.\n# Context commits or rolls back that open transaction.\n# close the connection separately; context does not close it."
         },
@@ -507,7 +507,7 @@
         {
           "title": "Bind rows before adding replay logic",
           "paragraphs": [
-            "The parser returns tuples in this order: order_id, customer_id, occurred_at, amount_cents. The four question marks in the INSERT stand for four values, supplied separately as tuples. They are not string-formatting slots. The table must already exist. In pipeline_lab.py, SCHEMA defines orders and runs; schema setup is separate from the data transaction.",
+            "The parser returns tuples in this order: `order_id`, `customer_id`, `occurred_at`, `amount_cents`. The four question marks in the `INSERT` stand for four values, supplied separately as tuples. They are not string-formatting slots. The table must already exist. In `pipeline_lab.py`, `SCHEMA` defines orders and runs; schema setup is separate from the data transaction.",
             "Start by importing one valid batch into a disposable database. Next add a batch with a new order followed by a duplicate existing order. Verify the new order is absent after failure. Add the run marker only after this rollback behavior makes sense. The next lesson adds the identity check that decides whether to write at all."
           ]
         }
@@ -569,7 +569,7 @@
         {
           "title": "Trace the two parts of batch identity",
           "paragraphs": [
-            "The caller chooses batch_id. The parser computes a fingerprint from the original file bytes. Store both. First import: the ID is absent, so insert the orders and run row together. Second import with the same ID and bytes: the stored fingerprint matches, so return replay. Same ID with changed bytes: reject the conflict before inserting anything.",
+            "The caller chooses `batch_id`. The parser computes a fingerprint from the original file bytes. Store both. First import: the ID is absent, so insert the orders and run row together. Second import with the same ID and bytes: the stored fingerprint matches, so return replay. Same ID with changed bytes: reject the conflict before inserting anything.",
             "For an independent case, change only a CSV line ending in a copy of the sample. Its parsed values can remain equal while its exact-byte fingerprint changes. Predict conflict under the same batch ID. A new batch ID is not a workaround for duplicate business order IDs; those remain unique too."
           ]
         }
@@ -612,13 +612,13 @@
         {
           "title": "Composite extraction cursors",
           "paragraphs": [
-            "A watermark records how far extraction has progressed, using a source sequence number or an (updated_at, id) tuple. Save it only after the downstream transaction commits. A timestamp alone can miss rows with the same timestamp, so define both the ordering and the tie-breaker."
+            "A watermark records how far extraction has progressed, using a source sequence number or an `(updated_at, id)` tuple. Save it only after the downstream transaction commits. A timestamp alone can miss rows with the same timestamp, so define both the ordering and the tie-breaker."
           ]
         },
         {
           "title": "Two tied update timestamps",
           "paragraphs": [
-            "Two rows share updated_at=10:00. If you remember only 10:00 and later ask for greater timestamps, a second row delivered at that boundary may be lost. A composite cursor or overlapping extraction plus deduplication handles this deliberately."
+            "Two rows share `updated_at=10:00`. If you remember only 10:00 and later ask for greater timestamps, a second row delivered at that boundary may be lost. A composite cursor or overlapping extraction plus deduplication handles this deliberately."
           ],
           "example": "# Composite cursor example:\nlast = (\"2026-09-01T10:00:00Z\", \"o1\")\nnext_row = (\"2026-09-01T10:00:00Z\", \"o2\")\nprint(next_row > last)\n# True under the specified lexicographic ordering."
         },
@@ -631,9 +631,9 @@
         {
           "title": "Work through a missed row",
           "paragraphs": [
-            "An extractor stores the largest occurred_at it has seen: 10:05. A source row arriving at 10:08 describes an event at 09:59. The next query WHERE occurred_at > 10:05 will never retrieve it. Sorting the returned rows cannot repair an exclusion that happened before sorting. Event time describes the business event; a reliable extraction cursor describes source changes.",
+            "An extractor stores the largest `occurred_at` it has seen: 10:05. A source row arriving at 10:08 describes an event at 09:59. The next query `WHERE occurred_at > 10:05` will never retrieve it. Sorting the returned rows cannot repair an exclusion that happened before sorting. Event time describes the business event; a reliable extraction cursor describes source changes.",
             "One alternative is a source-controlled increasing change sequence. Read changes after sequence 41, apply sequences 42–45 and advance the cursor to 45 in the same target transaction. If applying 44 fails, the target must retain both its earlier data and cursor 41. A lookback window plus idempotent application is another design, but it covers only lateness within that window and needs a stated correction policy.",
-            "Try the revision_lab.py exercise in the practice files. It deliberately processes a newer revision before an older one. The stale record must not replace the new value. Change the event order and compare the final projection; this is a local change-feed model, not a connector to a production CDC system."
+            "Try the `revision_lab.py` exercise in the practice files. It deliberately processes a newer revision before an older one. The stale record must not replace the new value. Change the event order and compare the final projection; this is a local change-feed model, not a connector to a production CDC system."
           ]
         }
       ],
@@ -819,7 +819,7 @@
           "title": "Choose the historical join before writing SQL",
           "paragraphs": [
             "Customer C belonged to region North before April 1 and South from April 1. Order A happened March 31 and order B happened April 2. Joining both orders to the current customer row assigns both to South. That is correct for a current-region report and incorrect for a region-at-order-time report. The same SQL join can be syntactically valid and answer the wrong question.",
-            "For the historical question, store nonoverlapping validity intervals and match valid_from <= order_time < valid_to. A timestamp exactly on April 1 belongs to the new interval. Before summing amounts, verify each order matches exactly one dimension version. An overlap duplicates money; a gap silently drops orders in an inner join.",
+            "For the historical question, store nonoverlapping validity intervals and match `valid_from <= order_time < valid_to`. A timestamp exactly on April 1 belongs to the new interval. Before summing amounts, verify each order matches exactly one dimension version. An overlap duplicates money; a gap silently drops orders in an inner join.",
             "Changed case: the April 1 region change is corrected to March 30. Identify the affected order IDs before recalculating aggregates. Rebuild their historical matches and compare counts and totals, rather than treating the correction as one additional customer row."
           ]
         }

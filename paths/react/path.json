@@ -214,16 +214,16 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "Input values arrive as strings even when they look numeric. Convert the text, then validate the result. Number('') is zero, so check for blank input before conversion.",
-            "const prevents reassignment of the binding; it does not freeze an object. Use strict equality to compare values without automatic type conversion. A missing value may be undefined; intentional absence often uses null."
+            "Input values arrive as strings even when they look numeric. Convert the text, then validate the result. `Number('')` is zero, so check for blank input before conversion.",
+            "const prevents reassignment of the binding; it does not freeze an object. Use strict equality to compare values without automatic type conversion. A missing value may be `undefined`; intentional absence often uses `null`."
           ],
           "example": "const raw = \"25\";\nconst minutes = Number(raw);\nconsole.log(minutes + 5); // 30\nconsole.log(raw + 5);     // \"255\"\nconsole.log(0 === false); // false"
         },
         {
           "title": "Enough syntax to write the first validator",
           "paragraphs": [
-            "function parseMinutes(raw) declares an operation with an input named raw. Braces delimit its body. return sends a value back and ends that call; console.log displays a value instead. if (condition) runs its following statement only when the condition is true.",
-            "The expression condition ? first : second chooses one value. && requires both conditions to hold and skips its right side when the left is false. Read Number.isInteger(n) && n >= 0 ? n : null as: return n only when it is a nonnegative integer, otherwise return null. The later functions lesson expands this into reusable transformations."
+            "`function parseMinutes(raw)` declares an operation with an input named `raw`. Braces delimit its body. `return` sends a value back and ends that call; `console.log` displays a value instead. `if (condition)` runs its following statement only when the condition is true.",
+            "The expression `condition ? first : second` chooses one value. `&&` requires both conditions to hold and skips its right side when the left is false. Read `Number.isInteger(n) && n >= 0 ? n : null` as: return `n` only when it is a nonnegative integer, otherwise return `null`. The later functions lesson expands this into reusable transformations."
           ],
           "example": "function nonblank(raw) {\n  if (raw.trim() === \"\") return null;\n  return raw.trim();\n}\nconsole.assert(nonblank(\"  SQL  \") === \"SQL\");\nconsole.assert(nonblank(\"  \") === null);"
         },
@@ -236,14 +236,14 @@
         {
           "title": "Run a small progression",
           "paragraphs": [
-            "Run practice/javascript-steps.js with Node. Predict conversion results, edit one assertion to observe a failure, then restore it. Continue through array transformation, an immutable update and rejected async work before working with component state."
+            "Run `practice/javascript-steps.js` with Node. Predict conversion results, edit one assertion to observe a failure, then restore it. Continue through array transformation, an immutable update and rejected async work before working with component state."
           ]
         },
         {
           "title": "Follow conversion before choosing a fallback",
           "paragraphs": [
-            "An HTML number input still exposes text through its value property. Number(\"\") becomes zero, which can turn an unanswered field into a legitimate zero-minute session. First distinguish missing text from an entered zero, then convert, check finiteness and the allowed range. Similarly, value || 20 replaces a valid zero; value ?? 20 replaces only null and undefined.",
-            "The focused foundation-data.ts lab accepts already-decoded numeric data. Its parser rejects the string \"20\" rather than converting it to a number. A form adapter can convert entered text, while the shared parser keeps its domain contract unambiguous. TypeScript annotations alone do not convert strings arriving at runtime."
+            "An HTML number input still exposes text through its `value` property. `Number(\"\")` becomes zero, which can turn an unanswered field into a legitimate zero-minute session. First distinguish missing text from an entered zero, then convert, check finiteness and the allowed range. Similarly, `value || 20` replaces a valid zero; `value ?? 20` replaces only `null` and `undefined`.",
+            "The focused `foundation-data.ts` lab accepts already-decoded numeric data. Its parser rejects the string `\"20\"` rather than converting it to a number. A form adapter can convert entered text, while the shared parser keeps its domain contract unambiguous. TypeScript annotations alone do not convert strings arriving at runtime."
           ],
           "example": "const text = \"\";\nconst missing = text.trim() === \"\";\nconsole.log(Number(text), missing); // 0, true\nconsole.log(0 || 20, 0 ?? 20); // 20, 0"
         }
@@ -294,8 +294,8 @@
         {
           "title": "Read callbacks one element at a time",
           "paragraphs": [
-            "x => x.done is a small function whose input is one record and whose result is its done field. filter calls it for each record and keeps records producing true. map calls its function for each retained record and collects the returned values. Neither operation deep-copies the objects.",
-            "reduce((sum, x) => sum + x.minutes, 0) starts sum at 0 and replaces it with the returned value after each item. With completed minutes 20 and 15, the accumulator becomes 20 then 35. An empty array leaves the initial 0 unchanged.",
+            "`x => x.done` is a small function whose input is one record and whose result is its `done` field. `filter` calls it for each record and keeps records producing `true`. `map` calls its function for each retained record and collects the returned values. Neither operation deep-copies the objects.",
+            "`reduce((sum, x) => sum + x.minutes, 0)` starts `sum` at 0 and replaces it with the returned value after each item. With completed minutes 20 and 15, the accumulator becomes 20 then 35. An empty array leaves the initial 0 unchanged.",
             "The spread form [...items] creates a new array containing the same items. In the next lesson, {...row, done: true} copies an object's fields and replaces done. Nested objects still remain shared; copy the particular nested object when changing it."
           ]
         },
@@ -352,7 +352,7 @@
         {
           "title": "Pitfalls",
           "paragraphs": [
-            "Returning nothing yields undefined. In an arrow function with braces, write return explicitly."
+            "Returning nothing yields `undefined`. In an arrow function with braces, write `return` explicitly."
           ]
         },
         {
@@ -401,15 +401,15 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "A Promise represents eventual completion or failure. await pauses the current async function, not the whole browser. Use try/catch to handle rejections and decide what the user should see.",
-            "fetch resolves for many HTTP errors, including 404; inspect response.ok. JSON parsing is not schema validation. Treat external data as untrusted and check its shape before using it."
+            "A Promise represents eventual completion or failure. `await` pauses the current `async` function, not the whole browser. Use `try`/`catch` to handle rejections and decide what the user should see.",
+            "`fetch` resolves for many HTTP errors, including 404; inspect `response.ok`. JSON parsing is not schema validation. Treat external data as untrusted and check its shape before using it."
           ],
           "example": "async function loadTitles(url) {\n  const response = await fetch(url);\n  if (!response.ok) throw new Error(\"HTTP \" + response.status);\n  const data = await response.json();\n  if (!Array.isArray(data) || !data.every(x => typeof x === \"string\")) {\n    throw new Error(\"Expected a list of titles\");\n  }\n  return data;\n}\n// Example function: requires a real compatible endpoint; not run automatically."
         },
         {
           "title": "Pitfalls",
           "paragraphs": [
-            "Launching dependent requests simultaneously can use data that is not ready. Conversely, unrelated requests can often run together with Promise.all; one rejection rejects that combined promise."
+            "Launching dependent requests simultaneously can use data that is not ready. Conversely, unrelated requests can often run together with `Promise.all`; one rejection rejects that combined promise."
           ]
         },
         {
@@ -457,7 +457,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "TypeScript adds a static type checker to JavaScript. A union such as string | null describes alternatives. A conditional can narrow that union before an operation is used.",
+            "TypeScript adds a static type checker to JavaScript. A union such as `string | null` describes alternatives. A conditional can narrow that union before an operation is used.",
             "An interface describes an expected shape, but it does not inspect a network response. Casting with as does not make unknown data valid. Start with unknown at external boundaries and check it."
           ],
           "example": "type Lesson = {id: number; title: string; done: boolean};\nfunction label(title: string | null): string {\n  return title === null ? \"Untitled\" : title.toUpperCase();\n}\nconsole.log(label(null)); // Untitled\n// Run in a TypeScript project or the official playground."
@@ -471,16 +471,16 @@
         {
           "title": "Narrow unknown data step by step",
           "paragraphs": [
-            "Treat parsed JSON as unknown. Check that it is a non-null object and not an array, then inspect fields. In foundation-data.ts, a result with ok: true carries a validated Session; ok: false carries an error string. Testing result.ok lets TypeScript narrow the union before you access value. The type follows the runtime check.",
-            "A cast such as JSON.parse(text) as Session skips all those checks. It can compile while minutes is \"twenty\". The lab rejects malformed values, preserves zero, trims identity text into a fresh value, and leaves the caller's object unchanged. Readonly helps prevent accidental writes in typed code, but is not a runtime freeze or an authorization rule."
+            "Treat parsed JSON as `unknown`. Check that it is a non-null object and not an array, then inspect fields. In `foundation-data.ts`, a result with `ok: true` carries a validated `Session`; `ok: false` carries an error string. Testing `result.ok` lets TypeScript narrow the union before you access `value`. The type follows the runtime check.",
+            "A cast such as `JSON.parse(text) as Session` skips all those checks. It can compile while `minutes` is `\"twenty\"`. The lab rejects malformed values, preserves zero, trims identity text into a fresh value, and leaves the caller's object unchanged. `Readonly` helps prevent accidental writes in typed code, but is not a runtime freeze or an authorization rule."
           ],
           "example": "const result = parseSession({id: \" a \", minutes: 0, done: false});\nif (result.ok) console.log(result.value.minutes); // 0\nelse console.log(result.error);"
         },
         {
           "title": "Prepare a versioned importer in small steps",
           "paragraphs": [
-            "The foundation project returns a summary from a function; a React upload screen comes later. First parse text with JSON.parse inside try/catch, then narrow the resulting unknown. Check version before reading lessons. Reject arrays where an object is expected, and inspect each lesson's id, title and done before deriving a count.",
-            "Use a fresh Set to track IDs: seen.has(id) detects a duplicate and seen.add(id) records a new ID. For {version:1, lessons:[{id:\"a\", title:\"Types\", done:false}]}, the summary is total 1, complete 0. Empty lessons gives 0 and 0. The same ID twice must fail, even if its titles differ. Check these independently before looking at decodeSaved."
+            "The foundation project returns a summary from a function; a React upload screen comes later. First parse text with `JSON.parse` inside `try`/`catch`, then narrow the resulting `unknown`. Check `version` before reading `lessons`. Reject arrays where an object is expected, and inspect each lesson's `id`, `title` and `done` before deriving a count.",
+            "Use a fresh `Set` to track IDs: `seen.has(id)` detects a duplicate and `seen.add(id)` records a new ID. For `{version:1, lessons:[{id:\"a\", title:\"Types\", done:false}]}`, the summary is total 1, complete 0. Empty `lessons` gives 0 and 0. The same ID twice must fail, even if its titles differ. Check these independently before looking at `decodeSaved`."
           ]
         }
       ],
@@ -585,8 +585,8 @@
         {
           "title": "Test the transition before wiring a component",
           "paragraphs": [
-            "The focused lab exposes transition(rows, action) as an ordinary TypeScript function. With rows a and b, completing a returns a changed copy of a and keeps b. The test freezes the input to expose mutation immediately. You can inspect the output without rendering a component or understanding a testing library for DOM events.",
-            "Build a component that calls setRows(previous => transition(previous, action)) once the transition is understood. Derived totals should be calculated from rows rather than maintained in a second independent state variable. A later component test still matters: passing transition tests does not prove that the button dispatches the right ID."
+            "The focused lab exposes `transition(rows, action)` as an ordinary TypeScript function. With rows a and b, completing a returns a changed copy of a and keeps b. The test freezes the input to expose mutation immediately. You can inspect the output without rendering a component or understanding a testing library for DOM events.",
+            "Build a component that calls `setRows(previous => transition(previous, action))` once the transition is understood. Derived totals should be calculated from `rows` rather than maintained in a second independent state variable. A later component test still matters: passing transition tests does not prove that the button dispatches the right ID."
           ]
         }
       ],
@@ -755,7 +755,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "Download App.tsx and run it in the React TypeScript project from setup. It has a search input, stable IDs, toggles and a derived completion count. It keeps data in memory so you can study state changes before adding storage.",
+            "Download `App.tsx` and run it in the React TypeScript project from setup. It has a search input, stable IDs, toggles and a derived completion count. It keeps data in memory so you can study state changes before adding storage.",
             "Test behavior through the screen: keyboard focus, blank search, mixed-case search, toggling, and an empty result. Then change one requirement at a time. Treat loading, failure and server validation as separate work when adding an API."
           ],
           "example": "Acceptance scenario:\n1. Initial count: 0 of 3 complete.\n2. Mark Types complete: 1 of 3 complete.\n3. Search STATE: one record remains visible.\n4. Clear search: Types remains complete.\n5. Refresh: in-memory state resets."
@@ -818,7 +818,7 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "Each call to makeCounter creates a distinct environment. A React handler similarly belongs to a render snapshot; long-lived callbacks may retain older values. Treat module-level mutable state as a shared singleton and avoid using it for independent users' data."
+            "Each call to `makeCounter` creates a distinct environment. A React handler similarly belongs to a render snapshot; long-lived callbacks may retain older values. Treat module-level mutable state as a shared singleton and avoid using it for independent users' data."
           ]
         }
       ],
@@ -919,7 +919,7 @@
         {
           "title": "Example",
           "paragraphs": [
-            "The reducer returns new arrays for toggle and remove; toggle also copies the matching row. The final comment shows how a component connects this function to useReducer."
+            "The reducer returns new arrays for `toggle` and `remove`; `toggle` also copies the matching row. The final comment shows how a component connects this function to `useReducer`."
           ],
           "example": "type Row = {id:string; title:string; done:boolean};\ntype Action = {type:\"toggle\"; id:string} | {type:\"remove\"; id:string};\nfunction reducer(state: Row[], action: Action): Row[] {\n  switch (action.type) {\n    case \"toggle\": return state.map(row => row.id === action.id ? {...row, done:!row.done} : row);\n    case \"remove\": return state.filter(row => row.id !== action.id);\n  }\n}\n// Component fragment: const [rows, dispatch] = useReducer(reducer, []);"
         },
@@ -1027,7 +1027,7 @@
         {
           "title": "Example",
           "paragraphs": [
-            "In this parent fragment, changing selectedLesson.id changes the key and remounts the editor. Local state resets, including any draft not saved elsewhere."
+            "In this parent fragment, changing `selectedLesson.id` changes the key and remounts the editor. Local state resets, including any draft not saved elsewhere."
           ],
           "example": "// Parent fragment:\n<LessonEditor key={selectedLesson.id} lesson={selectedLesson} />\n// Changing the key remounts the editor and resets its local state.\n// This also discards an unsaved draft unless it has been saved elsewhere."
         },
@@ -1075,20 +1075,20 @@
         {
           "title": "Contract",
           "paragraphs": [
-            "If a user selects A and then B, A's slower response may arrive last. Without a guard, the screen can show A while the heading says B. An AbortController can cancel a fetch, while a cleanup flag prevents obsolete callbacks from committing state."
+            "If a user selects A and then B, A's slower response may arrive last. Without a guard, the screen can show A while the heading says B. An `AbortController` can cancel a fetch, while a cleanup flag prevents obsolete callbacks from committing state."
           ]
         },
         {
           "title": "Example",
           "paragraphs": [
-            "This Effect fragment needs itemId, setView and decode from its component. Cleanup both aborts the request and marks the result inactive, preventing an obsolete response from updating the view."
+            "This Effect fragment needs `itemId`, `setView` and `decode` from its component. Cleanup both aborts the request and marks the result inactive, preventing an obsolete response from updating the view."
           ],
           "example": "// Effect fragment with itemId, setView and decode supplied by the component.\nuseEffect(() => {\n  const controller = new AbortController();\n  let active = true;\n  setView({status:\"loading\"});\n  fetch('/api/items/' + encodeURIComponent(itemId), {signal:controller.signal})\n    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })\n    .then(raw => { const data = decode(raw); if (active) setView({status:\"success\",data}); })\n    .catch(error => { if (active && error.name !== 'AbortError') setView({status:\"error\",message:'Unable to load'}); });\n  return () => { active = false; controller.abort(); };\n}, [itemId]);"
         },
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "This fragment assumes decode and setView are stable or otherwise correctly included in dependencies. A data-fetching library/framework may supply caching, invalidation and deduplication. A response cache key must include all inputs affecting the result. Retrying a write is more consequential than retrying a read."
+            "This fragment assumes `decode` and `setView` are stable or otherwise correctly included in dependencies. A data-fetching library/framework may supply caching, invalidation and deduplication. A response cache key must include all inputs affecting the result. Retrying a write is more consequential than retrying a read."
           ]
         }
       ],
@@ -1137,7 +1137,7 @@
         {
           "title": "Example",
           "paragraphs": [
-            "The URL parser reads q and validates page as a positive integer, falling back to 1. pushState changes browser history without emitting popstate itself."
+            "The URL parser reads `q` and validates `page` as a positive integer, falling back to 1. `pushState` changes browser history without emitting `popstate` itself."
           ],
           "example": "const params = new URLSearchParams('?q=react&page=2');\nconst query = params.get('q') ?? '';\nconst rawPage = Number(params.get('page') ?? '1');\nconst page = Number.isInteger(rawPage) && rawPage > 0 ? rawPage : 1;\nconsole.log(query, page); // react 2\n// pushState changes history but does not itself emit popstate."
         },
@@ -1188,7 +1188,7 @@
           "title": "Contract",
           "paragraphs": [
             "A reducer unit test can cover invariants cheaply. A component test checks accessible labels, actions and rendered outcomes. A browser test covers integration such as navigation and storage. A snapshot alone rarely proves that a feature works.",
-            "The kit supplies ui.test.tsx, vite.config.ts and locked dependencies. npm test executes five component regressions plus domain checks; the Back/Forward test exercises jsdom history, while a browser refresh/keyboard review remains separate evidence."
+            "The kit supplies `ui.test.tsx`, `vite.config.ts` and locked dependencies. `npm test` executes five component regressions plus domain checks; the Back/Forward test exercises jsdom history, while a browser refresh/keyboard review remains separate evidence."
           ]
         },
         {
@@ -1249,7 +1249,7 @@
         {
           "title": "Example",
           "paragraphs": [
-            "JSX renders externalTitle as text. Rendering it as untrusted HTML would change the security boundary; server authorization is still required for protected operations."
+            "JSX renders `externalTitle` as text. Rendering it as untrusted HTML would change the security boundary; server authorization is still required for protected operations."
           ],
           "example": "// Safe text rendering:\n<p>{externalTitle}</p>\n// Do not convert untrusted strings to HTML with dangerouslySetInnerHTML.\n// Authorization still belongs on the server, even if a button is hidden."
         },
@@ -1310,7 +1310,7 @@
         {
           "title": "Example",
           "paragraphs": [
-            "This component fragment caches expensiveFilter by rows and query. Its usefulness depends on measured cost and stable dependencies; a new rows reference invalidates the cache."
+            "This component fragment caches `expensiveFilter` by `rows` and `query`. Its usefulness depends on measured cost and stable dependencies; a new `rows` reference invalidates the cache."
           ],
           "example": "// Component fragment:\nconst visible = useMemo(\n  () => expensiveFilter(rows, query),\n  [rows, query]\n);\n// Use only when measurement shows this calculation is worth caching.\n// Changing rows identity every render can defeat the cache."
         },
@@ -1323,7 +1323,7 @@
         {
           "title": "Separate benchmark fixture",
           "paragraphs": [
-            "The tracker accepts at most 1,000 records. Run practice/performance-fixture.ts for 10,000 synthetic records; do not import that array into the tracker. Compare calculation timing with React Profiler evidence from a real UI interaction before choosing an optimization."
+            "The tracker accepts at most 1,000 records. Run `practice/performance-fixture.ts` for 10,000 synthetic records; do not import that array into the tracker. Compare calculation timing with React Profiler evidence from a real UI interaction before choosing an optimization."
           ]
         }
       ],
@@ -1383,7 +1383,7 @@
         {
           "title": "Guided advanced milestones",
           "paragraphs": [
-            "See practice/README.md and the persistence-bridge.ts and http-loader.ts exercises. Wire migration and storage into a copy of the tracker, then wire a real training API into RemoteLesson. Submit refresh, malformed data, HTTP error, race, authorization and unsaved-draft evidence. The supplied app still uses in-memory data and a local delayed loader until you complete those steps."
+            "See `practice/README.md` and the `persistence-bridge.ts` and `http-loader.ts` exercises. Wire migration and storage into a copy of the tracker, then wire a real training API into `RemoteLesson`. Submit refresh, malformed data, HTTP error, race, authorization and unsaved-draft evidence. The supplied app still uses in-memory data and a local delayed loader until you complete those steps."
           ]
         }
       ],

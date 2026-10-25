@@ -182,7 +182,7 @@
         {
           "title": "Collaboration",
           "paragraphs": [
-            "export_titles uses a plain function because joining titles needs no object collaboration. Its assertions cover a single title and an empty input."
+            "`export_titles` uses a plain function because joining titles needs no object collaboration. Its assertions cover a single title and an empty input."
           ],
           "example": "def export_titles(rows):\n    return \"\\n\".join(row[\"title\"] for row in rows)\nassert export_titles([{\"title\": \"Patterns\"}]) == \"Patterns\"\nassert export_titles([]) == \"\""
         },
@@ -196,7 +196,7 @@
           "title": "Selected catalog and provenance",
           "paragraphs": [
             "This is a selected Python-oriented pattern catalog, not a complete treatment of the 23 GoF patterns. Gamma, Helm, Johnson and Vlissides, Design Patterns: Elements of Reusable Object-Oriented Software (1994; ISBN 9780201633610), supplies the canonical creational, structural and behavioral catalog. Dependency Injection, Repository and Unit of Work are additional architectural material, not entries in that GoF catalog.",
-            "The course compares Chain of Responsibility and Mediator in collaboration.py. Study other patterns when a problem calls for them. Here, explain why your chosen objects and functions fit the requirement."
+            "The course compares Chain of Responsibility and Mediator in `collaboration.py`. Study other patterns when a problem calls for them. Here, explain why your chosen objects and functions fit the requirement."
           ]
         }
       ],
@@ -251,7 +251,7 @@
         {
           "title": "Collaboration",
           "paragraphs": [
-            "minutes accepts nonnegative integers but rejects bool, which subclasses int. The assertions check both acceptance and rejection."
+            "minutes accepts nonnegative integers but rejects `bool`, which subclasses `int`. The assertions check both acceptance and rejection."
           ],
           "example": "def minutes(value):\n    if type(value) is not int or value < 0:\n        raise ValueError(\"nonnegative integer required\")\n    return value\nassert minutes(0) == 0\ntry:\n    minutes(True)\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"bool was accepted\")"
         },
@@ -301,13 +301,13 @@
           "title": "Intent",
           "paragraphs": [
             "Composition assembles behavior by giving one object or function another collaborator. Inheritance models a substitutable relationship and shares implementation through a base type.",
-            "A study reminder needs a message format and a way to deliver it. Those are independent changes. Pass the delivery function into the reminder instead of subclassing ReminderForEveryChannel. The caller owns construction while the reminder owns the workflow. Tests can supply a function that records deliveries without sending them."
+            "A study reminder needs a message format and a way to deliver it. Those are independent changes. Pass the delivery function into the reminder instead of subclassing `ReminderForEveryChannel`. The caller owns construction while the reminder owns the workflow. Tests can supply a function that records deliveries without sending them."
           ]
         },
         {
           "title": "Collaboration",
           "paragraphs": [
-            "remind constructs the message and delegates delivery to the supplied callable. Passing sent.append makes the effect observable without an external service.",
+            "`remind` constructs the message and delegates delivery to the supplied callable. Passing `sent.append` makes the effect observable without an external service.",
             "In this example, the caller supplies the delivery function and remind formats the message inline. The exercise below also passes formatting as a separate function."
           ],
           "example": "def remind(title, deliver):\n    deliver(f\"Review {title}\")\nsent = []\nremind(\"Patterns\", sent.append)\nassert sent == [\"Review Patterns\"]"
@@ -371,14 +371,14 @@
         {
           "title": "Collaboration",
           "paragraphs": [
-            "summary depends only on titles(), expressed by TitleSource. MemorySource supplies that behavior without inheriting from the protocol."
+            "`summary` depends only on `titles()`, expressed by `TitleSource`. `MemorySource` supplies that behavior without inheriting from the protocol."
           ],
           "example": "from typing import Protocol\nclass TitleSource(Protocol):\n    def titles(self) -> list[str]: ...\nclass MemorySource:\n    def titles(self):\n        return [\"Patterns\"]\ndef summary(source: TitleSource):\n    return \", \".join(source.titles())\nassert summary(MemorySource()) == \"Patterns\""
         },
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "The protocol above supports structural static typing; no inheritance is required for MemorySource. Executing it does not run a type checker. Do not build an interface for every class. A useful boundary reduces actual coupling; splitting all operations into separate types may instead make changes harder to follow."
+            "The protocol above supports structural static typing; no inheritance is required for `MemorySource`. Executing it does not run a type checker. Do not build an interface for every class. A useful boundary reduces actual coupling; splitting all operations into separate types may instead make changes harder to follow."
           ]
         }
       ],
@@ -518,7 +518,7 @@
         {
           "title": "Collaboration",
           "paragraphs": [
-            "formatter_for selects a callable once; the caller then formats titles without repeating the selection logic. Unknown format names raise ValueError."
+            "`formatter_for` selects a callable once; the caller then formats titles without repeating the selection logic. Unknown format names raise `ValueError`."
           ],
           "example": "import json\ndef formatter_for(name):\n    if name == \"json\":\n        return lambda titles: json.dumps(titles)\n    if name == \"lines\":\n        return lambda titles: \"\\n\".join(titles)\n    raise ValueError(\"unknown format\")\nassert formatter_for(\"lines\")([\"A\", \"B\"]) == \"A\\nB\""
         },
@@ -636,7 +636,7 @@
         {
           "title": "Collaboration",
           "paragraphs": [
-            "MinutesAdapter validates the legacy seconds value and converts it to whole minutes with floor division: 125 seconds becomes 2 minutes."
+            "`MinutesAdapter` validates the legacy seconds value and converts it to whole minutes with floor division: 125 seconds becomes 2 minutes."
           ],
           "example": "class Legacy:\n    def seconds_spent(self):\n        return 125\nclass MinutesAdapter:\n    def __init__(self, legacy):\n        self.legacy = legacy\n    def minutes(self):\n        seconds = self.legacy.seconds_spent()\n        if type(seconds) is not int or seconds < 0:\n            raise ValueError(\"invalid seconds\")\n        return seconds // 60\nassert MinutesAdapter(Legacy()).minutes() == 2"
         },
@@ -754,8 +754,8 @@
         {
           "title": "Trace construction separately from invocation",
           "paragraphs": [
-            "Calling measured(formatter, sizes) creates wrapped and returns the function without formatting any titles yet. wrapped keeps access to those collaborators through a closure. Later format_titles([\"A\", \"BC\"]) invokes wrapped, which calls formatter once, records the returned length, then returns the same text.",
-            "@wraps copies useful function metadata; it does not call the formatter or catch errors. Two calls to measured can capture different recorders. This is why the recorder is supplied explicitly instead of shared through a global variable."
+            "Calling `measured(formatter, sizes)` creates `wrapped` and returns the function without formatting any titles yet. `wrapped` keeps access to those collaborators through a closure. Later `format_titles([\"A\", \"BC\"])` invokes `wrapped`, which calls `formatter` once, records the returned length, then returns the same text.",
+            "`@wraps` copies useful function metadata; it does not call the formatter or catch errors. Two calls to measured can capture different recorders. This is why the recorder is supplied explicitly instead of shared through a global variable."
           ]
         },
         {
@@ -816,7 +816,7 @@
         {
           "title": "Collaboration",
           "paragraphs": [
-            "Lesson and Module both expose duration(). Nested modules sum their children recursively, and an empty module has duration zero."
+            "`Lesson` and `Module` both expose `duration()`. Nested modules sum their children recursively, and an empty module has duration zero."
           ],
           "example": "from dataclasses import dataclass\n@dataclass(frozen=True)\nclass Lesson:\n    minutes: int\n    def duration(self):\n        return self.minutes\n@dataclass(frozen=True)\nclass Module:\n    children: tuple\n    def duration(self):\n        return sum(child.duration() for child in self.children)\nplan = Module((Lesson(10), Module((Lesson(20),))))\nassert plan.duration() == 30\nassert Module(()).duration() == 0"
         },
@@ -866,13 +866,13 @@
           "title": "Intent",
           "paragraphs": [
             "Proxy stands in for another object to control access, delay work or mediate a remote call. Its intent differs from adding optional behavior with Decorator, even when the code shape looks similar.",
-            "A lazy proxy delays loading a document until first use. A separate loaded flag distinguishes not loaded from a legitimate None result. This example caches one local value forever; it has no invalidation or concurrency guarantee."
+            "A lazy proxy delays loading a document until first use. A separate loaded flag distinguishes not loaded from a legitimate `None` result. This example caches one local value forever; it has no invalidation or concurrency guarantee."
           ]
         },
         {
           "title": "Collaboration",
           "paragraphs": [
-            "LazyDocument loads on the first get() and caches the result, including None. The separate loaded flag distinguishes a cached None from an unperformed load."
+            "`LazyDocument` loads on the first `get()` and caches the result, including `None`. The separate `loaded` flag distinguishes a cached `None` from an unperformed load."
           ],
           "example": "class LazyDocument:\n    def __init__(self, load):\n        self.load, self.loaded, self.value = load, False, None\n    def get(self):\n        if not self.loaded:\n            value = self.load()\n            self.value, self.loaded = value, True\n        return self.value\ncalls = []\np = LazyDocument(lambda: calls.append(\"load\"))\nassert p.get() is None and p.get() is None\nassert calls == [\"load\"]"
         },
@@ -928,7 +928,7 @@
         {
           "title": "Collaboration",
           "paragraphs": [
-            "publish calls a snapshot of the registered handlers. The example records one event through seen.append without coupling the publisher to that list."
+            "`publish` calls a snapshot of the registered handlers. The example records one event through `seen.append` without coupling the publisher to that list."
           ],
           "example": "class Events:\n    def __init__(self):\n        self.handlers = []\n    def subscribe(self, handler):\n        self.handlers.append(handler)\n    def unsubscribe(self, handler):\n        self.handlers.remove(handler)\n    def publish(self, event):\n        for handler in tuple(self.handlers):\n            handler(event)\nevents = Events()\nseen = []\nevents.subscribe(seen.append)\nevents.publish(\"lesson-completed\")\nassert seen == [\"lesson-completed\"]"
         },
@@ -1007,21 +1007,21 @@
         {
           "title": "Contract and collaboration",
           "paragraphs": [
-            "A request passes through handlers until one accepts. In collaboration.py, None means decline; False and empty strings are accepted results. Unhandled requests raise LookupError. Handler exceptions propagate instead of silently falling through. Order is policy: reordering handlers can change which result wins.",
+            "A request passes through handlers until one accepts. In `collaboration.py`, `None` means decline; `False` and empty strings are accepted results. Unhandled requests raise `LookupError`. Handler exceptions propagate instead of silently falling through. Order is policy: reordering handlers can change which result wins.",
             "Compare Observer, which notifies registered subscribers under an explicit failure policy, and Command, which represents an action to execute later. A chain neither promises broadcast nor stores an action. Keep simple conditionals when ordered handlers add no useful variation."
           ]
         },
         {
           "title": "Trace decline, acceptance and ordering",
           "paragraphs": [
-            "The first handler below declines JSON by returning None. The second produces JSON, so the last handler is never called. If two handlers accept the same request, their order decides the result. Do not use truthiness to detect acceptance: a valid False result still stops the chain."
+            "The first handler below declines JSON by returning `None`. The second produces JSON, so the last handler is never called. If two handlers accept the same request, their order decides the result. Do not use truthiness to detect acceptance: a valid `False` result still stops the chain."
           ],
           "example": "from collaboration import handle_request\nimport json\ndef lines(request):\n    return '\\n'.join(request['titles']) if request['format'] == 'lines' else None\ndef json_format(request):\n    return json.dumps(request['titles']) if request['format'] == 'json' else None\nassert handle_request({'format':'json','titles':['Patterns']}, [lines, json_format]) == '[\"Patterns\"]'\nassert handle_request('x', [lambda r: False, lambda r: 'later']) is False"
         },
         {
           "title": "Compare failure and fan-out contracts",
           "paragraphs": [
-            "test_collaboration.py verifies short circuit, overlapping-handler order, no accepting handler and an exception that must not trigger fallback. Its Observer comparison invokes both subscribers for the same event. Use an explicit chain for ordered selection; use broadcast when the intention is to notify each subscriber, and choose how to handle subscriber failures. A Command can capture either operation for later invocation, but does not determine these delivery rules."
+            "`test_collaboration.py` verifies short circuit, overlapping-handler order, no accepting handler and an exception that must not trigger fallback. Its Observer comparison invokes both subscribers for the same event. Use an explicit chain for ordered selection; use broadcast when the intention is to notify each subscriber, and choose how to handle subscriber failures. A Command can capture either operation for later invocation, but does not determine these delivery rules."
           ]
         }
       ],
@@ -1133,7 +1133,7 @@
         {
           "title": "Collaboration",
           "paragraphs": [
-            "The transition table permits draft → active and active → done through named actions. A missing state/action pair raises ValueError."
+            "The transition table permits draft → active and active → done through named actions. A missing state/action pair raises `ValueError`."
           ],
           "example": "TRANSITIONS = {(\"draft\", \"start\"): \"active\", (\"active\", \"pause\"): \"draft\", (\"active\", \"finish\"): \"done\"}\ndef transition(state, action):\n    try:\n        return TRANSITIONS[state, action]\n    except KeyError:\n        raise ValueError(\"illegal transition\") from None\nassert transition(\"draft\", \"start\") == \"active\"\nassert transition(\"active\", \"finish\") == \"done\""
         },
@@ -1182,7 +1182,7 @@
         {
           "title": "Contract and collaboration",
           "paragraphs": [
-            "CompletionMediator accepts copied lesson states and prerequisites. It validates active state and completed prerequisites before a state update and a local notification record. Missing prerequisites, missing IDs and repeated completion fail without changing state or notifications. Collaborators depend on the coordinator rather than calling one another.",
+            "`CompletionMediator` accepts copied lesson states and prerequisites. It validates active state and completed prerequisites before a state update and a local notification record. Missing prerequisites, missing IDs and repeated completion fail without changing state or notifications. Collaborators depend on the coordinator rather than calling one another.",
             "Observer announces a change without defining the full workflow; Command captures an action; Mediator owns collaboration rules. These patterns can coexist, but adding a central coordinator can concentrate too much policy. This sequential local example is not a database transaction or durable external notification protocol."
           ]
         },
@@ -1245,7 +1245,7 @@
         {
           "title": "Collaboration",
           "paragraphs": [
-            "ReportJob.run fixes the order: load, validate, render. MemoryJob changes only loading and inherits the shared validation and rendering behavior."
+            "`ReportJob.run` fixes the order: load, validate, render. `MemoryJob` changes only loading and inherits the shared validation and rendering behavior."
           ],
           "example": "class ReportJob:\n    def run(self):\n        rows = self.load()\n        if any(not isinstance(x, str) for x in rows):\n            raise ValueError(\"strings required\")\n        return self.render(rows)\n    def load(self):\n        raise NotImplementedError\n    def render(self, rows):\n        return \"\\n\".join(rows)\nclass MemoryJob(ReportJob):\n    def load(self):\n        return [\"Patterns\"]\nassert MemoryJob().run() == \"Patterns\""
         },
@@ -1308,7 +1308,7 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "Laziness moves errors to iteration time and may keep resources open longer. Do not return a generator over a file that has already been closed. Mutation during traversal must have a defined policy. A remote paged iterator may make network calls on next(), so document deadlines and page failures."
+            "Laziness moves errors to iteration time and may keep resources open longer. Do not return a generator over a file that has already been closed. Mutation during traversal must have a defined policy. A remote paged iterator may make network calls on `next()`, so document deadlines and page failures."
           ]
         }
       ],
@@ -1420,7 +1420,7 @@
         {
           "title": "Collaboration",
           "paragraphs": [
-            "Repository owns lookup and duplicate-ID rejection. get returns the stored Lesson or None when the ID is absent."
+            "Repository owns lookup and duplicate-ID rejection. `get` returns the stored `Lesson` or `None` when the ID is absent."
           ],
           "example": "from dataclasses import dataclass\n@dataclass(frozen=True)\nclass Lesson:\n    id: str\n    title: str\nclass Repository:\n    def __init__(self):\n        self.rows = {}\n    def add(self, lesson):\n        if lesson.id in self.rows:\n            raise ValueError(\"duplicate ID\")\n        self.rows[lesson.id] = lesson\n    def get(self, id):\n        return self.rows.get(id)\nr = Repository()\nr.add(Lesson(\"1\", \"Patterns\"))\nassert r.get(\"1\").title == \"Patterns\"\nassert r.get(\"missing\") is None"
         },
@@ -1476,7 +1476,7 @@
         {
           "title": "What yield means inside this context manager",
           "paragraphs": [
-            "@contextmanager turns this generator into a with-compatible resource. Entering with runs through the first yield and assigns its value to work. A successful body resumes after yield, allowing clear/update to publish. A body exception is raised at the suspended yield, so those following statements are skipped.",
+            "`@contextmanager` turns this generator into a `with`-compatible resource. Entering `with` runs through the first yield and assigns its value to work. A successful body resumes after yield, allowing clear/update to publish. A body exception is raised at the suspended yield, so those following statements are skipped.",
             "This example deliberately does not catch that exception. Catching and suppressing it would change the failure contract. If context managers are unfamiliar, the Python context-managers lesson traces yield, finally and propagation before storage is involved."
           ]
         },
@@ -1496,7 +1496,7 @@
         {
           "title": "A larger example has more than one observable effect",
           "paragraphs": [
-            "A successful export updates payload, version and a count history. If the payload changes but the history does not, a later observer sees a partial outcome. The MemoryStore fixture replaces one immutable snapshot after checks; its injected failure happens before replacement and therefore leaves all three observations unchanged.",
+            "A successful export updates payload, version and a count history. If the payload changes but the history does not, a later observer sees a partial outcome. The `MemoryStore` fixture replaces one immutable snapshot after checks; its injected failure happens before replacement and therefore leaves all three observations unchanged.",
             "This is a teaching boundary in one process, not proof that a file writer and remote audit service commit together. With separate external systems, identify the authoritative commit and recovery policy. Moving calls into a method named commit does not make an external multi-step workflow atomic."
           ]
         }
@@ -1583,14 +1583,14 @@
           "title": "Tradeoffs",
           "paragraphs": [
             "Passing happy-path examples does not prove equivalence for all inputs. Include malformed input, empty data, ordering, mutation and failure timing relevant to your contract. Do not lock every private method call into a mock expectation; that makes safe structural changes unnecessarily expensive.",
-            "Start from legacy_export.py, run test_refactoring.py after each step in refactoring-lab.md, and compare the supplied refactored_export.py endpoint only after preserving the observed contract."
+            "Start from `legacy_export.py`, run `test_refactoring.py` after each step in `refactoring-lab.md`, and compare the supplied `refactored_export.py` endpoint only after preserving the observed contract."
           ]
         },
         {
           "title": "Characterise late failures before moving code",
           "paragraphs": [
-            "The larger batch_export_legacy.py first checks version and format, then validates every row, formats the complete batch and calls storage once. A second row owned by B must reject an A export even when the first row is valid. If a refactor writes each accepted row immediately, it has changed behavior despite producing the same success output.",
-            "Run test_batch_export.py against both supplied versions, then copy the legacy into your own candidate and substitute it in the test import. Refactor in small steps: extract preparation, extract format selection, then keep the orchestration explicit. Preserve rejection before effects, input immutability, stale-version behavior and error types."
+            "The larger `batch_export_legacy.py` first checks version and format, then validates every row, formats the complete batch and calls storage once. A second row owned by B must reject an A export even when the first row is valid. If a refactor writes each accepted row immediately, it has changed behavior despite producing the same success output.",
+            "Run `test_batch_export.py` against both supplied versions, then copy the legacy into your own candidate and substitute it in the test import. Refactor in small steps: extract preparation, extract format selection, then keep the orchestration explicit. Preserve rejection before effects, input immutability, stale-version behavior and error types."
           ]
         }
       ],

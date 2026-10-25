@@ -274,7 +274,7 @@
         {
           "title": "The offline cache model",
           "paragraphs": [
-            "Use the supplied DnsCache as an offline lifetime model only. Its example address comes from a documentation range, not a live host. Real resolution depends on a recursive resolver, record types, answers and errors; the model does not parse packets, validate DNSSEC or simulate delegation."
+            "Use the supplied `DnsCache` as an offline lifetime model only. Its example address comes from a documentation range, not a live host. Real resolution depends on a recursive resolver, record types, answers and errors; the model does not parse packets, validate DNSSEC or simulate delegation."
           ],
           "example": "lessons.example -> A 192.0.2.10\nName resolution succeeds\nPort 443 can still refuse a connection\nThese are separate observations"
         }
@@ -381,7 +381,7 @@
           "title": "Frame bytes before decoding text",
           "paragraphs": [
             "The word cafe with an accented final letter needs two UTF-8 bytes for that letter. A recv boundary can separate those bytes; decoding each chunk independently can therefore fail even though the complete message is valid. Accumulate bytes until the application delimiter arrives, enforce a size limit and only then decode the complete frame. A sendall call does not reserve a matching recv call.",
-            "tcp_framing.py uses a real loopback listener and deliberately small three-byte reads. One exchange splits a UTF-8 character across sends; another sends two newline-delimited frames together. Both must yield complete messages. EOF with remaining bytes is an incomplete frame, not a successful short message. This tiny newline protocol teaches TCP framing; it is not an HTTP parser."
+            "`tcp_framing.py` uses a real loopback listener and deliberately small three-byte reads. One exchange splits a UTF-8 character across sends; another sends two newline-delimited frames together. Both must yield complete messages. EOF with remaining bytes is an incomplete frame, not a successful short message. This tiny newline protocol teaches TCP framing; it is not an HTTP parser."
           ],
           "example": "wire bytes: b'caf\\xc3' + b'\\xa9\\nsecond\\n'\nframes: ['café', 'second']\nwire bytes: b'incomplete' then EOF -> error, no completed frame",
           "exampleFormat": "prose"
@@ -480,7 +480,7 @@
         {
           "title": "Decoding and byte length",
           "paragraphs": [
-            "The supplied decoder first decodes bytes as strict UTF-8, then passes the resulting text to Python's JSON reader. It rejects decoding and syntax failures. Passing bytes directly to json.loads would also accept UTF-16 and UTF-32, which is broader than this lab's wire contract. It also checks a strict schema after parsing. Do not measure Content-Length from characters: a non-ASCII lesson name can require more bytes. Compression and transfer framing are separate protocol concerns delegated to the chosen client stack."
+            "The supplied decoder first decodes bytes as strict UTF-8, then passes the resulting text to Python's JSON reader. It rejects decoding and syntax failures. Passing bytes directly to `json.loads` would also accept UTF-16 and UTF-32, which is broader than this lab's wire contract. It also checks a strict schema after parsing. Do not measure Content-Length from characters: a non-ASCII lesson name can require more bytes. Compression and transfer framing are separate protocol concerns delegated to the chosen client stack."
           ],
           "example": "Text lesson='café'\nUTF-8 bytes contain more octets than text characters\nWrong encoding or truncated bytes -> decoding failure\nCorrect bytes + wrong field types -> schema failure"
         },
@@ -732,7 +732,7 @@
         {
           "title": "Trust roots and hostname checks",
           "paragraphs": [
-            "Certificate trust is configured by a client's trust roots and verification policy. Python's create_default_context enables certificate verification and hostname checking for a client-oriented context. Its supported protocol details also depend on the linked TLS library; record the runtime if testing real connections."
+            "Certificate trust is configured by a client's trust roots and verification policy. Python's `create_default_context` enables certificate verification and hostname checking for a client-oriented context. Its supported protocol details also depend on the linked TLS library; record the runtime if testing real connections."
           ]
         },
         {
@@ -879,7 +879,7 @@
         {
           "title": "Freshness and storage rules",
           "paragraphs": [
-            "An HTTP cache can store a response and decide when it is fresh enough to reuse under the applicable rules. max-age describes a freshness lifetime; no-store directs caches not to store, while unqualified private forbids a shared cache from storing the response but permits private-cache storage under the other applicable rules. Our SharedCache is a deliberately small offline model with an explicit private flag."
+            "An HTTP cache can store a response and decide when it is fresh enough to reuse under the applicable rules. max-age describes a freshness lifetime; no-store directs caches not to store, while unqualified private forbids a shared cache from storing the response but permits private-cache storage under the other applicable rules. Our `SharedCache` is a deliberately small offline model with an explicit private flag."
           ]
         },
         {

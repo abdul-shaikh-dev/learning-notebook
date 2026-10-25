@@ -171,7 +171,7 @@
         {
           "title": "Temporary tests and retained practice data",
           "paragraphs": [
-            "The test suite allocates and deletes its own temporary directory. Manual commands create notes.db in the selected practice folder and preserve it. Container commands bind the host port to 127.0.0.1; container listening on 0.0.0.0 is necessary for port forwarding and is a different boundary."
+            "The test suite allocates and deletes its own temporary directory. Manual commands create `notes.db` in the selected practice folder and preserve it. Container commands bind the host port to 127.0.0.1; container listening on 0.0.0.0 is necessary for port forwarding and is a different boundary."
           ],
           "example": "Tests: random loopback port + temporary notes.db\nLocal manual app: 127.0.0.1:8080\nStaging: separate database + least-privilege identity"
         }
@@ -269,7 +269,7 @@
         {
           "title": "Pinning a verified image digest",
           "paragraphs": [
-            "The downloadable Dockerfile deliberately uses the readable python:3.13-slim tag. Tags can change. As an assessed extension, resolve its current digest, replace both FROM references with that digest and record an upgrade process; do not invent or paste an unverified digest from a tutorial."
+            "The downloadable Dockerfile deliberately uses the readable `python:3.13-slim` tag. Tags can change. As an assessed extension, resolve its current digest, replace both `FROM` references with that digest and record an upgrade process; do not invent or paste an unverified digest from a tutorial."
           ],
           "example": "React: npm ci; npm test; npm run build\n.NET: dotnet restore; dotnet test -c Release; dotnet publish -c Release\nPython: python --version; python -m unittest -v"
         }
@@ -416,13 +416,13 @@
         {
           "title": "Build stages and runtime files",
           "paragraphs": [
-            "A multi-stage Dockerfile can run tests with test sources present and copy only runtime files into the final image. The supplied test stage executes test_release_app.py, while the runtime stage excludes test files and runs as numeric user 10001. A narrow build context also prevents accidental inclusion of databases and private configuration. Layer caching accelerates repeated builds but is not test evidence by itself."
+            "A multi-stage Dockerfile can run tests with test sources present and copy only runtime files into the final image. The supplied test stage executes `test_release_app.py`, while the runtime stage excludes test files and runs as numeric user 10001. A narrow build context also prevents accidental inclusion of databases and private configuration. Layer caching accelerates repeated builds but is not test evidence by itself."
           ]
         },
         {
           "title": "Image permissions and build context",
           "paragraphs": [
-            "The .dockerignore file permits only the Dockerfile and two named Python sources. The numeric runtime user can write /tmp; it cannot write arbitrary /app files. Verify the final image user and filesystem with docker inspect, rather than assuming a small image is hardened or vulnerability-free."
+            "The `.dockerignore` file permits only the Dockerfile and two named Python sources. The numeric runtime user can write `/tmp`; it cannot write arbitrary `/app` files. Verify the final image user and filesystem with `docker inspect`, rather than assuming a small image is hardened or vulnerability-free."
           ],
           "example": "FROM python:3.13-slim AS test\nCOPY release_app.py test_release_app.py ./\nRUN python -m unittest -v test_release_app.py\n# Runtime copies only release_app.py from the test stage."
         }
@@ -569,7 +569,7 @@
         {
           "title": "Routing the real integration",
           "paragraphs": [
-            "integration-runbook.md gives concrete build and release steps using the existing React/.NET/SQL kits. The Python runtime does not contain those components. A static host needs an intentional deep-link fallback; an API 404 must not be rewritten to index.html. Test cookie/token assumptions and CORS with the actual staging origin."
+            "`integration-runbook.md` gives concrete build and release steps using the existing React/.NET/SQL kits. The Python runtime does not contain those components. A static host needs an intentional deep-link fallback; an API 404 must not be rewritten to `index.html`. Test cookie/token assumptions and CORS with the actual staging origin."
           ],
           "example": "Browser HTTPS → / assets (React dist)\n                 → /api/* reverse proxy → .NET :8080\n.NET → private SQL Server TCP1433\nMigration runner → SQL with separate schema permission"
         }
@@ -618,15 +618,15 @@
         {
           "title": "The unchanged-schema lab",
           "paragraphs": [
-            "Both the release-label test and distinct_artifact_drill.py use an unchanged SQLite schema. The latter runs different v1/v2 source artifacts, verifies their hashes and retains notes through rollback; neither tests a schema migration. The runbook asks the .NET/SQL learner to generate and inspect migrations for SQL Server; SQLite does not support the same idempotent migration-script facilities."
+            "Both the release-label test and `distinct_artifact_drill.py` use an unchanged SQLite schema. The latter runs different v1/v2 source artifacts, verifies their hashes and retains notes through rollback; neither tests a schema migration. The runbook asks the .NET/SQL learner to generate and inspect migrations for SQL Server; SQLite does not support the same idempotent migration-script facilities."
           ],
           "example": "v1 reads title\nMigration adds nullable label\nv2 reads title + optional label\nBackfill in bounded batches\nRemove old representation only after old consumers disappear."
         },
         {
           "title": "Backfill is a moving boundary while old writers still run",
           "paragraphs": [
-            "Adding nullable label lets old code keep selecting and inserting title. New readers can use COALESCE(label,title) while new writers populate both fields. A first backfill does not finish migration if an old instance can insert another row with label=NULL one second later. Stop or upgrade old writers, reconcile the remaining rows, and only then enforce the final representation.",
-            "schema_coexistence.py executes this sequence in a disposable SQLite file, including a late old write after backfill. It verifies both readers during coexistence and deliberately proves the old query fails after DROP COLUMN title. Keeping the old binary therefore does not make rollback safe after contraction. The script tests data compatibility, not SQL Server DDL locking, deployment concurrency or an EF migration."
+            "Adding nullable label lets old code keep selecting and inserting title. New readers can use `COALESCE(label,title)` while new writers populate both fields. A first backfill does not finish migration if an old instance can insert another row with `label=NULL` one second later. Stop or upgrade old writers, reconcile the remaining rows, and only then enforce the final representation.",
+            "`schema_coexistence.py` executes this sequence in a disposable SQLite file, including a late old write after backfill. It verifies both readers during coexistence and deliberately proves the old query fails after `DROP COLUMN title`. Keeping the old binary therefore does not make rollback safe after contraction. The script tests data compatibility, not SQL Server DDL locking, deployment concurrency or an EF migration."
           ],
           "example": "expand: add nullable label -> old reader still works\nbackfill -> old writer inserts late row with label=NULL\nv2 fallback + dual writes -> coexistence\nretire old writers, reconcile -> contract\nold SELECT title -> fails after DROP",
           "exampleFormat": "prose"
@@ -683,7 +683,7 @@
         {
           "title": "Action pins and untrusted inputs",
           "paragraphs": [
-            "ci-example.yaml uses readable versioned official actions as a learning template. Production hardening pins reviewed actions to full commit SHAs and regularly upgrades them. Never insert a guessed SHA. Do not expose secrets through workflows triggered by untrusted code or interpolate untrusted fields directly into shell commands."
+            "`ci-example.yaml` uses readable versioned official actions as a learning template. Production hardening pins reviewed actions to full commit SHAs and regularly upgrades them. Never insert a guessed SHA. Do not expose secrets through workflows triggered by untrusted code or interpolate untrusted fields directly into shell commands."
           ],
           "example": "pull request → checkout → Python tests → artifact record\nrelease approval → promote approved artifact (separate job/system)\npermissions: contents: read"
         }
@@ -781,7 +781,7 @@
         {
           "title": "Readiness beyond SELECT 1",
           "paragraphs": [
-            "A query such as SELECT 1 alone may work even if required tables are absent; the lab readiness queries the notes table. This still does not prove write permissions, downstream identity or the complete user path. Do not classify every database outage as a process deadlock."
+            "A query such as `SELECT 1` alone may work even if required tables are absent; the lab readiness queries the notes table. This still does not prove write permissions, downstream identity or the complete user path. Do not classify every database outage as a process deadlock."
           ],
           "example": "Create NOT_READY_FILE → /ready returns503, /live returns200\nRemove file → /ready returns200\nReadiness success → write/read a synthetic note → inspect /version"
         }
@@ -880,7 +880,7 @@
           "title": "Isolated data recovery",
           "paragraphs": [
             "Do not replace a live database file underneath a running server. Restore into a separate location, verify it and perform a controlled switch after stopping writers. The course runbook distinguishes release rollback from recovery to an earlier data point, which intentionally loses later writes.",
-            "The release-label test reuses the same code. distinct_artifact_drill.py separately runs different v1/v2 source artifacts and rolls back to v1 with retained data. Docker-image and staging rollback remain optional integration exercises."
+            "The release-label test reuses the same code. `distinct_artifact_drill.py` separately runs different v1/v2 source artifacts and rolls back to v1 with retained data. Docker-image and staging rollback remain optional integration exercises."
           ],
           "example": "Create note in v1 → stop → start v2 using same db → read\nStop v2 → start v1 using same db → read again\nObserved: data retained, because schema stayed compatible."
         }
@@ -1119,7 +1119,7 @@
         {
           "title": "Consistent snapshots and RPO",
           "paragraphs": [
-            "A backup is a recoverable copy, not simply a file that exists. A database can have active transactions and sidecar journal/WAL state, so copying one live file can be inconsistent. Use the database-supported mechanism. The helper uses SQLite Connection.backup into a new destination and refuses to overwrite an existing snapshot; SQL Server needs its own backup chain and permissions."
+            "A backup is a recoverable copy, not simply a file that exists. A database can have active transactions and sidecar journal/WAL state, so copying one live file can be inconsistent. Use the database-supported mechanism. The helper uses SQLite `Connection.backup` into a new destination and refuses to overwrite an existing snapshot; SQL Server needs its own backup chain and permissions."
           ]
         },
         {
@@ -1181,7 +1181,7 @@
         {
           "title": "A healthy restore can contain the wrong business point in time",
           "paragraphs": [
-            "A snapshot contains note A; note B commits afterward. An isolated restore can pass integrity_check and correctly return A only. That is a successful restoration of the chosen snapshot with known data loss, not proof of zero RPO. If the selected snapshot was supposed to contain B, the same row count is instead evidence of the wrong backup or an incomplete recovery chain.",
+            "A snapshot contains note A; note B commits afterward. An isolated restore can pass `integrity_check` and correctly return A only. That is a successful restoration of the chosen snapshot with known data loss, not proof of zero RPO. If the selected snapshot was supposed to contain B, the same row count is instead evidence of the wrong backup or an incomplete recovery chain.",
             "Measure recovery from the agreed incident start to the point the restored application can safely serve the required data. Copy duration alone omits identity, configuration, verification and traffic cutover. The local drill has no external clients, but a real cutover must also fence the old writer; otherwise recovered and old databases can both accept divergent changes."
           ],
           "example": "snapshot S: A\nsource after S: A + B\nrestore S: A, integrity ok\nknown gap: B; reconcile or accept under RPO\nthen fence old writers before cutover",
@@ -1281,7 +1281,7 @@
         {
           "title": "The service's remaining deployment work",
           "paragraphs": [
-            "Use release-workbook.md and integration-runbook.md to document the release. The supplied service has no authentication and is intended for local learning. Before exposing it, implement and test TLS, identity, SQL monitoring, telemetry collection, proxy routing and the deployment configuration."
+            "Use `release-workbook.md` and `integration-runbook.md` to document the release. The supplied service has no authentication and is intended for local learning. Before exposing it, implement and test TLS, identity, SQL monitoring, telemetry collection, proxy routing and the deployment configuration."
           ],
           "example": "Packet: commit/digest + tests + topology + schema plan\nCandidate: version/readiness/smoke evidence\nObserve: eligible errors/latency + release attribution\nRecover: compatible v1 + validated snapshot + incident timeline"
         }

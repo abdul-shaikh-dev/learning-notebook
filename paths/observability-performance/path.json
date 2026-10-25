@@ -351,7 +351,7 @@
         {
           "title": "Named events and correlation",
           "paragraphs": [
-            "A structured log records named fields such as event, severity, request_id, route and duration_ms. This supports filtering without parsing arbitrary prose. Choose stable event names; a log line for import_rejected should identify the reason category, not dump the entire uploaded document.",
+            "A structured log records named fields such as `event`, `severity`, `request_id`, `route` and `duration_ms`. This supports filtering without parsing arbitrary prose. Choose stable event names; a log line for `import_rejected` should identify the reason category, not dump the entire uploaded document.",
             "Correlate related events through a request or trace identifier. Use bounded route templates rather than raw URLs that may contain personal identifiers or secrets. Apply retention, access controls and redaction at the source as well as the collection layer. Debug verbosity should be a deliberate temporary decision."
           ],
           "example": "{\"event\":\"import_rejected\",\"reason\":\"invalid_schema\",\"request_id\":\"demo-17\",\"route\":\"/imports\",\"status\":400}"
@@ -403,7 +403,7 @@
           "title": "Counters, gauges and distributions",
           "paragraphs": [
             "A counter accumulates events, such as completed requests, and normally increases until process restart. A gauge represents a current value such as in-flight requests and may rise or fall. A distribution records many observations such as request duration; a single gauge overwritten by each request loses the population.",
-            "Use rates derived from counters for requests per second, handling resets correctly through the monitoring tool. Histograms group observations into buckets and expose count and sum. Units and names should be consistent, such as duration_seconds and requests_total, so dashboards do not mix milliseconds and seconds silently."
+            "Use rates derived from counters for requests per second, handling resets correctly through the monitoring tool. Histograms group observations into buckets and expose count and sum. Units and names should be consistent, such as `duration_seconds` and `requests_total`, so dashboards do not mix milliseconds and seconds silently."
           ],
           "example": "requests_total: counter\ninflight_requests: gauge\nrequest_duration_seconds: histogram\nCPU utilisation: ratio gauge"
         },
@@ -453,7 +453,7 @@
         {
           "title": "Percentile estimators and sample size",
           "paragraphs": [
-            "The median describes the middle of a distribution; p95 describes a threshold at or below which roughly 95% of observations fall according to a defined estimator. Different estimators can yield different values for a small sample. The lab uses nearest rank: sort values and take index ceil(p*n)-1.",
+            "The median describes the middle of a distribution; p95 describes a threshold at or below which roughly 95% of observations fall according to a defined estimator. Different estimators can yield different values for a small sample. The lab uses nearest rank: sort values and take index `ceil(p*n) - 1`.",
             "A tiny sample cannot support precise tail claims. For 20 values the nearest-rank p99 is the maximum, not a stable estimate of a broad population. Do not average p95 values from different hosts to obtain a global p95; combine compatible distributions or histogram buckets instead."
           ],
           "example": "Durations: 10, 10, 10, 10, 100 ms\nMean = 28 ms; median = 10 ms\nNearest-rank p95 = 100 ms (5 observations)"
@@ -570,7 +570,7 @@
           "title": "Compute overlap before assigning the missing time",
           "paragraphs": [
             "A parent spans 0 to 150 ms. Child A spans 10 to 100; B spans 10 to 130. Their durations sum to 210 ms, but their union covers only 120 ms because 90 ms overlap. The remaining 30 ms belongs outside the measured child intervals. It may include setup, scheduling, serialization or uninstrumented waits; elapsed subtraction alone cannot call it CPU work.",
-            "trace_investigation.py measures two real concurrent sleeping operations with a monotonic clock, prints their intervals, overlap, process CPU and uncovered parent time, then repeats with B reporting failure. It retains the failed span and request outcome rather than dropping failed requests from the latency story. These are manual spans without context propagation or an OpenTelemetry collector."
+            "`trace_investigation.py` measures two real concurrent sleeping operations with a monotonic clock, prints their intervals, overlap, process CPU and uncovered parent time, then repeats with B reporting failure. It retains the failed span and request outcome rather than dropping failed requests from the latency story. These are manual spans without context propagation or an OpenTelemetry collector."
           ],
           "example": "A duration=90ms; B duration=120ms; overlap=90ms\ncovered child time=90+120-90=120ms\nuncovered parent=150-120=30ms\nlatest required child B determines completion before final assembly",
           "exampleFormat": "prose"
@@ -636,7 +636,7 @@
         {
           "title": "Concurrent request ownership",
           "paragraphs": [
-            "Global mutable current_trace_id leaks one request's identity into another under concurrency. Use the runtime or SDK's context model and test concurrent requests."
+            "Global mutable `current_trace_id` leaks one request's identity into another under concurrency. Use the runtime or SDK's context model and test concurrent requests."
           ]
         }
       ],
@@ -1007,8 +1007,8 @@
         {
           "title": "Separate a waiting request from CPU saturation",
           "paragraphs": [
-            "In the concurrent span drill, process CPU time excludes sleeping while parent wall time includes it. The wall/CPU gap therefore reflects waiting in this workload. In a real service, inspect spans and queues to find the slow dependency. process_time counts CPU across all threads, so it cannot attribute that CPU to one concurrent request.",
-            "Now profile a compute-bound lookup batch from benchmark.py. A faster lookup after indexing is incomplete evidence if index construction or memory cost disappears from the comparison. Measure build cost and repeated queries separately, preserve identical answers, and estimate how many queries repay construction cost. For example, a 20 ms build saving 0.5 ms per lookup breaks even after 40 lookups before considering memory."
+            "In the concurrent span drill, process CPU time excludes sleeping while parent wall time includes it. The wall/CPU gap therefore reflects waiting in this workload. In a real service, inspect spans and queues to find the slow dependency. `process_time` counts CPU across all threads, so it cannot attribute that CPU to one concurrent request.",
+            "Now profile a compute-bound lookup batch from `benchmark.py`. A faster lookup after indexing is incomplete evidence if index construction or memory cost disappears from the comparison. Measure build cost and repeated queries separately, preserve identical answers, and estimate how many queries repay construction cost. For example, a 20 ms build saving 0.5 ms per lookup breaks even after 40 lookups before considering memory."
           ],
           "example": "wall time: includes waiting and CPU\nprocess CPU: all process threads, excludes sleeping\nindex break-even: 20ms / 0.5ms saved per lookup = 40 lookups",
           "exampleFormat": "prose"

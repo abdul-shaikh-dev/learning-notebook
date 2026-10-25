@@ -95,3 +95,7 @@ footer{border-top:1px solid var(--line);background:var(--surface);padding:20px;t
  body>header .notebook-nav{order:6;width:100%;margin:0}
  body>header .notebook-nav a{flex:1;padding:0 6px;font-size:var(--size-meta)}
 }
+
+/* Inline code in lesson prose: sized with the sentence, wraps long identifiers, readable in both themes and print. */
+:is(p,li,dd,td,figcaption)>code{font-size:.88em;line-height:inherit;padding:.08em .32em;border:1px solid var(--line);border-radius:4px;background:var(--code-bg);color:var(--text);overflow-wrap:anywhere;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+:is(p,li,dd,td,figcaption) a>code{color:inherit}

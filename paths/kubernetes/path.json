@@ -230,7 +230,7 @@
         {
           "title": "Cluster context and identity",
           "paragraphs": [
-            "kubectl uses a kubeconfig context to choose cluster and identity, so a valid command can affect the wrong environment. The lab names its kind cluster notebook-lab, producing kind-notebook-lab, and every mutating example names that context and notebook-lab namespace. lab.ps1 refuses another context or a non-loopback API endpoint before making a cluster request."
+            "`kubectl` uses a kubeconfig context to choose cluster and identity, so a valid command can affect the wrong environment. The lab names its kind cluster `notebook-lab`, producing `kind-notebook-lab`, and every mutating example names that context and `notebook-lab` namespace. `lab.ps1` refuses another context or a non-loopback API endpoint before making a cluster request."
           ]
         },
         {
@@ -279,7 +279,7 @@
         {
           "title": "Object structure and matching",
           "paragraphs": [
-            "A manifest states apiVersion, kind, metadata and desired fields. Names identify objects within a scope; labels classify objects and selectors match label sets. Namespace scope avoids many naming collisions but is not a complete tenant security boundary. The kit uses JSON manifests because Kubernetes accepts JSON as well as YAML; the structures are the same API objects."
+            "A manifest states `apiVersion`, `kind`, `metadata` and desired fields. Names identify objects within a scope; labels classify objects and selectors match label sets. Namespace scope avoids many naming collisions but is not a complete tenant security boundary. The kit uses JSON manifests because Kubernetes accepts JSON as well as YAML; the structures are the same API objects."
           ]
         },
         {
@@ -292,7 +292,7 @@
         {
           "title": "Try a selector mismatch without a cluster",
           "paragraphs": [
-            "Make a separate copy of the extracted practice folder. In workload.json find the Service object, then change only spec.selector.app to wrong. Run the single selector test below. It compares the Service selector with the Deployment and template labels, so the altered fixture must fail. Restore release-demo and require the check to pass. This tests a local contract; it does not send Kubernetes API requests."
+            "Make a separate copy of the extracted practice folder. In `workload.json` find the Service object, then change only `spec.selector.app` to `wrong`. Run the single selector test below. It compares the Service selector with the Deployment and template labels, so the altered fixture must fail. Restore `release-demo` and require the check to pass. This tests a local contract; it does not send Kubernetes API requests."
           ],
           "example": "python -m unittest -v check_manifests.ManifestChecks.test_selectors_ports_and_security",
           "exampleFormat": "prose"
@@ -342,7 +342,7 @@
         {
           "title": "Container restart versus Pod replacement",
           "paragraphs": [
-            "Restarting a container in the same Pod is not the same as replacing the Pod. emptyDir survives a container restart within that Pod but disappears when the Pod is removed. The notes demo is intentionally scratch data, so do not claim replacement persistence from a Deployment replica count."
+            "Restarting a container in the same Pod is not the same as replacing the Pod. `emptyDir` survives a container restart within that Pod but disappears when the Pod is removed. The notes demo is intentionally scratch data, so do not claim replacement persistence from a Deployment replica count."
           ],
           "example": "Pod A UID=old → deleted\nReplacement Pod B UID=new → new scratch volume\nTwo containers within B would share network namespace; independent Pods do not share localhost."
         }
@@ -434,7 +434,7 @@
         {
           "title": "Service names and ready endpoints",
           "paragraphs": [
-            "A ClusterIP Service gives a stable virtual address and DNS name over matching ready endpoints. Its port can differ from the container targetPort; a named targetPort connects to the container port name. Pod IPs change as instances are replaced. Within notebook-lab, release-demo resolves the Service, while release-demo.notebook-lab.svc identifies its namespace more explicitly."
+            "A ClusterIP Service gives a stable virtual address and DNS name over matching ready endpoints. Its port can differ from the container `targetPort`; a named `targetPort` connects to the container port name. Pod IPs change as instances are replaced. Within `notebook-lab`, `release-demo` resolves the Service, while `release-demo.notebook-lab.svc` identifies its namespace more explicitly."
           ]
         },
         {
@@ -447,7 +447,7 @@
         {
           "title": "Locate the three port values",
           "paragraphs": [
-            "In workload.json, find the Service port 8080, its targetPort string http, and the container port named http with value 8080. The string is a lookup by name, not another numeric port. An EndpointSlice records backend addresses and readiness for the Service. These records help distinguish a matching label from a backend that can actually receive traffic."
+            "In `workload.json`, find the Service port 8080, its `targetPort` string `http`, and the container port named `http` with value 8080. The string is a lookup by name, not another numeric port. An EndpointSlice records backend addresses and readiness for the Service. These records help distinguish a matching label from a backend that can actually receive traffic."
           ]
         }
       ],
@@ -489,13 +489,13 @@
         {
           "title": "Configuration delivery",
           "paragraphs": [
-            "A ConfigMap stores non-confidential configuration outside the container image. The kit injects RELEASE_VERSION through envFrom. This value is a release label, not a hash of the deployed bytes. The container reads environment variables when it starts. Editing the ConfigMap does not change the environment of an already running process."
+            "A ConfigMap stores non-confidential configuration outside the container image. The kit injects `RELEASE_VERSION` through `envFrom`. This value is a release label, not a hash of the deployed bytes. The container reads environment variables when it starts. Editing the ConfigMap does not change the environment of an already running process."
           ]
         },
         {
           "title": "Mounted files and process reload",
           "paragraphs": [
-            "Mounted configuration files have different update behavior and applications still must reload them appropriately; subPath mounts do not receive normal ConfigMap updates. Avoid assuming every configuration delivery method has the same lifecycle. Record config revision with the release image."
+            "Mounted configuration files have different update behavior and applications still must reload them appropriately; `subPath` mounts do not receive normal ConfigMap updates. Avoid assuming every configuration delivery method has the same lifecycle. Record config revision with the release image."
           ],
           "example": "release-config: RELEASE_VERSION=v1\nPod environment captures v1 at startup\nConfigMap becomes v2 → existing process still reports v1\nControlled rollout creates new Pods with new environment."
         }
@@ -601,7 +601,7 @@
           "title": "Follow one failing Pod into the Service endpoints",
           "paragraphs": [
             "Two replicas are Ready. Creating /tmp/not-ready in one replica makes /ready return 503 while /live still returns 200. The kubelet eventually marks that Pod unready; the EndpointSlice controller updates its ready condition. The Pod can remain Running with the same UID and restart count. Traffic selection changes because readiness changed, not because the process died.",
-            "Run the optional readiness_drill.py only after the existing kind lab is healthy. It guards the named loopback context and namespace ownership, changes one Pod, checks its EndpointSlice and restores its gate in finally. Transitions are asynchronous, so it polls conditions with deadlines rather than assuming an immediate update. A long-lived connection already attached to the Pod is a separate boundary; endpoint readiness is not proof that every existing connection vanished."
+            "Run the optional `readiness_drill.py` only after the existing kind lab is healthy. It guards the named loopback context and namespace ownership, changes one Pod, checks its EndpointSlice and restores its gate in `finally`. Transitions are asynchronous, so it polls conditions with deadlines rather than assuming an immediate update. A long-lived connection already attached to the Pod is a separate boundary; endpoint readiness is not proof that every existing connection vanished."
           ],
           "example": "before: Ready=True, restartCount=N\ngate present: Ready=False, endpoint.ready=False, restartCount=N\ngate removed: Ready=True, restartCount=N",
           "exampleFormat": "prose"
@@ -694,7 +694,7 @@
         {
           "title": "Rollout capacity and deadlines",
           "paragraphs": [
-            "A Deployment rollout changes the Pod template, creates a new ReplicaSet and transitions availability according to maxSurge/maxUnavailable. For two replicas, the kit sets maxSurge to 1 and maxUnavailable to 0. This requires spare capacity for a third replica during rollout. A progress deadline signals a stalled rollout but does not automatically undo it. Application/data compatibility remains a separate release gate."
+            "A Deployment rollout changes the Pod template, creates a new ReplicaSet and transitions availability according to `maxSurge`/`maxUnavailable`. For two replicas, the kit sets `maxSurge` to 1 and `maxUnavailable` to 0. This requires spare capacity for a third replica during rollout. A progress deadline signals a stalled rollout but does not automatically undo it. Application/data compatibility remains a separate release gate."
           ]
         },
         {
@@ -792,7 +792,7 @@
         {
           "title": "Traffic policy and enforcement",
           "paragraphs": [
-            "NetworkPolicy selects Pods and declares allowed ingress/egress connections. A policy object can be accepted without enforcement if the cluster network plugin does not implement it. The optional lab policy isolates ingress to app=release-demo and permits port 8080 only from same-namespace app=notebook-client Pods. Baseline kind networking does not by itself establish policy enforcement."
+            "NetworkPolicy selects Pods and declares allowed ingress/egress connections. A policy object can be accepted without enforcement if the cluster network plugin does not implement it. The optional lab policy isolates ingress to `app=release-demo` and permits port 8080 only from same-namespace `app=notebook-client` Pods. Baseline kind networking does not by itself establish policy enforcement."
           ]
         },
         {
@@ -847,7 +847,7 @@
         {
           "title": "Impersonation and denied operations",
           "paragraphs": [
-            "Impersonation-based kubectl auth can-i checks require an identity allowed to impersonate and do not prove the application identity provider. Avoid broad wildcards and unintended escalation through workload creation. Explicitly verify a permitted read and a denied secret/mutation operation in the dedicated local namespace."
+            "Impersonation-based `kubectl auth can-i` checks require an identity allowed to impersonate and do not prove the application identity provider. Avoid broad wildcards and unintended escalation through workload creation. Explicitly verify a permitted read and a denied secret/mutation operation in the dedicated local namespace."
           ],
           "example": "viewer ServiceAccount → RoleBinding → pod-viewer Role\nAllowed: get/list/watch pods and pods/log\nNot granted: read secrets, create Pods, mutating Deployments"
         }
@@ -890,13 +890,13 @@
         {
           "title": "Process privileges and filesystems",
           "paragraphs": [
-            "Pod security settings restrict process privileges and filesystem capabilities. The baseline runs as non-root user 10001, disables privilege escalation, drops Linux capabilities, uses RuntimeDefault seccomp and a read-only root filesystem. A writable emptyDir at /tmp supports this application. The namespace requests restricted Pod Security admission at v1.34, independently of the application configuration."
+            "Pod security settings restrict process privileges and filesystem capabilities. The baseline runs as non-root user 10001, disables privilege escalation, drops Linux capabilities, uses `RuntimeDefault` seccomp and a read-only root filesystem. A writable `emptyDir` at `/tmp` supports this application. The namespace requests restricted Pod Security admission at v1.34, independently of the application configuration."
           ]
         },
         {
           "title": "Admission versus runtime evidence",
           "paragraphs": [
-            "Admission controls decide whether the Pod specification is allowed; they do not prove the base image has no vulnerabilities or that business authorization works. The baseline has no hostPath, privileged container or external load balancer. Read-only root needs compatible temp/cache/data paths and should be tested with the actual image."
+            "Admission controls decide whether the Pod specification is allowed; they do not prove the base image has no vulnerabilities or that business authorization works. The baseline has no `hostPath`, privileged container or external load balancer. Read-only root needs compatible temp/cache/data paths and should be tested with the actual image."
           ],
           "example": "USER 10001 + runAsNonRoot\nallowPrivilegeEscalation: false\ncapabilities drop ALL\nreadOnlyRootFilesystem: true\n/tmp is an explicit writable volume"
         }
@@ -945,7 +945,7 @@
         {
           "title": "Provisioning and driver permissions",
           "paragraphs": [
-            "Provisioning may wait for first consumer or stay Pending if no default StorageClass exists. A PVC with local-node backing is not multi-node failover or an off-node backup. fsGroup support and ownership depend on the driver; inspect events if the non-root writer cannot open /data."
+            "Provisioning may wait for first consumer or stay `Pending` if no default StorageClass exists. A PVC with local-node backing is not multi-node failover or an off-node backup. `fsGroup` support and ownership depend on the driver; inspect events if the non-root writer cannot open `/data`."
           ],
           "example": "storage.json → PVC lab-data +Pod storage-demo\nDelete storage-demo only → reapply → same message if storage remains\nDelete namespace/PVC → data may be deleted by reclaim policy"
         }
@@ -988,7 +988,7 @@
         {
           "title": "Finite work and retry bounds",
           "paragraphs": [
-            "A Job manages work intended to finish, unlike a continuously serving Deployment. Set completion behavior, retry bounds and a deadline. The lab Job requests /version through Service DNS, prints the result and exits; backoffLimit 1 and activeDeadlineSeconds 60 bound retries/time. Jobs can still run work more than once due to failure/replacement, so external effects require idempotency."
+            "A Job manages work intended to finish, unlike a continuously serving Deployment. Set completion behavior, retry bounds and a deadline. The lab Job requests `/version` through Service DNS, prints the result and exits; `backoffLimit` 1 and `activeDeadlineSeconds` 60 bound retries/time. Jobs can still run work more than once due to failure/replacement, so external effects require idempotency."
           ]
         },
         {
@@ -1086,7 +1086,7 @@
         {
           "title": "Voluntary eviction budgets",
           "paragraphs": [
-            "PodDisruptionBudget limits certain voluntary evictions based on healthy availability. With two replicas and minAvailable 1, an eviction request should retain at least one healthy instance when the mechanism applies. It does not prevent node crashes, application failures or all update actions. The optional policy/v1 manifest selects the same app labels as the Deployment."
+            "PodDisruptionBudget limits certain voluntary evictions based on healthy availability. With two replicas and `minAvailable` 1, an eviction request should retain at least one healthy instance when the mechanism applies. It does not prevent node crashes, application failures or all update actions. The optional `policy/v1` manifest selects the same app labels as the Deployment."
           ]
         },
         {
@@ -1141,7 +1141,7 @@
         {
           "title": "Review before local installation",
           "paragraphs": [
-            "Pin a compatible Helm version, review actual generated defaults and compare the rendered workload with the known lab contract. No helm install command is required for offline study. If enabling the chart in the local cluster, preserve explicit context/namespace gates and local image settings; a default chart may select a different public image."
+            "Pin a compatible Helm version, review actual generated defaults and compare the rendered workload with the known lab contract. No `helm install` command is required for offline study. If enabling the chart in the local cluster, preserve explicit context/namespace gates and local image settings; a default chart may select a different public image."
           ],
           "example": "helm create lab-chart\n# Review generated Service, Deployment, values and remove unneeded defaults.\nhelm lint ./lab-chart\nhelm template release-demo ./lab-chart --namespace notebook-lab > rendered.yaml"
         }
@@ -1239,7 +1239,7 @@
         {
           "title": "Missing images and debug privilege",
           "paragraphs": [
-            "ImagePullBackOff, CrashLoopBackOff and Pending indicate different stages, not interchangeable root causes. The kit imagePullPolicy Never intentionally fails if the named local image was not loaded onto kind nodes. A debug container or exec session is a separate privileged effect; use only the dedicated local lab."
+            "`ImagePullBackOff`, `CrashLoopBackOff` and `Pending` indicate different stages, not interchangeable root causes. The kit's `imagePullPolicy` of `Never` intentionally fails if the named local image was not loaded onto kind nodes. A debug container or exec session is a separate privileged effect; use only the dedicated local lab."
           ],
           "example": "kubectl --context=kind-notebook-lab -n notebook-lab describe pod NAME\nkubectl --context=kind-notebook-lab -n notebook-lab logs NAME --previous\nkubectl --context=kind-notebook-lab -n notebook-lab get endpointslices\n# Use actual object names and check their readiness conditions."
         },
@@ -1247,7 +1247,7 @@
           "title": "The order of checks changes the diagnosis",
           "paragraphs": [
             "A user sees a connection failure. First inspect the Deployment and Pods: no scheduled Pod makes application HTTP logs irrelevant. If the Pod is Running, inspect Ready and EndpointSlices. If the endpoint is absent or unready, investigate selectors and probes before DNS. If a ready endpoint exists, compare a request to the Pod with a request through the Service; this separates application behavior from routing.",
-            "In the supplied workload imagePullPolicy=Never requires the image on each node that can host the Pod. ErrImageNeverPull can therefore affect one replica after rescheduling even if its sibling works. Increasing probe delays cannot load an image. Likewise, a readiness 503 cannot be corrected by repeatedly deleting Pods when every replacement receives the same broken configuration."
+            "In the supplied workload `imagePullPolicy=Never` requires the image on each node that can host the Pod. `ErrImageNeverPull` can therefore affect one replica after rescheduling even if its sibling works. Increasing probe delays cannot load an image. Likewise, a readiness 503 cannot be corrected by repeatedly deleting Pods when every replacement receives the same broken configuration."
           ],
           "example": "Pending -> scheduling conditions/events\nErrImageNeverPull -> local image on selected node\nRunning + Ready=False -> probe/app readiness\nReady=True + no matching endpoints -> Service selector\nReady endpoint + failed request -> traffic/app boundary",
           "exampleFormat": "prose"

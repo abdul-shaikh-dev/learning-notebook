@@ -356,8 +356,8 @@
         {
           "title": "The mechanism",
           "paragraphs": [
-            "Start at the __main__ block, find argument parsing, then follow the input filename into the reader and summary calculation. Note which functions perform I/O and which merely transform values. This gives you a concrete place to insert a test or a new option. Reading every helper alphabetically hides the actual execution order.",
-            "Trace one record through each branch. In legacy_report.py, int converts the minutes text before the if condition checks truthiness. The number zero is false, so the append is skipped. The CSV parser did not lose the row. Locating that branch explains the failure and limits the required change."
+            "Start at the `__main__` block, find argument parsing, then follow the input filename into the reader and summary calculation. Note which functions perform I/O and which merely transform values. This gives you a concrete place to insert a test or a new option. Reading every helper alphabetically hides the actual execution order.",
+            "Trace one record through each branch. In `legacy_report.py`, `int` converts the `minutes` text before the `if` condition checks truthiness. The number zero is false, so the `append` is skipped. The CSV parser did not lose the row. Locating that branch explains the failure and limits the required change."
           ]
         },
         {
@@ -406,7 +406,7 @@
           "title": "The mechanism",
           "paragraphs": [
             "Before changing the tool, capture stable behavior such as the default JSON field names and the total for positive-minute records. These checks protect callers even when the internal code is reorganized. Label the known zero-count defect separately instead of turning its observed output into the desired permanent contract.",
-            "A test can be useful even when the original requirement is missing, but its authority is limited. If an existing behavior conflicts with an agreed acceptance example, resolve that conflict explicitly. Here the new requirement deliberately corrects count while preserving total_minutes and the default all-status selection."
+            "A test can be useful even when the original requirement is missing, but its authority is limited. If an existing behavior conflicts with an agreed acceptance example, resolve that conflict explicitly. Here the new requirement deliberately corrects `count` while preserving `total_minutes` and the default all-status selection."
           ]
         },
         {
@@ -553,7 +553,7 @@
           "title": "The mechanism",
           "paragraphs": [
             "The new tool accepts the exact header line \"id,status,minutes\". IDs are nonblank and unique; statuses are open, closed or cancelled; minutes are ASCII whole numbers from 0 to 1440. These choices make the teaching contract explicit. Another product might allow extra columns or decimal minutes, but it needs different examples and tests.",
-            "Validate every row before applying --status. Otherwise a malformed closed record disappears when the user asks for open tickets and the report appears trustworthy. The same input should not change from invalid to valid because of a display filter. Include line numbers in errors so the user can locate the problem without echoing an entire record."
+            "Validate every row before applying `--status`. Otherwise a malformed closed record disappears when the user asks for open tickets and the report appears trustworthy. The same input should not change from invalid to valid because of a display filter. Include line numbers in errors so the user can locate the problem without echoing an entire record."
           ]
         },
         {
@@ -700,7 +700,7 @@
           "title": "The mechanism",
           "paragraphs": [
             "A script may be called by another script that parses stdout as JSON. Adding a friendly progress message to stdout can break that caller even though a human still understands the screen. Send diagnostics to stderr and keep successful default stdout to one JSON object. Test through a subprocess when checking those stream boundaries.",
-            "The optional --status argument narrows the selection; omitting it still includes every status. An invalid choice fails before reading the file. The lab uses exit 2 for input and file errors. Define the --output behavior separately: it writes the JSON file and leaves stdout empty on success, so the default caller remains unchanged."
+            "The optional `--status` argument narrows the selection; omitting it still includes every status. An invalid choice fails before reading the file. The lab uses exit 2 for input and file errors. Define the `--output` behavior separately: it writes the JSON file and leaves `stdout` empty on success, so the default caller remains unchanged."
           ]
         },
         {
@@ -797,7 +797,7 @@
         {
           "title": "The mechanism",
           "paragraphs": [
-            "Implement the intermediate project in a copy of legacy_report.py or in your own report.py. Keep the sample input unchanged. Add strict validation, correct counting and an optional status filter. Use the acceptance examples to decide expected values before looking at the reference implementation.",
+            "Implement the intermediate project in a copy of `legacy_report.py` or in your own `report.py`. Keep the sample input unchanged. Add strict validation, correct counting and an optional status filter. Use the acceptance examples to decide expected values before looking at the reference implementation.",
             "Run unit checks for selection and subprocess checks for the command. Report what you actually ran, including the zero-minute and invalid-filter cases. The supplied reference suite checks the reference module by default; point your own tests at your attempted implementation to demonstrate your work."
           ]
         },
@@ -895,7 +895,7 @@
         {
           "title": "The mechanism",
           "paragraphs": [
-            "When a failure appeared recently, find one known good revision and one known bad revision. In a disposable clone, git bisect repeatedly chooses a revision for you to classify with the same reproduction. Keep the test command and environment fixed. A build failure unrelated to the target behavior cannot be treated as evidence that the regression is present.",
+            "When a failure appeared recently, find one known good revision and one known bad revision. In a disposable clone, `git bisect` repeatedly chooses a revision for you to classify with the same reproduction. Keep the test command and environment fixed. A build failure unrelated to the target behavior cannot be treated as evidence that the regression is present.",
             "After finding the first bad revision, inspect its diff and rerun the minimal example. The result narrows where behavior changed; it does not prove which line or assumption caused it. End the bisect session before doing normal development. This optional drill should never reset or rewrite your main working copy."
           ]
         },
@@ -944,7 +944,7 @@
         {
           "title": "The mechanism",
           "paragraphs": [
-            "Suppose a future request renames total_minutes to minutes. A person reading the report may see no difference, but a script indexing the old key will fail. List known consumers and test their assumptions. Consider keeping an old field temporarily, publishing a new interface or coordinating a migration instead of silently changing the output.",
+            "Suppose a future request renames `total_minutes` to `minutes`. A person reading the report may see no difference, but a script indexing the old key will fail. List known consumers and test their assumptions. Consider keeping an old field temporarily, publishing a new interface or coordinating a migration instead of silently changing the output.",
             "A version number communicates a compatibility decision only when the project has a declared policy. Semantic Versioning relates major, minor and patch changes to a defined public API. It does not discover callers for you or make a breaking change harmless. This exercise leaves the current key unchanged and asks you to plan the hypothetical migration separately."
           ]
         },
@@ -1142,7 +1142,7 @@
         {
           "title": "The mechanism",
           "paragraphs": [
-            "Complete the advanced project by adding --output without breaking the default command. Demonstrate validation failure, successful replacement and a simulated replacement error. Include the no-match and zero-minute cases. Keep your handoff short enough for a maintainer to understand which contract changed and why.",
+            "Complete the advanced project by adding `--output` without breaking the default command. Demonstrate validation failure, successful replacement and a simulated replacement error. Include the no-match and zero-minute cases. Keep your handoff short enough for a maintainer to understand which contract changed and why.",
             "Explain limits in concrete terms. The reference assumes a small trusted local input and a single writer; it does not provide a multi-user service or power-loss recovery. Link each claim to a command or test you ran. If you only read a reference solution, record that honestly and attempt a changed case before treating the skill as demonstrated."
           ]
         },

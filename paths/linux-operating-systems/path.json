@@ -158,13 +158,13 @@
         {
           "title": "Absolute and relative paths",
           "paragraphs": [
-            "An absolute Linux path starts at /. A relative path starts at the process working directory. The home directory is a user-specific location; ~ is expanded by the shell. Case matters on typical Linux filesystems, so Report.csv and report.csv may be different names."
+            "An absolute Linux path starts at `/`. A relative path starts at the process working directory. The home directory is a user-specific location; `~` is expanded by the shell. Case matters on typical Linux filesystems, so `Report.csv` and `report.csv` may be different names."
           ]
         },
         {
           "title": "A service launched from /",
           "paragraphs": [
-            "A service launched from / reads ./data.csv there, even if the script is stored in /home/learner/app. Locate both the working directory and the configured data path before changing code. .. moves to the parent; . names the current directory."
+            "A service launched from `/` reads `./data.csv` there, even if the script is stored in `/home/learner/app`. Locate both the working directory and the configured data path before changing code. `..` moves to the parent; `.` names the current directory."
           ],
           "example": "pwd\nmkdir -p notebook-lab/input\ncd notebook-lab\nprintf \"id,name\\n1,Asha\\n\" > input/sample.csv\nls -l input\n# All changes stay in notebook-lab."
         },
@@ -219,7 +219,7 @@
         {
           "title": "Comparing a backup copy",
           "paragraphs": [
-            "Copy the sample into backup.csv, compare the files and verify both exist before experimenting. A backup in the same filesystem helps against accidental edits but does not protect against a lost disk or corrupted account."
+            "Copy the sample into `backup.csv`, compare the files and verify both exist before experimenting. A backup in the same filesystem helps against accidental edits but does not protect against a lost disk or corrupted account."
           ],
           "example": "cp input/sample.csv backup.csv\ncat backup.csv\nwc -l backup.csv\n# Expect 2 lines; inspect with ls before any removal."
         },
@@ -274,7 +274,7 @@
         {
           "title": "A filename containing spaces",
           "paragraphs": [
-            "The filename quarterly report.csv contains a space. An unquoted variable can become two arguments; a quoted variable supplies one. A subprocess argument list avoids shell parsing altogether and is a better default for application code."
+            "The filename `quarterly report.csv` contains a space. An unquoted variable can become two arguments; a quoted variable supplies one. A subprocess argument list avoids shell parsing altogether and is a better default for application code."
           ],
           "example": "name=\"quarterly report.csv\"\nprintf \"%s\\n\" \"$name\"\n# One line containing the complete name.\n# Application equivalent: subprocess.run([\"tool\", name], shell=False)"
         },
@@ -343,7 +343,7 @@
         {
           "title": "Pipeline status and parsers",
           "paragraphs": [
-            "Bash pipeline status normally follows the last command. set -o pipefail changes that rule. Binary data and CSV quoting require suitable parsers; a simple grep pipeline is not a CSV importer."
+            "Bash pipeline status normally follows the last command. `set -o pipefail` changes that rule. Binary data and CSV quoting require suitable parsers; a simple `grep` pipeline is not a CSV importer."
           ]
         }
       ],
@@ -585,7 +585,7 @@
         {
           "title": "Successful and timed-out children",
           "paragraphs": [
-            "Run a child that prints 42 and then a child that sleeps. The supplied portable lab uses subprocess.run with a timeout and tests the resulting TimeoutExpired. It launches only the current Python interpreter and never scans or kills unrelated processes."
+            "Run a child that prints 42 and then a child that sleeps. The supplied portable lab uses `subprocess.run` with a timeout and tests the resulting `TimeoutExpired`. It launches only the current Python interpreter and never scans or kills unrelated processes."
           ],
           "example": "import subprocess, sys\nresult = subprocess.run([sys.executable, \"-c\", \"print(42)\"],\n                        capture_output=True, text=True, timeout=2)\nprint(result.returncode, result.stdout.strip())\n# Expected: 0 42"
         },
@@ -598,7 +598,7 @@
         {
           "title": "Inspect one trusted child first",
           "paragraphs": [
-            "The returned CompletedProcess keeps returncode, stdout and stderr separate. A nonzero child status does not raise automatically with the default check=False. A timeout raises TimeoutExpired instead of returning a normal completion. Start with these two observable outcomes before designing a supervisor for descendants."
+            "The returned `CompletedProcess` keeps `returncode`, `stdout` and `stderr` separate. A nonzero child status does not raise automatically with the default `check=False`. A timeout raises `TimeoutExpired` instead of returning a normal completion. Start with these two observable outcomes before designing a supervisor for descendants."
           ]
         }
       ],
@@ -763,7 +763,7 @@
         {
           "title": "A lost increment",
           "paragraphs": [
-            "Two workers both read count=5 and both write 6. One increment is lost. A lock around the full read-modify-write operation can prevent this race within a process. Separate processes need coordination that they can both access; an in-process lock cannot coordinate them."
+            "Two workers both read `count=5` and both write 6. One increment is lost. A lock around the full read-modify-write operation can prevent this race within a process. Separate processes need coordination that they can both access; an in-process lock cannot coordinate them."
           ],
           "example": "# Conceptual interleaving, not runnable code:\nworker A: read 5\nworker B: read 5\nworker A: write 6\nworker B: write 6\n# Intended total: 7; observed total: 6"
         },
@@ -832,7 +832,7 @@
           "title": "Observe EMFILE without changing the shell limit",
           "paragraphs": [
             "A process can run out of descriptors even when disk space and memory remain available. EMFILE names the per-process descriptor boundary; ENFILE is a different system-wide open-file-table boundary. Repeatedly reopening a harmless file such as /dev/null can demonstrate exhaustion without corrupting its content. Raising a limit merely moves the failure if handles still accumulate.",
-            "The optional linux_fd_drill.py starts a child with a small RLIMIT_NOFILE, opens descriptors until Linux returns EMFILE, closes every opened descriptor in finally, and proves a new open succeeds. The parent and shell limits are untouched. /proc/self/fd counts can include the directory handle used to inspect them, so compare observations made in the same way instead of expecting an absolute number across machines."
+            "The optional `linux_fd_drill.py` starts a child with a small `RLIMIT_NOFILE`, opens descriptors until Linux returns `EMFILE`, closes every opened descriptor in `finally`, and proves a new open succeeds. The parent and shell limits are untouched. `/proc/self/fd` counts can include the directory handle used to inspect them, so compare observations made in the same way instead of expecting an absolute number across machines."
           ],
           "example": "child only: soft RLIMIT_NOFILE=32\nrepeated open -> OSError(errno.EMFILE)\nclose owned descriptors -> count returns to baseline\nnew open -> succeeds",
           "exampleFormat": "prose"
@@ -1316,7 +1316,7 @@
         {
           "title": "Locating a missing data.csv",
           "paragraphs": [
-            "If a service fails to open data.csv, compare working directory, absolute input path, identity and parent traversal. If it opens but rejects a row, inspect the schema error rather than changing OS permissions. The supplied diagnostic fixture models these categories portably."
+            "If a service fails to open `data.csv`, compare working directory, absolute input path, identity and parent traversal. If it opens but rejects a row, inspect the schema error rather than changing OS permissions. The supplied diagnostic fixture models these categories portably."
           ],
           "example": "python diagnostic_lab.py\n# Expected: path -> configuration; permission -> access;\n# timeout -> lifecycle; bad-row -> application validation."
         },

@@ -467,7 +467,7 @@
         {
           "title": "Optional generated parser cases",
           "paragraphs": [
-            "Run python -m unittest test_parser_properties.py. Seeded generated strings preserve valid final actions; adding any extra field must reject. Boundary fixtures reject invalid text. This finite generated suite is reproducible regression evidence, not exhaustive fuzzing or a property-testing engine; optionally port the invariant to Hypothesis and record its seed and shrinking counterexample."
+            "Run `python -m unittest test_parser_properties.py`. Seeded generated strings preserve valid final actions; adding any extra field must reject. Boundary fixtures reject invalid text. This finite generated suite is reproducible regression evidence, not exhaustive fuzzing or a property-testing engine; optionally port the invariant to Hypothesis and record its seed and shrinking counterexample."
           ]
         }
       ],
@@ -510,7 +510,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "Authorization asks whether this authenticated subject may perform this operation on this resource under the current task. The host supplies identity and scopes; the model supplies only proposed business arguments. In our fake notebook, read_lesson is limited to configured IDs and save_note writes only under the host subject. Approval can add a required confirmation step, but cannot override a policy denial."
+            "Authorization asks whether this authenticated subject may perform this operation on this resource under the current task. The host supplies identity and scopes; the model supplies only proposed business arguments. In our fake notebook, `read_lesson` is limited to configured IDs and `save_note` writes only under the host subject. Approval can add a required confirmation step, but cannot override a policy denial."
           ]
         },
         {
@@ -698,7 +698,7 @@
         {
           "title": "Example",
           "paragraphs": [
-            "Our workshop runtime pauses before save_note, exposes a fingerprint for the host UI and revalidates the proposal before dispatch."
+            "Our workshop runtime pauses before `save_note`, exposes a fingerprint for the host UI and revalidates the proposal before dispatch."
           ],
           "example": "Pending: save_note(L1, \"Review indexes\")\nFingerprint includes run + subject + call ID + tool + args\nHost approves that pending fingerprint\nRecheck current policy and exact arguments\nChanged text or destination → reject stale approval\nOne successful dispatch consumes the approval."
         },
@@ -1012,20 +1012,20 @@
           "title": "Tradeoffs",
           "paragraphs": [
             "Validation is not tamper resistance. A caller able to forge trusted state can alter counters unless storage integrity is enforced elsewhere. In production, an approval may be a separately persisted, authenticated record with expiry; the workshop runtime discards it. Do not deserialize executable objects from untrusted input or infer policy from model-authored checkpoint text.",
-            "The workshop writes version 2 checkpoints with validated final text and stop reason. Version 1 completed results recover their answer from the verified final script action; version 1 stopped results use legacy_checkpoint_reason_unavailable because the original reason was not stored. Migration never invents a missing historical failure cause or grants approval."
+            "The workshop writes version 2 checkpoints with validated final text and stop reason. Version 1 completed results recover their answer from the verified final script action; version 1 stopped results use `legacy_checkpoint_reason_unavailable` because the original reason was not stored. Migration never invents a missing historical failure cause or grants approval."
           ]
         },
         {
           "title": "Optional durable adapter exercise",
           "paragraphs": [
-            "Run python -m unittest test_durable_state.py from practice. durable_state.py saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
+            "Run `python -m unittest test_durable_state.py` from practice. `durable_state.py` saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
           ]
         },
         {
           "title": "Locate the crash between two commits",
           "paragraphs": [
             "Walk through a save in four moments: the checkpoint says waiting; the user approves; the effect store commits the note and receipt; the checkpoint records completion. A crash after the third moment leaves durable business state ahead of durable run state. Resuming by blindly repeating the action risks duplication. Restoring only the checkpoint does not reconstruct what the effect store already did.",
-            "Open persisted-run-lab.md and run its crash-before-checkpoint case. Predict the note count, checkpoint status and receipt lookup before reading the assertions. Recovery asks the effect store about the same operation identity, then updates the run. Change the payload while retaining that identity: the receipt fingerprint must reject it rather than treating it as the original request.",
+            "Open `persisted-run-lab.md` and run its crash-before-checkpoint case. Predict the note count, checkpoint status and receipt lookup before reading the assertions. Recovery asks the effect store about the same operation identity, then updates the run. Change the payload while retaining that identity: the receipt fingerprint must reject it rather than treating it as the original request.",
             "For a changed case, crash before the effect commits. Recovery finds no local receipt and keeps the approval boundary. Absence is authoritative here because the local effect and receipt share a transaction; an external service with delayed lookup would require a different unknown-outcome policy."
           ]
         },
@@ -1349,15 +1349,15 @@
         {
           "title": "Optional durable adapter exercise",
           "paragraphs": [
-            "Run python -m unittest test_durable_state.py from practice. durable_state.py saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
+            "Run `python -m unittest test_durable_state.py` from practice. `durable_state.py` saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
           ]
         },
         {
           "title": "A version conflict is a useful outcome",
           "paragraphs": [
-            "Workers A and B both load checkpoint version 7. A saves version 8; B attempts to save its independently edited version 8. An unconditional UPDATE loses A's state. Compare-and-swap uses WHERE version = 7 and checks the affected-row count. Exactly one writer wins, and the loser reloads before making another decision.",
-            "A state-store version prevents stale checkpoint replacement but does not automatically fence an external side effect. B might have already called a tool before its save failed. Separate the right to own a run from the right to execute each operation, and ensure the effect boundary understands the operation identity. Read the SQL in durable_state.py and add a second connection that attempts the stale save.",
-            "Use the owner_version_lab.py exercise to observe this through two independent SQLite connections. It tests stale-save rejection and retained winning state. Extend it by retrying from a fresh read; do not change the expected version until after reading the winner."
+            "Workers A and B both load checkpoint version 7. A saves version 8; B attempts to save its independently edited version 8. An unconditional `UPDATE` loses A's state. Compare-and-swap uses `WHERE version = 7` and checks the affected-row count. Exactly one writer wins, and the loser reloads before making another decision.",
+            "A state-store version prevents stale checkpoint replacement but does not automatically fence an external side effect. B might have already called a tool before its save failed. Separate the right to own a run from the right to execute each operation, and ensure the effect boundary understands the operation identity. Read the SQL in `durable_state.py` and add a second connection that attempts the stale save.",
+            "Use the `owner_version_lab.py` exercise to observe this through two independent SQLite connections. It tests stale-save rejection and retained winning state. Extend it by retrying from a fresh read; do not change the expected version until after reading the winner."
           ]
         }
       ],
@@ -1428,7 +1428,7 @@
           "title": "Tradeoffs",
           "paragraphs": [
             "Exact model regeneration may differ because sampling, provider behavior or dependencies changed. Keep replay claims narrow: deterministic application logic can be replayed when its inputs and versions are fixed. Old authorization does not necessarily remain valid today. A migration must account for pending actions, changed argument meanings and idempotency scope, not only rename JSON fields.",
-            "Run persisted-run-lab.md and test_persisted_run_lab.py to recover a SQLite-backed checkpoint and effect after a lost reply or a crash before the uncertain checkpoint is saved; keep the single-host boundary explicit."
+            "Run `persisted-run-lab.md` and `test_persisted_run_lab.py` to recover a SQLite-backed checkpoint and effect after a lost reply or a crash before the uncertain checkpoint is saved; keep the single-host boundary explicit."
           ]
         }
       ],
@@ -1722,13 +1722,13 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "Replacing mocks with real adapters changes the risk boundary. Revisit authentication, transaction behavior, network timeouts, retry layers, receipt lookup, rate limits, isolation and retention. Renaming FakeStore to ProductionStore does not add those controls. In an architecture decision record, describe the next adapter to add and a test that would expose a failure in its contract."
+            "Replacing mocks with real adapters changes the risk boundary. Revisit authentication, transaction behavior, network timeouts, retry layers, receipt lookup, rate limits, isolation and retention. Renaming `FakeStore` to `ProductionStore` does not add those controls. In an architecture decision record, describe the next adapter to add and a test that would expose a failure in its contract."
           ]
         },
         {
           "title": "Optional durable adapter exercise",
           "paragraphs": [
-            "Run python -m unittest test_durable_state.py from practice. durable_state.py saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
+            "Run `python -m unittest test_durable_state.py` from practice. `durable_state.py` saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
           ]
         }
       ],

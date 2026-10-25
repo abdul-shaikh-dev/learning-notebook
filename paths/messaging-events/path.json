@@ -72,13 +72,13 @@
         {
           "title": "Commands, events and completion",
           "paragraphs": [
-            "A message is a transported payload. A command requests an action, such as GenerateExport, and needs an owner that can accept or reject it. An event reports something that already happened, such as ExportRequested. Event naming in past tense helps avoid confusing publication with completion. Asynchronous means sender and receiver can progress at different times; it does not mean work has succeeded."
+            "A message is a transported payload. A command requests an action, such as `GenerateExport`, and needs an owner that can accept or reject it. An event reports something that already happened, such as `ExportRequested`. Event naming in past tense helps avoid confusing publication with completion. Asynchronous means sender and receiver can progress at different times; it does not mean work has succeeded."
           ]
         },
         {
           "title": "Accepted versus ready",
           "paragraphs": [
-            "Our notebook export example accepts a job, records its identifier, and later produces a file. ExportRequested and ExportCompleted are different facts. The UI can show Accepted while an export remains pending; it must not display Download ready merely because a broker accepted a payload."
+            "Our notebook export example accepts a job, records its identifier, and later produces a file. `ExportRequested` and `ExportCompleted` are different facts. The UI can show Accepted while an export remains pending; it must not display Download ready merely because a broker accepted a payload."
           ]
         }
       ],
@@ -133,7 +133,7 @@
         {
           "title": "Worker and subscriber counts",
           "paragraphs": [
-            "Ten export jobs and two competing workers should yield ten completed jobs overall, not twenty. An audit subscription and a notification subscription each need their own copy of ExportCompleted. A reporting consumer on a retained log can rebuild its view from earlier records; a removed work-queue message cannot normally be replayed that way."
+            "Ten export jobs and two competing workers should yield ten completed jobs overall, not twenty. An audit subscription and a notification subscription each need their own copy of `ExportCompleted`. A reporting consumer on a retained log can rebuild its view from earlier records; a removed work-queue message cannot normally be replayed that way."
           ]
         }
       ],
@@ -195,15 +195,15 @@
         {
           "title": "Duplicate delivery of e-17",
           "paragraphs": [
-            "A delivery of event e-17 concerning job j-4 can arrive twice. Deduplicating by e-17 avoids repeating its effect. Deduplicating all job j-4 events would accidentally discard ExportCompleted after ExportRequested. Timestamps aid investigation, but clock skew means they are not a universal ordering authority.",
-            "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
+            "A delivery of event e-17 concerning job j-4 can arrive twice. Deduplicating by e-17 avoids repeating its effect. Deduplicating all job j-4 events would accidentally discard `ExportCompleted` after `ExportRequested`. Timestamps aid investigation, but clock skew means they are not a universal ordering authority.",
+            "Run Python snippets from the extracted practice folder with `event_lab.py` present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
           ],
           "example": "{\n  \"id\": \"e-17\",\n  \"job_id\": \"j-4\",\n  \"type\": \"ExportRequested\",\n  \"version\": 1,\n  \"value\": 7\n}"
         },
         {
           "title": "Keep the sample envelope and the design distinct",
           "paragraphs": [
-            "The JSON below is the small executable lab contract. It contains id, job_id, type, version and value only. The earlier discussion names additional production metadata; do not add those fields to the strict v1 parser and expect it to accept them. In the foundation sketch, write correlation and occurrence time beside the event. Lesson 14 explains how to introduce them as a versioned contract change.",
+            "The JSON below is the small executable lab contract. It contains `id`, `job_id`, `type`, `version` and `value` only. The earlier discussion names additional production metadata; do not add those fields to the strict v1 parser and expect it to accept them. In the foundation sketch, write correlation and occurrence time beside the event. Lesson 14 explains how to introduce them as a versioned contract change.",
             "The lab assumes event IDs are unique across its single event source. CloudEvents identifies an event by source plus id, so a multi-source inbox must preserve that source scope or use a documented globally unique ID policy."
           ]
         }
@@ -390,8 +390,8 @@
           "title": "Reproduce the commit-to-ack gap against a broker",
           "paragraphs": [
             "An event adds 7 to a balance. The consumer inserts event-1 into its inbox and updates the balance in one transaction, then its channel closes before acknowledgement. RabbitMQ redelivers the unacknowledged delivery. On replay the inbox key already exists, so the transaction skips the balance increment and the consumer acknowledges on the new channel. The two deliveries share an application ID; their channel delivery tags need not match.",
-            "broker_ack_drill.py exercises that transport boundary with a real optional local RabbitMQ server. It closes the first connection deliberately and verifies redelivered plus balance=7 on the second. Its in-memory SQLite database stays alive in the same Python process, so the drill demonstrates channel loss, not process-crash persistence. The existing file-backed inbox tests address local durable state separately.",
-            "Read this as a transport preview now. Implement the inbox in lesson 9 before attempting mechanism-lab.md; the local foundation project needs no broker installation."
+            "`broker_ack_drill.py` exercises that transport boundary with a real optional local RabbitMQ server. It closes the first connection deliberately and verifies `redelivered` plus `balance=7` on the second. Its in-memory SQLite database stays alive in the same Python process, so the drill demonstrates channel loss, not process-crash persistence. The existing file-backed inbox tests address local durable state separately.",
+            "Read this as a transport preview now. Implement the inbox in lesson 9 before attempting `mechanism-lab.md`; the local foundation project needs no broker installation."
           ],
           "example": "first delivery: inbox inserts event-1; balance 0 -> 7; commit\nconnection closes before ack\nredelivery: inbox conflict; balance stays 7; ack on new channel",
           "exampleFormat": "prose"
@@ -503,7 +503,7 @@
         {
           "title": "Independent audit and notification",
           "paragraphs": [
-            "ExportCompleted feeds audit and notifications. If notifications are down, audit can continue because the subscriptions are independent. Adding two notification workers to that subscription improves throughput without duplicating its logical responsibility. A schema name should be stable even when service deployment names change."
+            "`ExportCompleted` feeds audit and notifications. If notifications are down, audit can continue because the subscriptions are independent. Adding two notification workers to that subscription improves throughput without duplicating its logical responsibility. A schema name should be stable even when service deployment names change."
           ]
         }
       ],
@@ -614,7 +614,7 @@
         {
           "title": "Relay retries after publication",
           "paragraphs": [
-            "create_job() inserts job j-4 and outbox event e-17 together. The relay can crash after sending but before marking sent, so it must retry and may duplicate publication. The outbox closes the local commit gap but does not remove the consumer duplicate problem."
+            "`create_job()` inserts job `j-4` and outbox event `e-17` together. The relay can crash after sending but before marking sent, so it must retry and may duplicate publication. The outbox closes the local commit gap but does not remove the consumer duplicate problem."
           ],
           "example": "from contextlib import closing\nfrom event_lab import connect, create_job, pending\n\nwith closing(connect(':memory:')) as db:\n    create_job(db, 'j-4', 'e-17', 7)\n    print(len(pending(db)))  # 1 committed pending event"
         },
@@ -838,7 +838,7 @@
         {
           "title": "An additive field and an ID change",
           "paragraphs": [
-            "Add display_name to ExportCompleted while retaining job_id and event_id. Old consumers should still work if their parser accepts additional fields. Changing job_id from a string to an integer can break deduplication and needs a deliberate migration, not just a new producer deployment."
+            "Add `display_name` to `ExportCompleted` while retaining `job_id` and `event_id`. Old consumers should still work if their parser accepts additional fields. Changing `job_id` from a string to an integer can break deduplication and needs a deliberate migration, not just a new producer deployment."
           ],
           "example": "from event_lab import validate\n\nevent = {'id': 'e-17', 'job_id': 'j-4',\n         'type': 'ExportRequested', 'version': 1, 'value': 7}\nprint(validate(event))  # canonical JSON for this local Python reference\n# validate(event | {'display_name': 'Example'}) raises ValueError:\n# the supplied v1 parser deliberately rejects unknown fields."
         }

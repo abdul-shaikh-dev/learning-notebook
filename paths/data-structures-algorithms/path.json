@@ -243,7 +243,7 @@
           "title": "Concept",
           "paragraphs": [
             "A stack models last-in-first-out behavior such as undo. A queue models first-in-first-out behavior such as requests awaiting service. Name both ends explicitly when tracing operations.",
-            "Python list append/pop work well for a stack. Use collections.deque for removing from the front of a queue; repeatedly using list.pop(0) adds shifting work."
+            "Python list `append`/`pop` work well for a stack. Use `collections.deque` for removing from the front of a queue; repeatedly using `list.pop(0)` adds shifting work."
           ],
           "example": "from collections import deque\nqueue = deque(['A', 'B'])\nqueue.append('C')\nprint(queue.popleft())  # A\nstack = ['A', 'B']\nprint(stack.pop())      # B"
         },
@@ -372,7 +372,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "Sorting enables grouped display, merging and efficient search. Python's sorted returns a new list; list.sort modifies the existing list. A key function expresses what should be compared.",
+            "Sorting enables grouped display, merging and efficient search. Python's `sorted` returns a new list; `list.sort` modifies the existing list. A key function expresses what should be compared.",
             "A stable sort preserves the prior order of items with equal keys. This helps when records have ties. For general comparison sorting, O(n log n) is a common efficient bound; simple insertion sort has O(n²) worst-case time."
           ],
           "example": "rows = [('SQL', 20), ('Python', 10), ('React', 20)]\nprint(sorted(rows, key=lambda row: row[1]))\n# [('Python', 10), ('SQL', 20), ('React', 20)]"
@@ -380,8 +380,8 @@
         {
           "title": "Read a key function and a tie-break",
           "paragraphs": [
-            "key receives a function, not its result. def duration(row): return row[1] and lambda row: row[1] express the same key here. sorted calls that function for each row and orders by its returned value.",
-            "A tuple key compares its first position first, then later positions only on ties. For (-priority, title), priority 3 gives -3 and sorts before priority 2 giving -2. Equal priorities then use title in ascending order. The original records are returned, not the key tuples."
+            "`key` receives a function, not its result. `def duration(row): return row[1]` and `lambda row: row[1]` express the same key here. `sorted` calls that function for each row and orders by its returned value.",
+            "A tuple key compares its first position first, then later positions only on ties. For `(-priority, title)`, priority 3 gives -3 and sorts before priority 2 giving -2. Equal priorities then use title in ascending order. The original records are returned, not the key tuples."
           ],
           "example": "def duration(row):\n    return row[1]\nrows = [(\"SQL\", 20), (\"Python\", 10), (\"React\", 20)]\nassert sorted(rows, key=duration) == sorted(rows, key=lambda row: row[1])"
         },
@@ -444,7 +444,7 @@
         {
           "title": "Implemented tree practice",
           "paragraphs": [
-            "The new binary-search-tree lesson and trees_graphs.py supply an actual search tree; compare its explicit stack with recursive traversal and its height-dependent costs."
+            "The new binary-search-tree lesson and `trees_graphs.py` supply an actual search tree; compare its explicit stack with recursive traversal and its height-dependent costs."
           ]
         }
       ],
@@ -487,15 +487,15 @@
         {
           "title": "Connect a tree picture to node references",
           "paragraphs": [
-            "A node is a record containing a key and references to its left and right children. None means that child is absent. A class constructor uses self to attach these fields to the new object. Child references point to other nodes rather than copying their entire subtrees.",
-            "Before deletion, trace search only: compare with the current key, follow left for a smaller target or right for a larger one, and stop at equality or None. In the example, searching 7 visits 10 then 5 then None. The later linked-nodes lesson practises changing a single link before larger tree edits."
+            "A node is a record containing a key and references to its left and right children. `None` means that child is absent. A class constructor uses `self` to attach these fields to the new object. Child references point to other nodes rather than copying their entire subtrees.",
+            "Before deletion, trace search only: compare with the current key, follow left for a smaller target or right for a larger one, and stop at equality or `None`. In the example, searching 7 visits 10 then 5 then `None`. The later linked-nodes lesson practises changing a single link before larger tree edits."
           ],
           "example": "class Node:\n    def __init__(self, key):\n        self.key = key\n        self.left = None\n        self.right = None\nroot = Node(10)\nroot.left = Node(5)\nroot.right = Node(20)\nassert root.left.key == 5\nassert root.left.right is None"
         },
         {
           "title": "Contract and collaboration",
           "paragraphs": [
-            "The downloadable trees_graphs.py implements insert, contains, delete and inorder keys with integer keys (bool rejected). Every left subtree key is smaller and every right subtree key is larger than its ancestor. Duplicate insertion is a no-op; deleting a missing key returns False. Deletion of a two-child node copies the inorder successor and removes its original node, preserving a successor right child.",
+            "The downloadable `trees_graphs.py` implements insert, contains, delete and inorder keys with integer keys (`bool` rejected). Every left subtree key is smaller and every right subtree key is larger than its ancestor. Duplicate insertion is a no-op; deleting a missing key returns `False`. Deletion of a two-child node copies the inorder successor and removes its original node, preserving a successor right child.",
             "Operations are iterative. Search, insert and delete take O(h), worst O(n) in a skewed tree; inorder traversal takes O(n) with O(h) stack. There is no balancing guarantee. The exhaustive four-key insertion/deletion tests compare against a set and independently check global ancestor bounds after every mutation."
           ]
         },
@@ -509,7 +509,7 @@
         {
           "title": "Verify the invariant beyond a sample",
           "paragraphs": [
-            "Use test_trees_graphs.py to compare every four-key insertion/deletion order against a set. Check global ancestor bounds, not only immediate parent-child comparisons: a misplaced descendant can satisfy its immediate parent while violating the root bound. The successor-with-right-child fixture tests the splice above. Sorted insertion creates a chain; iterative traversal avoids recursion failure but does not improve that chain's linear search cost."
+            "Use `test_trees_graphs.py` to compare every four-key insertion/deletion order against a set. Check global ancestor bounds, not only immediate parent-child comparisons: a misplaced descendant can satisfy its immediate parent while violating the root bound. The successor-with-right-child fixture tests the splice above. Sorted insertion creates a chain; iterative traversal avoids recursion failure but does not improve that chain's linear search cost."
           ]
         }
       ],
@@ -606,7 +606,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "A min-heap keeps the smallest element at its root. In Python heapq operates on a list. Pushing or popping has logarithmic time in heap size; reading the minimum has constant time when nonempty.",
+            "A min-heap keeps the smallest element at its root. In Python `heapq` operates on a list. Pushing or popping has logarithmic time in heap size; reading the minimum has constant time when nonempty.",
             "A scheduler can use (priority, sequence, task) entries. A sequence number provides a defined tie-breaker and avoids comparing task objects when priorities tie. Real schedulers also need cancellation and fairness policies."
           ],
           "example": "import heapq\nheap = []\nheapq.heappush(heap, (2, 0, 'SQL'))\nheapq.heappush(heap, (1, 1, 'Python'))\nprint(heapq.heappop(heap)[2])  # Python"
@@ -669,7 +669,7 @@
         {
           "title": "Derive a second recurrence rather than memorising stairs",
           "paragraphs": [
-            "For unlimited coins of values 1, 3 and 4, define best[a] as the minimum coin count for amount a. The last coin c leaves amount a-c, so each reachable best[a-c]+1 is a candidate. Start best[0]=0; represent unreachable amounts with None, not zero. At six, using three after three yields two coins, while a greedy four leaves two ones.",
+            "For unlimited coins of values 1, 3 and 4, define best[a] as the minimum coin count for amount a. The last coin c leaves amount a-c, so each reachable best[a-c]+1 is a candidate. Start best[0]=0; represent unreachable amounts with `None`, not zero. At six, using three after three yields two coins, while a greedy four leaves two ones.",
             "The reference computes states in increasing amount because every positive coin leads to a smaller amount. For target T and k denominations it uses O(Tk) candidate work and O(T) storage. T is the numeric amount, so a huge value can be expensive even if its decimal input is short. The exercise oracle instead explores reachable amounts with BFS; agreement across small cases is evidence from a different mechanism."
           ]
         }
@@ -718,7 +718,7 @@
         {
           "title": "Implementation",
           "paragraphs": [
-            "insert_after preserves the old successor while inserting a new node. Traversal follows next until None, producing 1, 2, 3."
+            "`insert_after` preserves the old successor while inserting a new node. Traversal follows `next` until `None`, producing 1, 2, 3."
           ],
           "example": "class Node:\n    def __init__(self, value, next=None):\n        self.value, self.next = value, next\n\ndef insert_after(node, value):\n    node.next = Node(value, node.next)\n\ndef values(head):\n    out = []\n    while head is not None:\n        out.append(head.value)\n        head = head.next\n    return out\n\na = Node(1, Node(3))\ninsert_after(a, 2)\nassert values(a) == [1, 2, 3]"
         },
@@ -893,8 +893,8 @@
         {
           "title": "Trace the window before enumerating test inputs",
           "paragraphs": [
-            "For abba, right=0 gives a and left=0. At right=1, ab has length 2. At right=2, the prior b at index 1 moves left to 2. At right=3, the prior a at 0 lies outside the current window, so left remains 2. Moving left back to 1 would incorrectly accept bba.",
-            "The exercise uses itertools.product(\"ab\", repeat=size) to generate every tuple of a/b choices of that length. For size 2 those tuples spell aa, ab, ba, bb. Join a tuple into text, then let the slower oracle examine every nonempty substring. The oracle is deliberately easier to check than the optimized window."
+            "For abba, `right=0` gives a and `left=0`. At `right=1`, ab has length 2. At `right=2`, the prior b at index 1 moves left to 2. At `right=3`, the prior a at 0 lies outside the current window, so left remains 2. Moving left back to 1 would incorrectly accept bba.",
+            "The exercise uses `itertools.product(\"ab\", repeat=size)` to generate every tuple of a/b choices of that length. For size 2 those tuples spell aa, ab, ba, bb. Join a tuple into text, then let the slower oracle examine every nonempty substring. The oracle is deliberately easier to check than the optimized window."
           ]
         }
       ],
@@ -954,7 +954,7 @@
         {
           "title": "DFS with a directed cycle witness",
           "paragraphs": [
-            "Run directed_dfs in trees_graphs.py. It returns preorder across every component, including isolated and neighbor-only vertices, and a directed cycle witness [v,...,v] or an empty list. White is unseen, gray is on the active path, black is finished. Only an edge to gray proves a directed cycle; an edge to a finished shared prerequisite does not.",
+            "Run `directed_dfs` in `trees_graphs.py`. It returns preorder across every component, including isolated and neighbor-only vertices, and a directed cycle witness `[v, ..., v]` or an empty list. White is unseen, gray is on the active path, black is finished. Only an edge to gray proves a directed cycle; an edge to a finished shared prerequisite does not.",
             "An explicit stack retains each adjacency iterator and active-path index. Each vertex/edge is processed once: O(V+E) time and space including normalized adjacency. The tests compare all 512 directed three-vertex graphs with an independent transitive-closure oracle, check witness edges, and cover a 3,000-edge chain without recursion."
           ],
           "example": "from trees_graphs import directed_dfs\nassert directed_dfs({'A':['B'],'B':['A']})[1] == ['A','B','A']\nassert directed_dfs({'A':['B','C'],'C':['B']})[1] == []"
@@ -1070,7 +1070,7 @@
         {
           "title": "Correctness and cost",
           "paragraphs": [
-            "Each interval must have positive duration: finish > start. Zero-duration and reversed intervals raise ValueError. Intervals use half-open boundaries, so one interval may start exactly when another finishes. Empty input returns an empty schedule. Sorting costs O(n log n). Maximizing profit rather than count is a different problem; earliest finish need not maximize total weight. State the objective before selecting a heuristic."
+            "Each interval must have positive duration: finish > start. Zero-duration and reversed intervals raise `ValueError`. Intervals use half-open boundaries, so one interval may start exactly when another finishes. Empty input returns an empty schedule. Sorting costs O(n log n). Maximizing profit rather than count is a different problem; earliest finish need not maximize total weight. State the objective before selecting a heuristic."
           ]
         },
         {
@@ -1193,7 +1193,7 @@
           "title": "Preconditions versus boundary validation",
           "paragraphs": [
             "Capacity must be a nonnegative integer and every weight a positive integer; values must be finite numeric values in the stated optimization contract. These are caller preconditions. The function rejects negative capacity and nonpositive weights. Before using external data, also reject fractional capacity or weights, malformed pairs and nonfinite values.",
-            "Use advanced-reasoning.md and test_advanced_oracles.py for the learner extension: explain the invariant and recurrence, run the bounded independent oracles, and test a deliberately wrong implementation."
+            "Use `advanced-reasoning.md` and `test_advanced_oracles.py` for the learner extension: explain the invariant and recurrence, run the bounded independent oracles, and test a deliberately wrong implementation."
           ]
         }
       ],
@@ -1253,8 +1253,8 @@
         {
           "title": "Select state and method for a changed constraint",
           "paragraphs": [
-            "Try a route problem with one optional half-price edge. A location alone is no longer enough state: arriving at B with the discount unused has different future choices from arriving there after spending it. Model (location, used_discount), and choose transitions that preserve the resource constraint before selecting a shortest-path method.",
-            "This extension is not implemented in method_selection.py. A useful concrete case has A→B cost 8, A→C cost 3, C→B cost 3: ordinary cheapest cost is 6, but one half-price edge permits the direct cost 4. Test an unreachable destination and a zero-cost edge too. A passing coin lab does not demonstrate this richer state model."
+            "Try a route problem with one optional half-price edge. A location alone is no longer enough state: arriving at B with the discount unused has different future choices from arriving there after spending it. Model (location, `used_discount`), and choose transitions that preserve the resource constraint before selecting a shortest-path method.",
+            "This extension is not implemented in `method_selection.py`. A useful concrete case has A→B cost 8, A→C cost 3, C→B cost 3: ordinary cheapest cost is 6, but one half-price edge permits the direct cost 4. Test an unreachable destination and a zero-cost edge too. A passing coin lab does not demonstrate this richer state model."
           ]
         }
       ],

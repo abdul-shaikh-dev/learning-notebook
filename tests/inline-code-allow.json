@@ -1,0 +1,16 @@
+[
+ "/O\\(.*\\)",
+ "nW",
+ "macOS",
+ "sRGB",
+ "p.m",
+ "llama.cpp",
+ "ASP.NET",
+ "practical-maths-statistics: /(cost|ceil|bytes|seconds|count|len|sqrt|sum)\\(.*\\)",
+ "practical-maths-statistics: x_i",
+ "practical-maths-statistics: w_i",
+ "practical-maths-statistics: size_mb",
+ "practical-maths-statistics: /sigma=\\d+",
+ "data-structures-algorithms: /ways\\(.*\\)",
+ "data-structures-algorithms: log(V+E)"
+]

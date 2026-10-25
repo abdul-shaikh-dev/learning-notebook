@@ -402,7 +402,7 @@
           "title": "Concept",
           "paragraphs": [
             "A tool contract describes what an operation does, its inputs, output shape, failures and side effects. A tool call requests execution; it is not execution itself.",
-            "Prefer a narrow search_lessons(query) tool over a generic run_anything(command) capability for this notebook assistant. Describe when search is useful, the maximum query size and whether results may be empty. A read operation can still expose private data, so read-only does not automatically mean harmless. Keep authentication and access checks in the tool implementation."
+            "Prefer a narrow `search_lessons(query)` tool over a generic `run_anything(command)` capability for this notebook assistant. Describe when search is useful, the maximum query size and whether results may be empty. A read operation can still expose private data, so read-only does not automatically mean harmless. Keep authentication and access checks in the tool implementation."
           ]
         },
         {
@@ -485,7 +485,7 @@
         {
           "title": "Run a changed script without a model",
           "paragraphs": [
-            "Save this as try_loop.py beside workshop.py in the extracted kit, then run python try_loop.py. ScriptedSource returns the proposals you supply in order. It does not decide what to search. The finish proposal also consumes one proposal from the budget. Change max_steps to 1 and predict why the same script can no longer complete."
+            "Save this as `try_loop.py` beside `workshop.py` in the extracted kit, then run `python try_loop.py`. `ScriptedSource` returns the proposals you supply in order. It does not decide what to search. The finish proposal also consumes one proposal from the budget. Change `max_steps` to 1 and predict why the same script can no longer complete."
           ],
           "example": "from workshop import ScriptedSource, run\nscript = [\n    {'kind': 'tool', 'name': 'search_lessons', 'args': {'query': 'functions'}},\n    {'kind': 'finish', 'answer': 'Functions group reusable behavior.', 'citations': ['PY-01']},\n]\nresult = run(ScriptedSource(script), max_steps=2)\nprint(result.status, result.citations)\n# completed ['PY-01']"
         }
@@ -561,7 +561,7 @@
           "title": "Concept",
           "paragraphs": [
             "State records what the application knows about a task: validated inputs, observed results, pending work and terminal status. Keep operational state separate from conversational prose.",
-            "A progress claim such as I searched everything is not a database fact. Record actual search queries and accepted result IDs from the executor. Use clear statuses such as running, needs_input, completed and failed. If a task resumes later, it needs enough information to distinguish a proposed action from a completed tool call."
+            "A progress claim such as I searched everything is not a database fact. Record actual search queries and accepted result IDs from the executor. Use clear statuses such as `running`, `needs_input`, `completed` and `failed`. If a task resumes later, it needs enough information to distinguish a proposed action from a completed tool call."
           ]
         },
         {
@@ -625,7 +625,7 @@
           "title": "Concept",
           "paragraphs": [
             "Grounding connects an answer to available evidence. A citation helps the reader inspect support; it does not automatically make a claim correct.",
-            "A lesson snippet states that an INNER JOIN keeps matching pairs. A grounded answer can explain that point and cite the lesson. It should not invent performance guarantees absent from the source. Separate a directly supported statement, an inference and an unknown. When evidence is missing, return a useful limitation or ask a focused question."
+            "A lesson snippet states that an `INNER JOIN` keeps matching pairs. A grounded answer can explain that point and cite the lesson. It should not invent performance guarantees absent from the source. Separate a directly supported statement, an inference and an unknown. When evidence is missing, return a useful limitation or ask a focused question."
           ]
         },
         {
@@ -682,7 +682,7 @@
           "title": "Concept",
           "paragraphs": [
             "Treat tool arguments as untrusted input even when a model generated them in a structured format. Validate shape, types, bounds and domain rules before calling the tool.",
-            "A query should be a nonblank string with an upper length bound. Reject unexpected properties rather than quietly accepting an extra destination field. In Python bool is a subclass of int, so exact integer requirements may need an explicit bool rejection. Validation failures should be clear and should not execute the operation first."
+            "A query should be a nonblank string with an upper length bound. Reject unexpected properties rather than quietly accepting an extra destination field. In Python `bool` is a subclass of `int`, so exact integer requirements may need an explicit `bool` rejection. Validation failures should be clear and should not execute the operation first."
           ]
         },
         {
@@ -818,7 +818,7 @@
           "paragraphs": [
             "A research question asks how to recover a failed import. Document A describes setup; document B describes rollback; document C contains an old rollback policy. A fluent answer from A alone is a retrieval failure before it is a writing failure. Keep the selected IDs visible and distinguish missing evidence from contradictory evidence.",
             "Try three questions against the same small corpus: one answerable verbatim, one paraphrase, and one absent topic. A lexical baseline may miss the paraphrase; returning any nonempty list must not automatically permit an answer. First inspect selection, then generation, then whether each claim is supported. An embedding model can change ranking without solving document freshness or access control.",
-            "In local_framework_lab.py, the fixed research records let you isolate routing and model behaviour. Replace one record only after the deterministic tests pass. Retain the no-evidence case while extending retrieval; otherwise every question can appear answerable because the retriever always returns something."
+            "In `local_framework_lab.py`, the fixed research records let you isolate routing and model behaviour. Replace one record only after the deterministic tests pass. Retain the no-evidence case while extending retrieval; otherwise every question can appear answerable because the retriever always returns something."
           ]
         }
       ],
@@ -1682,14 +1682,14 @@
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "Optional provider_scaffold.py builds a current strict function request without sending it. provider-integration-exercise.md defines a separate opt-in transport, authorization, refusals/incomplete-state handling, usage/cost accounting and held-out evaluation evidence. Deterministic tests only prove local request construction and fabricated usage arithmetic; no live integration or model quality was tested.",
-            "Optionally use provider-evaluation-lab.md and provider_eval.py for a bounded, measured live-model sample after an explicit local --live choice; the offline test_provider_eval.py uses a stub transport and remains credential-free."
+            "Optional `provider_scaffold.py` builds a current strict function request without sending it. `provider-integration-exercise.md` defines a separate opt-in transport, authorization, refusals/incomplete-state handling, usage/cost accounting and held-out evaluation evidence. Deterministic tests only prove local request construction and fabricated usage arithmetic; no live integration or model quality was tested.",
+            "Optionally use `provider-evaluation-lab.md` and `provider_eval.py` for a bounded, measured live-model sample after an explicit local `--live` choice; the offline `test_provider_eval.py` uses a stub transport and remains credential-free."
           ]
         },
         {
           "title": "Build the same research task at three abstraction levels",
           "paragraphs": [
-            "The optional local-framework-guide.md develops one task through direct LangChain model invocation, an explicit LangGraph workflow, and a Deep Agents tool loop. Keep the corpus and questions fixed so that changes in control flow can be compared. Start with model-free graph checks, then call your existing llama.cpp server explicitly. Tool-calling support depends on the server, chat template and model; successful ordinary chat does not establish tool compatibility.",
+            "The optional `local-framework-guide.md` develops one task through direct LangChain model invocation, an explicit LangGraph workflow, and a Deep Agents tool loop. Keep the corpus and questions fixed so that changes in control flow can be compared. Start with model-free graph checks, then call your existing llama.cpp server explicitly. Tool-calling support depends on the server, chat template and model; successful ordinary chat does not establish tool compatibility.",
             "The graph keeps retrieval and the attempt limit in application code. The Deep Agents variant lets the model choose a bounded search tool and adds harness behaviour. Inspect tool calls and final evidence separately. More planning does not necessarily improve a tiny-model answer; compare unsupported claims, completion and latency on the same cases.",
             "LangSmith Fleet is a separate managed agent product, not a required local Python package. The guide includes a concrete migration exercise using synthetic documents and a capability comparison. Without a Fleet workspace, finish the local project and leave workspace deployment unexecuted. No private project corpus or local server is automatically exposed."
           ]

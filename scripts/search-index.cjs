@@ -1,6 +1,6 @@
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const {root,readPaths}=require('./manifest.cjs');
-function plain(value){return (typeof value==='string'?value:Array.isArray(value)?value.map(plain).join(' '):value&&typeof value==='object'?Object.values(value).map(plain).join(' '):'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();}
+function plain(value){return (typeof value==='string'?value:Array.isArray(value)?value.map(plain).join(' '):value&&typeof value==='object'?Object.values(value).map(plain).join(' '):'').replace(/<[^>]*>/g,' ').replace(/`([^`\n]*)`/g,'$1').replace(/\s+/g,' ').trim();}
 function searchEntries(){
  const result=[];const add=(p,kind,title,href,text)=>result.push({path:p.id,course:p.title,kind,title,href,text:plain(text)});
  for(const p of readPaths().filter(p=>p.status==='ready')){

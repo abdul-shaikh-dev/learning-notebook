@@ -119,8 +119,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Return the sum of entries that are at least minimum. Each entry is one session duration. An empty list contributes zero; a value equal to the threshold qualifies.",
-            "Return a value from sum_approved; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Return the sum of entries that are at least `minimum`. Each entry is one session duration. An empty list contributes zero; a value equal to the threshold qualifies.",
+            "Return a value from `sum_approved`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -133,14 +133,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "Durations and minimum are integers from 0 to 10,000."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Durations and `minimum` are integers from 0 to 10,000."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete sum_approved below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `sum_approved` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def sum_approved(minutes: list[int], minimum: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -184,8 +184,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Return a new list. Replace readings below low with low and readings above high with high. Keep readings on either boundary unchanged. Preserve order and duplicates.",
-            "Return a value from clamp_readings; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Return a new list. Replace readings below `low` with `low` and readings above `high` with `high`. Keep readings on either boundary unchanged. Preserve order and duplicates.",
+            "Return a value from `clamp_readings`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -198,14 +198,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "-10,000 <= low <= high <= 10,000. Readings are integers in that same numeric range."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "`-10_000 <= low <= high <= 10_000`. Readings are integers in that same numeric range."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete clamp_readings below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `clamp_readings` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def clamp_readings(readings: list[int], low: int, high: int) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -249,8 +249,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Return the index of the first label whose length is at least minimum. Return -1 if none qualifies. Labels are compared as supplied, including spaces.",
-            "Return a value from first_long_label; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Return the index of the first label whose length is at least `minimum`. Return -1 if none qualifies. Labels are compared as supplied, including spaces.",
+            "Return a value from `first_long_label`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -263,14 +263,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "Labels contain ASCII characters only. minimum is from 0 to 1,001."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Labels contain ASCII characters only. `minimum` is from 0 to 1,001."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete first_long_label below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `first_long_label` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def first_long_label(labels: list[str], minimum: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -315,7 +315,7 @@
           "title": "The problem",
           "paragraphs": [
             "Return the greatest number of consecutive 1 entries. A 0 ends the current streak. Return zero for an empty list or a list containing only zeros.",
-            "Return a value from longest_active_run; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Return a value from `longest_active_run`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -328,14 +328,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Each flag is exactly the integer 0 or 1."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete longest_active_run below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `longest_active_run` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def longest_active_run(flags: list[int]) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -380,7 +380,7 @@
           "title": "The problem",
           "paragraphs": [
             "Remove leading and trailing ASCII spaces, reduce each internal run of ASCII spaces to one, and convert A-Z to lowercase. The empty result is allowed. Only the literal space character is whitespace in this contract.",
-            "Return a value from clean_label; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Return a value from `clean_label`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -393,14 +393,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "text contains only ASCII letters A-Z, a-z and literal spaces."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "`text` contains only ASCII letters A-Z, a-z and literal spaces."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete clean_label below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `clean_label` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def clean_label(text: str) -> str:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -445,7 +445,7 @@
           "title": "The problem",
           "paragraphs": [
             "Return each reading minus its immediate predecessor, beginning with the second reading. Do not include a made-up change for the first reading. Fewer than two readings gives an empty list.",
-            "Return a value from reading_changes; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Return a value from `reading_changes`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -458,14 +458,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Readings are integers from -10,000 to 10,000."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete reading_changes below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `reading_changes` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def reading_changes(readings: list[int]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -510,7 +510,7 @@
           "title": "The problem",
           "paragraphs": [
             "Return each distinct label once, in the order it first appears. Matching is exact and case-sensitive. An empty string is a valid label.",
-            "Return a value from keep_first_labels; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Return a value from `keep_first_labels`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -523,14 +523,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Labels contain ASCII characters only."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete keep_first_labels below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `keep_first_labels` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def keep_first_labels(labels: list[str]) -> list[str]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -574,8 +574,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Each delivery is [item, quantity]. Return a dictionary of total quantity per item. Keep items whose total is zero. Negative quantities represent returns.",
-            "Return a value from stock_totals; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Each delivery is `[item, quantity]`. Return a dictionary of total quantity per item. Keep items whose total is zero. Negative quantities represent returns.",
+            "Return a value from `stock_totals`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -588,14 +588,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Each row has exactly two entries: a nonempty ASCII item name and an integer quantity from -1,000 to 1,000."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete stock_totals below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `stock_totals` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def stock_totals(deliveries: list[list]) -> dict[str, int]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -640,7 +640,7 @@
           "title": "The problem",
           "paragraphs": [
             "Return column sums across rows of different lengths. A missing position contributes zero. Include every column that occurs in any row. No rows, or only empty rows, gives an empty list.",
-            "Return a value from column_totals; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Return a value from `column_totals`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -653,14 +653,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "At most 1,000 rows and at most 10,000 integers in total. Values are from -1,000 to 1,000."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete column_totals below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `column_totals` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def column_totals(rows: list[list[int]]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -705,7 +705,7 @@
           "title": "The problem",
           "paragraphs": [
             "Group names by their first character in a dictionary. Preserve original order and duplicates within each group. Skip empty names. Matching is case-sensitive.",
-            "Return a value from group_by_initial; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Return a value from `group_by_initial`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -718,14 +718,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Names contain ASCII letters only, or are empty."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete group_by_initial below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `group_by_initial` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def group_by_initial(names: list[str]) -> dict[str, list[str]]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -769,8 +769,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Return the most frequent label. Break a frequency tie by the label that first appeared. Return None for no labels. An empty string counts as a label.",
-            "Return a value from most_requested; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Return the most frequent label. Break a frequency tie by the label that first appeared. Return `None` for no labels. An empty string counts as a label.",
+            "Return a value from `most_requested`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -783,14 +783,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "ASCII labels; exact case-sensitive matching."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete most_requested below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `most_requested` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def most_requested(labels: list[str]) -> str | None:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -834,8 +834,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "The sizes list is sorted in nondecreasing order. Return whether two different positions sum to target. Equal sizes may be used if they occur at least twice.",
-            "Return a value from can_fill_pair; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "The `sizes` list is sorted in nondecreasing order. Return whether two different positions sum to `target`. Equal sizes may be used if they occur at least twice.",
+            "Return a value from `can_fill_pair`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -848,14 +848,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "Sizes and target are integers from -10,000 to 10,000. Input is already sorted."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Sizes and `target` are integers from -10,000 to 10,000. Input is already sorted."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete can_fill_pair below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `can_fill_pair` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def can_fill_pair(sizes: list[int], target: int) -> bool:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -900,7 +900,7 @@
           "title": "The problem",
           "paragraphs": [
             "Both lists are sorted. Return their shared values in sorted order, retaining the smaller occurrence count for each value. For example, two 3s on one side and one 3 on the other produce one 3.",
-            "Return a value from shared_readings; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Return a value from `shared_readings`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -913,14 +913,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Both lists are nondecreasing integer lists with values from -10,000 to 10,000."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete shared_readings below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `shared_readings` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def shared_readings(left: list[int], right: list[int]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -964,8 +964,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Return the starting index of the width consecutive entries with the largest sum. Break ties by the earliest start. Return -1 when width exceeds the list length.",
-            "Return a value from busiest_block; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Return the starting index of the `width` consecutive entries with the largest sum. Break ties by the earliest start. Return -1 when `width` exceeds the list length.",
+            "Return a value from `busiest_block`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -978,14 +978,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "width is an integer from 1 to 1,001. Counts are integers from 0 to 10,000."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "`width` is an integer from 1 to 1,001. Counts are integers from 0 to 10,000."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete busiest_block below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `busiest_block` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def busiest_block(counts: list[int], width: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1029,8 +1029,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Return the longest length of a consecutive stretch whose sum is at most budget. An empty stretch is allowed, so return zero if no entry can fit.",
-            "Return a value from affordable_stretch; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Return the longest length of a consecutive stretch whose sum is at most `budget`. An empty stretch is allowed, so return zero if no entry can fit.",
+            "Return a value from `affordable_stretch`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -1043,14 +1043,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "Costs and budget are nonnegative integers from 0 to 10,000. Negative costs are outside the contract."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Costs and `budget` are nonnegative integers from 0 to 10,000. Negative costs are outside the contract."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete affordable_stretch below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `affordable_stretch` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def affordable_stretch(costs: list[int], budget: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1094,8 +1094,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "For each [start, stop] query, return the sum of values from start inclusive to stop exclusive. Preserve query order. Empty ranges have total zero.",
-            "Return a value from range_totals; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "For each `[start, stop]` query, return the sum of `values` from `start` inclusive to `stop` exclusive. Preserve query order. Empty ranges have total zero.",
+            "Return a value from `range_totals`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -1108,14 +1108,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "Values are integers from -10,000 to 10,000. Every query has 0 <= start <= stop <= len(values). At most 1,000 queries."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Values are integers from -10,000 to 10,000. Every query has `0 <= start <= stop <= len(values)`. At most 1,000 queries."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete range_totals below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `range_totals` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def range_totals(values: list[int], queries: list[list[int]]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1160,7 +1160,7 @@
           "title": "The problem",
           "paragraphs": [
             "Return the earliest index whose entries strictly before it sum to the same amount as entries strictly after it. The value at the index is excluded from both sums. Return -1 if none exists.",
-            "Return a value from balance_marker; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Return a value from `balance_marker`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -1173,14 +1173,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Integer values from -10,000 to 10,000; negative values are allowed."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete balance_marker below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `balance_marker` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def balance_marker(values: list[int]) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1224,8 +1224,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "capacities is sorted in nondecreasing order. Return the first index holding a value at least required, or len(capacities) if no value qualifies.",
-            "Return a value from first_suitable; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "`capacities` is sorted in nondecreasing order. Return the first index holding a value at least `required`, or `len(capacities)` if no value qualifies.",
+            "Return a value from `first_suitable`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -1238,14 +1238,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "Capacities and required are integers from 0 to 10,000."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Capacities and `required` are integers from 0 to 10,000."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete first_suitable below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `first_suitable` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def first_suitable(capacities: list[int], required: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1297,7 +1297,7 @@
           "title": "The problem",
           "paragraphs": [
             "Return whether every round, square and curly bracket closes in the correct nested order. Ignore ASCII letters and literal spaces. Empty text is valid.",
-            "Return a value from balanced_groups; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Return a value from `balanced_groups`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -1310,14 +1310,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "Only ASCII letters, spaces and the characters ()[]{} appear."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Only ASCII letters, spaces and the characters `()[]{}` appear."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete balanced_groups below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `balanced_groups` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def balanced_groups(text: str) -> bool:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1361,8 +1361,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Each command is either \"add:\" followed by a note, or exactly \"undo\". Add appends the note; undo removes the most recently retained note. Undo on an empty notebook does nothing. Return retained notes in order. Empty notes are allowed.",
-            "Return a value from undo_notes; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Each command is either `\"add:\"` followed by a note, or exactly `\"undo\"`. Add appends the note; undo removes the most recently retained note. Undo on an empty notebook does nothing. Return retained notes in order. Empty notes are allowed.",
+            "Return a value from `undo_notes`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -1375,14 +1375,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "All commands follow this grammar and use ASCII characters only. Notes may contain additional colons or the word undo."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "All commands follow this grammar and use ASCII characters only. Notes may contain additional colons or the word `undo`."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete undo_notes below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `undo_notes` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def undo_notes(commands: list[str]) -> list[str]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1426,8 +1426,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Parse settings into a dictionary. Strip literal ASCII spaces from both ends of each line, skip blank lines and lines starting with #, and split other lines at the first =. Strip literal spaces around the key and value. A valid key is nonempty and contains only lowercase ASCII letters or underscores. Skip invalid lines. A later valid assignment replaces an earlier value; values may be empty or contain = and #.",
-            "Return a value from read_settings; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Parse settings into a dictionary. Strip literal ASCII spaces from both ends of each line, skip blank lines and lines starting with `#`, and split other lines at the first `=`. Strip literal spaces around the key and value. A valid key is nonempty and contains only lowercase ASCII letters or underscores. Skip invalid lines. A later valid assignment replaces an earlier value; values may be empty or contain `=` and `#`.",
+            "Return a value from `read_settings`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -1440,14 +1440,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "All lines use printable ASCII characters. Invalid lines are expected and must be skipped."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete read_settings below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `read_settings` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def read_settings(lines: list[str]) -> dict[str, str]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1491,8 +1491,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Each sample is [device, timestamp, reading]. Return a dictionary mapping each device to [timestamp, reading] for its greatest timestamp. If timestamps tie for one device, the later input row wins. Input rows need not be time-sorted.",
-            "Return a value from latest_samples; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Each sample is `[device, timestamp, reading]`. Return a dictionary mapping each device to `[timestamp, reading]` for its greatest timestamp. If timestamps tie for one device, the later input row wins. Input rows need not be time-sorted.",
+            "Return a value from `latest_samples`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -1505,14 +1505,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Device is a nonempty ASCII string. Timestamp is an integer from 0 to 1,000,000. Reading is an integer from -10,000 to 10,000. Every row has exactly three entries."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete latest_samples below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `latest_samples` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def latest_samples(samples: list[list]) -> dict[str, list[int]]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1556,8 +1556,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Each [start, end] is a half-open time interval with start < end. Return sorted coverage intervals, combining overlaps and touching intervals. For example [1,3] and [3,5] become [1,5]. Do not change the supplied rows.",
-            "Return a value from maintenance_coverage; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Each `[start, end]` is a half-open time interval with `start < end`. Return sorted coverage intervals, combining overlaps and touching intervals. For example `[1, 3]` and `[3, 5]` become `[1, 5]`. Do not change the supplied rows.",
+            "Return a value from `maintenance_coverage`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -1570,14 +1570,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "Every row has two integer endpoints with 0 <= start < end <= 1,000,000. Input may be unsorted or repeated."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Every row has two integer endpoints with `0 <= start < end <= 1_000_000`. Input may be unsorted or repeated."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete maintenance_coverage below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `maintenance_coverage` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def maintenance_coverage(intervals: list[list[int]]) -> list[list[int]]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1621,8 +1621,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "The working day is [0, day_end). Return the earliest integer start where an appointment of duration fits without overlapping any busy interval. Busy intervals are half-open and may overlap, touch or arrive unsorted. Starting when another interval ends is allowed. Return -1 if no slot fits.",
-            "Return a value from first_open_slot; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "The working day is `[0, day_end)`. Return the earliest integer start where an appointment of `duration` fits without overlapping any busy interval. Busy intervals are half-open and may overlap, touch or arrive unsorted. Starting when another interval ends is allowed. Return -1 if no slot fits.",
+            "Return a value from `first_open_slot`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -1635,14 +1635,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "0 <= day_end <= 1,000,000 and 1 <= duration <= 1,000,000. Every busy row satisfies 0 <= start < end <= day_end."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "`0 <= day_end <= 1_000_000` and `1 <= duration <= 1_000_000`. Every `busy` row satisfies `0 <= start < end <= day_end`."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete first_open_slot below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `first_open_slot` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def first_open_slot(busy: list[list[int]], day_end: int, duration: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1686,8 +1686,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Timestamps are sorted integer seconds; duplicates represent separate requests. Return the greatest number of requests that can lie in an interval [s, s + width) for any integer start s. The right boundary is excluded. Return zero for no requests.",
-            "Return a value from peak_requests; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Timestamps are sorted integer seconds; duplicates represent separate requests. Return the greatest number of requests that can lie in an interval `[s, s + width)` for any integer start `s`. The right boundary is excluded. Return zero for no requests.",
+            "Return a value from `peak_requests`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -1700,14 +1700,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "Timestamps are nondecreasing integers from 0 to 1,000,000. width is from 1 to 1,000,000."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Timestamps are nondecreasing integers from 0 to 1,000,000. `width` is from 1 to 1,000,000."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete peak_requests below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `peak_requests` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def peak_requests(timestamps: list[int], width: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1751,8 +1751,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Accept an unsigned decimal price with one to six ASCII digits before the decimal point and, if a point is present, exactly two digits after it. Leading zeros are allowed. No spaces, signs, commas or exponent notation are accepted. Return its integer cents, or None for an invalid string. Examples: \"12\" gives 1200, \"12.05\" gives 1205.",
-            "Return a value from parse_price; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Accept an unsigned decimal price with one to six ASCII digits before the decimal point and, if a point is present, exactly two digits after it. Leading zeros are allowed. No spaces, signs, commas or exponent notation are accepted. Return its integer cents, or `None` for an invalid string. Examples: `\"12\"` gives 1200, `\"12.05\"` gives 1205.",
+            "Return a value from `parse_price`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -1765,14 +1765,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Input is any ASCII string of at most 100 characters. Invalid strings are part of the task."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete parse_price below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `parse_price` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def parse_price(text: str) -> int | None:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1816,8 +1816,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Compare release labels made of dot-separated nonnegative decimal components. Compare components numerically from left to right, treating missing trailing components as zero. Return -1, 0 or 1 when left is smaller, equal or greater. Leading zeros have no special meaning. This is a custom numeric format, not the full Python package-version specification.",
-            "Return a value from compare_releases; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Compare release labels made of dot-separated nonnegative decimal components. Compare components numerically from left to right, treating missing trailing components as zero. Return -1, 0 or 1 when `left` is smaller, equal or greater. Leading zeros have no special meaning. This is a custom numeric format, not the full Python package-version specification.",
+            "Return a value from `compare_releases`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -1830,14 +1830,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Each label has 1 to 20 nonempty components. Each component has 1 to 6 ASCII digits. No signs, suffixes or spaces."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete compare_releases below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `compare_releases` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def compare_releases(left: str, right: str) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1881,8 +1881,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Each [task, prerequisite] requires prerequisite to finish before task. Return an order containing every task once. Whenever several tasks are ready, choose the lexicographically smallest name. Repeated requirement rows have no extra effect. Return None if no complete order exists, including a self-dependency. An empty task list has the valid order [].",
-            "Return a value from ready_order; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Each `[task, prerequisite]` requires `prerequisite` to finish before `task`. Return an order containing every task once. Whenever several tasks are ready, choose the lexicographically smallest name. Repeated requirement rows have no extra effect. Return `None` if no complete order exists, including a self-dependency. An empty task list has the valid order `[]`.",
+            "Return a value from `ready_order`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -1895,14 +1895,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "tasks contains at most 100 names, with no duplicates. Each name is a nonempty lowercase ASCII word. Every requirement names two existing tasks. At most 1,000 requirement rows."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "`tasks` contains at most 100 names, with no duplicates. Each name is a nonempty lowercase ASCII word. Every requirement names two existing tasks. At most 1,000 requirement rows."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete ready_order below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `ready_order` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def ready_order(tasks: list[str], requirements: list[list[str]]) -> list[str] | None:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -1946,8 +1946,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Each order is [item, quantity]. Process orders in input order using a private working copy of stock. Accept an order only if its entire positive quantity is available, then deduct it. Rejected orders consume nothing. Unknown items have zero stock. Return one boolean per order; leave stock unchanged.",
-            "Return a value from fulfill_orders; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Each order is `[item, quantity]`. Process orders in input order using a private working copy of `stock`. Accept an order only if its entire positive quantity is available, then deduct it. Rejected orders consume nothing. Unknown items have zero stock. Return one boolean per order; leave `stock` unchanged.",
+            "Return a value from `fulfill_orders`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -1960,14 +1960,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "ASCII item names. Stock quantities are integers from 0 to 10,000. Order quantities are integers from 1 to 10,000. Each order row has exactly two entries."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete fulfill_orders below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `fulfill_orders` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def fulfill_orders(stock: dict[str, int], orders: list[list]) -> list[bool]:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
@@ -2011,8 +2011,8 @@
         {
           "title": "The problem",
           "paragraphs": [
-            "Each [start, end] is an optional half-open session. Choose as many sessions as possible without overlaps and return the count. A session may start exactly when the previous one ends. All sessions have equal value; their durations may differ. Identical rows represent competing sessions and cannot both be attended.",
-            "Return a value from book_most_sessions; do not read input or print the answer. Keep the supplied arguments unchanged."
+            "Each `[start, end]` is an optional half-open session. Choose as many sessions as possible without overlaps and return the count. A session may start exactly when the previous one ends. All sessions have equal value; their durations may differ. Identical rows represent competing sessions and cannot both be attended.",
+            "Return a value from `book_most_sessions`; do not read input or print the answer. Keep the supplied arguments unchanged."
           ]
         },
         {
@@ -2025,14 +2025,14 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-            "Each row contains integer times with 0 <= start < end <= 1,000,000. Input may be unsorted."
+            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Each row contains integer times with `0 <= start < end <= 1_000_000`. Input may be unsorted."
           ]
         }
       ],
       "exercise": {
         "challenge": true,
-        "prompt": "Complete book_most_sessions below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+        "prompt": "Complete `book_most_sessions` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
         "starter": "def book_most_sessions(sessions: list[list[int]]) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
         "checks": [
           "Match the expected return values, including edge cases.",
