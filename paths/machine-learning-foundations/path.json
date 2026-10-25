@@ -121,13 +121,13 @@
           "title": "How it works",
           "paragraphs": [
             "A feature is an input supplied to a model. The target is the outcome it learns to predict. A column name does not establish availability. A priority column edited after escalation may contain future information even though a priority column recorded at intake is valid.",
-            "Our dataset records channel, intake priority, initial team and customer_messages at intake. The last value counts messages in the submitted intake packet, not the lifetime conversation. ticket_id and customer_id identify records and groups; the reference model does not use them as predictors."
+            "Our dataset records channel, intake priority, initial team and `customer_messages` at intake. The last value counts messages in the submitted intake packet, not the lifetime conversation. `ticket_id` and `customer_id` identify records and groups; the reference model does not use them as predictors."
           ]
         },
         {
           "title": "Worked example",
           "paragraphs": [
-            "The target breached is computed from resolution_hours. Giving resolution_hours to the classifier would let it reconstruct the answer. The lab selects four allowed features explicitly instead of passing every CSV column."
+            "The target `breached` is computed from `resolution_hours`. Giving `resolution_hours` to the classifier would let it reconstruct the answer. The lab selects four allowed features explicitly instead of passing every CSV column."
           ],
           "example": "FEATURES = ('channel', 'priority', 'team', 'customer_messages')\n# resolution_hours and breached are excluded from X."
         },
@@ -296,7 +296,7 @@
           "title": "How it works",
           "paragraphs": [
             "Choose the positive class explicitly. Here it is breach. A true positive is a correctly flagged breach. A false positive flags a ticket that resolves within the limit. A false negative misses a breach. A true negative correctly leaves a non-breach unflagged.",
-            "Precision divides true positives by all predicted positives. Recall divides true positives by all actual positives. Report counts with ratios, especially on small samples. When a denominator is zero, the ratio is undefined; the standard-library lab returns None instead of silently claiming success."
+            "Precision divides true positives by all predicted positives. Recall divides true positives by all actual positives. Report counts with ratios, especially on small samples. When a denominator is zero, the ratio is undefined; the standard-library lab returns `None` instead of silently claiming success."
           ]
         },
         {
@@ -582,7 +582,7 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "Training message counts [2, 4] have mean 3 and population standard deviation 1. StandardScaler maps them to [-1, 1]. A validation value 8 becomes 5 using those same training statistics."
+            "Training message counts [2, 4] have mean 3 and population standard deviation 1. `StandardScaler` maps them to [-1, 1]. A validation value 8 becomes 5 using those same training statistics."
           ],
           "example": "training mean = 3\ntraining standard deviation = 1\ntransform(8) = (8 - 3) / 1 = 5"
         },
@@ -638,8 +638,8 @@
         {
           "title": "How it works",
           "paragraphs": [
-            "A Pipeline runs transformation steps in order and finishes with an estimator. Calling fit learns each transformation from the rows supplied to that fit. Calling predict reuses the fitted transformations. ColumnTransformer applies different transformations to numeric and categorical columns.",
-            "In the lab, median imputation and scaling handle the numeric message count. OneHotEncoder handles channel, priority and team. Passing the entire pipeline into cross-validation ensures each fold learns its own preprocessing statistics."
+            "A Pipeline runs transformation steps in order and finishes with an estimator. Calling fit learns each transformation from the rows supplied to that fit. Calling predict reuses the fitted transformations. `ColumnTransformer` applies different transformations to numeric and categorical columns.",
+            "In the lab, median imputation and scaling handle the numeric message count. `OneHotEncoder` handles channel, priority and team. Passing the entire pipeline into cross-validation ensures each fold learns its own preprocessing statistics."
           ]
         },
         {
@@ -751,7 +751,7 @@
           "title": "How it works",
           "paragraphs": [
             "Overfitting happens when the fitted model captures peculiarities of training examples that do not transfer well. Compare training and suitable validation results. Very low training error paired with much worse validation error is a warning, although distribution change or leakage can also distort the comparison.",
-            "Regularization penalizes large coefficients or otherwise constrains model flexibility. For LogisticRegression, a smaller C means stronger regularization. Select the setting within development data. More regularization can also underfit, so a smaller number is not automatically better."
+            "Regularization penalizes large coefficients or otherwise constrains model flexibility. For `LogisticRegression`, a smaller C means stronger regularization. Select the setting within development data. More regularization can also underfit, so a smaller number is not automatically better."
           ]
         },
         {
@@ -883,7 +883,7 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "If breached is defined by resolution_hours >24, a single threshold on resolution_hours gets every fictional label correct. That perfect result measures reconstruction of the label, not intake prediction."
+            "If `breached` is defined by `resolution_hours > 24`, a single threshold on `resolution_hours` gets every fictional label correct. That perfect result measures reconstruction of the label, not intake prediction."
           ],
           "example": "assert set(train_ticket_ids).isdisjoint(test_ticket_ids)\nassert \"resolution_hours\" not in selected_features"
         },
@@ -1107,7 +1107,7 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "Two reports both say seed=23 but one changes the target from >24 to >=24. They describe different tasks. Likewise, changing the CSV order can change a positional time split unless you validate or sort by dates."
+            "Two reports both say `seed=23` but one changes the target from `> 24` to `>= 24`. They describe different tasks. Likewise, changing the CSV order can change a positional time split unless you validate or sort by dates."
           ],
           "example": "record: target rule, feature list, data hash\nrecord: split rule, seed, versions, threshold policy\nrecord: metrics with counts and limitations"
         },

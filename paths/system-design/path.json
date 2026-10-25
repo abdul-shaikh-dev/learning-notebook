@@ -594,7 +594,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "An index provides an additional access structure. An index on (user_id, updated_at, lesson_id) can support a user-scoped ordered history, depending on the engine and query. An index on a low-selectivity field alone may not help. Read the actual execution plan and compare representative data; a tiny development table can conceal a scan that becomes expensive later."
+            "An index provides an additional access structure. An index on `(user_id, updated_at, lesson_id)` can support a user-scoped ordered history, depending on the engine and query. An index on a low-selectivity field alone may not help. Read the actual execution plan and compare representative data; a tiny development table can conceal a scan that becomes expensive later."
           ]
         },
         {
@@ -731,7 +731,7 @@
           "title": "A cache key is part of the correctness contract",
           "paragraphs": [
             "A public workshop list and a private learner's bookings are different cache problems. Keying private results only by URL can return Alice's bookings to Bob. Adding user identity addresses one distinction, but permissions can change while the entry lives. Choose whether to cache this response at all before choosing its TTL.",
-            "For a public remaining-seat display, a stale value may be acceptable for browsing if the booking transaction rechecks capacity. It is not acceptable to let a cache authorize the last seat. The booking_lab.py reference keeps the invariant at the write boundary. Insert a deliberately stale display value into your caller and prove the second booking still fails.",
+            "For a public remaining-seat display, a stale value may be acceptable for browsing if the booking transaction rechecks capacity. It is not acceptable to let a cache authorize the last seat. The `booking_lab.py` reference keeps the invariant at the write boundary. Insert a deliberately stale display value into your caller and prove the second booking still fails.",
             "Changed case: an administrator cancels the workshop. Describe which cached views may temporarily lag and which operations must consult authoritative state. A short TTL bounds some stale exposure; it does not turn a stale authorization decision into a correct one."
           ]
         }
@@ -987,7 +987,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "Partitioning divides data; sharding commonly means distributing partitions across separate database resources. Hashing user_id can spread many learners, but all activity for a large tenant or celebrity workshop may still create a hot key. Range partitioning supports range access but can concentrate new writes. Partition choice must reflect access patterns, growth and workload skew rather than only even record counts."
+            "Partitioning divides data; sharding commonly means distributing partitions across separate database resources. Hashing `user_id` can spread many learners, but all activity for a large tenant or celebrity workshop may still create a hot key. Range partitioning supports range access but can concentrate new writes. Partition choice must reflect access patterns, growth and workload skew rather than only even record counts."
           ]
         },
         {
@@ -1061,7 +1061,7 @@
         {
           "title": "Connect the timeline to the local test",
           "paragraphs": [
-            "After predicting the one-seat outcome, run the selected BookingTests command in the intermediate practice card. The race case opens separate database connections, the rollback case injects a failure after the decrement, and the replay case keeps the request key unchanged. Read those assertions before the implementation. The same kit also contains outbox code; its delivery behavior belongs to the later outbox lesson."
+            "After predicting the one-seat outcome, run the selected `BookingTests` command in the intermediate practice card. The race case opens separate database connections, the rollback case injects a failure after the decrement, and the replay case keeps the request key unchanged. Read those assertions before the implementation. The same kit also contains outbox code; its delivery behavior belongs to the later outbox lesson."
           ]
         }
       ],
@@ -1289,7 +1289,7 @@
           "title": "Distinguish a faster worker from a stable queue",
           "paragraphs": [
             "Arrivals average 12 jobs per second and a worker completes 10. After 60 seconds, a constant-rate model predicts 120 queued jobs. Reducing each job's processing time by 10% yields about 11.1 jobs per second, so the queue still grows. An optimisation can improve latency in a small benchmark while leaving the system unstable under the actual arrival rate.",
-            "Run capacity_calculator.py to check the arithmetic, then change the arrival rate to 8 and calculate drain time. Keep the initial backlog: an empty-queue benchmark hides the recovery period. Compare three decisions: add capacity, reject excess work, or accept delay within a bounded queue. Each changes a user-visible promise.",
+            "Run `capacity_calculator.py` to check the arithmetic, then change the arrival rate to 8 and calculate drain time. Keep the initial backlog: an empty-queue benchmark hides the recovery period. Compare three decisions: add capacity, reject excess work, or accept delay within a bounded queue. Each changes a user-visible promise.",
             "For an implementation extension, cap an in-memory queue at a small capacity, make a worker wait on an event, and submit more requests than the cap. Assert explicit rejection and eventual draining after release. Avoid sleeps as evidence of ordering; use events. This proves admission behaviour locally, not internet-scale capacity."
           ]
         }
@@ -1387,14 +1387,14 @@
           "title": "Tradeoffs",
           "paragraphs": [
             "A saga coordinates a longer workflow through local transactions and compensating actions. A compensating action addresses the effects of an earlier step. Cancelling a reservation, for example, does not erase an email someone already read. Define pending and failed states, retries, manual review and reconciliation. Distributed transactions are a separate option with coordination and availability costs; avoid presenting sagas as universally superior.",
-            "Optionally run booking-lab.md and test_booking_lab.py to observe concurrent last-seat booking, durable key replay, rollback between writes and duplicate outbox delivery on a local SQLite database."
+            "Optionally run `booking-lab.md` and `test_booking_lab.py` to observe concurrent last-seat booking, durable key replay, rollback between writes and duplicate outbox delivery on a local SQLite database."
           ]
         },
         {
           "title": "Try the crash sequence before opening the lab",
           "paragraphs": [
             "Use the optional booking lab to connect lessons 15 through 19. Assume the booking, caller-scoped request key and outbox event commit together. The response is lost, the client retries the same key, and the relay then crashes after publication but before recording success. Predict the booking count, remaining seats and number of event deliveries after replay.",
-            "For a one-seat workshop, the invariant is one booking and zero remaining seats. The relay can deliver the same event twice. A consumer must keep the business effect safe on replay. Run python -m unittest -v test_booking_lab.py from the extracted System Design practice folder, then inspect test_response_loss_replay_and_intent_conflict and test_outbox_replay_requires_consumer_deduplication. These tests cover the two failure boundaries separately; they do not prove atomic delivery to an external provider."
+            "For a one-seat workshop, the invariant is one booking and zero remaining seats. The relay can deliver the same event twice. A consumer must keep the business effect safe on replay. Run `python -m unittest -v test_booking_lab.py` from the extracted System Design practice folder, then inspect `test_response_loss_replay_and_intent_conflict` and `test_outbox_replay_requires_consumer_deduplication`. These tests cover the two failure boundaries separately; they do not prove atomic delivery to an external provider."
           ]
         }
       ],
@@ -1510,7 +1510,7 @@
         {
           "title": "Repeat the threat-model pass",
           "paragraphs": [
-            "Complete practice/threat-model-worksheet.md: asset and invariant, trust boundary, concrete abuse sequence, mitigation owner, allowed/denied test and residual risk. Repeat after boundary changes. Label planned tests versus executed evidence."
+            "Complete `practice/threat-model-worksheet.md`: asset and invariant, trust boundary, concrete abuse sequence, mitigation owner, allowed/denied test and residual risk. Repeat after boundary changes. Label planned tests versus executed evidence."
           ]
         }
       ],
@@ -1688,7 +1688,7 @@
         {
           "title": "Repeat the threat-model pass",
           "paragraphs": [
-            "Complete practice/threat-model-worksheet.md: asset and invariant, trust boundary, concrete abuse sequence, mitigation owner, allowed/denied test and residual risk. Repeat after boundary changes. Label planned tests versus executed evidence."
+            "Complete `practice/threat-model-worksheet.md`: asset and invariant, trust boundary, concrete abuse sequence, mitigation owner, allowed/denied test and residual risk. Repeat after boundary changes. Label planned tests versus executed evidence."
           ]
         },
         {

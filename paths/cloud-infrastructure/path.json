@@ -149,7 +149,7 @@
         {
           "title": "An explicit training scope",
           "paragraphs": [
-            "A developer belongs to two tenants and has access to a work and personal subscription. A familiar resource-group name can exist in the wrong subscription. The optional template requires an explicit subscription_id and declares a named training resource group and a storage account inside it. A separate apply would create both resources."
+            "A developer belongs to two tenants and has access to a work and personal subscription. A familiar resource-group name can exist in the wrong subscription. The optional template requires an explicit `subscription_id` and declares a named training resource group and a storage account inside it. A separate apply would create both resources."
           ]
         }
       ],
@@ -427,7 +427,7 @@
         {
           "title": "Core, providers and lock files",
           "paragraphs": [
-            "Terraform core and provider plugins evolve separately. required_version constrains core; required_providers identifies sources and version constraints. terraform init initializes the backend and obtains modules/providers. A dependency lock file records selected provider versions and checksums; a broad constraint alone does not reproduce an exact selection."
+            "Terraform core and provider plugins evolve separately. `required_version` constrains core; `required_providers` identifies sources and version constraints. `terraform init` initializes the backend and obtains modules/providers. A dependency lock file records selected provider versions and checksums; a broad constraint alone does not reproduce an exact selection."
           ]
         },
         {
@@ -488,7 +488,7 @@
         {
           "title": "Names, tags and public identifiers",
           "paragraphs": [
-            "The template validates a lower-case storage name and requires subscription_id rather than using a hardcoded credential. Tags carry learning purpose and expiry. Outputting a storage account ID is different from outputting its keys; the teaching template exposes only the resource-group ID."
+            "The template validates a lower-case storage name and requires `subscription_id` rather than using a hardcoded credential. Tags carry learning purpose and expiry. Outputting a storage account ID is different from outputting its keys; the teaching template exposes only the resource-group ID."
           ],
           "example": "{\n  \"variable\": {\n    \"storage_name\": {\n      \"type\": \"string\",\n      \"description\": \"Account name; full validation appears in main.tf.json.\"\n    }\n  }\n}"
         }
@@ -538,7 +538,7 @@
         {
           "title": "Expression-derived dependencies",
           "paragraphs": [
-            "Terraform derives dependencies from expressions that reference other resources. A storage account reference to a resource-group name establishes that relationship; independent resources may execute concurrently. depends_on can represent hidden dependencies but excessive blanket dependencies slow plans and make unknown values spread."
+            "Terraform derives dependencies from expressions that reference other resources. A storage account reference to a resource-group name establishes that relationship; independent resources may execute concurrently. `depends_on` can represent hidden dependencies but excessive blanket dependencies slow plans and make unknown values spread."
           ]
         },
         {
@@ -654,7 +654,7 @@
         {
           "title": "Simulated destructive changes",
           "paragraphs": [
-            "The offline planner replaces storage when its teaching identity name changes, and flags deletion when a desired ID is absent. It requires a separate allow_destroy argument for simulated destructive actions. This is a local policy contract, not Terraform replacement metadata."
+            "The offline planner replaces storage when its teaching identity name changes, and flags deletion when a desired ID is absent. It requires a separate `allow_destroy` argument for simulated destructive actions. This is a local policy contract, not Terraform replacement metadata."
           ],
           "example": "from infra_lab import plan, simulate_apply\nimport json\nfrom pathlib import Path\n\ncurrent = json.loads(Path('topology.json').read_text())['resources']\nprint(plan(current, []))  # two destroy operations in the MODEL\n# simulate_apply(current, []) raises ValueError\nprint(simulate_apply(current, [], allow_destroy=True))  # []\n# No cloud or filesystem resource is created/deleted."
         },
@@ -662,7 +662,7 @@
           "title": "Read the action before reading the totals",
           "paragraphs": [
             "Suppose a plan contains one tag update and one database replacement. The summary says two resources change, but only the replacement crosses the data-lifetime boundary. Read the address, before/after fields, action order and replacement reason. An unknown endpoint is normal during creation; an unknown backup destination is a missing recovery assumption. Neither observation is resolved by counting plus signs.",
-            "The optional terraform_plan_drill.py runs the real Terraform engine against its built-in terraform_data resource in a fresh temporary directory. An input-only edit plans an update; changing triggers_replace plans delete/create. Only the initial local state creation is applied. The terraform_data resource uses Terraform's built-in provider; no external provider plugin, provisioner or cloud resource is involved. These are real plan semantics, but they cannot predict which cloud-provider property forces replacement."
+            "The optional `terraform_plan_drill.py` runs the real Terraform engine against its built-in `terraform_data` resource in a fresh temporary directory. An input-only edit plans an update; changing `triggers_replace` plans delete/create. Only the initial local state creation is applied. The `terraform_data` resource uses Terraform's built-in provider; no external provider plugin, provisioner or cloud resource is involved. These are real plan semantics, but they cannot predict which cloud-provider property forces replacement."
           ],
           "example": "initial: [create], exit 2\nafter local apply: [no-op], exit 0\ninput v1 -> v2: [update], exit 2\nidentity-1 -> identity-2: [delete, create], exit 2",
           "exampleFormat": "prose"
@@ -720,7 +720,7 @@
         {
           "title": "Lifecycle protection and replacement",
           "paragraphs": [
-            "create_before_destroy can create a replacement first when the service permits coexistence, but unique naming and quotas can prevent that. prevent_destroy blocks certain configuration-driven destruction while present; removing the resource block also removes that protection. ignore_changes intentionally delegates selected drift and can conceal unexpected changes if used broadly."
+            "`create_before_destroy` can create a replacement first when the service permits coexistence, but unique naming and quotas can prevent that. `prevent_destroy` blocks certain configuration-driven destruction while present; removing the resource block also removes that protection. `ignore_changes` intentionally delegates selected drift and can conceal unexpected changes if used broadly."
           ]
         },
         {
@@ -835,7 +835,7 @@
         {
           "title": "Separate observed state, desired configuration and ownership",
           "paragraphs": [
-            "Configuration says public_access=false, yesterday's state records false, and an operator changed the live account to true. Refresh reads the live value. A normal plan can then propose false because the configuration still specifies it. A refresh-only operation updates state without changing the remote account. Decide whether to add the emergency change to configuration or restore the original control.",
+            "Configuration says `public_access=false`, yesterday's state records false, and an operator changed the live account to true. Refresh reads the live value. A normal plan can then propose false because the configuration still specifies it. A refresh-only operation updates state without changing the remote account. Decide whether to add the emergency change to configuration or restore the original control.",
             "Adopting an existing account adds a mapping between a Terraform address and the remote identity. If the configuration omits a required encryption or network property, the first post-import plan may propose an unexpected change. Compare the observed account, configuration and proposed actions before accepting management. Two state owners can each try to undo the other's changes; importing twice does not create high availability."
           ],
           "example": "configuration: public_access=false\nremote observation: public_access=true\nnormal plan: restore false\nrefresh-only: record true, do not remediate remote access",
@@ -893,7 +893,7 @@
         {
           "title": "The offline topology validator",
           "paragraphs": [
-            "infra_lab.py rejects public storage, wildcard roles and incomplete metadata in topology.json. It does not inspect an Azure tenant or enforce Azure Policy. The Azure template disables public networking but does not provide a complete private application network."
+            "`infra_lab.py` rejects public storage, wildcard roles and incomplete metadata in `topology.json`. It does not inspect an Azure tenant or enforce Azure Policy. The Azure template disables public networking but does not provide a complete private application network."
           ],
           "example": "from infra_lab import validate\nimport json\nfrom pathlib import Path\n\nresources = json.loads(Path('topology.json').read_text())['resources']\nresources[1]['public_network'] = True\ntry:\n    validate(resources)\nexcept ValueError as error:\n    print(error)  # public storage forbidden by training policy"
         }
@@ -1116,7 +1116,7 @@
         {
           "title": "Syntax, models and provider checks",
           "paragraphs": [
-            "JSON parsing checks syntax. Offline model tests check selected arithmetic and policy invariants. terraform validate checks language and provider schema after initialization. A plan can consult cloud APIs. Terraform test may create real resources unless runs are explicitly planned or providers mocked with compatible versions. Deployed smoke tests examine actual endpoints and identities."
+            "JSON parsing checks syntax. Offline model tests check selected arithmetic and policy invariants. `terraform validate` checks language and provider schema after initialization. A plan can consult cloud APIs. Terraform test may create real resources unless runs are explicitly planned or providers mocked with compatible versions. Deployed smoke tests examine actual endpoints and identities."
           ]
         },
         {
@@ -1233,7 +1233,7 @@
         {
           "title": "The isolated teardown sequence",
           "paragraphs": [
-            "The offline planner refuses destroy actions without an explicit opt-in; it never calls Azure. For an independently chosen isolated real lab, review terraform plan -destroy before any terraform destroy, then check the portal and remaining state. A resource group must contain only your disposable learning resources."
+            "The offline planner refuses destroy actions without an explicit opt-in; it never calls Azure. For an independently chosen isolated real lab, review `terraform plan -destroy` before any `terraform destroy`, then check the portal and remaining state. A resource group must contain only your disposable learning resources."
           ]
         }
       ],

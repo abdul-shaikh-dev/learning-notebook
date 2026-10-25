@@ -113,20 +113,20 @@
           "title": "Concept",
           "paragraphs": [
             "Python reads your source code and performs its instructions. A script is a plain text file ending in .py. The interpreter is the program that runs it; a terminal is where you ask the interpreter to run a file.",
-            "Save the example as hello.py in a folder you can find. Open a terminal in that folder and run python hello.py. On Windows, py hello.py may work instead; on macOS or Linux the command is often python3 hello.py. Use the same interpreter command throughout this path."
+            "Save the example as `hello.py` in a folder you can find. Open a terminal in that folder and run `python hello.py`. On Windows, `py hello.py` may work instead; on macOS or Linux the command is often `python3 hello.py`. Use the same interpreter command throughout this path."
           ]
         },
         {
           "title": "Example",
           "paragraphs": [
-            "print sends a value to the terminal. Quotation marks delimit text, called a string; they do not appear in the output. Python runs these lines from top to bottom."
+            "`print` sends a value to the terminal. Quotation marks delimit text, called a string; they do not appear in the output. Python runs these lines from top to bottom."
           ],
           "example": "print(\"Hello, Python!\")\nprint(\"One small step\")\n\n# Expected output:\n# Hello, Python!\n# One small step"
         },
         {
           "title": "Pitfalls",
           "paragraphs": [
-            "The interactive prompt shows >>> and runs one instruction at a time. Do not copy >>> into a script. If the terminal cannot find Python, fix the installation or interpreter selection before debugging your code. A file named python.py can also shadow library imports later."
+            "The interactive prompt shows `>>>` and runs one instruction at a time. Do not copy `>>>` into a script. If the terminal cannot find Python, fix the installation or interpreter selection before debugging your code. A file named `python.py` can also shadow library imports later."
           ]
         }
       ],
@@ -170,20 +170,20 @@
           "title": "Concept",
           "paragraphs": [
             "An assignment such as count = 3 binds a name to a value. Reading count later retrieves that value. Reassigning count changes what the name refers to; = is assignment, while == compares values.",
-            "Integers represent whole numbers, floats represent approximate fractional numbers, strings represent text, and booleans are True or False. Choose names that describe the value, such as minutes_per_day, and use type(value) when you need to inspect a type."
+            "Integers represent whole numbers, floats represent approximate fractional numbers, strings represent text, and booleans are `True` or `False`. Choose names that describe the value, such as `minutes_per_day`, and use `type(value)` when you need to inspect a type."
           ]
         },
         {
           "title": "Example",
           "paragraphs": [
-            "The example totals study time and uses an f-string to insert values into text. Division / produces a float. The // operator gives floor division, and % gives a remainder."
+            "The example totals study time and uses an f-string to insert values into text. Division `/` produces a `float`. The `//` operator gives floor division, and `%` gives a remainder."
           ],
           "example": "minutes_per_day = 25\ndays = 4\ntotal = minutes_per_day * days\nprint(f\"Total: {total} minutes\")\nprint(f\"Hours: {total / 60:.2f}\")\n\n# Expected output:\n# Total: 100 minutes\n# Hours: 1.67"
         },
         {
           "title": "Pitfalls",
           "paragraphs": [
-            "Decimal floats can have tiny representation errors: 0.1 + 0.2 need not equal 0.3 exactly. Avoid exact equality for measured fractional values; for money use integer smallest units or learn decimal.Decimal. A name is case sensitive: Minutes and minutes are different names."
+            "Decimal floats can have tiny representation errors: `0.1 + 0.2` need not equal `0.3` exactly. Avoid exact equality for measured fractional values; for money use integer smallest units or learn `decimal.Decimal`. A name is case sensitive: `Minutes` and `minutes` are different names."
           ]
         }
       ],
@@ -226,21 +226,21 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "Strings are sequences of Unicode code points. Indexing starts at zero: name[0] is the first character. A slice such as name[:3] selects a portion. len(name) counts code points, which may differ from the number of visible characters. Methods such as strip and lower return transformed strings.",
-            "input displays an optional prompt and returns a string, even when a user types digits. int converts suitable text to an integer; float converts suitable text to a floating-point number. This lesson uses fixed input text so the example runs without waiting for a person."
+            "Strings are sequences of Unicode code points. Indexing starts at zero: `name[0]` is the first character. A slice such as `name[:3]` selects a portion. `len(name)` counts code points, which may differ from the number of visible characters. Methods such as `strip` and `lower` return transformed strings.",
+            "input displays an optional prompt and returns a string, even when a user types digits. `int` converts suitable text to an integer; `float` converts suitable text to a floating-point number. This lesson uses fixed input text so the example runs without waiting for a person."
           ]
         },
         {
           "title": "Example",
           "paragraphs": [
-            "Trimming surrounding spaces and normalizing case helps compare user input. The example converts the age before adding one. Try replacing raw_age with input(\"Age: \") after you understand the deterministic version."
+            "Trimming surrounding spaces and normalizing case helps compare user input. The example converts the age before adding one. Try replacing `raw_age` with `input(\"Age: \")` after you understand the deterministic version."
           ],
           "example": "raw_name = \"  Mira  \"\nraw_age = \"20\"\nname = raw_name.strip()\nage = int(raw_age)\nprint(f\"Hi {name}, next year you will be {age + 1}.\")\nprint(name.lower())\n\n# Expected output:\n# Hi Mira, next year you will be 21.\n# mira"
         },
         {
           "title": "Pitfalls",
           "paragraphs": [
-            "Strings do not change in place: name.strip() returns a value you must use or assign. int(\"twenty\") raises ValueError; we handle this in lesson 8. Never use eval to interpret user input. Indexing an empty string fails, so inspect length before reading its first character."
+            "Strings do not change in place: `name.strip()` returns a value you must use or assign. `int(\"twenty\")` raises `ValueError`; we handle this in lesson 8. Never use `eval` to interpret user input. Indexing an empty string fails, so inspect length before reading its first character."
           ]
         }
       ],
@@ -283,7 +283,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "A comparison returns a boolean: score >= 50 asks whether the score meets a threshold. An if block runs only when its condition is true. elif tests another condition, and else handles the remaining cases.",
+            "A comparison returns a boolean: score >= 50 asks whether the score meets a threshold. An `if` block runs only when its condition is true. `elif` tests another condition, and `else` handles the remaining cases.",
             "Indentation defines the body of a block. Use four spaces consistently. Combine conditions with and, or, and not; use parentheses when the intended grouping is not obvious."
           ]
         },
@@ -341,7 +341,7 @@
           "title": "Concept",
           "paragraphs": [
             "A list stores an ordered sequence and can be changed with append or item assignment. A tuple is an ordered sequence whose item references cannot be reassigned. A dictionary maps unique keys to values; use meaningful keys for records such as a task title and status.",
-            "A set stores unique values and is useful for membership checks and removing duplicates. Set iteration order is not a display contract, so sort a set before producing predictable output. Dictionary indexing raises KeyError for a missing key; get supplies an optional fallback."
+            "A set stores unique values and is useful for membership checks and removing duplicates. Set iteration order is not a display contract, so sort a set before producing predictable output. Dictionary indexing raises `KeyError` for a missing key; get supplies an optional fallback."
           ]
         },
         {
@@ -354,7 +354,7 @@
         {
           "title": "Pitfalls",
           "paragraphs": [
-            "Assigning second = first shares the same list; editing either name edits that list. Use first.copy() for a shallow copy, remembering that nested objects remain shared. {} makes an empty dictionary; set() makes an empty set. List indices start at zero."
+            "Assigning `second = first` shares the same list; editing either name edits that list. Use `first.copy()` for a shallow copy, remembering that nested objects remain shared. `{}` makes an empty dictionary; `set()` makes an empty set. List indices start at zero."
           ]
         }
       ],
@@ -397,7 +397,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "A for loop iterates over items in a sequence or other iterable. range(3) produces 0, 1, and 2; its stop is excluded. An accumulator starts at a neutral value such as 0 and is updated during each iteration.",
+            "A `for` loop iterates over items in a sequence or other iterable. `range(3)` produces 0, 1, and 2; its stop is excluded. An accumulator starts at a neutral value such as 0 and is updated during each iteration.",
             "A while loop repeats while a condition remains true. It is useful when the number of repetitions is unknown. To terminate normally, the loop must eventually make the condition false or reach break; return or an exception can also leave the loop. break exits a loop and continue skips the remainder of the current iteration."
           ]
         },
@@ -418,14 +418,14 @@
           "title": "Work through a grouping operation",
           "paragraphs": [
             "Suppose the input topics are Python 20, SQL 30 and Python 10. A list preserves individual sessions; a dictionary answers the different question of total time per topic. Start with an empty dictionary, add 20 under Python, add 30 under SQL, then update Python to 30. Choosing a structure follows the question you need to answer.",
-            "Each item is a two-value tuple. The loop assigns its first value to topic and its second to minutes. totals.get(topic, 0) starts a missing topic at zero; adding minutes updates that topic without erasing earlier sessions. Two sessions with the same topic and duration may both be valid, so do not remove them with a set."
+            "Each item is a two-value tuple. The loop assigns its first value to `topic` and its second to `minutes`. `totals.get(topic, 0)` starts a missing topic at zero; adding minutes updates that topic without erasing earlier sessions. Two sessions with the same topic and duration may both be valid, so do not remove them with a set."
           ],
           "example": "totals = {}\nfor topic, minutes in [(\"Python\", 20), (\"SQL\", 30), (\"Python\", 10)]:\n    totals[topic] = totals.get(topic, 0) + minutes\nprint(totals)\n# Expected: {\"Python\": 30, \"SQL\": 30}"
         },
         {
           "title": "Keep the index when you need it",
           "paragraphs": [
-            "enumerate pairs each item with its zero-based index. In for index, label, Python assigns those two values to separate names. Use the index when a problem asks where a match occurs, and the value when it asks what matched."
+            "`enumerate` pairs each item with its zero-based index. In for index, label, Python assigns those two values to separate names. Use the index when a problem asks where a match occurs, and the value when it asks what matched."
           ],
           "example": "labels = [\"read\", \"code\"]\nfor index, label in enumerate(labels):\n    print(index, label)\n# 0 read\n# 1 code"
         }
@@ -469,7 +469,7 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "def defines a function with parameters: names for its inputs. Calling the function supplies arguments. return sends a result to the caller and ends that call. A function that reaches the end without return produces None.",
+            "`def` defines a function with parameters: names for its inputs. Calling the function supplies arguments. return sends a result to the caller and ends that call. A function that reaches the end without `return` produces `None`.",
             "Variables created inside a function are usually local to that call. Prefer passing data in and returning data out instead of changing global variables. This makes the function easier to reuse and test. A short docstring can explain its contract."
           ]
         },
@@ -483,22 +483,22 @@
         {
           "title": "Pitfalls",
           "paragraphs": [
-            "Printing a number does not return it. Avoid mutable defaults such as items=[] because the same list can be reused across calls; use None and create a list inside the function. Name parameters consistently and distinguish a function definition from a function call."
+            "Printing a number does not return it. Avoid mutable defaults such as items=[] because the same list can be reused across calls; use `None` and create a list inside the function. Name parameters consistently and distinguish a function definition from a function call."
           ]
         },
         {
           "title": "Separate computation from interaction",
           "paragraphs": [
-            "A function that asks for input, updates a global dictionary and prints results has three reasons to fail. Move the calculation into summarize(rows), returning a value. The terminal wrapper can collect input and render the returned rows. Now the same computation can serve a CLI, a file importer or a future web route.",
-            "An empty input is a normal case and returns an empty list. Invalid minutes are a different case and raise ValueError. Avoid returning an empty list for both, because callers could report a broken import as a successful empty summary."
+            "A function that asks for input, updates a global dictionary and prints results has three reasons to fail. Move the calculation into `summarize(rows)`, returning a value. The terminal wrapper can collect input and render the returned rows. Now the same computation can serve a CLI, a file importer or a future web route.",
+            "An empty input is a normal case and returns an empty list. Invalid minutes are a different case and raise `ValueError`. Avoid returning an empty list for both, because callers could report a broken import as a successful empty summary."
           ]
         },
         {
           "title": "Move from an example to a checked function",
           "paragraphs": [
-            "The Python Problem Solving path starts with these same building blocks. Its test runner calls your function with supplied arguments and compares the returned value. You do not need input() or print() inside the function. A starter that raises NotImplementedError is deliberately unfinished; replace that line with your calculation.",
-            "In a signature such as total(values: list[int]) -> int, list[int] describes the expected input and -> int describes the return type. These annotations do not validate values at runtime. The problem constraints tell you which inputs the tests supply.",
-            "An assert checks a claim while you develop: it does nothing if the comparison is true and raises AssertionError if false. Try changing an expected value below to see a failure, then restore it. These checks are for development, not validation of untrusted input."
+            "The Python Problem Solving path starts with these same building blocks. Its test runner calls your function with supplied arguments and compares the returned value. You do not need `input()` or `print()` inside the function. A starter that raises `NotImplementedError` is deliberately unfinished; replace that line with your calculation.",
+            "In a signature such as `total(values: list[int]) -> int`, `list[int]` describes the expected input and `-> int` describes the return type. These annotations do not validate values at runtime. The problem constraints tell you which inputs the tests supply.",
+            "An assert checks a claim while you develop: it does nothing if the comparison is true and raises `AssertionError` if false. Try changing an expected value below to see a failure, then restore it. These checks are for development, not validation of untrusted input."
           ],
           "example": "def doubled(value: int) -> int:\n    return value * 2\n\nassert doubled(3) == 6\nassert doubled(0) == 0\nassert doubled(-2) == -4\n# All three checks pass without output."
         }
@@ -549,7 +549,7 @@
         {
           "title": "Example",
           "paragraphs": [
-            "parse_minutes handles a conversion error and rejects negative values. The caller catches ValueError and gives a useful message. The example tries both valid and invalid input."
+            "`parse_minutes` handles a conversion error and rejects negative values. The caller catches `ValueError` and gives a useful message. The example tries both valid and invalid input."
           ],
           "example": "def parse_minutes(text):\n    minutes = int(text)\n    if minutes < 0:\n        raise ValueError(\"minutes must be nonnegative\")\n    return minutes\n\nfor text in [\"15\", \"-2\"]:\n    try:\n        print(parse_minutes(text))\n    except ValueError as error:\n        print(f\"Invalid: {error}\")\n\n# Expected output:\n# 15\n# Invalid: minutes must be nonnegative"
         },
@@ -563,7 +563,7 @@
           "title": "Trace a validation failure before repairing it",
           "paragraphs": [
             "A row with minutes=\"20\" is not equivalent to a row with integer 20 under an explicit numeric input contract. Validate at the boundary, then compute with one consistent representation. If text conversion is part of your product, perform it in a separate input adapter rather than accidentally accepting arbitrary values inside the calculation.",
-            "In Python, bool is a subclass of int. For this exercise, True must not silently mean one minute, so type(minutes) is int expresses the exact policy. The checks also try negative minutes, one above the maximum, missing fields and a whitespace-only topic. Each rejected input should identify a contract decision you can explain."
+            "In Python, `bool` is a subclass of `int`. For this exercise, `True` must not silently mean one minute, so `type(minutes) is int` expresses the exact policy. The checks also try negative minutes, one above the maximum, missing fields and a whitespace-only topic. Each rejected input should identify a contract decision you can explain."
           ]
         }
       ],
@@ -606,15 +606,15 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "A file stores data after the process ends. pathlib.Path describes a filesystem path. read_text and write_text work with text; specify encoding=\"utf-8\" so behavior is consistent across machines. A relative path is resolved from the current working directory.",
-            "JSON represents objects, arrays, strings, numbers, booleans, and null. json.dumps converts supported Python values to JSON text; json.loads reads JSON text into Python values. Saving and loading are separate operations, and loaded data still needs validation."
+            "A file stores data after the process ends. `pathlib.Path` describes a filesystem path. `read_text` and `write_text` work with text; specify `encoding=\"utf-8\"` so behavior is consistent across machines. A relative path is resolved from the current working directory.",
+            "JSON represents objects, arrays, strings, numbers, booleans, and null. `json.dumps` converts supported Python values to JSON text; `json.loads` reads JSON text into Python values. Saving and loading are separate operations, and loaded data still needs validation."
           ]
         },
         {
           "title": "Read the setup lines first",
           "paragraphs": [
-            "import json makes the standard-library module available under the name json. from pathlib import Path imports one named tool, so the example calls Path directly. These imports use Python's built-in library; there is nothing to install.",
-            "with TemporaryDirectory() as folder creates a temporary folder, gives its name to folder, and removes it when the indented block ends. Keep writing and reading inside that block. Path(folder) / \"tasks.json\" joins path parts; this slash is a Path operation, not numeric division. The later context-managers lesson explains how cleanup works when an operation fails."
+            "`import json` makes the standard-library module available under the name `json`. `from pathlib import Path` imports one named tool, so the example calls `Path` directly. These imports use Python's built-in library; there is nothing to install.",
+            "`with TemporaryDirectory() as folder` creates a temporary folder, gives its name to `folder`, and removes it when the indented block ends. Keep writing and reading inside that block. `Path(folder) / \"tasks.json\"` joins path parts; this slash is a `Path` operation, not numeric division. The later context-managers lesson explains how cleanup works when an operation fails."
           ]
         },
         {
@@ -627,7 +627,7 @@
         {
           "title": "Pitfalls",
           "paragraphs": [
-            "Writing a file replaces its previous contents. Do not use a valuable existing file for experiments. JSON object keys become strings, and JSON does not automatically preserve custom classes or tuples. A missing file raises FileNotFoundError and broken JSON raises json.JSONDecodeError; these are different recovery cases."
+            "Writing a file replaces its previous contents. Do not use a valuable existing file for experiments. JSON object keys become strings, and JSON does not automatically preserve custom classes or tuples. A missing file raises `FileNotFoundError` and broken JSON raises `json.JSONDecodeError`; these are different recovery cases."
           ]
         }
       ],
@@ -670,21 +670,21 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "A module is a Python file whose definitions can be imported. A package groups modules. Standard library modules ship with Python, while third-party packages require separate installation. Avoid naming your files json.py, unittest.py, or other library names.",
-            "A virtual environment gives a project its own interpreter context and installed packages. Create one with python -m venv .venv. On Windows call .venv\\Scripts\\python.exe directly; on macOS/Linux call .venv/bin/python. Direct invocation avoids shell activation differences. Use that interpreter with -m pip when installing a needed dependency."
+            "A module is a Python file whose definitions can be imported. A package groups modules. Standard library modules ship with Python, while third-party packages require separate installation. Avoid naming your files `json.py`, `unittest.py`, or other library names.",
+            "A virtual environment gives a project its own interpreter context and installed packages. Create one with `python -m venv .venv`. On Windows call `.venv\\Scripts\\python.exe` directly; on macOS/Linux call `.venv/bin/python`. Direct invocation avoids shell activation differences. Use that interpreter with `-m pip` when installing a needed dependency."
           ]
         },
         {
           "title": "Example",
           "paragraphs": [
-            "The runnable example uses only the standard library. For a two-file project, put your function in helpers.py, then import it from main.py in the same folder. The guard if __name__ == \"__main__\": limits script entry code to direct execution, keeping imports from unexpectedly running the program."
+            "The runnable example uses only the standard library. For a two-file project, put your function in `helpers.py`, then import it from `main.py` in the same folder. The guard `if __name__ == \"__main__\":` limits script entry code to direct execution, keeping imports from unexpectedly running the program."
           ],
           "example": "from statistics import mean\n\ndef average_minutes(values):\n    return mean(values)\n\nif __name__ == \"__main__\":\n    print(average_minutes([10, 20, 30]))\n\n# Expected output:\n# 20"
         },
         {
           "title": "Pitfalls",
           "paragraphs": [
-            "Installing into one interpreter and running another causes confusing missing-module errors. Inspect sys.executable to see which interpreter is active. Keep .venv out of version control and document dependencies; do not copy an environment between machines. No third-party installation is needed for this path."
+            "Installing into one interpreter and running another causes confusing missing-module errors. Inspect `sys.executable` to see which interpreter is active. Keep `.venv` out of version control and document dependencies; do not copy an environment between machines. No third-party installation is needed for this path."
           ]
         }
       ],
@@ -729,14 +729,14 @@
         {
           "title": "Concept",
           "paragraphs": [
-            "A test states an expected behavior for an input. Start with a normal case, an empty case, and an invalid or boundary case. unittest.TestCase supplies assertions and a runner in the standard library; a test failure should identify a behavior worth investigating.",
+            "A test states an expected behavior for an input. Start with a normal case, an empty case, and an invalid or boundary case. `unittest.TestCase` supplies assertions and a runner in the standard library; a test failure should identify a behavior worth investigating.",
             "An HTTP API is a remote service accepting requests and returning responses. A response has a status, headers, and body. JSON is one common body format. Networks can time out, services can reject requests, and returned data can differ from what you expected; HTTP success alone does not prove a usable schema."
           ]
         },
         {
           "title": "Example",
           "paragraphs": [
-            "The example processes an API-shaped JSON fixture entirely offline and tests the same parser. Real retrieval could use urllib.request.urlopen(url, timeout=10) in a with block followed by json.load(response). Keep the URL configured, inspect service documentation, handle HTTPError/URLError, and validate the decoded data before passing it to your calculation."
+            "The example processes an API-shaped JSON fixture entirely offline and tests the same parser. Real retrieval could use `urllib.request.urlopen(url, timeout=10)` in a `with` block followed by `json.load(response)`. Keep the URL configured, inspect service documentation, handle `HTTPError`/`URLError`, and validate the decoded data before passing it to your calculation."
           ],
           "example": "import json\nimport unittest\n\ndef total_minutes(payload):\n    return sum(item[\"minutes\"] for item in payload[\"sessions\"])\n\nclass TotalTests(unittest.TestCase):\n    def test_empty(self):\n        self.assertEqual(total_minutes({\"sessions\": []}), 0)\n\nsuite = unittest.defaultTestLoader.loadTestsFromTestCase(TotalTests)\nresult = unittest.TestResult()\nsuite.run(result)\nprint(f\"Tests passed: {result.wasSuccessful()}\")\npayload = json.loads('{\"sessions\":[{\"minutes\":15},{\"minutes\":20}]}')\nprint(total_minutes(payload))\n\n# Expected output:\n# Tests passed: True\n# 35"
         },
@@ -749,7 +749,7 @@
         {
           "title": "Bridge to local file failures",
           "paragraphs": [
-            "After the in-memory counter, run practice/test_io_failure_bridge.py. The source is a real JSON file and the output is an existing report. Invalid or missing input must leave that report unchanged. io_failure_bridge.py shows where validation fails and how cleanup removes the temporary file.",
+            "After the in-memory counter, run `practice/test_io_failure_bridge.py`. The source is a real JSON file and the output is an existing report. Invalid or missing input must leave that report unchanged. `io_failure_bridge.py` shows where validation fails and how cleanup removes the temporary file.",
             "This local exercise checks validation and replacement in one process. It does not prove crash durability or safe concurrent writers. The advanced import pipeline adds bounded input and more failure cases."
           ]
         }
@@ -802,7 +802,7 @@
         {
           "title": "Example",
           "paragraphs": [
-            "The example adds two validated records, saves them in a temporary folder, reloads them, and summarizes the result. The practical exercise extends the program with a topic summary. A real CLI could use argparse for commands such as add and summary; learn that module after the core functions work."
+            "The example adds two validated records, saves them in a temporary folder, reloads them, and summarizes the result. The practical exercise extends the program with a topic summary. A real CLI could use `argparse` for commands such as `add` and `summary`; learn that module after the core functions work."
           ],
           "example": "from pathlib import Path\nfrom tempfile import TemporaryDirectory\nimport json\n\ndef add_session(log, topic, minutes):\n    if not isinstance(topic, str) or not topic.strip():\n        raise ValueError(\"topic is required\")\n    if type(minutes) is not int or minutes < 0:\n        raise ValueError(\"minutes must be a nonnegative integer\")\n    log.append({\"topic\": topic.strip(), \"minutes\": minutes})\n\nwith TemporaryDirectory() as folder:\n    log = []\n    add_session(log, \"Python\", 25)\n    add_session(log, \"Python\", 15)\n    path = Path(folder) / \"study.json\"\n    path.write_text(json.dumps(log, indent=2), encoding=\"utf-8\")\n    restored = json.loads(path.read_text(encoding=\"utf-8\"))\n    print(f\"Sessions: {len(restored)}\")\n    print(f\"Minutes: {sum(s['minutes'] for s in restored)}\")\n\n# Expected output:\n# Sessions: 2\n# Minutes: 40"
         },
@@ -815,7 +815,7 @@
         {
           "title": "Build a summary without copying its implementation",
           "paragraphs": [
-            "Open summary-challenge.md and create my_summary.py with summarize(rows). The supplied summary_checks.py imports your module by name, so you can solve the contract independently and run python summary_checks.py my_summary. It checks grouping, deterministic ties, input preservation and invalid records. The reference is a separate file you can inspect after an attempt.",
+            "Open `summary-challenge.md` and create `my_summary.py` with `summarize(rows)`. The supplied `summary_checks.py` imports your module by name, so you can solve the contract independently and run `python summary_checks.py my_summary`. It checks grouping, deterministic ties, input preservation and invalid records. The reference is a separate file you can inspect after an attempt.",
             "One transfer check splits a seven-minute X session into distinct three-minute and four-minute sessions. The summary must stay the same. This property catches implementations tied to the example row count. It complements concrete expected values: a function always returning [] could satisfy reorder invariance but still be wrong."
           ]
         }
@@ -864,20 +864,20 @@
           "title": "Design",
           "paragraphs": [
             "A class groups data and its rules; each instance carries its own state. Methods receive the instance as self. Use a class when this relationship helps explain behavior, rather than wrapping unrelated functions.",
-            "A dataclass generates construction, representation and equality from annotated fields. It does not enforce annotated types. __post_init__ can enforce invariants after construction; frozen=True blocks ordinary assignment but is not deep immutability."
+            "A dataclass generates construction, representation and equality from annotated fields. It does not enforce annotated types. `__post_init__` can enforce invariants after construction; `frozen=True` blocks ordinary assignment but is not deep immutability."
           ]
         },
         {
           "title": "Example",
           "paragraphs": [
-            "Session is a value object with a nonnegative integer rule. The exact type check rejects booleans because bool subclasses int. hours is derived so it cannot drift away from minutes. Observe equality between independently constructed values."
+            "Session is a value object with a nonnegative integer rule. The exact type check rejects booleans because `bool` subclasses `int`. `hours` is derived so it cannot drift away from minutes. Observe equality between independently constructed values."
           ],
           "example": "from dataclasses import dataclass\n@dataclass(frozen=True)\nclass Session:\n    topic: str\n    minutes: int\n    def __post_init__(self):\n        if not isinstance(self.topic, str) or not self.topic.strip():\n            raise ValueError(\"topic required\")\n        if type(self.minutes) is not int or self.minutes < 0:\n            raise ValueError(\"invalid minutes\")\n    def hours(self):\n        return self.minutes / 60\ns = Session(\"Python\", 90)\nprint(s.hours())\nprint(s == Session(\"Python\", 90))\n\n# Expected output:\n# 1.5\n# True"
         },
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "Mutable defaults need field(default_factory=list) to create a new list per instance. Prefer composition until inheritance has a clear substitutability contract.",
+            "Mutable defaults need `field(default_factory=list)` to create a new list per instance. Prefer composition until inheritance has a clear substitutability contract.",
             "Equality compares fields; it is not persistent identity. Equal topic/duration records can still represent separate events."
           ]
         }
@@ -927,7 +927,7 @@
         {
           "title": "Example",
           "paragraphs": [
-            "summarize accepts anything with records(). MemorySource gives predictable data without I/O. The declared list[int] is a contract, not a JSON validator; external data needs runtime checks before use."
+            "`summarize` accepts anything with `records()`. `MemorySource` gives predictable data without I/O. The declared `list[int]` is a contract, not a JSON validator; external data needs runtime checks before use."
           ],
           "example": "from typing import Protocol\nclass MinuteSource(Protocol):\n    def records(self) -> list[int]: ...\nclass MemorySource:\n    def records(self) -> list[int]:\n        return [10, 20]\ndef summarize(source: MinuteSource) -> int:\n    return sum(source.records())\nprint(summarize(MemorySource()))\n\n# Expected output:\n# 30"
         },
@@ -977,8 +977,8 @@
         {
           "title": "Design",
           "paragraphs": [
-            "An iterable supplies an iterator through iter(). next() retrieves values until StopIteration. Lists are reusable iterables; a generator object is typically a one-pass iterator.",
-            "A generator function yields values while preserving local state. Its body starts during iteration, so errors and effects can be delayed. Lazy stages avoid intermediate lists, but list(...) materializes all results."
+            "An iterable supplies an iterator through `iter()`. `next()` retrieves values until `StopIteration`. Lists are reusable iterables; a generator object is typically a one-pass iterator.",
+            "A generator function yields values while preserving local state. Its body starts during iteration, so errors and effects can be delayed. Lazy stages avoid intermediate lists, but `list(...)` materializes all results."
           ]
         },
         {
@@ -1035,7 +1035,7 @@
           "title": "Design",
           "paragraphs": [
             "with gives a resource a bounded lifetime and exits whether the body succeeds or raises. Files and temporary directories already implement this protocol.",
-            "contextlib.contextmanager expresses acquisition before yield and cleanup in finally. Yield exactly once. An exception in the body is delivered at yield; do not accidentally suppress it."
+            "`contextlib.contextmanager` expresses acquisition before `yield` and cleanup in `finally`. Yield exactly once. An exception in the body is delivered at `yield`; do not accidentally suppress it."
           ]
         },
         {
@@ -1091,27 +1091,27 @@
         {
           "title": "Design",
           "paragraphs": [
-            "A package groups modules under an import name; a distribution is an installable artifact. __init__.py makes a regular package; __main__.py supports python -m package. For distribution, pyproject.toml declares metadata, Python requirements and a build backend. A src layout can prevent accidental imports from the working tree but needs installation or explicit test configuration."
+            "A package groups modules under an import name; a distribution is an installable artifact. `__init__.py` makes a regular package; `__main__.py` supports `python -m package`. For distribution, `pyproject.toml` declares metadata, Python requirements and a build backend. A src layout can prevent accidental imports from the working tree but needs installation or explicit test configuration."
           ]
         },
         {
           "title": "Example",
           "paragraphs": [
-            "argparse parses argument text and provides help/errors. A fixed argument list makes this example repeatable. The downloadable intermediate tool keeps calculation functions separate from main; publishing a wheel is optional later practice."
+            "`argparse` parses argument text and provides help/errors. A fixed argument list makes this example repeatable. The downloadable intermediate tool keeps calculation functions separate from main; publishing a wheel is optional later practice."
           ],
           "example": "import argparse\ndef parser():\n    result = argparse.ArgumentParser(description=\"Summarize study time\")\n    result.add_argument(\"minutes\", type=int, nargs=\"+\")\n    return result\nargs = parser().parse_args([\"10\", \"20\"])\nprint(sum(args.minutes))\n\n# Expected output:\n# 30"
         },
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "int conversion alone accepts negatives. Apply domain constraints after parsing or in a constrained converter; expected errors should return nonzero status.",
-            "Importing a module should not parse arguments or write files. Put the entry call beneath the __main__ guard. Pass argument lists to subprocess without shell=True rather than constructing shell commands from input."
+            "`int` conversion alone accepts negatives. Apply domain constraints after parsing or in a constrained converter; expected errors should return nonzero status.",
+            "Importing a module should not parse arguments or write files. Put the entry call beneath the `__main__` guard. Pass argument lists to `subprocess` without `shell=True` rather than constructing shell commands from input."
           ]
         },
         {
           "title": "Verify the installed artifact",
           "paragraphs": [
-            "Use practice/python_package_starter.py to generate the complete src-layout package with pinned setuptools 82.0.1, a CLI entry point and a packaged resource. Follow practice/installed-package-exercise.md and run test_installed_package.py: build a wheel without network dependency resolution, install into a second clean environment and execute outside the source checkout. The local checks passed with Python 3.14, build 1.4.0 and setuptools 82.0.1 on 2026-09-27; unavailable exact build tooling is reported as a skip. No package publication is involved. Extend the supplied implementation after recording module location, command exit statuses and packaged-data evidence."
+            "Use `practice/python_package_starter.py` to generate the complete src-layout package with pinned setuptools 82.0.1, a CLI entry point and a packaged resource. Follow `practice/installed-package-exercise.md` and run `test_installed_package.py`: build a wheel without network dependency resolution, install into a second clean environment and execute outside the source checkout. The local checks passed with Python 3.14, build 1.4.0 and setuptools 82.0.1 on 2026-09-27; unavailable exact build tooling is reported as a skip. No package publication is involved. Extend the supplied implementation after recording module location, command exit statuses and packaged-data evidence."
           ]
         }
       ],
@@ -1160,13 +1160,13 @@
         {
           "title": "Design",
           "paragraphs": [
-            "Use normal cases, boundaries and invariants such as save/load preservation. Temporary fixtures isolate tests from personal files. unittest supports assertRaises, assertLogs and subTest for diagnosed failure cases. Logs explain operations; they do not replace return values or assertions."
+            "Use normal cases, boundaries and invariants such as save/load preservation. Temporary fixtures isolate tests from personal files. `unittest` supports `assertRaises`, `assertLogs` and `subTest` for diagnosed failure cases. Logs explain operations; they do not replace return values or assertions."
           ]
         },
         {
           "title": "Example",
           "paragraphs": [
-            "A dedicated logger and StringIO handler make this warning deterministic. Applications choose handlers and levels; reusable modules should not globally configure logging. The project suite combines real temporary storage with one mock of the replacement boundary."
+            "A dedicated logger and `StringIO` handler make this warning deterministic. Applications choose handlers and levels; reusable modules should not globally configure logging. The project suite combines real temporary storage with one mock of the replacement boundary."
           ],
           "example": "import logging\nfrom io import StringIO\nstream = StringIO()\nlogger = logging.getLogger(\"lesson.validation\")\nlogger.handlers.clear()\nlogger.propagate = False\nlogger.setLevel(logging.INFO)\nhandler = logging.StreamHandler(stream)\nhandler.setFormatter(logging.Formatter(\"%(levelname)s:%(message)s\"))\nlogger.addHandler(handler)\nlogger.warning(\"rejected record %s\", 2)\nprint(stream.getvalue().strip())\nlogger.removeHandler(handler)\nhandler.close()\n\n# Expected output:\n# WARNING:rejected record 2"
         },
@@ -1180,8 +1180,8 @@
         {
           "title": "Replace one dependency to force a failure",
           "paragraphs": [
-            "The storage exercise needs an error at a precise point, after preparing new data but before replacing old data. unittest.mock.patch temporarily replaces the looked-up function. side_effect makes each call raise the supplied exception; leaving with restores the real function.",
-            "Use this technique only at the dependency you want to fail. Keep validation and the function under test real. The small example below has no disk access; the later storage exercise applies the same pattern to os.replace and checks old file contents."
+            "The storage exercise needs an error at a precise point, after preparing new data but before replacing old data. `unittest.mock.patch` temporarily replaces the looked-up function. `side_effect` makes each call raise the supplied exception; leaving `with` restores the real function.",
+            "Use this technique only at the dependency you want to fail. Keep validation and the function under test real. The small example below has no disk access; the later storage exercise applies the same pattern to `os.replace` and checks old file contents."
           ],
           "example": "from unittest.mock import patch\nimport os\n\ndef publish(source, target):\n    os.replace(source, target)\n\nwith patch(\"os.replace\", side_effect=OSError(\"injected\")) as replace:\n    try:\n        publish(\"prepared\", \"report\")\n    except OSError as error:\n        assert str(error) == \"injected\"\n    else:\n        raise AssertionError(\"failure was hidden\")\n    replace.assert_called_once_with(\"prepared\", \"report\")"
         }
@@ -1224,35 +1224,35 @@
         {
           "title": "Design",
           "paragraphs": [
-            "Concurrency overlaps progress; parallelism executes simultaneously. Threads commonly suit blocking I/O. CPU-bound Python often benefits from processes on conventional GIL-enabled builds; free-threaded builds/extensions change tradeoffs. asyncio cooperatively schedules coroutines at await points, and TaskGroup provides bounded task lifetimes and failure propagation."
+            "Concurrency overlaps progress; parallelism executes simultaneously. Threads commonly suit blocking I/O. CPU-bound Python often benefits from processes on conventional GIL-enabled builds; free-threaded builds/extensions change tradeoffs. `asyncio` cooperatively schedules coroutines at `await` points, and `TaskGroup` provides bounded task lifetimes and failure propagation."
           ]
         },
         {
           "title": "Example",
           "paragraphs": [
-            "Executor.map returns results in input order even if completion order differs. The caller aggregates returned values rather than workers changing shared totals. This tiny calculation demonstrates mechanics, not a speedup. The exercise uses simulated async I/O without any service."
+            "`Executor.map` returns results in input order even if completion order differs. The caller aggregates returned values rather than workers changing shared totals. This tiny calculation demonstrates mechanics, not a speedup. The exercise uses simulated async I/O without any service."
           ],
           "example": "from concurrent.futures import ThreadPoolExecutor\ndef score(value):\n    return value * value\nwith ThreadPoolExecutor(max_workers=2) as pool:\n    results = list(pool.map(score, [3, 1, 2]))\nprint(results)\nprint(sum(results))\n\n# Expected output:\n# [9, 1, 4]\n# 14"
         },
         {
           "title": "From threads to async tasks",
           "paragraphs": [
-            "Calling an async def function creates a coroutine. asyncio.run starts an event loop and runs the top-level coroutine in a normal script. Inside it, await suspends the current coroutine while other tasks can make progress. The supplied read_minutes uses sleep(0) only to give another task a turn.",
-            "Enter a TaskGroup with async with. Call group.create_task(read_minutes(value)) to schedule each coroutine and retain its task handle. A successful exit waits for every task in that group. Only then read task.result(). Keeping the handles in input order keeps the returned values in input order, even when tasks finish in a different order.",
-            "TaskGroup owns task lifetimes; it does not limit how many tasks you create. This exercise creates just two. The separate failure lab shows how a child failure cancels siblings and how exceptions leave the group."
+            "Calling an `async def` function creates a coroutine. `asyncio.run` starts an event loop and runs the top-level coroutine in a normal script. Inside it, `await` suspends the current coroutine while other tasks can make progress. The supplied `read_minutes` uses `sleep(0)` only to give another task a turn.",
+            "Enter a `TaskGroup` with `async with`. Call `group.create_task(read_minutes(value))` to schedule each coroutine and retain its task handle. A successful exit waits for every task in that group. Only then read `task.result()`. Keeping the handles in input order keeps the returned values in input order, even when tasks finish in a different order.",
+            "`TaskGroup` owns task lifetimes; it does not limit how many tasks you create. This exercise creates just two. The separate failure lab shows how a child failure cancels siblings and how exceptions leave the group."
           ]
         },
         {
           "title": "Tradeoffs",
           "paragraphs": [
-            "A future.result timeout limits waiting; it does not terminate a running thread. Executor context exit normally waits for work, so real blocking operations need their own deadlines.",
+            "A `future.result` timeout limits waiting; it does not terminate a running thread. Executor context exit normally waits for work, so real blocking operations need their own deadlines.",
             "Blocking code inside a coroutine stops event-loop progress. Cancellation is cooperative and must preserve cleanup. Bound tasks and workers; tiny tasks can cost more to schedule than to run. Do not let workers concurrently rewrite one JSON file."
           ]
         },
         {
           "title": "Fail and cancel a task group",
           "paragraphs": [
-            "Run practice/async_failure_lab.py and python -m unittest test_async_failure_lab.py from practice with Python 3.11+. An Event ensures the sibling is waiting before the failing child raises. Observe an ExceptionGroup containing ValueError, sibling cancellation and finally cleanup before the group exits. The second test cancels the parent and asserts CancelledError propagates after child cleanup. Do not swallow cancellation; no forceful thread termination is demonstrated."
+            "Run `practice/async_failure_lab.py` and `python -m unittest test_async_failure_lab.py` from practice with Python 3.11+. An `Event` ensures the sibling is waiting before the failing child raises. Observe an `ExceptionGroup` containing `ValueError`, sibling cancellation and `finally` cleanup before the group exits. The second test cancels the parent and asserts `CancelledError` propagates after child cleanup. Do not swallow cancellation; no forceful thread termination is demonstrated."
           ]
         }
       ],
@@ -1295,7 +1295,7 @@
         {
           "title": "Design",
           "paragraphs": [
-            "Big-O describes cost growth, not exact runtime. Repeated rescans can dominate constant-factor changes. cProfile helps locate cumulative time; timeit repeats focused measurements. Report workload size, environment and methodology. tracemalloc tracks Python allocations rather than every native allocation."
+            "Big-O describes cost growth, not exact runtime. Repeated rescans can dominate constant-factor changes. `cProfile` helps locate cumulative time; `timeit` repeats focused measurements. Report workload size, environment and methodology. `tracemalloc` tracks Python allocations rather than every native allocation."
           ]
         },
         {
@@ -1407,7 +1407,7 @@
         {
           "title": "Design",
           "paragraphs": [
-            "Direct writing truncates an existing file before the new data is complete. A same-directory temporary file lets you write, flush and fsync its contents, close it, then replace the target with os.replace. Atomic visibility differs from power-loss durability and concurrency control."
+            "Direct writing truncates an existing file before the new data is complete. A same-directory temporary file lets you write, `flush` and `fsync` its contents, close it, then replace the target with `os.replace`. Atomic visibility differs from power-loss durability and concurrency control."
           ]
         },
         {
@@ -1469,7 +1469,7 @@
         {
           "title": "Example",
           "paragraphs": [
-            "The mini example shows ordered workers and batch validation. advanced_project.py adds frozen domain records, duplicate JSON-key rejection, limits, logging and same-directory replacement. Run --demo with temporary files, then run test_projects.py before extending it. Threads demonstrate composition, not a promised speed advantage."
+            "The mini example shows ordered workers and batch validation. `advanced_project.py` adds frozen domain records, duplicate JSON-key rejection, limits, logging and same-directory replacement. Run `--demo` with temporary files, then run `test_projects.py` before extending it. Threads demonstrate composition, not a promised speed advantage."
           ],
           "example": "import json\nfrom concurrent.futures import ThreadPoolExecutor\ndef parse_line(text):\n    value = json.loads(text)\n    if type(value) is not dict or set(value) != {\"id\", \"minutes\"}:\n        raise ValueError(\"invalid fields\")\n    if not isinstance(value[\"id\"], str) or not value[\"id\"]:\n        raise ValueError(\"invalid id\")\n    if type(value[\"minutes\"]) is not int or value[\"minutes\"] < 0:\n        raise ValueError(\"invalid minutes\")\n    return value\ndef import_batch(lines):\n    with ThreadPoolExecutor(max_workers=2) as pool:\n        rows = list(pool.map(parse_line, lines))\n    if len({row[\"id\"] for row in rows}) != len(rows):\n        raise ValueError(\"duplicate id\")\n    return rows\nrows = import_batch(['{\"id\":\"a\",\"minutes\":10}', '{\"id\":\"b\",\"minutes\":20}'])\nprint([r[\"id\"] for r in rows])\nprint(sum(r[\"minutes\"] for r in rows))\n\n# Expected output:\n# ['a', 'b']\n# 30"
         },

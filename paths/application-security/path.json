@@ -170,7 +170,7 @@
           "title": "A cross-owner threat model",
           "paragraphs": [
             "The synthetic notebook stores Alice's and Bob's private documents across two tenants. If Alice guesses Bob's document ID, the unwanted action is reading another owner's private record. The relevant control is object authorization on the server, not making IDs difficult to guess.",
-            "Name the asset, identify its entry point and trust boundary, then describe an abuse case, the control that blocks it and the test that verifies the control. Include availability and operational evidence, not only confidentiality. The threat-model.md worksheet in the kit records the expected and observed test evidence separately."
+            "Name the asset, identify its entry point and trust boundary, then describe an abuse case, the control that blocks it and the test that verifies the control. Include availability and operational evidence, not only confidentiality. The `threat-model.md` worksheet in the kit records the expected and observed test evidence separately."
           ],
           "example": "Asset: Bob private document\nEntry: GET /documents/b\nBoundary: request identity -> server policy -> stored object\nAbuse: Alice changes requested ID to b\nControl: tenant + ownership check\nEvidence: denied response and no document data"
         }
@@ -221,7 +221,7 @@
           "title": "Verified identity and policy",
           "paragraphs": [
             "Authentication establishes who is acting under a particular mechanism. A principal is the server's representation of that identity, such as a subject identifier and tenant. Authorization then decides which actions that identity may perform. A display name or email string supplied by a caller is not sufficient evidence.",
-            "The offline Principal dataclass represents an identity already verified by a trusted adapter. It does not parse tokens, compare passwords or verify cryptographic signatures. Only tests and trusted application code construct it; accepting this object's fields from request JSON would defeat the boundary."
+            "The offline `Principal` dataclass represents an identity already verified by a trusted adapter. It does not parse tokens, compare passwords or verify cryptographic signatures. Only tests and trusted application code construct it; accepting this object's fields from request JSON would defeat the boundary."
           ]
         },
         {
@@ -279,7 +279,7 @@
         {
           "title": "Anonymous access and login errors",
           "paragraphs": [
-            "An anonymous request cannot read Alice's private document, even if it knows the ID. Tests supply None to represent missing authentication. A real endpoint must map absent/invalid authentication to that boundary rather than constructing a default privileged principal.",
+            "An anonymous request cannot read Alice's private document, even if it knows the ID. Tests supply `None` to represent missing authentication. A real endpoint must map absent/invalid authentication to that boundary rather than constructing a default privileged principal.",
             "Public login errors should avoid revealing whether an account exists. Internal monitoring still needs structured failure reasons and rate evidence without storing passwords. Recovery verification should be at least as carefully designed as ordinary login."
           ],
           "example": "from security_lab import read_document\ntry:\n    read_document(None,'a')\nexcept PermissionError:\n    pass\nelse:\n    raise AssertionError('anonymous read allowed')"
@@ -339,7 +339,7 @@
           "title": "The ownership policy matrix",
           "paragraphs": [
             "Alice in red can read a, cannot read Bob's b, and cannot read c in blue even though c names Alice as owner. A red reader can read b but cannot update it. The tests include anonymous, missing object, cross-owner, cross-tenant and unsupported-action cases.",
-            "read_document returns a copied record and uses the same outward error for missing and denied objects. That deliberate privacy policy does not replace internal diagnostics. In a database implementation filter or check ownership before returning or mutating data, and consider concurrent ownership changes."
+            "`read_document` returns a copied record and uses the same outward error for missing and denied objects. That deliberate privacy policy does not replace internal diagnostics. In a database implementation filter or check ownership before returning or mutating data, and consider concurrent ownership changes."
           ],
           "example": "from security_lab import Principal, DOCUMENTS, authorized\nassert authorized(Principal('alice','red'),DOCUMENTS['a'],'update')\nassert not authorized(Principal('alice','red'),DOCUMENTS['c'],'read')\nassert not authorized(Principal('reviewer','red','reader'),DOCUMENTS['b'],'update')"
         },
@@ -347,7 +347,7 @@
           "title": "Break a convincing but incomplete ownership check",
           "paragraphs": [
             "Alice in tenant Red requests document a. The request has a valid session and a valid CSRF token. Now change only the path to Bob's document b: the session is still valid, but object authorization must fail. Next use Alice's identity in tenant Blue against a. Checking only the owner name now fails to separate tenants. The predicate needs the authenticated tenant, owner and permitted action together.",
-            "Run test_security_http.py and inspect the persisted rows after every denial. A 403 or 404 response alone is insufficient: a handler could update first and reject afterward. In an isolated copy, remove the tenant condition from authorization and rerun. The cross-tenant case must fail the test. Restore the condition and verify the legitimate owner can still update.",
+            "Run `test_security_http.py` and inspect the persisted rows after every denial. A 403 or 404 response alone is insufficient: a handler could update first and reject afterward. In an isolated copy, remove the tenant condition from authorization and rerun. The cross-tenant case must fail the test. Restore the condition and verify the legitimate owner can still update.",
             "Changed case: add a read-only collaborator. Decide whether they may read, rename or delete before altering the code. A role called member cannot replace action-specific requirements. Add one allowed read and one denied mutation; avoid solving the negative test by denying every request."
           ]
         }
@@ -398,7 +398,7 @@
           "title": "Accepted update fields",
           "paragraphs": [
             "A request schema should define accepted fields, types, sizes and normalization. It should reject unsupported shapes before state changes. Validation does not prove identity, permission or business correctness; it is one boundary among several.",
-            "parse_update accepts exactly a title field. It strips surrounding whitespace, accepts 1..80 printable characters and rejects unknown fields. This prevents callers from setting owner, tenant or role through a broad object-to-model assignment. Unicode normalization and grapheme-length policy are separate choices not implemented by this code."
+            "`parse_update` accepts exactly a title field. It strips surrounding whitespace, accepts 1..80 printable characters and rejects unknown fields. This prevents callers from setting owner, tenant or role through a broad object-to-model assignment. Unicode normalization and grapheme-length policy are separate choices not implemented by this code."
           ]
         },
         {
@@ -632,7 +632,7 @@
         {
           "title": "Session-bound CSRF checks",
           "paragraphs": [
-            "The tests accept the token belonging to session A, reject missing/empty/wrong/Unicode tokens, reject session B's token, and reject an expired session. ASCII validation makes malformed input fail as PermissionError instead of exposing an internal comparison exception.",
+            "The tests accept the token belonging to session A, reject missing/empty/wrong/Unicode tokens, reject session B's token, and reject an expired session. ASCII validation makes malformed input fail as `PermissionError` instead of exposing an internal comparison exception.",
             "CSRF protection does not stop same-origin XSS, because malicious script may obtain or use the legitimate token. Keep XSS prevention and object authorization even after CSRF succeeds. The local method verifies a value; it does not prove browser transport or an HTTP route calls it."
           ],
           "example": "from security_lab import Sessions, Principal\ns=Sessions(); sid=s.login(Principal('alice','red'),0)\ntoken=s.records[sid][2]  # trusted fixture inspection\ns.csrf(sid,token,1)\n# A missing or another session's token is denied."
@@ -685,7 +685,7 @@
           "title": "Output contexts",
           "paragraphs": [
             "Cross-site scripting occurs when untrusted content is interpreted as executable browser content. The safe operation depends on the output context: text nodes, attributes, URLs, JavaScript and CSS have different rules. Generic input validation is not a universal output encoder.",
-            "title_html validates the title then uses Python html.escape for an HTML text-node context. A literal script-shaped string is rendered as text. It is not a safe JavaScript string encoder, URL allowlist, rich-HTML sanitizer or solution for every template sink."
+            "`title_html` validates the title then uses Python `html.escape` for an HTML text-node context. A literal script-shaped string is rendered as text. It is not a safe JavaScript string encoder, URL allowlist, rich-HTML sanitizer or solution for every template sink."
           ]
         },
         {
@@ -744,7 +744,7 @@
           "title": "SQL values and structure",
           "paragraphs": [
             "SQL injection occurs when untrusted input changes the structure of a database instruction. Bind parameters with the driver rather than concatenate quoted values. Parameters handle values; identifiers or sort directions require an explicit allowlist mapping because they are part of structure.",
-            "find_title uses SQLite's ? parameter binding against a fresh in-memory synthetic database. It does not assemble a string from the title. The connection contains only two training rows and is closed after each test."
+            "`find_title` uses SQLite's `?` parameter binding against a fresh in-memory synthetic database. It does not assemble a string from the title. The connection contains only two training rows and is closed after each test."
           ]
         },
         {
@@ -869,7 +869,7 @@
           "title": "Provider validation and local limits",
           "paragraphs": [
             "The opt-in worksheet requires configuring a training issuer, exact redirect URI and client, then using an established OIDC library. Record subject/issuer mapping without copying full tokens into evidence. Verify login success and invalid issuer, audience and nonce behavior in that library's integration tests.",
-            "The local Principal lets tests supply an already authenticated identity to the policy code. It cannot substitute for signature verification, key discovery, nonce handling, token lifetime checks or an actual provider redirect."
+            "The local `Principal` lets tests supply an already authenticated identity to the policy code. It cannot substitute for signature verification, key discovery, nonce handling, token lifetime checks or an actual provider redirect."
           ],
           "example": "OIDC login adapter -> verified (issuer, subject)\nApplication account mapping -> internal principal\nDocument policy -> permitted action\n# An unverified payload cannot enter this pipeline as a principal."
         }
@@ -937,7 +937,7 @@
           "paragraphs": [
             "Two tabs begin login. Tab A stores state A and verifier A; tab B stores state B and verifier B. If your implementation keeps one global verifier, B overwrites A. The response for A may then be associated with the wrong initiating transaction. Store pending flows by unpredictable state with expiry and one-time consumption, rather than one shared current-login value.",
             "A local transaction-binding test can create A and B, complete B first, and then complete A. Completing A again must fail; an unknown state must fail before exchanging a code. This test proves your state bookkeeping, not an identity provider's signature validation. Keep the provider adapter separate so a fake successful token response cannot bypass issuer, audience or nonce checks.",
-            "Use login_flow_lab.py for the out-of-order, replay and expiry cases, then implement the pending-flow class independently. In a future real-provider exercise, preserve the same cases while adding actual authorization-code exchange and the library's documented token-validation path."
+            "Use `login_flow_lab.py` for the out-of-order, replay and expiry cases, then implement the pending-flow class independently. In a future real-provider exercise, preserve the same cases while adding actual authorization-code exchange and the library's documented token-validation path."
           ]
         }
       ],
@@ -1112,7 +1112,7 @@
         {
           "title": "Allowlisted audit fields",
           "paragraphs": [
-            "safe_audit permits a small event/outcome vocabulary and a bounded control-free subject string. The test rejects a newline-bearing subject and an unknown event. The function returns a dictionary; it does not supply durable storage, access controls or an alerting service.",
+            "`safe_audit` permits a small event/outcome vocabulary and a bounded control-free subject string. The test rejects a newline-bearing subject and an unknown event. The function returns a dictionary; it does not supply durable storage, access controls or an alerting service.",
             "A denied request can be audited without publishing private object contents or detailed account-existence information. Logs should be reviewed for actual emitted fields, not only for a redaction helper that callers can bypass."
           ],
           "example": "from security_lab import safe_audit\nassert safe_audit('document.read','u-123','denied') == {'event':'document.read','subject':'u-123','outcome':'denied'}\n# The subject is an internal ID, never a password/token/body."
@@ -1210,7 +1210,7 @@
           "title": "Work and request limits",
           "paragraphs": [
             "Attackers can abuse legitimate operations through repetition: login attempts, expensive searches, uploads or repeated notifications. Bound inputs, work and request rates according to the asset and failure cost. Authentication does not eliminate abuse by compromised or legitimate accounts.",
-            "FixedWindowLimiter allows three requests per key per minute under injected monotonic time. Its dictionary is single-process, not shared across workers, and fixed windows can permit a burst across a boundary. The key must come from trusted server context; a caller-selected key trivially evades the limit."
+            "`FixedWindowLimiter` allows three requests per key per minute under injected monotonic time. Its dictionary is single-process, not shared across workers, and fixed windows can permit a burst across a boundary. The key must come from trusted server context; a caller-selected key trivially evades the limit."
           ]
         },
         {
@@ -1268,8 +1268,8 @@
         {
           "title": "Verification matrix and integration",
           "paragraphs": [
-            "The supplied unittest suite exercises the policy matrix, mass-assignment rejection, normalization boundaries, HTML text encoding, real local SQL binding, session rotation/expiry, CSRF comparisons, safe event construction and a local rate limiter. Those core policy tests use no HTTP server or cryptographic validator. The separate test_security_http.py suite starts a loopback HTTP server and checks session/CSRF/object-policy integration against persisted SQLite rows. It still does not test browser cookies or a real identity provider.",
-            "The verification-matrix.md worksheet records control/source, entry point, attack case, expected result, actual result and remaining limit. Add integration tests proving the real routes invoke each control and browser/provider tests for the boundaries the local suite cannot execute."
+            "The supplied `unittest` suite exercises the policy matrix, mass-assignment rejection, normalization boundaries, HTML text encoding, real local SQL binding, session rotation/expiry, CSRF comparisons, safe event construction and a local rate limiter. Those core policy tests use no HTTP server or cryptographic validator. The separate `test_security_http.py` suite starts a loopback HTTP server and checks session/CSRF/object-policy integration against persisted SQLite rows. It still does not test browser cookies or a real identity provider.",
+            "The `verification-matrix.md` worksheet records control/source, entry point, attack case, expected result, actual result and remaining limit. Add integration tests proving the real routes invoke each control and browser/provider tests for the boundaries the local suite cannot execute."
           ],
           "example": "Claim: foreign owner cannot read private document\nUnit evidence: read_document(alice,b) denied\nIntegration evidence: real authenticated HTTP request denied without payload\nRemaining: concurrent ownership changes, alternate endpoints, tenant mapping"
         },

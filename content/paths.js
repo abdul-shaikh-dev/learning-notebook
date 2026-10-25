@@ -711,7 +711,7 @@ const LEARNING_PATHS = [
           {
             "title": "Optional generated parser cases",
             "paragraphs": [
-              "Run python -m unittest test_parser_properties.py. Seeded generated strings preserve valid final actions; adding any extra field must reject. Boundary fixtures reject invalid text. This finite generated suite is reproducible regression evidence, not exhaustive fuzzing or a property-testing engine; optionally port the invariant to Hypothesis and record its seed and shrinking counterexample."
+              "Run `python -m unittest test_parser_properties.py`. Seeded generated strings preserve valid final actions; adding any extra field must reject. Boundary fixtures reject invalid text. This finite generated suite is reproducible regression evidence, not exhaustive fuzzing or a property-testing engine; optionally port the invariant to Hypothesis and record its seed and shrinking counterexample."
             ]
           }
         ],
@@ -754,7 +754,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "Authorization asks whether this authenticated subject may perform this operation on this resource under the current task. The host supplies identity and scopes; the model supplies only proposed business arguments. In our fake notebook, read_lesson is limited to configured IDs and save_note writes only under the host subject. Approval can add a required confirmation step, but cannot override a policy denial."
+              "Authorization asks whether this authenticated subject may perform this operation on this resource under the current task. The host supplies identity and scopes; the model supplies only proposed business arguments. In our fake notebook, `read_lesson` is limited to configured IDs and `save_note` writes only under the host subject. Approval can add a required confirmation step, but cannot override a policy denial."
             ]
           },
           {
@@ -942,7 +942,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "Our workshop runtime pauses before save_note, exposes a fingerprint for the host UI and revalidates the proposal before dispatch."
+              "Our workshop runtime pauses before `save_note`, exposes a fingerprint for the host UI and revalidates the proposal before dispatch."
             ],
             "example": "Pending: save_note(L1, \"Review indexes\")\nFingerprint includes run + subject + call ID + tool + args\nHost approves that pending fingerprint\nRecheck current policy and exact arguments\nChanged text or destination → reject stale approval\nOne successful dispatch consumes the approval."
           },
@@ -1466,20 +1466,20 @@ const LEARNING_PATHS = [
             "title": "Tradeoffs",
             "paragraphs": [
               "Validation is not tamper resistance. A caller able to forge trusted state can alter counters unless storage integrity is enforced elsewhere. In production, an approval may be a separately persisted, authenticated record with expiry; the workshop runtime discards it. Do not deserialize executable objects from untrusted input or infer policy from model-authored checkpoint text.",
-              "The workshop writes version 2 checkpoints with validated final text and stop reason. Version 1 completed results recover their answer from the verified final script action; version 1 stopped results use legacy_checkpoint_reason_unavailable because the original reason was not stored. Migration never invents a missing historical failure cause or grants approval."
+              "The workshop writes version 2 checkpoints with validated final text and stop reason. Version 1 completed results recover their answer from the verified final script action; version 1 stopped results use `legacy_checkpoint_reason_unavailable` because the original reason was not stored. Migration never invents a missing historical failure cause or grants approval."
             ]
           },
           {
             "title": "Optional durable adapter exercise",
             "paragraphs": [
-              "Run python -m unittest test_durable_state.py from practice. durable_state.py saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
+              "Run `python -m unittest test_durable_state.py` from practice. `durable_state.py` saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
             ]
           },
           {
             "title": "Locate the crash between two commits",
             "paragraphs": [
               "Walk through a save in four moments: the checkpoint says waiting; the user approves; the effect store commits the note and receipt; the checkpoint records completion. A crash after the third moment leaves durable business state ahead of durable run state. Resuming by blindly repeating the action risks duplication. Restoring only the checkpoint does not reconstruct what the effect store already did.",
-              "Open persisted-run-lab.md and run its crash-before-checkpoint case. Predict the note count, checkpoint status and receipt lookup before reading the assertions. Recovery asks the effect store about the same operation identity, then updates the run. Change the payload while retaining that identity: the receipt fingerprint must reject it rather than treating it as the original request.",
+              "Open `persisted-run-lab.md` and run its crash-before-checkpoint case. Predict the note count, checkpoint status and receipt lookup before reading the assertions. Recovery asks the effect store about the same operation identity, then updates the run. Change the payload while retaining that identity: the receipt fingerprint must reject it rather than treating it as the original request.",
               "For a changed case, crash before the effect commits. Recovery finds no local receipt and keeps the approval boundary. Absence is authoritative here because the local effect and receipt share a transaction; an external service with delayed lookup would require a different unknown-outcome policy."
             ]
           },
@@ -2005,15 +2005,15 @@ const LEARNING_PATHS = [
           {
             "title": "Optional durable adapter exercise",
             "paragraphs": [
-              "Run python -m unittest test_durable_state.py from practice. durable_state.py saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
+              "Run `python -m unittest test_durable_state.py` from practice. `durable_state.py` saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
             ]
           },
           {
             "title": "A version conflict is a useful outcome",
             "paragraphs": [
-              "Workers A and B both load checkpoint version 7. A saves version 8; B attempts to save its independently edited version 8. An unconditional UPDATE loses A's state. Compare-and-swap uses WHERE version = 7 and checks the affected-row count. Exactly one writer wins, and the loser reloads before making another decision.",
-              "A state-store version prevents stale checkpoint replacement but does not automatically fence an external side effect. B might have already called a tool before its save failed. Separate the right to own a run from the right to execute each operation, and ensure the effect boundary understands the operation identity. Read the SQL in durable_state.py and add a second connection that attempts the stale save.",
-              "Use the owner_version_lab.py exercise to observe this through two independent SQLite connections. It tests stale-save rejection and retained winning state. Extend it by retrying from a fresh read; do not change the expected version until after reading the winner."
+              "Workers A and B both load checkpoint version 7. A saves version 8; B attempts to save its independently edited version 8. An unconditional `UPDATE` loses A's state. Compare-and-swap uses `WHERE version = 7` and checks the affected-row count. Exactly one writer wins, and the loser reloads before making another decision.",
+              "A state-store version prevents stale checkpoint replacement but does not automatically fence an external side effect. B might have already called a tool before its save failed. Separate the right to own a run from the right to execute each operation, and ensure the effect boundary understands the operation identity. Read the SQL in `durable_state.py` and add a second connection that attempts the stale save.",
+              "Use the `owner_version_lab.py` exercise to observe this through two independent SQLite connections. It tests stale-save rejection and retained winning state. Extend it by retrying from a fresh read; do not change the expected version until after reading the winner."
             ]
           }
         ],
@@ -2196,7 +2196,7 @@ const LEARNING_PATHS = [
             "title": "Tradeoffs",
             "paragraphs": [
               "Exact model regeneration may differ because sampling, provider behavior or dependencies changed. Keep replay claims narrow: deterministic application logic can be replayed when its inputs and versions are fixed. Old authorization does not necessarily remain valid today. A migration must account for pending actions, changed argument meanings and idempotency scope, not only rename JSON fields.",
-              "Run persisted-run-lab.md and test_persisted_run_lab.py to recover a SQLite-backed checkpoint and effect after a lost reply or a crash before the uncertain checkpoint is saved; keep the single-host boundary explicit."
+              "Run `persisted-run-lab.md` and `test_persisted_run_lab.py` to recover a SQLite-backed checkpoint and effect after a lost reply or a crash before the uncertain checkpoint is saved; keep the single-host boundary explicit."
             ]
           }
         ],
@@ -2707,13 +2707,13 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "Replacing mocks with real adapters changes the risk boundary. Revisit authentication, transaction behavior, network timeouts, retry layers, receipt lookup, rate limits, isolation and retention. Renaming FakeStore to ProductionStore does not add those controls. In an architecture decision record, describe the next adapter to add and a test that would expose a failure in its contract."
+              "Replacing mocks with real adapters changes the risk boundary. Revisit authentication, transaction behavior, network timeouts, retry layers, receipt lookup, rate limits, isolation and retention. Renaming `FakeStore` to `ProductionStore` does not add those controls. In an architecture decision record, describe the next adapter to add and a test that would expose a failure in its contract."
             ]
           },
           {
             "title": "Optional durable adapter exercise",
             "paragraphs": [
-              "Run python -m unittest test_durable_state.py from practice. durable_state.py saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
+              "Run `python -m unittest test_durable_state.py` from practice. `durable_state.py` saves versioned JSON to SQLite and uses a conditional update to reject a stale checkpoint writer. Tests reopen the database and use two connections with a controlled sequential interleaving. This is local checkpoint persistence; it does not transact external tool effects, implement leases/fencing, authenticate workers or demonstrate a concurrent multi-process scheduler. Extend with two real processes, lock/busy handling and stale lease tests before claiming multi-worker operation. SQLite power-loss durability also depends on storage and configuration."
             ]
           }
         ],
@@ -3674,7 +3674,7 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "A tool contract describes what an operation does, its inputs, output shape, failures and side effects. A tool call requests execution; it is not execution itself.",
-              "Prefer a narrow search_lessons(query) tool over a generic run_anything(command) capability for this notebook assistant. Describe when search is useful, the maximum query size and whether results may be empty. A read operation can still expose private data, so read-only does not automatically mean harmless. Keep authentication and access checks in the tool implementation."
+              "Prefer a narrow `search_lessons(query)` tool over a generic `run_anything(command)` capability for this notebook assistant. Describe when search is useful, the maximum query size and whether results may be empty. A read operation can still expose private data, so read-only does not automatically mean harmless. Keep authentication and access checks in the tool implementation."
             ]
           },
           {
@@ -3757,7 +3757,7 @@ const LEARNING_PATHS = [
           {
             "title": "Run a changed script without a model",
             "paragraphs": [
-              "Save this as try_loop.py beside workshop.py in the extracted kit, then run python try_loop.py. ScriptedSource returns the proposals you supply in order. It does not decide what to search. The finish proposal also consumes one proposal from the budget. Change max_steps to 1 and predict why the same script can no longer complete."
+              "Save this as `try_loop.py` beside `workshop.py` in the extracted kit, then run `python try_loop.py`. `ScriptedSource` returns the proposals you supply in order. It does not decide what to search. The finish proposal also consumes one proposal from the budget. Change `max_steps` to 1 and predict why the same script can no longer complete."
             ],
             "example": "from workshop import ScriptedSource, run\nscript = [\n    {'kind': 'tool', 'name': 'search_lessons', 'args': {'query': 'functions'}},\n    {'kind': 'finish', 'answer': 'Functions group reusable behavior.', 'citations': ['PY-01']},\n]\nresult = run(ScriptedSource(script), max_steps=2)\nprint(result.status, result.citations)\n# completed ['PY-01']"
           }
@@ -3970,7 +3970,7 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "State records what the application knows about a task: validated inputs, observed results, pending work and terminal status. Keep operational state separate from conversational prose.",
-              "A progress claim such as I searched everything is not a database fact. Record actual search queries and accepted result IDs from the executor. Use clear statuses such as running, needs_input, completed and failed. If a task resumes later, it needs enough information to distinguish a proposed action from a completed tool call."
+              "A progress claim such as I searched everything is not a database fact. Record actual search queries and accepted result IDs from the executor. Use clear statuses such as `running`, `needs_input`, `completed` and `failed`. If a task resumes later, it needs enough information to distinguish a proposed action from a completed tool call."
             ]
           },
           {
@@ -4034,7 +4034,7 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "Grounding connects an answer to available evidence. A citation helps the reader inspect support; it does not automatically make a claim correct.",
-              "A lesson snippet states that an INNER JOIN keeps matching pairs. A grounded answer can explain that point and cite the lesson. It should not invent performance guarantees absent from the source. Separate a directly supported statement, an inference and an unknown. When evidence is missing, return a useful limitation or ask a focused question."
+              "A lesson snippet states that an `INNER JOIN` keeps matching pairs. A grounded answer can explain that point and cite the lesson. It should not invent performance guarantees absent from the source. Separate a directly supported statement, an inference and an unknown. When evidence is missing, return a useful limitation or ask a focused question."
             ]
           },
           {
@@ -4091,7 +4091,7 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "Treat tool arguments as untrusted input even when a model generated them in a structured format. Validate shape, types, bounds and domain rules before calling the tool.",
-              "A query should be a nonblank string with an upper length bound. Reject unexpected properties rather than quietly accepting an extra destination field. In Python bool is a subclass of int, so exact integer requirements may need an explicit bool rejection. Validation failures should be clear and should not execute the operation first."
+              "A query should be a nonblank string with an upper length bound. Reject unexpected properties rather than quietly accepting an extra destination field. In Python `bool` is a subclass of `int`, so exact integer requirements may need an explicit `bool` rejection. Validation failures should be clear and should not execute the operation first."
             ]
           },
           {
@@ -4227,7 +4227,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "A research question asks how to recover a failed import. Document A describes setup; document B describes rollback; document C contains an old rollback policy. A fluent answer from A alone is a retrieval failure before it is a writing failure. Keep the selected IDs visible and distinguish missing evidence from contradictory evidence.",
               "Try three questions against the same small corpus: one answerable verbatim, one paraphrase, and one absent topic. A lexical baseline may miss the paraphrase; returning any nonempty list must not automatically permit an answer. First inspect selection, then generation, then whether each claim is supported. An embedding model can change ranking without solving document freshness or access control.",
-              "In local_framework_lab.py, the fixed research records let you isolate routing and model behaviour. Replace one record only after the deterministic tests pass. Retain the no-evidence case while extending retrieval; otherwise every question can appear answerable because the retriever always returns something."
+              "In `local_framework_lab.py`, the fixed research records let you isolate routing and model behaviour. Replace one record only after the deterministic tests pass. Retain the no-evidence case while extending retrieval; otherwise every question can appear answerable because the retriever always returns something."
             ]
           }
         ],
@@ -5598,14 +5598,14 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "Optional provider_scaffold.py builds a current strict function request without sending it. provider-integration-exercise.md defines a separate opt-in transport, authorization, refusals/incomplete-state handling, usage/cost accounting and held-out evaluation evidence. Deterministic tests only prove local request construction and fabricated usage arithmetic; no live integration or model quality was tested.",
-              "Optionally use provider-evaluation-lab.md and provider_eval.py for a bounded, measured live-model sample after an explicit local --live choice; the offline test_provider_eval.py uses a stub transport and remains credential-free."
+              "Optional `provider_scaffold.py` builds a current strict function request without sending it. `provider-integration-exercise.md` defines a separate opt-in transport, authorization, refusals/incomplete-state handling, usage/cost accounting and held-out evaluation evidence. Deterministic tests only prove local request construction and fabricated usage arithmetic; no live integration or model quality was tested.",
+              "Optionally use `provider-evaluation-lab.md` and `provider_eval.py` for a bounded, measured live-model sample after an explicit local `--live` choice; the offline `test_provider_eval.py` uses a stub transport and remains credential-free."
             ]
           },
           {
             "title": "Build the same research task at three abstraction levels",
             "paragraphs": [
-              "The optional local-framework-guide.md develops one task through direct LangChain model invocation, an explicit LangGraph workflow, and a Deep Agents tool loop. Keep the corpus and questions fixed so that changes in control flow can be compared. Start with model-free graph checks, then call your existing llama.cpp server explicitly. Tool-calling support depends on the server, chat template and model; successful ordinary chat does not establish tool compatibility.",
+              "The optional `local-framework-guide.md` develops one task through direct LangChain model invocation, an explicit LangGraph workflow, and a Deep Agents tool loop. Keep the corpus and questions fixed so that changes in control flow can be compared. Start with model-free graph checks, then call your existing llama.cpp server explicitly. Tool-calling support depends on the server, chat template and model; successful ordinary chat does not establish tool compatibility.",
               "The graph keeps retrieval and the attempt limit in application code. The Deep Agents variant lets the model choose a bounded search tool and adds harness behaviour. Inspect tool calls and final evidence separately. More planning does not necessarily improve a tiny-model answer; compare unsupported claims, completion and latency on the same cases.",
               "LangSmith Fleet is a separate managed agent product, not a required local Python package. The guide includes a concrete migration exercise using synthetic documents and a capability comparison. Without a Fleet workspace, finish the local project and leave workspace deployment unexecuted. No private project corpus or local server is automatically exposed."
             ]
@@ -6093,7 +6093,7 @@ const LEARNING_PATHS = [
             "title": "A cross-owner threat model",
             "paragraphs": [
               "The synthetic notebook stores Alice's and Bob's private documents across two tenants. If Alice guesses Bob's document ID, the unwanted action is reading another owner's private record. The relevant control is object authorization on the server, not making IDs difficult to guess.",
-              "Name the asset, identify its entry point and trust boundary, then describe an abuse case, the control that blocks it and the test that verifies the control. Include availability and operational evidence, not only confidentiality. The threat-model.md worksheet in the kit records the expected and observed test evidence separately."
+              "Name the asset, identify its entry point and trust boundary, then describe an abuse case, the control that blocks it and the test that verifies the control. Include availability and operational evidence, not only confidentiality. The `threat-model.md` worksheet in the kit records the expected and observed test evidence separately."
             ],
             "example": "Asset: Bob private document\nEntry: GET /documents/b\nBoundary: request identity -> server policy -> stored object\nAbuse: Alice changes requested ID to b\nControl: tenant + ownership check\nEvidence: denied response and no document data"
           }
@@ -6144,7 +6144,7 @@ const LEARNING_PATHS = [
             "title": "Verified identity and policy",
             "paragraphs": [
               "Authentication establishes who is acting under a particular mechanism. A principal is the server's representation of that identity, such as a subject identifier and tenant. Authorization then decides which actions that identity may perform. A display name or email string supplied by a caller is not sufficient evidence.",
-              "The offline Principal dataclass represents an identity already verified by a trusted adapter. It does not parse tokens, compare passwords or verify cryptographic signatures. Only tests and trusted application code construct it; accepting this object's fields from request JSON would defeat the boundary."
+              "The offline `Principal` dataclass represents an identity already verified by a trusted adapter. It does not parse tokens, compare passwords or verify cryptographic signatures. Only tests and trusted application code construct it; accepting this object's fields from request JSON would defeat the boundary."
             ]
           },
           {
@@ -6202,7 +6202,7 @@ const LEARNING_PATHS = [
           {
             "title": "Anonymous access and login errors",
             "paragraphs": [
-              "An anonymous request cannot read Alice's private document, even if it knows the ID. Tests supply None to represent missing authentication. A real endpoint must map absent/invalid authentication to that boundary rather than constructing a default privileged principal.",
+              "An anonymous request cannot read Alice's private document, even if it knows the ID. Tests supply `None` to represent missing authentication. A real endpoint must map absent/invalid authentication to that boundary rather than constructing a default privileged principal.",
               "Public login errors should avoid revealing whether an account exists. Internal monitoring still needs structured failure reasons and rate evidence without storing passwords. Recovery verification should be at least as carefully designed as ordinary login."
             ],
             "example": "from security_lab import read_document\ntry:\n    read_document(None,'a')\nexcept PermissionError:\n    pass\nelse:\n    raise AssertionError('anonymous read allowed')"
@@ -6262,7 +6262,7 @@ const LEARNING_PATHS = [
             "title": "The ownership policy matrix",
             "paragraphs": [
               "Alice in red can read a, cannot read Bob's b, and cannot read c in blue even though c names Alice as owner. A red reader can read b but cannot update it. The tests include anonymous, missing object, cross-owner, cross-tenant and unsupported-action cases.",
-              "read_document returns a copied record and uses the same outward error for missing and denied objects. That deliberate privacy policy does not replace internal diagnostics. In a database implementation filter or check ownership before returning or mutating data, and consider concurrent ownership changes."
+              "`read_document` returns a copied record and uses the same outward error for missing and denied objects. That deliberate privacy policy does not replace internal diagnostics. In a database implementation filter or check ownership before returning or mutating data, and consider concurrent ownership changes."
             ],
             "example": "from security_lab import Principal, DOCUMENTS, authorized\nassert authorized(Principal('alice','red'),DOCUMENTS['a'],'update')\nassert not authorized(Principal('alice','red'),DOCUMENTS['c'],'read')\nassert not authorized(Principal('reviewer','red','reader'),DOCUMENTS['b'],'update')"
           },
@@ -6270,7 +6270,7 @@ const LEARNING_PATHS = [
             "title": "Break a convincing but incomplete ownership check",
             "paragraphs": [
               "Alice in tenant Red requests document a. The request has a valid session and a valid CSRF token. Now change only the path to Bob's document b: the session is still valid, but object authorization must fail. Next use Alice's identity in tenant Blue against a. Checking only the owner name now fails to separate tenants. The predicate needs the authenticated tenant, owner and permitted action together.",
-              "Run test_security_http.py and inspect the persisted rows after every denial. A 403 or 404 response alone is insufficient: a handler could update first and reject afterward. In an isolated copy, remove the tenant condition from authorization and rerun. The cross-tenant case must fail the test. Restore the condition and verify the legitimate owner can still update.",
+              "Run `test_security_http.py` and inspect the persisted rows after every denial. A 403 or 404 response alone is insufficient: a handler could update first and reject afterward. In an isolated copy, remove the tenant condition from authorization and rerun. The cross-tenant case must fail the test. Restore the condition and verify the legitimate owner can still update.",
               "Changed case: add a read-only collaborator. Decide whether they may read, rename or delete before altering the code. A role called member cannot replace action-specific requirements. Add one allowed read and one denied mutation; avoid solving the negative test by denying every request."
             ]
           }
@@ -6429,7 +6429,7 @@ const LEARNING_PATHS = [
             "title": "Accepted update fields",
             "paragraphs": [
               "A request schema should define accepted fields, types, sizes and normalization. It should reject unsupported shapes before state changes. Validation does not prove identity, permission or business correctness; it is one boundary among several.",
-              "parse_update accepts exactly a title field. It strips surrounding whitespace, accepts 1..80 printable characters and rejects unknown fields. This prevents callers from setting owner, tenant or role through a broad object-to-model assignment. Unicode normalization and grapheme-length policy are separate choices not implemented by this code."
+              "`parse_update` accepts exactly a title field. It strips surrounding whitespace, accepts 1..80 printable characters and rejects unknown fields. This prevents callers from setting owner, tenant or role through a broad object-to-model assignment. Unicode normalization and grapheme-length policy are separate choices not implemented by this code."
             ]
           },
           {
@@ -6772,7 +6772,7 @@ const LEARNING_PATHS = [
           {
             "title": "Session-bound CSRF checks",
             "paragraphs": [
-              "The tests accept the token belonging to session A, reject missing/empty/wrong/Unicode tokens, reject session B's token, and reject an expired session. ASCII validation makes malformed input fail as PermissionError instead of exposing an internal comparison exception.",
+              "The tests accept the token belonging to session A, reject missing/empty/wrong/Unicode tokens, reject session B's token, and reject an expired session. ASCII validation makes malformed input fail as `PermissionError` instead of exposing an internal comparison exception.",
               "CSRF protection does not stop same-origin XSS, because malicious script may obtain or use the legitimate token. Keep XSS prevention and object authorization even after CSRF succeeds. The local method verifies a value; it does not prove browser transport or an HTTP route calls it."
             ],
             "example": "from security_lab import Sessions, Principal\ns=Sessions(); sid=s.login(Principal('alice','red'),0)\ntoken=s.records[sid][2]  # trusted fixture inspection\ns.csrf(sid,token,1)\n# A missing or another session's token is denied."
@@ -6959,7 +6959,7 @@ const LEARNING_PATHS = [
             "title": "Output contexts",
             "paragraphs": [
               "Cross-site scripting occurs when untrusted content is interpreted as executable browser content. The safe operation depends on the output context: text nodes, attributes, URLs, JavaScript and CSS have different rules. Generic input validation is not a universal output encoder.",
-              "title_html validates the title then uses Python html.escape for an HTML text-node context. A literal script-shaped string is rendered as text. It is not a safe JavaScript string encoder, URL allowlist, rich-HTML sanitizer or solution for every template sink."
+              "`title_html` validates the title then uses Python `html.escape` for an HTML text-node context. A literal script-shaped string is rendered as text. It is not a safe JavaScript string encoder, URL allowlist, rich-HTML sanitizer or solution for every template sink."
             ]
           },
           {
@@ -7018,7 +7018,7 @@ const LEARNING_PATHS = [
             "title": "SQL values and structure",
             "paragraphs": [
               "SQL injection occurs when untrusted input changes the structure of a database instruction. Bind parameters with the driver rather than concatenate quoted values. Parameters handle values; identifiers or sort directions require an explicit allowlist mapping because they are part of structure.",
-              "find_title uses SQLite's ? parameter binding against a fresh in-memory synthetic database. It does not assemble a string from the title. The connection contains only two training rows and is closed after each test."
+              "`find_title` uses SQLite's `?` parameter binding against a fresh in-memory synthetic database. It does not assemble a string from the title. The connection contains only two training rows and is closed after each test."
             ]
           },
           {
@@ -7272,7 +7272,7 @@ const LEARNING_PATHS = [
             "title": "Provider validation and local limits",
             "paragraphs": [
               "The opt-in worksheet requires configuring a training issuer, exact redirect URI and client, then using an established OIDC library. Record subject/issuer mapping without copying full tokens into evidence. Verify login success and invalid issuer, audience and nonce behavior in that library's integration tests.",
-              "The local Principal lets tests supply an already authenticated identity to the policy code. It cannot substitute for signature verification, key discovery, nonce handling, token lifetime checks or an actual provider redirect."
+              "The local `Principal` lets tests supply an already authenticated identity to the policy code. It cannot substitute for signature verification, key discovery, nonce handling, token lifetime checks or an actual provider redirect."
             ],
             "example": "OIDC login adapter -> verified (issuer, subject)\nApplication account mapping -> internal principal\nDocument policy -> permitted action\n# An unverified payload cannot enter this pipeline as a principal."
           }
@@ -7445,7 +7445,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Two tabs begin login. Tab A stores state A and verifier A; tab B stores state B and verifier B. If your implementation keeps one global verifier, B overwrites A. The response for A may then be associated with the wrong initiating transaction. Store pending flows by unpredictable state with expiry and one-time consumption, rather than one shared current-login value.",
               "A local transaction-binding test can create A and B, complete B first, and then complete A. Completing A again must fail; an unknown state must fail before exchanging a code. This test proves your state bookkeeping, not an identity provider's signature validation. Keep the provider adapter separate so a fake successful token response cannot bypass issuer, audience or nonce checks.",
-              "Use login_flow_lab.py for the out-of-order, replay and expiry cases, then implement the pending-flow class independently. In a future real-provider exercise, preserve the same cases while adding actual authorization-code exchange and the library's documented token-validation path."
+              "Use `login_flow_lab.py` for the out-of-order, replay and expiry cases, then implement the pending-flow class independently. In a future real-provider exercise, preserve the same cases while adding actual authorization-code exchange and the library's documented token-validation path."
             ]
           }
         ],
@@ -7940,7 +7940,7 @@ const LEARNING_PATHS = [
           {
             "title": "Allowlisted audit fields",
             "paragraphs": [
-              "safe_audit permits a small event/outcome vocabulary and a bounded control-free subject string. The test rejects a newline-bearing subject and an unknown event. The function returns a dictionary; it does not supply durable storage, access controls or an alerting service.",
+              "`safe_audit` permits a small event/outcome vocabulary and a bounded control-free subject string. The test rejects a newline-bearing subject and an unknown event. The function returns a dictionary; it does not supply durable storage, access controls or an alerting service.",
               "A denied request can be audited without publishing private object contents or detailed account-existence information. Logs should be reviewed for actual emitted fields, not only for a redaction helper that callers can bypass."
             ],
             "example": "from security_lab import safe_audit\nassert safe_audit('document.read','u-123','denied') == {'event':'document.read','subject':'u-123','outcome':'denied'}\n# The subject is an internal ID, never a password/token/body."
@@ -8038,7 +8038,7 @@ const LEARNING_PATHS = [
             "title": "Work and request limits",
             "paragraphs": [
               "Attackers can abuse legitimate operations through repetition: login attempts, expensive searches, uploads or repeated notifications. Bound inputs, work and request rates according to the asset and failure cost. Authentication does not eliminate abuse by compromised or legitimate accounts.",
-              "FixedWindowLimiter allows three requests per key per minute under injected monotonic time. Its dictionary is single-process, not shared across workers, and fixed windows can permit a burst across a boundary. The key must come from trusted server context; a caller-selected key trivially evades the limit."
+              "`FixedWindowLimiter` allows three requests per key per minute under injected monotonic time. Its dictionary is single-process, not shared across workers, and fixed windows can permit a burst across a boundary. The key must come from trusted server context; a caller-selected key trivially evades the limit."
             ]
           },
           {
@@ -8096,8 +8096,8 @@ const LEARNING_PATHS = [
           {
             "title": "Verification matrix and integration",
             "paragraphs": [
-              "The supplied unittest suite exercises the policy matrix, mass-assignment rejection, normalization boundaries, HTML text encoding, real local SQL binding, session rotation/expiry, CSRF comparisons, safe event construction and a local rate limiter. Those core policy tests use no HTTP server or cryptographic validator. The separate test_security_http.py suite starts a loopback HTTP server and checks session/CSRF/object-policy integration against persisted SQLite rows. It still does not test browser cookies or a real identity provider.",
-              "The verification-matrix.md worksheet records control/source, entry point, attack case, expected result, actual result and remaining limit. Add integration tests proving the real routes invoke each control and browser/provider tests for the boundaries the local suite cannot execute."
+              "The supplied `unittest` suite exercises the policy matrix, mass-assignment rejection, normalization boundaries, HTML text encoding, real local SQL binding, session rotation/expiry, CSRF comparisons, safe event construction and a local rate limiter. Those core policy tests use no HTTP server or cryptographic validator. The separate `test_security_http.py` suite starts a loopback HTTP server and checks session/CSRF/object-policy integration against persisted SQLite rows. It still does not test browser cookies or a real identity provider.",
+              "The `verification-matrix.md` worksheet records control/source, entry point, attack case, expected result, actual result and remaining limit. Add integration tests proving the real routes invoke each control and browser/provider tests for the boundaries the local suite cannot execute."
             ],
             "example": "Claim: foreign owner cannot read private document\nUnit evidence: read_document(alice,b) denied\nIntegration evidence: real authenticated HTTP request denied without payload\nRemaining: concurrent ownership changes, alternate endpoints, tenant mapping"
           },
@@ -8711,8 +8711,8 @@ const LEARNING_PATHS = [
           {
             "title": "Edit and repeat",
             "paragraphs": [
-              "Replace Program.cs with the example below. Top-level statements provide the entry point without writing a Program class. Console.WriteLine writes text followed by a newline.",
-              "Every console example in lessons 1–8 is a separate complete Program.cs unless labeled otherwise. Do not append all examples to one file. A missing semicolon or a quote without its partner is a compiler error; read the first error and its line before changing unrelated code."
+              "Replace `Program.cs` with the example below. Top-level statements provide the entry point without writing a `Program` class. `Console.WriteLine` writes text followed by a newline.",
+              "Every console example in lessons 1–8 is a separate complete `Program.cs` unless labeled otherwise. Do not append all examples to one file. A missing semicolon or a quote without its partner is a compiler error; read the first error and its line before changing unrelated code."
             ],
             "example": "Console.WriteLine(\"Hello, C#!\");\n// Expected: Hello, C#!"
           }
@@ -8755,23 +8755,23 @@ const LEARNING_PATHS = [
           {
             "title": "Numbers and strings",
             "paragraphs": [
-              "int represents whole numbers; decimal is useful for decimal money arithmetic; bool represents true or false; string holds text. var asks the compiler to infer a type and does not make a variable dynamically typed.",
-              "Integer division discards the fractional part. Use a decimal operand when the fraction matters. The m suffix marks a decimal literal."
+              "`int` represents whole numbers; `decimal` is useful for decimal money arithmetic; `bool` represents `true` or `false`; `string` holds text. `var` asks the compiler to infer a type and does not make a variable dynamically typed.",
+              "Integer division discards the fractional part. Use a `decimal` operand when the fraction matters. The `m` suffix marks a `decimal` literal."
             ],
             "example": "int count = 3;\ndecimal total = 10m;\nConsole.WriteLine(10 / count);\nConsole.WriteLine(total / count > 3m);\n// Expected: 3 then True"
           },
           {
             "title": "Read the decision before running it",
             "paragraphs": [
-              "An if condition goes in parentheses. Its true branch runs when TryParse succeeds; else runs when it fails. out int age declares the variable receiving the parsed integer. && evaluates its right side only after its left side succeeds, so the quantity check runs only after successful parsing.",
-              "$\"Quantity: {quantity}\" is an interpolated string: the braces insert the variable's value. These are the only new control-flow features needed for this exercise. The next lesson adds repeated work with foreach."
+              "An `if` condition goes in parentheses. Its true branch runs when `TryParse` succeeds; `else` runs when it fails. `out int age` declares the variable receiving the parsed integer. `&&` evaluates its right side only after its left side succeeds, so the quantity check runs only after successful parsing.",
+              "`$\"Quantity: {quantity}\"` is an interpolated string: the braces insert the variable's value. These are the only new control-flow features needed for this exercise. The next lesson adds repeated work with `foreach`."
             ]
           },
           {
             "title": "Null and input",
             "paragraphs": [
-              "A nullable string, written string?, may contain no string. Console.ReadLine can return null when input ends, so validate before using it. The ?? operator supplies a fallback; ?. accesses a member only when the receiver exists.",
-              "Nullable annotations guide compiler analysis; they do not validate user input at runtime. Avoid adding ! just to silence a warning. TryParse handles an expected invalid input without an exception."
+              "A nullable string, written `string?`, may contain no string. `Console.ReadLine` can return `null` when input ends, so validate before using it. The `??` operator supplies a fallback; `?.` accesses a member only when the receiver exists.",
+              "Nullable annotations guide compiler analysis; they do not validate user input at runtime. Avoid adding `!` just to silence a warning. `TryParse` handles an expected invalid input without an exception."
             ],
             "example": "string? input = \"12\";\nif (int.TryParse(input, out int age))\n    Console.WriteLine(age + 1);\nelse\n    Console.WriteLine(\"Enter a whole number\");\n// Expected: 13"
           }
@@ -8815,15 +8815,15 @@ const LEARNING_PATHS = [
           {
             "title": "Branch and loop",
             "paragraphs": [
-              "if selects code based on a boolean condition. foreach visits each item in a collection; it is clearer than manually tracking indexes when you only need values.",
-              "An array has a fixed length. List<T> can grow. Generic T specifies the element type so an accidental string cannot enter a List<int>. Do not add or remove items from a list while enumerating it with foreach."
+              "`if` selects code based on a boolean condition. `foreach` visits each item in a collection; it is clearer than manually tracking indexes when you only need values.",
+              "An array has a fixed length. List<T> can grow. Generic T specifies the element type so an accidental `string` cannot enter a `List<int>`. Do not add or remove items from a list while enumerating it with `foreach`."
             ],
             "example": "var scores = new List<int> { 40, 75, 90 };\nforeach (int score in scores)\n{\n    if (score >= 60) Console.WriteLine($\"Pass: {score}\");\n}\n// Expected: Pass: 75 then Pass: 90"
           },
           {
             "title": "Lookup by key",
             "paragraphs": [
-              "Dictionary<TKey,TValue> associates unique keys with values, useful for looking up a task by its ID. TryGetValue handles a missing key; indexing a missing key throws.",
+              "Dictionary<TKey,TValue> associates unique keys with values, useful for looking up a task by its ID. `TryGetValue` handles a missing key; indexing a missing key throws.",
               "Decide whether duplicate keys should be rejected or replace a value. A loop boundary using <= instead of < can access one element beyond an array."
             ],
             "example": "var names = new Dictionary<int, string> { [1] = \"Read\" };\nConsole.WriteLine(names.TryGetValue(2, out string? name) ? name : \"Missing\");\n// Expected: Missing"
@@ -8869,7 +8869,7 @@ const LEARNING_PATHS = [
             "title": "Parameters and return values",
             "paragraphs": [
               "A method isolates logic so callers do not repeat it. Parameters are local names for supplied values. A return type describes the result; void means no result.",
-              "Prefer returning a computed value over printing inside every method. This lets the same logic support a console, a web endpoint and a test. Local functions below work in a top-level Program.cs."
+              "Prefer returning a computed value over printing inside every method. This lets the same logic support a console, a web endpoint and a test. Local functions below work in a top-level `Program.cs`."
             ],
             "example": "Console.WriteLine(Total(3, 2.50m));\nstatic decimal Total(int quantity, decimal price) => quantity * price;\n// Expected: 7.50 (decimal separator can vary by culture)"
           },
@@ -9288,16 +9288,16 @@ const LEARNING_PATHS = [
           {
             "title": "Expected versus exceptional",
             "paragraphs": [
-              "A failed TryParse is normal invalid input. An inaccessible file is an operation failure that may throw. Catch an exception only where you can recover or present a useful message.",
-              "Catch the specific type you understand. An empty catch hides failures. If you must rethrow the same exception, use throw; so its original stack information is retained."
+              "A failed `TryParse` is normal invalid input. An inaccessible file is an operation failure that may throw. Catch an exception only where you can recover or present a useful message.",
+              "Catch the specific type you understand. An empty `catch` hides failures. If you must rethrow the same exception, use `throw;` so its original stack information is retained."
             ],
             "example": "try\n{\n    string text = File.ReadAllText(\"missing-file.txt\");\n    Console.WriteLine(text);\n}\ncatch (FileNotFoundException)\n{\n    Console.WriteLine(\"File not found\");\n}\n// Expected when the file does not exist: File not found"
           },
           {
             "title": "Dispose owned resources",
             "paragraphs": [
-              "Some objects hold operating-system resources. using ensures Dispose runs even if the operation throws. The scope should be short and ownership clear.",
-              "Dispose is not a substitute for handling failure. Do not catch all exceptions and report success; the next layer needs to know whether the save succeeded."
+              "Some objects hold operating-system resources. `using` ensures `Dispose` runs even if the operation throws. The scope should be short and ownership clear.",
+              "`Dispose` is not a substitute for handling failure. Do not catch all exceptions and report success; the next layer needs to know whether the save succeeded."
             ],
             "example": "using var reader = new StringReader(\"Read\\nPractice\");\nConsole.WriteLine(reader.ReadLine());\n// Expected: Read; reader is disposed when its scope ends"
           }
@@ -9341,15 +9341,15 @@ const LEARNING_PATHS = [
           {
             "title": "A query pipeline",
             "paragraphs": [
-              "LINQ extension methods work on sequences. Where filters, OrderBy sorts, and Select transforms each item. A lambda such as n => n >= 60 defines the operation for an item.",
-              "ToList materializes the result into a list. Many sequence operators are deferred: creating a query does not necessarily enumerate its source. This matters if you mutate the source before enumeration."
+              "LINQ extension methods work on sequences. `Where` filters, `OrderBy` sorts, and `Select` transforms each item. A lambda such as `n => n >= 60` defines the operation for an item.",
+              "`ToList` materializes the result into a list. Many sequence operators are deferred: creating a query does not necessarily enumerate its source. This matters if you mutate the source before enumeration."
             ],
             "example": "var scores = new List<int> { 90, 40, 75 };\nvar results = scores.Where(n => n >= 60).OrderBy(n => n).Select(n => $\"Pass {n}\").ToList();\nConsole.WriteLine(string.Join(\", \", results));\n// Expected: Pass 75, Pass 90"
           },
           {
             "title": "Choose terminal operations",
             "paragraphs": [
-              "Any answers whether a match exists and Count counts matches. First throws on an empty sequence; FirstOrDefault supplies a default. For a reference type that default may be null.",
+              "`Any` answers whether a match exists and `Count` counts matches. `First` throws on an empty sequence; `FirstOrDefault` supplies a default. For a reference type that default may be `null`.",
               "LINQ over in-memory collections executes C#. LINQ through a database provider is translated and supports a provider-specific subset. Do not assume every helper method can become SQL."
             ],
             "example": "var titles = new List<string> { \"Read\", \"Practice\" };\nstring? match = titles.FirstOrDefault(t => t.StartsWith(\"Z\"));\nConsole.WriteLine(match ?? \"No match\");\n// Expected: No match"
@@ -9490,7 +9490,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tasks and await",
             "paragraphs": [
-              "An async method commonly returns Task or Task<T>. await suspends that method until the operation completes and then retrieves its result or propagates its exception.",
+              "An `async` method commonly returns `Task` or `Task<T>`. `await` suspends that method until the operation completes and then retrieves its result or propagates its exception.",
               "Async is especially useful for I/O such as files, HTTP and databases. It does not automatically make CPU work faster or place every method on a new thread. Avoid .Result and .Wait in asynchronous paths."
             ],
             "example": "Console.WriteLine(await DescribeAsync());\nstatic async Task<string> DescribeAsync()\n{\n    await Task.Delay(20);\n    return \"Ready\";\n}\n// Expected after a short delay: Ready"
@@ -9498,8 +9498,8 @@ const LEARNING_PATHS = [
           {
             "title": "Cancellation is cooperative",
             "paragraphs": [
-              "CancellationToken lets the caller request cancellation. Pass it through to APIs that accept it. A cancelled operation may throw OperationCanceledException, which can be handled at the boundary.",
-              "Use async void only for event handlers that require it; callers cannot await its completion. Await started tasks so their failures are observed. Artificial delay here teaches the mechanism, not network performance."
+              "`CancellationToken` lets the caller request cancellation. Pass it through to APIs that accept it. A cancelled operation may throw `OperationCanceledException`, which can be handled at the boundary.",
+              "Use `async void` only for event handlers that require it; callers cannot await its completion. Await started tasks so their failures are observed. Artificial delay here teaches the mechanism, not network performance."
             ],
             "example": "using var cts = new CancellationTokenSource();\ncts.Cancel();\ntry { await Task.Delay(1000, cts.Token); }\ncatch (OperationCanceledException) { Console.WriteLine(\"Cancelled\"); }\n// Expected: Cancelled"
           },
@@ -9507,7 +9507,7 @@ const LEARNING_PATHS = [
             "title": "Cancellation is an observed asynchronous outcome",
             "paragraphs": [
               "Complete the console exercise first. You can return to this optional HTTP example after the integration-checks lesson.",
-              "The HTTP-boundary lab uses a TaskCompletionSource to confirm the handler has started, then cancels the caller token. The handler waits on a cancellable operation; the test awaits the task and observes OperationCanceledException. The started signal controls the test order without relying on a timed delay.",
+              "The HTTP-boundary lab uses a `TaskCompletionSource` to confirm the handler has started, then cancels the caller token. The handler waits on a cancellable operation; the test awaits the task and observes `OperationCanceledException`. The started signal controls the test order without relying on a timed delay.",
               "Passing this check shows token propagation through this in-process adapter. It does not prove a remote service stopped work or rolled back a write. A caller cancelling after a remote commit can still have an unknown result. Distinguish cancelling the wait from undoing an operation."
             ]
           }
@@ -9908,8 +9908,8 @@ const LEARNING_PATHS = [
           {
             "title": "Communicate mutability and absence",
             "paragraphs": [
-              "Return an immutable record or a copied snapshot when callers should only inspect data. IReadOnlyList<T> restricts operations available through that interface; it does not freeze an underlying List<T> or make mutable elements immutable.",
-              "A result of null can mean missing when documented. Do not use default(T) as a universal failure signal: zero can be valid. A Try method or a result type can distinguish success from absence without an exception."
+              "Return an immutable record or a copied snapshot when callers should only inspect data. `IReadOnlyList<T>` restricts operations available through that interface; it does not freeze an underlying `List<T>` or make mutable elements immutable.",
+              "A result of `null` can mean missing when documented. Do not use `default(T)` as a universal failure signal: zero can be valid. A Try method or a result type can distinguish success from absence without an exception."
             ],
             "example": "// Complete console Program.cs\nvar items = new List<int> { 1, 2 };\nIReadOnlyList<int> view = items;\nitems.Add(3);\nConsole.WriteLine(view.Count);\nvar snapshot = items.ToArray();\nitems.Add(4);\nConsole.WriteLine(snapshot.Length);\n// Expected: 3 then 3"
           }
@@ -9955,14 +9955,14 @@ const LEARNING_PATHS = [
             "title": "Own what you create",
             "paragraphs": [
               "A method creating a disposable resource usually owns its cleanup. A method receiving a stream may instead borrow it: document whether it closes it. using translates scope exit into cleanup even after an exception.",
-              "Disposal is about resource lifetime, not forcing garbage collection. Do not add a finalizer to a class just because it owns managed IDisposable objects; standard disposal patterns handle those objects without introducing finalization complexity."
+              "Disposal is about resource lifetime, not forcing garbage collection. Do not add a finalizer to a class just because it owns managed `IDisposable` objects; standard disposal patterns handle those objects without introducing finalization complexity."
             ],
             "example": "// Complete console Program.cs\nusing (var tracker = new Tracker())\n{\n    Console.WriteLine(\"Work\");\n}\nsealed class Tracker : IDisposable\n{\n    public void Dispose() => Console.WriteLine(\"Disposed\");\n}\n// Expected: Work then Disposed"
           },
           {
             "title": "Await asynchronous cleanup",
             "paragraphs": [
-              "IAsyncDisposable supports cleanup that itself needs asynchronous work. await using awaits DisposeAsync when scope exits. The enclosing method therefore needs an asynchronous context.",
+              "`IAsyncDisposable` supports cleanup that itself needs asynchronous work. `await using` awaits `DisposeAsync` when scope exits. The enclosing method therefore needs an asynchronous context.",
               "Do not return a lazy sequence tied to a resource that has already been disposed. Materialize inside the scope or make the iterator own the scope so cleanup occurs when enumeration finishes or the enumerator is disposed."
             ],
             "example": "// Complete console Program.cs\nawait using (var resource = new AsyncResource())\n    Console.WriteLine(\"Work\");\nsealed class AsyncResource : IAsyncDisposable\n{\n    public async ValueTask DisposeAsync()\n    {\n        await Task.Delay(1);\n        Console.WriteLine(\"Cleaned\");\n    }\n}\n// Expected: Work then Cleaned"
@@ -9971,7 +9971,7 @@ const LEARNING_PATHS = [
             "title": "Keep lifetimes compatible",
             "paragraphs": [
               "Dependency injection disposes services it creates when their scope ends. Borrowed services should not be disposed manually by their consumer. A singleton cannot retain a request-scoped context safely beyond that request.",
-              "Long-lived HttpClient ownership differs from creating and disposing one for every request. In ASP.NET Core, IHttpClientFactory can manage handlers while giving named or typed clients configuration. A client configured with a timeout still needs caller cancellation propagated."
+              "Long-lived `HttpClient` ownership differs from creating and disposing one for every request. In ASP.NET Core, IHttpClientFactory can manage handlers while giving named or typed clients configuration. A client configured with a timeout still needs caller cancellation propagated."
             ],
             "example": "// ASP.NET Core registration and endpoint fragments, not a complete project.\nbuilder.Services.AddHttpClient(\"catalog\", client =>\n{\n    client.BaseAddress = new Uri(\"https://example.com/\");\n    client.Timeout = TimeSpan.FromSeconds(5);\n});\napp.MapGet(\"/catalog-status\", async (IHttpClientFactory factory, CancellationToken token) =>\n{\n    using var response = await factory.CreateClient(\"catalog\").GetAsync(\"status\", token);\n    return Results.StatusCode((int)response.StatusCode);\n});\n// Remote endpoint is illustrative; no specific status is guaranteed."
           }
@@ -10033,7 +10033,7 @@ const LEARNING_PATHS = [
             "title": "Select a strategy, constrain complexity",
             "paragraphs": [
               "A strategy is interchangeable behavior, often represented by a delegate or interface. Use it when a caller needs a genuine choice, such as sorting tasks by title or ID. Dependency injection can supply larger strategies with their own dependencies.",
-              "Events are notifications, not an implicit transaction. Unsubscribe long-lived publishers when a short-lived subscriber ends. Avoid async void event handlers for application workflows whose completion must be awaited."
+              "Events are notifications, not an implicit transaction. Unsubscribe long-lived publishers when a short-lived subscriber ends. Avoid `async void` event handlers for application workflows whose completion must be awaited."
             ],
             "example": "// Complete console Program.cs\nvar tasks = new[] { new Item(2, \"A\"), new Item(1, \"Z\") };\nFunc<Item, int> priority = task => task.Id;\nConsole.WriteLine(tasks.OrderBy(priority).First().Title);\nrecord Item(int Id, string Title);\n// Expected: Z"
           }
@@ -10077,14 +10077,14 @@ const LEARNING_PATHS = [
             "title": "Create separate projects",
             "paragraphs": [
               "Put reusable logic in a class library and tests in a test project. The reference lets tests call the library. Package restore requires network access; inspect generated files and package versions rather than assuming templates never change.",
-              "These commands create projects, not an entire finished application. A test runner reports failure when an assertion does not match; dotnet build only checks compilation."
+              "These commands create projects, not an entire finished application. A test runner reports failure when an assertion does not match; `dotnet build` only checks compilation."
             ],
             "example": "dotnet new classlib -n TaskLogic -f net10.0\ndotnet new xunit -n TaskLogic.Tests -f net10.0\ndotnet add TaskLogic.Tests/TaskLogic.Tests.csproj reference TaskLogic/TaskLogic.csproj\ndotnet test TaskLogic.Tests/TaskLogic.Tests.csproj\n# Expected: generated test project builds and tests run"
           },
           {
             "title": "Assert boundaries",
             "paragraphs": [
-              "Add the first code block to TaskLogic/Rules.cs and the second to a test file. Tests should cover a normal input and the threshold on both sides. Keep file-system and network dependencies out of a unit test when testing arithmetic or validation.",
+              "Add the first code block to `TaskLogic/Rules.cs` and the second to a test file. Tests should cover a normal input and the threshold on both sides. Keep file-system and network dependencies out of a unit test when testing arithmetic or validation.",
               "A passing test is evidence for its cases, not proof that all inputs work. Start with a failing assertion to confirm the test is discovered, then restore the correct expectation."
             ],
             "example": "// TaskLogic/Rules.cs\nnamespace TaskLogic;\npublic static class Rules { public static bool IsPassing(int score) => score >= 60; }\n\n// TaskLogic.Tests/RulesTests.cs\nusing Xunit;\npublic class RulesTests\n{\n    [Theory]\n    [InlineData(59, false)]\n    [InlineData(60, true)]\n    public void Passing_threshold(int score, bool expected)\n        => Assert.Equal(expected, TaskLogic.Rules.IsPassing(score));\n}\n// Expected: both theory cases pass"
@@ -10130,13 +10130,13 @@ const LEARNING_PATHS = [
             "title": "Trace the HTTP contract before sending requests",
             "paragraphs": [
               "The request method names the action and the URL names its target. GET /tasks asks for the collection. POST /tasks sends a JSON body with Content-Type: application/json. The response has a status, headers and a body; 201 means this endpoint created a task and Location names where it can be fetched.",
-              "A route is a method/path rule such as MapPost(\"/tasks\", ...). ASP.NET Core binds the body to TaskRequest and calls the handler. The handler validates before store.Add. An unknown ID reaches a different outcome from a blank title, which is why you inspect 404 versus 400 rather than only checking whether curl printed something."
+              "A route is a method/path rule such as `MapPost(\"/tasks\", ...)`. ASP.NET Core binds the body to `TaskRequest` and calls the handler. The handler validates before `store.Add`. An unknown ID reaches a different outcome from a blank title, which is why you inspect 404 versus 400 rather than only checking whether curl printed something."
             ]
           },
           {
             "title": "A complete small API",
             "paragraphs": [
-              "Create an empty ASP.NET Core project, then replace Program.cs with the code below. A GET reads data; a POST accepts a JSON request and returns 201 with a resource location. Request binding constructs the record from JSON.",
+              "Create an empty ASP.NET Core project, then replace `Program.cs` with the code below. A GET reads data; a POST accepts a JSON request and returns 201 with a resource location. Request binding constructs the record from JSON.",
               "Use the printed listening address or the explicit URL shown here. Local HTTP is sufficient for this exercise; it is not a deployment recipe. A singleton store holds shared memory and must synchronize access. This example does so, but data disappears on restart."
             ],
             "example": "dotnet new web -n TaskApi -f net10.0\ncd TaskApi\n# Replace Program.cs with the next section's complete file.\ndotnet run --urls http://localhost:5080\n# In another terminal:\ncurl.exe http://localhost:5080/tasks\n# Expected initially: []"
@@ -10727,7 +10727,7 @@ const LEARNING_PATHS = [
           {
             "title": "Use a repeatable HTTP acceptance check",
             "paragraphs": [
-              "An integration check crosses a boundary: routing, request binding, validation and storage work together. The downloadable console check uses only HttpClient and System.Text.Json, so it needs no test package. Run it against a fresh local practice server.",
+              "An integration check crosses a boundary: routing, request binding, validation and storage work together. The downloadable console check uses only `HttpClient` and `System.Text.Json`, so it needs no test package. Run it against a fresh local practice server.",
               "A console acceptance check is not a replacement for a test runner. It reports failure via an exception and nonzero exit code. Test data is uniquely named, and the check does not delete pre-existing records."
             ],
             "example": "// From a directory where practice files were downloaded:\ndotnet new web -n PracticeApi -f net10.0\n# Copy practice/task-api.cs to PracticeApi/Program.cs.\ndotnet run --project PracticeApi --urls http://127.0.0.1:5086\n# In another terminal:\ndotnet new console -n Acceptance -f net10.0\n# Copy practice/acceptance.cs to Acceptance/Program.cs.\ndotnet run --project Acceptance -- http://127.0.0.1:5086\n// Expected: PASS: 11 HTTP acceptance assertions."
@@ -10735,7 +10735,7 @@ const LEARNING_PATHS = [
           {
             "title": "Use WebApplicationFactory for framework tests",
             "paragraphs": [
-              "ASP.NET Core's testing package can start the app in a test host and give an HttpClient wired to it. The test project needs a compatible Microsoft.AspNetCore.Mvc.Testing package and a unit-test framework. Make Program accessible when using top-level statements.",
+              "ASP.NET Core's testing package can start the app in a test host and give an `HttpClient` wired to it. The test project needs a compatible `Microsoft.AspNetCore.Mvc.Testing` package and a unit-test framework. Make `Program` accessible when using top-level statements.",
               "Replace external services and configure a separate database per test run. In-memory hosting verifies middleware and endpoints, but does not validate a real reverse proxy, TLS termination or deployment networking."
             ],
             "example": "// xUnit integration-test fragment; requires packages and a project reference.\n// Add public partial class Program { } at the end of the API Program.cs.\nusing Microsoft.AspNetCore.Mvc.Testing;\nusing Xunit;\npublic class HealthTests : IClassFixture<WebApplicationFactory<Program>>\n{\n    private readonly WebApplicationFactory<Program> factory;\n    public HealthTests(WebApplicationFactory<Program> factory) => this.factory = factory;\n    [Fact]\n    public async Task Health_is_ok()\n    {\n        using var client = factory.CreateClient();\n        using var response = await client.GetAsync(\"/health\");\n        Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);\n    }\n}"
@@ -10751,7 +10751,7 @@ const LEARNING_PATHS = [
           {
             "title": "Locate exactly which boundary a test crosses",
             "paragraphs": [
-              "BoundaryChecks.csproj sends requests through a real HttpClient and SessionClient, but replaces HttpMessageHandler. It verifies route construction, status interpretation, response parsing and token propagation without opening a socket. It therefore gives stronger adapter evidence than returning a mocked Session directly, while remaining short of HTTP server integration.",
+              "`BoundaryChecks.csproj` sends requests through a real `HttpClient` and `SessionClient`, but replaces `HttpMessageHandler`. It verifies route construction, status interpretation, response parsing and token propagation without opening a socket. It therefore gives stronger adapter evidence than returning a mocked `Session` directly, while remaining short of HTTP server integration.",
               "Run the existing task-api and acceptance projects to cross a real loopback HTTP boundary. Then run persistence checks to include their actual storage adapter. Neither of those automatically includes deployment routing, TLS, production identity or SQL Server. State the furthest executed boundary rather than using integration as an all-or-nothing label."
             ]
           }
@@ -10796,23 +10796,23 @@ const LEARNING_PATHS = [
           {
             "title": "Use a scoped context",
             "paragraphs": [
-              "EF Core maps entities to tables and LINQ queries to SQL. In the existing TaskApi project, add the SQLite provider from the 10.x release family that matches this path's target framework. Keep runtime, provider and tooling versions compatible.",
-              "Replace the in-memory registration and endpoint implementation rather than mixing both stores. A DbContext is normally scoped to a request and is not thread-safe. Await an operation before starting another on the same context."
+              "EF Core maps entities to tables and LINQ queries to SQL. In the existing `TaskApi` project, add the SQLite provider from the 10.x release family that matches this path's target framework. Keep runtime, provider and tooling versions compatible.",
+              "Replace the in-memory registration and endpoint implementation rather than mixing both stores. A `DbContext` is normally scoped to a request and is not thread-safe. Await an operation before starting another on the same context."
             ],
             "example": "dotnet add package Microsoft.EntityFrameworkCore.Sqlite --version 10.0.0\n# Use a current supported 10.x patch for real projects; 10.0.0 is a reproducible lesson baseline.\n# Program.cs fragment; add before builder.Build():\n# builder.Services.AddDbContext<TaskDb>(o => o.UseSqlite(\"Data Source=tasks.db\"));"
           },
           {
             "title": "A database endpoint fragment",
             "paragraphs": [
-              "This fragment shows the key pieces, not a complete replacement Program.cs. Add the using directive at the file top, the context and entity after top-level statements, and register the context before building the app. Initialize after building and before app.Run.",
-              "EnsureCreated is convenient for an isolated learning database. It does not manage an evolving production schema and should not be mixed with a migrations workflow. Use migrations and review generated changes as the model evolves."
+              "This fragment shows the key pieces, not a complete replacement `Program.cs`. Add the using directive at the file top, the context and entity after top-level statements, and register the context before building the app. Initialize after building and before `app.Run`.",
+              "`EnsureCreated` is convenient for an isolated learning database. It does not manage an evolving production schema and should not be mixed with a migrations workflow. Use migrations and review generated changes as the model evolves."
             ],
             "example": "using Microsoft.EntityFrameworkCore;\n// After var app = builder.Build():\nusing (var scope = app.Services.CreateScope())\n    scope.ServiceProvider.GetRequiredService<TaskDb>().Database.EnsureCreated();\napp.MapGet(\"/saved-tasks\", async (TaskDb db, CancellationToken token) =>\n    await db.Tasks.AsNoTracking().OrderBy(t => t.Id).ToListAsync(token));\n// Type declarations:\nclass TaskDb(DbContextOptions<TaskDb> options) : DbContext(options)\n{\n    public DbSet<SavedTask> Tasks => Set<SavedTask>();\n}\nclass SavedTask\n{\n    public int Id { get; set; }\n    public string Title { get; set; } = \"\";\n}\n// GET /saved-tasks => [] for a new database."
           },
           {
             "title": "Keep SQL and data separate",
             "paragraphs": [
-              "LINQ predicates let the provider bind input as data. EF Core's interpolated FromSql form also parameterizes values when the interpolated expression is passed directly. Building a SQL string with concatenation and sending it through FromSqlRaw allows input to change SQL structure.",
+              "LINQ predicates let the provider bind input as data. EF Core's interpolated `FromSql` form also parameterizes values when the interpolated expression is passed directly. Building a SQL string with concatenation and sending it through `FromSqlRaw` allows input to change SQL structure.",
               "Parameters cannot substitute table names or sort keywords. Choose structural options from a fixed allowlist. Do not log secrets or put database credentials in committed code."
             ],
             "example": "// Inside an async endpoint with TaskDb db and string title:\nvar rows = await db.Tasks.Where(t => t.Title == title).ToListAsync();\n// Equivalent parameterized raw-SQL form for this entity:\nvar rowsFromSql = await db.Tasks.FromSql($\"SELECT * FROM Tasks WHERE Title = {title}\").ToListAsync();\n// A title containing an apostrophe remains a value, not SQL syntax."
@@ -10820,7 +10820,7 @@ const LEARNING_PATHS = [
           {
             "title": "Relational prerequisite",
             "paragraphs": [
-              "Before the EF Core scaffold, work through the SQL Server foundation lessons on table grain, keys, joins and transactions. Start with paths/sql-server/README.md and setup.sql. Those exercises use SQL Server; the guided .NET persistence check uses SQLite, so repeat provider-specific behavior on the database you deploy."
+              "Before the EF Core scaffold, work through the SQL Server foundation lessons on table grain, keys, joins and transactions. Start with `paths/sql-server/README.md` and `setup.sql`. Those exercises use SQL Server; the guided .NET persistence check uses SQLite, so repeat provider-specific behavior on the database you deploy."
             ]
           }
         ],
@@ -10866,14 +10866,14 @@ const LEARNING_PATHS = [
             "title": "Review schema changes",
             "paragraphs": [
               "A migration describes a transition from one model to another. Add a migration, inspect its generated operations and SQL, then apply it to a disposable database before touching shared data. Adding a required column may need a staged backfill instead of an arbitrary default.",
-              "Do not combine EnsureCreated with a migrations-managed database. Tool, provider and EF package major versions should align. The command examples use 10.0.0 as a reproducible baseline; select a supported patched 10.x version for real work."
+              "Do not combine `EnsureCreated` with a migrations-managed database. Tool, provider and EF package major versions should align. The command examples use 10.0.0 as a reproducible baseline; select a supported patched 10.x version for real work."
             ],
             "example": "dotnet new tool-manifest\ndotnet tool install dotnet-ef --version 10.0.0\ndotnet add package Microsoft.EntityFrameworkCore.Design --version 10.0.0\ndotnet ef migrations add AddTaskCompletion\ndotnet ef migrations script 0 AddTaskCompletion --output migration.sql\n// Review SQL and generated migration; use the actual previous migration name instead of 0 for an incremental upgrade.\ndotnet ef database update\n// SQLite scripts are tied to the known starting migration. Providers supporting\n// idempotent scripts can use migrations script --idempotent instead.\n// Select compatible supported 10.x patches for real work."
           },
           {
             "title": "Keep related writes atomic",
             "paragraphs": [
-              "A single SaveChanges call is normally transactional when the provider supports transactions. An explicit transaction is useful when several SaveChanges operations must either all commit or all be undone. Keep its duration short and avoid slow network calls while holding database locks.",
+              "A single `SaveChanges` call is normally transactional when the provider supports transactions. An explicit transaction is useful when several `SaveChanges` operations must either all commit or all be undone. Keep its duration short and avoid slow network calls while holding database locks.",
               "A database transaction cannot roll back an already sent email. Persist an outbox entry alongside the business write when reliable external delivery is required. If an execution strategy retries operations, coordinate user-managed transactions with that strategy rather than retrying pieces independently."
             ],
             "example": "// EF Core fragment; existing db, task and audit entity types required.\nawait using var tx = await db.Database.BeginTransactionAsync(token);\ndb.Tasks.Add(task);\nawait db.SaveChangesAsync(token);\ndb.AuditEntries.Add(new AuditEntry { TaskId = task.Id, Action = \"created\" });\nawait db.SaveChangesAsync(token);\nawait tx.CommitAsync(token);\n// An exception before commit leaves the transaction uncommitted; disposal rolls it back."
@@ -10881,7 +10881,7 @@ const LEARNING_PATHS = [
           {
             "title": "Detect competing updates",
             "paragraphs": [
-              "Optimistic concurrency compares the version originally read with the database's current version when writing. Configure a concurrency token and change it on each update. Catch DbUpdateConcurrencyException at the application boundary and decide whether to reject or reload.",
+              "Optimistic concurrency compares the version originally read with the database's current version when writing. Configure a concurrency token and change it on each update. Catch `DbUpdateConcurrencyException` at the application boundary and decide whether to reject or reload.",
               "A process-local lock cannot coordinate multiple servers. SQLite and SQL Server have different token facilities, so choose a token strategy for your provider. Do not silently overwrite a newer edit merely because a stale request arrived later."
             ],
             "example": "// Application-managed Guid token, provider-portable EF Core fragments:\nmodelBuilder.Entity<SavedTask>().Property(t => t.Version).IsConcurrencyToken();\n// On SavedTask: public Guid Version { get; set; } = Guid.NewGuid();\n// After loading and verifying the client's original version:\nitem.Done = true;\nitem.Version = Guid.NewGuid();\ntry { await db.SaveChangesAsync(token); }\ncatch (DbUpdateConcurrencyException)\n{\n    return Results.Problem(statusCode: 409, title: \"Task changed; reload before retrying\");\n}"
@@ -10889,7 +10889,7 @@ const LEARNING_PATHS = [
           {
             "title": "Runnable failed second write",
             "paragraphs": [
-              "Run practice/PersistenceChecks.csproj. It inserts a task inside an explicit transaction, then tries to insert an audit event with a duplicate unique key. That second SaveChanges fails; the catch rolls back. Fresh-context queries must find no new task and only the original audit event. This checks rollback after an actual failed write, rather than only checking that RollbackAsync was called."
+              "Run `practice/PersistenceChecks.csproj`. It inserts a task inside an explicit transaction, then tries to insert an audit event with a duplicate unique key. That second `SaveChanges` fails; the catch rolls back. Fresh-context queries must find no new task and only the original audit event. This checks rollback after an actual failed write, rather than only checking that `RollbackAsync` was called."
             ]
           }
         ],
@@ -11044,7 +11044,7 @@ const LEARNING_PATHS = [
           {
             "title": "Keep the simple endpoint separate from the versioned project",
             "paragraphs": [
-              "The 204 completion fragment below is a smaller milestone for learning persistence. The stage project preserves the downloadable API's versioned contract: it accepts expectedVersion, returns the updated representation and rejects stale versions with 409. Do not replace that project endpoint with this unconditional update.",
+              "The 204 completion fragment below is a smaller milestone for learning persistence. The stage project preserves the downloadable API's versioned contract: it accepts `expectedVersion`, returns the updated representation and rejects stale versions with 409. Do not replace that project endpoint with this unconditional update.",
               "Build in three steps: first prove create and fetch across restart; then complete and fetch Done; then carry the client's original version through the conditional update taught in ef-evolution. Run the HTTP acceptance checks only against the matching versioned API contract. An endpoint that returns 204 without checking the version will not satisfy those checks."
             ]
           },
@@ -11108,7 +11108,7 @@ const LEARNING_PATHS = [
           {
             "title": "Observe all started work",
             "paragraphs": [
-              "Task.WhenAll represents completion of all supplied tasks. Starting several tasks and awaiting only one can leave failures unobserved and resources active. When a group fails, decide whether sibling work should continue or share a cancellation source.",
+              "`Task.WhenAll` represents completion of all supplied tasks. Starting several tasks and awaiting only one can leave failures unobserved and resources active. When a group fails, decide whether sibling work should continue or share a cancellation source.",
               "Do not add retries to every layer. Establish a total operation budget, retry only transient and safe operations, and delay with the same token. Retrying a non-idempotent write after a timeout can create duplicates."
             ],
             "example": "// Complete console Program.cs\nvar tasks = new[] { ReadAsync(1), ReadAsync(2) };\nvar values = await Task.WhenAll(tasks);\nConsole.WriteLine(string.Join(\",\", values));\nstatic async Task<int> ReadAsync(int value)\n{\n    await Task.Delay(1);\n    return value;\n}\n// Expected: 1,2; result ordering follows task ordering."
@@ -11116,7 +11116,7 @@ const LEARNING_PATHS = [
           {
             "title": "Stream without collecting everything",
             "paragraphs": [
-              "IAsyncEnumerable<T> lets a consumer await each item as it becomes available. Pass cancellation into the iterator and propagate it to awaited operations. EnumeratorCancellation tells the compiler how the iterator's token participates in enumeration cancellation.",
+              "`IAsyncEnumerable<T>` lets a consumer await each item as it becomes available. Pass cancellation into the iterator and propagate it to awaited operations. `EnumeratorCancellation` tells the compiler how the iterator's token participates in enumeration cancellation.",
               "Streaming reduces the need to buffer all results, but it lengthens resource ownership while the consumer reads. A database stream may retain a connection; a partial HTTP response cannot later be replaced by a fresh problem response after headers are sent."
             ],
             "example": "// Complete console Program.cs\nusing System.Runtime.CompilerServices;\nawait foreach (int value in Generate(CancellationToken.None)) Console.WriteLine(value);\nstatic async IAsyncEnumerable<int> Generate([EnumeratorCancellation] CancellationToken token = default)\n{\n    for (int i = 0; i < 2; i++)\n    {\n        await Task.Delay(1, token);\n        yield return i;\n    }\n}\n// Expected: 0 then 1"
@@ -11124,7 +11124,7 @@ const LEARNING_PATHS = [
           {
             "title": "Keep request failure and retry policy separate",
             "paragraphs": [
-              "One scripted 503 produces one attempt and a propagated error. The adapter does not hide a retry loop. Retrying a read may be reasonable with a bounded deadline and transient-failure policy, but a write additionally needs an operation identity and reconciliation contract. The same helper should not silently retry every HttpRequestException.",
+              "One scripted 503 produces one attempt and a propagated error. The adapter does not hide a retry loop. Retrying a read may be reasonable with a bounded deadline and transient-failure policy, but a write additionally needs an operation identity and reconciliation contract. The same helper should not silently retry every `HttpRequestException`.",
               "As an extension, implement a bounded read retry that makes at most two attempts: 503 then 200 succeeds with two; 503 twice fails with two; 404 stays missing with one. Cancellation must prevent another attempt. The current reference has no retry, delay or total deadline policy, so passing it does not establish those behaviors."
             ]
           }
@@ -11259,23 +11259,23 @@ const LEARNING_PATHS = [
           {
             "title": "Bound work at the source",
             "paragraphs": [
-              "Launching one task per input can overload a dependency and consume memory even when individual calls are asynchronous. Parallel.ForEachAsync can process a sequence with an explicit maximum degree of parallelism.",
-              "A concurrency limit is different from a rate limit: four fast workers can still issue many requests per second. Choose both based on dependency limits and measured behavior. Do not use Task.Run to wrap naturally asynchronous I/O."
+              "Launching one task per input can overload a dependency and consume memory even when individual calls are asynchronous. `Parallel.ForEachAsync` can process a sequence with an explicit maximum degree of parallelism.",
+              "A concurrency limit is different from a rate limit: four fast workers can still issue many requests per second. Choose both based on dependency limits and measured behavior. Do not use `Task.Run` to wrap naturally asynchronous I/O."
             ],
             "example": "// Complete console Program.cs\nint active = 0, observed = 0;\nawait Parallel.ForEachAsync(Enumerable.Range(1, 8),\n    new ParallelOptions { MaxDegreeOfParallelism = 2 }, async (value, token) =>\n{\n    int current = Interlocked.Increment(ref active);\n    int previous;\n    do { previous = Volatile.Read(ref observed); }\n    while (current > previous && Interlocked.CompareExchange(ref observed, current, previous) != previous);\n    try { await Task.Delay(5, token); }\n    finally { Interlocked.Decrement(ref active); }\n});\nConsole.WriteLine(observed <= 2);\n// Expected: True; scheduling does not promise an exact peak."
           },
           {
             "title": "Protect compound operations",
             "paragraphs": [
-              "Interlocked handles specific atomic operations such as incrementing a counter. A lock protects a compound read-check-write transition. All accesses to the protected mutable state must use the same synchronization strategy.",
-              "A concurrent collection does not make a sequence of separate operations atomic. Check-then-add and read-then-increment can race. Keep lock scopes short, do not await inside a lock, and return immutable snapshots rather than live mutable state."
+              "`Interlocked` handles specific atomic operations such as incrementing a counter. A lock protects a compound read-check-write transition. All accesses to the protected mutable state must use the same synchronization strategy.",
+              "A concurrent collection does not make a sequence of separate operations atomic. Check-then-add and read-then-increment can race. Keep lock scopes short, do not `await` inside a `lock`, and return immutable snapshots rather than live mutable state."
             ],
             "example": "// Complete console Program.cs\nint counter = 0;\nobject gate = new();\nawait Task.WhenAll(Enumerable.Range(0, 100).Select(_ => Task.Run(() =>\n{\n    lock (gate) counter++;\n})));\nConsole.WriteLine(counter);\n// Expected: 100"
           },
           {
             "title": "Coordinate asynchronous exclusivity",
             "paragraphs": [
-              "SemaphoreSlim can allow a limited number of asynchronous callers into a section. Await WaitAsync and release in finally after acquisition succeeds. For a process-wide limit, the semaphore must be shared rather than recreated in every call.",
+              "`SemaphoreSlim` can allow a limited number of asynchronous callers into a section. Await `WaitAsync` and release in `finally` after acquisition succeeds. For a process-wide limit, the semaphore must be shared rather than recreated in every call.",
               "An in-process gate is not distributed coordination. Multiple replicas each have their own gate. Use database concurrency tokens, uniqueness constraints or a dedicated distributed design when the invariant spans processes."
             ],
             "example": "// Complete console Program.cs\nusing var gate = new SemaphoreSlim(1, 1);\nawait gate.WaitAsync();\ntry { Console.WriteLine(\"Exclusive section\"); }\nfinally { gate.Release(); }\n// Expected: Exclusive section; dispose only after all users finish."
@@ -11323,14 +11323,14 @@ const LEARNING_PATHS = [
             "title": "Delegate identity validation",
             "paragraphs": [
               "Authentication establishes a trusted principal. For bearer tokens, use a configured handler that validates issuer, audience, signature and lifetime; merely decoding a JWT is not authentication. A browser sign-in flow often uses an identity provider and cookies instead.",
-              "The following fragment requires a compatible Microsoft.AspNetCore.Authentication.JwtBearer package and a real configured authority. It is not a token-issuing server or a complete sign-in application. Store configuration through approved secrets and environment systems."
+              "The following fragment requires a compatible `Microsoft.AspNetCore.Authentication.JwtBearer` package and a real configured authority. It is not a token-issuing server or a complete sign-in application. Store configuration through approved secrets and environment systems."
             ],
             "example": "// Registration fragment with the JwtBearer package:\nbuilder.Services.AddAuthentication(\"Bearer\").AddJwtBearer(options =>\n{\n    options.Authority = builder.Configuration[\"Identity:Authority\"];\n    options.Audience = builder.Configuration[\"Identity:Audience\"];\n});\nbuilder.Services.AddAuthorization(options =>\n    options.AddPolicy(\"task-write\", policy => policy.RequireAuthenticatedUser().RequireClaim(\"permission\", \"tasks.write\")));\n// Before endpoints:\napp.UseAuthentication();\napp.UseAuthorization();"
           },
           {
             "title": "Authorize operations and resources",
             "paragraphs": [
-              "A policy can require a permission or role. A valid identity still must be allowed to access the particular task. Set ownership from a validated stable subject claim when creating a task; never trust an OwnerId supplied by the request body.",
+              "A policy can require a permission or role. A valid identity still must be allowed to access the particular task. Set ownership from a validated stable subject claim when creating a task; never trust an `OwnerId` supplied by the request body.",
               "A coarse write permission does not prevent one user from modifying another user's resource. Check ownership or a deliberate administrator policy on every read and write. Decide whether forbidden resources produce 403 or a consistent 404 to avoid revealing existence."
             ],
             "example": "// Endpoint fragment: existing entity has OwnerId; token handler must map a stable subject to sub.\napp.MapGet(\"/owned-tasks/{id:int}\", async (int id, TaskDb db, System.Security.Claims.ClaimsPrincipal user) =>\n{\n    string? owner = user.FindFirst(\"sub\")?.Value;\n    if (owner is null) return Results.Forbid();\n    var item = await db.Tasks.FindAsync(id);\n    if (item is null || item.OwnerId != owner) return Results.NotFound();\n    return Results.Ok(item);\n}).RequireAuthorization();\n// Configure claim mapping deliberately; test it against the real issuer."
@@ -11762,7 +11762,7 @@ const LEARNING_PATHS = [
           {
             "title": "Separate build from configuration",
             "paragraphs": [
-              "dotnet publish produces deployment output. A framework-dependent build needs a supported installed runtime on the host; a self-contained build carries a runtime and must be republished for runtime fixes. Neither choice configures HTTPS or a reverse proxy by itself.",
+              "`dotnet publish` produces deployment output. A framework-dependent build needs a supported installed runtime on the host; a self-contained build carries a runtime and must be republished for runtime fixes. Neither choice configures HTTPS or a reverse proxy by itself.",
               "Use environment-specific configuration and fail startup when required configuration is absent. Keep secrets out of source and published JSON. Environment variables with double underscores map to nested configuration keys in ASP.NET Core."
             ],
             "example": "dotnet publish PracticeApi/PracticeApi.csproj -c Release -o ./publish --no-self-contained\n# For a .NET 10 target, deploy to a compatible patched .NET 10 runtime.\n# On a local shell, an example nested configuration key is:\n# Identity__Audience=task-api\n# Do not put a real secret in a copied command, repository or lesson."
@@ -12625,7 +12625,7 @@ const LEARNING_PATHS = [
           {
             "title": "An explicit training scope",
             "paragraphs": [
-              "A developer belongs to two tenants and has access to a work and personal subscription. A familiar resource-group name can exist in the wrong subscription. The optional template requires an explicit subscription_id and declares a named training resource group and a storage account inside it. A separate apply would create both resources."
+              "A developer belongs to two tenants and has access to a work and personal subscription. A familiar resource-group name can exist in the wrong subscription. The optional template requires an explicit `subscription_id` and declares a named training resource group and a storage account inside it. A separate apply would create both resources."
             ]
           }
         ],
@@ -13005,7 +13005,7 @@ const LEARNING_PATHS = [
           {
             "title": "Core, providers and lock files",
             "paragraphs": [
-              "Terraform core and provider plugins evolve separately. required_version constrains core; required_providers identifies sources and version constraints. terraform init initializes the backend and obtains modules/providers. A dependency lock file records selected provider versions and checksums; a broad constraint alone does not reproduce an exact selection."
+              "Terraform core and provider plugins evolve separately. `required_version` constrains core; `required_providers` identifies sources and version constraints. `terraform init` initializes the backend and obtains modules/providers. A dependency lock file records selected provider versions and checksums; a broad constraint alone does not reproduce an exact selection."
             ]
           },
           {
@@ -13066,7 +13066,7 @@ const LEARNING_PATHS = [
           {
             "title": "Names, tags and public identifiers",
             "paragraphs": [
-              "The template validates a lower-case storage name and requires subscription_id rather than using a hardcoded credential. Tags carry learning purpose and expiry. Outputting a storage account ID is different from outputting its keys; the teaching template exposes only the resource-group ID."
+              "The template validates a lower-case storage name and requires `subscription_id` rather than using a hardcoded credential. Tags carry learning purpose and expiry. Outputting a storage account ID is different from outputting its keys; the teaching template exposes only the resource-group ID."
             ],
             "example": "{\n  \"variable\": {\n    \"storage_name\": {\n      \"type\": \"string\",\n      \"description\": \"Account name; full validation appears in main.tf.json.\"\n    }\n  }\n}"
           }
@@ -13116,7 +13116,7 @@ const LEARNING_PATHS = [
           {
             "title": "Expression-derived dependencies",
             "paragraphs": [
-              "Terraform derives dependencies from expressions that reference other resources. A storage account reference to a resource-group name establishes that relationship; independent resources may execute concurrently. depends_on can represent hidden dependencies but excessive blanket dependencies slow plans and make unknown values spread."
+              "Terraform derives dependencies from expressions that reference other resources. A storage account reference to a resource-group name establishes that relationship; independent resources may execute concurrently. `depends_on` can represent hidden dependencies but excessive blanket dependencies slow plans and make unknown values spread."
             ]
           },
           {
@@ -13414,7 +13414,7 @@ const LEARNING_PATHS = [
           {
             "title": "Simulated destructive changes",
             "paragraphs": [
-              "The offline planner replaces storage when its teaching identity name changes, and flags deletion when a desired ID is absent. It requires a separate allow_destroy argument for simulated destructive actions. This is a local policy contract, not Terraform replacement metadata."
+              "The offline planner replaces storage when its teaching identity name changes, and flags deletion when a desired ID is absent. It requires a separate `allow_destroy` argument for simulated destructive actions. This is a local policy contract, not Terraform replacement metadata."
             ],
             "example": "from infra_lab import plan, simulate_apply\nimport json\nfrom pathlib import Path\n\ncurrent = json.loads(Path('topology.json').read_text())['resources']\nprint(plan(current, []))  # two destroy operations in the MODEL\n# simulate_apply(current, []) raises ValueError\nprint(simulate_apply(current, [], allow_destroy=True))  # []\n# No cloud or filesystem resource is created/deleted."
           },
@@ -13422,7 +13422,7 @@ const LEARNING_PATHS = [
             "title": "Read the action before reading the totals",
             "paragraphs": [
               "Suppose a plan contains one tag update and one database replacement. The summary says two resources change, but only the replacement crosses the data-lifetime boundary. Read the address, before/after fields, action order and replacement reason. An unknown endpoint is normal during creation; an unknown backup destination is a missing recovery assumption. Neither observation is resolved by counting plus signs.",
-              "The optional terraform_plan_drill.py runs the real Terraform engine against its built-in terraform_data resource in a fresh temporary directory. An input-only edit plans an update; changing triggers_replace plans delete/create. Only the initial local state creation is applied. The terraform_data resource uses Terraform's built-in provider; no external provider plugin, provisioner or cloud resource is involved. These are real plan semantics, but they cannot predict which cloud-provider property forces replacement."
+              "The optional `terraform_plan_drill.py` runs the real Terraform engine against its built-in `terraform_data` resource in a fresh temporary directory. An input-only edit plans an update; changing `triggers_replace` plans delete/create. Only the initial local state creation is applied. The `terraform_data` resource uses Terraform's built-in provider; no external provider plugin, provisioner or cloud resource is involved. These are real plan semantics, but they cannot predict which cloud-provider property forces replacement."
             ],
             "example": "initial: [create], exit 2\nafter local apply: [no-op], exit 0\ninput v1 -> v2: [update], exit 2\nidentity-1 -> identity-2: [delete, create], exit 2",
             "exampleFormat": "prose"
@@ -13581,7 +13581,7 @@ const LEARNING_PATHS = [
           {
             "title": "Lifecycle protection and replacement",
             "paragraphs": [
-              "create_before_destroy can create a replacement first when the service permits coexistence, but unique naming and quotas can prevent that. prevent_destroy blocks certain configuration-driven destruction while present; removing the resource block also removes that protection. ignore_changes intentionally delegates selected drift and can conceal unexpected changes if used broadly."
+              "`create_before_destroy` can create a replacement first when the service permits coexistence, but unique naming and quotas can prevent that. `prevent_destroy` blocks certain configuration-driven destruction while present; removing the resource block also removes that protection. `ignore_changes` intentionally delegates selected drift and can conceal unexpected changes if used broadly."
             ]
           },
           {
@@ -13696,7 +13696,7 @@ const LEARNING_PATHS = [
           {
             "title": "Separate observed state, desired configuration and ownership",
             "paragraphs": [
-              "Configuration says public_access=false, yesterday's state records false, and an operator changed the live account to true. Refresh reads the live value. A normal plan can then propose false because the configuration still specifies it. A refresh-only operation updates state without changing the remote account. Decide whether to add the emergency change to configuration or restore the original control.",
+              "Configuration says `public_access=false`, yesterday's state records false, and an operator changed the live account to true. Refresh reads the live value. A normal plan can then propose false because the configuration still specifies it. A refresh-only operation updates state without changing the remote account. Decide whether to add the emergency change to configuration or restore the original control.",
               "Adopting an existing account adds a mapping between a Terraform address and the remote identity. If the configuration omits a required encryption or network property, the first post-import plan may propose an unexpected change. Compare the observed account, configuration and proposed actions before accepting management. Two state owners can each try to undo the other's changes; importing twice does not create high availability."
             ],
             "example": "configuration: public_access=false\nremote observation: public_access=true\nnormal plan: restore false\nrefresh-only: record true, do not remediate remote access",
@@ -13754,7 +13754,7 @@ const LEARNING_PATHS = [
           {
             "title": "The offline topology validator",
             "paragraphs": [
-              "infra_lab.py rejects public storage, wildcard roles and incomplete metadata in topology.json. It does not inspect an Azure tenant or enforce Azure Policy. The Azure template disables public networking but does not provide a complete private application network."
+              "`infra_lab.py` rejects public storage, wildcard roles and incomplete metadata in `topology.json`. It does not inspect an Azure tenant or enforce Azure Policy. The Azure template disables public networking but does not provide a complete private application network."
             ],
             "example": "from infra_lab import validate\nimport json\nfrom pathlib import Path\n\nresources = json.loads(Path('topology.json').read_text())['resources']\nresources[1]['public_network'] = True\ntry:\n    validate(resources)\nexcept ValueError as error:\n    print(error)  # public storage forbidden by training policy"
           }
@@ -14077,7 +14077,7 @@ const LEARNING_PATHS = [
           {
             "title": "Syntax, models and provider checks",
             "paragraphs": [
-              "JSON parsing checks syntax. Offline model tests check selected arithmetic and policy invariants. terraform validate checks language and provider schema after initialization. A plan can consult cloud APIs. Terraform test may create real resources unless runs are explicitly planned or providers mocked with compatible versions. Deployed smoke tests examine actual endpoints and identities."
+              "JSON parsing checks syntax. Offline model tests check selected arithmetic and policy invariants. `terraform validate` checks language and provider schema after initialization. A plan can consult cloud APIs. Terraform test may create real resources unless runs are explicitly planned or providers mocked with compatible versions. Deployed smoke tests examine actual endpoints and identities."
             ]
           },
           {
@@ -14194,7 +14194,7 @@ const LEARNING_PATHS = [
           {
             "title": "The isolated teardown sequence",
             "paragraphs": [
-              "The offline planner refuses destroy actions without an explicit opt-in; it never calls Azure. For an independently chosen isolated real lab, review terraform plan -destroy before any terraform destroy, then check the portal and remaining state. A resource group must contain only your disposable learning resources."
+              "The offline planner refuses destroy actions without an explicit opt-in; it never calls Azure. For an independently chosen isolated real lab, review `terraform plan -destroy` before any `terraform destroy`, then check the portal and remaining state. A resource group must contain only your disposable learning resources."
             ]
           }
         ],
@@ -14706,14 +14706,14 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the decision",
             "paragraphs": [
-              "A CSV stores text. pandas infers types when reading it, and inference can hide a wrong assumption. Load with read_csv, inspect shape, columns, head and dtypes, then compare them with the data dictionary. Reading successfully does not establish that a file contains the expected records.",
+              "A CSV stores text. pandas infers types when reading it, and inference can hide a wrong assumption. Load with `read_csv`, inspect shape, columns, head and dtypes, then compare them with the data dictionary. Reading successfully does not establish that a file contains the expected records.",
               "Keep the raw input unchanged. Make the source path relative to the script file so the same program works from another directory. A quick preview helps detect a delimiter or header mistake, but examine counts and validation results across the whole table. A clean first five rows cannot certify the rest."
             ]
           },
           {
             "title": "Worked example",
             "paragraphs": [
-              "df = pd.read_csv(\"support_tickets.csv\"); df.shape should be (24, 8). df[\"ticket_id\"].nunique() should be 24. A shape of (24, 1) suggests a delimiter problem."
+              "`df = pd.read_csv(\"support_tickets.csv\")`; `df.shape` should be `(24, 8)`. `df[\"ticket_id\"].nunique()` should be 24. A shape of `(24, 1)` suggests a delimiter problem."
             ]
           }
         ],
@@ -14755,14 +14755,14 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the decision",
             "paragraphs": [
-              "A NumPy array stores elements with a shared dtype. np.array([2, 4, 6], dtype=float) creates a one-dimensional numeric array of shape (3,). Multiplication by 60 converts every hour value to minutes. A Python list multiplied by 60 repeats its contents instead. Check the container before assuming arithmetic semantics.",
-              "For a two-dimensional table, an axis tells a reduction which dimension to collapse. A two-row, three-column array has shape (2, 3). Summing axis=0 produces one value per column; axis=1 produces one per row. Broadcasting can combine compatible shapes, but a successful operation may still use the wrong units."
+              "A NumPy array stores elements with a shared dtype. `np.array([2, 4, 6], dtype=float)` creates a one-dimensional numeric array of shape `(3,)`. Multiplication by 60 converts every hour value to minutes. A Python list multiplied by 60 repeats its contents instead. Check the container before assuming arithmetic semantics.",
+              "For a two-dimensional table, an axis tells a reduction which dimension to collapse. A two-row, three-column array has shape (2, 3). Summing `axis=0` produces one value per column; `axis=1` produces one per row. Broadcasting can combine compatible shapes, but a successful operation may still use the wrong units."
             ]
           },
           {
             "title": "Worked example",
             "paragraphs": [
-              "np.array([[1, 2, 3], [4, 5, 6]]).sum(axis=0) returns [5, 7, 9]. Summing axis=1 returns [6, 15]. The result length is a useful sanity check."
+              "`np.array([[1, 2, 3], [4, 5, 6]]).sum(axis=0)` returns `[5, 7, 9]`. Summing `axis=1` returns `[6, 15]`. The result length is a useful sanity check."
             ]
           }
         ],
@@ -14804,14 +14804,14 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the decision",
             "paragraphs": [
-              "Identifiers are labels even if they contain digits. Keep them as strings so leading zeros survive. Convert numeric columns with to_numeric and dates with to_datetime. errors=\"raise\" stops on malformed values; errors=\"coerce\" creates missing values. Coercion needs a separate count and review because it can silently change the population used by later summaries.",
-              "The supplied created_date is a calendar date without a timezone or time of day. It supports grouping by date, but it cannot establish elapsed resolution time. resolution_hours is a separate measured outcome in this fictional file. In a real event table, normalize timestamp zones and define which start and end events count before subtracting timestamps."
+              "Identifiers are labels even if they contain digits. Keep them as strings so leading zeros survive. Convert numeric columns with `to_numeric` and dates with `to_datetime`. `errors=\"raise\"` stops on malformed values; `errors=\"coerce\"` creates missing values. Coercion needs a separate count and review because it can silently change the population used by later summaries.",
+              "The supplied `created_date` is a calendar date without a timezone or time of day. It supports grouping by date, but it cannot establish elapsed resolution time. `resolution_hours` is a separate measured outcome in this fictional file. In a real event table, normalize timestamp zones and define which start and end events count before subtracting timestamps."
             ]
           },
           {
             "title": "Worked example",
             "paragraphs": [
-              "pd.to_numeric(pd.Series([\"8\", \"bad\"]), errors=\"coerce\") gives 8 and a missing value. That does not prove the second ticket resolved in zero hours."
+              "`pd.to_numeric(pd.Series([\"8\", \"bad\"]), errors=\"coerce\")` gives 8 and a missing value. That does not prove the second ticket resolved in zero hours."
             ]
           }
         ],
@@ -14853,14 +14853,14 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the decision",
             "paragraphs": [
-              "Use df.loc[mask, columns] to select both rows and columns. A mask is a Boolean Series aligned to the table index. Combine comparisons with & or | and put each comparison in parentheses. Python and/or expects single truth values and cannot combine whole pandas Series this way.",
-              "State whether your filter changes the population or only the displayed columns. Keeping high-priority tickets changes the population; hiding the team column does not. Record the number of rows before and after a filter. Use df.loc[mask, \"column\"] for assignment rather than chained indexing, which has version-dependent copy behavior and is unsupported for reliable updates."
+              "Use `df.loc[mask, columns]` to select both rows and columns. A mask is a Boolean Series aligned to the table index. Combine comparisons with `&` or `|` and put each comparison in parentheses. Python `and`/`or` expects single truth values and cannot combine whole pandas Series this way.",
+              "State whether your filter changes the population or only the displayed columns. Keeping high-priority tickets changes the population; hiding the team column does not. Record the number of rows before and after a filter. Use `df.loc[mask, \"column\"]` for assignment rather than chained indexing, which has version-dependent copy behavior and is unsupported for reliable updates."
             ]
           },
           {
             "title": "Worked example",
             "paragraphs": [
-              "mask = (df[\"priority\"] == \"high\") & (df[\"resolution_hours\"] > 24). df.loc[mask, [\"ticket_id\", \"resolution_hours\"]] lists high-priority breaches only."
+              "`mask = (df[\"priority\"] == \"high\") & (df[\"resolution_hours\"] > 24)`. `df.loc[mask, [\"ticket_id\", \"resolution_hours\"]]` lists high-priority breaches only."
             ]
           }
         ],
@@ -14902,7 +14902,7 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the decision",
             "paragraphs": [
-              "Missing means the value is unavailable. Duplicate means more than one record represents the same intended unit. isna() marks unavailable cells with True; sum that mask to count them. duplicated(\"ticket_id\") tests repeated identifiers. drop_duplicates() across all columns removes exact copies, but conflicting records with the same ID need a rule grounded in how the source was collected.",
+              "Missing means the value is unavailable. Duplicate means more than one record represents the same intended unit. `isna()` marks unavailable cells with `True`; sum that mask to count them. `duplicated(\"ticket_id\")` tests repeated identifiers. `drop_duplicates()` across all columns removes exact copies, but conflicting records with the same ID need a rule grounded in how the source was collected.",
               "Do not choose the first record just because it makes a test pass. If two versions have explicit update times, the newest validated version may be appropriate. If the source lacks that information, stop and report the conflict. For missing durations, report both total tickets and known durations so readers can see the denominator used by the mean."
             ]
           },
@@ -14952,13 +14952,13 @@ const LEARNING_PATHS = [
             "title": "Understand the decision",
             "paragraphs": [
               "A Series has values and an index. Adding two Series matches index labels rather than blindly adding the first item to the first item. This is useful when rows have been reordered, but it can create missing results when labels do not match. Use iloc for positional selection and loc for label selection.",
-              "Inspect the index after filtering or sorting. A filtered table may retain labels 2 and 5 rather than becoming labels 0 and 1. Resetting the index changes those labels; it does not change the underlying ticket identities. Keep ticket_id as the business identifier and choose positional array arithmetic only when you have verified both row orders."
+              "Inspect the index after filtering or sorting. A filtered table may retain labels 2 and 5 rather than becoming labels 0 and 1. Resetting the index changes those labels; it does not change the underlying ticket identities. Keep `ticket_id` as the business identifier and choose positional array arithmetic only when you have verified both row orders."
             ]
           },
           {
             "title": "Worked example",
             "paragraphs": [
-              "Series([10, 20], index=[\"A\", \"B\"]) plus Series([1, 2], index=[\"B\", \"A\"]) gives A=12 and B=21. The first stored values are not paired."
+              "`Series([10, 20], index=[\"A\", \"B\"])` plus `Series([1, 2], index=[\"B\", \"A\"])` gives A=12 and B=21. The first stored values are not paired."
             ]
           }
         ],
@@ -15000,14 +15000,14 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the decision",
             "paragraphs": [
-              "The teaching rule defines a breach as resolution_hours > 24. Exactly 24 hours does not breach. Derive the flag from validated durations and compare it with the supplied breached column. A disagreement can reveal a changed policy, corrupted export or wrong operator. Avoid overwriting the original flag before checking it.",
+              "The teaching rule defines a breach as `resolution_hours > 24`. Exactly 24 hours does not breach. Derive the flag from validated durations and compare it with the supplied breached column. A disagreement can reveal a changed policy, corrupted export or wrong operator. Avoid overwriting the original flag before checking it.",
               "Vectorized operations make the same rule apply across rows, but they do not validate inputs automatically. Reject negative or nonfinite durations before calculating a flag. A numeric conversion can still accept infinity. Keep the rule in a named function and test values below, at and above the threshold."
             ]
           },
           {
             "title": "Worked example",
             "paragraphs": [
-              "np.array([23.9, 24.0, 24.1]) > 24 produces [False, False, True]. Multiplying a duration by 60 changes units; it does not change which cases breach if the threshold also becomes 1440 minutes."
+              "`np.array([23.9, 24.0, 24.1]) > 24` produces `[False, False, True]`. Multiplying a duration by 60 changes units; it does not change which cases breach if the threshold also becomes 1440 minutes."
             ]
           }
         ],
@@ -15050,7 +15050,7 @@ const LEARNING_PATHS = [
             "title": "Understand the decision",
             "paragraphs": [
               "groupby splits rows by a key and computes an aggregate for each group. size counts rows; count on a column counts its nonmissing values. For validated zero-or-one breach flags, mean is the fraction of ones. Include ticket count, breach count and mean duration so the reader can check the rate and see how much data supports it.",
-              "A mean of group rates gives every group equal weight. An overall ticket rate must weight groups by ticket count. This difference matters when teams handle different volumes. Missing group labels also need a policy because groupby normally excludes missing keys; use dropna=False when auditing unclassified rows."
+              "A mean of group rates gives every group equal weight. An overall ticket rate must weight groups by ticket count. This difference matters when teams handle different volumes. Missing group labels also need a policy because `groupby` normally excludes missing keys; use `dropna=False` when auditing unclassified rows."
             ]
           },
           {
@@ -15559,8 +15559,8 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the decision",
             "paragraphs": [
-              "A left merge can attach a team owner to every ticket. The ticket table contains many rows for each team; the lookup must contain one row for each team. merge(..., validate=\"many_to_one\") rejects duplicate lookup keys. A duplicate right-side key otherwise repeats matching ticket rows and changes later counts and sums.",
-              "Cardinality validation does not prove every key matched. Use indicator=True and inspect left_only rows. Decide whether an unknown team should stop the report or appear as unassigned. pandas matches null join keys to each other, unlike the usual SQL null comparison, so reject missing required keys rather than assuming SQL behavior."
+              "A left merge can attach a team owner to every ticket. The ticket table contains many rows for each team; the lookup must contain one row for each team. `merge(..., validate=\"many_to_one\")` rejects duplicate lookup keys. A duplicate right-side key otherwise repeats matching ticket rows and changes later counts and sums.",
+              "Cardinality validation does not prove every key matched. Use `indicator=True` and inspect `left_only` rows. Decide whether an unknown team should stop the report or appear as unassigned. pandas matches null join keys to each other, unlike the usual SQL null comparison, so reject missing required keys rather than assuming SQL behavior."
             ]
           },
           {
@@ -15744,7 +15744,7 @@ const LEARNING_PATHS = [
           {
             "title": "Worked example",
             "paragraphs": [
-              "Three tickets created Monday resolve Tuesday and Wednesday. Grouping by created_date places all three on Monday. A closure workload chart would need resolved timestamps instead."
+              "Three tickets created Monday resolve Tuesday and Wednesday. Grouping by `created_date` places all three on Monday. A closure workload chart would need resolved timestamps instead."
             ]
           }
         ],
@@ -15786,14 +15786,14 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the decision",
             "paragraphs": [
-              "Use a bar chart for counts by team, a histogram for a duration distribution and a line chart for an ordered time series. These forms answer different questions. Matplotlib separates a Figure, the output container, from an Axes, where data and labels appear. The explicit fig, ax = plt.subplots() style helps when adding labels or several plots.",
+              "Use a bar chart for counts by team, a histogram for a duration distribution and a line chart for an ordered time series. These forms answer different questions. Matplotlib separates a Figure, the output container, from an Axes, where data and labels appear. The explicit `fig, ax = plt.subplots()` style helps when adding labels or several plots.",
               "A bar chart compares lengths, so a zero baseline usually matters. Label hours as hours and rates as fractions or percentages consistently. A chart needs a text summary and accessible labels; color alone should not encode the conclusion. Keep categories in a stable order so two generated reports can be compared."
             ]
           },
           {
             "title": "Worked example",
             "paragraphs": [
-              "The kit writes counts.png with team on the horizontal axis and ticket count on the vertical axis. The report repeats the numeric counts so the image is not the only way to read them."
+              "The kit writes `counts.png` with team on the horizontal axis and ticket count on the vertical axis. The report repeats the numeric counts so the image is not the only way to read them."
             ]
           }
         ],
@@ -15836,13 +15836,13 @@ const LEARNING_PATHS = [
             "title": "Understand the decision",
             "paragraphs": [
               "A long table stores a category in a column; a wide table gives selected categories their own columns. A team-by-priority count table can make comparisons easier. Group and count first, then unstack or pivot the summary. The reshaping step changes presentation, not what counts as one ticket.",
-              "pivot requires unique index-and-column combinations. Repeated team-priority rows in a raw ticket table are expected, so a direct pivot of duration can fail. pivot_table can aggregate them, but specify the aggregation rather than accepting a mean that may answer the wrong question. Filling missing count combinations with zero needs confidence that the input population is complete."
+              "`pivot` requires unique index-and-column combinations. Repeated team-priority rows in a raw ticket table are expected, so a direct pivot of duration can fail. `pivot_table` can aggregate them, but specify the aggregation rather than accepting a mean that may answer the wrong question. Filling missing count combinations with zero needs confidence that the input population is complete."
             ]
           },
           {
             "title": "Worked example",
             "paragraphs": [
-              "Billing has two low-priority tickets and one high-priority ticket. A grouped count followed by unstack produces a billing row with low=2 and high=1. A sum of resolution_hours would measure something else."
+              "Billing has two low-priority tickets and one high-priority ticket. A grouped count followed by `unstack` produces a billing row with `low=2` and `high=1`. A sum of `resolution_hours` would measure something else."
             ]
           }
         ],
@@ -15947,7 +15947,7 @@ const LEARNING_PATHS = [
           {
             "title": "Worked example",
             "paragraphs": [
-              "The test suite changes one duration to -1 and expects ValueError. It also duplicates an ID and inserts an unknown team. A report that prints plausible totals despite those changes has failed its input contract."
+              "The test suite changes one duration to -1 and expects `ValueError`. It also duplicates an ID and inserts an unknown team. A report that prints plausible totals despite those changes has failed its input contract."
             ]
           }
         ],
@@ -16038,7 +16038,7 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the decision",
             "paragraphs": [
-              "read_csv with chunksize can process a large file in smaller pieces. This limits the size of each loaded chunk, but a correct combined answer still needs state across chunks. A mean requires a total sum and a count of known values. Global duplicate detection also needs a shared set of IDs or an external store.",
+              "`read_csv` with `chunksize` can process a large file in smaller pieces. This limits the size of each loaded chunk, but a correct combined answer still needs state across chunks. A mean requires a total sum and a count of known values. Global duplicate detection also needs a shared set of IDs or an external store.",
               "Do not assume chunking makes every operation easy. An exact median cannot generally be combined from chunk medians. Sorting across the whole dataset may need external sorting, and a lookup must still obey the same cardinality rule. Profile a real workload before adding chunking to this small 24-row example."
             ]
           },
@@ -16088,13 +16088,13 @@ const LEARNING_PATHS = [
             "title": "Understand the decision",
             "paragraphs": [
               "A reproducible report starts from named input files and runs without manual edits to intermediate tables. Save a source hash, row count and library versions beside the results. A hash identifies the exact bytes used; it does not certify data accuracy. Stable sort order and consistent numeric formatting make differences between runs easier to inspect.",
-              "The kit writes report.json and counts.png into a chosen output folder. The JSON includes the fictional-data limitation and the table behind the chart. Run it from a fresh folder and inspect the output before sharing. If dependency versions change, rerun the tests and compare the table, rather than assuming an image that looks similar proves equivalence."
+              "The kit writes `report.json` and `counts.png` into a chosen output folder. The JSON includes the fictional-data limitation and the table behind the chart. Run it from a fresh folder and inspect the output before sharing. If dependency versions change, rerun the tests and compare the table, rather than assuming an image that looks similar proves equivalence."
             ]
           },
           {
             "title": "Worked example",
             "paragraphs": [
-              "python analysis.py --out report-output produces both files. Running it twice with the same environment and input preserves the JSON content. A changed source will normally have a different SHA-256. Matching hashes are a practical identity check, not a mathematical guarantee that two files are identical."
+              "`python analysis.py --out report-output` produces both files. Running it twice with the same environment and input preserves the JSON content. A changed source will normally have a different SHA-256. Matching hashes are a practical identity check, not a mathematical guarantee that two files are identical."
             ]
           }
         ],
@@ -16192,14 +16192,14 @@ const LEARNING_PATHS = [
           {
             "title": "Understand the decision",
             "paragraphs": [
-              "A descriptive analysis can use resolution_hours and breached because it summarizes completed tickets. A model intended to act at intake cannot use either as a predictor. The duration is only known later and the flag is the target. Mark when every field becomes available, not only whether its type is numeric.",
+              "A descriptive analysis can use `resolution_hours` and `breached` because it summarizes completed tickets. A model intended to act at intake cannot use either as a predictor. The duration is only known later and the flag is the target. Mark when every field becomes available, not only whether its type is numeric.",
               "Keep ticket IDs for tracing errors, but arbitrary identifiers rarely explain the underlying process. A model also needs a split that respects time or repeated customers, an untouched evaluation set and a baseline. The next learning path uses a larger fictional dataset to practise those decisions. Good results on that synthetic exercise do not establish production usefulness."
             ]
           },
           {
             "title": "Worked example",
             "paragraphs": [
-              "customer_messages in this kit means messages supplied at intake. If another export uses total messages over the entire case, the same column name would leak future information. The data dictionary determines which interpretation is valid."
+              "`customer_messages` in this kit means messages supplied at intake. If another export uses total messages over the entire case, the same column name would leak future information. The data dictionary determines which interpretation is valid."
             ]
           }
         ],
@@ -16647,7 +16647,7 @@ const LEARNING_PATHS = [
           {
             "title": "Orders and daily revenue",
             "paragraphs": [
-              "For a learning-sales dataset, one row is one order identified by order_id. A dashboard asking daily revenue needs a transformation that groups orders by day. Counting joined order lines as orders double-counts purchases unless the grain is handled explicitly."
+              "For a learning-sales dataset, one row is one order identified by `order_id`. A dashboard asking daily revenue needs a transformation that groups orders by day. Counting joined order lines as orders double-counts purchases unless the grain is handled explicitly."
             ],
             "example": "order_id,customer_id,occurred_at,amount_cents\no1,c1,2026-09-01T10:00:00Z,1250\no2,c1,2026-09-01T11:00:00Z,750\n# Two orders; total 2000 cents for the day."
           },
@@ -16858,7 +16858,7 @@ const LEARNING_PATHS = [
           {
             "title": "CSV structure and encoding",
             "paragraphs": [
-              "CSV permits quoted delimiters and embedded newlines, so split(\",\") is not a general parser. Agree encoding, delimiter, headers and newline handling with the producer. Python csv.DictReader maps named fields; open(..., newline=\"\", encoding=\"utf-8\") supports its newline handling."
+              "CSV permits quoted delimiters and embedded newlines, so `split(\",\")` is not a general parser. Agree encoding, delimiter, headers and newline handling with the producer. Python `csv.DictReader` maps named fields; `open(..., newline=\"\", encoding=\"utf-8\")` supports its newline handling."
             ]
           },
           {
@@ -16926,7 +16926,7 @@ const LEARNING_PATHS = [
           {
             "title": "Integer cents and UTC fields",
             "paragraphs": [
-              "amount_cents=\"1250\" becomes integer 1250; \"12.50\" violates this cents contract. customer_id must be a nonblank bounded identifier. Timestamps must be aware UTC values in this reference. Reject duplicate headers and extra columns."
+              "`amount_cents=\"1250\"` becomes integer 1250; \"12.50\" violates this cents contract. `customer_id` must be a nonblank bounded identifier. Timestamps must be aware UTC values in this reference. Reject duplicate headers and extra columns."
             ],
             "example": "def cents(value):\n    if not value.isascii() or not value.isdigit():\n        raise ValueError(\"expected nonnegative integer cents\")\n    return int(value)\nprint(cents(\"1250\"))\n# Expected 1250; cents(\"12.50\") raises ValueError."
           },
@@ -17154,7 +17154,7 @@ const LEARNING_PATHS = [
             "title": "Rollback after a uniqueness conflict",
             "paragraphs": [
               "The reference inserts two orders and a run identity together. A uniqueness conflict on a later row rolls back earlier writes and the run marker. Queries after failure should find the prior data unchanged. The connection is explicitly closed in finally.",
-              "This snippet assumes the reference connection's default legacy transaction control: INSERT opens a transaction. The connection context commits or rolls back an open transaction; it does not itself begin one. With autocommit=True, the context does not make these writes atomic. Set the transaction policy deliberately."
+              "This snippet assumes the reference connection's default legacy transaction control: `INSERT` opens a transaction. The connection context commits or rolls back an open transaction; it does not itself begin one. With `autocommit=True`, the context does not make these writes atomic. Set the transaction policy deliberately."
             ],
             "example": "with connection:\n    connection.executemany(\n        \"INSERT INTO orders VALUES (?, ?, ?, ?)\", rows)\n# Assumes transaction-enabled connection; INSERT opens the transaction.\n# Context commits or rolls back that open transaction.\n# close the connection separately; context does not close it."
           },
@@ -17167,7 +17167,7 @@ const LEARNING_PATHS = [
           {
             "title": "Bind rows before adding replay logic",
             "paragraphs": [
-              "The parser returns tuples in this order: order_id, customer_id, occurred_at, amount_cents. The four question marks in the INSERT stand for four values, supplied separately as tuples. They are not string-formatting slots. The table must already exist. In pipeline_lab.py, SCHEMA defines orders and runs; schema setup is separate from the data transaction.",
+              "The parser returns tuples in this order: `order_id`, `customer_id`, `occurred_at`, `amount_cents`. The four question marks in the `INSERT` stand for four values, supplied separately as tuples. They are not string-formatting slots. The table must already exist. In `pipeline_lab.py`, `SCHEMA` defines orders and runs; schema setup is separate from the data transaction.",
               "Start by importing one valid batch into a disposable database. Next add a batch with a new order followed by a duplicate existing order. Verify the new order is absent after failure. Add the run marker only after this rollback behavior makes sense. The next lesson adds the identity check that decides whether to write at all."
             ]
           }
@@ -17229,7 +17229,7 @@ const LEARNING_PATHS = [
           {
             "title": "Trace the two parts of batch identity",
             "paragraphs": [
-              "The caller chooses batch_id. The parser computes a fingerprint from the original file bytes. Store both. First import: the ID is absent, so insert the orders and run row together. Second import with the same ID and bytes: the stored fingerprint matches, so return replay. Same ID with changed bytes: reject the conflict before inserting anything.",
+              "The caller chooses `batch_id`. The parser computes a fingerprint from the original file bytes. Store both. First import: the ID is absent, so insert the orders and run row together. Second import with the same ID and bytes: the stored fingerprint matches, so return replay. Same ID with changed bytes: reject the conflict before inserting anything.",
               "For an independent case, change only a CSV line ending in a copy of the sample. Its parsed values can remain equal while its exact-byte fingerprint changes. Predict conflict under the same batch ID. A new batch ID is not a workaround for duplicate business order IDs; those remain unique too."
             ]
           }
@@ -17374,13 +17374,13 @@ const LEARNING_PATHS = [
           {
             "title": "Composite extraction cursors",
             "paragraphs": [
-              "A watermark records how far extraction has progressed, using a source sequence number or an (updated_at, id) tuple. Save it only after the downstream transaction commits. A timestamp alone can miss rows with the same timestamp, so define both the ordering and the tie-breaker."
+              "A watermark records how far extraction has progressed, using a source sequence number or an `(updated_at, id)` tuple. Save it only after the downstream transaction commits. A timestamp alone can miss rows with the same timestamp, so define both the ordering and the tie-breaker."
             ]
           },
           {
             "title": "Two tied update timestamps",
             "paragraphs": [
-              "Two rows share updated_at=10:00. If you remember only 10:00 and later ask for greater timestamps, a second row delivered at that boundary may be lost. A composite cursor or overlapping extraction plus deduplication handles this deliberately."
+              "Two rows share `updated_at=10:00`. If you remember only 10:00 and later ask for greater timestamps, a second row delivered at that boundary may be lost. A composite cursor or overlapping extraction plus deduplication handles this deliberately."
             ],
             "example": "# Composite cursor example:\nlast = (\"2026-09-01T10:00:00Z\", \"o1\")\nnext_row = (\"2026-09-01T10:00:00Z\", \"o2\")\nprint(next_row > last)\n# True under the specified lexicographic ordering."
           },
@@ -17393,9 +17393,9 @@ const LEARNING_PATHS = [
           {
             "title": "Work through a missed row",
             "paragraphs": [
-              "An extractor stores the largest occurred_at it has seen: 10:05. A source row arriving at 10:08 describes an event at 09:59. The next query WHERE occurred_at > 10:05 will never retrieve it. Sorting the returned rows cannot repair an exclusion that happened before sorting. Event time describes the business event; a reliable extraction cursor describes source changes.",
+              "An extractor stores the largest `occurred_at` it has seen: 10:05. A source row arriving at 10:08 describes an event at 09:59. The next query `WHERE occurred_at > 10:05` will never retrieve it. Sorting the returned rows cannot repair an exclusion that happened before sorting. Event time describes the business event; a reliable extraction cursor describes source changes.",
               "One alternative is a source-controlled increasing change sequence. Read changes after sequence 41, apply sequences 42–45 and advance the cursor to 45 in the same target transaction. If applying 44 fails, the target must retain both its earlier data and cursor 41. A lookback window plus idempotent application is another design, but it covers only lateness within that window and needs a stated correction policy.",
-              "Try the revision_lab.py exercise in the practice files. It deliberately processes a newer revision before an older one. The stale record must not replace the new value. Change the event order and compare the final projection; this is a local change-feed model, not a connector to a production CDC system."
+              "Try the `revision_lab.py` exercise in the practice files. It deliberately processes a newer revision before an older one. The stale record must not replace the new value. Change the event order and compare the final projection; this is a local change-feed model, not a connector to a production CDC system."
             ]
           }
         ],
@@ -17660,7 +17660,7 @@ const LEARNING_PATHS = [
             "title": "Choose the historical join before writing SQL",
             "paragraphs": [
               "Customer C belonged to region North before April 1 and South from April 1. Order A happened March 31 and order B happened April 2. Joining both orders to the current customer row assigns both to South. That is correct for a current-region report and incorrect for a region-at-order-time report. The same SQL join can be syntactically valid and answer the wrong question.",
-              "For the historical question, store nonoverlapping validity intervals and match valid_from <= order_time < valid_to. A timestamp exactly on April 1 belongs to the new interval. Before summing amounts, verify each order matches exactly one dimension version. An overlap duplicates money; a gap silently drops orders in an inner join.",
+              "For the historical question, store nonoverlapping validity intervals and match `valid_from <= order_time < valid_to`. A timestamp exactly on April 1 belongs to the new interval. Before summing amounts, verify each order matches exactly one dimension version. An overlap duplicates money; a gap silently drops orders in an inner join.",
               "Changed case: the April 1 region change is corrected to March 30. Identify the affected order IDs before recalculating aggregates. Rebuild their historical matches and compare counts and totals, rather than treating the correction as one additional customer row."
             ]
           }
@@ -18882,7 +18882,7 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "A stack models last-in-first-out behavior such as undo. A queue models first-in-first-out behavior such as requests awaiting service. Name both ends explicitly when tracing operations.",
-              "Python list append/pop work well for a stack. Use collections.deque for removing from the front of a queue; repeatedly using list.pop(0) adds shifting work."
+              "Python list `append`/`pop` work well for a stack. Use `collections.deque` for removing from the front of a queue; repeatedly using `list.pop(0)` adds shifting work."
             ],
             "example": "from collections import deque\nqueue = deque(['A', 'B'])\nqueue.append('C')\nprint(queue.popleft())  # A\nstack = ['A', 'B']\nprint(stack.pop())      # B"
           },
@@ -19353,7 +19353,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "Sorting enables grouped display, merging and efficient search. Python's sorted returns a new list; list.sort modifies the existing list. A key function expresses what should be compared.",
+              "Sorting enables grouped display, merging and efficient search. Python's `sorted` returns a new list; `list.sort` modifies the existing list. A key function expresses what should be compared.",
               "A stable sort preserves the prior order of items with equal keys. This helps when records have ties. For general comparison sorting, O(n log n) is a common efficient bound; simple insertion sort has O(n²) worst-case time."
             ],
             "example": "rows = [('SQL', 20), ('Python', 10), ('React', 20)]\nprint(sorted(rows, key=lambda row: row[1]))\n# [('Python', 10), ('SQL', 20), ('React', 20)]"
@@ -19361,8 +19361,8 @@ const LEARNING_PATHS = [
           {
             "title": "Read a key function and a tie-break",
             "paragraphs": [
-              "key receives a function, not its result. def duration(row): return row[1] and lambda row: row[1] express the same key here. sorted calls that function for each row and orders by its returned value.",
-              "A tuple key compares its first position first, then later positions only on ties. For (-priority, title), priority 3 gives -3 and sorts before priority 2 giving -2. Equal priorities then use title in ascending order. The original records are returned, not the key tuples."
+              "`key` receives a function, not its result. `def duration(row): return row[1]` and `lambda row: row[1]` express the same key here. `sorted` calls that function for each row and orders by its returned value.",
+              "A tuple key compares its first position first, then later positions only on ties. For `(-priority, title)`, priority 3 gives -3 and sorts before priority 2 giving -2. Equal priorities then use title in ascending order. The original records are returned, not the key tuples."
             ],
             "example": "def duration(row):\n    return row[1]\nrows = [(\"SQL\", 20), (\"Python\", 10), (\"React\", 20)]\nassert sorted(rows, key=duration) == sorted(rows, key=lambda row: row[1])"
           },
@@ -19806,7 +19806,7 @@ const LEARNING_PATHS = [
           {
             "title": "Implemented tree practice",
             "paragraphs": [
-              "The new binary-search-tree lesson and trees_graphs.py supply an actual search tree; compare its explicit stack with recursive traversal and its height-dependent costs."
+              "The new binary-search-tree lesson and `trees_graphs.py` supply an actual search tree; compare its explicit stack with recursive traversal and its height-dependent costs."
             ]
           }
         ],
@@ -20223,15 +20223,15 @@ const LEARNING_PATHS = [
           {
             "title": "Connect a tree picture to node references",
             "paragraphs": [
-              "A node is a record containing a key and references to its left and right children. None means that child is absent. A class constructor uses self to attach these fields to the new object. Child references point to other nodes rather than copying their entire subtrees.",
-              "Before deletion, trace search only: compare with the current key, follow left for a smaller target or right for a larger one, and stop at equality or None. In the example, searching 7 visits 10 then 5 then None. The later linked-nodes lesson practises changing a single link before larger tree edits."
+              "A node is a record containing a key and references to its left and right children. `None` means that child is absent. A class constructor uses `self` to attach these fields to the new object. Child references point to other nodes rather than copying their entire subtrees.",
+              "Before deletion, trace search only: compare with the current key, follow left for a smaller target or right for a larger one, and stop at equality or `None`. In the example, searching 7 visits 10 then 5 then `None`. The later linked-nodes lesson practises changing a single link before larger tree edits."
             ],
             "example": "class Node:\n    def __init__(self, key):\n        self.key = key\n        self.left = None\n        self.right = None\nroot = Node(10)\nroot.left = Node(5)\nroot.right = Node(20)\nassert root.left.key == 5\nassert root.left.right is None"
           },
           {
             "title": "Contract and collaboration",
             "paragraphs": [
-              "The downloadable trees_graphs.py implements insert, contains, delete and inorder keys with integer keys (bool rejected). Every left subtree key is smaller and every right subtree key is larger than its ancestor. Duplicate insertion is a no-op; deleting a missing key returns False. Deletion of a two-child node copies the inorder successor and removes its original node, preserving a successor right child.",
+              "The downloadable `trees_graphs.py` implements insert, contains, delete and inorder keys with integer keys (`bool` rejected). Every left subtree key is smaller and every right subtree key is larger than its ancestor. Duplicate insertion is a no-op; deleting a missing key returns `False`. Deletion of a two-child node copies the inorder successor and removes its original node, preserving a successor right child.",
               "Operations are iterative. Search, insert and delete take O(h), worst O(n) in a skewed tree; inorder traversal takes O(n) with O(h) stack. There is no balancing guarantee. The exhaustive four-key insertion/deletion tests compare against a set and independently check global ancestor bounds after every mutation."
             ]
           },
@@ -20245,7 +20245,7 @@ const LEARNING_PATHS = [
           {
             "title": "Verify the invariant beyond a sample",
             "paragraphs": [
-              "Use test_trees_graphs.py to compare every four-key insertion/deletion order against a set. Check global ancestor bounds, not only immediate parent-child comparisons: a misplaced descendant can satisfy its immediate parent while violating the root bound. The successor-with-right-child fixture tests the splice above. Sorted insertion creates a chain; iterative traversal avoids recursion failure but does not improve that chain's linear search cost."
+              "Use `test_trees_graphs.py` to compare every four-key insertion/deletion order against a set. Check global ancestor bounds, not only immediate parent-child comparisons: a misplaced descendant can satisfy its immediate parent while violating the root bound. The successor-with-right-child fixture tests the splice above. Sorted insertion creates a chain; iterative traversal avoids recursion failure but does not improve that chain's linear search cost."
             ]
           }
         ],
@@ -21083,7 +21083,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "A min-heap keeps the smallest element at its root. In Python heapq operates on a list. Pushing or popping has logarithmic time in heap size; reading the minimum has constant time when nonempty.",
+              "A min-heap keeps the smallest element at its root. In Python `heapq` operates on a list. Pushing or popping has logarithmic time in heap size; reading the minimum has constant time when nonempty.",
               "A scheduler can use (priority, sequence, task) entries. A sequence number provides a defined tie-breaker and avoids comparing task objects when priorities tie. Real schedulers also need cancellation and fairness policies."
             ],
             "example": "import heapq\nheap = []\nheapq.heappush(heap, (2, 0, 'SQL'))\nheapq.heappush(heap, (1, 1, 'Python'))\nprint(heapq.heappop(heap)[2])  # Python"
@@ -21146,7 +21146,7 @@ const LEARNING_PATHS = [
           {
             "title": "Derive a second recurrence rather than memorising stairs",
             "paragraphs": [
-              "For unlimited coins of values 1, 3 and 4, define best[a] as the minimum coin count for amount a. The last coin c leaves amount a-c, so each reachable best[a-c]+1 is a candidate. Start best[0]=0; represent unreachable amounts with None, not zero. At six, using three after three yields two coins, while a greedy four leaves two ones.",
+              "For unlimited coins of values 1, 3 and 4, define best[a] as the minimum coin count for amount a. The last coin c leaves amount a-c, so each reachable best[a-c]+1 is a candidate. Start best[0]=0; represent unreachable amounts with `None`, not zero. At six, using three after three yields two coins, while a greedy four leaves two ones.",
               "The reference computes states in increasing amount because every positive coin leads to a smaller amount. For target T and k denominations it uses O(Tk) candidate work and O(T) storage. T is the numeric amount, so a huge value can be expensive even if its decimal input is short. The exercise oracle instead explores reachable amounts with BFS; agreement across small cases is evidence from a different mechanism."
             ]
           }
@@ -21195,7 +21195,7 @@ const LEARNING_PATHS = [
           {
             "title": "Implementation",
             "paragraphs": [
-              "insert_after preserves the old successor while inserting a new node. Traversal follows next until None, producing 1, 2, 3."
+              "`insert_after` preserves the old successor while inserting a new node. Traversal follows `next` until `None`, producing 1, 2, 3."
             ],
             "example": "class Node:\n    def __init__(self, value, next=None):\n        self.value, self.next = value, next\n\ndef insert_after(node, value):\n    node.next = Node(value, node.next)\n\ndef values(head):\n    out = []\n    while head is not None:\n        out.append(head.value)\n        head = head.next\n    return out\n\na = Node(1, Node(3))\ninsert_after(a, 2)\nassert values(a) == [1, 2, 3]"
           },
@@ -21757,8 +21757,8 @@ const LEARNING_PATHS = [
           {
             "title": "Trace the window before enumerating test inputs",
             "paragraphs": [
-              "For abba, right=0 gives a and left=0. At right=1, ab has length 2. At right=2, the prior b at index 1 moves left to 2. At right=3, the prior a at 0 lies outside the current window, so left remains 2. Moving left back to 1 would incorrectly accept bba.",
-              "The exercise uses itertools.product(\"ab\", repeat=size) to generate every tuple of a/b choices of that length. For size 2 those tuples spell aa, ab, ba, bb. Join a tuple into text, then let the slower oracle examine every nonempty substring. The oracle is deliberately easier to check than the optimized window."
+              "For abba, `right=0` gives a and `left=0`. At `right=1`, ab has length 2. At `right=2`, the prior b at index 1 moves left to 2. At `right=3`, the prior a at 0 lies outside the current window, so left remains 2. Moving left back to 1 would incorrectly accept bba.",
+              "The exercise uses `itertools.product(\"ab\", repeat=size)` to generate every tuple of a/b choices of that length. For size 2 those tuples spell aa, ab, ba, bb. Join a tuple into text, then let the slower oracle examine every nonempty substring. The oracle is deliberately easier to check than the optimized window."
             ]
           }
         ],
@@ -21818,7 +21818,7 @@ const LEARNING_PATHS = [
           {
             "title": "DFS with a directed cycle witness",
             "paragraphs": [
-              "Run directed_dfs in trees_graphs.py. It returns preorder across every component, including isolated and neighbor-only vertices, and a directed cycle witness [v,...,v] or an empty list. White is unseen, gray is on the active path, black is finished. Only an edge to gray proves a directed cycle; an edge to a finished shared prerequisite does not.",
+              "Run `directed_dfs` in `trees_graphs.py`. It returns preorder across every component, including isolated and neighbor-only vertices, and a directed cycle witness `[v, ..., v]` or an empty list. White is unseen, gray is on the active path, black is finished. Only an edge to gray proves a directed cycle; an edge to a finished shared prerequisite does not.",
               "An explicit stack retains each adjacency iterator and active-path index. Each vertex/edge is processed once: O(V+E) time and space including normalized adjacency. The tests compare all 512 directed three-vertex graphs with an independent transitive-closure oracle, check witness edges, and cover a 3,000-edge chain without recursion."
             ],
             "example": "from trees_graphs import directed_dfs\nassert directed_dfs({'A':['B'],'B':['A']})[1] == ['A','B','A']\nassert directed_dfs({'A':['B','C'],'C':['B']})[1] == []"
@@ -22151,7 +22151,7 @@ const LEARNING_PATHS = [
           {
             "title": "Correctness and cost",
             "paragraphs": [
-              "Each interval must have positive duration: finish > start. Zero-duration and reversed intervals raise ValueError. Intervals use half-open boundaries, so one interval may start exactly when another finishes. Empty input returns an empty schedule. Sorting costs O(n log n). Maximizing profit rather than count is a different problem; earliest finish need not maximize total weight. State the objective before selecting a heuristic."
+              "Each interval must have positive duration: finish > start. Zero-duration and reversed intervals raise `ValueError`. Intervals use half-open boundaries, so one interval may start exactly when another finishes. Empty input returns an empty schedule. Sorting costs O(n log n). Maximizing profit rather than count is a different problem; earliest finish need not maximize total weight. State the objective before selecting a heuristic."
             ]
           },
           {
@@ -22376,7 +22376,7 @@ const LEARNING_PATHS = [
             "title": "Preconditions versus boundary validation",
             "paragraphs": [
               "Capacity must be a nonnegative integer and every weight a positive integer; values must be finite numeric values in the stated optimization contract. These are caller preconditions. The function rejects negative capacity and nonpositive weights. Before using external data, also reject fractional capacity or weights, malformed pairs and nonfinite values.",
-              "Use advanced-reasoning.md and test_advanced_oracles.py for the learner extension: explain the invariant and recurrence, run the bounded independent oracles, and test a deliberately wrong implementation."
+              "Use `advanced-reasoning.md` and `test_advanced_oracles.py` for the learner extension: explain the invariant and recurrence, run the bounded independent oracles, and test a deliberately wrong implementation."
             ]
           }
         ],
@@ -22526,8 +22526,8 @@ const LEARNING_PATHS = [
           {
             "title": "Select state and method for a changed constraint",
             "paragraphs": [
-              "Try a route problem with one optional half-price edge. A location alone is no longer enough state: arriving at B with the discount unused has different future choices from arriving there after spending it. Model (location, used_discount), and choose transitions that preserve the resource constraint before selecting a shortest-path method.",
-              "This extension is not implemented in method_selection.py. A useful concrete case has A→B cost 8, A→C cost 3, C→B cost 3: ordinary cheapest cost is 6, but one half-price edge permits the direct cost 4. Test an unreachable destination and a zero-cost edge too. A passing coin lab does not demonstrate this richer state model."
+              "Try a route problem with one optional half-price edge. A location alone is no longer enough state: arriving at B with the discount unused has different future choices from arriving there after spending it. Model (location, `used_discount`), and choose transitions that preserve the resource constraint before selecting a shortest-path method.",
+              "This extension is not implemented in `method_selection.py`. A useful concrete case has A→B cost 8, A→C cost 3, C→B cost 3: ordinary cheapest cost is 6, but one half-price edge permits the direct cost 4. Test an unreachable destination and a zero-cost edge too. A passing coin lab does not demonstrate this richer state model."
             ]
           }
         ],
@@ -23235,7 +23235,7 @@ const LEARNING_PATHS = [
           {
             "title": "Temporary tests and retained practice data",
             "paragraphs": [
-              "The test suite allocates and deletes its own temporary directory. Manual commands create notes.db in the selected practice folder and preserve it. Container commands bind the host port to 127.0.0.1; container listening on 0.0.0.0 is necessary for port forwarding and is a different boundary."
+              "The test suite allocates and deletes its own temporary directory. Manual commands create `notes.db` in the selected practice folder and preserve it. Container commands bind the host port to 127.0.0.1; container listening on 0.0.0.0 is necessary for port forwarding and is a different boundary."
             ],
             "example": "Tests: random loopback port + temporary notes.db\nLocal manual app: 127.0.0.1:8080\nStaging: separate database + least-privilege identity"
           }
@@ -23333,7 +23333,7 @@ const LEARNING_PATHS = [
           {
             "title": "Pinning a verified image digest",
             "paragraphs": [
-              "The downloadable Dockerfile deliberately uses the readable python:3.13-slim tag. Tags can change. As an assessed extension, resolve its current digest, replace both FROM references with that digest and record an upgrade process; do not invent or paste an unverified digest from a tutorial."
+              "The downloadable Dockerfile deliberately uses the readable `python:3.13-slim` tag. Tags can change. As an assessed extension, resolve its current digest, replace both `FROM` references with that digest and record an upgrade process; do not invent or paste an unverified digest from a tutorial."
             ],
             "example": "React: npm ci; npm test; npm run build\n.NET: dotnet restore; dotnet test -c Release; dotnet publish -c Release\nPython: python --version; python -m unittest -v"
           }
@@ -23480,13 +23480,13 @@ const LEARNING_PATHS = [
           {
             "title": "Build stages and runtime files",
             "paragraphs": [
-              "A multi-stage Dockerfile can run tests with test sources present and copy only runtime files into the final image. The supplied test stage executes test_release_app.py, while the runtime stage excludes test files and runs as numeric user 10001. A narrow build context also prevents accidental inclusion of databases and private configuration. Layer caching accelerates repeated builds but is not test evidence by itself."
+              "A multi-stage Dockerfile can run tests with test sources present and copy only runtime files into the final image. The supplied test stage executes `test_release_app.py`, while the runtime stage excludes test files and runs as numeric user 10001. A narrow build context also prevents accidental inclusion of databases and private configuration. Layer caching accelerates repeated builds but is not test evidence by itself."
             ]
           },
           {
             "title": "Image permissions and build context",
             "paragraphs": [
-              "The .dockerignore file permits only the Dockerfile and two named Python sources. The numeric runtime user can write /tmp; it cannot write arbitrary /app files. Verify the final image user and filesystem with docker inspect, rather than assuming a small image is hardened or vulnerability-free."
+              "The `.dockerignore` file permits only the Dockerfile and two named Python sources. The numeric runtime user can write `/tmp`; it cannot write arbitrary `/app` files. Verify the final image user and filesystem with `docker inspect`, rather than assuming a small image is hardened or vulnerability-free."
             ],
             "example": "FROM python:3.13-slim AS test\nCOPY release_app.py test_release_app.py ./\nRUN python -m unittest -v test_release_app.py\n# Runtime copies only release_app.py from the test stage."
           }
@@ -23633,7 +23633,7 @@ const LEARNING_PATHS = [
           {
             "title": "Routing the real integration",
             "paragraphs": [
-              "integration-runbook.md gives concrete build and release steps using the existing React/.NET/SQL kits. The Python runtime does not contain those components. A static host needs an intentional deep-link fallback; an API 404 must not be rewritten to index.html. Test cookie/token assumptions and CORS with the actual staging origin."
+              "`integration-runbook.md` gives concrete build and release steps using the existing React/.NET/SQL kits. The Python runtime does not contain those components. A static host needs an intentional deep-link fallback; an API 404 must not be rewritten to `index.html`. Test cookie/token assumptions and CORS with the actual staging origin."
             ],
             "example": "Browser HTTPS → / assets (React dist)\n                 → /api/* reverse proxy → .NET :8080\n.NET → private SQL Server TCP1433\nMigration runner → SQL with separate schema permission"
           }
@@ -23787,15 +23787,15 @@ const LEARNING_PATHS = [
           {
             "title": "The unchanged-schema lab",
             "paragraphs": [
-              "Both the release-label test and distinct_artifact_drill.py use an unchanged SQLite schema. The latter runs different v1/v2 source artifacts, verifies their hashes and retains notes through rollback; neither tests a schema migration. The runbook asks the .NET/SQL learner to generate and inspect migrations for SQL Server; SQLite does not support the same idempotent migration-script facilities."
+              "Both the release-label test and `distinct_artifact_drill.py` use an unchanged SQLite schema. The latter runs different v1/v2 source artifacts, verifies their hashes and retains notes through rollback; neither tests a schema migration. The runbook asks the .NET/SQL learner to generate and inspect migrations for SQL Server; SQLite does not support the same idempotent migration-script facilities."
             ],
             "example": "v1 reads title\nMigration adds nullable label\nv2 reads title + optional label\nBackfill in bounded batches\nRemove old representation only after old consumers disappear."
           },
           {
             "title": "Backfill is a moving boundary while old writers still run",
             "paragraphs": [
-              "Adding nullable label lets old code keep selecting and inserting title. New readers can use COALESCE(label,title) while new writers populate both fields. A first backfill does not finish migration if an old instance can insert another row with label=NULL one second later. Stop or upgrade old writers, reconcile the remaining rows, and only then enforce the final representation.",
-              "schema_coexistence.py executes this sequence in a disposable SQLite file, including a late old write after backfill. It verifies both readers during coexistence and deliberately proves the old query fails after DROP COLUMN title. Keeping the old binary therefore does not make rollback safe after contraction. The script tests data compatibility, not SQL Server DDL locking, deployment concurrency or an EF migration."
+              "Adding nullable label lets old code keep selecting and inserting title. New readers can use `COALESCE(label,title)` while new writers populate both fields. A first backfill does not finish migration if an old instance can insert another row with `label=NULL` one second later. Stop or upgrade old writers, reconcile the remaining rows, and only then enforce the final representation.",
+              "`schema_coexistence.py` executes this sequence in a disposable SQLite file, including a late old write after backfill. It verifies both readers during coexistence and deliberately proves the old query fails after `DROP COLUMN title`. Keeping the old binary therefore does not make rollback safe after contraction. The script tests data compatibility, not SQL Server DDL locking, deployment concurrency or an EF migration."
             ],
             "example": "expand: add nullable label -> old reader still works\nbackfill -> old writer inserts late row with label=NULL\nv2 fallback + dual writes -> coexistence\nretire old writers, reconcile -> contract\nold SELECT title -> fails after DROP",
             "exampleFormat": "prose"
@@ -23944,7 +23944,7 @@ const LEARNING_PATHS = [
           {
             "title": "Action pins and untrusted inputs",
             "paragraphs": [
-              "ci-example.yaml uses readable versioned official actions as a learning template. Production hardening pins reviewed actions to full commit SHAs and regularly upgrades them. Never insert a guessed SHA. Do not expose secrets through workflows triggered by untrusted code or interpolate untrusted fields directly into shell commands."
+              "`ci-example.yaml` uses readable versioned official actions as a learning template. Production hardening pins reviewed actions to full commit SHAs and regularly upgrades them. Never insert a guessed SHA. Do not expose secrets through workflows triggered by untrusted code or interpolate untrusted fields directly into shell commands."
             ],
             "example": "pull request → checkout → Python tests → artifact record\nrelease approval → promote approved artifact (separate job/system)\npermissions: contents: read"
           }
@@ -24223,7 +24223,7 @@ const LEARNING_PATHS = [
           {
             "title": "Readiness beyond SELECT 1",
             "paragraphs": [
-              "A query such as SELECT 1 alone may work even if required tables are absent; the lab readiness queries the notes table. This still does not prove write permissions, downstream identity or the complete user path. Do not classify every database outage as a process deadlock."
+              "A query such as `SELECT 1` alone may work even if required tables are absent; the lab readiness queries the notes table. This still does not prove write permissions, downstream identity or the complete user path. Do not classify every database outage as a process deadlock."
             ],
             "example": "Create NOT_READY_FILE → /ready returns503, /live returns200\nRemove file → /ready returns200\nReadiness success → write/read a synthetic note → inspect /version"
           }
@@ -24394,7 +24394,7 @@ const LEARNING_PATHS = [
             "title": "Isolated data recovery",
             "paragraphs": [
               "Do not replace a live database file underneath a running server. Restore into a separate location, verify it and perform a controlled switch after stopping writers. The course runbook distinguishes release rollback from recovery to an earlier data point, which intentionally loses later writes.",
-              "The release-label test reuses the same code. distinct_artifact_drill.py separately runs different v1/v2 source artifacts and rolls back to v1 with retained data. Docker-image and staging rollback remain optional integration exercises."
+              "The release-label test reuses the same code. `distinct_artifact_drill.py` separately runs different v1/v2 source artifacts and rolls back to v1 with retained data. Docker-image and staging rollback remain optional integration exercises."
             ],
             "example": "Create note in v1 → stop → start v2 using same db → read\nStop v2 → start v1 using same db → read again\nObserved: data retained, because schema stayed compatible."
           }
@@ -24713,7 +24713,7 @@ const LEARNING_PATHS = [
           {
             "title": "Consistent snapshots and RPO",
             "paragraphs": [
-              "A backup is a recoverable copy, not simply a file that exists. A database can have active transactions and sidecar journal/WAL state, so copying one live file can be inconsistent. Use the database-supported mechanism. The helper uses SQLite Connection.backup into a new destination and refuses to overwrite an existing snapshot; SQL Server needs its own backup chain and permissions."
+              "A backup is a recoverable copy, not simply a file that exists. A database can have active transactions and sidecar journal/WAL state, so copying one live file can be inconsistent. Use the database-supported mechanism. The helper uses SQLite `Connection.backup` into a new destination and refuses to overwrite an existing snapshot; SQL Server needs its own backup chain and permissions."
             ]
           },
           {
@@ -24775,7 +24775,7 @@ const LEARNING_PATHS = [
           {
             "title": "A healthy restore can contain the wrong business point in time",
             "paragraphs": [
-              "A snapshot contains note A; note B commits afterward. An isolated restore can pass integrity_check and correctly return A only. That is a successful restoration of the chosen snapshot with known data loss, not proof of zero RPO. If the selected snapshot was supposed to contain B, the same row count is instead evidence of the wrong backup or an incomplete recovery chain.",
+              "A snapshot contains note A; note B commits afterward. An isolated restore can pass `integrity_check` and correctly return A only. That is a successful restoration of the chosen snapshot with known data loss, not proof of zero RPO. If the selected snapshot was supposed to contain B, the same row count is instead evidence of the wrong backup or an incomplete recovery chain.",
               "Measure recovery from the agreed incident start to the point the restored application can safely serve the required data. Copy duration alone omits identity, configuration, verification and traffic cutover. The local drill has no external clients, but a real cutover must also fence the old writer; otherwise recovered and old databases can both accept divergent changes."
             ],
             "example": "snapshot S: A\nsource after S: A + B\nrestore S: A, integrity ok\nknown gap: B; reconcile or accept under RPO\nthen fence old writers before cutover",
@@ -25059,7 +25059,7 @@ const LEARNING_PATHS = [
           {
             "title": "The service's remaining deployment work",
             "paragraphs": [
-              "Use release-workbook.md and integration-runbook.md to document the release. The supplied service has no authentication and is intended for local learning. Before exposing it, implement and test TLS, identity, SQL monitoring, telemetry collection, proxy routing and the deployment configuration."
+              "Use `release-workbook.md` and `integration-runbook.md` to document the release. The supplied service has no authentication and is intended for local learning. Before exposing it, implement and test TLS, identity, SQL monitoring, telemetry collection, proxy routing and the deployment configuration."
             ],
             "example": "Packet: commit/digest + tests + topology + schema plan\nCandidate: version/readiness/smoke evidence\nObserve: eligible errors/latency + release attribution\nRecover: compatible v1 + validated snapshot + incident timeline"
           }
@@ -25710,7 +25710,7 @@ const LEARNING_PATHS = [
           {
             "title": "Collaboration",
             "paragraphs": [
-              "export_titles uses a plain function because joining titles needs no object collaboration. Its assertions cover a single title and an empty input."
+              "`export_titles` uses a plain function because joining titles needs no object collaboration. Its assertions cover a single title and an empty input."
             ],
             "example": "def export_titles(rows):\n    return \"\\n\".join(row[\"title\"] for row in rows)\nassert export_titles([{\"title\": \"Patterns\"}]) == \"Patterns\"\nassert export_titles([]) == \"\""
           },
@@ -25724,7 +25724,7 @@ const LEARNING_PATHS = [
             "title": "Selected catalog and provenance",
             "paragraphs": [
               "This is a selected Python-oriented pattern catalog, not a complete treatment of the 23 GoF patterns. Gamma, Helm, Johnson and Vlissides, Design Patterns: Elements of Reusable Object-Oriented Software (1994; ISBN 9780201633610), supplies the canonical creational, structural and behavioral catalog. Dependency Injection, Repository and Unit of Work are additional architectural material, not entries in that GoF catalog.",
-              "The course compares Chain of Responsibility and Mediator in collaboration.py. Study other patterns when a problem calls for them. Here, explain why your chosen objects and functions fit the requirement."
+              "The course compares Chain of Responsibility and Mediator in `collaboration.py`. Study other patterns when a problem calls for them. Here, explain why your chosen objects and functions fit the requirement."
             ]
           }
         ],
@@ -25779,7 +25779,7 @@ const LEARNING_PATHS = [
           {
             "title": "Collaboration",
             "paragraphs": [
-              "minutes accepts nonnegative integers but rejects bool, which subclasses int. The assertions check both acceptance and rejection."
+              "minutes accepts nonnegative integers but rejects `bool`, which subclasses `int`. The assertions check both acceptance and rejection."
             ],
             "example": "def minutes(value):\n    if type(value) is not int or value < 0:\n        raise ValueError(\"nonnegative integer required\")\n    return value\nassert minutes(0) == 0\ntry:\n    minutes(True)\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\"bool was accepted\")"
           },
@@ -25829,13 +25829,13 @@ const LEARNING_PATHS = [
             "title": "Intent",
             "paragraphs": [
               "Composition assembles behavior by giving one object or function another collaborator. Inheritance models a substitutable relationship and shares implementation through a base type.",
-              "A study reminder needs a message format and a way to deliver it. Those are independent changes. Pass the delivery function into the reminder instead of subclassing ReminderForEveryChannel. The caller owns construction while the reminder owns the workflow. Tests can supply a function that records deliveries without sending them."
+              "A study reminder needs a message format and a way to deliver it. Those are independent changes. Pass the delivery function into the reminder instead of subclassing `ReminderForEveryChannel`. The caller owns construction while the reminder owns the workflow. Tests can supply a function that records deliveries without sending them."
             ]
           },
           {
             "title": "Collaboration",
             "paragraphs": [
-              "remind constructs the message and delegates delivery to the supplied callable. Passing sent.append makes the effect observable without an external service.",
+              "`remind` constructs the message and delegates delivery to the supplied callable. Passing `sent.append` makes the effect observable without an external service.",
               "In this example, the caller supplies the delivery function and remind formats the message inline. The exercise below also passes formatting as a separate function."
             ],
             "example": "def remind(title, deliver):\n    deliver(f\"Review {title}\")\nsent = []\nremind(\"Patterns\", sent.append)\nassert sent == [\"Review Patterns\"]"
@@ -25992,14 +25992,14 @@ const LEARNING_PATHS = [
           {
             "title": "Collaboration",
             "paragraphs": [
-              "summary depends only on titles(), expressed by TitleSource. MemorySource supplies that behavior without inheriting from the protocol."
+              "`summary` depends only on `titles()`, expressed by `TitleSource`. `MemorySource` supplies that behavior without inheriting from the protocol."
             ],
             "example": "from typing import Protocol\nclass TitleSource(Protocol):\n    def titles(self) -> list[str]: ...\nclass MemorySource:\n    def titles(self):\n        return [\"Patterns\"]\ndef summary(source: TitleSource):\n    return \", \".join(source.titles())\nassert summary(MemorySource()) == \"Patterns\""
           },
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "The protocol above supports structural static typing; no inheritance is required for MemorySource. Executing it does not run a type checker. Do not build an interface for every class. A useful boundary reduces actual coupling; splitting all operations into separate types may instead make changes harder to follow."
+              "The protocol above supports structural static typing; no inheritance is required for `MemorySource`. Executing it does not run a type checker. Do not build an interface for every class. A useful boundary reduces actual coupling; splitting all operations into separate types may instead make changes harder to follow."
             ]
           }
         ],
@@ -26410,7 +26410,7 @@ const LEARNING_PATHS = [
           {
             "title": "Collaboration",
             "paragraphs": [
-              "formatter_for selects a callable once; the caller then formats titles without repeating the selection logic. Unknown format names raise ValueError."
+              "`formatter_for` selects a callable once; the caller then formats titles without repeating the selection logic. Unknown format names raise `ValueError`."
             ],
             "example": "import json\ndef formatter_for(name):\n    if name == \"json\":\n        return lambda titles: json.dumps(titles)\n    if name == \"lines\":\n        return lambda titles: \"\\n\".join(titles)\n    raise ValueError(\"unknown format\")\nassert formatter_for(\"lines\")([\"A\", \"B\"]) == \"A\\nB\""
           },
@@ -26715,7 +26715,7 @@ const LEARNING_PATHS = [
           {
             "title": "Collaboration",
             "paragraphs": [
-              "MinutesAdapter validates the legacy seconds value and converts it to whole minutes with floor division: 125 seconds becomes 2 minutes."
+              "`MinutesAdapter` validates the legacy seconds value and converts it to whole minutes with floor division: 125 seconds becomes 2 minutes."
             ],
             "example": "class Legacy:\n    def seconds_spent(self):\n        return 125\nclass MinutesAdapter:\n    def __init__(self, legacy):\n        self.legacy = legacy\n    def minutes(self):\n        seconds = self.legacy.seconds_spent()\n        if type(seconds) is not int or seconds < 0:\n            raise ValueError(\"invalid seconds\")\n        return seconds // 60\nassert MinutesAdapter(Legacy()).minutes() == 2"
           },
@@ -27197,8 +27197,8 @@ const LEARNING_PATHS = [
           {
             "title": "Trace construction separately from invocation",
             "paragraphs": [
-              "Calling measured(formatter, sizes) creates wrapped and returns the function without formatting any titles yet. wrapped keeps access to those collaborators through a closure. Later format_titles([\"A\", \"BC\"]) invokes wrapped, which calls formatter once, records the returned length, then returns the same text.",
-              "@wraps copies useful function metadata; it does not call the formatter or catch errors. Two calls to measured can capture different recorders. This is why the recorder is supplied explicitly instead of shared through a global variable."
+              "Calling `measured(formatter, sizes)` creates `wrapped` and returns the function without formatting any titles yet. `wrapped` keeps access to those collaborators through a closure. Later `format_titles([\"A\", \"BC\"])` invokes `wrapped`, which calls `formatter` once, records the returned length, then returns the same text.",
+              "`@wraps` copies useful function metadata; it does not call the formatter or catch errors. Two calls to measured can capture different recorders. This is why the recorder is supplied explicitly instead of shared through a global variable."
             ]
           },
           {
@@ -27518,7 +27518,7 @@ const LEARNING_PATHS = [
           {
             "title": "Collaboration",
             "paragraphs": [
-              "Lesson and Module both expose duration(). Nested modules sum their children recursively, and an empty module has duration zero."
+              "`Lesson` and `Module` both expose `duration()`. Nested modules sum their children recursively, and an empty module has duration zero."
             ],
             "example": "from dataclasses import dataclass\n@dataclass(frozen=True)\nclass Lesson:\n    minutes: int\n    def duration(self):\n        return self.minutes\n@dataclass(frozen=True)\nclass Module:\n    children: tuple\n    def duration(self):\n        return sum(child.duration() for child in self.children)\nplan = Module((Lesson(10), Module((Lesson(20),))))\nassert plan.duration() == 30\nassert Module(()).duration() == 0"
           },
@@ -27671,13 +27671,13 @@ const LEARNING_PATHS = [
             "title": "Intent",
             "paragraphs": [
               "Proxy stands in for another object to control access, delay work or mediate a remote call. Its intent differs from adding optional behavior with Decorator, even when the code shape looks similar.",
-              "A lazy proxy delays loading a document until first use. A separate loaded flag distinguishes not loaded from a legitimate None result. This example caches one local value forever; it has no invalidation or concurrency guarantee."
+              "A lazy proxy delays loading a document until first use. A separate loaded flag distinguishes not loaded from a legitimate `None` result. This example caches one local value forever; it has no invalidation or concurrency guarantee."
             ]
           },
           {
             "title": "Collaboration",
             "paragraphs": [
-              "LazyDocument loads on the first get() and caches the result, including None. The separate loaded flag distinguishes a cached None from an unperformed load."
+              "`LazyDocument` loads on the first `get()` and caches the result, including `None`. The separate `loaded` flag distinguishes a cached `None` from an unperformed load."
             ],
             "example": "class LazyDocument:\n    def __init__(self, load):\n        self.load, self.loaded, self.value = load, False, None\n    def get(self):\n        if not self.loaded:\n            value = self.load()\n            self.value, self.loaded = value, True\n        return self.value\ncalls = []\np = LazyDocument(lambda: calls.append(\"load\"))\nassert p.get() is None and p.get() is None\nassert calls == [\"load\"]"
           },
@@ -27830,7 +27830,7 @@ const LEARNING_PATHS = [
           {
             "title": "Collaboration",
             "paragraphs": [
-              "publish calls a snapshot of the registered handlers. The example records one event through seen.append without coupling the publisher to that list."
+              "`publish` calls a snapshot of the registered handlers. The example records one event through `seen.append` without coupling the publisher to that list."
             ],
             "example": "class Events:\n    def __init__(self):\n        self.handlers = []\n    def subscribe(self, handler):\n        self.handlers.append(handler)\n    def unsubscribe(self, handler):\n        self.handlers.remove(handler)\n    def publish(self, event):\n        for handler in tuple(self.handlers):\n            handler(event)\nevents = Events()\nseen = []\nevents.subscribe(seen.append)\nevents.publish(\"lesson-completed\")\nassert seen == [\"lesson-completed\"]"
           },
@@ -28167,21 +28167,21 @@ const LEARNING_PATHS = [
           {
             "title": "Contract and collaboration",
             "paragraphs": [
-              "A request passes through handlers until one accepts. In collaboration.py, None means decline; False and empty strings are accepted results. Unhandled requests raise LookupError. Handler exceptions propagate instead of silently falling through. Order is policy: reordering handlers can change which result wins.",
+              "A request passes through handlers until one accepts. In `collaboration.py`, `None` means decline; `False` and empty strings are accepted results. Unhandled requests raise `LookupError`. Handler exceptions propagate instead of silently falling through. Order is policy: reordering handlers can change which result wins.",
               "Compare Observer, which notifies registered subscribers under an explicit failure policy, and Command, which represents an action to execute later. A chain neither promises broadcast nor stores an action. Keep simple conditionals when ordered handlers add no useful variation."
             ]
           },
           {
             "title": "Trace decline, acceptance and ordering",
             "paragraphs": [
-              "The first handler below declines JSON by returning None. The second produces JSON, so the last handler is never called. If two handlers accept the same request, their order decides the result. Do not use truthiness to detect acceptance: a valid False result still stops the chain."
+              "The first handler below declines JSON by returning `None`. The second produces JSON, so the last handler is never called. If two handlers accept the same request, their order decides the result. Do not use truthiness to detect acceptance: a valid `False` result still stops the chain."
             ],
             "example": "from collaboration import handle_request\nimport json\ndef lines(request):\n    return '\\n'.join(request['titles']) if request['format'] == 'lines' else None\ndef json_format(request):\n    return json.dumps(request['titles']) if request['format'] == 'json' else None\nassert handle_request({'format':'json','titles':['Patterns']}, [lines, json_format]) == '[\"Patterns\"]'\nassert handle_request('x', [lambda r: False, lambda r: 'later']) is False"
           },
           {
             "title": "Compare failure and fan-out contracts",
             "paragraphs": [
-              "test_collaboration.py verifies short circuit, overlapping-handler order, no accepting handler and an exception that must not trigger fallback. Its Observer comparison invokes both subscribers for the same event. Use an explicit chain for ordered selection; use broadcast when the intention is to notify each subscriber, and choose how to handle subscriber failures. A Command can capture either operation for later invocation, but does not determine these delivery rules."
+              "`test_collaboration.py` verifies short circuit, overlapping-handler order, no accepting handler and an exception that must not trigger fallback. Its Observer comparison invokes both subscribers for the same event. Use an explicit chain for ordered selection; use broadcast when the intention is to notify each subscriber, and choose how to handle subscriber failures. A Command can capture either operation for later invocation, but does not determine these delivery rules."
             ]
           }
         ],
@@ -28390,7 +28390,7 @@ const LEARNING_PATHS = [
           {
             "title": "Collaboration",
             "paragraphs": [
-              "The transition table permits draft → active and active → done through named actions. A missing state/action pair raises ValueError."
+              "The transition table permits draft → active and active → done through named actions. A missing state/action pair raises `ValueError`."
             ],
             "example": "TRANSITIONS = {(\"draft\", \"start\"): \"active\", (\"active\", \"pause\"): \"draft\", (\"active\", \"finish\"): \"done\"}\ndef transition(state, action):\n    try:\n        return TRANSITIONS[state, action]\n    except KeyError:\n        raise ValueError(\"illegal transition\") from None\nassert transition(\"draft\", \"start\") == \"active\"\nassert transition(\"active\", \"finish\") == \"done\""
           },
@@ -28524,7 +28524,7 @@ const LEARNING_PATHS = [
           {
             "title": "Contract and collaboration",
             "paragraphs": [
-              "CompletionMediator accepts copied lesson states and prerequisites. It validates active state and completed prerequisites before a state update and a local notification record. Missing prerequisites, missing IDs and repeated completion fail without changing state or notifications. Collaborators depend on the coordinator rather than calling one another.",
+              "`CompletionMediator` accepts copied lesson states and prerequisites. It validates active state and completed prerequisites before a state update and a local notification record. Missing prerequisites, missing IDs and repeated completion fail without changing state or notifications. Collaborators depend on the coordinator rather than calling one another.",
               "Observer announces a change without defining the full workflow; Command captures an action; Mediator owns collaboration rules. These patterns can coexist, but adding a central coordinator can concentrate too much policy. This sequential local example is not a database transaction or durable external notification protocol."
             ]
           },
@@ -28677,7 +28677,7 @@ const LEARNING_PATHS = [
           {
             "title": "Collaboration",
             "paragraphs": [
-              "ReportJob.run fixes the order: load, validate, render. MemoryJob changes only loading and inherits the shared validation and rendering behavior."
+              "`ReportJob.run` fixes the order: load, validate, render. `MemoryJob` changes only loading and inherits the shared validation and rendering behavior."
             ],
             "example": "class ReportJob:\n    def run(self):\n        rows = self.load()\n        if any(not isinstance(x, str) for x in rows):\n            raise ValueError(\"strings required\")\n        return self.render(rows)\n    def load(self):\n        raise NotImplementedError\n    def render(self, rows):\n        return \"\\n\".join(rows)\nclass MemoryJob(ReportJob):\n    def load(self):\n        return [\"Patterns\"]\nassert MemoryJob().run() == \"Patterns\""
           },
@@ -28740,7 +28740,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "Laziness moves errors to iteration time and may keep resources open longer. Do not return a generator over a file that has already been closed. Mutation during traversal must have a defined policy. A remote paged iterator may make network calls on next(), so document deadlines and page failures."
+              "Laziness moves errors to iteration time and may keep resources open longer. Do not return a generator over a file that has already been closed. Mutation during traversal must have a defined policy. A remote paged iterator may make network calls on `next()`, so document deadlines and page failures."
             ]
           }
         ],
@@ -28930,7 +28930,7 @@ const LEARNING_PATHS = [
           {
             "title": "Collaboration",
             "paragraphs": [
-              "Repository owns lookup and duplicate-ID rejection. get returns the stored Lesson or None when the ID is absent."
+              "Repository owns lookup and duplicate-ID rejection. `get` returns the stored `Lesson` or `None` when the ID is absent."
             ],
             "example": "from dataclasses import dataclass\n@dataclass(frozen=True)\nclass Lesson:\n    id: str\n    title: str\nclass Repository:\n    def __init__(self):\n        self.rows = {}\n    def add(self, lesson):\n        if lesson.id in self.rows:\n            raise ValueError(\"duplicate ID\")\n        self.rows[lesson.id] = lesson\n    def get(self, id):\n        return self.rows.get(id)\nr = Repository()\nr.add(Lesson(\"1\", \"Patterns\"))\nassert r.get(\"1\").title == \"Patterns\"\nassert r.get(\"missing\") is None"
           },
@@ -28986,7 +28986,7 @@ const LEARNING_PATHS = [
           {
             "title": "What yield means inside this context manager",
             "paragraphs": [
-              "@contextmanager turns this generator into a with-compatible resource. Entering with runs through the first yield and assigns its value to work. A successful body resumes after yield, allowing clear/update to publish. A body exception is raised at the suspended yield, so those following statements are skipped.",
+              "`@contextmanager` turns this generator into a `with`-compatible resource. Entering `with` runs through the first yield and assigns its value to work. A successful body resumes after yield, allowing clear/update to publish. A body exception is raised at the suspended yield, so those following statements are skipped.",
               "This example deliberately does not catch that exception. Catching and suppressing it would change the failure contract. If context managers are unfamiliar, the Python context-managers lesson traces yield, finally and propagation before storage is involved."
             ]
           },
@@ -29006,7 +29006,7 @@ const LEARNING_PATHS = [
           {
             "title": "A larger example has more than one observable effect",
             "paragraphs": [
-              "A successful export updates payload, version and a count history. If the payload changes but the history does not, a later observer sees a partial outcome. The MemoryStore fixture replaces one immutable snapshot after checks; its injected failure happens before replacement and therefore leaves all three observations unchanged.",
+              "A successful export updates payload, version and a count history. If the payload changes but the history does not, a later observer sees a partial outcome. The `MemoryStore` fixture replaces one immutable snapshot after checks; its injected failure happens before replacement and therefore leaves all three observations unchanged.",
               "This is a teaching boundary in one process, not proof that a file writer and remote audit service commit together. With separate external systems, identify the authoritative commit and recovery policy. Moving calls into a method named commit does not make an external multi-step workflow atomic."
             ]
           }
@@ -29183,14 +29183,14 @@ const LEARNING_PATHS = [
             "title": "Tradeoffs",
             "paragraphs": [
               "Passing happy-path examples does not prove equivalence for all inputs. Include malformed input, empty data, ordering, mutation and failure timing relevant to your contract. Do not lock every private method call into a mock expectation; that makes safe structural changes unnecessarily expensive.",
-              "Start from legacy_export.py, run test_refactoring.py after each step in refactoring-lab.md, and compare the supplied refactored_export.py endpoint only after preserving the observed contract."
+              "Start from `legacy_export.py`, run `test_refactoring.py` after each step in `refactoring-lab.md`, and compare the supplied `refactored_export.py` endpoint only after preserving the observed contract."
             ]
           },
           {
             "title": "Characterise late failures before moving code",
             "paragraphs": [
-              "The larger batch_export_legacy.py first checks version and format, then validates every row, formats the complete batch and calls storage once. A second row owned by B must reject an A export even when the first row is valid. If a refactor writes each accepted row immediately, it has changed behavior despite producing the same success output.",
-              "Run test_batch_export.py against both supplied versions, then copy the legacy into your own candidate and substitute it in the test import. Refactor in small steps: extract preparation, extract format selection, then keep the orchestration explicit. Preserve rejection before effects, input immutability, stale-version behavior and error types."
+              "The larger `batch_export_legacy.py` first checks version and format, then validates every row, formats the complete batch and calls storage once. A second row owned by B must reject an A export even when the first row is valid. If a refactor writes each accepted row immediately, it has changed behavior despite producing the same success output.",
+              "Run `test_batch_export.py` against both supplied versions, then copy the legacy into your own candidate and substitute it in the test import. Refactor in small steps: extract preparation, extract format selection, then keep the orchestration explicit. Preserve rejection before effects, input immutability, stale-version behavior and error types."
             ]
           }
         ],
@@ -30123,13 +30123,13 @@ const LEARNING_PATHS = [
           {
             "title": "Practice project files",
             "paragraphs": [
-              "The complete practice ZIP is flat: Planner.csproj and Program.cs form the API, App.tsx and main.tsx form the UI, and schema.sql is the database migration. package-lock.json pins frontend dependency resolution. Extract into a new practice directory rather than mixing these files into an existing application."
+              "The complete practice ZIP is flat: `Planner.csproj` and `Program.cs` form the API, `App.tsx` and `main.tsx` form the UI, and `schema.sql` is the database migration. `package-lock.json` pins frontend dependency resolution. Extract into a new practice directory rather than mixing these files into an existing application."
             ]
           },
           {
             "title": "Local runtimes and commands",
             "paragraphs": [
-              "Use .NET 10, Node 24/npm and Python 3.11+. Run the API on 127.0.0.1:5087 and Vite on 127.0.0.1:5173 in separate terminals. The loopback address 127.0.0.1 points to your own computer. npm ci installs the pinned graph; npm run build checks types and bundles the UI. Record versions and commands so another attempt can reproduce the result."
+              "Use .NET 10, Node 24/npm and Python 3.11+. Run the API on 127.0.0.1:5087 and Vite on 127.0.0.1:5173 in separate terminals. The loopback address 127.0.0.1 points to your own computer. `npm ci` installs the pinned graph; `npm run build` checks types and bundles the UI. Record versions and commands so another attempt can reproduce the result."
             ]
           }
         ],
@@ -30171,7 +30171,7 @@ const LEARNING_PATHS = [
           {
             "title": "From form submission to storage",
             "paragraphs": [
-              "Clicking Add session runs the form handler. It validates the draft, serializes JSON and sends POST /api/tasks. Vite forwards the request to .NET; the route binds a CreateTask, checks allowed values and asks the store to create a record. The API returns 201 with the server-generated ID and version."
+              "Clicking Add session runs the form handler. It validates the draft, serializes JSON and sends POST /api/tasks. Vite forwards the request to .NET; the route binds a `CreateTask`, checks allowed values and asks the store to create a record. The API returns 201 with the server-generated ID and version."
             ]
           },
           {
@@ -30335,7 +30335,7 @@ const LEARNING_PATHS = [
           {
             "title": "Request fields and invariants",
             "paragraphs": [
-              "POST accepts title and minutes. title is trimmed and must contain 1–120 characters; minutes is an integer from 0 through 1440. Server-generated id, done=false and version=1 appear in the result. Unknown request fields are rejected. PUT requires title, minutes, done and expected version; missing done is not silently interpreted as false."
+              "POST accepts `title` and `minutes`. `title` is trimmed and must contain 1–120 characters; `minutes` is an integer from 0 through 1440. Server-generated id, `done=false` and `version=1` appear in the result. Unknown request fields are rejected. PUT requires `title`, `minutes`, `done` and expected version; missing `done` is not silently interpreted as `false`."
             ]
           },
           {
@@ -30383,13 +30383,13 @@ const LEARNING_PATHS = [
           {
             "title": "StudyTasks types and version",
             "paragraphs": [
-              "StudyTasks uses a uniqueidentifier primary key, nvarchar(120) title, bounded int minutes, bit done and positive int Version. Planned minutes is duration, not a timestamp. A record with zero minutes can be intentional. Version counts accepted updates; it is not wall-clock time and is not SQL Server rowversion."
+              "`StudyTasks` uses a `uniqueidentifier` primary key, `nvarchar(120)` `title`, bounded `int` `minutes`, `bit` `done` and positive `int` `Version`. Planned minutes is duration, not a timestamp. A record with zero minutes can be intentional. Version counts accepted updates; it is not wall-clock time and is not SQL Server `rowversion`."
             ]
           },
           {
             "title": "Constraints and schema compatibility",
             "paragraphs": [
-              "schema.sql creates the table only if absent in an owned learning database. It never creates or selects a database automatically. CHECK constraints defend basic invariants even when an importer bypasses HTTP. Existing incompatible schemas need an explicit migration; silently skipping creation is not proof of compatibility."
+              "`schema.sql` creates the table only if absent in an owned learning database. It never creates or selects a database automatically. `CHECK` constraints defend basic invariants even when an importer bypasses HTTP. Existing incompatible schemas need an explicit migration; silently skipping creation is not proof of compatibility."
             ]
           }
         ],
@@ -30431,7 +30431,7 @@ const LEARNING_PATHS = [
           {
             "title": "Form state and accessible feedback",
             "paragraphs": [
-              "App.tsx owns the title, minutes text, task list, busy flag and status message. Keep minutes as text while typing; convert and validate at submission. Native labels bind to input IDs, required/min/max/step help the browser, and role=status announces asynchronous outcomes without moving focus."
+              "`App.tsx` owns the title, minutes text, task list, busy flag and status message. Keep minutes as text while typing; convert and validate at submission. Native labels bind to input IDs, required/min/max/step help the browser, and `role=status` announces asynchronous outcomes without moving focus."
             ]
           },
           {
@@ -30479,7 +30479,7 @@ const LEARNING_PATHS = [
           {
             "title": "Create and complete a session",
             "paragraphs": [
-              "Start the two processes using the practice README. Add SQL study with 25 minutes. Observe POST 201, its task JSON and the visible row. Click Complete and inspect PUT 200 with version=2 and done=true. The reference renders the returned task rather than guessing a server-generated ID."
+              "Start the two processes using the practice README. Add SQL study with 25 minutes. Observe POST 201, its task JSON and the visible row. Click Complete and inspect PUT 200 with `version=2` and `done=true`. The reference renders the returned task rather than guessing a server-generated ID."
             ]
           },
           {
@@ -30534,13 +30534,13 @@ const LEARNING_PATHS = [
           {
             "title": "Unknown data and decoding",
             "paragraphs": [
-              "request returns unknown. decodeTask checks for a GUID-shaped ID, a title, integer minutes, boolean done and a positive integer version before returning a StudyTask. The list decoder also rejects duplicate IDs because React keys and update requests require unique task identities."
+              "`request` returns `unknown`. `decodeTask` checks for a GUID-shaped ID, a title, integer minutes, boolean done and a positive integer version before returning a `StudyTask`. The list decoder also rejects duplicate IDs because React keys and update requests require unique task identities."
             ]
           },
           {
             "title": "Decoder contract tests",
             "paragraphs": [
-              "The decoder extracts the allowed representation fields, so extra response metadata does not become mutable UI state. Network decoding and server request validation protect different boundaries. Run planner-api.test.ts to see boolean minutes, fractional duration, malformed identity and stale conflicts rejected independently."
+              "The decoder extracts the allowed representation fields, so extra response metadata does not become mutable UI state. Network decoding and server request validation protect different boundaries. Run `planner-api.test.ts` to see boolean minutes, fractional duration, malformed identity and stale conflicts rejected independently."
             ]
           }
         ],
@@ -30582,7 +30582,7 @@ const LEARNING_PATHS = [
           {
             "title": "Effect setup and cleanup",
             "paragraphs": [
-              "The initial effect creates an AbortController, loads tasks and cancels on cleanup. React StrictMode can exercise setup and cleanup more than once in development, so loading must tolerate that lifecycle. Suppress the cancelled request error rather than announcing an intentional cleanup as a user failure."
+              "The initial effect creates an `AbortController`, loads tasks and cancels on cleanup. React StrictMode can exercise setup and cleanup more than once in development, so loading must tolerate that lifecycle. Suppress the cancelled request error rather than announcing an intentional cleanup as a user failure."
             ]
           },
           {
@@ -30630,13 +30630,13 @@ const LEARNING_PATHS = [
           {
             "title": "Selecting SQL storage",
             "paragraphs": [
-              "Create NotebookPlannerLab as a new dedicated database in SSMS and run schema.sql there. Set PlannerConnection only in the API shell, then restart. /health must report sql-server. A missing connection uses memory; a configured but unreachable SQL endpoint must fail rather than silently falling back and losing durability."
+              "Create `NotebookPlannerLab` as a new dedicated database in SSMS and run `schema.sql` there. Set `PlannerConnection` only in the API shell, then restart. `/health` must report `sql-server`. A missing connection uses memory; a configured but unreachable SQL endpoint must fail rather than silently falling back and losing durability."
             ]
           },
           {
             "title": "Local trust and deployed credentials",
             "paragraphs": [
-              "Windows integrated authentication works with the local SQLEXPRESS instance when permissions allow. The local TrustServerCertificate option accepts a self-signed certificate for this sandbox; deployed connections need certificate verification and a least-privilege principal. Never put connection secrets in React or the repository."
+              "Windows integrated authentication works with the local SQLEXPRESS instance when permissions allow. The local `TrustServerCertificate` option accepts a self-signed certificate for this sandbox; deployed connections need certificate verification and a least-privilege principal. Never put connection secrets in React or the repository."
             ]
           }
         ],
@@ -30678,7 +30678,7 @@ const LEARNING_PATHS = [
           {
             "title": "Typed SQL parameters",
             "paragraphs": [
-              "SqlPlanner uses fixed SQL statements and explicitly typed parameters. @title is nvarchar(120), @minutes is int and @id is uniqueidentifier. A title containing an apostrophe is stored as a title; it cannot append a second statement because input never becomes SQL syntax."
+              "`SqlPlanner` uses fixed SQL statements and explicitly typed parameters. `@title` is `nvarchar(120)`, `@minutes` is `int` and `@id` is `uniqueidentifier`. A title containing an apostrophe is stored as a title; it cannot append a second statement because input never becomes SQL syntax."
             ]
           },
           {
@@ -30726,7 +30726,7 @@ const LEARNING_PATHS = [
           {
             "title": "Atomic expected-version updates",
             "paragraphs": [
-              "Both tabs read version 1. Tab A completes the session and receives version 2. Tab B submits version 1; UPDATE WHERE Id=@id AND Version=@version affects no row and the API returns 409. Checking a version before an unconditional update would leave a race between the check and the write."
+              "Both tabs read version 1. Tab A completes the session and receives version 2. Tab B submits version 1; `UPDATE ... WHERE Id=@id AND Version=@version` affects no row and the API returns 409. Checking a version before an unconditional update would leave a race between the check and the write."
             ]
           },
           {
@@ -30740,7 +30740,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "The reference UI creates sessions and toggles completion; it does not yet edit an existing title or minutes. After adding an editor, try this case: two tabs read version 4. A changes the title and receives version 5. B submits version 4 with a minutes edit. The API must return a conflict and retain A's row. Keep B's unsaved minutes visible while offering deliberate reload or reconciliation. Automatically resending with version 5 would silently overwrite another decision.",
               "In the existing reference, run two independent clients with the same initial version and check that only one update succeeds. Read the winning row through a third request. In the UI, enter a new-session draft before a completion toggle receives an injected 409; verify that draft and the displayed row survive and the conflict message appears.",
-              "After implementing the existing-session editor, extend planner-ui.test.tsx with controllable responses: load version 4, return conflict on save, then return version 5 on explicit refresh. Check that the edit draft survives until the learner chooses how to reconcile. Editing different fields still needs a stated field-level merge policy."
+              "After implementing the existing-session editor, extend `planner-ui.test.tsx` with controllable responses: load version 4, return conflict on save, then return version 5 on explicit refresh. Check that the edit draft survives until the learner chooses how to reconcile. Editing different fields still needs a stated field-level merge policy."
             ]
           }
         ],
@@ -30882,7 +30882,7 @@ const LEARNING_PATHS = [
           {
             "title": "Related writes and invariants",
             "paragraphs": [
-              "Creating one session is one SQL INSERT, so the reference uses a single atomic statement. Adding an audit row, deduplication record or outbox event changes the invariant: the task and its corresponding evidence must commit together or not at all. Two independent successful calls do not create an atomic operation."
+              "Creating one session is one SQL `INSERT`, so the reference uses a single atomic statement. Adding an audit row, deduplication record or outbox event changes the invariant: the task and its corresponding evidence must commit together or not at all. Two independent successful calls do not create an atomic operation."
             ]
           },
           {
@@ -31109,7 +31109,7 @@ const LEARNING_PATHS = [
           {
             "title": "Verified owner context",
             "paragraphs": [
-              "The baseline is anonymous and loopback-only. To serve people, integrate an established authentication system, derive owner from verified server-side identity and add an OwnerId column. Filter list queries by owner and enforce owner on updates. Do not trust owner supplied in JSON, a query string or an arbitrary header."
+              "The baseline is anonymous and loopback-only. To serve people, integrate an established authentication system, derive owner from verified server-side identity and add an `OwnerId` column. Filter list queries by owner and enforce owner on updates. Do not trust owner supplied in JSON, a query string or an arbitrary header."
             ]
           },
           {
@@ -31284,7 +31284,7 @@ const LEARNING_PATHS = [
           {
             "title": "Decoder, API, browser and SQL tests",
             "paragraphs": [
-              "planner-api.test.ts tests decoding and HTTP error interpretation without a server. acceptance.py calls a real loopback .NET host and tests invalid inputs, missing fields, create/list and concurrent stale writes. Browser walkthrough checks labels, status, draft recovery and the actual UI/API route. SQL restart checks add persistence evidence."
+              "`planner-api.test.ts` tests decoding and HTTP error interpretation without a server. `acceptance.py` calls a real loopback .NET host and tests invalid inputs, missing fields, create/list and concurrent stale writes. Browser walkthrough checks labels, status, draft recovery and the actual UI/API route. SQL restart checks add persistence evidence."
             ]
           },
           {
@@ -31380,7 +31380,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tested artifact promotion",
             "paragraphs": [
-              "Build the React assets and publish the .NET application once in CI. Record commit and artifact checksum, run tests against those outputs and promote the same bytes. Rebuilding separately for production breaks the connection between test evidence and deployed behavior. Supply server configuration and secrets at runtime. Vite normally replaces import.meta.env values during the frontend build; changing those values requires a rebuild unless you design a separate public runtime-configuration mechanism. Never expose secrets through frontend configuration."
+              "Build the React assets and publish the .NET application once in CI. Record commit and artifact checksum, run tests against those outputs and promote the same bytes. Rebuilding separately for production breaks the connection between test evidence and deployed behavior. Supply server configuration and secrets at runtime. Vite normally replaces `import.meta.env` values during the frontend build; changing those values requires a rebuild unless you design a separate public runtime-configuration mechanism. Never expose secrets through frontend configuration."
             ]
           },
           {
@@ -32073,14 +32073,14 @@ const LEARNING_PATHS = [
             "title": "Repository state",
             "paragraphs": [
               "Git records snapshots and their relationships. A hosting website is optional: you can learn every core operation in a local directory. A repository usually has a working directory plus a .git directory containing objects, references and configuration. A nested terminal can point at a different repository than the editor you are looking at.",
-              "Run the provided sandbox instead of experimenting in an existing checkout. With --workspace-parent . it creates a fresh owned child and retains repositories plus evidence.json for inspection. It isolates Git configuration and hooks and uses a synthetic identity per command. Omitting --workspace-parent runs the temporary automated verifier, which deletes only its own generated root. It never pushes or contacts a hosting service."
+              "Run the provided sandbox instead of experimenting in an existing checkout. With `--workspace-parent .` it creates a fresh owned child and retains repositories plus `evidence.json` for inspection. It isolates Git configuration and hooks and uses a synthetic identity per command. Omitting `--workspace-parent` runs the temporary automated verifier, which deletes only its own generated root. It never pushes or contacts a hosting service."
             ]
           },
           {
             "title": "Sandbox and configuration",
             "paragraphs": [
-              "Check the repository root and status before any mutation. Git configuration has scopes: system, global and repository local; command-line -c values apply to that invocation. Changing global identity is not necessary for these exercises.",
-              "The sandbox supports --stage foundation, intermediate, advanced or all. Its output is actual assertion evidence. This does not prove remote permissions, branch protection or team policy."
+              "Check the repository root and status before any mutation. Git configuration has scopes: system, global and repository local; command-line `-c` values apply to that invocation. Changing global identity is not necessary for these exercises.",
+              "The sandbox supports `--stage foundation`, `intermediate`, `advanced` or `all`. Its output is actual assertion evidence. This does not prove remote permissions, branch protection or team policy."
             ],
             "example": "git --version\ngit rev-parse --show-toplevel\ngit status --short\n# Offline complete fixture:\npython sandbox.py --stage foundation --workspace-parent ."
           }
@@ -32125,13 +32125,13 @@ const LEARNING_PATHS = [
             "title": "Working tree, index and HEAD",
             "paragraphs": [
               "The working tree is the editable files you see. The index, often called the staging area, is the proposed next snapshot. HEAD normally points to the current branch tip commit. These three states can differ even for one file.",
-              "git add copies the file's current contents into the index. Editing afterward changes the working tree but does not refresh that staged copy. A tracked file can therefore have both staged and unstaged changes."
+              "`git add` copies the file's current contents into the index. Editing afterward changes the working tree but does not refresh that staged copy. A tracked file can therefore have both staged and unstaged changes."
             ]
           },
           {
             "title": "Staged versus current contents",
             "paragraphs": [
-              "In the fixture notes.txt is committed as one, staged as two, then edited to three. The next commit stores two while the working file remains three. git diff compares working tree to index; git diff --cached compares index to HEAD.",
+              "In the fixture `notes.txt` is committed as one, staged as two, then edited to three. The next commit stores two while the working file remains three. `git diff` compares working tree to index; `git diff --cached` compares index to `HEAD`.",
               "If you expect the latest edit in the commit, stage it again and inspect the cached diff. Commit success alone says nothing about whether the intended contents were staged."
             ],
             "example": "git diff\ngit diff --cached\ngit show HEAD:notes.txt\n# Fixture assertion: HEAD is two while working tree is three."
@@ -32139,8 +32139,8 @@ const LEARNING_PATHS = [
           {
             "title": "Try a new prediction in the retained fixture",
             "paragraphs": [
-              "The script has already performed its demonstration when it exits. Its evidence.json records the intermediate diffs; the final working file has been restored. To practice yourself, enter only the reported foundation repository and check git rev-parse --show-toplevel before editing.",
-              "Change notes.txt to four and stage it, then change it to five without staging again. Predict each diff before running git diff and git diff --cached. The cached diff ends at four; the ordinary diff compares four with five. You can verify this without making a commit or changing any existing project."
+              "The script has already performed its demonstration when it exits. Its `evidence.json` records the intermediate diffs; the final working file has been restored. To practice yourself, enter only the reported foundation repository and check `git rev-parse --show-toplevel` before editing.",
+              "Change `notes.txt` to four and stage it, then change it to five without staging again. Predict each diff before running `git diff` and `git diff --cached`. The cached diff ends at four; the ordinary diff compares four with five. You can verify this without making a commit or changing any existing project."
             ]
           }
         ],
@@ -32264,14 +32264,14 @@ const LEARNING_PATHS = [
           {
             "title": "Status and diff comparisons",
             "paragraphs": [
-              "git status reports tracked modifications, staged changes and untracked files. Short status uses separate index and working-tree columns. An untracked file is not part of a commit until added; a clean status does not inspect ignored files or prove the application works.",
+              "`git status` reports tracked modifications, staged changes and untracked files. Short status uses separate index and working-tree columns. An untracked file is not part of a commit until added; a clean status does not inspect ignored files or prove the application works.",
               "A diff is a comparison between states. Read filenames and hunks, not just the changed-line count. A whitespace-only edit can hide a meaningful change; a generated file can obscure the source file that explains the behavior."
             ]
           },
           {
             "title": "Reviewing the proposed snapshot",
             "paragraphs": [
-              "Use git diff --cached immediately before a commit to review the actual proposed snapshot. Use git diff HEAD to include staged and unstaged tracked changes; it still does not include ordinary untracked file contents.",
+              "Use `git diff --cached` immediately before a commit to review the actual proposed snapshot. Use `git diff HEAD` to include staged and unstaged tracked changes; it still does not include ordinary untracked file contents.",
               "The foundation fixture asserts the states separately. When a file appears unexpectedly, check whether you are at the right repository root and whether .gitignore is excluding something you expected to see."
             ],
             "example": "git status --short\ngit diff --stat\ngit diff --cached -- notes.txt\ngit diff HEAD -- notes.txt"
@@ -32323,7 +32323,7 @@ const LEARNING_PATHS = [
           {
             "title": "Partial staging and amendments",
             "paragraphs": [
-              "The sandbox stages explicit fixture content and commits with synthetic metadata. Outside the sandbox, selective staging or git add -p can split independent hunks; inspect the result because a partially staged file may differ from the version you tested.",
+              "The sandbox stages explicit fixture content and commits with synthetic metadata. Outside the sandbox, selective staging or `git add -p` can split independent hunks; inspect the result because a partially staged file may differ from the version you tested.",
               "An amended commit replaces commit identity. It can be convenient before sharing, but updating published history affects other people's references. Coordinate rather than assuming every local improvement authorizes history rewriting."
             ],
             "example": "git diff --cached\ngit commit -m \"Preserve staged note snapshot\"\ngit show --stat --oneline HEAD"
@@ -32375,7 +32375,7 @@ const LEARNING_PATHS = [
           {
             "title": "Synthetic secrets and tracked files",
             "paragraphs": [
-              "The foundation fixture writes a fake local.env and asserts that check-ignore matches it while ls-files does not. The token is fake. Inspect an example config template before sharing it: placeholders must not be live values.",
+              "The foundation fixture writes a fake `local.env` and asserts that `check-ignore` matches it while `ls-files` does not. The token is fake. Inspect an example config template before sharing it: placeholders must not be live values.",
               "For an already tracked local file, removing it from the index can stop future tracking while leaving a working copy, but past commits still contain it. Treat any history cleanup as a coordinated operation, not an automatic response in someone else's repository."
             ],
             "example": "git check-ignore -v local.env\ngit ls-files -- local.env\n# If previously tracked, ignore rules alone do not remove it."
@@ -32427,7 +32427,7 @@ const LEARNING_PATHS = [
           {
             "title": "Ancestry and detached HEAD",
             "paragraphs": [
-              "Use a graph view to see where branches diverged. git show inspects one object; rev-parse resolves a name; merge-base answers ancestry questions. In the intermediate fixture the conflict-resolution merge has two parents, which the verifier asserts directly.",
+              "Use a graph view to see where branches diverged. `git show` inspects one object; `rev-parse` resolves a name; `merge-base` answers ancestry questions. In the intermediate fixture the conflict-resolution merge has two parents, which the verifier asserts directly.",
               "In detached HEAD you can inspect or experiment. Before switching away from useful new commits, create a branch pointing at them; otherwise recovery may depend on a local reflog that can expire."
             ],
             "example": "git log --graph --oneline --decorate --all\ngit rev-parse HEAD\ngit rev-list --parents -n 1 HEAD\ngit show HEAD:policy.txt"
@@ -32576,7 +32576,7 @@ const LEARNING_PATHS = [
           {
             "title": "Divergent fixture branches",
             "paragraphs": [
-              "The fixture creates feature from the base, edits policy.txt, then switches to main and edits the same line differently. Neither commit disappears: the two branch tips preserve both histories.",
+              "The fixture creates `feature` from the base, edits `policy.txt`, then switches to `main` and edits the same line differently. Neither commit disappears: the two branch tips preserve both histories.",
               "If switching is blocked, understand the local changes first. Commit useful work or stash it in the training repository. Inspect the changes before using a command that could discard them."
             ],
             "example": "git switch -c feature\ngit branch --show-current\ngit switch main\ngit log --all --oneline --decorate"
@@ -32621,14 +32621,14 @@ const LEARNING_PATHS = [
           {
             "title": "Restore destinations",
             "paragraphs": [
-              "git restore --staged removes a path's staged difference by restoring its index state from HEAD, while usually leaving the working file alone. git restore without --staged changes the working file from the index. Specify the source and destination when the distinction matters.",
+              "`git restore --staged` removes a path's staged difference by restoring its index state from `HEAD`, while usually leaving the working file alone. `git restore` without `--staged` changes the working file from the index. Specify the source and destination when the distinction matters.",
               "Discarding working edits loses those uncommitted contents unless another copy exists. Git does not promise a reflog for every untracked or unstaged file. Inspect diffs and preserve useful edits before a destructive restore."
             ]
           },
           {
             "title": "Keeping an unfinished edit",
             "paragraphs": [
-              "In the fixture the commit contains two and the working tree contains three. Restoring notes.txt from the index changes the file back to two without moving the branch tip.",
+              "In the fixture the commit contains two and the working tree contains three. Restoring `notes.txt` from the index changes the file back to two without moving the branch tip.",
               "The sandbox discards only its generated content. For real work, an accidental staging choice can often be corrected without discarding the file: unstage, review, and stage the intended contents."
             ],
             "example": "git diff -- notes.txt\ngit restore --staged -- notes.txt\n# Only in the disposable fixture after inspecting the diff:\ngit restore -- notes.txt"
@@ -32680,7 +32680,7 @@ const LEARNING_PATHS = [
           {
             "title": "Integration policy and verification",
             "paragraphs": [
-              "The intermediate fixture diverges feature and main and records a two-parent merge after resolution. Later a reviewer clone fetches a descendant and integrates it with --ff-only, which refuses unexpected divergence.",
+              "The intermediate fixture diverges `feature` and `main` and records a two-parent merge after resolution. Later a reviewer clone fetches a descendant and integrates it with `--ff-only`, which refuses unexpected divergence.",
               "Agree on an integration policy. A team may prefer merge commits for topology, squash for a coherent final change, or rebase before merge. Those choices affect history and review evidence, not the need to verify behavior."
             ],
             "example": "git log --graph --oneline --all\ngit merge feature\ngit rev-list --parents -n 1 HEAD\n# Strict update when divergence is unexpected:\ngit merge --ff-only origin/main"
@@ -32689,7 +32689,7 @@ const LEARNING_PATHS = [
             "title": "A clean merge can combine incompatible decisions",
             "paragraphs": [
               "Both developers start with a batch size of 5 and a capacity of 10. Alice raises the batch size to 8. Bob lowers the capacity to 6. Each branch still satisfies batch <= capacity. Because the values live in different files, Git merges the edits cleanly. The merged program has a batch size of 8 and a capacity of 6 and violates the invariant.",
-              "The semantic_merge.py lab creates a source and two local clones, records both independently valid states, performs the merge and asserts the combined failure. This is why a successful merge command is only evidence about integration of file histories. Behavioral checks must run on the combined candidate."
+              "The `semantic_merge.py` lab creates a source and two local clones, records both independently valid states, performs the merge and asserts the combined failure. This is why a successful merge command is only evidence about integration of file histories. Behavioral checks must run on the combined candidate."
             ]
           }
         ],
@@ -32894,7 +32894,7 @@ const LEARNING_PATHS = [
             "title": "Remote-tracking references",
             "paragraphs": [
               "A remote is a named repository location plus configuration. origin is a convention, not a special authority. Remote-tracking references such as origin/main are local records of a remote's state at the last fetch; they can be stale.",
-              "git fetch retrieves objects and updates tracking references. git pull combines fetch with integration according to explicit options/configuration. A push asks the remote to update references and requires separate authorization; the sandbox never pushes."
+              "`git fetch` retrieves objects and updates tracking references. `git pull` combines fetch with integration according to explicit options/configuration. A push asks the remote to update references and requires separate authorization; the sandbox never pushes."
             ]
           },
           {
@@ -33061,7 +33061,7 @@ const LEARNING_PATHS = [
           {
             "title": "An offline review record",
             "paragraphs": [
-              "Use the local fixture's feature history to write an offline review.md: problem, base/tip identifiers, changed behavior, conflict resolution and checks. The file lets you practise reviewing the change without publishing a pull request or sending a message.",
+              "Use the local fixture's feature history to write an offline `review.md`: problem, base/tip identifiers, changed behavior, conflict resolution and checks. The file lets you practise reviewing the change without publishing a pull request or sending a message.",
               "A later change can invalidate earlier review or checks. Recheck the final candidate against the current target, especially after a rebase or conflict resolution. Approval of an old commit is not automatic evidence for a new one."
             ],
             "example": "git diff main...feature\ngit log --oneline main..feature\n# Offline review.md fields:\n# Problem / Behavior / Base / Candidate / Checks / Remaining limits"
@@ -33106,14 +33106,14 @@ const LEARNING_PATHS = [
           {
             "title": "Revert and reset effects",
             "paragraphs": [
-              "git revert creates a new commit that reverses an earlier change while preserving the original history. It is often suitable for an already shared simple commit. Reverting a merge requires selecting the appropriate mainline and understanding later integration effects.",
-              "git reset moves a branch reference. --soft keeps index and working changes, --mixed also resets the index, and --hard also overwrites tracked working contents. These are different recovery contracts; none should be chosen without inspecting what it will affect."
+              "`git revert` creates a new commit that reverses an earlier change while preserving the original history. It is often suitable for an already shared simple commit. Reverting a merge requires selecting the appropriate mainline and understanding later integration effects.",
+              "`git reset` moves a branch reference. `--soft` keeps index and working changes, `--mixed` also resets the index, and `--hard` also overwrites tracked working contents. These are different recovery contracts; none should be chosen without inspecting what it will affect."
             ]
           },
           {
             "title": "Shared-history recovery",
             "paragraphs": [
-              "The advanced fixture reverts a synthetic regression while retaining unrelated changes. It uses reset --hard only in its generated private repository to demonstrate reference movement and reflog recovery.",
+              "The advanced fixture reverts a synthetic regression while retaining unrelated changes. It uses `reset --hard` only in its generated private repository to demonstrate reference movement and reflog recovery.",
               "Do not use the destructive fixture command in a user checkout. Untracked files and never-committed edits have different recovery limits. For shared histories, coordinate a remedy rather than assuming force publication is permitted."
             ],
             "example": "# Disposable fixture only:\ngit revert --no-edit <synthetic-bad-commit>\ngit log --oneline -3\n# Inspect first; sandbox demonstrates reset separately."
@@ -33210,14 +33210,14 @@ const LEARNING_PATHS = [
           {
             "title": "Bisect predicates",
             "paragraphs": [
-              "git bisect searches between a known good and known bad revision. Marking candidates divides the search space; git bisect run can automate a repeatable test. Good/bad describe the chosen behavior, not whether a commit is universally high quality.",
+              "`git bisect` searches between a known good and known bad revision. Marking candidates divides the search space; `git bisect run` can automate a repeatable test. Good/bad describe the chosen behavior, not whether a commit is universally high quality.",
               "The predicate must be reliable on historical revisions. Build failures unrelated to the defect may need skip rather than bad. A flaky test or changing external dependency can send the search toward the wrong commit."
             ]
           },
           {
             "title": "A repeatable regression search",
             "paragraphs": [
-              "The fixture commits safe, then bug, then an unrelated file. Its Python predicate checks mode.txt and exits nonzero only when bug is present. The verifier asserts that refs/bisect/bad identifies the exact regression commit, then exits bisect mode.",
+              "The fixture commits `safe`, then `bug`, then an unrelated file. Its Python predicate checks `mode.txt` and exits nonzero only when `bug` is present. The verifier asserts that `refs/bisect/bad` identifies the exact regression commit, then exits bisect mode.",
               "For a real project, pin needed dependencies or build each candidate consistently and record the failing condition. Reproduce the result on the candidate and its parent before concluding causation."
             ],
             "example": "git bisect start <known-bad> <known-good>\ngit bisect run python check.py\ngit bisect reset\n# check.py: exit 0 for good, 1 for this failure; 125 to skip."
@@ -33371,14 +33371,14 @@ const LEARNING_PATHS = [
           {
             "title": "Selected patches and dependencies",
             "paragraphs": [
-              "git cherry-pick applies the change introduced by a commit to your current branch and normally records a new commit. It is useful for a selected backport when merging an entire branch would include unrelated work.",
+              "`git cherry-pick` applies the change introduced by a commit to your current branch and normally records a new commit. It is useful for a selected backport when merging an entire branch would include unrelated work.",
               "A selected commit may depend on earlier changes that were not selected. Inspect dependencies and test the target branch. Reapplying an already present patch can become empty; a conflict requires a deliberate resolution or abort."
             ]
           },
           {
             "title": "Backport identity and evidence",
             "paragraphs": [
-              "The advanced fixture recovers one private.txt commit and cherry-picks it onto main. It asserts the expected file content rather than claiming that matching a commit message proves behavior.",
+              "The advanced fixture recovers one `private.txt` commit and cherry-picks it onto `main`. It asserts the expected file content rather than claiming that matching a commit message proves behavior.",
               "A new parent context usually means a new identity. Record the original source in a backport note and review the adapted result. Repeated backports can complicate future merges, so keep the policy explicit."
             ],
             "example": "git show <source-commit>\ngit cherry-pick <source-commit>\n# On unresolved conflicts:\ngit cherry-pick --abort"
@@ -33572,7 +33572,7 @@ const LEARNING_PATHS = [
           {
             "title": "Stash contents and lifetime",
             "paragraphs": [
-              "git stash records selected local changes so the working tree can be prepared for another operation. By default ordinary untracked files are not included; options such as --include-untracked change that scope. Ignored files require a still different deliberate choice.",
+              "`git stash` records selected local changes so the working tree can be prepared for another operation. By default ordinary untracked files are not included; options such as `--include-untracked` change that scope. Ignored files require a still different deliberate choice.",
               "A stash is not a reviewed commit or a shared backup. Applying it can conflict with the current files. Name useful stashes and inspect their contents before applying or dropping them."
             ]
           },
@@ -33683,7 +33683,7 @@ const LEARNING_PATHS = [
           {
             "title": "Reviewing the complete fixture",
             "paragraphs": [
-              "Use the candidate and tag from the advanced kit to explain your release choice. Trace the bisect result, recovery branch, cherry-picked change and rebased topic. You can keep an optional note in release-review.md if it helps you revisit those decisions.",
+              "Use the candidate and tag from the advanced kit to explain your release choice. Trace the bisect result, recovery branch, cherry-picked change and rebased topic. You can keep an optional note in `release-review.md` if it helps you revisit those decisions.",
               "The fixture verifies local mechanics. It cannot certify remote policy, actual pull-request approvals, signed release trust or production rollback. Those remain explicit extensions with independent verification."
             ],
             "example": "# Review record:\n# Candidate SHA / Base SHA / Diff purpose / Checks\n# Integration decision / Reviewer concerns / Tag\n# Artifact evidence / Release authority / Recovery plan"
@@ -33692,7 +33692,7 @@ const LEARNING_PATHS = [
             "title": "Review the integrated commit and its follow-up repair",
             "paragraphs": [
               "The evidence file gives the base, Alice, Bob, merged and repaired commit IDs. Compare the merged batch size of 8 and capacity of 6 with the repaired values of 6 and 6, and verify that the repaired candidate descends from both developers. A check run on Alice before the merge says nothing about Bob's newly combined capacity change.",
-              "Run python semantic_merge.py --workspace-parent . to retain a fresh fixture for inspection, or its unittest for temporary verification. It never adopts an existing checkout. Change the scenario to a batch size of 4 and a capacity of 6 as an independent valid merge, then check that your behavior test accepts that case without requiring a repair."
+              "Run `python semantic_merge.py --workspace-parent .` to retain a fresh fixture for inspection, or its unittest for temporary verification. It never adopts an existing checkout. Change the scenario to a batch size of 4 and a capacity of 6 as an independent valid merge, then check that your behavior test accepts that case without requiring a repair."
             ]
           },
           {
@@ -37082,16 +37082,16 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "Input values arrive as strings even when they look numeric. Convert the text, then validate the result. Number('') is zero, so check for blank input before conversion.",
-              "const prevents reassignment of the binding; it does not freeze an object. Use strict equality to compare values without automatic type conversion. A missing value may be undefined; intentional absence often uses null."
+              "Input values arrive as strings even when they look numeric. Convert the text, then validate the result. `Number('')` is zero, so check for blank input before conversion.",
+              "const prevents reassignment of the binding; it does not freeze an object. Use strict equality to compare values without automatic type conversion. A missing value may be `undefined`; intentional absence often uses `null`."
             ],
             "example": "const raw = \"25\";\nconst minutes = Number(raw);\nconsole.log(minutes + 5); // 30\nconsole.log(raw + 5);     // \"255\"\nconsole.log(0 === false); // false"
           },
           {
             "title": "Enough syntax to write the first validator",
             "paragraphs": [
-              "function parseMinutes(raw) declares an operation with an input named raw. Braces delimit its body. return sends a value back and ends that call; console.log displays a value instead. if (condition) runs its following statement only when the condition is true.",
-              "The expression condition ? first : second chooses one value. && requires both conditions to hold and skips its right side when the left is false. Read Number.isInteger(n) && n >= 0 ? n : null as: return n only when it is a nonnegative integer, otherwise return null. The later functions lesson expands this into reusable transformations."
+              "`function parseMinutes(raw)` declares an operation with an input named `raw`. Braces delimit its body. `return` sends a value back and ends that call; `console.log` displays a value instead. `if (condition)` runs its following statement only when the condition is true.",
+              "The expression `condition ? first : second` chooses one value. `&&` requires both conditions to hold and skips its right side when the left is false. Read `Number.isInteger(n) && n >= 0 ? n : null` as: return `n` only when it is a nonnegative integer, otherwise return `null`. The later functions lesson expands this into reusable transformations."
             ],
             "example": "function nonblank(raw) {\n  if (raw.trim() === \"\") return null;\n  return raw.trim();\n}\nconsole.assert(nonblank(\"  SQL  \") === \"SQL\");\nconsole.assert(nonblank(\"  \") === null);"
           },
@@ -37104,14 +37104,14 @@ const LEARNING_PATHS = [
           {
             "title": "Run a small progression",
             "paragraphs": [
-              "Run practice/javascript-steps.js with Node. Predict conversion results, edit one assertion to observe a failure, then restore it. Continue through array transformation, an immutable update and rejected async work before working with component state."
+              "Run `practice/javascript-steps.js` with Node. Predict conversion results, edit one assertion to observe a failure, then restore it. Continue through array transformation, an immutable update and rejected async work before working with component state."
             ]
           },
           {
             "title": "Follow conversion before choosing a fallback",
             "paragraphs": [
-              "An HTML number input still exposes text through its value property. Number(\"\") becomes zero, which can turn an unanswered field into a legitimate zero-minute session. First distinguish missing text from an entered zero, then convert, check finiteness and the allowed range. Similarly, value || 20 replaces a valid zero; value ?? 20 replaces only null and undefined.",
-              "The focused foundation-data.ts lab accepts already-decoded numeric data. Its parser rejects the string \"20\" rather than converting it to a number. A form adapter can convert entered text, while the shared parser keeps its domain contract unambiguous. TypeScript annotations alone do not convert strings arriving at runtime."
+              "An HTML number input still exposes text through its `value` property. `Number(\"\")` becomes zero, which can turn an unanswered field into a legitimate zero-minute session. First distinguish missing text from an entered zero, then convert, check finiteness and the allowed range. Similarly, `value || 20` replaces a valid zero; `value ?? 20` replaces only `null` and `undefined`.",
+              "The focused `foundation-data.ts` lab accepts already-decoded numeric data. Its parser rejects the string `\"20\"` rather than converting it to a number. A form adapter can convert entered text, while the shared parser keeps its domain contract unambiguous. TypeScript annotations alone do not convert strings arriving at runtime."
             ],
             "example": "const text = \"\";\nconst missing = text.trim() === \"\";\nconsole.log(Number(text), missing); // 0, true\nconsole.log(0 || 20, 0 ?? 20); // 20, 0"
           }
@@ -37162,8 +37162,8 @@ const LEARNING_PATHS = [
           {
             "title": "Read callbacks one element at a time",
             "paragraphs": [
-              "x => x.done is a small function whose input is one record and whose result is its done field. filter calls it for each record and keeps records producing true. map calls its function for each retained record and collects the returned values. Neither operation deep-copies the objects.",
-              "reduce((sum, x) => sum + x.minutes, 0) starts sum at 0 and replaces it with the returned value after each item. With completed minutes 20 and 15, the accumulator becomes 20 then 35. An empty array leaves the initial 0 unchanged.",
+              "`x => x.done` is a small function whose input is one record and whose result is its `done` field. `filter` calls it for each record and keeps records producing `true`. `map` calls its function for each retained record and collects the returned values. Neither operation deep-copies the objects.",
+              "`reduce((sum, x) => sum + x.minutes, 0)` starts `sum` at 0 and replaces it with the returned value after each item. With completed minutes 20 and 15, the accumulator becomes 20 then 35. An empty array leaves the initial 0 unchanged.",
               "The spread form [...items] creates a new array containing the same items. In the next lesson, {...row, done: true} copies an object's fields and replaces done. Nested objects still remain shared; copy the particular nested object when changing it."
             ]
           },
@@ -37220,7 +37220,7 @@ const LEARNING_PATHS = [
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "Returning nothing yields undefined. In an arrow function with braces, write return explicitly."
+              "Returning nothing yields `undefined`. In an arrow function with braces, write `return` explicitly."
             ]
           },
           {
@@ -37269,15 +37269,15 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "A Promise represents eventual completion or failure. await pauses the current async function, not the whole browser. Use try/catch to handle rejections and decide what the user should see.",
-              "fetch resolves for many HTTP errors, including 404; inspect response.ok. JSON parsing is not schema validation. Treat external data as untrusted and check its shape before using it."
+              "A Promise represents eventual completion or failure. `await` pauses the current `async` function, not the whole browser. Use `try`/`catch` to handle rejections and decide what the user should see.",
+              "`fetch` resolves for many HTTP errors, including 404; inspect `response.ok`. JSON parsing is not schema validation. Treat external data as untrusted and check its shape before using it."
             ],
             "example": "async function loadTitles(url) {\n  const response = await fetch(url);\n  if (!response.ok) throw new Error(\"HTTP \" + response.status);\n  const data = await response.json();\n  if (!Array.isArray(data) || !data.every(x => typeof x === \"string\")) {\n    throw new Error(\"Expected a list of titles\");\n  }\n  return data;\n}\n// Example function: requires a real compatible endpoint; not run automatically."
           },
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "Launching dependent requests simultaneously can use data that is not ready. Conversely, unrelated requests can often run together with Promise.all; one rejection rejects that combined promise."
+              "Launching dependent requests simultaneously can use data that is not ready. Conversely, unrelated requests can often run together with `Promise.all`; one rejection rejects that combined promise."
             ]
           },
           {
@@ -37325,7 +37325,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "TypeScript adds a static type checker to JavaScript. A union such as string | null describes alternatives. A conditional can narrow that union before an operation is used.",
+              "TypeScript adds a static type checker to JavaScript. A union such as `string | null` describes alternatives. A conditional can narrow that union before an operation is used.",
               "An interface describes an expected shape, but it does not inspect a network response. Casting with as does not make unknown data valid. Start with unknown at external boundaries and check it."
             ],
             "example": "type Lesson = {id: number; title: string; done: boolean};\nfunction label(title: string | null): string {\n  return title === null ? \"Untitled\" : title.toUpperCase();\n}\nconsole.log(label(null)); // Untitled\n// Run in a TypeScript project or the official playground."
@@ -37339,16 +37339,16 @@ const LEARNING_PATHS = [
           {
             "title": "Narrow unknown data step by step",
             "paragraphs": [
-              "Treat parsed JSON as unknown. Check that it is a non-null object and not an array, then inspect fields. In foundation-data.ts, a result with ok: true carries a validated Session; ok: false carries an error string. Testing result.ok lets TypeScript narrow the union before you access value. The type follows the runtime check.",
-              "A cast such as JSON.parse(text) as Session skips all those checks. It can compile while minutes is \"twenty\". The lab rejects malformed values, preserves zero, trims identity text into a fresh value, and leaves the caller's object unchanged. Readonly helps prevent accidental writes in typed code, but is not a runtime freeze or an authorization rule."
+              "Treat parsed JSON as `unknown`. Check that it is a non-null object and not an array, then inspect fields. In `foundation-data.ts`, a result with `ok: true` carries a validated `Session`; `ok: false` carries an error string. Testing `result.ok` lets TypeScript narrow the union before you access `value`. The type follows the runtime check.",
+              "A cast such as `JSON.parse(text) as Session` skips all those checks. It can compile while `minutes` is `\"twenty\"`. The lab rejects malformed values, preserves zero, trims identity text into a fresh value, and leaves the caller's object unchanged. `Readonly` helps prevent accidental writes in typed code, but is not a runtime freeze or an authorization rule."
             ],
             "example": "const result = parseSession({id: \" a \", minutes: 0, done: false});\nif (result.ok) console.log(result.value.minutes); // 0\nelse console.log(result.error);"
           },
           {
             "title": "Prepare a versioned importer in small steps",
             "paragraphs": [
-              "The foundation project returns a summary from a function; a React upload screen comes later. First parse text with JSON.parse inside try/catch, then narrow the resulting unknown. Check version before reading lessons. Reject arrays where an object is expected, and inspect each lesson's id, title and done before deriving a count.",
-              "Use a fresh Set to track IDs: seen.has(id) detects a duplicate and seen.add(id) records a new ID. For {version:1, lessons:[{id:\"a\", title:\"Types\", done:false}]}, the summary is total 1, complete 0. Empty lessons gives 0 and 0. The same ID twice must fail, even if its titles differ. Check these independently before looking at decodeSaved."
+              "The foundation project returns a summary from a function; a React upload screen comes later. First parse text with `JSON.parse` inside `try`/`catch`, then narrow the resulting `unknown`. Check `version` before reading `lessons`. Reject arrays where an object is expected, and inspect each lesson's `id`, `title` and `done` before deriving a count.",
+              "Use a fresh `Set` to track IDs: `seen.has(id)` detects a duplicate and `seen.add(id)` records a new ID. For `{version:1, lessons:[{id:\"a\", title:\"Types\", done:false}]}`, the summary is total 1, complete 0. Empty `lessons` gives 0 and 0. The same ID twice must fail, even if its titles differ. Check these independently before looking at `decodeSaved`."
             ]
           }
         ],
@@ -37744,8 +37744,8 @@ const LEARNING_PATHS = [
           {
             "title": "Test the transition before wiring a component",
             "paragraphs": [
-              "The focused lab exposes transition(rows, action) as an ordinary TypeScript function. With rows a and b, completing a returns a changed copy of a and keeps b. The test freezes the input to expose mutation immediately. You can inspect the output without rendering a component or understanding a testing library for DOM events.",
-              "Build a component that calls setRows(previous => transition(previous, action)) once the transition is understood. Derived totals should be calculated from rows rather than maintained in a second independent state variable. A later component test still matters: passing transition tests does not prove that the button dispatches the right ID."
+              "The focused lab exposes `transition(rows, action)` as an ordinary TypeScript function. With rows a and b, completing a returns a changed copy of a and keeps b. The test freezes the input to expose mutation immediately. You can inspect the output without rendering a component or understanding a testing library for DOM events.",
+              "Build a component that calls `setRows(previous => transition(previous, action))` once the transition is understood. Derived totals should be calculated from `rows` rather than maintained in a second independent state variable. A later component test still matters: passing transition tests does not prove that the button dispatches the right ID."
             ]
           }
         ],
@@ -38756,7 +38756,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "Download App.tsx and run it in the React TypeScript project from setup. It has a search input, stable IDs, toggles and a derived completion count. It keeps data in memory so you can study state changes before adding storage.",
+              "Download `App.tsx` and run it in the React TypeScript project from setup. It has a search input, stable IDs, toggles and a derived completion count. It keeps data in memory so you can study state changes before adding storage.",
               "Test behavior through the screen: keyboard focus, blank search, mixed-case search, toggling, and an empty result. Then change one requirement at a time. Treat loading, failure and server validation as separate work when adding an API."
             ],
             "example": "Acceptance scenario:\n1. Initial count: 0 of 3 complete.\n2. Mark Types complete: 1 of 3 complete.\n3. Search STATE: one record remains visible.\n4. Clear search: Types remains complete.\n5. Refresh: in-memory state resets."
@@ -38819,7 +38819,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "Each call to makeCounter creates a distinct environment. A React handler similarly belongs to a render snapshot; long-lived callbacks may retain older values. Treat module-level mutable state as a shared singleton and avoid using it for independent users' data."
+              "Each call to `makeCounter` creates a distinct environment. A React handler similarly belongs to a render snapshot; long-lived callbacks may retain older values. Treat module-level mutable state as a shared singleton and avoid using it for independent users' data."
             ]
           }
         ],
@@ -38998,7 +38998,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "The reducer returns new arrays for toggle and remove; toggle also copies the matching row. The final comment shows how a component connects this function to useReducer."
+              "The reducer returns new arrays for `toggle` and `remove`; `toggle` also copies the matching row. The final comment shows how a component connects this function to `useReducer`."
             ],
             "example": "type Row = {id:string; title:string; done:boolean};\ntype Action = {type:\"toggle\"; id:string} | {type:\"remove\"; id:string};\nfunction reducer(state: Row[], action: Action): Row[] {\n  switch (action.type) {\n    case \"toggle\": return state.map(row => row.id === action.id ? {...row, done:!row.done} : row);\n    case \"remove\": return state.filter(row => row.id !== action.id);\n  }\n}\n// Component fragment: const [rows, dispatch] = useReducer(reducer, []);"
           },
@@ -39196,7 +39196,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "In this parent fragment, changing selectedLesson.id changes the key and remounts the editor. Local state resets, including any draft not saved elsewhere."
+              "In this parent fragment, changing `selectedLesson.id` changes the key and remounts the editor. Local state resets, including any draft not saved elsewhere."
             ],
             "example": "// Parent fragment:\n<LessonEditor key={selectedLesson.id} lesson={selectedLesson} />\n// Changing the key remounts the editor and resets its local state.\n// This also discards an unsaved draft unless it has been saved elsewhere."
           },
@@ -39244,20 +39244,20 @@ const LEARNING_PATHS = [
           {
             "title": "Contract",
             "paragraphs": [
-              "If a user selects A and then B, A's slower response may arrive last. Without a guard, the screen can show A while the heading says B. An AbortController can cancel a fetch, while a cleanup flag prevents obsolete callbacks from committing state."
+              "If a user selects A and then B, A's slower response may arrive last. Without a guard, the screen can show A while the heading says B. An `AbortController` can cancel a fetch, while a cleanup flag prevents obsolete callbacks from committing state."
             ]
           },
           {
             "title": "Example",
             "paragraphs": [
-              "This Effect fragment needs itemId, setView and decode from its component. Cleanup both aborts the request and marks the result inactive, preventing an obsolete response from updating the view."
+              "This Effect fragment needs `itemId`, `setView` and `decode` from its component. Cleanup both aborts the request and marks the result inactive, preventing an obsolete response from updating the view."
             ],
             "example": "// Effect fragment with itemId, setView and decode supplied by the component.\nuseEffect(() => {\n  const controller = new AbortController();\n  let active = true;\n  setView({status:\"loading\"});\n  fetch('/api/items/' + encodeURIComponent(itemId), {signal:controller.signal})\n    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })\n    .then(raw => { const data = decode(raw); if (active) setView({status:\"success\",data}); })\n    .catch(error => { if (active && error.name !== 'AbortError') setView({status:\"error\",message:'Unable to load'}); });\n  return () => { active = false; controller.abort(); };\n}, [itemId]);"
           },
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "This fragment assumes decode and setView are stable or otherwise correctly included in dependencies. A data-fetching library/framework may supply caching, invalidation and deduplication. A response cache key must include all inputs affecting the result. Retrying a write is more consequential than retrying a read."
+              "This fragment assumes `decode` and `setView` are stable or otherwise correctly included in dependencies. A data-fetching library/framework may supply caching, invalidation and deduplication. A response cache key must include all inputs affecting the result. Retrying a write is more consequential than retrying a read."
             ]
           }
         ],
@@ -39632,7 +39632,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "The URL parser reads q and validates page as a positive integer, falling back to 1. pushState changes browser history without emitting popstate itself."
+              "The URL parser reads `q` and validates `page` as a positive integer, falling back to 1. `pushState` changes browser history without emitting `popstate` itself."
             ],
             "example": "const params = new URLSearchParams('?q=react&page=2');\nconst query = params.get('q') ?? '';\nconst rawPage = Number(params.get('page') ?? '1');\nconst page = Number.isInteger(rawPage) && rawPage > 0 ? rawPage : 1;\nconsole.log(query, page); // react 2\n// pushState changes history but does not itself emit popstate."
           },
@@ -39683,7 +39683,7 @@ const LEARNING_PATHS = [
             "title": "Contract",
             "paragraphs": [
               "A reducer unit test can cover invariants cheaply. A component test checks accessible labels, actions and rendered outcomes. A browser test covers integration such as navigation and storage. A snapshot alone rarely proves that a feature works.",
-              "The kit supplies ui.test.tsx, vite.config.ts and locked dependencies. npm test executes five component regressions plus domain checks; the Back/Forward test exercises jsdom history, while a browser refresh/keyboard review remains separate evidence."
+              "The kit supplies `ui.test.tsx`, `vite.config.ts` and locked dependencies. `npm test` executes five component regressions plus domain checks; the Back/Forward test exercises jsdom history, while a browser refresh/keyboard review remains separate evidence."
             ]
           },
           {
@@ -39744,7 +39744,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "JSX renders externalTitle as text. Rendering it as untrusted HTML would change the security boundary; server authorization is still required for protected operations."
+              "JSX renders `externalTitle` as text. Rendering it as untrusted HTML would change the security boundary; server authorization is still required for protected operations."
             ],
             "example": "// Safe text rendering:\n<p>{externalTitle}</p>\n// Do not convert untrusted strings to HTML with dangerouslySetInnerHTML.\n// Authorization still belongs on the server, even if a button is hidden."
           },
@@ -39805,7 +39805,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "This component fragment caches expensiveFilter by rows and query. Its usefulness depends on measured cost and stable dependencies; a new rows reference invalidates the cache."
+              "This component fragment caches `expensiveFilter` by `rows` and `query`. Its usefulness depends on measured cost and stable dependencies; a new `rows` reference invalidates the cache."
             ],
             "example": "// Component fragment:\nconst visible = useMemo(\n  () => expensiveFilter(rows, query),\n  [rows, query]\n);\n// Use only when measurement shows this calculation is worth caching.\n// Changing rows identity every render can defeat the cache."
           },
@@ -39818,7 +39818,7 @@ const LEARNING_PATHS = [
           {
             "title": "Separate benchmark fixture",
             "paragraphs": [
-              "The tracker accepts at most 1,000 records. Run practice/performance-fixture.ts for 10,000 synthetic records; do not import that array into the tracker. Compare calculation timing with React Profiler evidence from a real UI interaction before choosing an optimization."
+              "The tracker accepts at most 1,000 records. Run `practice/performance-fixture.ts` for 10,000 synthetic records; do not import that array into the tracker. Compare calculation timing with React Profiler evidence from a real UI interaction before choosing an optimization."
             ]
           }
         ],
@@ -39878,7 +39878,7 @@ const LEARNING_PATHS = [
           {
             "title": "Guided advanced milestones",
             "paragraphs": [
-              "See practice/README.md and the persistence-bridge.ts and http-loader.ts exercises. Wire migration and storage into a copy of the tracker, then wire a real training API into RemoteLesson. Submit refresh, malformed data, HTTP error, race, authorization and unsaved-draft evidence. The supplied app still uses in-memory data and a local delayed loader until you complete those steps."
+              "See `practice/README.md` and the `persistence-bridge.ts` and `http-loader.ts` exercises. Wire migration and storage into a copy of the tracker, then wire a real training API into `RemoteLesson`. Submit refresh, malformed data, HTTP error, race, authorization and unsaved-draft evidence. The supplied app still uses in-memory data and a local delayed loader until you complete those steps."
             ]
           }
         ],
@@ -40753,7 +40753,7 @@ const LEARNING_PATHS = [
           {
             "title": "Cluster context and identity",
             "paragraphs": [
-              "kubectl uses a kubeconfig context to choose cluster and identity, so a valid command can affect the wrong environment. The lab names its kind cluster notebook-lab, producing kind-notebook-lab, and every mutating example names that context and notebook-lab namespace. lab.ps1 refuses another context or a non-loopback API endpoint before making a cluster request."
+              "`kubectl` uses a kubeconfig context to choose cluster and identity, so a valid command can affect the wrong environment. The lab names its kind cluster `notebook-lab`, producing `kind-notebook-lab`, and every mutating example names that context and `notebook-lab` namespace. `lab.ps1` refuses another context or a non-loopback API endpoint before making a cluster request."
             ]
           },
           {
@@ -40802,7 +40802,7 @@ const LEARNING_PATHS = [
           {
             "title": "Object structure and matching",
             "paragraphs": [
-              "A manifest states apiVersion, kind, metadata and desired fields. Names identify objects within a scope; labels classify objects and selectors match label sets. Namespace scope avoids many naming collisions but is not a complete tenant security boundary. The kit uses JSON manifests because Kubernetes accepts JSON as well as YAML; the structures are the same API objects."
+              "A manifest states `apiVersion`, `kind`, `metadata` and desired fields. Names identify objects within a scope; labels classify objects and selectors match label sets. Namespace scope avoids many naming collisions but is not a complete tenant security boundary. The kit uses JSON manifests because Kubernetes accepts JSON as well as YAML; the structures are the same API objects."
             ]
           },
           {
@@ -40815,7 +40815,7 @@ const LEARNING_PATHS = [
           {
             "title": "Try a selector mismatch without a cluster",
             "paragraphs": [
-              "Make a separate copy of the extracted practice folder. In workload.json find the Service object, then change only spec.selector.app to wrong. Run the single selector test below. It compares the Service selector with the Deployment and template labels, so the altered fixture must fail. Restore release-demo and require the check to pass. This tests a local contract; it does not send Kubernetes API requests."
+              "Make a separate copy of the extracted practice folder. In `workload.json` find the Service object, then change only `spec.selector.app` to `wrong`. Run the single selector test below. It compares the Service selector with the Deployment and template labels, so the altered fixture must fail. Restore `release-demo` and require the check to pass. This tests a local contract; it does not send Kubernetes API requests."
             ],
             "example": "python -m unittest -v check_manifests.ManifestChecks.test_selectors_ports_and_security",
             "exampleFormat": "prose"
@@ -40942,7 +40942,7 @@ const LEARNING_PATHS = [
           {
             "title": "Container restart versus Pod replacement",
             "paragraphs": [
-              "Restarting a container in the same Pod is not the same as replacing the Pod. emptyDir survives a container restart within that Pod but disappears when the Pod is removed. The notes demo is intentionally scratch data, so do not claim replacement persistence from a Deployment replica count."
+              "Restarting a container in the same Pod is not the same as replacing the Pod. `emptyDir` survives a container restart within that Pod but disappears when the Pod is removed. The notes demo is intentionally scratch data, so do not claim replacement persistence from a Deployment replica count."
             ],
             "example": "Pod A UID=old → deleted\nReplacement Pod B UID=new → new scratch volume\nTwo containers within B would share network namespace; independent Pods do not share localhost."
           }
@@ -41504,7 +41504,7 @@ const LEARNING_PATHS = [
           {
             "title": "Service names and ready endpoints",
             "paragraphs": [
-              "A ClusterIP Service gives a stable virtual address and DNS name over matching ready endpoints. Its port can differ from the container targetPort; a named targetPort connects to the container port name. Pod IPs change as instances are replaced. Within notebook-lab, release-demo resolves the Service, while release-demo.notebook-lab.svc identifies its namespace more explicitly."
+              "A ClusterIP Service gives a stable virtual address and DNS name over matching ready endpoints. Its port can differ from the container `targetPort`; a named `targetPort` connects to the container port name. Pod IPs change as instances are replaced. Within `notebook-lab`, `release-demo` resolves the Service, while `release-demo.notebook-lab.svc` identifies its namespace more explicitly."
             ]
           },
           {
@@ -41517,7 +41517,7 @@ const LEARNING_PATHS = [
           {
             "title": "Locate the three port values",
             "paragraphs": [
-              "In workload.json, find the Service port 8080, its targetPort string http, and the container port named http with value 8080. The string is a lookup by name, not another numeric port. An EndpointSlice records backend addresses and readiness for the Service. These records help distinguish a matching label from a backend that can actually receive traffic."
+              "In `workload.json`, find the Service port 8080, its `targetPort` string `http`, and the container port named `http` with value 8080. The string is a lookup by name, not another numeric port. An EndpointSlice records backend addresses and readiness for the Service. These records help distinguish a matching label from a backend that can actually receive traffic."
             ]
           }
         ],
@@ -41981,13 +41981,13 @@ const LEARNING_PATHS = [
           {
             "title": "Configuration delivery",
             "paragraphs": [
-              "A ConfigMap stores non-confidential configuration outside the container image. The kit injects RELEASE_VERSION through envFrom. This value is a release label, not a hash of the deployed bytes. The container reads environment variables when it starts. Editing the ConfigMap does not change the environment of an already running process."
+              "A ConfigMap stores non-confidential configuration outside the container image. The kit injects `RELEASE_VERSION` through `envFrom`. This value is a release label, not a hash of the deployed bytes. The container reads environment variables when it starts. Editing the ConfigMap does not change the environment of an already running process."
             ]
           },
           {
             "title": "Mounted files and process reload",
             "paragraphs": [
-              "Mounted configuration files have different update behavior and applications still must reload them appropriately; subPath mounts do not receive normal ConfigMap updates. Avoid assuming every configuration delivery method has the same lifecycle. Record config revision with the release image."
+              "Mounted configuration files have different update behavior and applications still must reload them appropriately; `subPath` mounts do not receive normal ConfigMap updates. Avoid assuming every configuration delivery method has the same lifecycle. Record config revision with the release image."
             ],
             "example": "release-config: RELEASE_VERSION=v1\nPod environment captures v1 at startup\nConfigMap becomes v2 → existing process still reports v1\nControlled rollout creates new Pods with new environment."
           }
@@ -42173,7 +42173,7 @@ const LEARNING_PATHS = [
             "title": "Follow one failing Pod into the Service endpoints",
             "paragraphs": [
               "Two replicas are Ready. Creating /tmp/not-ready in one replica makes /ready return 503 while /live still returns 200. The kubelet eventually marks that Pod unready; the EndpointSlice controller updates its ready condition. The Pod can remain Running with the same UID and restart count. Traffic selection changes because readiness changed, not because the process died.",
-              "Run the optional readiness_drill.py only after the existing kind lab is healthy. It guards the named loopback context and namespace ownership, changes one Pod, checks its EndpointSlice and restores its gate in finally. Transitions are asynchronous, so it polls conditions with deadlines rather than assuming an immediate update. A long-lived connection already attached to the Pod is a separate boundary; endpoint readiness is not proof that every existing connection vanished."
+              "Run the optional `readiness_drill.py` only after the existing kind lab is healthy. It guards the named loopback context and namespace ownership, changes one Pod, checks its EndpointSlice and restores its gate in `finally`. Transitions are asynchronous, so it polls conditions with deadlines rather than assuming an immediate update. A long-lived connection already attached to the Pod is a separate boundary; endpoint readiness is not proof that every existing connection vanished."
             ],
             "example": "before: Ready=True, restartCount=N\ngate present: Ready=False, endpoint.ready=False, restartCount=N\ngate removed: Ready=True, restartCount=N",
             "exampleFormat": "prose"
@@ -42356,7 +42356,7 @@ const LEARNING_PATHS = [
           {
             "title": "Rollout capacity and deadlines",
             "paragraphs": [
-              "A Deployment rollout changes the Pod template, creates a new ReplicaSet and transitions availability according to maxSurge/maxUnavailable. For two replicas, the kit sets maxSurge to 1 and maxUnavailable to 0. This requires spare capacity for a third replica during rollout. A progress deadline signals a stalled rollout but does not automatically undo it. Application/data compatibility remains a separate release gate."
+              "A Deployment rollout changes the Pod template, creates a new ReplicaSet and transitions availability according to `maxSurge`/`maxUnavailable`. For two replicas, the kit sets `maxSurge` to 1 and `maxUnavailable` to 0. This requires spare capacity for a third replica during rollout. A progress deadline signals a stalled rollout but does not automatically undo it. Application/data compatibility remains a separate release gate."
             ]
           },
           {
@@ -42819,7 +42819,7 @@ const LEARNING_PATHS = [
           {
             "title": "Traffic policy and enforcement",
             "paragraphs": [
-              "NetworkPolicy selects Pods and declares allowed ingress/egress connections. A policy object can be accepted without enforcement if the cluster network plugin does not implement it. The optional lab policy isolates ingress to app=release-demo and permits port 8080 only from same-namespace app=notebook-client Pods. Baseline kind networking does not by itself establish policy enforcement."
+              "NetworkPolicy selects Pods and declares allowed ingress/egress connections. A policy object can be accepted without enforcement if the cluster network plugin does not implement it. The optional lab policy isolates ingress to `app=release-demo` and permits port 8080 only from same-namespace `app=notebook-client` Pods. Baseline kind networking does not by itself establish policy enforcement."
             ]
           },
           {
@@ -42874,7 +42874,7 @@ const LEARNING_PATHS = [
           {
             "title": "Impersonation and denied operations",
             "paragraphs": [
-              "Impersonation-based kubectl auth can-i checks require an identity allowed to impersonate and do not prove the application identity provider. Avoid broad wildcards and unintended escalation through workload creation. Explicitly verify a permitted read and a denied secret/mutation operation in the dedicated local namespace."
+              "Impersonation-based `kubectl auth can-i` checks require an identity allowed to impersonate and do not prove the application identity provider. Avoid broad wildcards and unintended escalation through workload creation. Explicitly verify a permitted read and a denied secret/mutation operation in the dedicated local namespace."
             ],
             "example": "viewer ServiceAccount → RoleBinding → pod-viewer Role\nAllowed: get/list/watch pods and pods/log\nNot granted: read secrets, create Pods, mutating Deployments"
           }
@@ -42997,13 +42997,13 @@ const LEARNING_PATHS = [
           {
             "title": "Process privileges and filesystems",
             "paragraphs": [
-              "Pod security settings restrict process privileges and filesystem capabilities. The baseline runs as non-root user 10001, disables privilege escalation, drops Linux capabilities, uses RuntimeDefault seccomp and a read-only root filesystem. A writable emptyDir at /tmp supports this application. The namespace requests restricted Pod Security admission at v1.34, independently of the application configuration."
+              "Pod security settings restrict process privileges and filesystem capabilities. The baseline runs as non-root user 10001, disables privilege escalation, drops Linux capabilities, uses `RuntimeDefault` seccomp and a read-only root filesystem. A writable `emptyDir` at `/tmp` supports this application. The namespace requests restricted Pod Security admission at v1.34, independently of the application configuration."
             ]
           },
           {
             "title": "Admission versus runtime evidence",
             "paragraphs": [
-              "Admission controls decide whether the Pod specification is allowed; they do not prove the base image has no vulnerabilities or that business authorization works. The baseline has no hostPath, privileged container or external load balancer. Read-only root needs compatible temp/cache/data paths and should be tested with the actual image."
+              "Admission controls decide whether the Pod specification is allowed; they do not prove the base image has no vulnerabilities or that business authorization works. The baseline has no `hostPath`, privileged container or external load balancer. Read-only root needs compatible temp/cache/data paths and should be tested with the actual image."
             ],
             "example": "USER 10001 + runAsNonRoot\nallowPrivilegeEscalation: false\ncapabilities drop ALL\nreadOnlyRootFilesystem: true\n/tmp is an explicit writable volume"
           }
@@ -43052,7 +43052,7 @@ const LEARNING_PATHS = [
           {
             "title": "Provisioning and driver permissions",
             "paragraphs": [
-              "Provisioning may wait for first consumer or stay Pending if no default StorageClass exists. A PVC with local-node backing is not multi-node failover or an off-node backup. fsGroup support and ownership depend on the driver; inspect events if the non-root writer cannot open /data."
+              "Provisioning may wait for first consumer or stay `Pending` if no default StorageClass exists. A PVC with local-node backing is not multi-node failover or an off-node backup. `fsGroup` support and ownership depend on the driver; inspect events if the non-root writer cannot open `/data`."
             ],
             "example": "storage.json → PVC lab-data +Pod storage-demo\nDelete storage-demo only → reapply → same message if storage remains\nDelete namespace/PVC → data may be deleted by reclaim policy"
           }
@@ -43175,7 +43175,7 @@ const LEARNING_PATHS = [
           {
             "title": "Finite work and retry bounds",
             "paragraphs": [
-              "A Job manages work intended to finish, unlike a continuously serving Deployment. Set completion behavior, retry bounds and a deadline. The lab Job requests /version through Service DNS, prints the result and exits; backoffLimit 1 and activeDeadlineSeconds 60 bound retries/time. Jobs can still run work more than once due to failure/replacement, so external effects require idempotency."
+              "A Job manages work intended to finish, unlike a continuously serving Deployment. Set completion behavior, retry bounds and a deadline. The lab Job requests `/version` through Service DNS, prints the result and exits; `backoffLimit` 1 and `activeDeadlineSeconds` 60 bound retries/time. Jobs can still run work more than once due to failure/replacement, so external effects require idempotency."
             ]
           },
           {
@@ -43273,7 +43273,7 @@ const LEARNING_PATHS = [
           {
             "title": "Voluntary eviction budgets",
             "paragraphs": [
-              "PodDisruptionBudget limits certain voluntary evictions based on healthy availability. With two replicas and minAvailable 1, an eviction request should retain at least one healthy instance when the mechanism applies. It does not prevent node crashes, application failures or all update actions. The optional policy/v1 manifest selects the same app labels as the Deployment."
+              "PodDisruptionBudget limits certain voluntary evictions based on healthy availability. With two replicas and `minAvailable` 1, an eviction request should retain at least one healthy instance when the mechanism applies. It does not prevent node crashes, application failures or all update actions. The optional `policy/v1` manifest selects the same app labels as the Deployment."
             ]
           },
           {
@@ -43328,7 +43328,7 @@ const LEARNING_PATHS = [
           {
             "title": "Review before local installation",
             "paragraphs": [
-              "Pin a compatible Helm version, review actual generated defaults and compare the rendered workload with the known lab contract. No helm install command is required for offline study. If enabling the chart in the local cluster, preserve explicit context/namespace gates and local image settings; a default chart may select a different public image."
+              "Pin a compatible Helm version, review actual generated defaults and compare the rendered workload with the known lab contract. No `helm install` command is required for offline study. If enabling the chart in the local cluster, preserve explicit context/namespace gates and local image settings; a default chart may select a different public image."
             ],
             "example": "helm create lab-chart\n# Review generated Service, Deployment, values and remove unneeded defaults.\nhelm lint ./lab-chart\nhelm template release-demo ./lab-chart --namespace notebook-lab > rendered.yaml"
           }
@@ -43518,7 +43518,7 @@ const LEARNING_PATHS = [
           {
             "title": "Missing images and debug privilege",
             "paragraphs": [
-              "ImagePullBackOff, CrashLoopBackOff and Pending indicate different stages, not interchangeable root causes. The kit imagePullPolicy Never intentionally fails if the named local image was not loaded onto kind nodes. A debug container or exec session is a separate privileged effect; use only the dedicated local lab."
+              "`ImagePullBackOff`, `CrashLoopBackOff` and `Pending` indicate different stages, not interchangeable root causes. The kit's `imagePullPolicy` of `Never` intentionally fails if the named local image was not loaded onto kind nodes. A debug container or exec session is a separate privileged effect; use only the dedicated local lab."
             ],
             "example": "kubectl --context=kind-notebook-lab -n notebook-lab describe pod NAME\nkubectl --context=kind-notebook-lab -n notebook-lab logs NAME --previous\nkubectl --context=kind-notebook-lab -n notebook-lab get endpointslices\n# Use actual object names and check their readiness conditions."
           },
@@ -43526,7 +43526,7 @@ const LEARNING_PATHS = [
             "title": "The order of checks changes the diagnosis",
             "paragraphs": [
               "A user sees a connection failure. First inspect the Deployment and Pods: no scheduled Pod makes application HTTP logs irrelevant. If the Pod is Running, inspect Ready and EndpointSlices. If the endpoint is absent or unready, investigate selectors and probes before DNS. If a ready endpoint exists, compare a request to the Pod with a request through the Service; this separates application behavior from routing.",
-              "In the supplied workload imagePullPolicy=Never requires the image on each node that can host the Pod. ErrImageNeverPull can therefore affect one replica after rescheduling even if its sibling works. Increasing probe delays cannot load an image. Likewise, a readiness 503 cannot be corrected by repeatedly deleting Pods when every replacement receives the same broken configuration."
+              "In the supplied workload `imagePullPolicy=Never` requires the image on each node that can host the Pod. `ErrImageNeverPull` can therefore affect one replica after rescheduling even if its sibling works. Increasing probe delays cannot load an image. Likewise, a readiness 503 cannot be corrected by repeatedly deleting Pods when every replacement receives the same broken configuration."
             ],
             "example": "Pending -> scheduling conditions/events\nErrImageNeverPull -> local image on selected node\nRunning + Ready=False -> probe/app readiness\nReady=True + no matching endpoints -> Service selector\nReady endpoint + failed request -> traffic/app boundary",
             "exampleFormat": "prose"
@@ -46355,13 +46355,13 @@ const LEARNING_PATHS = [
           {
             "title": "Absolute and relative paths",
             "paragraphs": [
-              "An absolute Linux path starts at /. A relative path starts at the process working directory. The home directory is a user-specific location; ~ is expanded by the shell. Case matters on typical Linux filesystems, so Report.csv and report.csv may be different names."
+              "An absolute Linux path starts at `/`. A relative path starts at the process working directory. The home directory is a user-specific location; `~` is expanded by the shell. Case matters on typical Linux filesystems, so `Report.csv` and `report.csv` may be different names."
             ]
           },
           {
             "title": "A service launched from /",
             "paragraphs": [
-              "A service launched from / reads ./data.csv there, even if the script is stored in /home/learner/app. Locate both the working directory and the configured data path before changing code. .. moves to the parent; . names the current directory."
+              "A service launched from `/` reads `./data.csv` there, even if the script is stored in `/home/learner/app`. Locate both the working directory and the configured data path before changing code. `..` moves to the parent; `.` names the current directory."
             ],
             "example": "pwd\nmkdir -p notebook-lab/input\ncd notebook-lab\nprintf \"id,name\\n1,Asha\\n\" > input/sample.csv\nls -l input\n# All changes stay in notebook-lab."
           },
@@ -46416,7 +46416,7 @@ const LEARNING_PATHS = [
           {
             "title": "Comparing a backup copy",
             "paragraphs": [
-              "Copy the sample into backup.csv, compare the files and verify both exist before experimenting. A backup in the same filesystem helps against accidental edits but does not protect against a lost disk or corrupted account."
+              "Copy the sample into `backup.csv`, compare the files and verify both exist before experimenting. A backup in the same filesystem helps against accidental edits but does not protect against a lost disk or corrupted account."
             ],
             "example": "cp input/sample.csv backup.csv\ncat backup.csv\nwc -l backup.csv\n# Expect 2 lines; inspect with ls before any removal."
           },
@@ -46471,7 +46471,7 @@ const LEARNING_PATHS = [
           {
             "title": "A filename containing spaces",
             "paragraphs": [
-              "The filename quarterly report.csv contains a space. An unquoted variable can become two arguments; a quoted variable supplies one. A subprocess argument list avoids shell parsing altogether and is a better default for application code."
+              "The filename `quarterly report.csv` contains a space. An unquoted variable can become two arguments; a quoted variable supplies one. A subprocess argument list avoids shell parsing altogether and is a better default for application code."
             ],
             "example": "name=\"quarterly report.csv\"\nprintf \"%s\\n\" \"$name\"\n# One line containing the complete name.\n# Application equivalent: subprocess.run([\"tool\", name], shell=False)"
           },
@@ -46540,7 +46540,7 @@ const LEARNING_PATHS = [
           {
             "title": "Pipeline status and parsers",
             "paragraphs": [
-              "Bash pipeline status normally follows the last command. set -o pipefail changes that rule. Binary data and CSV quoting require suitable parsers; a simple grep pipeline is not a CSV importer."
+              "Bash pipeline status normally follows the last command. `set -o pipefail` changes that rule. Binary data and CSV quoting require suitable parsers; a simple `grep` pipeline is not a CSV importer."
             ]
           }
         ],
@@ -46840,7 +46840,7 @@ const LEARNING_PATHS = [
           {
             "title": "Successful and timed-out children",
             "paragraphs": [
-              "Run a child that prints 42 and then a child that sleeps. The supplied portable lab uses subprocess.run with a timeout and tests the resulting TimeoutExpired. It launches only the current Python interpreter and never scans or kills unrelated processes."
+              "Run a child that prints 42 and then a child that sleeps. The supplied portable lab uses `subprocess.run` with a timeout and tests the resulting `TimeoutExpired`. It launches only the current Python interpreter and never scans or kills unrelated processes."
             ],
             "example": "import subprocess, sys\nresult = subprocess.run([sys.executable, \"-c\", \"print(42)\"],\n                        capture_output=True, text=True, timeout=2)\nprint(result.returncode, result.stdout.strip())\n# Expected: 0 42"
           },
@@ -46853,7 +46853,7 @@ const LEARNING_PATHS = [
           {
             "title": "Inspect one trusted child first",
             "paragraphs": [
-              "The returned CompletedProcess keeps returncode, stdout and stderr separate. A nonzero child status does not raise automatically with the default check=False. A timeout raises TimeoutExpired instead of returning a normal completion. Start with these two observable outcomes before designing a supervisor for descendants."
+              "The returned `CompletedProcess` keeps `returncode`, `stdout` and `stderr` separate. A nonzero child status does not raise automatically with the default `check=False`. A timeout raises `TimeoutExpired` instead of returning a normal completion. Start with these two observable outcomes before designing a supervisor for descendants."
             ]
           }
         ],
@@ -47097,7 +47097,7 @@ const LEARNING_PATHS = [
           {
             "title": "A lost increment",
             "paragraphs": [
-              "Two workers both read count=5 and both write 6. One increment is lost. A lock around the full read-modify-write operation can prevent this race within a process. Separate processes need coordination that they can both access; an in-process lock cannot coordinate them."
+              "Two workers both read `count=5` and both write 6. One increment is lost. A lock around the full read-modify-write operation can prevent this race within a process. Separate processes need coordination that they can both access; an in-process lock cannot coordinate them."
             ],
             "example": "# Conceptual interleaving, not runnable code:\nworker A: read 5\nworker B: read 5\nworker A: write 6\nworker B: write 6\n# Intended total: 7; observed total: 6"
           },
@@ -47166,7 +47166,7 @@ const LEARNING_PATHS = [
             "title": "Observe EMFILE without changing the shell limit",
             "paragraphs": [
               "A process can run out of descriptors even when disk space and memory remain available. EMFILE names the per-process descriptor boundary; ENFILE is a different system-wide open-file-table boundary. Repeatedly reopening a harmless file such as /dev/null can demonstrate exhaustion without corrupting its content. Raising a limit merely moves the failure if handles still accumulate.",
-              "The optional linux_fd_drill.py starts a child with a small RLIMIT_NOFILE, opens descriptors until Linux returns EMFILE, closes every opened descriptor in finally, and proves a new open succeeds. The parent and shell limits are untouched. /proc/self/fd counts can include the directory handle used to inspect them, so compare observations made in the same way instead of expecting an absolute number across machines."
+              "The optional `linux_fd_drill.py` starts a child with a small `RLIMIT_NOFILE`, opens descriptors until Linux returns `EMFILE`, closes every opened descriptor in `finally`, and proves a new open succeeds. The parent and shell limits are untouched. `/proc/self/fd` counts can include the directory handle used to inspect them, so compare observations made in the same way instead of expecting an absolute number across machines."
             ],
             "example": "child only: soft RLIMIT_NOFILE=32\nrepeated open -> OSError(errno.EMFILE)\nclose owned descriptors -> count returns to baseline\nnew open -> succeeds",
             "exampleFormat": "prose"
@@ -47745,7 +47745,7 @@ const LEARNING_PATHS = [
           {
             "title": "Locating a missing data.csv",
             "paragraphs": [
-              "If a service fails to open data.csv, compare working directory, absolute input path, identity and parent traversal. If it opens but rejects a row, inspect the schema error rather than changing OS permissions. The supplied diagnostic fixture models these categories portably."
+              "If a service fails to open `data.csv`, compare working directory, absolute input path, identity and parent traversal. If it opens but rejects a row, inspect the schema error rather than changing OS permissions. The supplied diagnostic fixture models these categories portably."
             ],
             "example": "python diagnostic_lab.py\n# Expected: path -> configuration; permission -> access;\n# timeout -> lifecycle; bad-row -> application validation."
           },
@@ -48281,13 +48281,13 @@ const LEARNING_PATHS = [
             "title": "How it works",
             "paragraphs": [
               "A feature is an input supplied to a model. The target is the outcome it learns to predict. A column name does not establish availability. A priority column edited after escalation may contain future information even though a priority column recorded at intake is valid.",
-              "Our dataset records channel, intake priority, initial team and customer_messages at intake. The last value counts messages in the submitted intake packet, not the lifetime conversation. ticket_id and customer_id identify records and groups; the reference model does not use them as predictors."
+              "Our dataset records channel, intake priority, initial team and `customer_messages` at intake. The last value counts messages in the submitted intake packet, not the lifetime conversation. `ticket_id` and `customer_id` identify records and groups; the reference model does not use them as predictors."
             ]
           },
           {
             "title": "Worked example",
             "paragraphs": [
-              "The target breached is computed from resolution_hours. Giving resolution_hours to the classifier would let it reconstruct the answer. The lab selects four allowed features explicitly instead of passing every CSV column."
+              "The target `breached` is computed from `resolution_hours`. Giving `resolution_hours` to the classifier would let it reconstruct the answer. The lab selects four allowed features explicitly instead of passing every CSV column."
             ],
             "example": "FEATURES = ('channel', 'priority', 'team', 'customer_messages')\n# resolution_hours and breached are excluded from X."
           },
@@ -48559,7 +48559,7 @@ const LEARNING_PATHS = [
             "title": "How it works",
             "paragraphs": [
               "Choose the positive class explicitly. Here it is breach. A true positive is a correctly flagged breach. A false positive flags a ticket that resolves within the limit. A false negative misses a breach. A true negative correctly leaves a non-breach unflagged.",
-              "Precision divides true positives by all predicted positives. Recall divides true positives by all actual positives. Report counts with ratios, especially on small samples. When a denominator is zero, the ratio is undefined; the standard-library lab returns None instead of silently claiming success."
+              "Precision divides true positives by all predicted positives. Recall divides true positives by all actual positives. Report counts with ratios, especially on small samples. When a denominator is zero, the ratio is undefined; the standard-library lab returns `None` instead of silently claiming success."
             ]
           },
           {
@@ -48845,7 +48845,7 @@ const LEARNING_PATHS = [
           {
             "title": "Worked example",
             "paragraphs": [
-              "Training message counts [2, 4] have mean 3 and population standard deviation 1. StandardScaler maps them to [-1, 1]. A validation value 8 becomes 5 using those same training statistics."
+              "Training message counts [2, 4] have mean 3 and population standard deviation 1. `StandardScaler` maps them to [-1, 1]. A validation value 8 becomes 5 using those same training statistics."
             ],
             "example": "training mean = 3\ntraining standard deviation = 1\ntransform(8) = (8 - 3) / 1 = 5"
           },
@@ -48901,8 +48901,8 @@ const LEARNING_PATHS = [
           {
             "title": "How it works",
             "paragraphs": [
-              "A Pipeline runs transformation steps in order and finishes with an estimator. Calling fit learns each transformation from the rows supplied to that fit. Calling predict reuses the fitted transformations. ColumnTransformer applies different transformations to numeric and categorical columns.",
-              "In the lab, median imputation and scaling handle the numeric message count. OneHotEncoder handles channel, priority and team. Passing the entire pipeline into cross-validation ensures each fold learns its own preprocessing statistics."
+              "A Pipeline runs transformation steps in order and finishes with an estimator. Calling fit learns each transformation from the rows supplied to that fit. Calling predict reuses the fitted transformations. `ColumnTransformer` applies different transformations to numeric and categorical columns.",
+              "In the lab, median imputation and scaling handle the numeric message count. `OneHotEncoder` handles channel, priority and team. Passing the entire pipeline into cross-validation ensures each fold learns its own preprocessing statistics."
             ]
           },
           {
@@ -49014,7 +49014,7 @@ const LEARNING_PATHS = [
             "title": "How it works",
             "paragraphs": [
               "Overfitting happens when the fitted model captures peculiarities of training examples that do not transfer well. Compare training and suitable validation results. Very low training error paired with much worse validation error is a warning, although distribution change or leakage can also distort the comparison.",
-              "Regularization penalizes large coefficients or otherwise constrains model flexibility. For LogisticRegression, a smaller C means stronger regularization. Select the setting within development data. More regularization can also underfit, so a smaller number is not automatically better."
+              "Regularization penalizes large coefficients or otherwise constrains model flexibility. For `LogisticRegression`, a smaller C means stronger regularization. Select the setting within development data. More regularization can also underfit, so a smaller number is not automatically better."
             ]
           },
           {
@@ -49146,7 +49146,7 @@ const LEARNING_PATHS = [
           {
             "title": "Worked example",
             "paragraphs": [
-              "If breached is defined by resolution_hours >24, a single threshold on resolution_hours gets every fictional label correct. That perfect result measures reconstruction of the label, not intake prediction."
+              "If `breached` is defined by `resolution_hours > 24`, a single threshold on `resolution_hours` gets every fictional label correct. That perfect result measures reconstruction of the label, not intake prediction."
             ],
             "example": "assert set(train_ticket_ids).isdisjoint(test_ticket_ids)\nassert \"resolution_hours\" not in selected_features"
           },
@@ -50067,7 +50067,7 @@ const LEARNING_PATHS = [
           {
             "title": "Worked example",
             "paragraphs": [
-              "Two reports both say seed=23 but one changes the target from >24 to >=24. They describe different tasks. Likewise, changing the CSV order can change a positional time split unless you validate or sort by dates."
+              "Two reports both say `seed=23` but one changes the target from `> 24` to `>= 24`. They describe different tasks. Likewise, changing the CSV order can change a positional time split unless you validate or sort by dates."
             ],
             "example": "record: target rule, feature list, data hash\nrecord: split rule, seed, versions, threshold policy\nrecord: metrics with counts and limitations"
           },
@@ -50595,13 +50595,13 @@ const LEARNING_PATHS = [
           {
             "title": "Commands, events and completion",
             "paragraphs": [
-              "A message is a transported payload. A command requests an action, such as GenerateExport, and needs an owner that can accept or reject it. An event reports something that already happened, such as ExportRequested. Event naming in past tense helps avoid confusing publication with completion. Asynchronous means sender and receiver can progress at different times; it does not mean work has succeeded."
+              "A message is a transported payload. A command requests an action, such as `GenerateExport`, and needs an owner that can accept or reject it. An event reports something that already happened, such as `ExportRequested`. Event naming in past tense helps avoid confusing publication with completion. Asynchronous means sender and receiver can progress at different times; it does not mean work has succeeded."
             ]
           },
           {
             "title": "Accepted versus ready",
             "paragraphs": [
-              "Our notebook export example accepts a job, records its identifier, and later produces a file. ExportRequested and ExportCompleted are different facts. The UI can show Accepted while an export remains pending; it must not display Download ready merely because a broker accepted a payload."
+              "Our notebook export example accepts a job, records its identifier, and later produces a file. `ExportRequested` and `ExportCompleted` are different facts. The UI can show Accepted while an export remains pending; it must not display Download ready merely because a broker accepted a payload."
             ]
           }
         ],
@@ -50656,7 +50656,7 @@ const LEARNING_PATHS = [
           {
             "title": "Worker and subscriber counts",
             "paragraphs": [
-              "Ten export jobs and two competing workers should yield ten completed jobs overall, not twenty. An audit subscription and a notification subscription each need their own copy of ExportCompleted. A reporting consumer on a retained log can rebuild its view from earlier records; a removed work-queue message cannot normally be replayed that way."
+              "Ten export jobs and two competing workers should yield ten completed jobs overall, not twenty. An audit subscription and a notification subscription each need their own copy of `ExportCompleted`. A reporting consumer on a retained log can rebuild its view from earlier records; a removed work-queue message cannot normally be replayed that way."
             ]
           }
         ],
@@ -50818,15 +50818,15 @@ const LEARNING_PATHS = [
           {
             "title": "Duplicate delivery of e-17",
             "paragraphs": [
-              "A delivery of event e-17 concerning job j-4 can arrive twice. Deduplicating by e-17 avoids repeating its effect. Deduplicating all job j-4 events would accidentally discard ExportCompleted after ExportRequested. Timestamps aid investigation, but clock skew means they are not a universal ordering authority.",
-              "Run Python snippets from the extracted practice folder with event_lab.py present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
+              "A delivery of event e-17 concerning job j-4 can arrive twice. Deduplicating by e-17 avoids repeating its effect. Deduplicating all job j-4 events would accidentally discard `ExportCompleted` after `ExportRequested`. Timestamps aid investigation, but clock skew means they are not a universal ordering authority.",
+              "Run Python snippets from the extracted practice folder with `event_lab.py` present; JSON shows the strict v1 teaching envelope. No snippet connects to a broker."
             ],
             "example": "{\n  \"id\": \"e-17\",\n  \"job_id\": \"j-4\",\n  \"type\": \"ExportRequested\",\n  \"version\": 1,\n  \"value\": 7\n}"
           },
           {
             "title": "Keep the sample envelope and the design distinct",
             "paragraphs": [
-              "The JSON below is the small executable lab contract. It contains id, job_id, type, version and value only. The earlier discussion names additional production metadata; do not add those fields to the strict v1 parser and expect it to accept them. In the foundation sketch, write correlation and occurrence time beside the event. Lesson 14 explains how to introduce them as a versioned contract change.",
+              "The JSON below is the small executable lab contract. It contains `id`, `job_id`, `type`, `version` and `value` only. The earlier discussion names additional production metadata; do not add those fields to the strict v1 parser and expect it to accept them. In the foundation sketch, write correlation and occurrence time beside the event. Lesson 14 explains how to introduce them as a versioned contract change.",
               "The lab assumes event IDs are unique across its single event source. CloudEvents identifies an event by source plus id, so a multi-source inbox must preserve that source scope or use a documented globally unique ID policy."
             ]
           }
@@ -51109,8 +51109,8 @@ const LEARNING_PATHS = [
             "title": "Reproduce the commit-to-ack gap against a broker",
             "paragraphs": [
               "An event adds 7 to a balance. The consumer inserts event-1 into its inbox and updates the balance in one transaction, then its channel closes before acknowledgement. RabbitMQ redelivers the unacknowledged delivery. On replay the inbox key already exists, so the transaction skips the balance increment and the consumer acknowledges on the new channel. The two deliveries share an application ID; their channel delivery tags need not match.",
-              "broker_ack_drill.py exercises that transport boundary with a real optional local RabbitMQ server. It closes the first connection deliberately and verifies redelivered plus balance=7 on the second. Its in-memory SQLite database stays alive in the same Python process, so the drill demonstrates channel loss, not process-crash persistence. The existing file-backed inbox tests address local durable state separately.",
-              "Read this as a transport preview now. Implement the inbox in lesson 9 before attempting mechanism-lab.md; the local foundation project needs no broker installation."
+              "`broker_ack_drill.py` exercises that transport boundary with a real optional local RabbitMQ server. It closes the first connection deliberately and verifies `redelivered` plus `balance=7` on the second. Its in-memory SQLite database stays alive in the same Python process, so the drill demonstrates channel loss, not process-crash persistence. The existing file-backed inbox tests address local durable state separately.",
+              "Read this as a transport preview now. Implement the inbox in lesson 9 before attempting `mechanism-lab.md`; the local foundation project needs no broker installation."
             ],
             "example": "first delivery: inbox inserts event-1; balance 0 -> 7; commit\nconnection closes before ack\nredelivery: inbox conflict; balance stays 7; ack on new channel",
             "exampleFormat": "prose"
@@ -51320,7 +51320,7 @@ const LEARNING_PATHS = [
           {
             "title": "Independent audit and notification",
             "paragraphs": [
-              "ExportCompleted feeds audit and notifications. If notifications are down, audit can continue because the subscriptions are independent. Adding two notification workers to that subscription improves throughput without duplicating its logical responsibility. A schema name should be stable even when service deployment names change."
+              "`ExportCompleted` feeds audit and notifications. If notifications are down, audit can continue because the subscriptions are independent. Adding two notification workers to that subscription improves throughput without duplicating its logical responsibility. A schema name should be stable even when service deployment names change."
             ]
           }
         ],
@@ -51431,7 +51431,7 @@ const LEARNING_PATHS = [
           {
             "title": "Relay retries after publication",
             "paragraphs": [
-              "create_job() inserts job j-4 and outbox event e-17 together. The relay can crash after sending but before marking sent, so it must retry and may duplicate publication. The outbox closes the local commit gap but does not remove the consumer duplicate problem."
+              "`create_job()` inserts job `j-4` and outbox event `e-17` together. The relay can crash after sending but before marking sent, so it must retry and may duplicate publication. The outbox closes the local commit gap but does not remove the consumer duplicate problem."
             ],
             "example": "from contextlib import closing\nfrom event_lab import connect, create_job, pending\n\nwith closing(connect(':memory:')) as db:\n    create_job(db, 'j-4', 'e-17', 7)\n    print(len(pending(db)))  # 1 committed pending event"
           },
@@ -51838,7 +51838,7 @@ const LEARNING_PATHS = [
           {
             "title": "An additive field and an ID change",
             "paragraphs": [
-              "Add display_name to ExportCompleted while retaining job_id and event_id. Old consumers should still work if their parser accepts additional fields. Changing job_id from a string to an integer can break deduplication and needs a deliberate migration, not just a new producer deployment."
+              "Add `display_name` to `ExportCompleted` while retaining `job_id` and `event_id`. Old consumers should still work if their parser accepts additional fields. Changing `job_id` from a string to an integer can break deduplication and needs a deliberate migration, not just a new producer deployment."
             ],
             "example": "from event_lab import validate\n\nevent = {'id': 'e-17', 'job_id': 'j-4',\n         'type': 'ExportRequested', 'version': 1, 'value': 7}\nprint(validate(event))  # canonical JSON for this local Python reference\n# validate(event | {'display_name': 'Example'}) raises ValueError:\n# the supplied v1 parser deliberately rejects unknown fields."
           }
@@ -52991,7 +52991,7 @@ const LEARNING_PATHS = [
           {
             "title": "The offline cache model",
             "paragraphs": [
-              "Use the supplied DnsCache as an offline lifetime model only. Its example address comes from a documentation range, not a live host. Real resolution depends on a recursive resolver, record types, answers and errors; the model does not parse packets, validate DNSSEC or simulate delegation."
+              "Use the supplied `DnsCache` as an offline lifetime model only. Its example address comes from a documentation range, not a live host. Real resolution depends on a recursive resolver, record types, answers and errors; the model does not parse packets, validate DNSSEC or simulate delegation."
             ],
             "example": "lessons.example -> A 192.0.2.10\nName resolution succeeds\nPort 443 can still refuse a connection\nThese are separate observations"
           }
@@ -53179,7 +53179,7 @@ const LEARNING_PATHS = [
             "title": "Frame bytes before decoding text",
             "paragraphs": [
               "The word cafe with an accented final letter needs two UTF-8 bytes for that letter. A recv boundary can separate those bytes; decoding each chunk independently can therefore fail even though the complete message is valid. Accumulate bytes until the application delimiter arrives, enforce a size limit and only then decode the complete frame. A sendall call does not reserve a matching recv call.",
-              "tcp_framing.py uses a real loopback listener and deliberately small three-byte reads. One exchange splits a UTF-8 character across sends; another sends two newline-delimited frames together. Both must yield complete messages. EOF with remaining bytes is an incomplete frame, not a successful short message. This tiny newline protocol teaches TCP framing; it is not an HTTP parser."
+              "`tcp_framing.py` uses a real loopback listener and deliberately small three-byte reads. One exchange splits a UTF-8 character across sends; another sends two newline-delimited frames together. Both must yield complete messages. EOF with remaining bytes is an incomplete frame, not a successful short message. This tiny newline protocol teaches TCP framing; it is not an HTTP parser."
             ],
             "example": "wire bytes: b'caf\\xc3' + b'\\xa9\\nsecond\\n'\nframes: ['café', 'second']\nwire bytes: b'incomplete' then EOF -> error, no completed frame",
             "exampleFormat": "prose"
@@ -53278,7 +53278,7 @@ const LEARNING_PATHS = [
           {
             "title": "Decoding and byte length",
             "paragraphs": [
-              "The supplied decoder first decodes bytes as strict UTF-8, then passes the resulting text to Python's JSON reader. It rejects decoding and syntax failures. Passing bytes directly to json.loads would also accept UTF-16 and UTF-32, which is broader than this lab's wire contract. It also checks a strict schema after parsing. Do not measure Content-Length from characters: a non-ASCII lesson name can require more bytes. Compression and transfer framing are separate protocol concerns delegated to the chosen client stack."
+              "The supplied decoder first decodes bytes as strict UTF-8, then passes the resulting text to Python's JSON reader. It rejects decoding and syntax failures. Passing bytes directly to `json.loads` would also accept UTF-16 and UTF-32, which is broader than this lab's wire contract. It also checks a strict schema after parsing. Do not measure Content-Length from characters: a non-ASCII lesson name can require more bytes. Compression and transfer framing are separate protocol concerns delegated to the chosen client stack."
             ],
             "example": "Text lesson='café'\nUTF-8 bytes contain more octets than text characters\nWrong encoding or truncated bytes -> decoding failure\nCorrect bytes + wrong field types -> schema failure"
           },
@@ -53530,7 +53530,7 @@ const LEARNING_PATHS = [
           {
             "title": "Trust roots and hostname checks",
             "paragraphs": [
-              "Certificate trust is configured by a client's trust roots and verification policy. Python's create_default_context enables certificate verification and hostname checking for a client-oriented context. Its supported protocol details also depend on the linked TLS library; record the runtime if testing real connections."
+              "Certificate trust is configured by a client's trust roots and verification policy. Python's `create_default_context` enables certificate verification and hostname checking for a client-oriented context. Its supported protocol details also depend on the linked TLS library; record the runtime if testing real connections."
             ]
           },
           {
@@ -53837,7 +53837,7 @@ const LEARNING_PATHS = [
           {
             "title": "Freshness and storage rules",
             "paragraphs": [
-              "An HTTP cache can store a response and decide when it is fresh enough to reuse under the applicable rules. max-age describes a freshness lifetime; no-store directs caches not to store, while unqualified private forbids a shared cache from storing the response but permits private-cache storage under the other applicable rules. Our SharedCache is a deliberately small offline model with an explicit private flag."
+              "An HTTP cache can store a response and decide when it is fresh enough to reuse under the applicable rules. max-age describes a freshness lifetime; no-store directs caches not to store, while unqualified private forbids a shared cache from storing the response but permits private-cache storage under the other applicable rules. Our `SharedCache` is a deliberately small offline model with an explicit private flag."
             ]
           },
           {
@@ -55489,7 +55489,7 @@ const LEARNING_PATHS = [
           {
             "title": "Named events and correlation",
             "paragraphs": [
-              "A structured log records named fields such as event, severity, request_id, route and duration_ms. This supports filtering without parsing arbitrary prose. Choose stable event names; a log line for import_rejected should identify the reason category, not dump the entire uploaded document.",
+              "A structured log records named fields such as `event`, `severity`, `request_id`, `route` and `duration_ms`. This supports filtering without parsing arbitrary prose. Choose stable event names; a log line for `import_rejected` should identify the reason category, not dump the entire uploaded document.",
               "Correlate related events through a request or trace identifier. Use bounded route templates rather than raw URLs that may contain personal identifiers or secrets. Apply retention, access controls and redaction at the source as well as the collection layer. Debug verbosity should be a deliberate temporary decision."
             ],
             "example": "{\"event\":\"import_rejected\",\"reason\":\"invalid_schema\",\"request_id\":\"demo-17\",\"route\":\"/imports\",\"status\":400}"
@@ -55541,7 +55541,7 @@ const LEARNING_PATHS = [
             "title": "Counters, gauges and distributions",
             "paragraphs": [
               "A counter accumulates events, such as completed requests, and normally increases until process restart. A gauge represents a current value such as in-flight requests and may rise or fall. A distribution records many observations such as request duration; a single gauge overwritten by each request loses the population.",
-              "Use rates derived from counters for requests per second, handling resets correctly through the monitoring tool. Histograms group observations into buckets and expose count and sum. Units and names should be consistent, such as duration_seconds and requests_total, so dashboards do not mix milliseconds and seconds silently."
+              "Use rates derived from counters for requests per second, handling resets correctly through the monitoring tool. Histograms group observations into buckets and expose count and sum. Units and names should be consistent, such as `duration_seconds` and `requests_total`, so dashboards do not mix milliseconds and seconds silently."
             ],
             "example": "requests_total: counter\ninflight_requests: gauge\nrequest_duration_seconds: histogram\nCPU utilisation: ratio gauge"
           },
@@ -55591,7 +55591,7 @@ const LEARNING_PATHS = [
           {
             "title": "Percentile estimators and sample size",
             "paragraphs": [
-              "The median describes the middle of a distribution; p95 describes a threshold at or below which roughly 95% of observations fall according to a defined estimator. Different estimators can yield different values for a small sample. The lab uses nearest rank: sort values and take index ceil(p*n)-1.",
+              "The median describes the middle of a distribution; p95 describes a threshold at or below which roughly 95% of observations fall according to a defined estimator. Different estimators can yield different values for a small sample. The lab uses nearest rank: sort values and take index `ceil(p*n) - 1`.",
               "A tiny sample cannot support precise tail claims. For 20 values the nearest-rank p99 is the maximum, not a stable estimate of a broad population. Do not average p95 values from different hosts to obtain a global p95; combine compatible distributions or histogram buckets instead."
             ],
             "example": "Durations: 10, 10, 10, 10, 100 ms\nMean = 28 ms; median = 10 ms\nNearest-rank p95 = 100 ms (5 observations)"
@@ -55708,7 +55708,7 @@ const LEARNING_PATHS = [
             "title": "Compute overlap before assigning the missing time",
             "paragraphs": [
               "A parent spans 0 to 150 ms. Child A spans 10 to 100; B spans 10 to 130. Their durations sum to 210 ms, but their union covers only 120 ms because 90 ms overlap. The remaining 30 ms belongs outside the measured child intervals. It may include setup, scheduling, serialization or uninstrumented waits; elapsed subtraction alone cannot call it CPU work.",
-              "trace_investigation.py measures two real concurrent sleeping operations with a monotonic clock, prints their intervals, overlap, process CPU and uncovered parent time, then repeats with B reporting failure. It retains the failed span and request outcome rather than dropping failed requests from the latency story. These are manual spans without context propagation or an OpenTelemetry collector."
+              "`trace_investigation.py` measures two real concurrent sleeping operations with a monotonic clock, prints their intervals, overlap, process CPU and uncovered parent time, then repeats with B reporting failure. It retains the failed span and request outcome rather than dropping failed requests from the latency story. These are manual spans without context propagation or an OpenTelemetry collector."
             ],
             "example": "A duration=90ms; B duration=120ms; overlap=90ms\ncovered child time=90+120-90=120ms\nuncovered parent=150-120=30ms\nlatest required child B determines completion before final assembly",
             "exampleFormat": "prose"
@@ -55883,7 +55883,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concurrent request ownership",
             "paragraphs": [
-              "Global mutable current_trace_id leaks one request's identity into another under concurrency. Use the runtime or SDK's context model and test concurrent requests."
+              "Global mutable `current_trace_id` leaks one request's identity into another under concurrency. Use the runtime or SDK's context model and test concurrent requests."
             ]
           }
         ],
@@ -56465,8 +56465,8 @@ const LEARNING_PATHS = [
           {
             "title": "Separate a waiting request from CPU saturation",
             "paragraphs": [
-              "In the concurrent span drill, process CPU time excludes sleeping while parent wall time includes it. The wall/CPU gap therefore reflects waiting in this workload. In a real service, inspect spans and queues to find the slow dependency. process_time counts CPU across all threads, so it cannot attribute that CPU to one concurrent request.",
-              "Now profile a compute-bound lookup batch from benchmark.py. A faster lookup after indexing is incomplete evidence if index construction or memory cost disappears from the comparison. Measure build cost and repeated queries separately, preserve identical answers, and estimate how many queries repay construction cost. For example, a 20 ms build saving 0.5 ms per lookup breaks even after 40 lookups before considering memory."
+              "In the concurrent span drill, process CPU time excludes sleeping while parent wall time includes it. The wall/CPU gap therefore reflects waiting in this workload. In a real service, inspect spans and queues to find the slow dependency. `process_time` counts CPU across all threads, so it cannot attribute that CPU to one concurrent request.",
+              "Now profile a compute-bound lookup batch from `benchmark.py`. A faster lookup after indexing is incomplete evidence if index construction or memory cost disappears from the comparison. Measure build cost and repeated queries separately, preserve identical answers, and estimate how many queries repay construction cost. For example, a 20 ms build saving 0.5 ms per lookup breaks even after 40 lookups before considering memory."
             ],
             "example": "wall time: includes waiting and CPU\nprocess CPU: all process threads, excludes sleeping\nindex break-even: 20ms / 0.5ms saved per lookup = 40 lookups",
             "exampleFormat": "prose"
@@ -59042,7 +59042,7 @@ const LEARNING_PATHS = [
             "title": "How it works",
             "paragraphs": [
               "A proposition has a truth value. For a download rule, let A mean that the account is active and B mean that the file is public. A and B permits a download only when both statements are true. A or B permits either statement or both. Write the four possible input pairs to check the rule before using it in code.",
-              "Negation changes true to false and false to true. The rule not (A and B) is equivalent to (not A) or (not B). It is not equivalent to (not A) and (not B). With Boolean inputs these expressions form a truth table; with other Python objects, and and or can return an operand rather than a bool."
+              "Negation changes true to false and false to true. The rule not (A and B) is equivalent to (not A) or (not B). It is not equivalent to (not A) and (not B). With Boolean inputs these expressions form a truth table; with other Python objects, `and` and `or` can return an operand rather than a `bool`."
             ]
           },
           {
@@ -60301,7 +60301,7 @@ const LEARNING_PATHS = [
           {
             "title": "How it works",
             "paragraphs": [
-              "A real vector is an ordered list of numbers. For a document, [word_count, link_count] is a different representation from [link_count, word_count]. Equal lengths are necessary for addition, but matching coordinate meanings are necessary for a useful result.",
+              "A real vector is an ordered list of numbers. For a document, `[word_count, link_count]` is a different representation from `[link_count, word_count]`. Equal lengths are necessary for addition, but matching coordinate meanings are necessary for a useful result.",
               "Vector addition combines corresponding coordinates. Multiplying by a scalar multiplies every coordinate by the same number. The Euclidean length is sqrt(sum(x*x)). Using that length to compare heterogeneous features can make a large-unit feature dominate, so choose a representation before interpreting distance."
             ]
           },
@@ -61077,20 +61077,20 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "Python reads your source code and performs its instructions. A script is a plain text file ending in .py. The interpreter is the program that runs it; a terminal is where you ask the interpreter to run a file.",
-              "Save the example as hello.py in a folder you can find. Open a terminal in that folder and run python hello.py. On Windows, py hello.py may work instead; on macOS or Linux the command is often python3 hello.py. Use the same interpreter command throughout this path."
+              "Save the example as `hello.py` in a folder you can find. Open a terminal in that folder and run `python hello.py`. On Windows, `py hello.py` may work instead; on macOS or Linux the command is often `python3 hello.py`. Use the same interpreter command throughout this path."
             ]
           },
           {
             "title": "Example",
             "paragraphs": [
-              "print sends a value to the terminal. Quotation marks delimit text, called a string; they do not appear in the output. Python runs these lines from top to bottom."
+              "`print` sends a value to the terminal. Quotation marks delimit text, called a string; they do not appear in the output. Python runs these lines from top to bottom."
             ],
             "example": "print(\"Hello, Python!\")\nprint(\"One small step\")\n\n# Expected output:\n# Hello, Python!\n# One small step"
           },
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "The interactive prompt shows >>> and runs one instruction at a time. Do not copy >>> into a script. If the terminal cannot find Python, fix the installation or interpreter selection before debugging your code. A file named python.py can also shadow library imports later."
+              "The interactive prompt shows `>>>` and runs one instruction at a time. Do not copy `>>>` into a script. If the terminal cannot find Python, fix the installation or interpreter selection before debugging your code. A file named `python.py` can also shadow library imports later."
             ]
           }
         ],
@@ -61146,20 +61146,20 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "An assignment such as count = 3 binds a name to a value. Reading count later retrieves that value. Reassigning count changes what the name refers to; = is assignment, while == compares values.",
-              "Integers represent whole numbers, floats represent approximate fractional numbers, strings represent text, and booleans are True or False. Choose names that describe the value, such as minutes_per_day, and use type(value) when you need to inspect a type."
+              "Integers represent whole numbers, floats represent approximate fractional numbers, strings represent text, and booleans are `True` or `False`. Choose names that describe the value, such as `minutes_per_day`, and use `type(value)` when you need to inspect a type."
             ]
           },
           {
             "title": "Example",
             "paragraphs": [
-              "The example totals study time and uses an f-string to insert values into text. Division / produces a float. The // operator gives floor division, and % gives a remainder."
+              "The example totals study time and uses an f-string to insert values into text. Division `/` produces a `float`. The `//` operator gives floor division, and `%` gives a remainder."
             ],
             "example": "minutes_per_day = 25\ndays = 4\ntotal = minutes_per_day * days\nprint(f\"Total: {total} minutes\")\nprint(f\"Hours: {total / 60:.2f}\")\n\n# Expected output:\n# Total: 100 minutes\n# Hours: 1.67"
           },
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "Decimal floats can have tiny representation errors: 0.1 + 0.2 need not equal 0.3 exactly. Avoid exact equality for measured fractional values; for money use integer smallest units or learn decimal.Decimal. A name is case sensitive: Minutes and minutes are different names."
+              "Decimal floats can have tiny representation errors: `0.1 + 0.2` need not equal `0.3` exactly. Avoid exact equality for measured fractional values; for money use integer smallest units or learn `decimal.Decimal`. A name is case sensitive: `Minutes` and `minutes` are different names."
             ]
           }
         ],
@@ -61313,21 +61313,21 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "Strings are sequences of Unicode code points. Indexing starts at zero: name[0] is the first character. A slice such as name[:3] selects a portion. len(name) counts code points, which may differ from the number of visible characters. Methods such as strip and lower return transformed strings.",
-              "input displays an optional prompt and returns a string, even when a user types digits. int converts suitable text to an integer; float converts suitable text to a floating-point number. This lesson uses fixed input text so the example runs without waiting for a person."
+              "Strings are sequences of Unicode code points. Indexing starts at zero: `name[0]` is the first character. A slice such as `name[:3]` selects a portion. `len(name)` counts code points, which may differ from the number of visible characters. Methods such as `strip` and `lower` return transformed strings.",
+              "input displays an optional prompt and returns a string, even when a user types digits. `int` converts suitable text to an integer; `float` converts suitable text to a floating-point number. This lesson uses fixed input text so the example runs without waiting for a person."
             ]
           },
           {
             "title": "Example",
             "paragraphs": [
-              "Trimming surrounding spaces and normalizing case helps compare user input. The example converts the age before adding one. Try replacing raw_age with input(\"Age: \") after you understand the deterministic version."
+              "Trimming surrounding spaces and normalizing case helps compare user input. The example converts the age before adding one. Try replacing `raw_age` with `input(\"Age: \")` after you understand the deterministic version."
             ],
             "example": "raw_name = \"  Mira  \"\nraw_age = \"20\"\nname = raw_name.strip()\nage = int(raw_age)\nprint(f\"Hi {name}, next year you will be {age + 1}.\")\nprint(name.lower())\n\n# Expected output:\n# Hi Mira, next year you will be 21.\n# mira"
           },
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "Strings do not change in place: name.strip() returns a value you must use or assign. int(\"twenty\") raises ValueError; we handle this in lesson 8. Never use eval to interpret user input. Indexing an empty string fails, so inspect length before reading its first character."
+              "Strings do not change in place: `name.strip()` returns a value you must use or assign. `int(\"twenty\")` raises `ValueError`; we handle this in lesson 8. Never use `eval` to interpret user input. Indexing an empty string fails, so inspect length before reading its first character."
             ]
           }
         ],
@@ -61382,7 +61382,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "A comparison returns a boolean: score >= 50 asks whether the score meets a threshold. An if block runs only when its condition is true. elif tests another condition, and else handles the remaining cases.",
+              "A comparison returns a boolean: score >= 50 asks whether the score meets a threshold. An `if` block runs only when its condition is true. `elif` tests another condition, and `else` handles the remaining cases.",
               "Indentation defines the body of a block. Use four spaces consistently. Combine conditions with and, or, and not; use parentheses when the intended grouping is not obvious."
             ]
           },
@@ -61556,7 +61556,7 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "A list stores an ordered sequence and can be changed with append or item assignment. A tuple is an ordered sequence whose item references cannot be reassigned. A dictionary maps unique keys to values; use meaningful keys for records such as a task title and status.",
-              "A set stores unique values and is useful for membership checks and removing duplicates. Set iteration order is not a display contract, so sort a set before producing predictable output. Dictionary indexing raises KeyError for a missing key; get supplies an optional fallback."
+              "A set stores unique values and is useful for membership checks and removing duplicates. Set iteration order is not a display contract, so sort a set before producing predictable output. Dictionary indexing raises `KeyError` for a missing key; get supplies an optional fallback."
             ]
           },
           {
@@ -61569,7 +61569,7 @@ const LEARNING_PATHS = [
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "Assigning second = first shares the same list; editing either name edits that list. Use first.copy() for a shallow copy, remembering that nested objects remain shared. {} makes an empty dictionary; set() makes an empty set. List indices start at zero."
+              "Assigning `second = first` shares the same list; editing either name edits that list. Use `first.copy()` for a shallow copy, remembering that nested objects remain shared. `{}` makes an empty dictionary; `set()` makes an empty set. List indices start at zero."
             ]
           }
         ],
@@ -61624,7 +61624,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "A for loop iterates over items in a sequence or other iterable. range(3) produces 0, 1, and 2; its stop is excluded. An accumulator starts at a neutral value such as 0 and is updated during each iteration.",
+              "A `for` loop iterates over items in a sequence or other iterable. `range(3)` produces 0, 1, and 2; its stop is excluded. An accumulator starts at a neutral value such as 0 and is updated during each iteration.",
               "A while loop repeats while a condition remains true. It is useful when the number of repetitions is unknown. To terminate normally, the loop must eventually make the condition false or reach break; return or an exception can also leave the loop. break exits a loop and continue skips the remainder of the current iteration."
             ]
           },
@@ -61645,14 +61645,14 @@ const LEARNING_PATHS = [
             "title": "Work through a grouping operation",
             "paragraphs": [
               "Suppose the input topics are Python 20, SQL 30 and Python 10. A list preserves individual sessions; a dictionary answers the different question of total time per topic. Start with an empty dictionary, add 20 under Python, add 30 under SQL, then update Python to 30. Choosing a structure follows the question you need to answer.",
-              "Each item is a two-value tuple. The loop assigns its first value to topic and its second to minutes. totals.get(topic, 0) starts a missing topic at zero; adding minutes updates that topic without erasing earlier sessions. Two sessions with the same topic and duration may both be valid, so do not remove them with a set."
+              "Each item is a two-value tuple. The loop assigns its first value to `topic` and its second to `minutes`. `totals.get(topic, 0)` starts a missing topic at zero; adding minutes updates that topic without erasing earlier sessions. Two sessions with the same topic and duration may both be valid, so do not remove them with a set."
             ],
             "example": "totals = {}\nfor topic, minutes in [(\"Python\", 20), (\"SQL\", 30), (\"Python\", 10)]:\n    totals[topic] = totals.get(topic, 0) + minutes\nprint(totals)\n# Expected: {\"Python\": 30, \"SQL\": 30}"
           },
           {
             "title": "Keep the index when you need it",
             "paragraphs": [
-              "enumerate pairs each item with its zero-based index. In for index, label, Python assigns those two values to separate names. Use the index when a problem asks where a match occurs, and the value when it asks what matched."
+              "`enumerate` pairs each item with its zero-based index. In for index, label, Python assigns those two values to separate names. Use the index when a problem asks where a match occurs, and the value when it asks what matched."
             ],
             "example": "labels = [\"read\", \"code\"]\nfor index, label in enumerate(labels):\n    print(index, label)\n# 0 read\n# 1 code"
           }
@@ -61708,7 +61708,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "def defines a function with parameters: names for its inputs. Calling the function supplies arguments. return sends a result to the caller and ends that call. A function that reaches the end without return produces None.",
+              "`def` defines a function with parameters: names for its inputs. Calling the function supplies arguments. return sends a result to the caller and ends that call. A function that reaches the end without `return` produces `None`.",
               "Variables created inside a function are usually local to that call. Prefer passing data in and returning data out instead of changing global variables. This makes the function easier to reuse and test. A short docstring can explain its contract."
             ]
           },
@@ -61722,22 +61722,22 @@ const LEARNING_PATHS = [
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "Printing a number does not return it. Avoid mutable defaults such as items=[] because the same list can be reused across calls; use None and create a list inside the function. Name parameters consistently and distinguish a function definition from a function call."
+              "Printing a number does not return it. Avoid mutable defaults such as items=[] because the same list can be reused across calls; use `None` and create a list inside the function. Name parameters consistently and distinguish a function definition from a function call."
             ]
           },
           {
             "title": "Separate computation from interaction",
             "paragraphs": [
-              "A function that asks for input, updates a global dictionary and prints results has three reasons to fail. Move the calculation into summarize(rows), returning a value. The terminal wrapper can collect input and render the returned rows. Now the same computation can serve a CLI, a file importer or a future web route.",
-              "An empty input is a normal case and returns an empty list. Invalid minutes are a different case and raise ValueError. Avoid returning an empty list for both, because callers could report a broken import as a successful empty summary."
+              "A function that asks for input, updates a global dictionary and prints results has three reasons to fail. Move the calculation into `summarize(rows)`, returning a value. The terminal wrapper can collect input and render the returned rows. Now the same computation can serve a CLI, a file importer or a future web route.",
+              "An empty input is a normal case and returns an empty list. Invalid minutes are a different case and raise `ValueError`. Avoid returning an empty list for both, because callers could report a broken import as a successful empty summary."
             ]
           },
           {
             "title": "Move from an example to a checked function",
             "paragraphs": [
-              "The Python Problem Solving path starts with these same building blocks. Its test runner calls your function with supplied arguments and compares the returned value. You do not need input() or print() inside the function. A starter that raises NotImplementedError is deliberately unfinished; replace that line with your calculation.",
-              "In a signature such as total(values: list[int]) -> int, list[int] describes the expected input and -> int describes the return type. These annotations do not validate values at runtime. The problem constraints tell you which inputs the tests supply.",
-              "An assert checks a claim while you develop: it does nothing if the comparison is true and raises AssertionError if false. Try changing an expected value below to see a failure, then restore it. These checks are for development, not validation of untrusted input."
+              "The Python Problem Solving path starts with these same building blocks. Its test runner calls your function with supplied arguments and compares the returned value. You do not need `input()` or `print()` inside the function. A starter that raises `NotImplementedError` is deliberately unfinished; replace that line with your calculation.",
+              "In a signature such as `total(values: list[int]) -> int`, `list[int]` describes the expected input and `-> int` describes the return type. These annotations do not validate values at runtime. The problem constraints tell you which inputs the tests supply.",
+              "An assert checks a claim while you develop: it does nothing if the comparison is true and raises `AssertionError` if false. Try changing an expected value below to see a failure, then restore it. These checks are for development, not validation of untrusted input."
             ],
             "example": "def doubled(value: int) -> int:\n    return value * 2\n\nassert doubled(3) == 6\nassert doubled(0) == 0\nassert doubled(-2) == -4\n# All three checks pass without output."
           }
@@ -61899,7 +61899,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "parse_minutes handles a conversion error and rejects negative values. The caller catches ValueError and gives a useful message. The example tries both valid and invalid input."
+              "`parse_minutes` handles a conversion error and rejects negative values. The caller catches `ValueError` and gives a useful message. The example tries both valid and invalid input."
             ],
             "example": "def parse_minutes(text):\n    minutes = int(text)\n    if minutes < 0:\n        raise ValueError(\"minutes must be nonnegative\")\n    return minutes\n\nfor text in [\"15\", \"-2\"]:\n    try:\n        print(parse_minutes(text))\n    except ValueError as error:\n        print(f\"Invalid: {error}\")\n\n# Expected output:\n# 15\n# Invalid: minutes must be nonnegative"
           },
@@ -61913,7 +61913,7 @@ const LEARNING_PATHS = [
             "title": "Trace a validation failure before repairing it",
             "paragraphs": [
               "A row with minutes=\"20\" is not equivalent to a row with integer 20 under an explicit numeric input contract. Validate at the boundary, then compute with one consistent representation. If text conversion is part of your product, perform it in a separate input adapter rather than accidentally accepting arbitrary values inside the calculation.",
-              "In Python, bool is a subclass of int. For this exercise, True must not silently mean one minute, so type(minutes) is int expresses the exact policy. The checks also try negative minutes, one above the maximum, missing fields and a whitespace-only topic. Each rejected input should identify a contract decision you can explain."
+              "In Python, `bool` is a subclass of `int`. For this exercise, `True` must not silently mean one minute, so `type(minutes) is int` expresses the exact policy. The checks also try negative minutes, one above the maximum, missing fields and a whitespace-only topic. Each rejected input should identify a contract decision you can explain."
             ]
           }
         ],
@@ -61968,15 +61968,15 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "A file stores data after the process ends. pathlib.Path describes a filesystem path. read_text and write_text work with text; specify encoding=\"utf-8\" so behavior is consistent across machines. A relative path is resolved from the current working directory.",
-              "JSON represents objects, arrays, strings, numbers, booleans, and null. json.dumps converts supported Python values to JSON text; json.loads reads JSON text into Python values. Saving and loading are separate operations, and loaded data still needs validation."
+              "A file stores data after the process ends. `pathlib.Path` describes a filesystem path. `read_text` and `write_text` work with text; specify `encoding=\"utf-8\"` so behavior is consistent across machines. A relative path is resolved from the current working directory.",
+              "JSON represents objects, arrays, strings, numbers, booleans, and null. `json.dumps` converts supported Python values to JSON text; `json.loads` reads JSON text into Python values. Saving and loading are separate operations, and loaded data still needs validation."
             ]
           },
           {
             "title": "Read the setup lines first",
             "paragraphs": [
-              "import json makes the standard-library module available under the name json. from pathlib import Path imports one named tool, so the example calls Path directly. These imports use Python's built-in library; there is nothing to install.",
-              "with TemporaryDirectory() as folder creates a temporary folder, gives its name to folder, and removes it when the indented block ends. Keep writing and reading inside that block. Path(folder) / \"tasks.json\" joins path parts; this slash is a Path operation, not numeric division. The later context-managers lesson explains how cleanup works when an operation fails."
+              "`import json` makes the standard-library module available under the name `json`. `from pathlib import Path` imports one named tool, so the example calls `Path` directly. These imports use Python's built-in library; there is nothing to install.",
+              "`with TemporaryDirectory() as folder` creates a temporary folder, gives its name to `folder`, and removes it when the indented block ends. Keep writing and reading inside that block. `Path(folder) / \"tasks.json\"` joins path parts; this slash is a `Path` operation, not numeric division. The later context-managers lesson explains how cleanup works when an operation fails."
             ]
           },
           {
@@ -61989,7 +61989,7 @@ const LEARNING_PATHS = [
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "Writing a file replaces its previous contents. Do not use a valuable existing file for experiments. JSON object keys become strings, and JSON does not automatically preserve custom classes or tuples. A missing file raises FileNotFoundError and broken JSON raises json.JSONDecodeError; these are different recovery cases."
+              "Writing a file replaces its previous contents. Do not use a valuable existing file for experiments. JSON object keys become strings, and JSON does not automatically preserve custom classes or tuples. A missing file raises `FileNotFoundError` and broken JSON raises `json.JSONDecodeError`; these are different recovery cases."
             ]
           }
         ],
@@ -62143,21 +62143,21 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "A module is a Python file whose definitions can be imported. A package groups modules. Standard library modules ship with Python, while third-party packages require separate installation. Avoid naming your files json.py, unittest.py, or other library names.",
-              "A virtual environment gives a project its own interpreter context and installed packages. Create one with python -m venv .venv. On Windows call .venv\\Scripts\\python.exe directly; on macOS/Linux call .venv/bin/python. Direct invocation avoids shell activation differences. Use that interpreter with -m pip when installing a needed dependency."
+              "A module is a Python file whose definitions can be imported. A package groups modules. Standard library modules ship with Python, while third-party packages require separate installation. Avoid naming your files `json.py`, `unittest.py`, or other library names.",
+              "A virtual environment gives a project its own interpreter context and installed packages. Create one with `python -m venv .venv`. On Windows call `.venv\\Scripts\\python.exe` directly; on macOS/Linux call `.venv/bin/python`. Direct invocation avoids shell activation differences. Use that interpreter with `-m pip` when installing a needed dependency."
             ]
           },
           {
             "title": "Example",
             "paragraphs": [
-              "The runnable example uses only the standard library. For a two-file project, put your function in helpers.py, then import it from main.py in the same folder. The guard if __name__ == \"__main__\": limits script entry code to direct execution, keeping imports from unexpectedly running the program."
+              "The runnable example uses only the standard library. For a two-file project, put your function in `helpers.py`, then import it from `main.py` in the same folder. The guard `if __name__ == \"__main__\":` limits script entry code to direct execution, keeping imports from unexpectedly running the program."
             ],
             "example": "from statistics import mean\n\ndef average_minutes(values):\n    return mean(values)\n\nif __name__ == \"__main__\":\n    print(average_minutes([10, 20, 30]))\n\n# Expected output:\n# 20"
           },
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "Installing into one interpreter and running another causes confusing missing-module errors. Inspect sys.executable to see which interpreter is active. Keep .venv out of version control and document dependencies; do not copy an environment between machines. No third-party installation is needed for this path."
+              "Installing into one interpreter and running another causes confusing missing-module errors. Inspect `sys.executable` to see which interpreter is active. Keep `.venv` out of version control and document dependencies; do not copy an environment between machines. No third-party installation is needed for this path."
             ]
           }
         ],
@@ -62214,14 +62214,14 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "A test states an expected behavior for an input. Start with a normal case, an empty case, and an invalid or boundary case. unittest.TestCase supplies assertions and a runner in the standard library; a test failure should identify a behavior worth investigating.",
+              "A test states an expected behavior for an input. Start with a normal case, an empty case, and an invalid or boundary case. `unittest.TestCase` supplies assertions and a runner in the standard library; a test failure should identify a behavior worth investigating.",
               "An HTTP API is a remote service accepting requests and returning responses. A response has a status, headers, and body. JSON is one common body format. Networks can time out, services can reject requests, and returned data can differ from what you expected; HTTP success alone does not prove a usable schema."
             ]
           },
           {
             "title": "Example",
             "paragraphs": [
-              "The example processes an API-shaped JSON fixture entirely offline and tests the same parser. Real retrieval could use urllib.request.urlopen(url, timeout=10) in a with block followed by json.load(response). Keep the URL configured, inspect service documentation, handle HTTPError/URLError, and validate the decoded data before passing it to your calculation."
+              "The example processes an API-shaped JSON fixture entirely offline and tests the same parser. Real retrieval could use `urllib.request.urlopen(url, timeout=10)` in a `with` block followed by `json.load(response)`. Keep the URL configured, inspect service documentation, handle `HTTPError`/`URLError`, and validate the decoded data before passing it to your calculation."
             ],
             "example": "import json\nimport unittest\n\ndef total_minutes(payload):\n    return sum(item[\"minutes\"] for item in payload[\"sessions\"])\n\nclass TotalTests(unittest.TestCase):\n    def test_empty(self):\n        self.assertEqual(total_minutes({\"sessions\": []}), 0)\n\nsuite = unittest.defaultTestLoader.loadTestsFromTestCase(TotalTests)\nresult = unittest.TestResult()\nsuite.run(result)\nprint(f\"Tests passed: {result.wasSuccessful()}\")\npayload = json.loads('{\"sessions\":[{\"minutes\":15},{\"minutes\":20}]}')\nprint(total_minutes(payload))\n\n# Expected output:\n# Tests passed: True\n# 35"
           },
@@ -62234,7 +62234,7 @@ const LEARNING_PATHS = [
           {
             "title": "Bridge to local file failures",
             "paragraphs": [
-              "After the in-memory counter, run practice/test_io_failure_bridge.py. The source is a real JSON file and the output is an existing report. Invalid or missing input must leave that report unchanged. io_failure_bridge.py shows where validation fails and how cleanup removes the temporary file.",
+              "After the in-memory counter, run `practice/test_io_failure_bridge.py`. The source is a real JSON file and the output is an existing report. Invalid or missing input must leave that report unchanged. `io_failure_bridge.py` shows where validation fails and how cleanup removes the temporary file.",
               "This local exercise checks validation and replacement in one process. It does not prove crash durability or safe concurrent writers. The advanced import pipeline adds bounded input and more failure cases."
             ]
           }
@@ -62299,7 +62299,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "The example adds two validated records, saves them in a temporary folder, reloads them, and summarizes the result. The practical exercise extends the program with a topic summary. A real CLI could use argparse for commands such as add and summary; learn that module after the core functions work."
+              "The example adds two validated records, saves them in a temporary folder, reloads them, and summarizes the result. The practical exercise extends the program with a topic summary. A real CLI could use `argparse` for commands such as `add` and `summary`; learn that module after the core functions work."
             ],
             "example": "from pathlib import Path\nfrom tempfile import TemporaryDirectory\nimport json\n\ndef add_session(log, topic, minutes):\n    if not isinstance(topic, str) or not topic.strip():\n        raise ValueError(\"topic is required\")\n    if type(minutes) is not int or minutes < 0:\n        raise ValueError(\"minutes must be a nonnegative integer\")\n    log.append({\"topic\": topic.strip(), \"minutes\": minutes})\n\nwith TemporaryDirectory() as folder:\n    log = []\n    add_session(log, \"Python\", 25)\n    add_session(log, \"Python\", 15)\n    path = Path(folder) / \"study.json\"\n    path.write_text(json.dumps(log, indent=2), encoding=\"utf-8\")\n    restored = json.loads(path.read_text(encoding=\"utf-8\"))\n    print(f\"Sessions: {len(restored)}\")\n    print(f\"Minutes: {sum(s['minutes'] for s in restored)}\")\n\n# Expected output:\n# Sessions: 2\n# Minutes: 40"
           },
@@ -62312,7 +62312,7 @@ const LEARNING_PATHS = [
           {
             "title": "Build a summary without copying its implementation",
             "paragraphs": [
-              "Open summary-challenge.md and create my_summary.py with summarize(rows). The supplied summary_checks.py imports your module by name, so you can solve the contract independently and run python summary_checks.py my_summary. It checks grouping, deterministic ties, input preservation and invalid records. The reference is a separate file you can inspect after an attempt.",
+              "Open `summary-challenge.md` and create `my_summary.py` with `summarize(rows)`. The supplied `summary_checks.py` imports your module by name, so you can solve the contract independently and run `python summary_checks.py my_summary`. It checks grouping, deterministic ties, input preservation and invalid records. The reference is a separate file you can inspect after an attempt.",
               "One transfer check splits a seven-minute X session into distinct three-minute and four-minute sessions. The summary must stay the same. This property catches implementations tied to the example row count. It complements concrete expected values: a function always returning [] could satisfy reorder invariance but still be wrong."
             ]
           }
@@ -62373,20 +62373,20 @@ const LEARNING_PATHS = [
             "title": "Design",
             "paragraphs": [
               "A class groups data and its rules; each instance carries its own state. Methods receive the instance as self. Use a class when this relationship helps explain behavior, rather than wrapping unrelated functions.",
-              "A dataclass generates construction, representation and equality from annotated fields. It does not enforce annotated types. __post_init__ can enforce invariants after construction; frozen=True blocks ordinary assignment but is not deep immutability."
+              "A dataclass generates construction, representation and equality from annotated fields. It does not enforce annotated types. `__post_init__` can enforce invariants after construction; `frozen=True` blocks ordinary assignment but is not deep immutability."
             ]
           },
           {
             "title": "Example",
             "paragraphs": [
-              "Session is a value object with a nonnegative integer rule. The exact type check rejects booleans because bool subclasses int. hours is derived so it cannot drift away from minutes. Observe equality between independently constructed values."
+              "Session is a value object with a nonnegative integer rule. The exact type check rejects booleans because `bool` subclasses `int`. `hours` is derived so it cannot drift away from minutes. Observe equality between independently constructed values."
             ],
             "example": "from dataclasses import dataclass\n@dataclass(frozen=True)\nclass Session:\n    topic: str\n    minutes: int\n    def __post_init__(self):\n        if not isinstance(self.topic, str) or not self.topic.strip():\n            raise ValueError(\"topic required\")\n        if type(self.minutes) is not int or self.minutes < 0:\n            raise ValueError(\"invalid minutes\")\n    def hours(self):\n        return self.minutes / 60\ns = Session(\"Python\", 90)\nprint(s.hours())\nprint(s == Session(\"Python\", 90))\n\n# Expected output:\n# 1.5\n# True"
           },
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "Mutable defaults need field(default_factory=list) to create a new list per instance. Prefer composition until inheritance has a clear substitutability contract.",
+              "Mutable defaults need `field(default_factory=list)` to create a new list per instance. Prefer composition until inheritance has a clear substitutability contract.",
               "Equality compares fields; it is not persistent identity. Equal topic/duration records can still represent separate events."
             ]
           }
@@ -62448,7 +62448,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "summarize accepts anything with records(). MemorySource gives predictable data without I/O. The declared list[int] is a contract, not a JSON validator; external data needs runtime checks before use."
+              "`summarize` accepts anything with `records()`. `MemorySource` gives predictable data without I/O. The declared `list[int]` is a contract, not a JSON validator; external data needs runtime checks before use."
             ],
             "example": "from typing import Protocol\nclass MinuteSource(Protocol):\n    def records(self) -> list[int]: ...\nclass MemorySource:\n    def records(self) -> list[int]:\n        return [10, 20]\ndef summarize(source: MinuteSource) -> int:\n    return sum(source.records())\nprint(summarize(MemorySource()))\n\n# Expected output:\n# 30"
           },
@@ -62510,8 +62510,8 @@ const LEARNING_PATHS = [
           {
             "title": "Design",
             "paragraphs": [
-              "An iterable supplies an iterator through iter(). next() retrieves values until StopIteration. Lists are reusable iterables; a generator object is typically a one-pass iterator.",
-              "A generator function yields values while preserving local state. Its body starts during iteration, so errors and effects can be delayed. Lazy stages avoid intermediate lists, but list(...) materializes all results."
+              "An iterable supplies an iterator through `iter()`. `next()` retrieves values until `StopIteration`. Lists are reusable iterables; a generator object is typically a one-pass iterator.",
+              "A generator function yields values while preserving local state. Its body starts during iteration, so errors and effects can be delayed. Lazy stages avoid intermediate lists, but `list(...)` materializes all results."
             ]
           },
           {
@@ -62658,7 +62658,7 @@ const LEARNING_PATHS = [
             "title": "Design",
             "paragraphs": [
               "with gives a resource a bounded lifetime and exits whether the body succeeds or raises. Files and temporary directories already implement this protocol.",
-              "contextlib.contextmanager expresses acquisition before yield and cleanup in finally. Yield exactly once. An exception in the body is delivered at yield; do not accidentally suppress it."
+              "`contextlib.contextmanager` expresses acquisition before `yield` and cleanup in `finally`. Yield exactly once. An exception in the body is delivered at `yield`; do not accidentally suppress it."
             ]
           },
           {
@@ -62825,27 +62825,27 @@ const LEARNING_PATHS = [
           {
             "title": "Design",
             "paragraphs": [
-              "A package groups modules under an import name; a distribution is an installable artifact. __init__.py makes a regular package; __main__.py supports python -m package. For distribution, pyproject.toml declares metadata, Python requirements and a build backend. A src layout can prevent accidental imports from the working tree but needs installation or explicit test configuration."
+              "A package groups modules under an import name; a distribution is an installable artifact. `__init__.py` makes a regular package; `__main__.py` supports `python -m package`. For distribution, `pyproject.toml` declares metadata, Python requirements and a build backend. A src layout can prevent accidental imports from the working tree but needs installation or explicit test configuration."
             ]
           },
           {
             "title": "Example",
             "paragraphs": [
-              "argparse parses argument text and provides help/errors. A fixed argument list makes this example repeatable. The downloadable intermediate tool keeps calculation functions separate from main; publishing a wheel is optional later practice."
+              "`argparse` parses argument text and provides help/errors. A fixed argument list makes this example repeatable. The downloadable intermediate tool keeps calculation functions separate from main; publishing a wheel is optional later practice."
             ],
             "example": "import argparse\ndef parser():\n    result = argparse.ArgumentParser(description=\"Summarize study time\")\n    result.add_argument(\"minutes\", type=int, nargs=\"+\")\n    return result\nargs = parser().parse_args([\"10\", \"20\"])\nprint(sum(args.minutes))\n\n# Expected output:\n# 30"
           },
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "int conversion alone accepts negatives. Apply domain constraints after parsing or in a constrained converter; expected errors should return nonzero status.",
-              "Importing a module should not parse arguments or write files. Put the entry call beneath the __main__ guard. Pass argument lists to subprocess without shell=True rather than constructing shell commands from input."
+              "`int` conversion alone accepts negatives. Apply domain constraints after parsing or in a constrained converter; expected errors should return nonzero status.",
+              "Importing a module should not parse arguments or write files. Put the entry call beneath the `__main__` guard. Pass argument lists to `subprocess` without `shell=True` rather than constructing shell commands from input."
             ]
           },
           {
             "title": "Verify the installed artifact",
             "paragraphs": [
-              "Use practice/python_package_starter.py to generate the complete src-layout package with pinned setuptools 82.0.1, a CLI entry point and a packaged resource. Follow practice/installed-package-exercise.md and run test_installed_package.py: build a wheel without network dependency resolution, install into a second clean environment and execute outside the source checkout. The local checks passed with Python 3.14, build 1.4.0 and setuptools 82.0.1 on 2026-09-27; unavailable exact build tooling is reported as a skip. No package publication is involved. Extend the supplied implementation after recording module location, command exit statuses and packaged-data evidence."
+              "Use `practice/python_package_starter.py` to generate the complete src-layout package with pinned setuptools 82.0.1, a CLI entry point and a packaged resource. Follow `practice/installed-package-exercise.md` and run `test_installed_package.py`: build a wheel without network dependency resolution, install into a second clean environment and execute outside the source checkout. The local checks passed with Python 3.14, build 1.4.0 and setuptools 82.0.1 on 2026-09-27; unavailable exact build tooling is reported as a skip. No package publication is involved. Extend the supplied implementation after recording module location, command exit statuses and packaged-data evidence."
             ]
           }
         ],
@@ -63005,13 +63005,13 @@ const LEARNING_PATHS = [
           {
             "title": "Design",
             "paragraphs": [
-              "Use normal cases, boundaries and invariants such as save/load preservation. Temporary fixtures isolate tests from personal files. unittest supports assertRaises, assertLogs and subTest for diagnosed failure cases. Logs explain operations; they do not replace return values or assertions."
+              "Use normal cases, boundaries and invariants such as save/load preservation. Temporary fixtures isolate tests from personal files. `unittest` supports `assertRaises`, `assertLogs` and `subTest` for diagnosed failure cases. Logs explain operations; they do not replace return values or assertions."
             ]
           },
           {
             "title": "Example",
             "paragraphs": [
-              "A dedicated logger and StringIO handler make this warning deterministic. Applications choose handlers and levels; reusable modules should not globally configure logging. The project suite combines real temporary storage with one mock of the replacement boundary."
+              "A dedicated logger and `StringIO` handler make this warning deterministic. Applications choose handlers and levels; reusable modules should not globally configure logging. The project suite combines real temporary storage with one mock of the replacement boundary."
             ],
             "example": "import logging\nfrom io import StringIO\nstream = StringIO()\nlogger = logging.getLogger(\"lesson.validation\")\nlogger.handlers.clear()\nlogger.propagate = False\nlogger.setLevel(logging.INFO)\nhandler = logging.StreamHandler(stream)\nhandler.setFormatter(logging.Formatter(\"%(levelname)s:%(message)s\"))\nlogger.addHandler(handler)\nlogger.warning(\"rejected record %s\", 2)\nprint(stream.getvalue().strip())\nlogger.removeHandler(handler)\nhandler.close()\n\n# Expected output:\n# WARNING:rejected record 2"
           },
@@ -63025,8 +63025,8 @@ const LEARNING_PATHS = [
           {
             "title": "Replace one dependency to force a failure",
             "paragraphs": [
-              "The storage exercise needs an error at a precise point, after preparing new data but before replacing old data. unittest.mock.patch temporarily replaces the looked-up function. side_effect makes each call raise the supplied exception; leaving with restores the real function.",
-              "Use this technique only at the dependency you want to fail. Keep validation and the function under test real. The small example below has no disk access; the later storage exercise applies the same pattern to os.replace and checks old file contents."
+              "The storage exercise needs an error at a precise point, after preparing new data but before replacing old data. `unittest.mock.patch` temporarily replaces the looked-up function. `side_effect` makes each call raise the supplied exception; leaving `with` restores the real function.",
+              "Use this technique only at the dependency you want to fail. Keep validation and the function under test real. The small example below has no disk access; the later storage exercise applies the same pattern to `os.replace` and checks old file contents."
             ],
             "example": "from unittest.mock import patch\nimport os\n\ndef publish(source, target):\n    os.replace(source, target)\n\nwith patch(\"os.replace\", side_effect=OSError(\"injected\")) as replace:\n    try:\n        publish(\"prepared\", \"report\")\n    except OSError as error:\n        assert str(error) == \"injected\"\n    else:\n        raise AssertionError(\"failure was hidden\")\n    replace.assert_called_once_with(\"prepared\", \"report\")"
           }
@@ -63081,35 +63081,35 @@ const LEARNING_PATHS = [
           {
             "title": "Design",
             "paragraphs": [
-              "Concurrency overlaps progress; parallelism executes simultaneously. Threads commonly suit blocking I/O. CPU-bound Python often benefits from processes on conventional GIL-enabled builds; free-threaded builds/extensions change tradeoffs. asyncio cooperatively schedules coroutines at await points, and TaskGroup provides bounded task lifetimes and failure propagation."
+              "Concurrency overlaps progress; parallelism executes simultaneously. Threads commonly suit blocking I/O. CPU-bound Python often benefits from processes on conventional GIL-enabled builds; free-threaded builds/extensions change tradeoffs. `asyncio` cooperatively schedules coroutines at `await` points, and `TaskGroup` provides bounded task lifetimes and failure propagation."
             ]
           },
           {
             "title": "Example",
             "paragraphs": [
-              "Executor.map returns results in input order even if completion order differs. The caller aggregates returned values rather than workers changing shared totals. This tiny calculation demonstrates mechanics, not a speedup. The exercise uses simulated async I/O without any service."
+              "`Executor.map` returns results in input order even if completion order differs. The caller aggregates returned values rather than workers changing shared totals. This tiny calculation demonstrates mechanics, not a speedup. The exercise uses simulated async I/O without any service."
             ],
             "example": "from concurrent.futures import ThreadPoolExecutor\ndef score(value):\n    return value * value\nwith ThreadPoolExecutor(max_workers=2) as pool:\n    results = list(pool.map(score, [3, 1, 2]))\nprint(results)\nprint(sum(results))\n\n# Expected output:\n# [9, 1, 4]\n# 14"
           },
           {
             "title": "From threads to async tasks",
             "paragraphs": [
-              "Calling an async def function creates a coroutine. asyncio.run starts an event loop and runs the top-level coroutine in a normal script. Inside it, await suspends the current coroutine while other tasks can make progress. The supplied read_minutes uses sleep(0) only to give another task a turn.",
-              "Enter a TaskGroup with async with. Call group.create_task(read_minutes(value)) to schedule each coroutine and retain its task handle. A successful exit waits for every task in that group. Only then read task.result(). Keeping the handles in input order keeps the returned values in input order, even when tasks finish in a different order.",
-              "TaskGroup owns task lifetimes; it does not limit how many tasks you create. This exercise creates just two. The separate failure lab shows how a child failure cancels siblings and how exceptions leave the group."
+              "Calling an `async def` function creates a coroutine. `asyncio.run` starts an event loop and runs the top-level coroutine in a normal script. Inside it, `await` suspends the current coroutine while other tasks can make progress. The supplied `read_minutes` uses `sleep(0)` only to give another task a turn.",
+              "Enter a `TaskGroup` with `async with`. Call `group.create_task(read_minutes(value))` to schedule each coroutine and retain its task handle. A successful exit waits for every task in that group. Only then read `task.result()`. Keeping the handles in input order keeps the returned values in input order, even when tasks finish in a different order.",
+              "`TaskGroup` owns task lifetimes; it does not limit how many tasks you create. This exercise creates just two. The separate failure lab shows how a child failure cancels siblings and how exceptions leave the group."
             ]
           },
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "A future.result timeout limits waiting; it does not terminate a running thread. Executor context exit normally waits for work, so real blocking operations need their own deadlines.",
+              "A `future.result` timeout limits waiting; it does not terminate a running thread. Executor context exit normally waits for work, so real blocking operations need their own deadlines.",
               "Blocking code inside a coroutine stops event-loop progress. Cancellation is cooperative and must preserve cleanup. Bound tasks and workers; tiny tasks can cost more to schedule than to run. Do not let workers concurrently rewrite one JSON file."
             ]
           },
           {
             "title": "Fail and cancel a task group",
             "paragraphs": [
-              "Run practice/async_failure_lab.py and python -m unittest test_async_failure_lab.py from practice with Python 3.11+. An Event ensures the sibling is waiting before the failing child raises. Observe an ExceptionGroup containing ValueError, sibling cancellation and finally cleanup before the group exits. The second test cancels the parent and asserts CancelledError propagates after child cleanup. Do not swallow cancellation; no forceful thread termination is demonstrated."
+              "Run `practice/async_failure_lab.py` and `python -m unittest test_async_failure_lab.py` from practice with Python 3.11+. An `Event` ensures the sibling is waiting before the failing child raises. Observe an `ExceptionGroup` containing `ValueError`, sibling cancellation and `finally` cleanup before the group exits. The second test cancels the parent and asserts `CancelledError` propagates after child cleanup. Do not swallow cancellation; no forceful thread termination is demonstrated."
             ]
           }
         ],
@@ -63164,7 +63164,7 @@ const LEARNING_PATHS = [
           {
             "title": "Design",
             "paragraphs": [
-              "Big-O describes cost growth, not exact runtime. Repeated rescans can dominate constant-factor changes. cProfile helps locate cumulative time; timeit repeats focused measurements. Report workload size, environment and methodology. tracemalloc tracks Python allocations rather than every native allocation."
+              "Big-O describes cost growth, not exact runtime. Repeated rescans can dominate constant-factor changes. `cProfile` helps locate cumulative time; `timeit` repeats focused measurements. Report workload size, environment and methodology. `tracemalloc` tracks Python allocations rather than every native allocation."
             ]
           },
           {
@@ -63300,7 +63300,7 @@ const LEARNING_PATHS = [
           {
             "title": "Design",
             "paragraphs": [
-              "Direct writing truncates an existing file before the new data is complete. A same-directory temporary file lets you write, flush and fsync its contents, close it, then replace the target with os.replace. Atomic visibility differs from power-loss durability and concurrency control."
+              "Direct writing truncates an existing file before the new data is complete. A same-directory temporary file lets you write, `flush` and `fsync` its contents, close it, then replace the target with `os.replace`. Atomic visibility differs from power-loss durability and concurrency control."
             ]
           },
           {
@@ -63483,7 +63483,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "The mini example shows ordered workers and batch validation. advanced_project.py adds frozen domain records, duplicate JSON-key rejection, limits, logging and same-directory replacement. Run --demo with temporary files, then run test_projects.py before extending it. Threads demonstrate composition, not a promised speed advantage."
+              "The mini example shows ordered workers and batch validation. `advanced_project.py` adds frozen domain records, duplicate JSON-key rejection, limits, logging and same-directory replacement. Run `--demo` with temporary files, then run `test_projects.py` before extending it. Threads demonstrate composition, not a promised speed advantage."
             ],
             "example": "import json\nfrom concurrent.futures import ThreadPoolExecutor\ndef parse_line(text):\n    value = json.loads(text)\n    if type(value) is not dict or set(value) != {\"id\", \"minutes\"}:\n        raise ValueError(\"invalid fields\")\n    if not isinstance(value[\"id\"], str) or not value[\"id\"]:\n        raise ValueError(\"invalid id\")\n    if type(value[\"minutes\"]) is not int or value[\"minutes\"] < 0:\n        raise ValueError(\"invalid minutes\")\n    return value\ndef import_batch(lines):\n    with ThreadPoolExecutor(max_workers=2) as pool:\n        rows = list(pool.map(parse_line, lines))\n    if len({row[\"id\"] for row in rows}) != len(rows):\n        raise ValueError(\"duplicate id\")\n    return rows\nrows = import_batch(['{\"id\":\"a\",\"minutes\":10}', '{\"id\":\"b\",\"minutes\":20}'])\nprint([r[\"id\"] for r in rows])\nprint(sum(r[\"minutes\"] for r in rows))\n\n# Expected output:\n# ['a', 'b']\n# 30"
           },
@@ -64251,8 +64251,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Return the sum of entries that are at least minimum. Each entry is one session duration. An empty list contributes zero; a value equal to the threshold qualifies.",
-              "Return a value from sum_approved; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Return the sum of entries that are at least `minimum`. Each entry is one session duration. An empty list contributes zero; a value equal to the threshold qualifies.",
+              "Return a value from `sum_approved`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -64265,14 +64265,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "Durations and minimum are integers from 0 to 10,000."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Durations and `minimum` are integers from 0 to 10,000."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete sum_approved below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `sum_approved` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def sum_approved(minutes: list[int], minimum: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -64316,8 +64316,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Return a new list. Replace readings below low with low and readings above high with high. Keep readings on either boundary unchanged. Preserve order and duplicates.",
-              "Return a value from clamp_readings; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Return a new list. Replace readings below `low` with `low` and readings above `high` with `high`. Keep readings on either boundary unchanged. Preserve order and duplicates.",
+              "Return a value from `clamp_readings`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -64330,14 +64330,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "-10,000 <= low <= high <= 10,000. Readings are integers in that same numeric range."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "`-10_000 <= low <= high <= 10_000`. Readings are integers in that same numeric range."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete clamp_readings below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `clamp_readings` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def clamp_readings(readings: list[int], low: int, high: int) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -64381,8 +64381,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Return the index of the first label whose length is at least minimum. Return -1 if none qualifies. Labels are compared as supplied, including spaces.",
-              "Return a value from first_long_label; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Return the index of the first label whose length is at least `minimum`. Return -1 if none qualifies. Labels are compared as supplied, including spaces.",
+              "Return a value from `first_long_label`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -64395,14 +64395,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "Labels contain ASCII characters only. minimum is from 0 to 1,001."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Labels contain ASCII characters only. `minimum` is from 0 to 1,001."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete first_long_label below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `first_long_label` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def first_long_label(labels: list[str], minimum: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -64447,7 +64447,7 @@ const LEARNING_PATHS = [
             "title": "The problem",
             "paragraphs": [
               "Return the greatest number of consecutive 1 entries. A 0 ends the current streak. Return zero for an empty list or a list containing only zeros.",
-              "Return a value from longest_active_run; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Return a value from `longest_active_run`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -64460,14 +64460,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Each flag is exactly the integer 0 or 1."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete longest_active_run below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `longest_active_run` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def longest_active_run(flags: list[int]) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -64512,7 +64512,7 @@ const LEARNING_PATHS = [
             "title": "The problem",
             "paragraphs": [
               "Remove leading and trailing ASCII spaces, reduce each internal run of ASCII spaces to one, and convert A-Z to lowercase. The empty result is allowed. Only the literal space character is whitespace in this contract.",
-              "Return a value from clean_label; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Return a value from `clean_label`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -64525,14 +64525,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "text contains only ASCII letters A-Z, a-z and literal spaces."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "`text` contains only ASCII letters A-Z, a-z and literal spaces."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete clean_label below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `clean_label` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def clean_label(text: str) -> str:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -64577,7 +64577,7 @@ const LEARNING_PATHS = [
             "title": "The problem",
             "paragraphs": [
               "Return each reading minus its immediate predecessor, beginning with the second reading. Do not include a made-up change for the first reading. Fewer than two readings gives an empty list.",
-              "Return a value from reading_changes; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Return a value from `reading_changes`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -64590,14 +64590,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Readings are integers from -10,000 to 10,000."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete reading_changes below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `reading_changes` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def reading_changes(readings: list[int]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -64642,7 +64642,7 @@ const LEARNING_PATHS = [
             "title": "The problem",
             "paragraphs": [
               "Return each distinct label once, in the order it first appears. Matching is exact and case-sensitive. An empty string is a valid label.",
-              "Return a value from keep_first_labels; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Return a value from `keep_first_labels`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -64655,14 +64655,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Labels contain ASCII characters only."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete keep_first_labels below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `keep_first_labels` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def keep_first_labels(labels: list[str]) -> list[str]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -64706,8 +64706,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Each delivery is [item, quantity]. Return a dictionary of total quantity per item. Keep items whose total is zero. Negative quantities represent returns.",
-              "Return a value from stock_totals; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Each delivery is `[item, quantity]`. Return a dictionary of total quantity per item. Keep items whose total is zero. Negative quantities represent returns.",
+              "Return a value from `stock_totals`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -64720,14 +64720,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Each row has exactly two entries: a nonempty ASCII item name and an integer quantity from -1,000 to 1,000."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete stock_totals below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `stock_totals` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def stock_totals(deliveries: list[list]) -> dict[str, int]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -64772,7 +64772,7 @@ const LEARNING_PATHS = [
             "title": "The problem",
             "paragraphs": [
               "Return column sums across rows of different lengths. A missing position contributes zero. Include every column that occurs in any row. No rows, or only empty rows, gives an empty list.",
-              "Return a value from column_totals; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Return a value from `column_totals`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -64785,14 +64785,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "At most 1,000 rows and at most 10,000 integers in total. Values are from -1,000 to 1,000."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete column_totals below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `column_totals` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def column_totals(rows: list[list[int]]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -64837,7 +64837,7 @@ const LEARNING_PATHS = [
             "title": "The problem",
             "paragraphs": [
               "Group names by their first character in a dictionary. Preserve original order and duplicates within each group. Skip empty names. Matching is case-sensitive.",
-              "Return a value from group_by_initial; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Return a value from `group_by_initial`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -64850,14 +64850,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Names contain ASCII letters only, or are empty."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete group_by_initial below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `group_by_initial` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def group_by_initial(names: list[str]) -> dict[str, list[str]]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -64901,8 +64901,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Return the most frequent label. Break a frequency tie by the label that first appeared. Return None for no labels. An empty string counts as a label.",
-              "Return a value from most_requested; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Return the most frequent label. Break a frequency tie by the label that first appeared. Return `None` for no labels. An empty string counts as a label.",
+              "Return a value from `most_requested`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -64915,14 +64915,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "ASCII labels; exact case-sensitive matching."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete most_requested below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `most_requested` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def most_requested(labels: list[str]) -> str | None:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -64966,8 +64966,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "The sizes list is sorted in nondecreasing order. Return whether two different positions sum to target. Equal sizes may be used if they occur at least twice.",
-              "Return a value from can_fill_pair; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "The `sizes` list is sorted in nondecreasing order. Return whether two different positions sum to `target`. Equal sizes may be used if they occur at least twice.",
+              "Return a value from `can_fill_pair`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -64980,14 +64980,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "Sizes and target are integers from -10,000 to 10,000. Input is already sorted."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Sizes and `target` are integers from -10,000 to 10,000. Input is already sorted."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete can_fill_pair below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `can_fill_pair` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def can_fill_pair(sizes: list[int], target: int) -> bool:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -65032,7 +65032,7 @@ const LEARNING_PATHS = [
             "title": "The problem",
             "paragraphs": [
               "Both lists are sorted. Return their shared values in sorted order, retaining the smaller occurrence count for each value. For example, two 3s on one side and one 3 on the other produce one 3.",
-              "Return a value from shared_readings; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Return a value from `shared_readings`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -65045,14 +65045,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Both lists are nondecreasing integer lists with values from -10,000 to 10,000."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete shared_readings below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `shared_readings` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def shared_readings(left: list[int], right: list[int]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -65096,8 +65096,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Return the starting index of the width consecutive entries with the largest sum. Break ties by the earliest start. Return -1 when width exceeds the list length.",
-              "Return a value from busiest_block; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Return the starting index of the `width` consecutive entries with the largest sum. Break ties by the earliest start. Return -1 when `width` exceeds the list length.",
+              "Return a value from `busiest_block`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -65110,14 +65110,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "width is an integer from 1 to 1,001. Counts are integers from 0 to 10,000."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "`width` is an integer from 1 to 1,001. Counts are integers from 0 to 10,000."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete busiest_block below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `busiest_block` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def busiest_block(counts: list[int], width: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -65161,8 +65161,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Return the longest length of a consecutive stretch whose sum is at most budget. An empty stretch is allowed, so return zero if no entry can fit.",
-              "Return a value from affordable_stretch; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Return the longest length of a consecutive stretch whose sum is at most `budget`. An empty stretch is allowed, so return zero if no entry can fit.",
+              "Return a value from `affordable_stretch`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -65175,14 +65175,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "Costs and budget are nonnegative integers from 0 to 10,000. Negative costs are outside the contract."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Costs and `budget` are nonnegative integers from 0 to 10,000. Negative costs are outside the contract."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete affordable_stretch below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `affordable_stretch` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def affordable_stretch(costs: list[int], budget: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -65226,8 +65226,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "For each [start, stop] query, return the sum of values from start inclusive to stop exclusive. Preserve query order. Empty ranges have total zero.",
-              "Return a value from range_totals; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "For each `[start, stop]` query, return the sum of `values` from `start` inclusive to `stop` exclusive. Preserve query order. Empty ranges have total zero.",
+              "Return a value from `range_totals`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -65240,14 +65240,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "Values are integers from -10,000 to 10,000. Every query has 0 <= start <= stop <= len(values). At most 1,000 queries."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Values are integers from -10,000 to 10,000. Every query has `0 <= start <= stop <= len(values)`. At most 1,000 queries."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete range_totals below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `range_totals` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def range_totals(values: list[int], queries: list[list[int]]) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -65292,7 +65292,7 @@ const LEARNING_PATHS = [
             "title": "The problem",
             "paragraphs": [
               "Return the earliest index whose entries strictly before it sum to the same amount as entries strictly after it. The value at the index is excluded from both sums. Return -1 if none exists.",
-              "Return a value from balance_marker; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Return a value from `balance_marker`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -65305,14 +65305,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Integer values from -10,000 to 10,000; negative values are allowed."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete balance_marker below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `balance_marker` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def balance_marker(values: list[int]) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -65356,8 +65356,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "capacities is sorted in nondecreasing order. Return the first index holding a value at least required, or len(capacities) if no value qualifies.",
-              "Return a value from first_suitable; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "`capacities` is sorted in nondecreasing order. Return the first index holding a value at least `required`, or `len(capacities)` if no value qualifies.",
+              "Return a value from `first_suitable`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -65370,14 +65370,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "Capacities and required are integers from 0 to 10,000."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Capacities and `required` are integers from 0 to 10,000."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete first_suitable below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `first_suitable` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def first_suitable(capacities: list[int], required: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -65429,7 +65429,7 @@ const LEARNING_PATHS = [
             "title": "The problem",
             "paragraphs": [
               "Return whether every round, square and curly bracket closes in the correct nested order. Ignore ASCII letters and literal spaces. Empty text is valid.",
-              "Return a value from balanced_groups; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Return a value from `balanced_groups`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -65442,14 +65442,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "Only ASCII letters, spaces and the characters ()[]{} appear."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Only ASCII letters, spaces and the characters `()[]{}` appear."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete balanced_groups below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `balanced_groups` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def balanced_groups(text: str) -> bool:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -65493,8 +65493,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Each command is either \"add:\" followed by a note, or exactly \"undo\". Add appends the note; undo removes the most recently retained note. Undo on an empty notebook does nothing. Return retained notes in order. Empty notes are allowed.",
-              "Return a value from undo_notes; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Each command is either `\"add:\"` followed by a note, or exactly `\"undo\"`. Add appends the note; undo removes the most recently retained note. Undo on an empty notebook does nothing. Return retained notes in order. Empty notes are allowed.",
+              "Return a value from `undo_notes`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -65507,14 +65507,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "All commands follow this grammar and use ASCII characters only. Notes may contain additional colons or the word undo."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "All commands follow this grammar and use ASCII characters only. Notes may contain additional colons or the word `undo`."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete undo_notes below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `undo_notes` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def undo_notes(commands: list[str]) -> list[str]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -65558,8 +65558,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Parse settings into a dictionary. Strip literal ASCII spaces from both ends of each line, skip blank lines and lines starting with #, and split other lines at the first =. Strip literal spaces around the key and value. A valid key is nonempty and contains only lowercase ASCII letters or underscores. Skip invalid lines. A later valid assignment replaces an earlier value; values may be empty or contain = and #.",
-              "Return a value from read_settings; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Parse settings into a dictionary. Strip literal ASCII spaces from both ends of each line, skip blank lines and lines starting with `#`, and split other lines at the first `=`. Strip literal spaces around the key and value. A valid key is nonempty and contains only lowercase ASCII letters or underscores. Skip invalid lines. A later valid assignment replaces an earlier value; values may be empty or contain `=` and `#`.",
+              "Return a value from `read_settings`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -65572,14 +65572,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "All lines use printable ASCII characters. Invalid lines are expected and must be skipped."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete read_settings below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `read_settings` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def read_settings(lines: list[str]) -> dict[str, str]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -65623,8 +65623,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Each sample is [device, timestamp, reading]. Return a dictionary mapping each device to [timestamp, reading] for its greatest timestamp. If timestamps tie for one device, the later input row wins. Input rows need not be time-sorted.",
-              "Return a value from latest_samples; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Each sample is `[device, timestamp, reading]`. Return a dictionary mapping each device to `[timestamp, reading]` for its greatest timestamp. If timestamps tie for one device, the later input row wins. Input rows need not be time-sorted.",
+              "Return a value from `latest_samples`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -65637,14 +65637,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Device is a nonempty ASCII string. Timestamp is an integer from 0 to 1,000,000. Reading is an integer from -10,000 to 10,000. Every row has exactly three entries."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete latest_samples below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `latest_samples` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def latest_samples(samples: list[list]) -> dict[str, list[int]]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -65688,8 +65688,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Each [start, end] is a half-open time interval with start < end. Return sorted coverage intervals, combining overlaps and touching intervals. For example [1,3] and [3,5] become [1,5]. Do not change the supplied rows.",
-              "Return a value from maintenance_coverage; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Each `[start, end]` is a half-open time interval with `start < end`. Return sorted coverage intervals, combining overlaps and touching intervals. For example `[1, 3]` and `[3, 5]` become `[1, 5]`. Do not change the supplied rows.",
+              "Return a value from `maintenance_coverage`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -65702,14 +65702,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "Every row has two integer endpoints with 0 <= start < end <= 1,000,000. Input may be unsorted or repeated."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Every row has two integer endpoints with `0 <= start < end <= 1_000_000`. Input may be unsorted or repeated."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete maintenance_coverage below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `maintenance_coverage` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def maintenance_coverage(intervals: list[list[int]]) -> list[list[int]]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -65753,8 +65753,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "The working day is [0, day_end). Return the earliest integer start where an appointment of duration fits without overlapping any busy interval. Busy intervals are half-open and may overlap, touch or arrive unsorted. Starting when another interval ends is allowed. Return -1 if no slot fits.",
-              "Return a value from first_open_slot; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "The working day is `[0, day_end)`. Return the earliest integer start where an appointment of `duration` fits without overlapping any busy interval. Busy intervals are half-open and may overlap, touch or arrive unsorted. Starting when another interval ends is allowed. Return -1 if no slot fits.",
+              "Return a value from `first_open_slot`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -65767,14 +65767,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "0 <= day_end <= 1,000,000 and 1 <= duration <= 1,000,000. Every busy row satisfies 0 <= start < end <= day_end."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "`0 <= day_end <= 1_000_000` and `1 <= duration <= 1_000_000`. Every `busy` row satisfies `0 <= start < end <= day_end`."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete first_open_slot below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `first_open_slot` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def first_open_slot(busy: list[list[int]], day_end: int, duration: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -65818,8 +65818,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Timestamps are sorted integer seconds; duplicates represent separate requests. Return the greatest number of requests that can lie in an interval [s, s + width) for any integer start s. The right boundary is excluded. Return zero for no requests.",
-              "Return a value from peak_requests; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Timestamps are sorted integer seconds; duplicates represent separate requests. Return the greatest number of requests that can lie in an interval `[s, s + width)` for any integer start `s`. The right boundary is excluded. Return zero for no requests.",
+              "Return a value from `peak_requests`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -65832,14 +65832,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "Timestamps are nondecreasing integers from 0 to 1,000,000. width is from 1 to 1,000,000."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Timestamps are nondecreasing integers from 0 to 1,000,000. `width` is from 1 to 1,000,000."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete peak_requests below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `peak_requests` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def peak_requests(timestamps: list[int], width: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -65883,8 +65883,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Accept an unsigned decimal price with one to six ASCII digits before the decimal point and, if a point is present, exactly two digits after it. Leading zeros are allowed. No spaces, signs, commas or exponent notation are accepted. Return its integer cents, or None for an invalid string. Examples: \"12\" gives 1200, \"12.05\" gives 1205.",
-              "Return a value from parse_price; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Accept an unsigned decimal price with one to six ASCII digits before the decimal point and, if a point is present, exactly two digits after it. Leading zeros are allowed. No spaces, signs, commas or exponent notation are accepted. Return its integer cents, or `None` for an invalid string. Examples: `\"12\"` gives 1200, `\"12.05\"` gives 1205.",
+              "Return a value from `parse_price`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -65897,14 +65897,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Input is any ASCII string of at most 100 characters. Invalid strings are part of the task."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete parse_price below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `parse_price` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def parse_price(text: str) -> int | None:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -65948,8 +65948,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Compare release labels made of dot-separated nonnegative decimal components. Compare components numerically from left to right, treating missing trailing components as zero. Return -1, 0 or 1 when left is smaller, equal or greater. Leading zeros have no special meaning. This is a custom numeric format, not the full Python package-version specification.",
-              "Return a value from compare_releases; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Compare release labels made of dot-separated nonnegative decimal components. Compare components numerically from left to right, treating missing trailing components as zero. Return -1, 0 or 1 when `left` is smaller, equal or greater. Leading zeros have no special meaning. This is a custom numeric format, not the full Python package-version specification.",
+              "Return a value from `compare_releases`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -65962,14 +65962,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Each label has 1 to 20 nonempty components. Each component has 1 to 6 ASCII digits. No signs, suffixes or spaces."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete compare_releases below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `compare_releases` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def compare_releases(left: str, right: str) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -66013,8 +66013,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Each [task, prerequisite] requires prerequisite to finish before task. Return an order containing every task once. Whenever several tasks are ready, choose the lexicographically smallest name. Repeated requirement rows have no extra effect. Return None if no complete order exists, including a self-dependency. An empty task list has the valid order [].",
-              "Return a value from ready_order; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Each `[task, prerequisite]` requires `prerequisite` to finish before `task`. Return an order containing every task once. Whenever several tasks are ready, choose the lexicographically smallest name. Repeated requirement rows have no extra effect. Return `None` if no complete order exists, including a self-dependency. An empty task list has the valid order `[]`.",
+              "Return a value from `ready_order`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -66027,14 +66027,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "tasks contains at most 100 names, with no duplicates. Each name is a nonempty lowercase ASCII word. Every requirement names two existing tasks. At most 1,000 requirement rows."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "`tasks` contains at most 100 names, with no duplicates. Each name is a nonempty lowercase ASCII word. Every requirement names two existing tasks. At most 1,000 requirement rows."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete ready_order below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `ready_order` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def ready_order(tasks: list[str], requirements: list[list[str]]) -> list[str] | None:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -66078,8 +66078,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Each order is [item, quantity]. Process orders in input order using a private working copy of stock. Accept an order only if its entire positive quantity is available, then deduct it. Rejected orders consume nothing. Unknown items have zero stock. Return one boolean per order; leave stock unchanged.",
-              "Return a value from fulfill_orders; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Each order is `[item, quantity]`. Process orders in input order using a private working copy of `stock`. Accept an order only if its entire positive quantity is available, then deduct it. Rejected orders consume nothing. Unknown items have zero stock. Return one boolean per order; leave `stock` unchanged.",
+              "Return a value from `fulfill_orders`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -66092,14 +66092,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "ASCII item names. Stock quantities are integers from 0 to 10,000. Order quantities are integers from 1 to 10,000. Each order row has exactly two entries."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete fulfill_orders below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `fulfill_orders` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def fulfill_orders(stock: dict[str, int], orders: list[list]) -> list[bool]:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -66143,8 +66143,8 @@ const LEARNING_PATHS = [
           {
             "title": "The problem",
             "paragraphs": [
-              "Each [start, end] is an optional half-open session. Choose as many sessions as possible without overlaps and return the count. A session may start exactly when the previous one ends. All sessions have equal value; their durations may differ. Identical rows represent competing sessions and cannot both be attended.",
-              "Return a value from book_most_sessions; do not read input or print the answer. Keep the supplied arguments unchanged."
+              "Each `[start, end]` is an optional half-open session. Choose as many sessions as possible without overlaps and return the count. A session may start exactly when the previous one ends. All sessions have equal value; their durations may differ. Identical rows represent competing sessions and cannot both be attended.",
+              "Return a value from `book_most_sessions`; do not read input or print the answer. Keep the supplied arguments unchanged."
             ]
           },
           {
@@ -66157,14 +66157,14 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include bool values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
-              "Each row contains integer times with 0 <= start < end <= 1,000,000. Input may be unsorted."
+              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Each row contains integer times with `0 <= start < end <= 1_000_000`. Input may be unsorted."
             ]
           }
         ],
         "exercise": {
           "challenge": true,
-          "prompt": "Complete book_most_sessions below and run the tests. You can also edit solutions.py in the downloadable practice ZIP and use the terminal command shown below.",
+          "prompt": "Complete `book_most_sessions` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
           "starter": "def book_most_sessions(sessions: list[list[int]]) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
           "checks": [
             "Match the expected return values, including edge cases.",
@@ -66793,8 +66793,8 @@ const LEARNING_PATHS = [
           {
             "title": "The mechanism",
             "paragraphs": [
-              "Start at the __main__ block, find argument parsing, then follow the input filename into the reader and summary calculation. Note which functions perform I/O and which merely transform values. This gives you a concrete place to insert a test or a new option. Reading every helper alphabetically hides the actual execution order.",
-              "Trace one record through each branch. In legacy_report.py, int converts the minutes text before the if condition checks truthiness. The number zero is false, so the append is skipped. The CSV parser did not lose the row. Locating that branch explains the failure and limits the required change."
+              "Start at the `__main__` block, find argument parsing, then follow the input filename into the reader and summary calculation. Note which functions perform I/O and which merely transform values. This gives you a concrete place to insert a test or a new option. Reading every helper alphabetically hides the actual execution order.",
+              "Trace one record through each branch. In `legacy_report.py`, `int` converts the `minutes` text before the `if` condition checks truthiness. The number zero is false, so the `append` is skipped. The CSV parser did not lose the row. Locating that branch explains the failure and limits the required change."
             ]
           },
           {
@@ -66843,7 +66843,7 @@ const LEARNING_PATHS = [
             "title": "The mechanism",
             "paragraphs": [
               "Before changing the tool, capture stable behavior such as the default JSON field names and the total for positive-minute records. These checks protect callers even when the internal code is reorganized. Label the known zero-count defect separately instead of turning its observed output into the desired permanent contract.",
-              "A test can be useful even when the original requirement is missing, but its authority is limited. If an existing behavior conflicts with an agreed acceptance example, resolve that conflict explicitly. Here the new requirement deliberately corrects count while preserving total_minutes and the default all-status selection."
+              "A test can be useful even when the original requirement is missing, but its authority is limited. If an existing behavior conflicts with an agreed acceptance example, resolve that conflict explicitly. Here the new requirement deliberately corrects `count` while preserving `total_minutes` and the default all-status selection."
             ]
           },
           {
@@ -66990,7 +66990,7 @@ const LEARNING_PATHS = [
             "title": "The mechanism",
             "paragraphs": [
               "The new tool accepts the exact header line \"id,status,minutes\". IDs are nonblank and unique; statuses are open, closed or cancelled; minutes are ASCII whole numbers from 0 to 1440. These choices make the teaching contract explicit. Another product might allow extra columns or decimal minutes, but it needs different examples and tests.",
-              "Validate every row before applying --status. Otherwise a malformed closed record disappears when the user asks for open tickets and the report appears trustworthy. The same input should not change from invalid to valid because of a display filter. Include line numbers in errors so the user can locate the problem without echoing an entire record."
+              "Validate every row before applying `--status`. Otherwise a malformed closed record disappears when the user asks for open tickets and the report appears trustworthy. The same input should not change from invalid to valid because of a display filter. Include line numbers in errors so the user can locate the problem without echoing an entire record."
             ]
           },
           {
@@ -67137,7 +67137,7 @@ const LEARNING_PATHS = [
             "title": "The mechanism",
             "paragraphs": [
               "A script may be called by another script that parses stdout as JSON. Adding a friendly progress message to stdout can break that caller even though a human still understands the screen. Send diagnostics to stderr and keep successful default stdout to one JSON object. Test through a subprocess when checking those stream boundaries.",
-              "The optional --status argument narrows the selection; omitting it still includes every status. An invalid choice fails before reading the file. The lab uses exit 2 for input and file errors. Define the --output behavior separately: it writes the JSON file and leaves stdout empty on success, so the default caller remains unchanged."
+              "The optional `--status` argument narrows the selection; omitting it still includes every status. An invalid choice fails before reading the file. The lab uses exit 2 for input and file errors. Define the `--output` behavior separately: it writes the JSON file and leaves `stdout` empty on success, so the default caller remains unchanged."
             ]
           },
           {
@@ -67234,7 +67234,7 @@ const LEARNING_PATHS = [
           {
             "title": "The mechanism",
             "paragraphs": [
-              "Implement the intermediate project in a copy of legacy_report.py or in your own report.py. Keep the sample input unchanged. Add strict validation, correct counting and an optional status filter. Use the acceptance examples to decide expected values before looking at the reference implementation.",
+              "Implement the intermediate project in a copy of `legacy_report.py` or in your own `report.py`. Keep the sample input unchanged. Add strict validation, correct counting and an optional status filter. Use the acceptance examples to decide expected values before looking at the reference implementation.",
               "Run unit checks for selection and subprocess checks for the command. Report what you actually ran, including the zero-minute and invalid-filter cases. The supplied reference suite checks the reference module by default; point your own tests at your attempted implementation to demonstrate your work."
             ]
           },
@@ -67427,7 +67427,7 @@ const LEARNING_PATHS = [
           {
             "title": "The mechanism",
             "paragraphs": [
-              "When a failure appeared recently, find one known good revision and one known bad revision. In a disposable clone, git bisect repeatedly chooses a revision for you to classify with the same reproduction. Keep the test command and environment fixed. A build failure unrelated to the target behavior cannot be treated as evidence that the regression is present.",
+              "When a failure appeared recently, find one known good revision and one known bad revision. In a disposable clone, `git bisect` repeatedly chooses a revision for you to classify with the same reproduction. Keep the test command and environment fixed. A build failure unrelated to the target behavior cannot be treated as evidence that the regression is present.",
               "After finding the first bad revision, inspect its diff and rerun the minimal example. The result narrows where behavior changed; it does not prove which line or assumption caused it. End the bisect session before doing normal development. This optional drill should never reset or rewrite your main working copy."
             ]
           },
@@ -67476,7 +67476,7 @@ const LEARNING_PATHS = [
           {
             "title": "The mechanism",
             "paragraphs": [
-              "Suppose a future request renames total_minutes to minutes. A person reading the report may see no difference, but a script indexing the old key will fail. List known consumers and test their assumptions. Consider keeping an old field temporarily, publishing a new interface or coordinating a migration instead of silently changing the output.",
+              "Suppose a future request renames `total_minutes` to `minutes`. A person reading the report may see no difference, but a script indexing the old key will fail. List known consumers and test their assumptions. Consider keeping an old field temporarily, publishing a new interface or coordinating a migration instead of silently changing the output.",
               "A version number communicates a compatibility decision only when the project has a declared policy. Semantic Versioning relates major, minor and patch changes to a defined public API. It does not discover callers for you or make a breaking change harmless. This exercise leaves the current key unchanged and asks you to plan the hypothetical migration separately."
             ]
           },
@@ -67674,7 +67674,7 @@ const LEARNING_PATHS = [
           {
             "title": "The mechanism",
             "paragraphs": [
-              "Complete the advanced project by adding --output without breaking the default command. Demonstrate validation failure, successful replacement and a simulated replacement error. Include the no-match and zero-minute cases. Keep your handoff short enough for a maintainer to understand which contract changed and why.",
+              "Complete the advanced project by adding `--output` without breaking the default command. Demonstrate validation failure, successful replacement and a simulated replacement error. Include the no-match and zero-minute cases. Keep your handoff short enough for a maintainer to understand which contract changed and why.",
               "Explain limits in concrete terms. The reference assumes a small trusted local input and a single writer; it does not provide a multi-user service or power-loss recovery. Link each claim to a command or test you ran. If you only read a reference solution, record that honestly and attempt a changed case before treating the skill as demonstrated."
             ]
           },
@@ -70864,8 +70864,8 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "A SQL Server instance is a running database engine. One instance can contain several databases. A database contains objects such as tables; a schema groups named objects inside it. A row records one thing at a defined level of detail, and columns describe its attributes. In this course, one order row represents one order, not one payment or one customer.",
-              "T-SQL is Microsoft's SQL dialect. SELECT retrieves a result; INSERT, UPDATE and DELETE change data. SQL Server Management Studio (SSMS) is a client, not the engine itself. Installing a query tool alone does not create a running server. Connect to an existing local or training SQL Server instance for these exercises; do not use a work production connection.",
-              "The browser displays examples and checks your quiz answers; it does not execute SQL. Read setup.sql, run it in SSMS on your training instance, and keep that query window open. It creates LearningNotebook only if absent and uses session-local #LN tables. Opening a second window creates a different session, so its temporary tables are separate."
+              "T-SQL is Microsoft's SQL dialect. `SELECT` retrieves a result; `INSERT`, `UPDATE` and `DELETE` change data. SQL Server Management Studio (SSMS) is a client, not the engine itself. Installing a query tool alone does not create a running server. Connect to an existing local or training SQL Server instance for these exercises; do not use a work production connection.",
+              "The browser displays examples and checks your quiz answers; it does not execute SQL. Read `setup.sql`, run it in SSMS on your training instance, and keep that query window open. It creates `LearningNotebook` only if absent and uses session-local `#LN` tables. Opening a second window creates a different session, so its temporary tables are separate."
             ],
             "example": ""
           },
@@ -70879,14 +70879,14 @@ const LEARNING_PATHS = [
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "Check the connection and database before a query that changes data. Our examples use fixed synthetic data; matching a row count is evidence about this fixture, not proof that a production extract is complete. Closing the session removes its local temporary tables. Reopen setup.sql to get a fresh fixture."
+              "Check the connection and database before a query that changes data. Our examples use fixed synthetic data; matching a row count is evidence about this fixture, not proof that a production extract is complete. Closing the session removes its local temporary tables. Reopen `setup.sql` to get a fresh fixture."
             ],
             "example": ""
           },
           {
             "title": "Write a small SELECT before counting rows",
             "paragraphs": [
-              "Name the columns after SELECT and the table after FROM. A comma separates columns. ORDER BY names the column used to sort the result; ascending order is the default. The semicolon ends the statement. Start with one column, then add a second before attempting the customer exercise."
+              "Name the columns after `SELECT` and the table after `FROM`. A comma separates columns. `ORDER BY` names the column used to sort the result; ascending order is the default. The semicolon ends the statement. Start with one column, then add a second before attempting the customer exercise."
             ],
             "example": "SELECT OrderId FROM #LNOrders ORDER BY OrderId;\n-- 101, 102, 103, 104, 105"
           }
@@ -70929,16 +70929,16 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "Use int for these identifiers, decimal(12,2) for the sample amounts, date for dates without a time, and nvarchar for Unicode names. Decimal has a fixed precision and scale; it is useful when two decimal places are part of the business contract. It does not solve every rounding decision. Avoid float for amounts that must compare exactly to a cent.",
-              "A primary key uniquely identifies a row and cannot contain NULL. A foreign key in an ordinary permanent table enforces a relationship to an existing parent key. A CHECK constraint restricts allowed values. A constraint prevents invalid writes; an application-side check alone can be bypassed by another writer. SQL Server does not enforce foreign keys on temporary tables, so our fixture uses explicit validation queries for relationships.",
-              "NULL means missing or unknown, not zero and not an empty string. Email is optional in the fixture: Ben and Dia have NULL. Equality with NULL does not produce TRUE, so use IS NULL or IS NOT NULL. Decide whether an unknown amount should stop a report rather than quietly substituting zero."
+              "Use `int` for these identifiers, `decimal(12,2)` for the sample amounts, `date` for dates without a time, and `nvarchar` for Unicode names. Decimal has a fixed precision and scale; it is useful when two decimal places are part of the business contract. It does not solve every rounding decision. Avoid `float` for amounts that must compare exactly to a cent.",
+              "A primary key uniquely identifies a row and cannot contain `NULL`. A foreign key in an ordinary permanent table enforces a relationship to an existing parent key. A `CHECK` constraint restricts allowed values. A constraint prevents invalid writes; an application-side check alone can be bypassed by another writer. SQL Server does not enforce foreign keys on temporary tables, so our fixture uses explicit validation queries for relationships.",
+              "`NULL` means missing or unknown, not zero and not an empty string. `Email` is optional in the fixture: Ben and Dia have `NULL`. Equality with `NULL` does not produce `TRUE`, so use `IS NULL` or `IS NOT NULL`. Decide whether an unknown amount should stop a report rather than quietly substituting zero."
             ],
             "example": ""
           },
           {
             "title": "Example",
             "paragraphs": [
-              "COUNT(*) counts all four customers; COUNT(Email) counts the two known emails. The unassigned payment for OrderId 999 is intentionally allowed in the staging fixture. A production payment table with an enforced foreign key would reject it; an incoming staging table may retain it for investigation."
+              "`COUNT(*)` counts all four customers; `COUNT(Email)` counts the two known emails. The unassigned payment for `OrderId` 999 is intentionally allowed in the staging fixture. A production payment table with an enforced foreign key would reject it; an incoming staging table may retain it for investigation."
             ],
             "example": "SELECT COUNT(*) AS Customers, COUNT(Email) AS KnownEmails\nFROM #LNCustomers;\n-- 4, 2\nSELECT CustomerId FROM #LNCustomers\nWHERE Email IS NULL ORDER BY CustomerId;\n-- 2, 4"
           },
@@ -70988,9 +70988,9 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "SELECT chooses output columns; FROM identifies input rows; WHERE keeps rows meeting a condition. ORDER BY is the output ordering contract. Without it, a familiar-looking order is not guaranteed. TOP without an ORDER BY does not mean the earliest or largest rows.",
+              "`SELECT` chooses output columns; `FROM` identifies input rows; `WHERE` keeps rows meeting a condition. `ORDER BY` is the output ordering contract. Without it, a familiar-looking order is not guaranteed. `TOP` without an `ORDER BY` does not mean the earliest or largest rows.",
               "Use AND for conditions that must both hold and OR for alternatives; parentheses make mixed expressions unambiguous. Date predicates are easier to reason about as a lower bound inclusive and an upper bound exclusive. This also works when a date column later becomes a timestamp.",
-              "A computed column alias is available to ORDER BY, but generally not to WHERE in the same query because of SQL's logical binding order. Logical order explains name scope; it is not a diagram of the optimizer's physical execution plan."
+              "A computed column alias is available to `ORDER BY`, but generally not to `WHERE` in the same query because of SQL's logical binding order. Logical order explains name scope; it is not a diagram of the optimizer's physical execution plan."
             ],
             "example": ""
           },
@@ -71004,7 +71004,7 @@ const LEARNING_PATHS = [
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "SELECT * is convenient during exploration but makes downstream consumers depend on every future column. Integer arithmetic also matters: 5/2 yields 2, whereas CAST(5 AS decimal(10,2))/2 produces a fractional result. State required rounding at the output boundary."
+              "`SELECT *` is convenient during exploration but makes downstream consumers depend on every future column. Integer arithmetic also matters: `5/2` yields 2, whereas `CAST(5 AS decimal(10,2))/2` produces a fractional result. State required rounding at the output boundary."
             ],
             "example": ""
           }
@@ -71047,23 +71047,23 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "A customer can have many orders. Joining CustomerId therefore produces one output row per matching order, not one per customer. An INNER JOIN keeps matches. A LEFT JOIN also keeps each left-side row with no match, filling the right-side columns with NULL.",
+              "A customer can have many orders. Joining `CustomerId` therefore produces one output row per matching order, not one per customer. An `INNER JOIN` keeps matches. A `LEFT JOIN` also keeps each left-side row with no match, filling the right-side columns with `NULL`.",
               "An order can have several payments: order 101 has payments 60 and 40. Joining orders directly to payments repeats the order amount for each payment. Summing those repeated amounts would exaggerate sales. Diagnose a join by checking key uniqueness, match counts and unmatched populations before summing money.",
-              "A filter on a right-hand column in WHERE can remove the NULL-extended rows of a LEFT JOIN. Put a right-side eligibility condition in ON when the requirement is to preserve all left rows and attach only qualifying right rows. This is a semantic choice, not a performance trick."
+              "A filter on a right-hand column in `WHERE` can remove the `NULL`-extended rows of a `LEFT JOIN`. Put a right-side eligibility condition in `ON` when the requirement is to preserve all left rows and attach only qualifying right rows. This is a semantic choice, not a performance trick."
             ],
             "example": ""
           },
           {
             "title": "Example",
             "paragraphs": [
-              "Dia has no order. LEFT JOIN preserves her as one row with a NULL OrderId. Customers 1 and 2 each appear twice; customer 3 once; customer 4 once, so the output has six rows."
+              "Dia has no order. `LEFT JOIN` preserves her as one row with a `NULL` `OrderId`. Customers 1 and 2 each appear twice; customer 3 once; customer 4 once, so the output has six rows."
             ],
             "example": "SELECT c.CustomerId, c.CustomerName, o.OrderId\nFROM #LNCustomers AS c\nLEFT JOIN #LNOrders AS o ON o.CustomerId = c.CustomerId\nORDER BY c.CustomerId, o.OrderId;\n-- 1/101,1/102,2/103,2/104,3/105,4/NULL"
           },
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "DISTINCT is not a repair for an unexplained join expansion. It can hide duplicate evidence or discard legitimate repeated values. If the desired grain is one row per order, aggregate payments to that grain before joining; lesson 5 introduces grouping and lesson 6 combines the grouped payments with orders."
+              "`DISTINCT` is not a repair for an unexplained join expansion. It can hide duplicate evidence or discard legitimate repeated values. If the desired grain is one row per order, aggregate payments to that grain before joining; lesson 5 introduces grouping and lesson 6 combines the grouped payments with orders."
             ],
             "example": ""
           }
@@ -71671,8 +71671,8 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "Grouping by CustomerId returns one row per customer represented in the orders. SUM adds amounts; COUNT(*) counts rows; AVG calculates a mean of non-NULL values. Aggregates generally ignore NULL values, while COUNT(*) counts rows regardless of column values. An absent group is different from a group whose known amounts sum to zero.",
-              "WHERE limits input rows before grouping. HAVING limits groups after aggregate values exist. To count a customer's orders after a LEFT JOIN, COUNT(o.OrderId) counts the matched non-NULL identifiers; COUNT(*) would count the placeholder row for a customer with no order.",
+              "Grouping by `CustomerId` returns one row per customer represented in the orders. `SUM` adds amounts; `COUNT(*)` counts rows; `AVG` calculates a mean of non-`NULL` values. Aggregates generally ignore `NULL` values, while `COUNT(*)` counts rows regardless of column values. An absent group is different from a group whose known amounts sum to zero.",
+              "`WHERE` limits input rows before grouping. `HAVING` limits groups after aggregate values exist. To count a customer's orders after a `LEFT JOIN`, `COUNT(o.OrderId)` counts the matched non-`NULL` identifiers; `COUNT(*)` would count the placeholder row for a customer with no order.",
               "Always label the denominator: average order value is total amount divided by order count, not by customer count. A mean of customer means is not the overall order mean unless the weights happen to match."
             ],
             "example": ""
@@ -71680,7 +71680,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "Customer 1 has 150 across two orders; customer 2 has 200 across two; customer 3 has 40 across one. The totals reconcile to 390 and five orders. A HAVING threshold of 150 includes 1 and 2."
+              "Customer 1 has 150 across two orders; customer 2 has 200 across two; customer 3 has 40 across one. The totals reconcile to 390 and five orders. A `HAVING` threshold of 150 includes 1 and 2."
             ],
             "example": "SELECT CustomerId, COUNT(*) AS OrderCount, SUM(Amount) AS Total\nFROM #LNOrders\nGROUP BY CustomerId\nHAVING SUM(Amount) >= 150\nORDER BY CustomerId;\n-- 1,2,150.00; 2,2,200.00"
           },
@@ -71730,31 +71730,31 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "A subquery is a query inside another statement. EXISTS asks whether at least one matching row exists without multiplying the outer row. A common table expression (CTE) names a result within the next statement, so a long transformation can be read in stages.",
+              "A subquery is a query inside another statement. `EXISTS` asks whether at least one matching row exists without multiplying the outer row. A common table expression (CTE) names a result within the next statement, so a long transformation can be read in stages.",
               "A CTE is scoped to that one following statement. It is not a permanent table or a guaranteed performance cache. Prefix WITH with a semicolon when a preceding statement might lack its terminator. Multiple CTEs in one WITH are separated by commas.",
-              "For this report, first reduce payments to one row per OrderId, then attach that total to the orders. This changes the grain before the join so a two-payment order no longer duplicates its amount."
+              "For this report, first reduce payments to one row per `OrderId`, then attach that total to the orders. This changes the grain before the join so a two-payment order no longer duplicates its amount."
             ],
             "example": ""
           },
           {
             "title": "Example",
             "paragraphs": [
-              "Order 104 has no payment total and is NULL after the join. COALESCE turns that absence into zero only for this specific amount calculation; retain a separate missing-payment indicator when it matters to the workflow."
+              "Order 104 has no payment total and is `NULL` after the join. `COALESCE` turns that absence into zero only for this specific amount calculation; retain a separate missing-payment indicator when it matters to the workflow."
             ],
             "example": ";WITH Paid AS (\n SELECT OrderId, SUM(Amount) AS PaidAmount FROM #LNPayments GROUP BY OrderId\n)\nSELECT o.OrderId, o.Amount, COALESCE(p.PaidAmount,0) AS PaidAmount\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId\nORDER BY o.OrderId;\n-- 101:100;102:50;103:70;104:0;105:45 paid"
           },
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "NOT IN against a list containing NULL can unexpectedly reject rows because of UNKNOWN comparisons. NOT EXISTS with an explicit equality is usually a clearer expression for unmatched keys. Never discard unknown keys before recording their exception count."
+              "`NOT IN` against a list containing `NULL` can unexpectedly reject rows because of UNKNOWN comparisons. `NOT EXISTS` with an explicit equality is usually a clearer expression for unmatched keys. Never discard unknown keys before recording their exception count."
             ],
             "example": ""
           },
           {
             "title": "Trace the payment grain before combining queries",
             "paragraphs": [
-              "Order 101 has payments 60 and 40. A direct join produces two rows carrying the same order amount of 100. Grouping payments first produces one row, OrderId 101 with PaidAmount 100, so the later join keeps one row for that order.",
-              "Before the capstone, optionally adapt the example to return OrderId, Due, Paid and Outstanding for all five orders. Outstanding is Due minus Paid. Keep unpaid orders and report unmatched incoming payments separately using this lesson's exercise. Check five order rows, Due 390, matched Paid 265 and Outstanding 125. The orphan payment of 20 belongs in the exception output and must not reduce those balances."
+              "Order 101 has payments 60 and 40. A direct join produces two rows carrying the same order amount of 100. Grouping payments first produces one row, `OrderId` 101 with `PaidAmount` 100, so the later join keeps one row for that order.",
+              "Before the capstone, optionally adapt the example to return `OrderId`, `Due`, `Paid` and `Outstanding` for all five orders. Outstanding is Due minus Paid. Keep unpaid orders and report unmatched incoming payments separately using this lesson's exercise. Check five order rows, Due 390, matched Paid 265 and Outstanding 125. The orphan payment of 20 belongs in the exception output and must not reduce those balances."
             ]
           }
         ],
@@ -71873,9 +71873,9 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "GROUP BY collapses a group to fewer rows. A window function uses OVER to calculate across a related set while keeping each original row. PARTITION BY starts a separate window per customer; ORDER BY defines sequence within it.",
-              "ROW_NUMBER assigns sequential numbers. To select the latest order reliably, order by OrderDate descending and then OrderId descending. The identifier resolves same-date ties. RANK and DENSE_RANK treat ties differently, so select a function to match the business question rather than because its name sounds right.",
-              "For a running sum, explicitly use ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW. That means every preceding row plus this one in the specified order. The outer query still needs ORDER BY to control display order."
+              "`GROUP BY` collapses a group to fewer rows. A window function uses `OVER` to calculate across a related set while keeping each original row. `PARTITION BY` starts a separate window per customer; `ORDER BY` defines sequence within it.",
+              "`ROW_NUMBER` assigns sequential numbers. To select the latest order reliably, order by `OrderDate` descending and then `OrderId` descending. The identifier resolves same-date ties. `RANK` and `DENSE_RANK` treat ties differently, so select a function to match the business question rather than because its name sounds right.",
+              "For a running sum, explicitly use `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`. That means every preceding row plus this one in the specified order. The outer query still needs `ORDER BY` to control display order."
             ],
             "example": ""
           },
@@ -71889,7 +71889,7 @@ const LEARNING_PATHS = [
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "ROW_NUMBER is not a stored primary key. It can change when the input changes. For latest-row selection, rank in a CTE and filter rn=1 outside it; the alias cannot be filtered in WHERE in that same SELECT."
+              "`ROW_NUMBER` is not a stored primary key. It can change when the input changes. For latest-row selection, rank in a CTE and filter `rn=1` outside it; the alias cannot be filtered in `WHERE` in that same `SELECT`."
             ],
             "example": ""
           }
@@ -71933,15 +71933,15 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "A parameter is a named input with a declared SQL type. Parameters make the value contract explicit and avoid building SQL by concatenating user text. Applications should bind parameters through their database driver. Parameterization helps prevent value-based SQL injection; it is not a replacement for access control or input validation.",
-              "A stored procedure is a named database program invoked with EXEC. It can contain queries and control flow. SET NOCOUNT ON suppresses row-count messages, not the query result. The lesson example creates a local temporary procedure, so it disappears when this SQL session ends and changes no permanent application code.",
-              "In SSMS, CREATE PROCEDURE belongs in its own batch. The GO separators below are important. The procedure relies on the caller's temporary fixture only for this lesson; a deployed procedure normally uses explicitly qualified permanent tables with a designed permission model."
+              "A stored procedure is a named database program invoked with `EXEC`. It can contain queries and control flow. `SET NOCOUNT ON` suppresses row-count messages, not the query result. The lesson example creates a local temporary procedure, so it disappears when this SQL session ends and changes no permanent application code.",
+              "In SSMS, `CREATE PROCEDURE` belongs in its own batch. The `GO` separators below are important. The procedure relies on the caller's temporary fixture only for this lesson; a deployed procedure normally uses explicitly qualified permanent tables with a designed permission model."
             ],
             "example": ""
           },
           {
             "title": "Example",
             "paragraphs": [
-              "Requesting CustomerId 2 produces orders 103 and 104. Calling the same procedure for 4 gives an empty result because Dia has no orders. That is a legitimate result, not a SQL exception."
+              "Requesting `CustomerId` 2 produces orders 103 and 104. Calling the same procedure for 4 gives an empty result because Dia has no orders. That is a legitimate result, not a SQL exception."
             ],
             "example": "IF OBJECT_ID('tempdb..#LNOrdersForCustomer') IS NOT NULL DROP PROCEDURE #LNOrdersForCustomer;\nGO\nCREATE PROCEDURE #LNOrdersForCustomer @CustomerId int\nAS\nBEGIN\n SET NOCOUNT ON;\n SELECT OrderId,Amount FROM #LNOrders WHERE CustomerId=@CustomerId ORDER BY OrderId;\nEND;\nGO\nEXEC #LNOrdersForCustomer @CustomerId=2;"
           },
@@ -71955,7 +71955,7 @@ const LEARNING_PATHS = [
           {
             "title": "Bind a value to dynamic SQL",
             "paragraphs": [
-              "sys.sp_executesql takes SQL text, a declaration of its parameters, then their values. The N prefix marks a Unicode string. The parameter name inside the SQL text must match the declaration. In this example @Customer is an int; changing its value does not change the SQL text. Adapt the pattern to a decimal amount for the exercise."
+              "`sys.sp_executesql` takes SQL text, a declaration of its parameters, then their values. The `N` prefix marks a Unicode string. The parameter name inside the SQL text must match the declaration. In this example `@Customer` is an `int`; changing its value does not change the SQL text. Adapt the pattern to a decimal amount for the exercise."
             ],
             "example": "EXEC sys.sp_executesql\n N'SELECT OrderId FROM #LNOrders WHERE CustomerId=@Customer ORDER BY OrderId;',\n N'@Customer int', @Customer=2;\n-- 103, 104"
           }
@@ -71999,22 +71999,22 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "A # temporary table exists in tempdb with session-local visibility. Unlike a CTE, it can be reused by later statements and can have indexes. It consumes resources and is not automatically faster; choose it when inspecting, indexing or reusing an intermediate result helps.",
-              "INSERT adds rows, UPDATE changes matching rows, and DELETE removes matching rows. A missing WHERE on an UPDATE or DELETE affects every row. For practice, we change a dedicated #LNWork copy rather than the base fixture, and put the demonstration inside a transaction that rolls back.",
-              "SELECT INTO creates a new table from query output. It does not mean every constraint and index from the source has been reproduced. For a controlled production staging design, CREATE TABLE first and explicitly INSERT the selected columns."
+              "`INSERT` adds rows, `UPDATE` changes matching rows, and `DELETE` removes matching rows. A missing `WHERE` on an `UPDATE` or `DELETE` affects every row. For practice, we change a dedicated `#LNWork` copy rather than the base fixture, and put the demonstration inside a transaction that rolls back.",
+              "`SELECT INTO` creates a new table from query output. It does not mean every constraint and index from the source has been reproduced. For a controlled production staging design, `CREATE TABLE` first and explicitly `INSERT` the selected columns."
             ],
             "example": ""
           },
           {
             "title": "Example",
             "paragraphs": [
-              "The script copies five orders, adds 10 to order 103, observes 90, then rolls back to 80. The copied table exists before BEGIN TRAN, so it remains after rollback. Rerunning this example replaces only the session-local work copy."
+              "The script copies five orders, adds 10 to order 103, observes 90, then rolls back to 80. The copied table exists before `BEGIN TRAN`, so it remains after rollback. Rerunning this example replaces only the session-local work copy."
             ],
             "example": "IF @@TRANCOUNT<>0 THROW 51000,'Finish your existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNWork') IS NOT NULL DROP TABLE #LNWork;\nSELECT OrderId,Amount INTO #LNWork FROM #LNOrders;\nBEGIN TRAN;\nUPDATE #LNWork SET Amount=Amount+10 WHERE OrderId=103;\nSELECT OrderId,Amount FROM #LNWork WHERE OrderId=103; --90\nROLLBACK;\nSELECT OrderId,Amount FROM #LNWork WHERE OrderId=103; --80"
           },
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "Record @@ROWCOUNT immediately after the relevant modification: subsequent statements can replace it. A targeted update that affects zero rows may indicate a missing identifier or concurrency conflict. Inspect it rather than claiming success because no exception occurred."
+              "Record `@@ROWCOUNT` immediately after the relevant modification: subsequent statements can replace it. A targeted update that affects zero rows may indicate a missing identifier or concurrency conflict. Inspect it rather than claiming success because no exception occurred."
             ],
             "example": ""
           }
@@ -72057,16 +72057,16 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "BEGIN TRAN starts an explicit transaction. COMMIT completes it, and ROLLBACK undoes its transactional changes. Atomicity means those changes succeed together or are undone together. Keep transactions short. Do not wait for a person while holding locks. Handle errors explicitly; a disconnect or timeout is not a rollback strategy.",
-              "TRY/CATCH lets this example roll back when a statement fails. SET XACT_ABORT ON makes many runtime errors terminate and roll back the transaction. In CATCH, XACT_STATE reports whether a transaction remains and whether it is committable; THROW propagates the original error.",
-              "Isolation is about overlapping sessions. READ COMMITTED prevents dirty reads, but a later statement can see newly committed changes. Its implementation depends on the database's READ_COMMITTED_SNAPSHOT setting. SNAPSHOT needs database configuration and gives a transaction-level versioned view; SERIALIZABLE protects ranges more strongly and can increase blocking. NOLOCK permits unreliable reads and is unsuitable as a reconciliation fix."
+              "`BEGIN TRAN` starts an explicit transaction. `COMMIT` completes it, and `ROLLBACK` undoes its transactional changes. Atomicity means those changes succeed together or are undone together. Keep transactions short. Do not wait for a person while holding locks. Handle errors explicitly; a disconnect or timeout is not a rollback strategy.",
+              "`TRY`/`CATCH` lets this example roll back when a statement fails. `SET XACT_ABORT ON` makes many runtime errors terminate and roll back the transaction. In `CATCH`, `XACT_STATE` reports whether a transaction remains and whether it is committable; `THROW` propagates the original error.",
+              "Isolation is about overlapping sessions. `READ COMMITTED` prevents dirty reads, but a later statement can see newly committed changes. Its implementation depends on the database's `READ_COMMITTED_SNAPSHOT` setting. `SNAPSHOT` needs database configuration and gives a transaction-level versioned view; `SERIALIZABLE` protects ranges more strongly and can increase blocking. `NOLOCK` permits unreliable reads and is unsuitable as a reconciliation fix."
             ],
             "example": ""
           },
           {
             "title": "Example",
             "paragraphs": [
-              "This deliberately throws after an update to a work copy. The CATCH rolls it back and returns an explanatory result instead of rethrowing, solely so the final verification runs. A real application should usually propagate the failure. Starting an outer transaction beforehand would change rollback scope; run the exercise with @@TRANCOUNT=0."
+              "This deliberately throws after an update to a work copy. The `CATCH` rolls it back and returns an explanatory result instead of rethrowing, solely so the final verification runs. A real application should usually propagate the failure. Starting an outer transaction beforehand would change rollback scope; run the exercise with `@@TRANCOUNT = 0`."
             ],
             "example": "IF @@TRANCOUNT<>0 THROW 51000,'Finish your existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNAtomicWork') IS NOT NULL DROP TABLE #LNAtomicWork;\nSELECT OrderId,Amount INTO #LNAtomicWork FROM #LNOrders;\nSET XACT_ABORT ON;\nBEGIN TRY\n BEGIN TRAN;\n UPDATE #LNAtomicWork SET Amount=999 WHERE OrderId=101;\n THROW 51001,'Simulated failure',1;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n SELECT ERROR_MESSAGE() AS DemonstrationError;\nEND CATCH;\nSELECT Amount FROM #LNAtomicWork WHERE OrderId=101; --100"
           },
@@ -72080,7 +72080,7 @@ const LEARNING_PATHS = [
           {
             "title": "Runnable opt-in engine experiment",
             "paragraphs": [
-              "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
+              "The downloadable `concurrency-lab.md` gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local `#LN` tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
               "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
             ]
           }
@@ -72221,9 +72221,9 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "An index is an additional access structure the optimizer may use. A clustered rowstore index organizes the table's rows by its key; a nonclustered index provides another ordered access path with a row locator. An INCLUDE column can cover output without being part of the search key. More indexes also mean more maintenance during writes.",
+              "An index is an additional access structure the optimizer may use. A clustered rowstore index organizes the table's rows by its key; a nonclustered index provides another ordered access path with a row locator. An `INCLUDE` column can cover output without being part of the search key. More indexes also mean more maintenance during writes.",
               "An execution plan shows chosen operators such as scans, seeks, sorts and joins. Estimated plans show predictions; actual plans add runtime information. Compare estimated and actual row counts, warnings and expensive work, not only the largest percentage label. A seek is not automatically good and a scan is not automatically bad.",
-              "A predicate such as OrderDate >= @From AND OrderDate < @To can support an index range access more naturally than wrapping OrderDate in YEAR(). Whether an index is chosen still depends on data volume, distribution, statistics and required output. Our five-row fixture is too small to establish performance gains."
+              "A predicate such as `OrderDate >= @From AND OrderDate < @To` can support an index range access more naturally than wrapping `OrderDate` in `YEAR()`. Whether an index is chosen still depends on data volume, distribution, statistics and required output. Our five-row fixture is too small to establish performance gains."
             ],
             "example": ""
           },
@@ -72593,16 +72593,16 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "Your stakeholder wants to know which orders are paid. Define the grain as one row per order, the scope as all five fixture orders, and the matching rule as OrderId. All amounts share one currency. Payment rows are staging observations: an unknown order is an exception to report, not evidence that an order should be invented.",
-              "First aggregate the six payment rows by OrderId. Then left join the five orders to that result. Keep missing payment evidence separate from a known total of zero, and calculate outstanding as amount due minus matched payments. A negative outstanding amount means overpayment in this teaching contract.",
-              "The report has two outputs: five order rows and an orphan-payment list. A grand-total subtraction of 390-285=105 is misleading for order balances because 20 of incoming payments belongs to unknown OrderId 999. Matched payments total 265, leaving net outstanding 125. Positive outstanding is 130; overpayment is 5; net 130-5=125."
+              "Your stakeholder wants to know which orders are paid. Define the grain as one row per order, the scope as all five fixture orders, and the matching rule as `OrderId`. All amounts share one currency. Payment rows are staging observations: an unknown order is an exception to report, not evidence that an order should be invented.",
+              "First aggregate the six payment rows by `OrderId`. Then left join the five orders to that result. Keep missing payment evidence separate from a known total of zero, and calculate outstanding as amount due minus matched payments. A negative outstanding amount means overpayment in this teaching contract.",
+              "The report has two outputs: five order rows and an orphan-payment list. A grand-total subtraction of 390-285=105 is misleading for order balances because 20 of incoming payments belongs to unknown `OrderId` 999. Matched payments total 265, leaving net outstanding 125. Positive outstanding is 130; overpayment is 5; net 130-5=125."
             ],
             "example": ""
           },
           {
             "title": "Choose a status with CASE",
             "paragraphs": [
-              "A searched CASE expression evaluates WHEN conditions in order and returns the result of the first true condition. ELSE supplies the fallback and END closes the expression. Put the missing-payment test first, then compare the matched payment total with the amount due. COALESCE can supply zero for balance arithmetic, but it would hide the distinction between no payment record and a recorded zero payment if you used it alone for status."
+              "A searched `CASE` expression evaluates `WHEN` conditions in order and returns the result of the first true condition. `ELSE` supplies the fallback and `END` closes the expression. Put the missing-payment test first, then compare the matched payment total with the amount due. `COALESCE` can supply zero for balance arithmetic, but it would hide the distinction between no payment record and a recorded zero payment if you used it alone for status."
             ],
             "example": "SELECT OrderId,\n CASE WHEN Amount >= 100 THEN 'large' ELSE 'small' END AS Size\nFROM #LNOrders ORDER BY OrderId;\n-- 101 large; 102 small; 103 small; 104 large; 105 small"
           },
@@ -72616,7 +72616,7 @@ const LEARNING_PATHS = [
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "A rerun must not append duplicate logical exceptions. A real pipeline needs source batch identifiers, source-row keys, duplicate policy, currency, effective time and approval rules. This capstone produces read-only results, so repeated execution does not post transactions. Duplicated PaymentId rows would be rejected by the fixture primary key; duplicate business events with different identifiers still require a separate policy."
+              "A rerun must not append duplicate logical exceptions. A real pipeline needs source batch identifiers, source-row keys, duplicate policy, currency, effective time and approval rules. This capstone produces read-only results, so repeated execution does not post transactions. Duplicated `PaymentId` rows would be rejected by the fixture primary key; duplicate business events with different identifiers still require a separate policy."
             ],
             "example": ""
           }
@@ -72777,7 +72777,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "A surrogate key identifies a database row; a business key identifies the event or entity outside the database. A payment identity column does not stop the same source payment being imported twice. Keep a stable source-system/event key and enforce its uniqueness in a permanent target. Decide whether corrections replace an event or create a new revision before choosing that key.",
               "Separate an order header from its lines: customer and order date belong to the order; product, quantity and unit price belong to a line. Storing a customer address repeatedly in order rows may be appropriate as a historical shipping snapshot, but inappropriate if meant to be a current customer lookup. Normalization and historical snapshots solve different requirements.",
-              "decimal(p,s) has p total digits and s fractional digits. Arithmetic can widen the intermediate precision and scale, with SQL Server rules and maximum precision limiting the result. Explicitly choose the posting scale and test overflow and half-cent cases. A CHECK on amount alone does not reject NULL; combine NOT NULL with the check when an amount is required."
+              "`decimal(p,s)` has `p` total digits and `s` fractional digits. Arithmetic can widen the intermediate precision and scale, with SQL Server rules and maximum precision limiting the result. Explicitly choose the posting scale and test overflow and half-cent cases. A `CHECK` on amount alone does not reject `NULL`; combine `NOT NULL` with the check when an amount is required."
             ],
             "example": ""
           },
@@ -72785,7 +72785,7 @@ const LEARNING_PATHS = [
             "title": "Example",
             "paragraphs": [
               "Three units at 12.35 total 37.05. The timestamp is a different problem: a local January 1 observation corresponds to December 31 in UTC. A date bucket therefore requires a stated reporting zone, not simply stripping the offset.",
-              "datetimeoffset preserves an offset, not a named time-zone rule set. Store an event's observed instant and, when required, its source zone/offset and ingestion time separately. Daylight-saving conversion needs an explicit policy for ambiguous local times."
+              "`datetimeoffset` preserves an offset, not a named time-zone rule set. Store an event's observed instant and, when required, its source zone/offset and ingestion time separately. Daylight-saving conversion needs an explicit policy for ambiguous local times."
             ],
             "example": "DECLARE @Price decimal(12,2)=12.35, @Quantity int=3;\nSELECT @Price*@Quantity AS Gross, CAST(@Price*@Quantity AS decimal(12,2)) AS Posted;\nDECLARE @Observed datetimeoffset(0)='2026-01-01T00:30:00+05:30';\nSELECT @Observed AS SourceTime, SWITCHOFFSET(@Observed,'+00:00') AS UtcTime;\n--37.05; UTC is 2025-12-31 19:00:00 +00:00"
           },
@@ -72800,7 +72800,7 @@ const LEARNING_PATHS = [
           {
             "title": "Visible decimal normalization",
             "paragraphs": [
-              "Run rounding-lab.sql: raw 1.004 becomes decimal(12,2) 1.00; raw 1.005 becomes 1.01. Both are accepted scale conversion under this loader policy, while malformed, blank and negative amounts are rejected. The loader result includes AmountText and ParsedAmount together. Strict source-scale rejection needs a separate policy."
+              "Run `rounding-lab.sql`: raw 1.004 becomes `decimal(12,2)` 1.00; raw 1.005 becomes 1.01. Both are accepted scale conversion under this loader policy, while malformed, blank and negative amounts are rejected. The loader result includes `AmountText` and `ParsedAmount` together. Strict source-scale rejection needs a separate policy."
             ]
           }
         ],
@@ -72842,16 +72842,16 @@ const LEARNING_PATHS = [
           {
             "title": "Model",
             "paragraphs": [
-              "UNION ALL concatenates input rows and preserves duplicates; UNION removes duplicates across all selected columns. EXCEPT returns distinct left-side rows absent from the right; INTERSECT returns distinct shared rows. These compare selected values, not hidden record identity. Matching keys alone can miss changed amounts.",
-              "EXISTS is a good fit for \"does this customer have any order?\" because it does not expand the outer population. A scalar subquery must return at most one value per outer row; a many-row result raises an error. Do not hide uncertainty with an arbitrary TOP without deterministic ordering.",
-              "APPLY evaluates a right-side table expression in relation to each left row. CROSS APPLY retains rows with a right result; OUTER APPLY also preserves left rows without one. This is useful for a latest order per customer, but does not guarantee a particular physical execution strategy."
+              "`UNION ALL` concatenates input rows and preserves duplicates; `UNION` removes duplicates across all selected columns. `EXCEPT` returns distinct left-side rows absent from the right; `INTERSECT` returns distinct shared rows. These compare selected values, not hidden record identity. Matching keys alone can miss changed amounts.",
+              "`EXISTS` is a good fit for \"does this customer have any order?\" because it does not expand the outer population. A scalar subquery must return at most one value per outer row; a many-row result raises an error. Do not hide uncertainty with an arbitrary `TOP` without deterministic ordering.",
+              "`APPLY` evaluates a right-side table expression in relation to each left row. `CROSS APPLY` retains rows with a right result; `OUTER APPLY` also preserves left rows without one. This is useful for a latest order per customer, but does not guarantee a particular physical execution strategy."
             ],
             "example": ""
           },
           {
             "title": "Example",
             "paragraphs": [
-              "OUTER APPLY returns four customer rows including Dia. Changing it to CROSS APPLY removes Dia. The OrderId tie-breaker makes the TOP selection deliberate.",
+              "`OUTER APPLY` returns four customer rows including Dia. Changing it to `CROSS APPLY` removes Dia. The `OrderId` tie-breaker makes the `TOP` selection deliberate.",
               "Set comparison treats NULLs as equal for distinctness in these operators. That differs from ordinary equality predicates and matters when checking snapshots containing nullable columns. The comparable columns also need compatible types and intended collation."
             ],
             "example": "SELECT c.CustomerId, recent.OrderId, recent.Amount\nFROM #LNCustomers c\nOUTER APPLY (\n SELECT TOP(1) o.OrderId,o.Amount FROM #LNOrders o\n WHERE o.CustomerId=c.CustomerId ORDER BY o.OrderDate DESC,o.OrderId DESC\n) recent ORDER BY c.CustomerId;\n--1/102/50,2/104/120,3/105/40,4/NULL/NULL"
@@ -72859,7 +72859,7 @@ const LEARNING_PATHS = [
           {
             "title": "Tradeoffs",
             "paragraphs": [
-              "EXCEPT is excellent for finding differences, but it does not report how many duplicate copies existed. Validate uniqueness separately. Likewise, UNION can hide a replayed payment if the selected values happen to match; replay handling belongs to business keys, not accidental row equality."
+              "`EXCEPT` is excellent for finding differences, but it does not report how many duplicate copies existed. Validate uniqueness separately. Likewise, `UNION` can hide a replayed payment if the selected values happen to match; replay handling belongs to business keys, not accidental row equality."
             ],
             "example": ""
           }
@@ -72903,16 +72903,16 @@ const LEARNING_PATHS = [
           {
             "title": "Model",
             "paragraphs": [
-              "LAG accesses a preceding row in a specified order; LEAD accesses a following row. The first LAG result is NULL unless a default is supplied. Replacing this with zero changes the meaning from \"no previous observation\" to a numerical baseline, so choose deliberately.",
-              "ROWS BETWEEN 1 PRECEDING AND CURRENT ROW means at most two rows, even if they are minutes or months apart. A seven-row mean is not a seven-day mean when dates are missing or several observations share a date. For calendar windows, define a calendar or explicit time-range join.",
-              "With an ORDER BY, an aggregate window's implicit frame can include peers under RANGE semantics. Explicit ROWS plus a stable tie-breaker is the clearer running-row contract. Ranking ties, peer totals and running sequence are separate requirements."
+              "`LAG` accesses a preceding row in a specified order; `LEAD` accesses a following row. The first `LAG` result is `NULL` unless a default is supplied. Replacing this with zero changes the meaning from \"no previous observation\" to a numerical baseline, so choose deliberately.",
+              "`ROWS BETWEEN 1 PRECEDING AND CURRENT ROW` means at most two rows, even if they are minutes or months apart. A seven-row mean is not a seven-day mean when dates are missing or several observations share a date. For calendar windows, define a calendar or explicit time-range join.",
+              "With an `ORDER BY`, an aggregate window's implicit frame can include peers under `RANGE` semantics. Explicit `ROWS` plus a stable tie-breaker is the clearer running-row contract. Ranking ties, peer totals and running sequence are separate requirements."
             ],
             "example": ""
           },
           {
             "title": "Example",
             "paragraphs": [
-              "The sample has five rows ordered by date then identifier. Its two-row sums are 100, 150, 130, 200 and 160. These are adjacent-order amounts across all customers; adding PARTITION BY CustomerId changes the question.",
+              "The sample has five rows ordered by date then identifier. Its two-row sums are 100, 150, 130, 200 and 160. These are adjacent-order amounts across all customers; adding `PARTITION BY CustomerId` changes the question.",
               "A gaps-and-islands problem first defines adjacency, such as consecutive calendar days or consecutive event sequence numbers. Deduplicate to the intended grain before labelling islands. Otherwise repeated dates can create misleading sequence differences."
             ],
             "example": "SELECT OrderId,OrderDate,Amount,\n LAG(Amount) OVER(ORDER BY OrderDate,OrderId) AS PreviousAmount,\n SUM(Amount) OVER(ORDER BY OrderDate,OrderId ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) AS TwoRows\nFROM #LNOrders ORDER BY OrderDate,OrderId;\n--TwoRows: 100, 150, 130, 200, 160"
@@ -72964,7 +72964,7 @@ const LEARNING_PATHS = [
             "title": "Model",
             "paragraphs": [
               "Sargability describes whether a predicate can support useful search arguments on an access structure. Avoid unnecessary functions or implicit conversions on indexed columns. Match parameter types to column types so the engine does not have to convert the column for comparison. This helps possibilities; it does not force an index seek.",
-              "For the query \"one customer during a date range,\" an index beginning with CustomerId then OrderDate is a candidate. Amount is output only, so it can be included. Reversing the key order may help other date-only queries instead. Index order is a workload trade-off, not a universal selectivity slogan.",
+              "For the query \"one customer during a date range,\" an index beginning with `CustomerId` then `OrderDate` is a candidate. Amount is output only, so it can be included. Reversing the key order may help other date-only queries instead. Index order is a workload trade-off, not a universal selectivity slogan.",
               "Statistics help estimate cardinality, meaning how many rows flow through an operator. A histogram describes the leading statistics key and has limited steps; skew and correlation can still make estimates inaccurate. An index existing does not imply its estimates represent today's data."
             ],
             "example": ""
@@ -72987,9 +72987,9 @@ const LEARNING_PATHS = [
           {
             "title": "Explain why the same query can choose different work",
             "paragraphs": [
-              "Imagine 100,000 rows: 99,900 have status Closed and 100 have status Open. A noncovering index on status can be useful for Open but require many lookups for Closed. The predicate text is unchanged; the value distribution changes how much work each access path implies. An index is not automatically useful because a WHERE clause mentions its first column.",
+              "Imagine 100,000 rows: 99,900 have status Closed and 100 have status Open. A noncovering index on status can be useful for Open but require many lookups for Closed. The predicate text is unchanged; the value distribution changes how much work each access path implies. An index is not automatically useful because a `WHERE` clause mentions its first column.",
               "In an isolated copy of the training data, compare the two parameter values with actual plans and logical reads. Record returned rows separately from rows read. Repeat after changing the distribution and updating statistics through the supported lab procedure. A tiny teaching table may legitimately scan; do not force an index to make the illustration look successful.",
-              "Now add a covering column and compare write cost and storage as well as read work. The question is whether this workload benefits, not whether a plan contains the word Seek. Use query-store-lab.sql to distinguish one execution's observations from a historical change."
+              "Now add a covering column and compare write cost and storage as well as read work. The question is whether this workload benefits, not whether a plan contains the word Seek. Use `query-store-lab.sql` to distinguish one execution's observations from a historical change."
             ]
           }
         ],
@@ -73032,9 +73032,9 @@ const LEARNING_PATHS = [
           {
             "title": "Model",
             "paragraphs": [
-              "A procedure contract includes permitted input ranges, result columns, expected row counts and error semantics. \"It returned no SQL exception\" is insufficient if an update silently matched zero rows. Check @@ROWCOUNT immediately after the modification.",
-              "Choose whether a procedure owns the transaction or participates in its caller's transaction. This lab explicitly owns it and rejects an outer transaction. SQL Server nested BEGIN TRAN statements do not provide independent inner transactions: an unqualified ROLLBACK can undo the outer work. A composable production design needs an intentional savepoint/transaction-state policy.",
-              "TRY/CATCH handles many execution errors, but not every failure at the same execution level. Compile errors and client disconnections need application handling too. In CATCH, inspect transaction state, roll back owned work as appropriate, and THROW so the caller does not mistake failure for success."
+              "A procedure contract includes permitted input ranges, result columns, expected row counts and error semantics. \"It returned no SQL exception\" is insufficient if an update silently matched zero rows. Check `@@ROWCOUNT` immediately after the modification.",
+              "Choose whether a procedure owns the transaction or participates in its caller's transaction. This lab explicitly owns it and rejects an outer transaction. SQL Server nested `BEGIN TRAN` statements do not provide independent inner transactions: an unqualified `ROLLBACK` can undo the outer work. A composable production design needs an intentional savepoint/transaction-state policy.",
+              "`TRY`/`CATCH` handles many execution errors, but not every failure at the same execution level. Compile errors and client disconnections need application handling too. In `CATCH`, inspect transaction state, roll back owned work as appropriate, and `THROW` so the caller does not mistake failure for success."
             ],
             "example": ""
           },
@@ -73093,15 +73093,15 @@ const LEARNING_PATHS = [
             "title": "Model",
             "paragraphs": [
               "A watermark such as \"latest ingestion timestamp\" helps select work but does not identify an event. Events can arrive late, clocks can differ, and a retry can replay an earlier batch. Keep stable source/event identifiers and a defined revision policy.",
-              "Distinguish identical duplicates from conflicting reuse of the same identifier. Two copies of E1 with amount 10 are a replay; E1 with 10 and 11 is a conflict requiring investigation or an explicit correction event. Choosing MAX(amount) would invent a business decision.",
-              "A target unique key is a last line of defence. NOT EXISTS avoids known rows in this single-session demonstration, but two simultaneous sessions can both observe absence. A production loader needs transaction/isolation design and duplicate-conflict handling; merely adding WHERE NOT EXISTS is not a concurrency proof."
+              "Distinguish identical duplicates from conflicting reuse of the same identifier. Two copies of E1 with amount 10 are a replay; E1 with 10 and 11 is a conflict requiring investigation or an explicit correction event. Choosing `MAX(amount)` would invent a business decision.",
+              "A target unique key is a last line of defence. `NOT EXISTS` avoids known rows in this single-session demonstration, but two simultaneous sessions can both observe absence. A production loader needs transaction/isolation design and duplicate-conflict handling; merely adding `WHERE NOT EXISTS` is not a concurrency proof."
             ],
             "example": ""
           },
           {
             "title": "Example",
             "paragraphs": [
-              "Run this snippet twice without replacing #LNReplayTarget. The first inserts two events; the second inserts none; the total stays 30. If you change E1 to 11, this simple loader skips it without detecting the conflict, demonstrating an intentional limitation.",
+              "Run this snippet twice without replacing `#LNReplayTarget`. The first inserts two events; the second inserts none; the total stays 30. If you change E1 to 11, this simple loader skips it without detecting the conflict, demonstrating an intentional limitation.",
               "The advanced capstone adds explicit validation, conflict and replay checks. Keep source observations long enough to explain why a row was accepted, rejected, quarantined or already processed."
             ],
             "example": "IF OBJECT_ID('tempdb..#LNReplayTarget') IS NULL\n CREATE TABLE #LNReplayTarget(EventId nvarchar(20) NOT NULL PRIMARY KEY,Amount decimal(12,2) NOT NULL);\nINSERT #LNReplayTarget(EventId,Amount)\nSELECT s.EventId,s.Amount FROM (VALUES(N'E1',CAST(10 AS decimal(12,2))),(N'E2',CAST(20 AS decimal(12,2)))) s(EventId,Amount)\nWHERE NOT EXISTS(SELECT 1 FROM #LNReplayTarget t WHERE t.EventId=s.EventId);\nSELECT @@ROWCOUNT AS InsertedNow;\nSELECT COUNT(*) AS Events,SUM(Amount) AS Total FROM #LNReplayTarget;\n--First run 2, then 0; target always 2/30. Single-session demo only."
@@ -73116,7 +73116,7 @@ const LEARNING_PATHS = [
           {
             "title": "Visible decimal normalization",
             "paragraphs": [
-              "Run rounding-lab.sql: raw 1.004 becomes decimal(12,2) 1.00; raw 1.005 becomes 1.01. Both are accepted scale conversion under this loader policy, while malformed, blank and negative amounts are rejected. The loader result includes AmountText and ParsedAmount together. Strict source-scale rejection needs a separate policy."
+              "Run `rounding-lab.sql`: raw 1.004 becomes `decimal(12,2)` 1.00; raw 1.005 becomes 1.01. Both are accepted scale conversion under this loader policy, while malformed, blank and negative amounts are rejected. The loader result includes `AmountText` and `ParsedAmount` together. Strict source-scale rejection needs a separate policy."
             ]
           }
         ],
@@ -73168,7 +73168,7 @@ const LEARNING_PATHS = [
             "title": "Example",
             "paragraphs": [
               "The diagnostic queries read options and known plans. An empty plan result can reflect capture settings, a new database or lack of applicable workload; it does not prove there were no queries. Do not enable or reconfigure Query Store on a shared system for this lesson.",
-              "Synthetic incident: planA averages 5 ms for 100 executions and planB averages 50 ms for 2. Combined mean is(500+100)/102, about 5.882 ms, not 27.5 ms. This arithmetic lesson is independent of whether your training database has captured plans."
+              "Synthetic incident: `planA` averages 5 ms for 100 executions and `planB` averages 50 ms for 2. Combined mean is (500+100)/102, about 5.882 ms, not 27.5 ms. This arithmetic lesson is independent of whether your training database has captured plans."
             ],
             "example": "--Read-only diagnostics in the selected training database; permission may be required.\nSELECT DB_NAME() AS DatabaseName,actual_state_desc,desired_state_desc,\n current_storage_size_mb,max_storage_size_mb\nFROM sys.database_query_store_options;\nSELECT TOP(10) q.query_id,p.plan_id,p.is_forced_plan,qt.query_sql_text\nFROM sys.query_store_query q\nJOIN sys.query_store_query_text qt ON qt.query_text_id=q.query_text_id\nJOIN sys.query_store_plan p ON p.query_id=q.query_id\nORDER BY q.query_id DESC,p.plan_id DESC;\n--State, row count and contents depend on the instance; no fixed result is promised."
           },
@@ -73182,14 +73182,14 @@ const LEARNING_PATHS = [
           {
             "title": "Runnable opt-in engine experiment",
             "paragraphs": [
-              "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
+              "The downloadable `concurrency-lab.md` gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local `#LN` tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
               "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
             ]
           },
           {
             "title": "Match the measured workload reliably",
             "paragraphs": [
-              "The downloadable lab identifies its dedicated procedure by object_id in Query Store. Exact text matching can miss automatically parameterized statements, while an inspection query can accidentally match its own text. Require captured successful runtime executions for the workload, not merely a matching query-text row. See engine-verification.md for the reproduced defect and negative control."
+              "The downloadable lab identifies its dedicated procedure by `object_id` in Query Store. Exact text matching can miss automatically parameterized statements, while an inspection query can accidentally match its own text. Require captured successful runtime executions for the workload, not merely a matching query-text row. See `engine-verification.md` for the reproduced defect and negative control."
             ]
           }
         ],
@@ -73270,7 +73270,7 @@ const LEARNING_PATHS = [
           {
             "title": "Runnable opt-in engine experiment",
             "paragraphs": [
-              "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
+              "The downloadable `concurrency-lab.md` gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local `#LN` tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
               "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
             ]
           },
@@ -73278,7 +73278,7 @@ const LEARNING_PATHS = [
             "title": "Predict a two-session schedule before running it",
             "paragraphs": [
               "At version 8, balance is 100. Session A reads it and plans +10; B reads it and plans +20. If both send unconditional replacement values, A can write 110 and B then write 120, losing 10. With a version predicate, the second replacement affects zero rows. That result is a conflict requiring a fresh decision, not success with an unchanged row.",
-              "Use session-a.sql and session-b.sql from the concurrency lab. Pause at the supplied boundaries and note the order of reads, writes and commits. An atomic UPDATE balance = balance + delta addresses this particular arithmetic race; it does not automatically protect a rule involving several rows or an external payment.",
+              "Use `session-a.sql` and `session-b.sql` from the concurrency lab. Pause at the supplied boundaries and note the order of reads, writes and commits. An atomic `UPDATE` with `balance = balance + delta` addresses this particular arithmetic race; it does not automatically protect a rule involving several rows or an external payment.",
               "Change the task to reserving the last available seat. Decide which predicate must remain true at the write and which constraint remains a final guard. A test with two sequential successful reads is not concurrent evidence; keep both sessions open at the documented interleaving."
             ]
           }
@@ -73691,7 +73691,7 @@ const LEARNING_PATHS = [
           {
             "title": "Runnable opt-in engine experiment",
             "paragraphs": [
-              "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
+              "The downloadable `concurrency-lab.md` gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local `#LN` tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
               "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
             ]
           }
@@ -73839,8 +73839,8 @@ const LEARNING_PATHS = [
           {
             "title": "Model",
             "paragraphs": [
-              "Use parameters for values such as customer identifiers and amounts. A parameter cannot stand in for a table name or ORDER BY column identifier. If dynamic structure is required, select it from a fixed allowlist and quote the identifier; keep values parameterized.",
-              "A login authenticates at server scope and a database user represents access in a database, subject to the platform's authentication model. Roles group permissions. Grant the narrow operations the application requires, such as execution of a vetted procedure, instead of db_owner or sysadmin for convenience.",
+              "Use parameters for values such as customer identifiers and amounts. A parameter cannot stand in for a table name or `ORDER BY` column identifier. If dynamic structure is required, select it from a fixed allowlist and quote the identifier; keep values parameterized.",
+              "A login authenticates at server scope and a database user represents access in a database, subject to the platform's authentication model. Roles group permissions. Grant the narrow operations the application requires, such as execution of a vetted procedure, instead of `db_owner` or `sysadmin` for convenience.",
               "Execution through a procedure can involve ownership chaining or other execution-context rules. Dynamic SQL can behave differently from static statements in that permission model. Test with the intended low-privilege identity, not only an administrator account."
             ],
             "example": ""
@@ -73848,7 +73848,7 @@ const LEARNING_PATHS = [
           {
             "title": "Example",
             "paragraphs": [
-              "The example allows only Amount or OrderId as a sort column and passes @Minimum independently. QUOTENAME handles identifier quoting, but it does not decide whether a caller should be allowed to request an identifier: that is the allowlist's purpose.",
+              "The example allows only `Amount` or `OrderId` as a sort column and passes `@Minimum` independently. `QUOTENAME` handles identifier quoting, but it does not decide whether a caller should be allowed to request an identifier: that is the allowlist's purpose.",
               "The exercise changes no users or grants. For a real training permissions lab, have an administrator provision a dedicated user/role and test allowed/denied actions against a disposable schema. Do not create a powerful account as a shortcut."
             ],
             "example": "DECLARE @RequestedSort sysname=N'Amount',@Minimum decimal(12,2)=80;\nIF @RequestedSort NOT IN(N'Amount',N'OrderId') OR @RequestedSort IS NULL\n THROW 51200,'Unsupported sort column.',1;\nDECLARE @Sql nvarchar(max)=N'SELECT OrderId,Amount FROM #LNOrders WHERE Amount>=@Min ORDER BY '\n +QUOTENAME(@RequestedSort)+CASE WHEN @RequestedSort=N'Amount' THEN N',OrderId;' ELSE N';' END;\nEXEC sys.sp_executesql @Sql,N'@Min decimal(12,2)',@Min=@Minimum;\n--103/80,101/100,104/120. Values are parameters; identifier is allowlisted then quoted."
@@ -73901,14 +73901,14 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "An expand-and-contract migration first adds compatible structure, deploys writers/readers that understand it, backfills existing rows, validates them, and only later removes obsolete structure. Renaming or dropping a column while older application instances still use it can break a rolling deployment.",
               "A migration history needs stable identifiers and a record of what was applied. An existence check alone is insufficient: a column may exist with the wrong type, nullability or meaning. Check expected preconditions and fail visibly when the actual schema diverges.",
-              "Backfilling currency illustrates the danger of a convenient default. In this synthetic fixture we stipulate USD; real records require authoritative currency evidence. For a large table, plan bounded batches, log growth, locks and application compatibility instead of assuming one giant UPDATE is harmless."
+              "Backfilling currency illustrates the danger of a convenient default. In this synthetic fixture we stipulate USD; real records require authoritative currency evidence. For a large table, plan bounded batches, log growth, locks and application compatibility instead of assuming one giant `UPDATE` is harmless."
             ],
             "example": ""
           },
           {
             "title": "Example",
             "paragraphs": [
-              "The lab changes only a temporary copy. It adds a nullable column, fills it under the fixture contract, verifies no NULL remains, then tightens nullability. Count and amount stay 5 and 390.",
+              "The lab changes only a temporary copy. It adds a nullable column, fills it under the fixture contract, verifies no `NULL` remains, then tightens nullability. Count and amount stay 5 and 390.",
               "This is a shape-of-migration demonstration, not a production deployment script. Index rebuilds and schema modifications may require stronger locks and version-specific capabilities; verify on a representative training environment."
             ],
             "example": "IF OBJECT_ID('tempdb..#LNMigrationWork') IS NOT NULL DROP TABLE #LNMigrationWork;\nSELECT OrderId,Amount INTO #LNMigrationWork FROM #LNOrders;\nALTER TABLE #LNMigrationWork ADD CurrencyCode char(3) NULL;\n--Fixture contract explicitly says one synthetic currency; choose USD only for this lab.\nUPDATE #LNMigrationWork SET CurrencyCode='USD' WHERE CurrencyCode IS NULL;\nIF EXISTS(SELECT 1 FROM #LNMigrationWork WHERE CurrencyCode IS NULL)\n THROW 51210,'Backfill incomplete.',1;\nALTER TABLE #LNMigrationWork ALTER COLUMN CurrencyCode char(3) NOT NULL;\nSELECT COUNT(*) AS Rows,SUM(Amount) AS Total FROM #LNMigrationWork; --5/390"
@@ -74049,8 +74049,8 @@ const LEARNING_PATHS = [
           {
             "title": "Model",
             "paragraphs": [
-              "Download advanced-lab.sql and advanced-solutions.sql. Run the foundation setup first, then the advanced fixture in the same SQL session. This second fixture is intentionally different from the foundation payments: six raw rows include an exact duplicate, an orphan and an invalid amount. Do not compare its 215 accepted amount with the earlier 265 matched total as if they were the same dataset.",
-              "Keep raw rows immutable for the run. Parse types while retaining original text, identify conflicting payloads per business key, distinguish duplicate copies, then classify invalid and orphan records before loading accepted events. A rejected row must remain traceable to its RawRowId and reason.",
+              "Download `advanced-lab.sql` and `advanced-solutions.sql`. Run the foundation setup first, then the advanced fixture in the same SQL session. This second fixture is intentionally different from the foundation payments: six raw rows include an exact duplicate, an orphan and an invalid amount. Do not compare its 215 accepted amount with the earlier 265 matched total as if they were the same dataset.",
+              "Keep raw rows immutable for the run. Parse types while retaining original text, identify conflicting payloads per business key, distinguish duplicate copies, then classify invalid and orphan records before loading accepted events. A rejected row must remain traceable to its `RawRowId` and reason.",
               "The downloadable solution uses a conservative payload conflict rule: different amount strings under the same event key are conflicts, even when they might parse to equal amounts. It permits decimal scale conversion during parsing. Those are explicit teaching policies, not universal financial-import rules. A stricter input format/scale rule should be added if the source contract requires it."
             ],
             "example": ""
@@ -74074,29 +74074,29 @@ const LEARNING_PATHS = [
           {
             "title": "Runnable opt-in engine experiment",
             "paragraphs": [
-              "The downloadable concurrency-lab.md gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local #LN tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
+              "The downloadable `concurrency-lab.md` gives a dedicated disposable database with explicit opt-in, two guarded session scripts, timed schedules, expected assertions and ownership-checked cleanup. Use separate A/B connections; existing session-local `#LN` tables cannot demonstrate a shared-row race. Record actual engine results rather than labeling the expected schedule as executed evidence.",
               "The lab contrasts dirty/committed reads, demonstrates stale read-modify-write loss and an atomic increment remedy, and forces a low-priority deadlock victim with whole-transaction rollback. The Query Store script captures repeated identical query text before/after an index and returns persisted plans, runtime intervals and metrics; no particular speedup or plan shape is promised."
             ]
           },
           {
             "title": "Visible decimal normalization",
             "paragraphs": [
-              "Run rounding-lab.sql: raw 1.004 becomes decimal(12,2) 1.00; raw 1.005 becomes 1.01. Both are accepted scale conversion under this loader policy, while malformed, blank and negative amounts are rejected. The loader result includes AmountText and ParsedAmount together. Strict source-scale rejection needs a separate policy."
+              "Run `rounding-lab.sql`: raw 1.004 becomes `decimal(12,2)` 1.00; raw 1.005 becomes 1.01. Both are accepted scale conversion under this loader policy, while malformed, blank and negative amounts are rejected. The loader result includes `AmountText` and `ParsedAmount` together. Strict source-scale rejection needs a separate policy."
             ]
           },
           {
             "title": "Diagnose a plausible reconciliation result",
             "paragraphs": [
               "A join duplicates one 100-unit order and drops a different 100-unit order. The total remains correct, but the report is wrong. Reconcile business keys and multiplicity as well as aggregate amounts. Count source-only, target-only and duplicated IDs before declaring that a zero total difference means success.",
-              "Construct this fixture using temporary tables in a separate query window: source IDs A=100, B=100, C=50; faulty output A=100, A=100, C=50. Both sums are 250 and both row counts are three. Group by ID to reveal A twice and B absent. Repair the join rather than applying DISTINCT blindly: legitimate equal-valued orders must remain separate.",
+              "Construct this fixture using temporary tables in a separate query window: source IDs A=100, B=100, C=50; faulty output A=100, A=100, C=50. Both sums are 250 and both row counts are three. Group by ID to reveal A twice and B absent. Repair the join rather than applying `DISTINCT` blindly: legitimate equal-valued orders must remain separate.",
               "Transfer the test to a replayed batch: a second run must preserve the same IDs and values, while changed content under an existing batch identity must follow the explicit conflict policy. Submit actual engine output for these cases; source inspection does not establish isolation or rollback behaviour."
             ]
           },
           {
             "title": "Build the classifier before the loader",
             "paragraphs": [
-              "First return RawRowId and ParsedAmount only. TRY_CONVERT returns NULL for a failed supported conversion; NULLIF turns a blank trimmed field into NULL before conversion. Next add the known-order join and classify invalid and orphan rows. Only then add ROW_NUMBER partitioned by EventId to distinguish repeated copies. Keep the within-key conflict rule ahead of the duplicate rule so conflicting copies do not become silently accepted duplicates.",
-              "Check the six dispositions before adding INSERT or BEGIN TRAN. The earlier CTE, window, CASE and replay lessons supply these separate parts. After the classification is correct, insert only accepted events, then test the second pass. This order gives a wrong classification a smaller place to hide."
+              "First return `RawRowId` and `ParsedAmount` only. `TRY_CONVERT` returns `NULL` for a failed supported conversion; `NULLIF` turns a blank trimmed field into `NULL` before conversion. Next add the known-order join and classify invalid and orphan rows. Only then add `ROW_NUMBER` partitioned by `EventId` to distinguish repeated copies. Keep the within-key conflict rule ahead of the duplicate rule so conflicting copies do not become silently accepted duplicates.",
+              "Check the six dispositions before adding `INSERT` or `BEGIN TRAN`. The earlier CTE, window, CASE and replay lessons supply these separate parts. After the classification is correct, insert only accepted events, then test the second pass. This order gives a wrong classification a smaller place to hide."
             ]
           }
         ],
@@ -75494,7 +75494,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "An index provides an additional access structure. An index on (user_id, updated_at, lesson_id) can support a user-scoped ordered history, depending on the engine and query. An index on a low-selectivity field alone may not help. Read the actual execution plan and compare representative data; a tiny development table can conceal a scan that becomes expensive later."
+              "An index provides an additional access structure. An index on `(user_id, updated_at, lesson_id)` can support a user-scoped ordered history, depending on the engine and query. An index on a low-selectivity field alone may not help. Read the actual execution plan and compare representative data; a tiny development table can conceal a scan that becomes expensive later."
             ]
           },
           {
@@ -75631,7 +75631,7 @@ const LEARNING_PATHS = [
             "title": "A cache key is part of the correctness contract",
             "paragraphs": [
               "A public workshop list and a private learner's bookings are different cache problems. Keying private results only by URL can return Alice's bookings to Bob. Adding user identity addresses one distinction, but permissions can change while the entry lives. Choose whether to cache this response at all before choosing its TTL.",
-              "For a public remaining-seat display, a stale value may be acceptable for browsing if the booking transaction rechecks capacity. It is not acceptable to let a cache authorize the last seat. The booking_lab.py reference keeps the invariant at the write boundary. Insert a deliberately stale display value into your caller and prove the second booking still fails.",
+              "For a public remaining-seat display, a stale value may be acceptable for browsing if the booking transaction rechecks capacity. It is not acceptable to let a cache authorize the last seat. The `booking_lab.py` reference keeps the invariant at the write boundary. Insert a deliberately stale display value into your caller and prove the second booking still fails.",
               "Changed case: an administrator cancels the workshop. Describe which cached views may temporarily lag and which operations must consult authoritative state. A short TTL bounds some stale exposure; it does not turn a stale authorization decision into a correct one."
             ]
           }
@@ -76335,7 +76335,7 @@ const LEARNING_PATHS = [
           {
             "title": "Concept",
             "paragraphs": [
-              "Partitioning divides data; sharding commonly means distributing partitions across separate database resources. Hashing user_id can spread many learners, but all activity for a large tenant or celebrity workshop may still create a hot key. Range partitioning supports range access but can concentrate new writes. Partition choice must reflect access patterns, growth and workload skew rather than only even record counts."
+              "Partitioning divides data; sharding commonly means distributing partitions across separate database resources. Hashing `user_id` can spread many learners, but all activity for a large tenant or celebrity workshop may still create a hot key. Range partitioning supports range access but can concentrate new writes. Partition choice must reflect access patterns, growth and workload skew rather than only even record counts."
             ]
           },
           {
@@ -76409,7 +76409,7 @@ const LEARNING_PATHS = [
           {
             "title": "Connect the timeline to the local test",
             "paragraphs": [
-              "After predicting the one-seat outcome, run the selected BookingTests command in the intermediate practice card. The race case opens separate database connections, the rollback case injects a failure after the decrement, and the replay case keeps the request key unchanged. Read those assertions before the implementation. The same kit also contains outbox code; its delivery behavior belongs to the later outbox lesson."
+              "After predicting the one-seat outcome, run the selected `BookingTests` command in the intermediate practice card. The race case opens separate database connections, the rollback case injects a failure after the decrement, and the replay case keeps the request key unchanged. Read those assertions before the implementation. The same kit also contains outbox code; its delivery behavior belongs to the later outbox lesson."
             ]
           }
         ],
@@ -77145,7 +77145,7 @@ const LEARNING_PATHS = [
             "title": "Distinguish a faster worker from a stable queue",
             "paragraphs": [
               "Arrivals average 12 jobs per second and a worker completes 10. After 60 seconds, a constant-rate model predicts 120 queued jobs. Reducing each job's processing time by 10% yields about 11.1 jobs per second, so the queue still grows. An optimisation can improve latency in a small benchmark while leaving the system unstable under the actual arrival rate.",
-              "Run capacity_calculator.py to check the arithmetic, then change the arrival rate to 8 and calculate drain time. Keep the initial backlog: an empty-queue benchmark hides the recovery period. Compare three decisions: add capacity, reject excess work, or accept delay within a bounded queue. Each changes a user-visible promise.",
+              "Run `capacity_calculator.py` to check the arithmetic, then change the arrival rate to 8 and calculate drain time. Keep the initial backlog: an empty-queue benchmark hides the recovery period. Compare three decisions: add capacity, reject excess work, or accept delay within a bounded queue. Each changes a user-visible promise.",
               "For an implementation extension, cap an in-memory queue at a small capacity, make a worker wait on an event, and submit more requests than the cap. Assert explicit rejection and eventual draining after release. Avoid sleeps as evidence of ordering; use events. This proves admission behaviour locally, not internet-scale capacity."
             ]
           }
@@ -77243,14 +77243,14 @@ const LEARNING_PATHS = [
             "title": "Tradeoffs",
             "paragraphs": [
               "A saga coordinates a longer workflow through local transactions and compensating actions. A compensating action addresses the effects of an earlier step. Cancelling a reservation, for example, does not erase an email someone already read. Define pending and failed states, retries, manual review and reconciliation. Distributed transactions are a separate option with coordination and availability costs; avoid presenting sagas as universally superior.",
-              "Optionally run booking-lab.md and test_booking_lab.py to observe concurrent last-seat booking, durable key replay, rollback between writes and duplicate outbox delivery on a local SQLite database."
+              "Optionally run `booking-lab.md` and `test_booking_lab.py` to observe concurrent last-seat booking, durable key replay, rollback between writes and duplicate outbox delivery on a local SQLite database."
             ]
           },
           {
             "title": "Try the crash sequence before opening the lab",
             "paragraphs": [
               "Use the optional booking lab to connect lessons 15 through 19. Assume the booking, caller-scoped request key and outbox event commit together. The response is lost, the client retries the same key, and the relay then crashes after publication but before recording success. Predict the booking count, remaining seats and number of event deliveries after replay.",
-              "For a one-seat workshop, the invariant is one booking and zero remaining seats. The relay can deliver the same event twice. A consumer must keep the business effect safe on replay. Run python -m unittest -v test_booking_lab.py from the extracted System Design practice folder, then inspect test_response_loss_replay_and_intent_conflict and test_outbox_replay_requires_consumer_deduplication. These tests cover the two failure boundaries separately; they do not prove atomic delivery to an external provider."
+              "For a one-seat workshop, the invariant is one booking and zero remaining seats. The relay can deliver the same event twice. A consumer must keep the business effect safe on replay. Run `python -m unittest -v test_booking_lab.py` from the extracted System Design practice folder, then inspect `test_response_loss_replay_and_intent_conflict` and `test_outbox_replay_requires_consumer_deduplication`. These tests cover the two failure boundaries separately; they do not prove atomic delivery to an external provider."
             ]
           }
         ],
@@ -77465,7 +77465,7 @@ const LEARNING_PATHS = [
           {
             "title": "Repeat the threat-model pass",
             "paragraphs": [
-              "Complete practice/threat-model-worksheet.md: asset and invariant, trust boundary, concrete abuse sequence, mitigation owner, allowed/denied test and residual risk. Repeat after boundary changes. Label planned tests versus executed evidence."
+              "Complete `practice/threat-model-worksheet.md`: asset and invariant, trust boundary, concrete abuse sequence, mitigation owner, allowed/denied test and residual risk. Repeat after boundary changes. Label planned tests versus executed evidence."
             ]
           }
         ],
@@ -77893,7 +77893,7 @@ const LEARNING_PATHS = [
           {
             "title": "Repeat the threat-model pass",
             "paragraphs": [
-              "Complete practice/threat-model-worksheet.md: asset and invariant, trust boundary, concrete abuse sequence, mitigation owner, allowed/denied test and residual risk. Repeat after boundary changes. Label planned tests versus executed evidence."
+              "Complete `practice/threat-model-worksheet.md`: asset and invariant, trust boundary, concrete abuse sequence, mitigation owner, allowed/denied test and residual risk. Repeat after boundary changes. Label planned tests versus executed evidence."
             ]
           },
           {
@@ -81435,7 +81435,7 @@ const LEARNING_PATHS = [
           {
             "title": "Arrange, act and assert",
             "paragraphs": [
-              "A fixture prepares the situation, the action invokes the subject, and assertions compare results with the contract. unittest collects independent methods on TestCase; each test should fail with a useful message when one important behavior is wrong. Name the behavior, not the author's sequence number."
+              "A fixture prepares the situation, the action invokes the subject, and assertions compare results with the contract. `unittest` collects independent methods on `TestCase`; each test should fail with a useful message when one important behavior is wrong. Name the behavior, not the author's sequence number."
             ]
           },
           {
@@ -81448,7 +81448,7 @@ const LEARNING_PATHS = [
           {
             "title": "Run one complete test",
             "paragraphs": [
-              "Save this as test_my_total.py beside testing_foundation.py in the extracted kit. TestCase supplies assertEqual; the runner discovers methods whose names start with test_. Run python -m unittest -v test_my_total.py. It should report one passing test. Then write the empty-list test requested below."
+              "Save this as `test_my_total.py` beside `testing_foundation.py` in the extracted kit. `TestCase` supplies `assertEqual`; the runner discovers methods whose names start with `test_`. Run `python -m unittest -v test_my_total.py`. It should report one passing test. Then write the empty-list test requested below."
             ],
             "example": "import unittest\nfrom testing_foundation import total_minutes\n\nclass TotalTests(unittest.TestCase):\n    def test_two_records(self):\n        rows = [{\"id\": \"a\", \"minutes\": 7}, {\"id\": \"b\", \"minutes\": 2}]\n        self.assertEqual(total_minutes(rows), 9)"
           }
@@ -81497,7 +81497,7 @@ const LEARNING_PATHS = [
           {
             "title": "Types beyond ordinary integers",
             "paragraphs": [
-              "An example like 30 exercises ordinary input but says little about endpoints. Test just below, at and just above a boundary. Types form separate classes: Python True behaves like an integer in some contexts, yet the lesson's JSON contract rejects it. That decision must be tested rather than assumed."
+              "An example like 30 exercises ordinary input but says little about endpoints. Test just below, at and just above a boundary. Types form separate classes: Python `True` behaves like an integer in some contexts, yet the lesson's JSON contract rejects it. That decision must be tested rather than assumed."
             ],
             "example": "0 -> accepted\n1440 -> accepted\n1441 -> rejected\ntrue -> rejected although isinstance(True, int) is true"
           }
@@ -81540,13 +81540,13 @@ const LEARNING_PATHS = [
           {
             "title": "Errors and postconditions",
             "paragraphs": [
-              "A negative test needs an expected error and a postcondition. Rejecting malformed input is only half the contract if the function already changed a file before raising. Use assertRaises around the smallest action and inspect unchanged state afterward."
+              "A negative test needs an expected error and a postcondition. Rejecting malformed input is only half the contract if the function already changed a file before raising. Use `assertRaises` around the smallest action and inspect unchanged state afterward."
             ]
           },
           {
             "title": "Rejecting the right failure",
             "paragraphs": [
-              "Catching every exception in a test can accidentally accept an unrelated NameError as success. Assert the intended exception class, then verify that the error came from the boundary under study. Avoid depending on every word of a diagnostic unless the wording is part of the public interface."
+              "Catching every exception in a test can accidentally accept an unrelated `NameError` as success. Assert the intended exception class, then verify that the error came from the boundary under study. Avoid depending on every word of a diagnostic unless the wording is part of the public interface."
             ],
             "example": "with assertRaises(ValueError): parse_record('[]')\nAfter failed import: target still contains 'old'; replacement callback has zero calls"
           }
@@ -81644,7 +81644,7 @@ const LEARNING_PATHS = [
           {
             "title": "Preserving causes safely",
             "paragraphs": [
-              "Do not erase the original error by returning None from a blanket handler. The parser chains JSONDecodeError into a public ValueError so callers get a stable boundary while developers retain the cause. Logs used for reproduction should omit private input even when the raw exception might include it."
+              "Do not erase the original error by returning `None` from a blanket handler. The parser chains `JSONDecodeError` into a public `ValueError` so callers get a stable boundary while developers retain the cause. Logs used for reproduction should omit private input even when the raw exception might include it."
             ],
             "example": "import_batch -> parse_record -> json.loads\nPublic failure: ValueError('invalid JSON')\n__cause__: JSONDecodeError, retaining location information"
           }
@@ -81701,13 +81701,13 @@ const LEARNING_PATHS = [
             "title": "Reduce an unfamiliar missing-row report",
             "paragraphs": [
               "A user reports that a timeline loses entries when loading page two. Start with four rows: a, b and c at timestamp 5, and d at timestamp 6. With a page size of 2, the first page returns a and b, and the second returns d. Row c disappears. Network retries, authentication and thousands of production records are unnecessary to reproduce this particular symptom.",
-              "The new cursor_candidate.py is small enough to inspect after reproducing. Run python cursor_checks.py cursor_candidate to see expected failures, then repair a copy. The first test records the missing user-visible row rather than asserting how many internal sorting calls occur."
+              "The new `cursor_candidate.py` is small enough to inspect after reproducing. Run `python cursor_checks.py cursor_candidate` to see expected failures, then repair a copy. The first test records the missing user-visible row rather than asserting how many internal sorting calls occur."
             ]
           },
           {
             "title": "Observe duplicate keys before writing the rejection",
             "paragraphs": [
-              "json.loads normally returns a dictionary, which cannot retain two identical keys. Its object_pairs_hook instead receives the ordered key/value pairs while decoding each object. In the parser project, build a dictionary from those pairs and raise ValueError when a key is already present. Check the text length before decoding. This is how the project can reject both duplicate keys and oversized text.",
+              "`json.loads` normally returns a dictionary, which cannot retain two identical keys. Its `object_pairs_hook` instead receives the ordered key/value pairs while decoding each object. In the parser project, build a dictionary from those pairs and raise `ValueError` when a key is already present. Check the text length before decoding. This is how the project can reject both duplicate keys and oversized text.",
               "Try the observation below first, then add a second case with distinct keys to make sure your rejection does not forbid valid objects."
             ],
             "example": "import json\npairs = json.loads('{\"minutes\":5,\"minutes\":9}', object_pairs_hook=lambda items: items)\nprint(pairs)\n# [(\"minutes\", 5), (\"minutes\", 9)]"
@@ -81856,13 +81856,13 @@ const LEARNING_PATHS = [
           {
             "title": "Predictions and observations",
             "paragraphs": [
-              "Debugging is an experiment: make a specific prediction, choose an observation that could disprove it, and change one relevant condition. The supplied buggy_minutes has an intentional defect: it accepts booleans. A green ordinary-integer test does not distinguish this mutant from the stricter implementation."
+              "Debugging is an experiment: make a specific prediction, choose an observation that could disprove it, and change one relevant condition. The supplied `buggy_minutes` has an intentional defect: it accepts booleans. A green ordinary-integer test does not distinguish this mutant from the stricter implementation."
             ]
           },
           {
             "title": "Inspecting the boolean branch",
             "paragraphs": [
-              "A debugger can show actual values and call flow, but stepping without a question often wastes time. Put a breakpoint at the boundary, inspect type(value) and the chosen branch, then exit with a small regression case. Do not keep permanent breakpoints in a downloadable production-style path."
+              "A debugger can show actual values and call flow, but stepping without a question often wastes time. Put a breakpoint at the boundary, inspect `type(value)` and the chosen branch, then exit with a small regression case. Do not keep permanent breakpoints in a downloadable production-style path."
             ],
             "example": "Hypothesis: True passes because bool subclasses int\nObservation: isinstance(True, int) -> True\nDiscriminator: type(True) is int -> False"
           },
@@ -82173,7 +82173,7 @@ const LEARNING_PATHS = [
           {
             "title": "Controlled collaborators",
             "paragraphs": [
-              "A test double replaces a dependency so the test can control its response or observe how it is called. Our importer accepts a replacement callback, allowing a test to inject an OSError after the temporary report has been written. This lets the test control one file operation without mocking every internal helper."
+              "A test double replaces a dependency so the test can control its response or observe how it is called. Our importer accepts a replacement callback, allowing a test to inject an `OSError` after the temporary report has been written. This lets the test control one file operation without mocking every internal helper."
             ]
           },
           {
@@ -82473,7 +82473,7 @@ const LEARNING_PATHS = [
           {
             "title": "Old behavior versus corrected behavior",
             "paragraphs": [
-              "A regression test preserves the condition that previously failed and the intended user outcome. It should fail on the old behavior and pass on the fix. Our bool case distinguishes the faulty validator from parse_record's exact-type policy without requiring the entire importer to run."
+              "A regression test preserves the condition that previously failed and the intended user outcome. It should fail on the old behavior and pass on the fix. Our `bool` case distinguishes the faulty validator from `parse_record`'s exact-type policy without requiring the entire importer to run."
             ]
           },
           {
@@ -82542,7 +82542,7 @@ const LEARNING_PATHS = [
           {
             "title": "Run the missing branch",
             "paragraphs": [
-              "The optional branch workbook gives PositiveOnly and BothDirections test classes. The positive case executes every statement of label, but never takes the false direction. Adding zero covers it. Even both branches need meaningful expected-value assertions; execution is not correctness."
+              "The optional branch workbook gives `PositiveOnly` and `BothDirections` test classes. The positive case executes every statement of label, but never takes the false direction. Adding zero covers it. Even both branches need meaningful expected-value assertions; execution is not correctness."
             ]
           }
         ],
@@ -82730,7 +82730,7 @@ const LEARNING_PATHS = [
           {
             "title": "Competing reads and writes",
             "paragraphs": [
-              "A race appears when competing actions depend on an ordering the implementation does not enforce. The VersionStore test uses a Barrier so two threads read version zero before either updates. A lock protects the comparison and write as one local critical section; exactly one stale proposal can commit."
+              "A race appears when competing actions depend on an ordering the implementation does not enforce. The `VersionStore` test uses a Barrier so two threads read version zero before either updates. A lock protects the comparison and write as one local critical section; exactly one stale proposal can commit."
             ]
           },
           {
@@ -82743,8 +82743,8 @@ const LEARNING_PATHS = [
           {
             "title": "Know what each synchronization primitive contributes",
             "paragraphs": [
-              "A Thread runs a worker function. A Barrier waits until both workers have reached the same point, so both read the old version before either attempts the update. A Lock allows only one worker at a time through comparison and mutation. join waits for a worker to finish; its timeout bounds that wait but does not stop the worker. Check is_alive() afterward. This fixture also bounds the barrier wait; arbitrary blocking worker code needs its own cancellation or process-level timeout.",
-              "First read VersionStore and test it sequentially: read version 0, update with expected 0, then try expected 0 again. Expect success then conflict. Next introduce the two threads and barrier. This keeps the version rule separate from the machinery needed to expose simultaneous stale proposals."
+              "A `Thread` runs a worker function. A `Barrier` waits until both workers have reached the same point, so both read the old version before either attempts the update. A `Lock` allows only one worker at a time through comparison and mutation. `join` waits for a worker to finish; its timeout bounds that wait but does not stop the worker. Check `is_alive()` afterward. This fixture also bounds the barrier wait; arbitrary blocking worker code needs its own cancellation or process-level timeout.",
+              "First read `VersionStore` and test it sequentially: read version 0, update with expected 0, then try expected 0 again. Expect success then conflict. Next introduce the two threads and barrier. This keeps the version rule separate from the machinery needed to expose simultaneous stale proposals."
             ]
           }
         ],
@@ -82884,7 +82884,7 @@ const LEARNING_PATHS = [
           {
             "title": "Barriers and safety timeouts",
             "paragraphs": [
-              "Our concurrency test gates progress using a Barrier and joins workers with safety timeouts. The barrier timeout bounds its wait, and the join timeout lets the test detect an unfinished worker with is_alive(). A join timeout does not terminate a thread and is not the ordering mechanism. If a worker fails before reaching the barrier, report that failure before a later join timeout obscures the cause."
+              "Our concurrency test gates progress using a `Barrier` and joins workers with safety timeouts. The barrier timeout bounds its wait, and the join timeout lets the test detect an unfinished worker with `is_alive()`. A join timeout does not terminate a thread and is not the ordering mechanism. If a worker fails before reaching the barrier, report that failure before a later join timeout obscures the cause."
             ],
             "example": "Fragile: sleep(.01), assert worker finished\nControlled: Event signals readiness, release explicitly, join with bound\nEvidence: exact outcomes rather than elapsed milliseconds"
           }
@@ -82933,14 +82933,14 @@ const LEARNING_PATHS = [
           {
             "title": "Event-ordered cleanup",
             "paragraphs": [
-              "IsolatedAsyncioTestCase supplies an isolated event loop. Use events to order tasks and a short external bound to detect hangs. The guided diagnosis kit covers cancellation after acquisition and successful cleanup; the Python TaskGroup lab extends this to sibling-failure behavior."
+              "`IsolatedAsyncioTestCase` supplies an isolated event loop. Use events to order tasks and a short external bound to detect hangs. The guided diagnosis kit covers cancellation after acquisition and successful cleanup; the Python `TaskGroup` lab extends this to sibling-failure behavior."
             ],
             "example": "Child acquires resource -> readiness event\nParent cancels task -> child's finally runs\nAwait raises CancelledError -> assert cleanup marker"
           },
           {
             "title": "Observe cancellation after acquisition",
             "paragraphs": [
-              "The guided diagnosis kit includes IsolatedAsyncioTestCase tests. A started event proves acquisition before cancellation. The cancelled task must propagate CancelledError, omit committed, and append released exactly once. A separate successful test requires both committed and released. Timeouts detect hangs; they do not order the tasks."
+              "The guided diagnosis kit includes `IsolatedAsyncioTestCase` tests. A started event proves acquisition before cancellation. The cancelled task must propagate `CancelledError`, omit committed, and append released exactly once. A separate successful test requires both committed and released. Timeouts detect hangs; they do not order the tasks."
             ]
           }
         ],
@@ -84365,7 +84365,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "An interruption can be external, self-initiated or necessary. The cost includes finding the previous context again, not simply message-reading time. Research describes particular computing environments; it does not establish a universal number of minutes lost for every person and interruption.",
               "Separate necessary support interruptions from optional alerts before designing a change. Eliminating a required support call may increase uninterrupted minutes while damaging a responsibility that matters more than the draft. For the supplied session, the resumption time is observed rather than borrowed from a popular average. Keep a brief record of what had to be reconstructed: the sentence, source or checking position. Then test a local intervention such as leaving a return cue. Comparing similar sessions helps you distinguish less reconstruction work from a simpler task or fewer required calls.",
-              "A return cue is a short note that lets you restart: name the file or page, the last checked step and the next action. For example: draft.md, paragraph two checked; next verify the date in paragraph three against the booking email. Save it before an interruption when feasible. The later return-cue lesson develops this into a handoff for longer gaps."
+              "A return cue is a short note that lets you restart: name the file or page, the last checked step and the next action. For example: `draft.md`, paragraph two checked; next verify the date in paragraph three against the booking email. Save it before an interruption when feasible. The later return-cue lesson develops this into a handoff for longer gaps."
             ],
             "example": "During a 60-minute reading block, three alerts take 2 minutes each and each return takes 3 minutes. Observed disruption is 3 × (2 + 3) = 15 minutes, leaving 45 for reading. This is the recorded case, not a general interruption penalty.",
             "exampleFormat": "prose"
@@ -87139,8 +87139,8 @@ const LEARNING_PATHS = [
           {
             "title": "Debug the existing dashboard by following focus",
             "paragraphs": [
-              "Open practice/demo.html from this path's files. Tab to the title, submit blank, then enter a title and submit again. Failure should explain recovery; after success the cleared title is ready for another entry. The visible list and status should agree.",
-              "Optional fault injection: copy the practice folder, then remove input.focus() only from the successful submit branch of demo.js. Add a title with the mouse button and continue by keyboard. Compare focus with the blank-input branch, then restore the line. A test that only searches for focus() would miss which branch needs it."
+              "Open `practice/demo.html` from this path's files. Tab to the title, submit blank, then enter a title and submit again. Failure should explain recovery; after success the cleared title is ready for another entry. The visible list and status should agree.",
+              "Optional fault injection: copy the practice folder, then remove `input.focus()` only from the successful submit branch of `demo.js`. Add a title with the mouse button and continue by keyboard. Compare focus with the blank-input branch, then restore the line. A test that only searches for `focus()` would miss which branch needs it."
             ],
             "example": "Empty submit -> input focused, invalid state and error. Corrected submit -> row appended, invalid state cleared, status updated, input focused. Preview -> modal heading. Close -> trigger. Focus follows the next task; always jumping to the page top would interrupt entry.",
             "exampleFormat": "prose"
@@ -87366,8 +87366,8 @@ const LEARNING_PATHS = [
           {
             "title": "Clear errors when the state changes",
             "paragraphs": [
-              "Inspect the existing demo.js submit handler. It trims the title, rejects emptiness, marks aria-invalid on failure and clears the flag and error on success. Spaces-only input must follow failure. Keeping the old error beside a newly appended valid row creates contradictory states.",
-              "In a copied folder, temporarily remove the line clearing title-error and repeat blank -> valid. Repair the success transition rather than hiding alerts in CSS. Submit angle brackets too: the demo uses textContent, so the title should appear literally rather than become markup."
+              "Inspect the existing `demo.js` submit handler. It trims the title, rejects emptiness, marks `aria-invalid` on failure and clears the flag and error on success. Spaces-only input must follow failure. Keeping the old error beside a newly appended valid row creates contradictory states.",
+              "In a copied folder, temporarily remove the line clearing `title-error` and repeat blank -> valid. Repair the success transition rather than hiding alerts in CSS. Submit angle brackets too: the demo uses `textContent`, so the title should appear literally rather than become markup."
             ],
             "example": "Spaces -> no row, error, invalid input. \"Graphs\" -> one row, cleared error/invalid flag, success status. \"<b>Graphs</b>\" -> literal characters in another row. Reload -> no rows because this demo has no persistence.",
             "exampleFormat": "prose"
@@ -87566,7 +87566,7 @@ const LEARNING_PATHS = [
           {
             "title": "Modal behavior and focus",
             "paragraphs": [
-              "A modal blocks interaction with the rest of the page. Use a native dialog with showModal for a simple modal where supported, give it a title and provide an explicit close control. Choose initial focus according to the content: a short form may start at a field, while long explanatory content may focus a heading with tabindex=-1.",
+              "A modal blocks interaction with the rest of the page. Use a native `dialog` with `showModal` for a simple modal where supported, give it a title and provide an explicit close control. Choose initial focus according to the content: a short form may start at a field, while long explanatory content may focus a heading with `tabindex=-1`.",
               "Test Tab and Shift+Tab containment, Escape, closing and focus return. Native behaviour helps but still needs checking in supported browser and assistive-technology combinations. If opening a dialog changes the task irreversibly, consider the least destructive action as initial focus. Do not add aria-modal to a dialog that still permits background interaction."
             ],
             "example": "const opener = document.activeElement;\ndialog.showModal();\ndialog.addEventListener(\"close\", () => opener.focus(), {once:true});"
@@ -87580,7 +87580,7 @@ const LEARNING_PATHS = [
           {
             "title": "Track focus ownership as triggers change",
             "paragraphs": [
-              "The demo calls showModal() from Preview, focuses the dialog heading and returns focus to the trigger on close. Read those lines, then test Tab, Shift+Tab, Escape and Close in your browser. A dialog tag alone is not a complete interaction test.",
+              "The demo calls `showModal()` from Preview, focuses the dialog heading and returns focus to the trigger on close. Read those lines, then test Tab, Shift+Tab, Escape and Close in your browser. A `dialog` tag alone is not a complete interaction test.",
               "In a copy, remove the close listener and compare both close routes. The browser may already return focus to the invoker in this simple case; report what happens rather than inventing a failure. The harder case changes the trigger's lifetime: an in-dialog action removes the row whose Preview button opened it."
             ],
             "example": "Stable trigger: remember opener, open, select initial focus, close, return. Row-specific trigger: remember the actual invoking button; on close check whether it still belongs to the document. If removed, choose the agreed surviving-row or Add fallback.",

@@ -451,8 +451,8 @@
         {
           "title": "Debug the existing dashboard by following focus",
           "paragraphs": [
-            "Open practice/demo.html from this path's files. Tab to the title, submit blank, then enter a title and submit again. Failure should explain recovery; after success the cleared title is ready for another entry. The visible list and status should agree.",
-            "Optional fault injection: copy the practice folder, then remove input.focus() only from the successful submit branch of demo.js. Add a title with the mouse button and continue by keyboard. Compare focus with the blank-input branch, then restore the line. A test that only searches for focus() would miss which branch needs it."
+            "Open `practice/demo.html` from this path's files. Tab to the title, submit blank, then enter a title and submit again. Failure should explain recovery; after success the cleared title is ready for another entry. The visible list and status should agree.",
+            "Optional fault injection: copy the practice folder, then remove `input.focus()` only from the successful submit branch of `demo.js`. Add a title with the mouse button and continue by keyboard. Compare focus with the blank-input branch, then restore the line. A test that only searches for `focus()` would miss which branch needs it."
           ],
           "example": "Empty submit -> input focused, invalid state and error. Corrected submit -> row appended, invalid state cleared, status updated, input focused. Preview -> modal heading. Close -> trigger. Focus follows the next task; always jumping to the page top would interrupt entry.",
           "exampleFormat": "prose"
@@ -678,8 +678,8 @@
         {
           "title": "Clear errors when the state changes",
           "paragraphs": [
-            "Inspect the existing demo.js submit handler. It trims the title, rejects emptiness, marks aria-invalid on failure and clears the flag and error on success. Spaces-only input must follow failure. Keeping the old error beside a newly appended valid row creates contradictory states.",
-            "In a copied folder, temporarily remove the line clearing title-error and repeat blank -> valid. Repair the success transition rather than hiding alerts in CSS. Submit angle brackets too: the demo uses textContent, so the title should appear literally rather than become markup."
+            "Inspect the existing `demo.js` submit handler. It trims the title, rejects emptiness, marks `aria-invalid` on failure and clears the flag and error on success. Spaces-only input must follow failure. Keeping the old error beside a newly appended valid row creates contradictory states.",
+            "In a copied folder, temporarily remove the line clearing `title-error` and repeat blank -> valid. Repair the success transition rather than hiding alerts in CSS. Submit angle brackets too: the demo uses `textContent`, so the title should appear literally rather than become markup."
           ],
           "example": "Spaces -> no row, error, invalid input. \"Graphs\" -> one row, cleared error/invalid flag, success status. \"<b>Graphs</b>\" -> literal characters in another row. Reload -> no rows because this demo has no persistence.",
           "exampleFormat": "prose"
@@ -775,7 +775,7 @@
         {
           "title": "Modal behavior and focus",
           "paragraphs": [
-            "A modal blocks interaction with the rest of the page. Use a native dialog with showModal for a simple modal where supported, give it a title and provide an explicit close control. Choose initial focus according to the content: a short form may start at a field, while long explanatory content may focus a heading with tabindex=-1.",
+            "A modal blocks interaction with the rest of the page. Use a native `dialog` with `showModal` for a simple modal where supported, give it a title and provide an explicit close control. Choose initial focus according to the content: a short form may start at a field, while long explanatory content may focus a heading with `tabindex=-1`.",
             "Test Tab and Shift+Tab containment, Escape, closing and focus return. Native behaviour helps but still needs checking in supported browser and assistive-technology combinations. If opening a dialog changes the task irreversibly, consider the least destructive action as initial focus. Do not add aria-modal to a dialog that still permits background interaction."
           ],
           "example": "const opener = document.activeElement;\ndialog.showModal();\ndialog.addEventListener(\"close\", () => opener.focus(), {once:true});"
@@ -789,7 +789,7 @@
         {
           "title": "Track focus ownership as triggers change",
           "paragraphs": [
-            "The demo calls showModal() from Preview, focuses the dialog heading and returns focus to the trigger on close. Read those lines, then test Tab, Shift+Tab, Escape and Close in your browser. A dialog tag alone is not a complete interaction test.",
+            "The demo calls `showModal()` from Preview, focuses the dialog heading and returns focus to the trigger on close. Read those lines, then test Tab, Shift+Tab, Escape and Close in your browser. A `dialog` tag alone is not a complete interaction test.",
             "In a copy, remove the close listener and compare both close routes. The browser may already return focus to the invoker in this simple case; report what happens rather than inventing a failure. The harder case changes the trigger's lifetime: an in-dialog action removes the row whose Preview button opened it."
           ],
           "example": "Stable trigger: remember opener, open, select initial focus, close, return. Row-specific trigger: remember the actual invoking button; on close check whether it still belongs to the document. If removed, choose the agreed surviving-row or Add fallback.",

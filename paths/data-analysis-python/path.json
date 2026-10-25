@@ -96,14 +96,14 @@
         {
           "title": "Understand the decision",
           "paragraphs": [
-            "A CSV stores text. pandas infers types when reading it, and inference can hide a wrong assumption. Load with read_csv, inspect shape, columns, head and dtypes, then compare them with the data dictionary. Reading successfully does not establish that a file contains the expected records.",
+            "A CSV stores text. pandas infers types when reading it, and inference can hide a wrong assumption. Load with `read_csv`, inspect shape, columns, head and dtypes, then compare them with the data dictionary. Reading successfully does not establish that a file contains the expected records.",
             "Keep the raw input unchanged. Make the source path relative to the script file so the same program works from another directory. A quick preview helps detect a delimiter or header mistake, but examine counts and validation results across the whole table. A clean first five rows cannot certify the rest."
           ]
         },
         {
           "title": "Worked example",
           "paragraphs": [
-            "df = pd.read_csv(\"support_tickets.csv\"); df.shape should be (24, 8). df[\"ticket_id\"].nunique() should be 24. A shape of (24, 1) suggests a delimiter problem."
+            "`df = pd.read_csv(\"support_tickets.csv\")`; `df.shape` should be `(24, 8)`. `df[\"ticket_id\"].nunique()` should be 24. A shape of `(24, 1)` suggests a delimiter problem."
           ]
         }
       ],
@@ -145,14 +145,14 @@
         {
           "title": "Understand the decision",
           "paragraphs": [
-            "A NumPy array stores elements with a shared dtype. np.array([2, 4, 6], dtype=float) creates a one-dimensional numeric array of shape (3,). Multiplication by 60 converts every hour value to minutes. A Python list multiplied by 60 repeats its contents instead. Check the container before assuming arithmetic semantics.",
-            "For a two-dimensional table, an axis tells a reduction which dimension to collapse. A two-row, three-column array has shape (2, 3). Summing axis=0 produces one value per column; axis=1 produces one per row. Broadcasting can combine compatible shapes, but a successful operation may still use the wrong units."
+            "A NumPy array stores elements with a shared dtype. `np.array([2, 4, 6], dtype=float)` creates a one-dimensional numeric array of shape `(3,)`. Multiplication by 60 converts every hour value to minutes. A Python list multiplied by 60 repeats its contents instead. Check the container before assuming arithmetic semantics.",
+            "For a two-dimensional table, an axis tells a reduction which dimension to collapse. A two-row, three-column array has shape (2, 3). Summing `axis=0` produces one value per column; `axis=1` produces one per row. Broadcasting can combine compatible shapes, but a successful operation may still use the wrong units."
           ]
         },
         {
           "title": "Worked example",
           "paragraphs": [
-            "np.array([[1, 2, 3], [4, 5, 6]]).sum(axis=0) returns [5, 7, 9]. Summing axis=1 returns [6, 15]. The result length is a useful sanity check."
+            "`np.array([[1, 2, 3], [4, 5, 6]]).sum(axis=0)` returns `[5, 7, 9]`. Summing `axis=1` returns `[6, 15]`. The result length is a useful sanity check."
           ]
         }
       ],
@@ -194,14 +194,14 @@
         {
           "title": "Understand the decision",
           "paragraphs": [
-            "Identifiers are labels even if they contain digits. Keep them as strings so leading zeros survive. Convert numeric columns with to_numeric and dates with to_datetime. errors=\"raise\" stops on malformed values; errors=\"coerce\" creates missing values. Coercion needs a separate count and review because it can silently change the population used by later summaries.",
-            "The supplied created_date is a calendar date without a timezone or time of day. It supports grouping by date, but it cannot establish elapsed resolution time. resolution_hours is a separate measured outcome in this fictional file. In a real event table, normalize timestamp zones and define which start and end events count before subtracting timestamps."
+            "Identifiers are labels even if they contain digits. Keep them as strings so leading zeros survive. Convert numeric columns with `to_numeric` and dates with `to_datetime`. `errors=\"raise\"` stops on malformed values; `errors=\"coerce\"` creates missing values. Coercion needs a separate count and review because it can silently change the population used by later summaries.",
+            "The supplied `created_date` is a calendar date without a timezone or time of day. It supports grouping by date, but it cannot establish elapsed resolution time. `resolution_hours` is a separate measured outcome in this fictional file. In a real event table, normalize timestamp zones and define which start and end events count before subtracting timestamps."
           ]
         },
         {
           "title": "Worked example",
           "paragraphs": [
-            "pd.to_numeric(pd.Series([\"8\", \"bad\"]), errors=\"coerce\") gives 8 and a missing value. That does not prove the second ticket resolved in zero hours."
+            "`pd.to_numeric(pd.Series([\"8\", \"bad\"]), errors=\"coerce\")` gives 8 and a missing value. That does not prove the second ticket resolved in zero hours."
           ]
         }
       ],
@@ -243,14 +243,14 @@
         {
           "title": "Understand the decision",
           "paragraphs": [
-            "Use df.loc[mask, columns] to select both rows and columns. A mask is a Boolean Series aligned to the table index. Combine comparisons with & or | and put each comparison in parentheses. Python and/or expects single truth values and cannot combine whole pandas Series this way.",
-            "State whether your filter changes the population or only the displayed columns. Keeping high-priority tickets changes the population; hiding the team column does not. Record the number of rows before and after a filter. Use df.loc[mask, \"column\"] for assignment rather than chained indexing, which has version-dependent copy behavior and is unsupported for reliable updates."
+            "Use `df.loc[mask, columns]` to select both rows and columns. A mask is a Boolean Series aligned to the table index. Combine comparisons with `&` or `|` and put each comparison in parentheses. Python `and`/`or` expects single truth values and cannot combine whole pandas Series this way.",
+            "State whether your filter changes the population or only the displayed columns. Keeping high-priority tickets changes the population; hiding the team column does not. Record the number of rows before and after a filter. Use `df.loc[mask, \"column\"]` for assignment rather than chained indexing, which has version-dependent copy behavior and is unsupported for reliable updates."
           ]
         },
         {
           "title": "Worked example",
           "paragraphs": [
-            "mask = (df[\"priority\"] == \"high\") & (df[\"resolution_hours\"] > 24). df.loc[mask, [\"ticket_id\", \"resolution_hours\"]] lists high-priority breaches only."
+            "`mask = (df[\"priority\"] == \"high\") & (df[\"resolution_hours\"] > 24)`. `df.loc[mask, [\"ticket_id\", \"resolution_hours\"]]` lists high-priority breaches only."
           ]
         }
       ],
@@ -292,7 +292,7 @@
         {
           "title": "Understand the decision",
           "paragraphs": [
-            "Missing means the value is unavailable. Duplicate means more than one record represents the same intended unit. isna() marks unavailable cells with True; sum that mask to count them. duplicated(\"ticket_id\") tests repeated identifiers. drop_duplicates() across all columns removes exact copies, but conflicting records with the same ID need a rule grounded in how the source was collected.",
+            "Missing means the value is unavailable. Duplicate means more than one record represents the same intended unit. `isna()` marks unavailable cells with `True`; sum that mask to count them. `duplicated(\"ticket_id\")` tests repeated identifiers. `drop_duplicates()` across all columns removes exact copies, but conflicting records with the same ID need a rule grounded in how the source was collected.",
             "Do not choose the first record just because it makes a test pass. If two versions have explicit update times, the newest validated version may be appropriate. If the source lacks that information, stop and report the conflict. For missing durations, report both total tickets and known durations so readers can see the denominator used by the mean."
           ]
         },
@@ -342,13 +342,13 @@
           "title": "Understand the decision",
           "paragraphs": [
             "A Series has values and an index. Adding two Series matches index labels rather than blindly adding the first item to the first item. This is useful when rows have been reordered, but it can create missing results when labels do not match. Use iloc for positional selection and loc for label selection.",
-            "Inspect the index after filtering or sorting. A filtered table may retain labels 2 and 5 rather than becoming labels 0 and 1. Resetting the index changes those labels; it does not change the underlying ticket identities. Keep ticket_id as the business identifier and choose positional array arithmetic only when you have verified both row orders."
+            "Inspect the index after filtering or sorting. A filtered table may retain labels 2 and 5 rather than becoming labels 0 and 1. Resetting the index changes those labels; it does not change the underlying ticket identities. Keep `ticket_id` as the business identifier and choose positional array arithmetic only when you have verified both row orders."
           ]
         },
         {
           "title": "Worked example",
           "paragraphs": [
-            "Series([10, 20], index=[\"A\", \"B\"]) plus Series([1, 2], index=[\"B\", \"A\"]) gives A=12 and B=21. The first stored values are not paired."
+            "`Series([10, 20], index=[\"A\", \"B\"])` plus `Series([1, 2], index=[\"B\", \"A\"])` gives A=12 and B=21. The first stored values are not paired."
           ]
         }
       ],
@@ -390,14 +390,14 @@
         {
           "title": "Understand the decision",
           "paragraphs": [
-            "The teaching rule defines a breach as resolution_hours > 24. Exactly 24 hours does not breach. Derive the flag from validated durations and compare it with the supplied breached column. A disagreement can reveal a changed policy, corrupted export or wrong operator. Avoid overwriting the original flag before checking it.",
+            "The teaching rule defines a breach as `resolution_hours > 24`. Exactly 24 hours does not breach. Derive the flag from validated durations and compare it with the supplied breached column. A disagreement can reveal a changed policy, corrupted export or wrong operator. Avoid overwriting the original flag before checking it.",
             "Vectorized operations make the same rule apply across rows, but they do not validate inputs automatically. Reject negative or nonfinite durations before calculating a flag. A numeric conversion can still accept infinity. Keep the rule in a named function and test values below, at and above the threshold."
           ]
         },
         {
           "title": "Worked example",
           "paragraphs": [
-            "np.array([23.9, 24.0, 24.1]) > 24 produces [False, False, True]. Multiplying a duration by 60 changes units; it does not change which cases breach if the threshold also becomes 1440 minutes."
+            "`np.array([23.9, 24.0, 24.1]) > 24` produces `[False, False, True]`. Multiplying a duration by 60 changes units; it does not change which cases breach if the threshold also becomes 1440 minutes."
           ]
         }
       ],
@@ -440,7 +440,7 @@
           "title": "Understand the decision",
           "paragraphs": [
             "groupby splits rows by a key and computes an aggregate for each group. size counts rows; count on a column counts its nonmissing values. For validated zero-or-one breach flags, mean is the fraction of ones. Include ticket count, breach count and mean duration so the reader can check the rate and see how much data supports it.",
-            "A mean of group rates gives every group equal weight. An overall ticket rate must weight groups by ticket count. This difference matters when teams handle different volumes. Missing group labels also need a policy because groupby normally excludes missing keys; use dropna=False when auditing unclassified rows."
+            "A mean of group rates gives every group equal weight. An overall ticket rate must weight groups by ticket count. This difference matters when teams handle different volumes. Missing group labels also need a policy because `groupby` normally excludes missing keys; use `dropna=False` when auditing unclassified rows."
           ]
         },
         {
@@ -488,8 +488,8 @@
         {
           "title": "Understand the decision",
           "paragraphs": [
-            "A left merge can attach a team owner to every ticket. The ticket table contains many rows for each team; the lookup must contain one row for each team. merge(..., validate=\"many_to_one\") rejects duplicate lookup keys. A duplicate right-side key otherwise repeats matching ticket rows and changes later counts and sums.",
-            "Cardinality validation does not prove every key matched. Use indicator=True and inspect left_only rows. Decide whether an unknown team should stop the report or appear as unassigned. pandas matches null join keys to each other, unlike the usual SQL null comparison, so reject missing required keys rather than assuming SQL behavior."
+            "A left merge can attach a team owner to every ticket. The ticket table contains many rows for each team; the lookup must contain one row for each team. `merge(..., validate=\"many_to_one\")` rejects duplicate lookup keys. A duplicate right-side key otherwise repeats matching ticket rows and changes later counts and sums.",
+            "Cardinality validation does not prove every key matched. Use `indicator=True` and inspect `left_only` rows. Decide whether an unknown team should stop the report or appear as unassigned. pandas matches null join keys to each other, unlike the usual SQL null comparison, so reject missing required keys rather than assuming SQL behavior."
           ]
         },
         {
@@ -594,7 +594,7 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "Three tickets created Monday resolve Tuesday and Wednesday. Grouping by created_date places all three on Monday. A closure workload chart would need resolved timestamps instead."
+            "Three tickets created Monday resolve Tuesday and Wednesday. Grouping by `created_date` places all three on Monday. A closure workload chart would need resolved timestamps instead."
           ]
         }
       ],
@@ -636,14 +636,14 @@
         {
           "title": "Understand the decision",
           "paragraphs": [
-            "Use a bar chart for counts by team, a histogram for a duration distribution and a line chart for an ordered time series. These forms answer different questions. Matplotlib separates a Figure, the output container, from an Axes, where data and labels appear. The explicit fig, ax = plt.subplots() style helps when adding labels or several plots.",
+            "Use a bar chart for counts by team, a histogram for a duration distribution and a line chart for an ordered time series. These forms answer different questions. Matplotlib separates a Figure, the output container, from an Axes, where data and labels appear. The explicit `fig, ax = plt.subplots()` style helps when adding labels or several plots.",
             "A bar chart compares lengths, so a zero baseline usually matters. Label hours as hours and rates as fractions or percentages consistently. A chart needs a text summary and accessible labels; color alone should not encode the conclusion. Keep categories in a stable order so two generated reports can be compared."
           ]
         },
         {
           "title": "Worked example",
           "paragraphs": [
-            "The kit writes counts.png with team on the horizontal axis and ticket count on the vertical axis. The report repeats the numeric counts so the image is not the only way to read them."
+            "The kit writes `counts.png` with team on the horizontal axis and ticket count on the vertical axis. The report repeats the numeric counts so the image is not the only way to read them."
           ]
         }
       ],
@@ -686,13 +686,13 @@
           "title": "Understand the decision",
           "paragraphs": [
             "A long table stores a category in a column; a wide table gives selected categories their own columns. A team-by-priority count table can make comparisons easier. Group and count first, then unstack or pivot the summary. The reshaping step changes presentation, not what counts as one ticket.",
-            "pivot requires unique index-and-column combinations. Repeated team-priority rows in a raw ticket table are expected, so a direct pivot of duration can fail. pivot_table can aggregate them, but specify the aggregation rather than accepting a mean that may answer the wrong question. Filling missing count combinations with zero needs confidence that the input population is complete."
+            "`pivot` requires unique index-and-column combinations. Repeated team-priority rows in a raw ticket table are expected, so a direct pivot of duration can fail. `pivot_table` can aggregate them, but specify the aggregation rather than accepting a mean that may answer the wrong question. Filling missing count combinations with zero needs confidence that the input population is complete."
           ]
         },
         {
           "title": "Worked example",
           "paragraphs": [
-            "Billing has two low-priority tickets and one high-priority ticket. A grouped count followed by unstack produces a billing row with low=2 and high=1. A sum of resolution_hours would measure something else."
+            "Billing has two low-priority tickets and one high-priority ticket. A grouped count followed by `unstack` produces a billing row with `low=2` and `high=1`. A sum of `resolution_hours` would measure something else."
           ]
         }
       ],
@@ -797,7 +797,7 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "The test suite changes one duration to -1 and expects ValueError. It also duplicates an ID and inserts an unknown team. A report that prints plausible totals despite those changes has failed its input contract."
+            "The test suite changes one duration to -1 and expects `ValueError`. It also duplicates an ID and inserts an unknown team. A report that prints plausible totals despite those changes has failed its input contract."
           ]
         }
       ],
@@ -888,7 +888,7 @@
         {
           "title": "Understand the decision",
           "paragraphs": [
-            "read_csv with chunksize can process a large file in smaller pieces. This limits the size of each loaded chunk, but a correct combined answer still needs state across chunks. A mean requires a total sum and a count of known values. Global duplicate detection also needs a shared set of IDs or an external store.",
+            "`read_csv` with `chunksize` can process a large file in smaller pieces. This limits the size of each loaded chunk, but a correct combined answer still needs state across chunks. A mean requires a total sum and a count of known values. Global duplicate detection also needs a shared set of IDs or an external store.",
             "Do not assume chunking makes every operation easy. An exact median cannot generally be combined from chunk medians. Sorting across the whole dataset may need external sorting, and a lookup must still obey the same cardinality rule. Profile a real workload before adding chunking to this small 24-row example."
           ]
         },
@@ -938,13 +938,13 @@
           "title": "Understand the decision",
           "paragraphs": [
             "A reproducible report starts from named input files and runs without manual edits to intermediate tables. Save a source hash, row count and library versions beside the results. A hash identifies the exact bytes used; it does not certify data accuracy. Stable sort order and consistent numeric formatting make differences between runs easier to inspect.",
-            "The kit writes report.json and counts.png into a chosen output folder. The JSON includes the fictional-data limitation and the table behind the chart. Run it from a fresh folder and inspect the output before sharing. If dependency versions change, rerun the tests and compare the table, rather than assuming an image that looks similar proves equivalence."
+            "The kit writes `report.json` and `counts.png` into a chosen output folder. The JSON includes the fictional-data limitation and the table behind the chart. Run it from a fresh folder and inspect the output before sharing. If dependency versions change, rerun the tests and compare the table, rather than assuming an image that looks similar proves equivalence."
           ]
         },
         {
           "title": "Worked example",
           "paragraphs": [
-            "python analysis.py --out report-output produces both files. Running it twice with the same environment and input preserves the JSON content. A changed source will normally have a different SHA-256. Matching hashes are a practical identity check, not a mathematical guarantee that two files are identical."
+            "`python analysis.py --out report-output` produces both files. Running it twice with the same environment and input preserves the JSON content. A changed source will normally have a different SHA-256. Matching hashes are a practical identity check, not a mathematical guarantee that two files are identical."
           ]
         }
       ],
@@ -1042,14 +1042,14 @@
         {
           "title": "Understand the decision",
           "paragraphs": [
-            "A descriptive analysis can use resolution_hours and breached because it summarizes completed tickets. A model intended to act at intake cannot use either as a predictor. The duration is only known later and the flag is the target. Mark when every field becomes available, not only whether its type is numeric.",
+            "A descriptive analysis can use `resolution_hours` and `breached` because it summarizes completed tickets. A model intended to act at intake cannot use either as a predictor. The duration is only known later and the flag is the target. Mark when every field becomes available, not only whether its type is numeric.",
             "Keep ticket IDs for tracing errors, but arbitrary identifiers rarely explain the underlying process. A model also needs a split that respects time or repeated customers, an untouched evaluation set and a baseline. The next learning path uses a larger fictional dataset to practise those decisions. Good results on that synthetic exercise do not establish production usefulness."
           ]
         },
         {
           "title": "Worked example",
           "paragraphs": [
-            "customer_messages in this kit means messages supplied at intake. If another export uses total messages over the entire case, the same column name would leak future information. The data dictionary determines which interpretation is valid."
+            "`customer_messages` in this kit means messages supplied at intake. If another export uses total messages over the entire case, the same column name would leak future information. The data dictionary determines which interpretation is valid."
           ]
         }
       ],

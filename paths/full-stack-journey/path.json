@@ -215,13 +215,13 @@
         {
           "title": "Practice project files",
           "paragraphs": [
-            "The complete practice ZIP is flat: Planner.csproj and Program.cs form the API, App.tsx and main.tsx form the UI, and schema.sql is the database migration. package-lock.json pins frontend dependency resolution. Extract into a new practice directory rather than mixing these files into an existing application."
+            "The complete practice ZIP is flat: `Planner.csproj` and `Program.cs` form the API, `App.tsx` and `main.tsx` form the UI, and `schema.sql` is the database migration. `package-lock.json` pins frontend dependency resolution. Extract into a new practice directory rather than mixing these files into an existing application."
           ]
         },
         {
           "title": "Local runtimes and commands",
           "paragraphs": [
-            "Use .NET 10, Node 24/npm and Python 3.11+. Run the API on 127.0.0.1:5087 and Vite on 127.0.0.1:5173 in separate terminals. The loopback address 127.0.0.1 points to your own computer. npm ci installs the pinned graph; npm run build checks types and bundles the UI. Record versions and commands so another attempt can reproduce the result."
+            "Use .NET 10, Node 24/npm and Python 3.11+. Run the API on 127.0.0.1:5087 and Vite on 127.0.0.1:5173 in separate terminals. The loopback address 127.0.0.1 points to your own computer. `npm ci` installs the pinned graph; `npm run build` checks types and bundles the UI. Record versions and commands so another attempt can reproduce the result."
           ]
         }
       ],
@@ -263,7 +263,7 @@
         {
           "title": "From form submission to storage",
           "paragraphs": [
-            "Clicking Add session runs the form handler. It validates the draft, serializes JSON and sends POST /api/tasks. Vite forwards the request to .NET; the route binds a CreateTask, checks allowed values and asks the store to create a record. The API returns 201 with the server-generated ID and version."
+            "Clicking Add session runs the form handler. It validates the draft, serializes JSON and sends POST /api/tasks. Vite forwards the request to .NET; the route binds a `CreateTask`, checks allowed values and asks the store to create a record. The API returns 201 with the server-generated ID and version."
           ]
         },
         {
@@ -311,7 +311,7 @@
         {
           "title": "Request fields and invariants",
           "paragraphs": [
-            "POST accepts title and minutes. title is trimmed and must contain 1–120 characters; minutes is an integer from 0 through 1440. Server-generated id, done=false and version=1 appear in the result. Unknown request fields are rejected. PUT requires title, minutes, done and expected version; missing done is not silently interpreted as false."
+            "POST accepts `title` and `minutes`. `title` is trimmed and must contain 1–120 characters; `minutes` is an integer from 0 through 1440. Server-generated id, `done=false` and `version=1` appear in the result. Unknown request fields are rejected. PUT requires `title`, `minutes`, `done` and expected version; missing `done` is not silently interpreted as `false`."
           ]
         },
         {
@@ -359,13 +359,13 @@
         {
           "title": "StudyTasks types and version",
           "paragraphs": [
-            "StudyTasks uses a uniqueidentifier primary key, nvarchar(120) title, bounded int minutes, bit done and positive int Version. Planned minutes is duration, not a timestamp. A record with zero minutes can be intentional. Version counts accepted updates; it is not wall-clock time and is not SQL Server rowversion."
+            "`StudyTasks` uses a `uniqueidentifier` primary key, `nvarchar(120)` `title`, bounded `int` `minutes`, `bit` `done` and positive `int` `Version`. Planned minutes is duration, not a timestamp. A record with zero minutes can be intentional. Version counts accepted updates; it is not wall-clock time and is not SQL Server `rowversion`."
           ]
         },
         {
           "title": "Constraints and schema compatibility",
           "paragraphs": [
-            "schema.sql creates the table only if absent in an owned learning database. It never creates or selects a database automatically. CHECK constraints defend basic invariants even when an importer bypasses HTTP. Existing incompatible schemas need an explicit migration; silently skipping creation is not proof of compatibility."
+            "`schema.sql` creates the table only if absent in an owned learning database. It never creates or selects a database automatically. `CHECK` constraints defend basic invariants even when an importer bypasses HTTP. Existing incompatible schemas need an explicit migration; silently skipping creation is not proof of compatibility."
           ]
         }
       ],
@@ -407,7 +407,7 @@
         {
           "title": "Form state and accessible feedback",
           "paragraphs": [
-            "App.tsx owns the title, minutes text, task list, busy flag and status message. Keep minutes as text while typing; convert and validate at submission. Native labels bind to input IDs, required/min/max/step help the browser, and role=status announces asynchronous outcomes without moving focus."
+            "`App.tsx` owns the title, minutes text, task list, busy flag and status message. Keep minutes as text while typing; convert and validate at submission. Native labels bind to input IDs, required/min/max/step help the browser, and `role=status` announces asynchronous outcomes without moving focus."
           ]
         },
         {
@@ -455,7 +455,7 @@
         {
           "title": "Create and complete a session",
           "paragraphs": [
-            "Start the two processes using the practice README. Add SQL study with 25 minutes. Observe POST 201, its task JSON and the visible row. Click Complete and inspect PUT 200 with version=2 and done=true. The reference renders the returned task rather than guessing a server-generated ID."
+            "Start the two processes using the practice README. Add SQL study with 25 minutes. Observe POST 201, its task JSON and the visible row. Click Complete and inspect PUT 200 with `version=2` and `done=true`. The reference renders the returned task rather than guessing a server-generated ID."
           ]
         },
         {
@@ -510,13 +510,13 @@
         {
           "title": "Unknown data and decoding",
           "paragraphs": [
-            "request returns unknown. decodeTask checks for a GUID-shaped ID, a title, integer minutes, boolean done and a positive integer version before returning a StudyTask. The list decoder also rejects duplicate IDs because React keys and update requests require unique task identities."
+            "`request` returns `unknown`. `decodeTask` checks for a GUID-shaped ID, a title, integer minutes, boolean done and a positive integer version before returning a `StudyTask`. The list decoder also rejects duplicate IDs because React keys and update requests require unique task identities."
           ]
         },
         {
           "title": "Decoder contract tests",
           "paragraphs": [
-            "The decoder extracts the allowed representation fields, so extra response metadata does not become mutable UI state. Network decoding and server request validation protect different boundaries. Run planner-api.test.ts to see boolean minutes, fractional duration, malformed identity and stale conflicts rejected independently."
+            "The decoder extracts the allowed representation fields, so extra response metadata does not become mutable UI state. Network decoding and server request validation protect different boundaries. Run `planner-api.test.ts` to see boolean minutes, fractional duration, malformed identity and stale conflicts rejected independently."
           ]
         }
       ],
@@ -558,7 +558,7 @@
         {
           "title": "Effect setup and cleanup",
           "paragraphs": [
-            "The initial effect creates an AbortController, loads tasks and cancels on cleanup. React StrictMode can exercise setup and cleanup more than once in development, so loading must tolerate that lifecycle. Suppress the cancelled request error rather than announcing an intentional cleanup as a user failure."
+            "The initial effect creates an `AbortController`, loads tasks and cancels on cleanup. React StrictMode can exercise setup and cleanup more than once in development, so loading must tolerate that lifecycle. Suppress the cancelled request error rather than announcing an intentional cleanup as a user failure."
           ]
         },
         {
@@ -606,13 +606,13 @@
         {
           "title": "Selecting SQL storage",
           "paragraphs": [
-            "Create NotebookPlannerLab as a new dedicated database in SSMS and run schema.sql there. Set PlannerConnection only in the API shell, then restart. /health must report sql-server. A missing connection uses memory; a configured but unreachable SQL endpoint must fail rather than silently falling back and losing durability."
+            "Create `NotebookPlannerLab` as a new dedicated database in SSMS and run `schema.sql` there. Set `PlannerConnection` only in the API shell, then restart. `/health` must report `sql-server`. A missing connection uses memory; a configured but unreachable SQL endpoint must fail rather than silently falling back and losing durability."
           ]
         },
         {
           "title": "Local trust and deployed credentials",
           "paragraphs": [
-            "Windows integrated authentication works with the local SQLEXPRESS instance when permissions allow. The local TrustServerCertificate option accepts a self-signed certificate for this sandbox; deployed connections need certificate verification and a least-privilege principal. Never put connection secrets in React or the repository."
+            "Windows integrated authentication works with the local SQLEXPRESS instance when permissions allow. The local `TrustServerCertificate` option accepts a self-signed certificate for this sandbox; deployed connections need certificate verification and a least-privilege principal. Never put connection secrets in React or the repository."
           ]
         }
       ],
@@ -654,7 +654,7 @@
         {
           "title": "Typed SQL parameters",
           "paragraphs": [
-            "SqlPlanner uses fixed SQL statements and explicitly typed parameters. @title is nvarchar(120), @minutes is int and @id is uniqueidentifier. A title containing an apostrophe is stored as a title; it cannot append a second statement because input never becomes SQL syntax."
+            "`SqlPlanner` uses fixed SQL statements and explicitly typed parameters. `@title` is `nvarchar(120)`, `@minutes` is `int` and `@id` is `uniqueidentifier`. A title containing an apostrophe is stored as a title; it cannot append a second statement because input never becomes SQL syntax."
           ]
         },
         {
@@ -702,7 +702,7 @@
         {
           "title": "Atomic expected-version updates",
           "paragraphs": [
-            "Both tabs read version 1. Tab A completes the session and receives version 2. Tab B submits version 1; UPDATE WHERE Id=@id AND Version=@version affects no row and the API returns 409. Checking a version before an unconditional update would leave a race between the check and the write."
+            "Both tabs read version 1. Tab A completes the session and receives version 2. Tab B submits version 1; `UPDATE ... WHERE Id=@id AND Version=@version` affects no row and the API returns 409. Checking a version before an unconditional update would leave a race between the check and the write."
           ]
         },
         {
@@ -716,7 +716,7 @@
           "paragraphs": [
             "The reference UI creates sessions and toggles completion; it does not yet edit an existing title or minutes. After adding an editor, try this case: two tabs read version 4. A changes the title and receives version 5. B submits version 4 with a minutes edit. The API must return a conflict and retain A's row. Keep B's unsaved minutes visible while offering deliberate reload or reconciliation. Automatically resending with version 5 would silently overwrite another decision.",
             "In the existing reference, run two independent clients with the same initial version and check that only one update succeeds. Read the winning row through a third request. In the UI, enter a new-session draft before a completion toggle receives an injected 409; verify that draft and the displayed row survive and the conflict message appears.",
-            "After implementing the existing-session editor, extend planner-ui.test.tsx with controllable responses: load version 4, return conflict on save, then return version 5 on explicit refresh. Check that the edit draft survives until the learner chooses how to reconcile. Editing different fields still needs a stated field-level merge policy."
+            "After implementing the existing-session editor, extend `planner-ui.test.tsx` with controllable responses: load version 4, return conflict on save, then return version 5 on explicit refresh. Check that the edit draft survives until the learner chooses how to reconcile. Editing different fields still needs a stated field-level merge policy."
           ]
         }
       ],
@@ -758,7 +758,7 @@
         {
           "title": "Related writes and invariants",
           "paragraphs": [
-            "Creating one session is one SQL INSERT, so the reference uses a single atomic statement. Adding an audit row, deduplication record or outbox event changes the invariant: the task and its corresponding evidence must commit together or not at all. Two independent successful calls do not create an atomic operation."
+            "Creating one session is one SQL `INSERT`, so the reference uses a single atomic statement. Adding an audit row, deduplication record or outbox event changes the invariant: the task and its corresponding evidence must commit together or not at all. Two independent successful calls do not create an atomic operation."
           ]
         },
         {
@@ -869,7 +869,7 @@
         {
           "title": "Verified owner context",
           "paragraphs": [
-            "The baseline is anonymous and loopback-only. To serve people, integrate an established authentication system, derive owner from verified server-side identity and add an OwnerId column. Filter list queries by owner and enforce owner on updates. Do not trust owner supplied in JSON, a query string or an arbitrary header."
+            "The baseline is anonymous and loopback-only. To serve people, integrate an established authentication system, derive owner from verified server-side identity and add an `OwnerId` column. Filter list queries by owner and enforce owner on updates. Do not trust owner supplied in JSON, a query string or an arbitrary header."
           ]
         },
         {
@@ -965,7 +965,7 @@
         {
           "title": "Decoder, API, browser and SQL tests",
           "paragraphs": [
-            "planner-api.test.ts tests decoding and HTTP error interpretation without a server. acceptance.py calls a real loopback .NET host and tests invalid inputs, missing fields, create/list and concurrent stale writes. Browser walkthrough checks labels, status, draft recovery and the actual UI/API route. SQL restart checks add persistence evidence."
+            "`planner-api.test.ts` tests decoding and HTTP error interpretation without a server. `acceptance.py` calls a real loopback .NET host and tests invalid inputs, missing fields, create/list and concurrent stale writes. Browser walkthrough checks labels, status, draft recovery and the actual UI/API route. SQL restart checks add persistence evidence."
           ]
         },
         {
@@ -1061,7 +1061,7 @@
         {
           "title": "Tested artifact promotion",
           "paragraphs": [
-            "Build the React assets and publish the .NET application once in CI. Record commit and artifact checksum, run tests against those outputs and promote the same bytes. Rebuilding separately for production breaks the connection between test evidence and deployed behavior. Supply server configuration and secrets at runtime. Vite normally replaces import.meta.env values during the frontend build; changing those values requires a rebuild unless you design a separate public runtime-configuration mechanism. Never expose secrets through frontend configuration."
+            "Build the React assets and publish the .NET application once in CI. Record commit and artifact checksum, run tests against those outputs and promote the same bytes. Rebuilding separately for production breaks the connection between test evidence and deployed behavior. Supply server configuration and secrets at runtime. Vite normally replaces `import.meta.env` values during the frontend build; changing those values requires a rebuild unless you design a separate public runtime-configuration mechanism. Never expose secrets through frontend configuration."
           ]
         },
         {

@@ -74,6 +74,15 @@ Give each paragraph a distinct job. Replace repeated instructions such as “tra
 example and explain the boundary” with an explanation of what the example does.
 Keep takeaways short and write quiz feedback that explains the decision.
 
+Wrap inline code in lesson paragraphs in backticks: function and variable names,
+calls, file names, commands with their flags, settings and SQL keywords, for example
+``Run `python -m unittest test_lab.py`, then inspect `parse_record` ``. Mark a whole
+expression as one span (`` `df.loc[mask, "column"]` ``) rather than its pieces. The
+reader renders each span as `<code>`; search indexes the text without the backticks.
+`node tests/inline-code.cjs` flags likely unmarked code. Maths notation and names that
+only look like code belong in `tests/inline-code-allow.json`, optionally limited to one
+course as `"course-id: entry"`.
+
 The reader keeps lesson explanations and complete diagram walkthroughs visible.
 Motion, quiz answers and reference solutions remain optional. Course overviews show
 one stage navigation and keep project assessment details out of the main reading

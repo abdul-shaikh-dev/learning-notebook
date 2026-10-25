@@ -206,7 +206,7 @@
         {
           "title": "Arrange, act and assert",
           "paragraphs": [
-            "A fixture prepares the situation, the action invokes the subject, and assertions compare results with the contract. unittest collects independent methods on TestCase; each test should fail with a useful message when one important behavior is wrong. Name the behavior, not the author's sequence number."
+            "A fixture prepares the situation, the action invokes the subject, and assertions compare results with the contract. `unittest` collects independent methods on `TestCase`; each test should fail with a useful message when one important behavior is wrong. Name the behavior, not the author's sequence number."
           ]
         },
         {
@@ -219,7 +219,7 @@
         {
           "title": "Run one complete test",
           "paragraphs": [
-            "Save this as test_my_total.py beside testing_foundation.py in the extracted kit. TestCase supplies assertEqual; the runner discovers methods whose names start with test_. Run python -m unittest -v test_my_total.py. It should report one passing test. Then write the empty-list test requested below."
+            "Save this as `test_my_total.py` beside `testing_foundation.py` in the extracted kit. `TestCase` supplies `assertEqual`; the runner discovers methods whose names start with `test_`. Run `python -m unittest -v test_my_total.py`. It should report one passing test. Then write the empty-list test requested below."
           ],
           "example": "import unittest\nfrom testing_foundation import total_minutes\n\nclass TotalTests(unittest.TestCase):\n    def test_two_records(self):\n        rows = [{\"id\": \"a\", \"minutes\": 7}, {\"id\": \"b\", \"minutes\": 2}]\n        self.assertEqual(total_minutes(rows), 9)"
         }
@@ -268,7 +268,7 @@
         {
           "title": "Types beyond ordinary integers",
           "paragraphs": [
-            "An example like 30 exercises ordinary input but says little about endpoints. Test just below, at and just above a boundary. Types form separate classes: Python True behaves like an integer in some contexts, yet the lesson's JSON contract rejects it. That decision must be tested rather than assumed."
+            "An example like 30 exercises ordinary input but says little about endpoints. Test just below, at and just above a boundary. Types form separate classes: Python `True` behaves like an integer in some contexts, yet the lesson's JSON contract rejects it. That decision must be tested rather than assumed."
           ],
           "example": "0 -> accepted\n1440 -> accepted\n1441 -> rejected\ntrue -> rejected although isinstance(True, int) is true"
         }
@@ -311,13 +311,13 @@
         {
           "title": "Errors and postconditions",
           "paragraphs": [
-            "A negative test needs an expected error and a postcondition. Rejecting malformed input is only half the contract if the function already changed a file before raising. Use assertRaises around the smallest action and inspect unchanged state afterward."
+            "A negative test needs an expected error and a postcondition. Rejecting malformed input is only half the contract if the function already changed a file before raising. Use `assertRaises` around the smallest action and inspect unchanged state afterward."
           ]
         },
         {
           "title": "Rejecting the right failure",
           "paragraphs": [
-            "Catching every exception in a test can accidentally accept an unrelated NameError as success. Assert the intended exception class, then verify that the error came from the boundary under study. Avoid depending on every word of a diagnostic unless the wording is part of the public interface."
+            "Catching every exception in a test can accidentally accept an unrelated `NameError` as success. Assert the intended exception class, then verify that the error came from the boundary under study. Avoid depending on every word of a diagnostic unless the wording is part of the public interface."
           ],
           "example": "with assertRaises(ValueError): parse_record('[]')\nAfter failed import: target still contains 'old'; replacement callback has zero calls"
         }
@@ -415,7 +415,7 @@
         {
           "title": "Preserving causes safely",
           "paragraphs": [
-            "Do not erase the original error by returning None from a blanket handler. The parser chains JSONDecodeError into a public ValueError so callers get a stable boundary while developers retain the cause. Logs used for reproduction should omit private input even when the raw exception might include it."
+            "Do not erase the original error by returning `None` from a blanket handler. The parser chains `JSONDecodeError` into a public `ValueError` so callers get a stable boundary while developers retain the cause. Logs used for reproduction should omit private input even when the raw exception might include it."
           ],
           "example": "import_batch -> parse_record -> json.loads\nPublic failure: ValueError('invalid JSON')\n__cause__: JSONDecodeError, retaining location information"
         }
@@ -472,13 +472,13 @@
           "title": "Reduce an unfamiliar missing-row report",
           "paragraphs": [
             "A user reports that a timeline loses entries when loading page two. Start with four rows: a, b and c at timestamp 5, and d at timestamp 6. With a page size of 2, the first page returns a and b, and the second returns d. Row c disappears. Network retries, authentication and thousands of production records are unnecessary to reproduce this particular symptom.",
-            "The new cursor_candidate.py is small enough to inspect after reproducing. Run python cursor_checks.py cursor_candidate to see expected failures, then repair a copy. The first test records the missing user-visible row rather than asserting how many internal sorting calls occur."
+            "The new `cursor_candidate.py` is small enough to inspect after reproducing. Run `python cursor_checks.py cursor_candidate` to see expected failures, then repair a copy. The first test records the missing user-visible row rather than asserting how many internal sorting calls occur."
           ]
         },
         {
           "title": "Observe duplicate keys before writing the rejection",
           "paragraphs": [
-            "json.loads normally returns a dictionary, which cannot retain two identical keys. Its object_pairs_hook instead receives the ordered key/value pairs while decoding each object. In the parser project, build a dictionary from those pairs and raise ValueError when a key is already present. Check the text length before decoding. This is how the project can reject both duplicate keys and oversized text.",
+            "`json.loads` normally returns a dictionary, which cannot retain two identical keys. Its `object_pairs_hook` instead receives the ordered key/value pairs while decoding each object. In the parser project, build a dictionary from those pairs and raise `ValueError` when a key is already present. Check the text length before decoding. This is how the project can reject both duplicate keys and oversized text.",
             "Try the observation below first, then add a second case with distinct keys to make sure your rejection does not forbid valid objects."
           ],
           "example": "import json\npairs = json.loads('{\"minutes\":5,\"minutes\":9}', object_pairs_hook=lambda items: items)\nprint(pairs)\n# [(\"minutes\", 5), (\"minutes\", 9)]"
@@ -522,13 +522,13 @@
         {
           "title": "Predictions and observations",
           "paragraphs": [
-            "Debugging is an experiment: make a specific prediction, choose an observation that could disprove it, and change one relevant condition. The supplied buggy_minutes has an intentional defect: it accepts booleans. A green ordinary-integer test does not distinguish this mutant from the stricter implementation."
+            "Debugging is an experiment: make a specific prediction, choose an observation that could disprove it, and change one relevant condition. The supplied `buggy_minutes` has an intentional defect: it accepts booleans. A green ordinary-integer test does not distinguish this mutant from the stricter implementation."
           ]
         },
         {
           "title": "Inspecting the boolean branch",
           "paragraphs": [
-            "A debugger can show actual values and call flow, but stepping without a question often wastes time. Put a breakpoint at the boundary, inspect type(value) and the chosen branch, then exit with a small regression case. Do not keep permanent breakpoints in a downloadable production-style path."
+            "A debugger can show actual values and call flow, but stepping without a question often wastes time. Put a breakpoint at the boundary, inspect `type(value)` and the chosen branch, then exit with a small regression case. Do not keep permanent breakpoints in a downloadable production-style path."
           ],
           "example": "Hypothesis: True passes because bool subclasses int\nObservation: isinstance(True, int) -> True\nDiscriminator: type(True) is int -> False"
         },
@@ -633,7 +633,7 @@
         {
           "title": "Controlled collaborators",
           "paragraphs": [
-            "A test double replaces a dependency so the test can control its response or observe how it is called. Our importer accepts a replacement callback, allowing a test to inject an OSError after the temporary report has been written. This lets the test control one file operation without mocking every internal helper."
+            "A test double replaces a dependency so the test can control its response or observe how it is called. Our importer accepts a replacement callback, allowing a test to inject an `OSError` after the temporary report has been written. This lets the test control one file operation without mocking every internal helper."
           ]
         },
         {
@@ -836,7 +836,7 @@
         {
           "title": "Old behavior versus corrected behavior",
           "paragraphs": [
-            "A regression test preserves the condition that previously failed and the intended user outcome. It should fail on the old behavior and pass on the fix. Our bool case distinguishes the faulty validator from parse_record's exact-type policy without requiring the entire importer to run."
+            "A regression test preserves the condition that previously failed and the intended user outcome. It should fail on the old behavior and pass on the fix. Our `bool` case distinguishes the faulty validator from `parse_record`'s exact-type policy without requiring the entire importer to run."
           ]
         },
         {
@@ -905,7 +905,7 @@
         {
           "title": "Run the missing branch",
           "paragraphs": [
-            "The optional branch workbook gives PositiveOnly and BothDirections test classes. The positive case executes every statement of label, but never takes the false direction. Adding zero covers it. Even both branches need meaningful expected-value assertions; execution is not correctness."
+            "The optional branch workbook gives `PositiveOnly` and `BothDirections` test classes. The positive case executes every statement of label, but never takes the false direction. Adding zero covers it. Even both branches need meaningful expected-value assertions; execution is not correctness."
           ]
         }
       ],
@@ -996,7 +996,7 @@
         {
           "title": "Competing reads and writes",
           "paragraphs": [
-            "A race appears when competing actions depend on an ordering the implementation does not enforce. The VersionStore test uses a Barrier so two threads read version zero before either updates. A lock protects the comparison and write as one local critical section; exactly one stale proposal can commit."
+            "A race appears when competing actions depend on an ordering the implementation does not enforce. The `VersionStore` test uses a Barrier so two threads read version zero before either updates. A lock protects the comparison and write as one local critical section; exactly one stale proposal can commit."
           ]
         },
         {
@@ -1009,8 +1009,8 @@
         {
           "title": "Know what each synchronization primitive contributes",
           "paragraphs": [
-            "A Thread runs a worker function. A Barrier waits until both workers have reached the same point, so both read the old version before either attempts the update. A Lock allows only one worker at a time through comparison and mutation. join waits for a worker to finish; its timeout bounds that wait but does not stop the worker. Check is_alive() afterward. This fixture also bounds the barrier wait; arbitrary blocking worker code needs its own cancellation or process-level timeout.",
-            "First read VersionStore and test it sequentially: read version 0, update with expected 0, then try expected 0 again. Expect success then conflict. Next introduce the two threads and barrier. This keeps the version rule separate from the machinery needed to expose simultaneous stale proposals."
+            "A `Thread` runs a worker function. A `Barrier` waits until both workers have reached the same point, so both read the old version before either attempts the update. A `Lock` allows only one worker at a time through comparison and mutation. `join` waits for a worker to finish; its timeout bounds that wait but does not stop the worker. Check `is_alive()` afterward. This fixture also bounds the barrier wait; arbitrary blocking worker code needs its own cancellation or process-level timeout.",
+            "First read `VersionStore` and test it sequentially: read version 0, update with expected 0, then try expected 0 again. Expect success then conflict. Next introduce the two threads and barrier. This keeps the version rule separate from the machinery needed to expose simultaneous stale proposals."
           ]
         }
       ],
@@ -1058,7 +1058,7 @@
         {
           "title": "Barriers and safety timeouts",
           "paragraphs": [
-            "Our concurrency test gates progress using a Barrier and joins workers with safety timeouts. The barrier timeout bounds its wait, and the join timeout lets the test detect an unfinished worker with is_alive(). A join timeout does not terminate a thread and is not the ordering mechanism. If a worker fails before reaching the barrier, report that failure before a later join timeout obscures the cause."
+            "Our concurrency test gates progress using a `Barrier` and joins workers with safety timeouts. The barrier timeout bounds its wait, and the join timeout lets the test detect an unfinished worker with `is_alive()`. A join timeout does not terminate a thread and is not the ordering mechanism. If a worker fails before reaching the barrier, report that failure before a later join timeout obscures the cause."
           ],
           "example": "Fragile: sleep(.01), assert worker finished\nControlled: Event signals readiness, release explicitly, join with bound\nEvidence: exact outcomes rather than elapsed milliseconds"
         }
@@ -1107,14 +1107,14 @@
         {
           "title": "Event-ordered cleanup",
           "paragraphs": [
-            "IsolatedAsyncioTestCase supplies an isolated event loop. Use events to order tasks and a short external bound to detect hangs. The guided diagnosis kit covers cancellation after acquisition and successful cleanup; the Python TaskGroup lab extends this to sibling-failure behavior."
+            "`IsolatedAsyncioTestCase` supplies an isolated event loop. Use events to order tasks and a short external bound to detect hangs. The guided diagnosis kit covers cancellation after acquisition and successful cleanup; the Python `TaskGroup` lab extends this to sibling-failure behavior."
           ],
           "example": "Child acquires resource -> readiness event\nParent cancels task -> child's finally runs\nAwait raises CancelledError -> assert cleanup marker"
         },
         {
           "title": "Observe cancellation after acquisition",
           "paragraphs": [
-            "The guided diagnosis kit includes IsolatedAsyncioTestCase tests. A started event proves acquisition before cancellation. The cancelled task must propagate CancelledError, omit committed, and append released exactly once. A separate successful test requires both committed and released. Timeouts detect hangs; they do not order the tasks."
+            "The guided diagnosis kit includes `IsolatedAsyncioTestCase` tests. A started event proves acquisition before cancellation. The cancelled task must propagate `CancelledError`, omit committed, and append released exactly once. A separate successful test requires both committed and released. Timeouts detect hangs; they do not order the tasks."
           ]
         }
       ],
