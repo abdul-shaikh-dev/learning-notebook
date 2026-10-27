@@ -34,9 +34,10 @@ function trackLessonSection(main,l){
  if(!l||typeof requestAnimationFrame==='undefined')return;
  const buttons=Array.from(main.querySelectorAll('.atlas-lesson-rail [data-jump]'));
  const entries=buttons.map(button=>({button,target:document.getElementById(button.dataset.jump)})).filter(entry=>entry.target);
- if(!entries.length)return;
+ const bar=main.querySelector('.reading-progress>span'),article=main.querySelector('.reading');
+ if(!entries.length&&!bar)return;
  let frame=0;
- const update=()=>{frame=0;let current=entries[0];for(const entry of entries){if(entry.target.getBoundingClientRect().top<=120)current=entry;}
+ const update=()=>{frame=0;if(bar&&article){const box=article.getBoundingClientRect(),travel=box.height-innerHeight;bar.style.transform='scaleX('+(travel>0?Math.min(1,Math.max(0,-box.top/travel)):1)+')';}if(!entries.length)return;let current=entries[0];for(const entry of entries){if(entry.target.getBoundingClientRect().top<=120)current=entry;}
   entries.forEach(entry=>{if(entry===current)entry.button.setAttribute('aria-current','location');else entry.button.removeAttribute('aria-current');});
  };
  const schedule=()=>{if(!frame)frame=requestAnimationFrame(update);};
@@ -47,7 +48,7 @@ function trackLessonSection(main,l){
 }
 function bindLearningTools(main,p,l){
  trackLessonSection(main,l);
-  main.querySelectorAll('[data-jump]').forEach(button=>button.addEventListener('click',()=>{const target=document.getElementById(button.dataset.jump);if(target){target.tabIndex=-1;target.focus({preventScroll:true});target.scrollIntoView({block:'start'});}}));
+  main.querySelectorAll('[data-jump]').forEach(button=>button.addEventListener('click',()=>{const target=document.getElementById(button.dataset.jump);if(target){target.tabIndex=-1;target.focus({preventScroll:true});target.scrollIntoView({block:'start'});}button.closest('.course-menu')?.removeAttribute('open');}));
   enhanceCodePanels(main,p?.id);
   bindVisualExplorer(l);
   if(typeof NotebookMermaid!=='undefined')NotebookMermaid.render(main);
@@ -128,7 +129,10 @@ function atlasCourseCover(p,done){
  const icon=typeof LIBRARY_ICONS==='object'?LIBRARY_ICONS[p.id]||'':'';
  return `<section class="atlas-cover" aria-label="Course introduction"><div class="atlas-cover-copy"><p class="atlas-category">${escapeText(p.category)} <span>Learning path</span></p><h1>${escapeText(p.title)}</h1><p class="intro">${escapeText(p.description)}</p><a class="primary" href="${lessonRoute(p,next)}">${read?'Continue learning':'Start learning'} <span aria-hidden="true">→</span></a><p class="atlas-next">${read===lessons.length?'Revisit the beginning':read?'Next unread lesson':'Begin with'}: ${escapeText(next.title.replace(/^\d+\.\s*/,''))}</p></div>${typeof atlasConceptPreview === 'function' ? atlasConceptPreview(p) : ''}<div class="atlas-itinerary"><div class="atlas-itinerary-title"><span class="atlas-course-icon" aria-hidden="true">${icon}</span><div><strong>Your route through this course</strong><small>${read} of ${lessons.length} lessons read</small></div></div><progress value="${read}" max="${lessons.length}" aria-label="Lessons read">${read} / ${lessons.length}</progress><ol>${(p.stages||[]).map((s,i)=>`<li><button data-jump="stage-${s.id}"><span class="atlas-station" aria-hidden="true">${i+1}</span><span><strong>${escapeText(s.title.split(' · ')[0])}</strong><small>${lessons.filter(l=>l.stage===s.id).length} lessons · ${escapeText(s.title.split(' · ').slice(1).join(' · ')||'Explore and practise')}</small></span><span aria-hidden="true">↗</span></button></li>`).join('')}</ol><a href="#resources/${p.id}">Practice files & instructions <span aria-hidden="true">↗</span></a></div></section>`;
 }
-function atlasLessonRail(p,l){return `<nav class="atlas-lesson-rail" aria-label="On this lesson"><details id="atlas-rail-sections" open><summary>Jump to a section</summary><ol>${l.sections.map((s,i)=>`<li><button data-jump="lesson-section-${i}">${escapeText(s.title)}</button></li>`).join('')}${l.visual?'<li><button data-jump="lesson-visual">Interactive exploration ↗</button></li>':''}${l.diagram?'<li><button data-jump="lesson-diagram">Concept diagram ↗</button></li>':''}${l.exercise?'<li><button data-jump="lesson-practice">'+(l.exercise.challenge?'Your solution':'Practice this idea')+'</button></li>':''}${l.quiz?'<li><button data-jump="lesson-checkpoint">Check your understanding</button></li>':''}</ol></details></nav>`;}
+function lessonJumps(l){return `${l.sections.map((s,i)=>`<li><button data-jump="lesson-section-${i}">${escapeText(s.title)}</button></li>`).join('')}${l.visual?'<li><button data-jump="lesson-visual">Interactive exploration ↗</button></li>':''}${l.diagram?'<li><button data-jump="lesson-diagram">Concept diagram ↗</button></li>':''}${l.exercise?'<li><button data-jump="lesson-practice">'+(l.exercise.challenge?'Your solution':'Practice this idea')+'</button></li>':''}${l.quiz?'<li><button data-jump="lesson-checkpoint">Check your understanding</button></li>':''}`;}
+// Lessons carry one compact course menu; its section list stands in for the rail on narrow screens.
+function lessonCourseMenu(p,l){const task=p.resources&&taskForLesson(p,l);return `<details class="course-menu"><summary>Contents</summary><div class="course-menu-panel"><nav class="course-menu-sections" aria-label="On this lesson"><h2>On this lesson</h2><ol>${lessonJumps(l)}</ol></nav><nav aria-label="Course"><h2>Course</h2><ul class="course-menu-links"><li><a href="#path/${p.id}">Course overview</a></li>${p.resources?`<li><a href="#resources/${p.id}${task?'/'+task.id:''}">Practice files</a></li>`:''}<li><a href="offline.html?course=${p.id}">Save course offline</a></li></ul><ol class="course-menu-lessons">${p.lessons.map(item=>`<li><a href="${lessonRoute(p,item)}" ${l.id===item.id?'aria-current="page"':''}>${escapeText(item.title)}</a></li>`).join('')}</ol></nav></div></details>`;}
+function atlasLessonRail(p,l){return `<nav class="atlas-lesson-rail" aria-label="On this lesson"><details id="atlas-rail-sections" open><summary>Jump to a section</summary><ol>${lessonJumps(l)}</ol></details></nav>`;}
 function atlasLibraryFeature(){return `<aside class="atlas-open-page" aria-label="Try a visual lesson"><div class="atlas-page-tab">Open a page</div><h2>Try a<br> visual lesson.</h2><a href="#topic/sql-server/joins-and-grain"><span>Why did my join double the total?</span><span aria-hidden="true">↗</span></a><a href="#topic/react/state"><span>When does React see new state?</span><span aria-hidden="true">↗</span></a><a href="#topic/kubernetes/deployments"><span>What happens when a Pod disappears?</span><span aria-hidden="true">↗</span></a></aside>`;}
 
 // Explicit author metadata distinguishes conceptual flow text from executable examples.

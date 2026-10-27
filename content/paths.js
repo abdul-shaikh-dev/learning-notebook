@@ -61314,7 +61314,7 @@ const LEARNING_PATHS = [
             "title": "Concept",
             "paragraphs": [
               "Strings are sequences of Unicode code points. Indexing starts at zero: `name[0]` is the first character. A slice such as `name[:3]` selects a portion. `len(name)` counts code points, which may differ from the number of visible characters. Methods such as `strip` and `lower` return transformed strings.",
-              "input displays an optional prompt and returns a string, even when a user types digits. `int` converts suitable text to an integer; `float` converts suitable text to a floating-point number. This lesson uses fixed input text so the example runs without waiting for a person."
+              "`input` displays an optional prompt and returns a string, even when a user types digits. `int` converts suitable text to an integer; `float` converts suitable text to a floating-point number. This lesson uses fixed input text so the example runs without waiting for a person."
             ]
           },
           {

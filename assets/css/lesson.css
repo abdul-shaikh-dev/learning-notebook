@@ -1,0 +1,45 @@
+/* Lesson reading: a thin reading bar, one compact course menu, a named next step and the shortcut list. */
+.reading-progress{position:fixed;inset:0 0 auto;height:3px;z-index:20;pointer-events:none}
+.reading-progress>span{display:block;height:100%;background:var(--green-text);transform:scaleX(0);transform-origin:left center}
+
+.catalog .lesson-meta{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);margin:0 0 var(--space-3)}
+.catalog .lesson-meta>p{margin:0}
+.course-menu{position:relative;flex:none;margin:0;padding:0;border:0;background:transparent}
+.course-menu>summary{display:inline-flex;align-items:center;gap:var(--space-2);min-height:44px;padding:0 var(--space-3);border:1px solid var(--line);border-radius:var(--radius-control);background:var(--surface);color:var(--text);font-size:var(--size-small);font-weight:600;cursor:pointer;list-style:none}
+.course-menu>summary::-webkit-details-marker{display:none}
+.course-menu>summary::after{content:'';width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg)}
+.course-menu[open]>summary::after{transform:translateY(2px) rotate(225deg)}
+.course-menu>summary:hover{border-color:var(--control)}
+.course-menu>summary:focus-visible{outline:var(--focus-ring);outline-offset:2px}
+.course-menu-panel{position:absolute;right:0;top:calc(100% + 6px);z-index:15;box-sizing:border-box;width:min(360px,calc(100vw - 40px));max-height:min(70vh,560px);overflow:auto;padding:var(--space-4);background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:var(--radius-card);box-shadow:var(--shadow)}
+.catalog .course-menu-panel h2{margin:0 0 var(--space-2);font:600 var(--size-meta)/1.3 var(--font-text);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.catalog .course-menu-panel nav+nav{margin-top:var(--space-4);padding-top:var(--space-4);border-top:1px solid var(--line)}
+.catalog .course-menu-panel nav{display:block;margin:0;padding:0;border:0;background:transparent;position:static}
+.catalog .course-menu-panel :is(ol,ul){display:block;list-style:none;margin:0;padding:0;max-height:none;overflow:visible;columns:auto}
+.course-menu-panel li{margin:0}
+.catalog .course-menu-panel :is(a,button){display:flex;align-items:center;box-sizing:border-box;width:100%;min-height:40px;margin:0;padding:var(--space-1) var(--space-2);border:0;border-radius:var(--radius-control);background:transparent;color:var(--text);font:inherit;font-size:var(--size-small);line-height:1.35;text-align:left;text-decoration:none;box-shadow:none}
+.catalog .course-menu-panel :is(a,button):hover{background:var(--sunken)}
+.catalog .course-menu-panel :is(a,button):focus-visible{outline:var(--focus-ring);outline-offset:-3px}
+.catalog .course-menu-panel a[aria-current=page]{background:var(--green-bg);color:var(--green-text);font-weight:700}
+.course-menu-links{margin-bottom:var(--space-2)!important;padding-bottom:var(--space-2)!important;border-bottom:1px solid var(--line)}
+@media(min-width:951px){.catalog .course-menu-panel .course-menu-sections{display:none}.catalog .course-menu-panel nav+nav{margin-top:0;padding-top:0;border-top:0}}
+@media(max-width:950px){.catalog .atlas-lesson-layout>.atlas-lesson-rail{display:none}}
+
+/* The next lesson is the main next step. */
+.catalog .lesson-actions #read-next{display:inline-flex;flex-wrap:wrap;align-items:baseline;gap:0 .4em;max-width:100%;text-align:left}
+.catalog .lesson-actions #read-next .next-title{flex-basis:100%;color:inherit;opacity:1;font-size:var(--size-meta);font-weight:400;line-height:1.4;overflow-wrap:anywhere}
+
+/* Keyboard shortcuts */
+.footer-shortcuts{min-height:24px;margin:0 0 0 var(--space-1);padding:0 var(--space-1);border:0;background:none;color:var(--link);font:inherit;text-decoration:underline;cursor:pointer}
+.footer-shortcuts:focus-visible{outline:var(--focus-ring);outline-offset:2px}
+@media(hover:none) and (pointer:coarse){.footer-shortcuts,.footer-shortcuts-sep{display:none}}
+.shortcuts-dialog{box-sizing:border-box;width:min(420px,calc(100vw - 32px));padding:var(--space-5);border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+.shortcuts-dialog::backdrop{background:color-mix(in srgb,var(--sunken) 85%,transparent)}
+.shortcuts-dialog h2{margin:0 0 var(--space-4);font-family:var(--font-heading);font-size:var(--size-sub);font-weight:400}
+.shortcut-list{display:grid;gap:var(--space-2);margin:0 0 var(--space-4)}
+.shortcut-list>div{display:grid;grid-template-columns:56px minmax(0,1fr);align-items:center;gap:var(--space-3)}
+.shortcut-list dt,.shortcut-list dd{margin:0}
+.shortcut-list kbd{display:inline-grid;place-items:center;min-width:32px;min-height:28px;padding:0 var(--space-2);box-sizing:border-box;border:1px solid var(--control);border-bottom-width:2px;border-radius:var(--radius-control);background:var(--raised);color:var(--text);font:600 var(--size-small)/1 var(--font-code)}
+.shortcuts-dialog p{margin:0 0 var(--space-4);font-size:var(--size-small);color:var(--muted)}
+.shortcuts-dialog form{margin:0;text-align:right}
+@media print{.reading-progress,.course-menu{display:none}}

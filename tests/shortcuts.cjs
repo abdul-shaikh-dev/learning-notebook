@@ -1,0 +1,32 @@
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
+process.chdir(process.env.LEARNING_REPO||path.resolve(__dirname,'..'));
+// Keyboard shortcuts: which keys act, which never do, and what the help lists.
+const paths=require(path.resolve('scripts/manifest.cjs')).readPaths();
+const ctx={LEARNING_PATHS:paths};vm.createContext(ctx);
+// The reader's own escapeText and lessonRoute, without the rest of catalog.js, which needs a page.
+const catalog=fs.readFileSync('assets/js/catalog.js','utf8'),helpers=[/^const escapeText=.*$/m,/^function lessonRoute\(.*$/m].map(re=>catalog.match(re)[0]).join('\n');
+vm.runInContext([fs.readFileSync('assets/js/learning-tools.js','utf8'),helpers,fs.readFileSync('assets/js/notebook-shortcuts.js','utf8')].join('\n')+'\n;this.NotebookShortcuts=NotebookShortcuts;',ctx);
+const {action,helpHTML,LIST}=ctx.NotebookShortcuts;
+const python=paths.find(p=>p.id==='python'),[first,second,third]=python.lessons,last=python.lessons.at(-1);
+const same=(actual,expected,message)=>assert.equal(JSON.stringify(actual),JSON.stringify(expected),message);
+const at=l=>'#topic/python/'+l.id,key=(key,extra={})=>({key,target:{tagName:'BODY'},...extra});
+same(action(key('/'),'#'),{type:'search'});
+same(action(key('?'),at(second)),{type:'help'});
+same(action(key(']'),at(second)),{type:'go',href:at(third)});
+same(action(key('['),at(second)),{type:'go',href:at(first)});
+assert.equal(action(key('['),at(first)),null,'No previous lesson before the first');
+assert.equal(action(key(']'),at(last)),null,'No next lesson after the last');
+assert.equal(action(key(']'),'#path/python'),null,'Lesson keys only act on lesson pages');
+assert.equal(action(key(']'),'#topic/python/missing'),null);
+for(const tagName of ['INPUT','TEXTAREA','SELECT'])assert.equal(action(key('/',{target:{tagName}}),'#'),null,'Never while typing in '+tagName);
+assert.equal(action(key(']',{target:{tagName:'DIV',isContentEditable:true}}),at(second)),null,'Never while editing text');
+for(const modifier of ['ctrlKey','metaKey','altKey'])assert.equal(action(key('/',{[modifier]:true}),'#'),null,'Never with '+modifier);
+assert.equal(action(key('/',{defaultPrevented:true}),'#'),null,'Never when a control already handled the key');
+assert.equal(action(key('?'),'#',true),null,'Never over an open dialog');
+assert.equal(action(key('a'),'#'),null);
+const help=helpHTML();
+for(const [k,text] of LIST)assert.ok(help.includes('<kbd>'+k+'</kbd></dt><dd>'+text+'</dd>'),'Help lists '+k);
+for(const k of ['/','[',']','?'])assert.ok(LIST.some(([listed])=>listed===k),'Shortcut '+k+' is documented');
+assert.ok(fs.readFileSync('index.html','utf8').includes('data-shortcuts'),'The help is reachable without a keyboard shortcut');
+assert.ok(fs.readFileSync('README.md','utf8').includes('Keyboard shortcuts'),'Shortcuts are documented in the README');
+console.log('PASS: keyboard shortcuts for search, previous and next lesson and help; none fire while typing, with modifiers or over a dialog; every shortcut is listed in the help and the README.');

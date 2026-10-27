@@ -38,3 +38,17 @@ for(const p of paths)for(const l of p.lessons)if(l.diagram){
  assert.match(screen,/<details class="mermaid-text" data-diagram-alternative>/,'Screen alternative starts collapsed');
  assert(!print.includes('<summary>Full diagram description'),'Print does not hide the alternative in a disclosure');
 }
+// The lesson leads with its title: one compact course menu, a reading bar and a named next step.
+{const l=p.lessons[2];ctx.location.hash='#topic/python/'+l.id;ctx.renderCatalog();const html=node('main').innerHTML,article=html.slice(html.indexOf('<article class="reading">'));
+ assert(!article.includes('class="course-tools"'),'No row of course buttons above the lesson');
+ assert(article.indexOf('<details class="course-menu">')<article.indexOf('<h1>'),'The course menu sits on the meta line before the title');
+ assert.equal((html.match(/class="course-menu"/g)||[]).length,1,'One course control');
+ const menu=article.slice(article.indexOf('<details class="course-menu">'),article.indexOf('</details>')+10);
+ for(const href of ['#path/python','offline.html?course=python',...p.lessons.map(item=>'#topic/python/'+item.id)])assert(menu.includes('href="'+href+'"'),'Menu links '+href);
+ assert(menu.includes('aria-current="page">'+escapeText(l.title)),'Menu marks the current lesson');
+ for(const [i] of l.sections.entries())assert(menu.includes('data-jump="lesson-section-'+i+'"'),'Menu lists each section for narrow screens');
+ assert(html.startsWith('<div class="reading-progress" aria-hidden="true"><span></span></div>'),'Decorative reading bar');
+ assert(article.includes('Read &amp; continue')||article.includes('Read & continue'));
+ assert(article.includes('<small class="next-title">Next: '+escapeText(p.lessons[3].title)+'</small>'),'The main next step names the next lesson');
+ ctx.location.hash='#topic/python/'+p.lessons.at(-1).id;ctx.renderCatalog();assert(!node('main').innerHTML.includes('next-title'),'The last lesson has no next title');}
+console.log('PASS: lesson pages lead with the title, one course menu with sections and lessons, a decorative reading bar and a named next lesson.');

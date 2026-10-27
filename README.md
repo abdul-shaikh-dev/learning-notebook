@@ -30,6 +30,20 @@ Start at a course overview to see its prerequisites, learning outcomes and stage
 - Use **Read & continue** to mark a lesson as read and open the next one. Opening a lesson does not mark it complete. Quizzes do not block navigation.
 - Find a topic through search, the course map, lesson navigation or a printable study pack. The [financial handbook](https://abdul-shaikh-dev.github.io/learning-notebook/handbook.html) is also available as one continuous reference.
 
+### Keyboard shortcuts
+
+On the notebook pages, press `?` to see the shortcuts, or choose **Keyboard shortcuts** in the footer.
+
+| Key | Action |
+| --- | --- |
+| `/` | Search the notebook |
+| `[` | Previous lesson |
+| `]` | Next lesson (does not mark the current lesson read) |
+| `?` | Show the shortcuts |
+| `Esc` | Close the shortcuts list or the lesson Contents menu |
+
+Shortcuts never act while you type in a field, or when Ctrl, Alt or Cmd is held.
+
 The personal effectiveness paths include a [browser practice studio](https://abdul-shaikh-dev.github.io/learning-notebook/paths/time-attention-energy/practice/lab.html) for planning and reflection. Studio entries stay in memory unless you explicitly export them; a chosen review date does not schedule a notification.
 
 The Python Problem Solving path contains 30 original challenges with optional hints and worked reasoning. Download its ZIP, edit `solutions.py`, and run each challenge locally with `check.py`. Tests do not require an account or packages; passing them is separate from reading progress.
