@@ -44,6 +44,10 @@ On the notebook pages, press `?` to see the shortcuts, or choose **Keyboard shor
 
 Shortcuts never act while you type in a field, or when Ctrl, Alt or Cmd is held.
 
+On the search page, press `↓` in the search box to move into the results, `↑` and `↓` to move between them, and `Esc` to return to the box. Before you type, the page offers your recent searches (kept only in this browser), the course you were reading and some suggested topics.
+
+The search index (`content/search.js`) lists each word once with the entries that contain it, plus a short summary per entry, instead of every entry's full text. `tests/notebook-search.cjs` checks that a fixed list of queries finds exactly the same lessons as a scan of the full text, and that the index stays at or under 350 KB compressed.
+
 The personal effectiveness paths include a [browser practice studio](https://abdul-shaikh-dev.github.io/learning-notebook/paths/time-attention-energy/practice/lab.html) for planning and reflection. Studio entries stay in memory unless you explicitly export them; a chosen review date does not schedule a notification.
 
 The Python Problem Solving path contains 30 original challenges with optional hints and worked reasoning. Download its ZIP, edit `solutions.py`, and run each challenge locally with `check.py`. Tests do not require an account or packages; passing them is separate from reading progress.

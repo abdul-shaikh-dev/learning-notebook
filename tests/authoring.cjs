@@ -2,6 +2,8 @@ const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),asse
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'notebook-authoring-'));
 fs.mkdirSync(path.join(temp,'scripts'));fs.mkdirSync(path.join(temp,'paths'));fs.mkdirSync(path.join(temp,'content'));
 for(const name of ['manifest.cjs','lazy-catalog.cjs','search-index.cjs','sync-catalog.cjs','new-path.cjs'])fs.copyFileSync(path.join(__dirname,'../scripts',name),path.join(temp,'scripts',name));
+// The search index uses the reader's own tokenizer.
+fs.mkdirSync(path.join(temp,'assets/js'),{recursive:true});fs.copyFileSync(path.join(__dirname,'../assets/js/notebook-search.js'),path.join(temp,'assets/js/notebook-search.js'));
 function run(...args){return cp.spawnSync(process.execPath,args,{encoding:'utf8',cwd:temp});}
 let r=run('scripts/new-path.cjs','test-topic','Test topic');assert.equal(r.status,0,r.stderr);
 let p=JSON.parse(fs.readFileSync(path.join(temp,'paths/test-topic/path.json'),'utf8'));assert.equal(p.status,'planned');
