@@ -21,7 +21,7 @@ let renders=0;const render=()=>{renders++;};const flush=async()=>{for(let i=0;i<
  assert.equal(ctx.loader.prepare('topic','react',render),false,'cached course needs no script');
  ctx.location.hash='#topic/python/values-and-names';ctx.loader.prepare('topic','python',render);requests[1].onerror();await flush();assert.match(node('main').innerHTML,/Try again/);node('retry-content').click();assert.equal(renders,1);
  ctx.loader.prepare('topic','python',render);assert.equal(requests.length,3,'retry makes fresh request');vm.runInContext(files['content/courses/python.js'],ctx);requests[2].onload();await flush();assert.equal(renders,2);
- ctx.location.hash='#search';ctx.loader.prepare('search',undefined,render);assert.match(requests[3].src,/content\/search.js\?v=/);vm.runInContext('const NOTEBOOK_SEARCH=[];',ctx);requests[3].onload();await flush();assert.equal(ctx.loader.prepare('search',undefined,render),false);
+ ctx.location.hash='#search';ctx.loader.prepare('search',undefined,render);assert.match(requests[3].src,/content\/search.js\?v=/);vm.runInContext('const NOTEBOOK_SEARCH={courses:{},entries:[],words:"",postings:[]};',ctx);requests[3].onload();await flush();assert.equal(ctx.loader.prepare('search',undefined,render),false);
  console.log('PASS: compact catalog, lazy course/search, deduplication, cached reuse, stale-route suppression and failure retry.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
 
