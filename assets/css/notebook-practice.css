@@ -4,3 +4,6 @@
 
 .practice-actions button:not(.primary){border:1px solid var(--control);border-radius:6px;background:var(--surface);color:var(--text);padding:10px 14px}.practice-actions button:not(.primary):hover:not(:disabled){background:var(--raised)}
 #runner-output{margin:0;min-height:1.6em}#runner-output:focus-visible{outline:3px solid var(--blue-text);outline-offset:3px}
+/* Lesson examples: Run and Edit sit directly under the code panel; output and the editor follow. */
+.browser-practice.example-runner{margin:-16px 0 28px}.example-runner .example-actions{margin:0 0 12px;gap:8px}.browser-practice.example-runner textarea{min-height:0}.example-runner [id^=example-help-]{margin:8px 0 12px;font-size:var(--size-small);line-height:1.6;color:var(--muted)}
+.browser-practice .example-output{margin:0;min-height:1.6em;white-space:pre-wrap;overflow-wrap:anywhere;font:var(--size-small)/1.6 var(--font-code);padding:16px;background:var(--raised);border:1px solid var(--control);border-radius:6px;max-height:360px;overflow:auto}.example-output:focus-visible{outline:3px solid var(--blue-text);outline-offset:3px}

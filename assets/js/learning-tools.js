@@ -136,9 +136,12 @@ function atlasLessonRail(p,l){return `<nav class="atlas-lesson-rail" aria-label=
 function atlasLibraryFeature(){return `<aside class="atlas-open-page" aria-label="Try a visual lesson"><div class="atlas-page-tab">Open a page</div><h2>Try a<br> visual lesson.</h2><a href="#topic/sql-server/joins-and-grain"><span>Why did my join double the total?</span><span aria-hidden="true">↗</span></a><a href="#topic/react/state"><span>When does React see new state?</span><span aria-hidden="true">↗</span></a><a href="#topic/kubernetes/deployments"><span>What happens when a Pod disappears?</span><span aria-hidden="true">↗</span></a></aside>`;}
 
 // Explicit author metadata distinguishes conceptual flow text from executable examples.
-function lessonExample(l,s,index){
+function lessonExample(l,s,index,p){
  if(!s.example)return '';
  if(s.exampleFormat==='prose')return '<aside class="worked-example" aria-label="Worked example"><strong>Worked example</strong><p>'+escapeText(s.example)+'</p></aside>';
- const example='<pre class="example">'+escapeText(s.example)+'</pre>';
+ // Courses marked runExamples add Run and Edit below each Python example.
+ const controls=p&&typeof NotebookPractice!=='undefined'?NotebookPractice.exampleControls(p,s,index):'';
+ if(controls)return '<pre class="example" id="example-code-'+index+'" data-language="python">'+escapeText(s.example)+'</pre>'+controls;
+ const example='<pre class="example"'+(s.exampleFormat==='text'?' data-language="plaintext"':'')+'>'+escapeText(s.example)+'</pre>';
  return l.diagram?.textExampleSections?.includes(index)?'<div class="flow-text-alternative"><button class="quiet" data-jump="lesson-diagram">View this flow as a diagram ↓</button><details><summary>Read the original flow as text</summary>'+example+'</details></div>':example;
 }
