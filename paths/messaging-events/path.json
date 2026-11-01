@@ -424,7 +424,7 @@
         },
         {
           "title": "Pika blocking channel operations",
-          "url": "https://pika.readthedocs.io/en/stable/modules/adapters/blocking.html",
+          "url": "https://pika.github.io/pika/latest/modules/adapters/blocking/",
           "section": "basic_get, basic_ack and publisher confirmation",
           "reviewed": "2026-10-02",
           "scope": "Primary API documentation for the optional mechanism lab. Runtime prerequisites and execution evidence are separate in mechanism-lab.md."
