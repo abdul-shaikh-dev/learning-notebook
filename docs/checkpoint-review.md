@@ -61,12 +61,18 @@ When adding a code-based question to a Python course, add its fact in the same c
 
 Writing the facts corrected one draft answer: with 16 commits to bisect, Git reports "7 revisions left to test after this (roughly 3 steps)" once it checks out the first midpoint, not 4, so the question asks for the number Git prints.
 
+### Networking & the Web
+
+2026-11-01: one extra question per lesson and three per stage (24 lesson questions, 9 stage questions). 30 of the 33 answers depend on how the course labs or the standard library behave, for example a 200 from `/bad-json` that the decoder rejects, a TTL of 0 leaving no cached answer, `b'incomplete'` raising "EOF inside a frame", HEAD reporting the GET length with an empty body, a non-matching `If-None-Match` returning 200 with the current ETag, Python refusing `CERT_NONE` while hostname checking is on, the `/stall` request reaching the server before the client times out, and a `true` version failing the lesson contract.
+
+`tests/network_checkpoint_facts.py` checks each of those 30 by running the labs in `paths/networking-web/practice`: the offline DNS, cache and retry models, the loopback HTTP server and the loopback TCP framing exchange. Nothing leaves 127.0.0.1. It fails if a lab's result supports a different option than the one marked correct, and lists any question without a fact. The other three answers are cited from the lessons: forwarded fields from lesson 18, HTTP semantics across versions from lesson 23 and the unexecuted extensions from lesson 24. The check runs in the `python` CI job on Python 3.11 and 3.14; run it locally with `python tests/network_checkpoint_facts.py`.
+
 ### Plan for the remaining courses
 
 Work one course per change, in this order, so that each answer can be checked against something that runs or a cited source:
 
 1. **Courses whose answers run in another tool:** Data analysis with Python and Machine learning foundations (CPython with the course's packages), SQL Server & T-SQL (a local SQL Server or the course's scripts), C# & .NET (`dotnet run`), JavaScript → TypeScript → React (Node) and Linux & Operating Systems (a shell). Record each check in this document, as for the Python course, because only the bundled Python runtime is part of `tests/browser-python.cjs`.
-2. **Courses checked against their cited sources:** Networking & the Web, Messaging & Event-Driven Systems and Data Engineering first, where answers can also run against the course labs; then Testing & Debugging, AI Agents, Agent Harnesses, Application Security, Kubernetes, Cloud & Infrastructure as Code, Observability & Performance, Delivery & Operations, System Design, UI Design & Accessibility, Full-Stack Project Journey and Requirements & software maintenance. Each answer should trace to a lesson source or a primary reference such as a specification or WCAG success criterion.
+2. **Courses checked against their cited sources:** Messaging & Event-Driven Systems and Data Engineering first, where answers can also run against the course labs (Networking & the Web is done); then Testing & Debugging, AI Agents, Agent Harnesses, Application Security, Kubernetes, Cloud & Infrastructure as Code, Observability & Performance, Delivery & Operations, System Design, UI Design & Accessibility, Full-Stack Project Journey and Requirements & software maintenance. Each answer should trace to a lesson source or a primary reference such as a specification or WCAG success criterion.
 3. **Personal effectiveness and development courses:** Learning How to Learn, Habits & Behaviour Change, Self-Awareness & Communication, Task & Project Management, Time, Attention & Energy and Plan and Review Your Week. Questions should test the course's own model and avoid claims stronger than its sources.
 
 Python Problem Solving is left out because its lessons are challenges with tests, and Financial foundations because it has its own course page and question format.

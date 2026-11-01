@@ -68,6 +68,8 @@ jobs:
         run: python scripts/verify-python.py
       - name: Check Git checkpoint answers against real Git
         run: python tests/git_checkpoint_facts.py
+      - name: Check Networking checkpoint answers against the course labs
+        run: python tests/network_checkpoint_facts.py
 
   react:
     runs-on: ubuntu-latest
