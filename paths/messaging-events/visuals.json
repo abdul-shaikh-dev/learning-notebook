@@ -1,0 +1,400 @@
+{
+ "idempotent-consumers": {
+  "title": "A redelivered event applies once",
+  "intro": "Redeliver event e-17 after a crash, first to a consumer with a durable inbox, then to one that remembers IDs in memory.",
+  "scope": "The lab’s consume() with SQLite: event e-17 adds 7 to job j-4’s total for each consumer. The inbox key is consumer plus event ID, written in the same transaction as the projection update. The broker is at-least-once; a crash before the ack causes redelivery. Broker durability needs its own configuration.",
+  "sources": [
+   {
+    "title": "RabbitMQ reliability guide",
+    "url": "https://www.rabbitmq.com/docs/reliability"
+   },
+   {
+    "title": "Azure transactional outbox",
+    "url": "https://learn.microsoft.com/en-us/azure/architecture/databases/guide/transactional-out-box-cosmos"
+   }
+  ],
+  "scenarios": [
+   {
+    "id": "inbox",
+    "label": "Durable inbox: one effect",
+    "steps": [
+     {
+      "title": "Consume e-17",
+      "explanation": "audit receives e-17 (job j-4, value 7). One transaction inserts the inbox key (audit, e-17) and adds 7 to the projection, so consume returns True.",
+      "nodes": [
+       {
+        "id": "broker",
+        "label": "Broker delivery",
+        "detail": "e-17 delivered · j-4 · value 7",
+        "tone": "active",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "consumer",
+        "label": "Consumer",
+        "detail": "audit: consume → True",
+        "tone": "success",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "inbox",
+        "label": "Inbox table",
+        "detail": "(audit, e-17)",
+        "tone": "success",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "total",
+        "label": "Projection",
+        "detail": "audit · j-4 · total 7",
+        "tone": "success",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "broker",
+        "to": "consumer",
+        "label": "deliver e-17"
+       },
+       {
+        "from": "consumer",
+        "to": "inbox",
+        "label": "insert key"
+       },
+       {
+        "from": "consumer",
+        "to": "total",
+        "label": "add 7, same transaction"
+       }
+      ]
+     },
+     {
+      "title": "Redelivered after a crash",
+      "focus": [
+       "msg-broker",
+       "msg-consumer"
+      ],
+      "explanation": "The consumer crashed before acknowledging, so the broker delivers e-17 again. After reopening the database, the key is found and consume returns False. The total stays 7.",
+      "nodes": [
+       {
+        "id": "broker",
+        "label": "Broker delivery",
+        "detail": "e-17 delivered again after restart",
+        "tone": "warning",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "consumer",
+        "label": "Consumer",
+        "detail": "Reopened: consume → False",
+        "tone": "success",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "inbox",
+        "label": "Inbox table",
+        "detail": "(audit, e-17)",
+        "tone": "neutral",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "total",
+        "label": "Projection",
+        "detail": "audit · j-4 · total 7",
+        "tone": "neutral",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "broker",
+        "to": "consumer",
+        "label": "redeliver e-17"
+       },
+       {
+        "from": "consumer",
+        "to": "inbox",
+        "label": "key exists: skip"
+       }
+      ]
+     },
+     {
+      "title": "Another consumer, its own key",
+      "focus": [
+       "msg-inbox",
+       "msg-total"
+      ],
+      "explanation": "notifications has its own key (notifications, e-17), so it processes the same event once as well. A single global event-ID row would wrongly block it.",
+      "nodes": [
+       {
+        "id": "broker",
+        "label": "Broker delivery",
+        "detail": "e-17 delivered to notifications",
+        "tone": "active",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "consumer",
+        "label": "Consumer",
+        "detail": "notifications: consume → True",
+        "tone": "success",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "inbox",
+        "label": "Inbox table",
+        "detail": "(audit, e-17), (notifications, e-17)",
+        "tone": "success",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "total",
+        "label": "Projection",
+        "detail": "audit 7 · notifications 7",
+        "tone": "success",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "broker",
+        "to": "consumer",
+        "label": "deliver e-17"
+       },
+       {
+        "from": "consumer",
+        "to": "inbox",
+        "label": "insert own key"
+       }
+      ]
+     },
+     {
+      "title": "Same ID, different payload",
+      "focus": [
+       "msg-broker",
+       "msg-consumer"
+      ],
+      "explanation": "e-17 arrives again with value 9. The stored payload differs, so consume raises an identity collision instead of treating it as a replay.",
+      "nodes": [
+       {
+        "id": "broker",
+        "label": "Broker delivery",
+        "detail": "e-17 arrives with value 9",
+        "tone": "warning",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "consumer",
+        "label": "Consumer",
+        "detail": "ValueError: identity collision",
+        "tone": "warning",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "inbox",
+        "label": "Inbox table",
+        "detail": "(audit, e-17), (notifications, e-17)",
+        "tone": "neutral",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "total",
+        "label": "Projection",
+        "detail": "audit 7 · notifications 7",
+        "tone": "neutral",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "broker",
+        "to": "consumer",
+        "label": "deliver e-17"
+       },
+       {
+        "from": "consumer",
+        "to": "inbox",
+        "label": "payload differs"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "memory",
+    "label": "In-memory set: applied twice",
+    "steps": [
+     {
+      "title": "Consume with a memory set",
+      "explanation": "This consumer keeps seen event IDs in a Python set. It applies e-17 and adds 7 to the total.",
+      "nodes": [
+       {
+        "id": "broker",
+        "label": "Broker delivery",
+        "detail": "e-17 delivered · j-4 · value 7",
+        "tone": "active",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "consumer",
+        "label": "Consumer",
+        "detail": "audit applies e-17",
+        "tone": "success",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "inbox",
+        "label": "Seen IDs in memory",
+        "detail": "{e-17}",
+        "tone": "neutral",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "total",
+        "label": "Projection",
+        "detail": "audit · j-4 · total 7",
+        "tone": "success",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "broker",
+        "to": "consumer",
+        "label": "deliver e-17"
+       },
+       {
+        "from": "consumer",
+        "to": "inbox",
+        "label": "remember e-17"
+       },
+       {
+        "from": "consumer",
+        "to": "total",
+        "label": "add 7"
+       }
+      ]
+     },
+     {
+      "title": "Crash before the ack",
+      "focus": [
+       "msg-broker",
+       "msg-inbox"
+      ],
+      "explanation": "The process crashes before acknowledging. The restarted process starts with an empty set, and the broker delivers e-17 again.",
+      "nodes": [
+       {
+        "id": "broker",
+        "label": "Broker delivery",
+        "detail": "e-17 delivered again after restart",
+        "tone": "warning",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "consumer",
+        "label": "Consumer",
+        "detail": "Restarted; memory was lost",
+        "tone": "warning",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "inbox",
+        "label": "Seen IDs in memory",
+        "detail": "{} after restart",
+        "tone": "warning",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "total",
+        "label": "Projection",
+        "detail": "audit · j-4 · total 7",
+        "tone": "neutral",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "broker",
+        "to": "consumer",
+        "label": "redeliver e-17"
+       }
+      ]
+     },
+     {
+      "title": "Redelivery applies again",
+      "focus": [
+       "msg-total"
+      ],
+      "explanation": "e-17 is not in the empty set, so the consumer adds 7 again: the total becomes 14. A second process, or a durable key pruned too early, fails the same way.",
+      "nodes": [
+       {
+        "id": "broker",
+        "label": "Broker delivery",
+        "detail": "e-17 delivered again after restart",
+        "tone": "neutral",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "consumer",
+        "label": "Consumer",
+        "detail": "e-17 not in set; applies it",
+        "tone": "warning",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "inbox",
+        "label": "Seen IDs in memory",
+        "detail": "{e-17}",
+        "tone": "neutral",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "total",
+        "label": "Projection",
+        "detail": "audit · j-4 · total 14",
+        "tone": "warning",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "consumer",
+        "to": "total",
+        "label": "add 7 again"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

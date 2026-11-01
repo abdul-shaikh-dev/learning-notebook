@@ -17363,6 +17363,451 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "TB"
+        },
+        "visual": {
+          "title": "Re-running an import without a second effect",
+          "intro": "Run the same two-order import twice: once with a stored batch identity, and once with a loader that only appends.",
+          "scope": "The lab’s import_csv on sample_orders.csv (orders o1 and o2, 1,250 and 750 cents) with SQLite. Fingerprint F1 stands for the hash of the file’s exact bytes; F2 is the hash of a copy with one changed line ending. The append-only loader is a counter-example, not part of the lab.",
+          "sources": [
+            {
+              "title": "Python sqlite3: Transaction control",
+              "url": "https://docs.python.org/3/library/sqlite3.html"
+            }
+          ],
+          "scenarios": [
+            {
+              "id": "batch",
+              "label": "Same batch ID replays",
+              "steps": [
+                {
+                  "title": "First import commits",
+                  "explanation": "sept-01 is not in runs, so import_csv inserts both orders and the run row (batch ID, fingerprint, row count) in one transaction and returns committed.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Input file",
+                      "detail": "sample_orders.csv · batch sept-01 · F1",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "runs",
+                      "label": "runs table",
+                      "detail": "sept-01 · F1 · 2 rows",
+                      "tone": "success",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "orders",
+                      "label": "orders table",
+                      "detail": "o1, o2 inserted",
+                      "tone": "success",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "result",
+                      "label": "Import result",
+                      "detail": "committed",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "runs",
+                      "label": "new batch ID"
+                    },
+                    {
+                      "from": "source",
+                      "to": "orders",
+                      "label": "insert in the same transaction"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "orders table",
+                      "columns": [
+                        "order_id",
+                        "amount_cents"
+                      ],
+                      "rows": [
+                        [
+                          "o1",
+                          "1250"
+                        ],
+                        [
+                          "o2",
+                          "750"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Same ID, same bytes",
+                  "focus": [
+                    "replay-result"
+                  ],
+                  "explanation": "The second call finds sept-01 with a matching fingerprint and returns replay without inserting anything. The table still has two orders.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Input file",
+                      "detail": "sample_orders.csv · batch sept-01 · F1",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "runs",
+                      "label": "runs table",
+                      "detail": "sept-01 · F1 · 2 rows",
+                      "tone": "neutral",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "orders",
+                      "label": "orders table",
+                      "detail": "Unchanged",
+                      "tone": "neutral",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "result",
+                      "label": "Import result",
+                      "detail": "replay",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "runs",
+                      "label": "fingerprint matches"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "orders table",
+                      "columns": [
+                        "order_id",
+                        "amount_cents"
+                      ],
+                      "rows": [
+                        [
+                          "o1",
+                          "1250"
+                        ],
+                        [
+                          "o2",
+                          "750"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Same ID, changed bytes",
+                  "focus": [
+                    "replay-source",
+                    "replay-result"
+                  ],
+                  "explanation": "A copy with one changed line ending parses to the same values but hashes to F2. Under sept-01 that is a conflict, rejected before any insert.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Input file",
+                      "detail": "Copy with one changed line ending · F2",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "runs",
+                      "label": "runs table",
+                      "detail": "sept-01 · F1 · 2 rows",
+                      "tone": "neutral",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "orders",
+                      "label": "orders table",
+                      "detail": "Unchanged",
+                      "tone": "neutral",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "result",
+                      "label": "Import result",
+                      "detail": "ValueError: batch identity conflicts",
+                      "tone": "warning",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "runs",
+                      "label": "fingerprint differs"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "orders table",
+                      "columns": [
+                        "order_id",
+                        "amount_cents"
+                      ],
+                      "rows": [
+                        [
+                          "o1",
+                          "1250"
+                        ],
+                        [
+                          "o2",
+                          "750"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "append",
+              "label": "Append-only re-run duplicates",
+              "steps": [
+                {
+                  "title": "First run appends",
+                  "explanation": "A loader with no batch identity appends every row it reads. The first run adds o1 and o2.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Input file",
+                      "detail": "sample_orders.csv · no batch ID",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "runs",
+                      "label": "runs table",
+                      "detail": "No run marker is kept",
+                      "tone": "neutral",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "orders",
+                      "label": "orders table",
+                      "detail": "o1, o2 appended",
+                      "tone": "success",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "result",
+                      "label": "Import result",
+                      "detail": "appended 2 rows",
+                      "tone": "neutral",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "orders",
+                      "label": "append rows"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "orders table",
+                      "columns": [
+                        "order_id",
+                        "amount_cents"
+                      ],
+                      "rows": [
+                        [
+                          "o1",
+                          "1250"
+                        ],
+                        [
+                          "o2",
+                          "750"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Retry after a lost reply",
+                  "focus": [
+                    "replay-orders",
+                    "replay-result"
+                  ],
+                  "explanation": "The caller never saw the first reply, so it runs the job again. Nothing records that this input was already loaded, so o1 and o2 are appended a second time.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Input file",
+                      "detail": "sample_orders.csv · no batch ID",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "runs",
+                      "label": "runs table",
+                      "detail": "No run marker is kept",
+                      "tone": "neutral",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "orders",
+                      "label": "orders table",
+                      "detail": "o1, o2 appended again",
+                      "tone": "warning",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "result",
+                      "label": "Import result",
+                      "detail": "appended 2 rows again",
+                      "tone": "warning",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "orders",
+                      "label": "append rows again"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "orders table",
+                      "columns": [
+                        "order_id",
+                        "amount_cents"
+                      ],
+                      "rows": [
+                        [
+                          "o1",
+                          "1250"
+                        ],
+                        [
+                          "o2",
+                          "750"
+                        ],
+                        [
+                          "o1",
+                          "1250"
+                        ],
+                        [
+                          "o2",
+                          "750"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Reconcile against the source",
+                  "focus": [
+                    "replay-result"
+                  ],
+                  "focusLabel": "Compare",
+                  "explanation": "The source has 2 orders worth 2,000 cents; the table has 4 worth 4,000. A stored batch ID and fingerprint, committed with the rows, and unique order IDs prevent this.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Input file",
+                      "detail": "2 orders · 2,000 cents",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "runs",
+                      "label": "runs table",
+                      "detail": "No run marker is kept",
+                      "tone": "neutral",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "orders",
+                      "label": "orders table",
+                      "detail": "4 rows: each order twice",
+                      "tone": "warning",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "result",
+                      "label": "Import result",
+                      "detail": "Totals doubled",
+                      "tone": "warning",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "orders",
+                      "to": "result",
+                      "label": "compare with the source"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "orders table",
+                      "columns": [
+                        "order_id",
+                        "amount_cents"
+                      ],
+                      "rows": [
+                        [
+                          "o1",
+                          "1250"
+                        ],
+                        [
+                          "o2",
+                          "750"
+                        ],
+                        [
+                          "o1",
+                          "1250"
+                        ],
+                        [
+                          "o2",
+                          "750"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       },
       {
@@ -34307,6 +34752,418 @@ const LEARNING_PATHS = [
                 4
               ],
               "explanation": "New parent context needs fresh checks and review. Follow the operation continue/abort lifecycle for conflicts."
+            }
+          ]
+        },
+        "visual": {
+          "title": "Rebasing gives commits new identities",
+          "intro": "Rebase the same topic twice: once while it is private, and once after a teammate has built on it.",
+          "scope": "An owned training repository. Commit IDs are shortened and illustrative. Replaying a commit onto a new parent creates a new commit object with a new ID; the old commit stays reachable from the reflog until it is cleaned up. Hosting rules for force-pushes are separate.",
+          "sources": [
+            {
+              "title": "Git reference: git-rebase, including Recovering from upstream rebase",
+              "url": "https://git-scm.com/docs/git-rebase"
+            }
+          ],
+          "scenarios": [
+            {
+              "id": "private",
+              "label": "Rebase a private topic",
+              "steps": [
+                {
+                  "title": "Inspect the history",
+                  "explanation": "Your topic commit T1 has parent B. main has since gained M1. Nobody else has fetched the topic, so you own its history.",
+                  "nodes": [
+                    {
+                      "id": "base",
+                      "label": "B · 4e1f0a2",
+                      "detail": "Original base; both branches began here",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "main",
+                      "label": "M1 · 7c9d3b1",
+                      "detail": "main advanced after the topic began",
+                      "tone": "neutral",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "topic",
+                      "label": "T1 · a1b2c3d",
+                      "detail": "Your unpublished topic commit; parent B",
+                      "tone": "active",
+                      "x": 510,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "base",
+                      "to": "main",
+                      "label": "main advances"
+                    },
+                    {
+                      "from": "base",
+                      "to": "topic",
+                      "label": "topic parent"
+                    }
+                  ]
+                },
+                {
+                  "title": "Replay onto main",
+                  "focus": [
+                    "git-topic",
+                    "git-replay"
+                  ],
+                  "explanation": "git rebase main reapplies T1’s change after M1. The new commit T1′ has a different parent, so it has a new ID. The old T1 is no longer on the branch; the reflog keeps it as a recovery point.",
+                  "nodes": [
+                    {
+                      "id": "base",
+                      "label": "B · 4e1f0a2",
+                      "detail": "Original base; both branches began here",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "main",
+                      "label": "M1 · 7c9d3b1",
+                      "detail": "main advanced after the topic began",
+                      "tone": "neutral",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "topic",
+                      "label": "T1 · a1b2c3d",
+                      "detail": "Old commit; kept in the reflog for recovery",
+                      "tone": "neutral",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "replay",
+                      "label": "T1′ · e5f6a7b",
+                      "detail": "Same change, parent M1: a new identity",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "main",
+                      "to": "replay",
+                      "label": "new parent"
+                    },
+                    {
+                      "from": "topic",
+                      "to": "replay",
+                      "label": "replay the change"
+                    }
+                  ]
+                },
+                {
+                  "title": "Verify the new candidate",
+                  "focus": [
+                    "git-check"
+                  ],
+                  "explanation": "git log --graph --oneline --all shows main as an ancestor of the topic. The new parent context needs fresh tests and review before you publish it.",
+                  "nodes": [
+                    {
+                      "id": "base",
+                      "label": "B · 4e1f0a2",
+                      "detail": "Original base; both branches began here",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "main",
+                      "label": "M1 · 7c9d3b1",
+                      "detail": "main advanced after the topic began",
+                      "tone": "neutral",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "replay",
+                      "label": "T1′ · e5f6a7b",
+                      "detail": "Same change, parent M1: a new identity",
+                      "tone": "success",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "check",
+                      "label": "Checks",
+                      "detail": "main is an ancestor; file contents verified",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "main",
+                      "to": "replay",
+                      "label": "new parent"
+                    },
+                    {
+                      "from": "replay",
+                      "to": "check",
+                      "label": "test and review"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "shared",
+              "label": "Rebase commits a teammate already has",
+              "steps": [
+                {
+                  "title": "The topic is shared",
+                  "explanation": "T1 was pushed and a teammate pulled it, then committed T2 on top. Their branch now refers to T1’s ID.",
+                  "nodes": [
+                    {
+                      "id": "base",
+                      "label": "B · 4e1f0a2",
+                      "detail": "Original base; both branches began here",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "main",
+                      "label": "M1 · 7c9d3b1",
+                      "detail": "main advanced after the topic began",
+                      "tone": "neutral",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "topic",
+                      "label": "T1 · a1b2c3d",
+                      "detail": "Pushed; a teammate pulled it",
+                      "tone": "active",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "mate",
+                      "label": "T2 · 3d4e5f6",
+                      "detail": "Teammate’s work; parent T1",
+                      "tone": "neutral",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "base",
+                      "to": "main",
+                      "label": "main advances"
+                    },
+                    {
+                      "from": "base",
+                      "to": "topic",
+                      "label": "topic parent"
+                    },
+                    {
+                      "from": "topic",
+                      "to": "mate",
+                      "label": "teammate builds on T1"
+                    }
+                  ]
+                },
+                {
+                  "title": "Rewrite and force-push",
+                  "focus": [
+                    "git-replay"
+                  ],
+                  "explanation": "You rebase onto main and force-push. The remote topic now points to T1′. --force-with-lease would stop you overwriting work you had not fetched, but it is not permission to rewrite history others use.",
+                  "nodes": [
+                    {
+                      "id": "base",
+                      "label": "B · 4e1f0a2",
+                      "detail": "Original base; both branches began here",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "main",
+                      "label": "M1 · 7c9d3b1",
+                      "detail": "main advanced after the topic began",
+                      "tone": "neutral",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "topic",
+                      "label": "T1 · a1b2c3d",
+                      "detail": "Old commit; T2 still builds on it",
+                      "tone": "warning",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "mate",
+                      "label": "T2 · 3d4e5f6",
+                      "detail": "Teammate’s work; parent T1",
+                      "tone": "neutral",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "replay",
+                      "label": "T1′ · e5f6a7b",
+                      "detail": "Remote topic now points here",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 200
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "main",
+                      "to": "replay",
+                      "label": "new parent"
+                    },
+                    {
+                      "from": "topic",
+                      "to": "mate",
+                      "label": "T2 still on old T1"
+                    }
+                  ]
+                },
+                {
+                  "title": "The teammate merges",
+                  "focus": [
+                    "git-merge"
+                  ],
+                  "explanation": "Their next pull merges T1′ into a branch that still contains T1. History now holds the same change twice under two IDs, and reviews of T1 no longer match the branch.",
+                  "nodes": [
+                    {
+                      "id": "base",
+                      "label": "B · 4e1f0a2",
+                      "detail": "Original base; both branches began here",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "main",
+                      "label": "M1 · 7c9d3b1",
+                      "detail": "main advanced after the topic began",
+                      "tone": "neutral",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "topic",
+                      "label": "T1 · a1b2c3d",
+                      "detail": "Still in the teammate’s history",
+                      "tone": "warning",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "mate",
+                      "label": "T2 · 3d4e5f6",
+                      "detail": "Teammate’s work; parent T1",
+                      "tone": "neutral",
+                      "x": 750,
+                      "y": 35
+                    },
+                    {
+                      "id": "replay",
+                      "label": "T1′ · e5f6a7b",
+                      "detail": "The same change again, new ID",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 200
+                    },
+                    {
+                      "id": "merge",
+                      "label": "Merge · 9a8b7c6",
+                      "detail": "Joins old T1 + T2 with T1′",
+                      "tone": "warning",
+                      "x": 270,
+                      "y": 200
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "mate",
+                      "to": "merge",
+                      "label": "first parent"
+                    },
+                    {
+                      "from": "replay",
+                      "to": "merge",
+                      "label": "second parent"
+                    }
+                  ]
+                },
+                {
+                  "title": "Coordinate instead",
+                  "focus": [
+                    "git-mate2"
+                  ],
+                  "explanation": "Agree before rewriting shared work. The teammate then rebases T2 onto the new topic; Git skips the change T1′ already contains, leaving one copy of it.",
+                  "nodes": [
+                    {
+                      "id": "base",
+                      "label": "B · 4e1f0a2",
+                      "detail": "Original base; both branches began here",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "main",
+                      "label": "M1 · 7c9d3b1",
+                      "detail": "main advanced after the topic began",
+                      "tone": "neutral",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "replay",
+                      "label": "T1′ · e5f6a7b",
+                      "detail": "Shared topic after agreement",
+                      "tone": "success",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "mate2",
+                      "label": "T2′ · 1c2d3e4",
+                      "detail": "T2 replayed onto T1′ by its owner",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "main",
+                      "to": "replay",
+                      "label": "new parent"
+                    },
+                    {
+                      "from": "replay",
+                      "to": "mate2",
+                      "label": "teammate replays T2"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -52163,6 +53020,404 @@ const LEARNING_PATHS = [
           ],
           "solution": "The unique inbox key combines consumer and event identity and commits with its effect. Separate consumers can each process the same fact. Retain keys for at least the promised redelivery/replay window plus an explicit margin; after expiry a replay may apply again. Identity collisions with changed content fail rather than masquerading as duplicates.",
           "solutionFormat": "prose"
+        },
+        "visual": {
+          "title": "A redelivered event applies once",
+          "intro": "Redeliver event e-17 after a crash, first to a consumer with a durable inbox, then to one that remembers IDs in memory.",
+          "scope": "The lab’s consume() with SQLite: event e-17 adds 7 to job j-4’s total for each consumer. The inbox key is consumer plus event ID, written in the same transaction as the projection update. The broker is at-least-once; a crash before the ack causes redelivery. Broker durability needs its own configuration.",
+          "sources": [
+            {
+              "title": "RabbitMQ reliability guide",
+              "url": "https://www.rabbitmq.com/docs/reliability"
+            },
+            {
+              "title": "Azure transactional outbox",
+              "url": "https://learn.microsoft.com/en-us/azure/architecture/databases/guide/transactional-out-box-cosmos"
+            }
+          ],
+          "scenarios": [
+            {
+              "id": "inbox",
+              "label": "Durable inbox: one effect",
+              "steps": [
+                {
+                  "title": "Consume e-17",
+                  "explanation": "audit receives e-17 (job j-4, value 7). One transaction inserts the inbox key (audit, e-17) and adds 7 to the projection, so consume returns True.",
+                  "nodes": [
+                    {
+                      "id": "broker",
+                      "label": "Broker delivery",
+                      "detail": "e-17 delivered · j-4 · value 7",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "consumer",
+                      "label": "Consumer",
+                      "detail": "audit: consume → True",
+                      "tone": "success",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "inbox",
+                      "label": "Inbox table",
+                      "detail": "(audit, e-17)",
+                      "tone": "success",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "total",
+                      "label": "Projection",
+                      "detail": "audit · j-4 · total 7",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "broker",
+                      "to": "consumer",
+                      "label": "deliver e-17"
+                    },
+                    {
+                      "from": "consumer",
+                      "to": "inbox",
+                      "label": "insert key"
+                    },
+                    {
+                      "from": "consumer",
+                      "to": "total",
+                      "label": "add 7, same transaction"
+                    }
+                  ]
+                },
+                {
+                  "title": "Redelivered after a crash",
+                  "focus": [
+                    "msg-broker",
+                    "msg-consumer"
+                  ],
+                  "explanation": "The consumer crashed before acknowledging, so the broker delivers e-17 again. After reopening the database, the key is found and consume returns False. The total stays 7.",
+                  "nodes": [
+                    {
+                      "id": "broker",
+                      "label": "Broker delivery",
+                      "detail": "e-17 delivered again after restart",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "consumer",
+                      "label": "Consumer",
+                      "detail": "Reopened: consume → False",
+                      "tone": "success",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "inbox",
+                      "label": "Inbox table",
+                      "detail": "(audit, e-17)",
+                      "tone": "neutral",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "total",
+                      "label": "Projection",
+                      "detail": "audit · j-4 · total 7",
+                      "tone": "neutral",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "broker",
+                      "to": "consumer",
+                      "label": "redeliver e-17"
+                    },
+                    {
+                      "from": "consumer",
+                      "to": "inbox",
+                      "label": "key exists: skip"
+                    }
+                  ]
+                },
+                {
+                  "title": "Another consumer, its own key",
+                  "focus": [
+                    "msg-inbox",
+                    "msg-total"
+                  ],
+                  "explanation": "notifications has its own key (notifications, e-17), so it processes the same event once as well. A single global event-ID row would wrongly block it.",
+                  "nodes": [
+                    {
+                      "id": "broker",
+                      "label": "Broker delivery",
+                      "detail": "e-17 delivered to notifications",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "consumer",
+                      "label": "Consumer",
+                      "detail": "notifications: consume → True",
+                      "tone": "success",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "inbox",
+                      "label": "Inbox table",
+                      "detail": "(audit, e-17), (notifications, e-17)",
+                      "tone": "success",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "total",
+                      "label": "Projection",
+                      "detail": "audit 7 · notifications 7",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "broker",
+                      "to": "consumer",
+                      "label": "deliver e-17"
+                    },
+                    {
+                      "from": "consumer",
+                      "to": "inbox",
+                      "label": "insert own key"
+                    }
+                  ]
+                },
+                {
+                  "title": "Same ID, different payload",
+                  "focus": [
+                    "msg-broker",
+                    "msg-consumer"
+                  ],
+                  "explanation": "e-17 arrives again with value 9. The stored payload differs, so consume raises an identity collision instead of treating it as a replay.",
+                  "nodes": [
+                    {
+                      "id": "broker",
+                      "label": "Broker delivery",
+                      "detail": "e-17 arrives with value 9",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "consumer",
+                      "label": "Consumer",
+                      "detail": "ValueError: identity collision",
+                      "tone": "warning",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "inbox",
+                      "label": "Inbox table",
+                      "detail": "(audit, e-17), (notifications, e-17)",
+                      "tone": "neutral",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "total",
+                      "label": "Projection",
+                      "detail": "audit 7 · notifications 7",
+                      "tone": "neutral",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "broker",
+                      "to": "consumer",
+                      "label": "deliver e-17"
+                    },
+                    {
+                      "from": "consumer",
+                      "to": "inbox",
+                      "label": "payload differs"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "memory",
+              "label": "In-memory set: applied twice",
+              "steps": [
+                {
+                  "title": "Consume with a memory set",
+                  "explanation": "This consumer keeps seen event IDs in a Python set. It applies e-17 and adds 7 to the total.",
+                  "nodes": [
+                    {
+                      "id": "broker",
+                      "label": "Broker delivery",
+                      "detail": "e-17 delivered · j-4 · value 7",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "consumer",
+                      "label": "Consumer",
+                      "detail": "audit applies e-17",
+                      "tone": "success",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "inbox",
+                      "label": "Seen IDs in memory",
+                      "detail": "{e-17}",
+                      "tone": "neutral",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "total",
+                      "label": "Projection",
+                      "detail": "audit · j-4 · total 7",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "broker",
+                      "to": "consumer",
+                      "label": "deliver e-17"
+                    },
+                    {
+                      "from": "consumer",
+                      "to": "inbox",
+                      "label": "remember e-17"
+                    },
+                    {
+                      "from": "consumer",
+                      "to": "total",
+                      "label": "add 7"
+                    }
+                  ]
+                },
+                {
+                  "title": "Crash before the ack",
+                  "focus": [
+                    "msg-broker",
+                    "msg-inbox"
+                  ],
+                  "explanation": "The process crashes before acknowledging. The restarted process starts with an empty set, and the broker delivers e-17 again.",
+                  "nodes": [
+                    {
+                      "id": "broker",
+                      "label": "Broker delivery",
+                      "detail": "e-17 delivered again after restart",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "consumer",
+                      "label": "Consumer",
+                      "detail": "Restarted; memory was lost",
+                      "tone": "warning",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "inbox",
+                      "label": "Seen IDs in memory",
+                      "detail": "{} after restart",
+                      "tone": "warning",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "total",
+                      "label": "Projection",
+                      "detail": "audit · j-4 · total 7",
+                      "tone": "neutral",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "broker",
+                      "to": "consumer",
+                      "label": "redeliver e-17"
+                    }
+                  ]
+                },
+                {
+                  "title": "Redelivery applies again",
+                  "focus": [
+                    "msg-total"
+                  ],
+                  "explanation": "e-17 is not in the empty set, so the consumer adds 7 again: the total becomes 14. A second process, or a durable key pruned too early, fails the same way.",
+                  "nodes": [
+                    {
+                      "id": "broker",
+                      "label": "Broker delivery",
+                      "detail": "e-17 delivered again after restart",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "consumer",
+                      "label": "Consumer",
+                      "detail": "e-17 not in set; applies it",
+                      "tone": "warning",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "inbox",
+                      "label": "Seen IDs in memory",
+                      "detail": "{e-17}",
+                      "tone": "neutral",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "total",
+                      "label": "Projection",
+                      "detail": "audit · j-4 · total 14",
+                      "tone": "warning",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "consumer",
+                      "to": "total",
+                      "label": "add 7 again"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       },
       {
@@ -53902,6 +55157,388 @@ const LEARNING_PATHS = [
             1
           ],
           "direction": "LR"
+        },
+        "visual": {
+          "title": "A cached answer has an exact end",
+          "intro": "Follow one DNS answer to the end of its TTL, then compare it with a connection that was opened before the address changed.",
+          "scope": "The offline teaching cache from the lab: an entry stored at now with a TTL expires at now + TTL, and a lookup at or after that time returns None. The clock is injected; no DNS query or socket is made. Real resolvers follow more rules (RFC 1035). Addresses are from the 203.0.113.0/24 documentation range.",
+          "sources": [
+            {
+              "title": "IETF RFC 1035: DNS, section 3.2.1 TTL field",
+              "url": "https://www.rfc-editor.org/rfc/rfc1035.html"
+            }
+          ],
+          "scenarios": [
+            {
+              "id": "expiry",
+              "label": "Re-resolve after the TTL",
+              "steps": [
+                {
+                  "title": "Remember the answer",
+                  "explanation": "remember() at t=10 with TTL 5 stores the address with an expiry of 10 + 5 = 15. The clock is passed in, so the test never sleeps.",
+                  "nodes": [
+                    {
+                      "id": "clock",
+                      "label": "Injected clock",
+                      "detail": "now = 10",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "cache",
+                      "label": "Resolver cache",
+                      "detail": "api.example.test → 203.0.113.10 until t=15",
+                      "tone": "active",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "lookup",
+                      "label": "Lookup result",
+                      "detail": "No lookup yet",
+                      "tone": "neutral",
+                      "x": 510,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "clock",
+                      "to": "cache",
+                      "label": "stored at t=10, TTL 5"
+                    }
+                  ]
+                },
+                {
+                  "title": "Look up just before expiry",
+                  "focus": [
+                    "dns-clock",
+                    "dns-lookup"
+                  ],
+                  "explanation": "lookup() at t=14.99 still returns 203.0.113.10, because 14.99 is earlier than the expiry at 15.",
+                  "nodes": [
+                    {
+                      "id": "clock",
+                      "label": "Injected clock",
+                      "detail": "now = 14.99",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "cache",
+                      "label": "Resolver cache",
+                      "detail": "api.example.test → 203.0.113.10 until t=15",
+                      "tone": "neutral",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "lookup",
+                      "label": "Lookup result",
+                      "detail": "lookup(14.99) → 203.0.113.10",
+                      "tone": "success",
+                      "x": 510,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "cache",
+                      "to": "lookup",
+                      "label": "14.99 < 15: cached answer"
+                    }
+                  ]
+                },
+                {
+                  "title": "Look up at the expiry",
+                  "focus": [
+                    "dns-cache",
+                    "dns-lookup"
+                  ],
+                  "explanation": "At exactly t=15 the check now < expiry fails, so the model returns None. It does not keep serving the old address until something replaces it.",
+                  "nodes": [
+                    {
+                      "id": "clock",
+                      "label": "Injected clock",
+                      "detail": "now = 15",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "cache",
+                      "label": "Resolver cache",
+                      "detail": "Entry expired at t=15",
+                      "tone": "warning",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "lookup",
+                      "label": "Lookup result",
+                      "detail": "lookup(15) → None",
+                      "tone": "warning",
+                      "x": 510,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "cache",
+                      "to": "lookup",
+                      "label": "15 is not < 15: no answer"
+                    }
+                  ]
+                },
+                {
+                  "title": "Resolve again separately",
+                  "focus": [
+                    "dns-cache",
+                    "dns-lookup"
+                  ],
+                  "explanation": "A new resolution is a separate step. It may return a changed address, as here, or fail. The new answer gets its own expiry, 15 + 5 = 20.",
+                  "nodes": [
+                    {
+                      "id": "clock",
+                      "label": "Injected clock",
+                      "detail": "now = 15",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "cache",
+                      "label": "Resolver cache",
+                      "detail": "api.example.test → 203.0.113.20 until t=20",
+                      "tone": "success",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "lookup",
+                      "label": "Lookup result",
+                      "detail": "New resolution → 203.0.113.20",
+                      "tone": "success",
+                      "x": 510,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "lookup",
+                      "to": "cache",
+                      "label": "store new answer, TTL 5"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "connection",
+              "label": "An open connection keeps the old address",
+              "steps": [
+                {
+                  "title": "Remember and connect",
+                  "explanation": "At t=10 the client caches 203.0.113.10 for 5 seconds and opens a connection to that address.",
+                  "nodes": [
+                    {
+                      "id": "clock",
+                      "label": "Injected clock",
+                      "detail": "now = 10",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "cache",
+                      "label": "Resolver cache",
+                      "detail": "api.example.test → 203.0.113.10 until t=15",
+                      "tone": "active",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "lookup",
+                      "label": "Lookup result",
+                      "detail": "lookup(10) → 203.0.113.10",
+                      "tone": "neutral",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "conn",
+                      "label": "Open connection",
+                      "detail": "Connected to 203.0.113.10 at t=10",
+                      "tone": "active",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "cache",
+                      "to": "lookup",
+                      "label": "cached answer"
+                    },
+                    {
+                      "from": "lookup",
+                      "to": "conn",
+                      "label": "open connection"
+                    }
+                  ]
+                },
+                {
+                  "title": "The answer is refreshed",
+                  "focus": [
+                    "dns-cache",
+                    "dns-lookup"
+                  ],
+                  "explanation": "At t=15 the entry expires and a new resolution stores 203.0.113.20. New lookups now return the new address.",
+                  "nodes": [
+                    {
+                      "id": "clock",
+                      "label": "Injected clock",
+                      "detail": "now = 15",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "cache",
+                      "label": "Resolver cache",
+                      "detail": "api.example.test → 203.0.113.20 until t=20",
+                      "tone": "success",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "lookup",
+                      "label": "Lookup result",
+                      "detail": "lookup(15) after refresh → .20",
+                      "tone": "success",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "conn",
+                      "label": "Open connection",
+                      "detail": "Connected to 203.0.113.10 at t=10",
+                      "tone": "neutral",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "cache",
+                      "to": "lookup",
+                      "label": "new answer"
+                    }
+                  ]
+                },
+                {
+                  "title": "The open connection did not move",
+                  "focus": [
+                    "dns-conn"
+                  ],
+                  "focusLabel": "Unchanged",
+                  "explanation": "At t=16 the existing connection still sends to 203.0.113.10. A short TTL does not migrate an open connection: the DNS cache and connection reuse have separate lifetimes.",
+                  "nodes": [
+                    {
+                      "id": "clock",
+                      "label": "Injected clock",
+                      "detail": "now = 16",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "cache",
+                      "label": "Resolver cache",
+                      "detail": "api.example.test → 203.0.113.20 until t=20",
+                      "tone": "neutral",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "lookup",
+                      "label": "Lookup result",
+                      "detail": "lookup(15) after refresh → .20",
+                      "tone": "neutral",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "conn",
+                      "label": "Open connection",
+                      "detail": "Still sending to 203.0.113.10 at t=16",
+                      "tone": "warning",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "lookup",
+                      "to": "conn",
+                      "label": "not consulted again"
+                    }
+                  ]
+                },
+                {
+                  "title": "Only new connections use it",
+                  "focus": [
+                    "dns-lookup",
+                    "dns-conn"
+                  ],
+                  "explanation": "A connection opened after the refresh looks the name up and reaches 203.0.113.20. When to drain or close old connections is a separate decision from the TTL.",
+                  "nodes": [
+                    {
+                      "id": "clock",
+                      "label": "Injected clock",
+                      "detail": "now = 17",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 35
+                    },
+                    {
+                      "id": "cache",
+                      "label": "Resolver cache",
+                      "detail": "api.example.test → 203.0.113.20 until t=20",
+                      "tone": "neutral",
+                      "x": 270,
+                      "y": 35
+                    },
+                    {
+                      "id": "lookup",
+                      "label": "Lookup result",
+                      "detail": "lookup(17) → 203.0.113.20",
+                      "tone": "success",
+                      "x": 510,
+                      "y": 35
+                    },
+                    {
+                      "id": "conn",
+                      "label": "Open connection",
+                      "detail": "New connection to 203.0.113.20 at t=17",
+                      "tone": "success",
+                      "x": 750,
+                      "y": 35
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "lookup",
+                      "to": "conn",
+                      "label": "open new connection"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       },
       {

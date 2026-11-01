@@ -53,4 +53,12 @@ ${missing.length?`<p class="stat-missing">Not measured: ${missing.map(o=>`<span 
 <div class="ml-results"><table class="ml-confusion"><caption>Confusion counts</caption><thead><tr><th scope="col">Truth</th><th scope="col">Flagged</th><th scope="col">Not flagged</th></tr></thead><tbody><tr><th scope="row">Needs help</th><td>TP ${count.TP}</td><td>FN ${count.FN}</td></tr><tr><th scope="row">Fine</th><td>FP ${count.FP}</td><td>TN ${count.TN}</td></tr></tbody></table>
 <output data-motion-node="ml-cost" class="ml-cost"><span>Cost = 4 × FN + FP</span><strong>4 × ${count.FN} + ${count.FP} = ${cost}</strong></output></div>${notes(s)}${action(last?'Sequence complete':'Next step')}</div>`;
  });
+
+ // Batch replay: the run marker and the orders commit together; the row count and cents come from the orders table.
+ S.register('idempotency-and-replay',(s,m)=>{
+  const n=id=>s.nodes.find(x=>x.id===id)||{},table=rows(s,'orders table'),cents=table.reduce((t,r)=>t+Number(r[1]),0),dupes=table.length-new Set(table.map(r=>r[0])).size;
+  const card=(id,key,cls='replay-card')=>`<section data-motion-node="replay-${key}" class="${cls} tone-${e(n(id).tone)}"><h4>${e(n(id).label)}</h4><p>${e(n(id).detail)}</p>${id==='orders'?`<p class="replay-count">${table.length} rows · ${String(cents).replace(/\B(?=(\d{3})+$)/g,',')} cents${dupes?` · ${dupes} duplicate${dupes>1?'s':''}`:''}</p>`:''}</section>`;
+  const batch=m.scenarioIndex===0,last=m.index===(m.scenario?.steps.length??0)-1;
+  return `<div class="scene-data">${header(batch?'import_csv(file, db, "sept-01")':'append_rows(file, db)',batch?'The run row and the orders are written in one transaction.':'Nothing records which input was already loaded.')}<div class="replay-flow">${card('source','source')}<div class="replay-store"><span>${batch?'One transaction':'Separate appends'}</span>${card('runs','runs')}${card('orders','orders')}</div><output data-motion-node="replay-result" class="replay-result tone-${e(n('result').tone)}"><span>${e(n('result').label)}</span><strong>${e(n('result').detail)}</strong></output></div>${action(last?'Sequence complete':'Next step')}</div>`;
+ });
 })(globalThis);

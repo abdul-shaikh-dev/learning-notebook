@@ -96,4 +96,32 @@
     const active = stage === 1 ? failed ? 4 : 2 : -1;
     return wrap("retry", `<div class="scene-infra__retry-head">${motion("caller", `<span class="scene-infra__mini-label">caller</span><strong>${detail(step, "client")}</strong>`, "scene-infra__retry-actor")}${motion("retry-owner", `<span class="scene-infra__mini-label">sole retry owner</span><strong>${detail(step, "api")}</strong>`, "scene-infra__retry-actor")}${motion("dependency", `<span class="scene-infra__mini-label">dependency</span><strong>${detail(step, "dep")}</strong>`, "scene-infra__retry-actor")}</div><div class="scene-infra__timeline" role="img" aria-label="Modeled elapsed ${progress} milliseconds of a 600 millisecond deadline"><div class="scene-infra__timeline-scale"><span>0 ms</span><strong>${progress} ms elapsed</strong><span>600 ms deadline</span></div><div class="scene-infra__timeline-bar">${segments.map((s, i) => `<span class="${s.startsWith("wait") ? "is-wait" : "is-attempt"} ${i === active ? "is-active" : i > doneThrough ? "is-future" : ""}">${esc(s)}</span>`).join("")}</div></div><p class="scene-infra__annotation">${failed && stage === 2 ? "Stop at the deadline; a timed-out effect can remain uncertain." : "At most 3 attempts; each capped at 150 ms, including the remaining deadline."}</p>`, "One API retry owner spends a 600 ms end-to-end budget across attempts and waits.");
   });
+
+  // Networking: the clock rail runs t=10 to t=20; the cached answer lasts from its store time to its expiry.
+  scenes.register("dns-cache", step => {
+    const now = Number(/[\d.]+/.exec(node(step, "clock")?.detail || "")?.[0] ?? 10);
+    const entry = node(step, "cache")?.detail || "", end = /t=([\d.]+)/.exec(entry), expiry = end ? Number(end[1]) : null, expired = /expired/i.test(entry);
+    const pos = t => `${Math.min(100, Math.max(0, (t - 10) * 10))}%`;
+    const card = id => { const item = node(step, id); return item ? motion(`dns-${id}`, `<span class="scene-infra__mini-label">${esc(item.label)}</span><strong>${esc(item.detail)}</strong>`, `scene-infra__card is-${esc(item.tone || "neutral")}`) : ""; };
+    const life = expiry === null ? "" : `<span class="scene-infra__ttl-life${expired ? " is-expired" : ""}" style="--from:${pos(expiry - 5)};--to:${pos(expiry)}">${expired ? "expired" : `cached until t=${esc(expiry)}`}</span>`;
+    return wrap("dns", `${motion("dns-clock", `<span class="scene-infra__mini-label">Injected clock</span><strong>${detail(step, "clock")}</strong><div class="scene-infra__ttl-track" role="img" aria-label="Time ${esc(now)} on a rail from 10 to 20${expiry === null ? "" : `; the cached answer ends at ${esc(expiry)}`}">${life}<span class="scene-infra__ttl-now" style="--at:${pos(now)}"></span></div><div class="scene-infra__ttl-scale" aria-hidden="true"><span>t=10</span><span>t=15</span><span>t=20</span></div>`, "scene-infra__ttl")}<div class="scene-infra__cards">${["cache", "lookup", "conn"].map(card).join("")}</div><p class="scene-infra__annotation">lookup() returns the cached address only while now &lt; expiry; at the expiry it returns None.</p>`, "One cached DNS answer, its TTL on an injected clock, and the connection that used it.");
+  });
+
+  // Git: lanes are fixed, commits sit in time order, and each chip names its parent.
+  const commits = { base: ["main", 0, "root"], main: ["main", 1, "on B"], topic: ["topic", 1, "on B"], replay: ["topic", 2, "on M1"], check: null, mate: ["teammate", 2, "on T1"], merge: ["teammate", 3, "T2 + T1′"], mate2: ["teammate", 3, "on T1′"] };
+  scenes.register("rebase", (step, meta) => {
+    const lanes = scenario(meta) === "shared" ? ["main", "topic", "teammate"] : ["main", "topic"];
+    const chip = item => { const [name, hash = ""] = item.label.split(" · "); return motion(`git-${item.id}`, `<strong>${esc(name)}</strong><code>${esc(hash)}</code><small>${esc(commits[item.id][2])}</small>`, `scene-infra__commit is-${esc(item.tone || "neutral")}${/reflog|still/i.test(item.detail) ? " is-old" : ""}`); };
+    const lane = name => `<div class="scene-infra__git-lane"><span class="scene-infra__mini-label">${name}</span><div class="scene-infra__git-cells">${[0, 1, 2, 3].map(col => { const item = step.nodes.find(n => commits[n.id]?.[0] === name && commits[n.id][1] === col); return item ? chip(item) : "<span></span>"; }).join("")}</div></div>`;
+    const check = node(step, "check");
+    return wrap("git", `<div class="scene-infra__git">${lanes.map(lane).join("")}</div>${check ? motion("git-check", `<span class="scene-infra__mini-label">${esc(check.label)}</span><strong>${esc(check.detail)}</strong>`, "scene-infra__card is-success") : ""}<ul class="scene-infra__git-notes">${step.nodes.filter(n => commits[n.id]).map(n => `<li><b>${esc(n.label)}:</b> ${esc(n.detail)}</li>`).join("")}</ul>`, "Commits in time order on each branch; a replayed commit has a new parent and a new ID.");
+  });
+
+  // Messaging: the inbox key and the projection total sit together, in one transaction or in memory.
+  scenes.register("idempotent-consumers", (step, meta) => {
+    const memory = scenario(meta) === "memory";
+    const broker = node(step, "broker"), consumer = node(step, "consumer");
+    const row = id => { const item = node(step, id); return motion(`msg-${id}`, `<div class="scene-infra__store-row${item?.tone === "warning" ? " is-warning" : ""}"><strong>${esc(item?.label)}</strong><small>${esc(item?.detail)}</small></div>`); };
+    return wrap("inbox", `<div class="scene-infra__queue-flow">${motion("msg-broker", `<span class="scene-infra__mini-label">Broker</span><div class="scene-infra__envelope"><span class="scene-infra__stamp">e-17</span><strong>ExportRequested</strong><small>${esc(broker?.detail)}</small></div>`, "scene-infra__queue-lane")}${motion("msg-consumer", `<span class="scene-infra__worker-icon" aria-hidden="true">⚙</span><strong>${esc(consumer?.label)}</strong><small>${esc(consumer?.detail)}</small>`, `scene-infra__worker-lane${consumer?.tone === "warning" ? " is-crashed" : ""}`)}<div class="scene-infra__store-lane"><span class="scene-infra__mini-label">${memory ? "process memory, then database" : "one database transaction"}</span>${row("inbox")}${row("total")}</div></div><p class="scene-infra__journey-note">${memory ? "The seen set lives in process memory, so a restart empties it." : "The inbox key and the total commit together or not at all."}</p>`, "Event e-17 is delivered at least once; the consumer decides whether it applies again.");
+  });
 })();

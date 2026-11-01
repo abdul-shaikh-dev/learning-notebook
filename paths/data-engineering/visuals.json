@@ -1,0 +1,447 @@
+{
+ "idempotency-and-replay": {
+  "title": "Re-running an import without a second effect",
+  "intro": "Run the same two-order import twice: once with a stored batch identity, and once with a loader that only appends.",
+  "scope": "The lab’s import_csv on sample_orders.csv (orders o1 and o2, 1,250 and 750 cents) with SQLite. Fingerprint F1 stands for the hash of the file’s exact bytes; F2 is the hash of a copy with one changed line ending. The append-only loader is a counter-example, not part of the lab.",
+  "sources": [
+   {
+    "title": "Python sqlite3: Transaction control",
+    "url": "https://docs.python.org/3/library/sqlite3.html"
+   }
+  ],
+  "scenarios": [
+   {
+    "id": "batch",
+    "label": "Same batch ID replays",
+    "steps": [
+     {
+      "title": "First import commits",
+      "explanation": "sept-01 is not in runs, so import_csv inserts both orders and the run row (batch ID, fingerprint, row count) in one transaction and returns committed.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Input file",
+        "detail": "sample_orders.csv · batch sept-01 · F1",
+        "tone": "active",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "runs",
+        "label": "runs table",
+        "detail": "sept-01 · F1 · 2 rows",
+        "tone": "success",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "orders",
+        "label": "orders table",
+        "detail": "o1, o2 inserted",
+        "tone": "success",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "result",
+        "label": "Import result",
+        "detail": "committed",
+        "tone": "success",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "runs",
+        "label": "new batch ID"
+       },
+       {
+        "from": "source",
+        "to": "orders",
+        "label": "insert in the same transaction"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "orders table",
+        "columns": [
+         "order_id",
+         "amount_cents"
+        ],
+        "rows": [
+         [
+          "o1",
+          "1250"
+         ],
+         [
+          "o2",
+          "750"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Same ID, same bytes",
+      "focus": [
+       "replay-result"
+      ],
+      "explanation": "The second call finds sept-01 with a matching fingerprint and returns replay without inserting anything. The table still has two orders.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Input file",
+        "detail": "sample_orders.csv · batch sept-01 · F1",
+        "tone": "active",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "runs",
+        "label": "runs table",
+        "detail": "sept-01 · F1 · 2 rows",
+        "tone": "neutral",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "orders",
+        "label": "orders table",
+        "detail": "Unchanged",
+        "tone": "neutral",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "result",
+        "label": "Import result",
+        "detail": "replay",
+        "tone": "success",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "runs",
+        "label": "fingerprint matches"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "orders table",
+        "columns": [
+         "order_id",
+         "amount_cents"
+        ],
+        "rows": [
+         [
+          "o1",
+          "1250"
+         ],
+         [
+          "o2",
+          "750"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Same ID, changed bytes",
+      "focus": [
+       "replay-source",
+       "replay-result"
+      ],
+      "explanation": "A copy with one changed line ending parses to the same values but hashes to F2. Under sept-01 that is a conflict, rejected before any insert.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Input file",
+        "detail": "Copy with one changed line ending · F2",
+        "tone": "warning",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "runs",
+        "label": "runs table",
+        "detail": "sept-01 · F1 · 2 rows",
+        "tone": "neutral",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "orders",
+        "label": "orders table",
+        "detail": "Unchanged",
+        "tone": "neutral",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "result",
+        "label": "Import result",
+        "detail": "ValueError: batch identity conflicts",
+        "tone": "warning",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "runs",
+        "label": "fingerprint differs"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "orders table",
+        "columns": [
+         "order_id",
+         "amount_cents"
+        ],
+        "rows": [
+         [
+          "o1",
+          "1250"
+         ],
+         [
+          "o2",
+          "750"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "append",
+    "label": "Append-only re-run duplicates",
+    "steps": [
+     {
+      "title": "First run appends",
+      "explanation": "A loader with no batch identity appends every row it reads. The first run adds o1 and o2.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Input file",
+        "detail": "sample_orders.csv · no batch ID",
+        "tone": "active",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "runs",
+        "label": "runs table",
+        "detail": "No run marker is kept",
+        "tone": "neutral",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "orders",
+        "label": "orders table",
+        "detail": "o1, o2 appended",
+        "tone": "success",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "result",
+        "label": "Import result",
+        "detail": "appended 2 rows",
+        "tone": "neutral",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "orders",
+        "label": "append rows"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "orders table",
+        "columns": [
+         "order_id",
+         "amount_cents"
+        ],
+        "rows": [
+         [
+          "o1",
+          "1250"
+         ],
+         [
+          "o2",
+          "750"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Retry after a lost reply",
+      "focus": [
+       "replay-orders",
+       "replay-result"
+      ],
+      "explanation": "The caller never saw the first reply, so it runs the job again. Nothing records that this input was already loaded, so o1 and o2 are appended a second time.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Input file",
+        "detail": "sample_orders.csv · no batch ID",
+        "tone": "active",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "runs",
+        "label": "runs table",
+        "detail": "No run marker is kept",
+        "tone": "neutral",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "orders",
+        "label": "orders table",
+        "detail": "o1, o2 appended again",
+        "tone": "warning",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "result",
+        "label": "Import result",
+        "detail": "appended 2 rows again",
+        "tone": "warning",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "orders",
+        "label": "append rows again"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "orders table",
+        "columns": [
+         "order_id",
+         "amount_cents"
+        ],
+        "rows": [
+         [
+          "o1",
+          "1250"
+         ],
+         [
+          "o2",
+          "750"
+         ],
+         [
+          "o1",
+          "1250"
+         ],
+         [
+          "o2",
+          "750"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Reconcile against the source",
+      "focus": [
+       "replay-result"
+      ],
+      "focusLabel": "Compare",
+      "explanation": "The source has 2 orders worth 2,000 cents; the table has 4 worth 4,000. A stored batch ID and fingerprint, committed with the rows, and unique order IDs prevent this.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Input file",
+        "detail": "2 orders · 2,000 cents",
+        "tone": "neutral",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "runs",
+        "label": "runs table",
+        "detail": "No run marker is kept",
+        "tone": "neutral",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "orders",
+        "label": "orders table",
+        "detail": "4 rows: each order twice",
+        "tone": "warning",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "result",
+        "label": "Import result",
+        "detail": "Totals doubled",
+        "tone": "warning",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "orders",
+        "to": "result",
+        "label": "compare with the source"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "orders table",
+        "columns": [
+         "order_id",
+         "amount_cents"
+        ],
+        "rows": [
+         [
+          "o1",
+          "1250"
+         ],
+         [
+          "o2",
+          "750"
+         ],
+         [
+          "o1",
+          "1250"
+         ],
+         [
+          "o2",
+          "750"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}
