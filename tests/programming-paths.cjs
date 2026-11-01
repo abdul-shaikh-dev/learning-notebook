@@ -24,7 +24,9 @@ for(const p of paths){
  choices[(l.quiz.correct+1)%choices.length].click();assert.equal(node('feedback').textContent,'Not quite. '+l.quiz.explanation);
  assert.deepEqual({...JSON.parse(stored.get('learning-notebook:path:'+p.id+':checkpoints:v1'))[l.id],at:0},{correct:true,streak:1,at:0},l.id+': the first checkpoint answer is saved for review');assert.equal(node('checkpoint-note').textContent,'Saved for review. It returns in 1 day.');}
  node('main').querySelectorAll=()=>[];
- assert.ok(node('main').innerHTML.includes('Compare with a worked solution'));
+ // Coding challenges keep their editor; every other exercise asks for an attempt before its worked solution.
+ assert.ok(node('main').innerHTML.includes(l.exercise.challenge?'Compare with a worked solution':'Compare with the worked solution'));
+ assert.equal(node('main').innerHTML.includes('data-attempt="'+l.id+'"'),!l.exercise.challenge,l.id+': attempt box');
  assert.ok(!node('main').innerHTML.includes('<script>'));
  if(l.trace&&!l.diagram){node('trace-next').click();assert.ok(node('trace-frame').innerHTML.includes('Step 2'));node('trace-prev').click();assert.ok(node('trace-frame').innerHTML.includes('Step 1'));assert.equal(node('trace-prev').disabled,true);}
  }

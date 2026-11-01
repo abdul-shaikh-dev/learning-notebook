@@ -11,6 +11,7 @@ const NotebookBackup = (() => {
   const challengeLessons = path => path.lessons.filter(l => l.exercise?.challenge);
   const assessment = id => 'learning-notebook:path:' + id + ':assessments:v1';
   const checkpointKey = id => 'learning-notebook:path:' + id + ':checkpoints:v1';
+  const exerciseKey = id => 'learning-notebook:path:' + id + ':exercises:v1';
   const courses = () => LEARNING_PATHS.filter(p => p.status === 'ready' && Array.isArray(p.lessons));
   const fail = message => { throw new Error(message); };
   function object(value, label) {
@@ -57,6 +58,23 @@ const NotebookBackup = (() => {
     }
     return result;
   }
+  // Exercise attempts: the latest answer (at most 5,000 characters), when it was saved, and an optional rating with its review schedule.
+  function exercises(value, path) {
+    object(value, 'Exercise answers');
+    const result = {};
+    for (const [id, entry] of Object.entries(value)) {
+      if (!path.lessons.some(l => l.id === id)) fail('Exercise answers contain an unknown lesson.');
+      fields(entry, ['answer','saved','rating','correct','streak','at'], 'Exercise answer');
+      if (typeof entry.answer !== 'string' || entry.answer.length > 5000) fail('An exercise answer must be text of at most 5,000 characters.');
+      if (!Number.isInteger(entry.saved) || entry.saved <= 0 || entry.saved > Date.now() + 864e5) fail('Exercise answer date is invalid.');
+      if (own(entry,'rating') && !['matched','partly','missed'].includes(entry.rating)) fail('Exercise rating is invalid.');
+      const timed = ['correct','streak','at'].filter(k => own(entry,k));
+      if (timed.length && (timed.length < 3 || !own(entry,'rating') || entry.correct !== (entry.rating === 'matched'))) fail('Exercise review schedule is invalid.');
+      if (timed.length && (typeof entry.correct !== 'boolean' || !Number.isInteger(entry.streak) || entry.streak < 0 || entry.streak > 4 || entry.correct !== entry.streak > 0 || !Number.isInteger(entry.at) || entry.at <= 0 || entry.at > Date.now() + 864e5)) fail('Exercise review schedule is invalid.');
+      result[id] = {answer:entry.answer,saved:entry.saved,...(own(entry,'rating') ? {rating:entry.rating} : {}),...(timed.length ? {correct:entry.correct,streak:entry.streak,at:entry.at} : {})};
+    }
+    return result;
+  }
   function finance(value, legacy = false) {
     fields(value, ['done','answers','last','starterDone','study', ...(legacy ? ['version'] : [])], 'Financial progress');
     if (legacy && own(value,'version') && value.version !== 1) fail('Unsupported financial backup version.');
@@ -94,12 +112,13 @@ const NotebookBackup = (() => {
     for (const [id, entry] of Object.entries(value.paths)) {
       const path = courses().find(p => p.id === id);
       if (!path) fail('This backup contains a course not available in this notebook version.');
-      fields(entry, ['read','assessed','checkpoints', ...(challengeLessons(path).length ? ['challenges'] : [])], 'Course progress');
+      fields(entry, ['read','assessed','checkpoints','exercises', ...(challengeLessons(path).length ? ['challenges'] : [])], 'Course progress');
       paths[id] = {
         read:ids(entry.read, path.lessons.map(l=>l.id), path.title + ' readings'),
         assessed:ids(entry.assessed, (path.stages || []).map(s=>s.id), path.title + ' projects'),
         ...(own(entry,'challenges') ? {challenges:challenges(entry.challenges,path)} : {}),
-        ...(own(entry,'checkpoints') ? {checkpoints:checkpoints(entry.checkpoints,path)} : {})
+        ...(own(entry,'checkpoints') ? {checkpoints:checkpoints(entry.checkpoints,path)} : {}),
+        ...(own(entry,'exercises') ? {exercises:exercises(entry.exercises,path)} : {})
       };
     }
     return {paths,financial:value.financial == null ? null : finance(value.financial),
@@ -144,6 +163,8 @@ const NotebookBackup = (() => {
       }
       const answers = get(checkpointKey(path.id), path.title + ' checkpoint answers');
       if (answers !== null && Object.keys(object(answers, path.title + ' checkpoint answers')).length) result.paths[path.id].checkpoints = checkpoints(answers,path);
+      const attempts = get(exerciseKey(path.id), path.title + ' exercise answers');
+      if (attempts !== null && Object.keys(object(attempts, path.title + ' exercise answers')).length) result.paths[path.id].exercises = exercises(attempts,path);
     }
     const financial = get(FINANCE,'Financial progress');
     if (financial !== null) result.financial = finance(financial);
@@ -169,6 +190,12 @@ const NotebookBackup = (() => {
         for (const [id, entry] of Object.entries(a.checkpoints || {})) if (!answers[id] || entry.at >= answers[id].at) answers[id] = entry;
         result.paths[path.id].checkpoints = answers;
       }
+      // An exercise keeps its most recent change, an answer or a rating; this browser wins a tie.
+      if (a.exercises || b.exercises) {
+        const latest = entry => Math.max(entry.saved, entry.at || 0), attempts = {...b.exercises};
+        for (const [id, entry] of Object.entries(a.exercises || {})) if (!attempts[id] || latest(entry) >= latest(attempts[id])) attempts[id] = entry;
+        result.paths[path.id].exercises = attempts;
+      }
     }
     const a = current.financial, b = imported.financial;
     if (!a || !b) result.financial = a || b;
@@ -192,6 +219,7 @@ const NotebookBackup = (() => {
                   [assessment(path.id),JSON.stringify(after.paths[path.id].assessed)]);
       if (own(incoming.paths[path.id],'challenges')) writes.push([challengeKey(path.id),JSON.stringify(after.paths[path.id].challenges)]);
       if (own(incoming.paths[path.id],'checkpoints')) writes.push([checkpointKey(path.id),JSON.stringify(after.paths[path.id].checkpoints)]);
+      if (own(incoming.paths[path.id],'exercises')) writes.push([exerciseKey(path.id),JSON.stringify(after.paths[path.id].exercises)]);
     }
     if (incoming.financial !== null) writes.push([FINANCE,JSON.stringify(after.financial)]);
     if (!current.progress.lastLesson && incoming.lastLesson) writes.push([LAST,JSON.stringify(incoming.lastLesson)]);
@@ -226,6 +254,7 @@ const NotebookBackup = (() => {
       read:value.paths[path.id]?.read.length || 0, checks:value.paths[path.id]?.assessed.length || 0,
       total:path.lessons.length,
       answers:Object.keys(value.paths[path.id]?.checkpoints || {}).length,
+      exercises:Object.values(value.paths[path.id]?.exercises || {}).filter(e => e.answer.trim()).length,
       drafts:Object.keys(value.paths[path.id]?.challenges || {}).length,
       attempted:Object.values(value.paths[path.id]?.challenges || {}).filter(a=>a.status==='attempted').length,
       solved:Object.values(value.paths[path.id]?.challenges || {}).filter(a=>a.status==='solved').length}));
@@ -235,9 +264,9 @@ const NotebookBackup = (() => {
       checks:Object.values(value.financial?.study || {}).filter(s=>s.checked).length});
     return all;
   }
-  const count = row => `${row.read} read · ${row.checks} self-checked` + (row.answers ? ` · ${row.answers} checkpoints answered` : '') + (row.drafts ? ` · ${row.drafts} code drafts · ${row.attempted} attempted · ${row.solved} solved` : '');
+  const count = row => `${row.read} read · ${row.checks} self-checked` + (row.answers ? ` · ${row.answers} checkpoints answered` : '') + (row.exercises ? ` · ${row.exercises} exercises attempted` : '') + (row.drafts ? ` · ${row.drafts} code drafts · ${row.attempted} attempted · ${row.solved} solved` : '');
   function summary(value) {
-    const all = rows(value), active = all.filter(row=>row.read || row.checks || row.answers || row.drafts);
+    const all = rows(value), active = all.filter(row=>row.read || row.checks || row.answers || row.exercises || row.drafts);
     const list = items => '<ul class="backup-counts">'+items.map(row=>'<li><strong>'+esc(row.title)+'</strong><span>'+esc(count(row))+' · '+row.total+' lessons</span></li>').join('')+'</ul>';
     return '<p>'+all.reduce((n,row)=>n+row.read,0)+' lessons read. Saved progress across '+active.length+' '+(active.length===1?'path':'paths')+'.</p>'+(active.length?list(active):'<p>No saved progress yet. Mark a lesson read or start a challenge to record your progress.</p>')+'<details><summary>All learning paths</summary>'+list(all)+'</details>';
   }
@@ -259,7 +288,7 @@ const NotebookBackup = (() => {
       after.map((row,i)=>'<tr><th scope="row">'+esc(row.title)+'</th><td>'+esc(count(before[i]))+'</td><td>'+esc(count(incoming[i]))+'</td><td>'+esc(count(row))+'</td></tr>').join('')+'</tbody></table></div>'+
       '<p>Financial quiz answers after merge: '+Object.keys(value.after.financial?.answers || {}).length+'. Conflicting answers kept from this browser: '+conflicts+'.</p>'+
       '<p>Conflicting challenge drafts kept from this browser: '+challengeConflicts+'.</p>'+
-      '<p>Read lessons and self-checks are combined. Missing challenge drafts are imported. Existing local code, challenge status, quiz answers and last-opened locations win conflicts. For review checkpoints, the more recent answer is kept. Nothing is marked unread or reset.</p>';
+      '<p>Read lessons and self-checks are combined. Missing challenge drafts are imported. Existing local code, challenge status, quiz answers and last-opened locations win conflicts. For review checkpoints and exercise answers, the more recent one is kept. Nothing is marked unread or reset.</p>';
   }
   function view() {
     let saved, failed = false;
@@ -275,7 +304,7 @@ const NotebookBackup = (() => {
       '<h2>Restore from a file</h2><p>Import combines completed readings and self-checks with your current progress. Missing challenge drafts are added. Local code, challenge status and quiz answers win conflicts. Nothing is reset.</p>'+
       '<label for="nb-file">Choose a Learning Notebook JSON backup (up to 1 MB)</label><input id="nb-file" type="file" accept=".json,application/json">'+
       '<div id="nb-preview" aria-live="polite"></div><div class="backup-actions"><button type="button" class="primary" id="nb-apply" disabled>Merge reviewed progress</button></div>'+
-      '<p id="nb-status" role="status" aria-live="polite"></p><p class="muted">Backups contain completion choices, checkpoint answers for review, financial quiz answers, and code and status saved in the challenge editor. They do not include course content or downloaded practice files. An older finance-only backup can also be merged. Journey/lab slider positions are temporary and are not stored as progress.</p></section>';
+      '<p id="nb-status" role="status" aria-live="polite"></p><p class="muted">Backups contain completion choices, checkpoint answers for review, exercise answers and ratings, financial quiz answers, and code and status saved in the challenge editor. They do not include course content or downloaded practice files. An older finance-only backup can also be merged. Journey/lab slider positions are temporary and are not stored as progress.</p></section>';
   }
   function bind(main) {
     const get = id => main.querySelector('#'+id), status = get('nb-status'), input = get('nb-file'), button = get('nb-apply');

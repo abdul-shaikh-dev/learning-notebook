@@ -40,7 +40,7 @@ assert.equal(s.started[0].p.id,'sql-server','The course read most recently comes
 const py=byId.python;
 assert.equal(py.read,2,'Duplicates and unknown lessons do not count');assert.equal(py.total,python.lessons.length);
 same(py.projects,{done:1,total:python.stages.length,label:'projects'});
-same(py.review,{due:2,missed:1,scheduled:1,retired:1,next:NOW+DAY},'Missed and due-again questions are due; a week-old correct answer is retired');
+same(py.review,{due:2,dueExercises:0,missed:1,scheduled:1,retired:1,next:NOW+DAY,attempted:0},'Missed and due-again questions are due; a week-old correct answer is retired');
 same(py.step,{label:'Next: '+l3.title.replace(/^\d+\.\s*/,''),href:'#topic/python/'+l3.id},'The next step is the first unread lesson');
 
 const q=byId['sql-server'];
@@ -58,7 +58,7 @@ assert.equal(fin.step.href,paths.find(p=>p.id==='financial-foundations').href,'F
 
 assert.equal(s.read,2+sql.lessons.length+3,'Total lessons read');assert.equal(s.projects,1,'Finance study sections are not counted as projects');
 assert.equal(s.solved,1);assert.equal(s.challenges,pps.lessons.length);
-same(s.review,{due:2,missed:1,scheduled:1,retired:1,next:NOW+DAY});
+same(s.review,{due:2,dueExercises:0,missed:1,scheduled:1,retired:1,next:NOW+DAY});
 
 html=e.P.view(NOW);
 for(const text of ['Courses in progress','2 of '+python.lessons.length+' lessons read','1 of '+python.stages.length+' projects self-checked','2 questions due for review','1 of '+pps.lessons.length+' challenges solved · 1 in progress','Not started yet ('+(s.courses-4)+')','Review 2 questions','href="#review"','Due now','Retired'])assert.ok(html.includes(text),'Dashboard shows: '+text);
