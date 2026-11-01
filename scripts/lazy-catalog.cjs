@@ -8,7 +8,9 @@ function lazyFiles(){
   const revision=createHash('sha256').update(source).digest('hex').slice(0,12);
   const file='content/courses/'+p.id+'.js';files[file]=source;
   const {id,title,category,status,description,level,href}=p;
-  summaries.push({id,title,category,status,description,level,href,lessons:Array.isArray(p.lessons)?p.lessons.map(({id,title,stage})=>({id,title,stage})):p.lessons,stages:p.stages?.map(({id})=>({id})),dataFile:file+'?v='+revision});
+  // The progress page shows solved challenges against this count without loading the course.
+  const challenges=Array.isArray(p.lessons)?p.lessons.filter(l=>l.exercise?.challenge).length:0;
+  summaries.push({id,title,category,status,description,level,href,lessons:Array.isArray(p.lessons)?p.lessons.map(({id,title,stage})=>({id,title,stage})):p.lessons,stages:p.stages?.map(({id})=>({id})),...(challenges?{challenges}:{}),dataFile:file+'?v='+revision});
  }
  const search=require('./search-index.cjs').searchSource();
  const version=createHash('sha256').update(search).digest('hex').slice(0,12);

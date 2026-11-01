@@ -1,0 +1,65 @@
+/* Progress dashboard: totals, each started course with its next step, then the review summary. Backups follow below. */
+.visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.progress-dashboard{margin:0 0 var(--space-7)}
+.catalog .progress-dashboard h3{margin:0 0 var(--space-3);font-family:var(--font-heading);font-size:var(--size-sub);font-weight:400;line-height:1.25}
+
+/* Totals */
+.catalog .progress-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--space-3);margin:0 0 var(--space-6);padding:0}
+.progress-stats>div{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:var(--space-1);padding:var(--space-4);border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface)}
+.progress-stats dt{font-size:var(--size-small);color:var(--muted)}
+.catalog .progress-stats dd{margin:0;font-family:var(--font-heading);font-size:var(--size-section);line-height:1.1;color:var(--text)}
+
+.progress-columns{display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,1fr);gap:var(--space-6);align-items:start}
+
+/* Started courses */
+.catalog .progress-courses{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-3)}
+.catalog .progress-course{margin:0;padding:var(--space-4);border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface)}
+.progress-course-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:var(--space-1) var(--space-3)}
+.catalog .progress-course h4{margin:0;font-size:var(--size-label);line-height:1.3}
+.catalog .progress-course h4 a{color:var(--text);background:none;padding:0;text-decoration:none}
+.catalog .progress-course h4 a:hover{text-decoration:underline}
+.progress-course-head>span{font-size:var(--size-small);color:var(--muted)}
+.progress-meter{display:block;height:6px;margin:var(--space-3) 0;border-radius:3px;background:var(--sunken);overflow:hidden}
+.progress-meter>span{display:block;height:100%;min-width:3px;border-radius:3px;background:var(--green-text)}
+.catalog .progress-facts{display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-4);list-style:none;margin:0 0 var(--space-2);padding:0;font-size:var(--size-small);color:var(--muted)}
+.catalog .progress-facts li{margin:0}
+.catalog .progress-course a.progress-next{display:inline-block;box-sizing:border-box;min-height:44px;margin-left:calc(-1 * var(--space-2));padding:var(--space-2);line-height:1.45;background:none;font-weight:600;color:var(--link);text-decoration:none;overflow-wrap:anywhere}
+.catalog .progress-course a.progress-next:hover{text-decoration:underline}
+.catalog .progress-dashboard a:focus-visible{outline:var(--focus-ring);outline-offset:2px}
+
+.progress-waiting{margin:var(--space-4) 0 0}
+.progress-waiting>summary{min-height:44px;display:list-item;align-content:center;cursor:pointer;font-weight:600}
+.catalog .progress-waiting ul{list-style:none;margin:var(--space-2) 0 0;padding:0;columns:2 260px;column-gap:var(--space-5)}
+.catalog .progress-waiting li{margin:0;padding:var(--space-1) 0;break-inside:avoid}
+.catalog .progress-waiting li a{display:inline-block;min-height:32px;padding:var(--space-1) 0;background:none}
+.progress-waiting li span{font-size:var(--size-meta);color:var(--muted)}
+
+/* Review summary */
+.progress-review{padding:var(--space-4);border:1px solid var(--line);border-radius:var(--radius-card);background:var(--raised)}
+.catalog .progress-review p{margin:0;font-size:var(--size-small);line-height:1.55}
+.catalog .progress-review-counts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3);margin:0 0 var(--space-4)}
+.progress-review-counts>div{display:flex;flex-direction:column-reverse;justify-content:flex-end}
+.progress-review-counts dt{font-size:var(--size-small);color:var(--muted)}
+.catalog .progress-review-counts dd{margin:0;font-family:var(--font-heading);font-size:var(--size-sub)}
+.catalog .progress-dashboard a.progress-action{display:inline-flex;align-items:center;gap:var(--space-2);min-height:44px;padding:0 var(--space-4);border-radius:var(--radius-control);background:var(--brand);color:var(--on-brand);font-weight:700;text-decoration:none}
+.catalog .progress-dashboard a.progress-action:hover{background:var(--brand-hover)}
+
+/* Before any progress */
+.catalog .progress-empty ul{margin:var(--space-2) 0 var(--space-4);padding-left:1.2em}
+.catalog .progress-empty li{margin:0 0 var(--space-1)}
+
+/* Backups sit below the dashboard */
+.backup-contents{margin:var(--space-3) 0}
+.backup-contents>summary{min-height:44px;display:list-item;align-content:center;cursor:pointer;font-weight:600}
+
+/* On narrow screens the review, which may need action today, comes before the course list. */
+@media(max-width:800px){.progress-columns{grid-template-columns:minmax(0,1fr)}.progress-review{order:-1}}
+@media(max-width:700px){
+ .progress-dashboard{margin-bottom:var(--space-6)}
+ .catalog .progress-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2);margin-bottom:var(--space-5)}
+ .progress-stats>div{padding:var(--space-3)}
+ .progress-stats>div:last-child:nth-child(odd){grid-column:1 / -1}
+ .catalog .progress-stats dd{font-size:var(--size-sub)}
+ .catalog .progress-course{padding:var(--space-3)}
+}
+@media print{.progress-waiting,.progress-action,.progress-next{display:none}.progress-course{break-inside:avoid}}
