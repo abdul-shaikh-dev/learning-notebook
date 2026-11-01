@@ -64,3 +64,15 @@ Work one course per change, in this order, so that each answer can be checked ag
 Python Problem Solving is left out because its lessons are challenges with tests, and Financial foundations because it has its own course page and question format.
 
 Code: `assets/js/notebook-review.js`, with rendering in `assets/js/catalog.js`. Tests: `tests/notebook-review.cjs`, `tests/checkpoint-questions.cjs`, the checkpoint cases in `tests/notebook-backup.cjs`, and the lesson-page check in `tests/programming-paths.cjs`.
+
+## Exercise attempts
+
+Each lesson's "Practice this idea" exercise has an answer box. The answer is saved in this browser as it is typed (at most 5,000 characters) under `learning-notebook:path:<id>:exercises:v1`, keyed by lesson ID. The worked solution opens when the learner compares a written attempt with it; "Show the solution without answering" opens it at any time. Coding challenges in Python Problem Solving keep their own editor and are unchanged. Printed packs still show the prompt, checklist and solution.
+
+After comparing, the learner rates the attempt against the checklist: matched it, partly or missed it.
+
+- A first attempt that matches is saved but not scheduled.
+- Partly or missed puts the exercise into Review at once, on the checkpoint schedule: it stays due until an attempt matches, then returns after 1, 3 and 7 days and retires after a match following the 7-day gap.
+- Changing the rating on the same visit replaces the earlier choice instead of adding to the streak.
+
+Review lists due exercises beside due questions. An exercise in review starts with an empty box; the earlier answer appears beside the worked solution, and an empty box never erases it. Progress counts exercises attempted per course. Backups include a course's `exercises` only when it has some, and on import the more recent change to each exercise (answer or rating) wins, with this browser winning a tie. `tests/exercise-attempts.cjs` covers saving, rating, scheduling, the review page, backups and progress.

@@ -19,6 +19,7 @@ require('./resource-navigation.cjs');
 require('./notebook-search.cjs');
 require('./notebook-backup.cjs');
 require('./notebook-review.cjs');
+require('./exercise-attempts.cjs');
 require('./progress-dashboard.cjs');
 require('./checkpoint-questions.cjs');
 
