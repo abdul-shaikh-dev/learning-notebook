@@ -1,0 +1,11 @@
+{
+  "hosts": {
+    "escholarship.org": "Answers automated requests with HTTP 403. Check by hand.",
+    "idp.springer.com": "Springer sends automated requests through a session redirect. Check the article by hand.",
+    "journals.sagepub.com": "Answers automated requests with HTTP 403. Check by hand.",
+    "ombuds.umich.edu": "Answers automated requests with HTTP 403. Check by hand.",
+    "onlinelibrary.wiley.com": "Answers automated requests with HTTP 403. Check by hand.",
+    "pubsonline.informs.org": "Answers automated requests with HTTP 403. Check by hand."
+  },
+  "urls": {}
+}
