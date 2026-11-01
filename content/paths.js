@@ -33306,6 +33306,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In a sandbox whose global configuration file is empty, you run git -c user.name=Fixture commit. What does git config --global user.name print afterwards?",
+            "options": [
+              "Nothing; the -c value applied only to that one command",
+              "Fixture",
+              "The author name of the last commit"
+            ],
+            "correct": 0,
+            "explanation": "A -c value overrides configuration for a single invocation and is never written to a file. The global scope stays as it was, which is why the sandbox can commit without touching your identity."
+          }
         ]
       },
       {
@@ -33446,7 +33458,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "notes.txt is committed as \"one\". You change it to \"two\" and stage it, then change it to \"three\" without staging. What does plain git diff show?",
+            "options": [
+              "The change from two to three",
+              "The change from one to two",
+              "The change from one to three"
+            ],
+            "correct": 0,
+            "explanation": "Plain git diff compares the working tree with the index. The index holds the staged \"two\", so only the later, unstaged edit appears."
+          }
+        ]
       },
       {
         "id": "inspect-changes",
@@ -33497,6 +33521,18 @@ const LEARNING_PATHS = [
             "section": "Comparisons between working tree, index and commits",
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "One file is staged and another is modified but not staged. Which command lists only the staged file's name?",
+            "options": [
+              "git diff --cached --name-only",
+              "git diff --name-only",
+              "git status --ignored"
+            ],
+            "correct": 0,
+            "explanation": "--cached compares the index with HEAD, and --name-only prints file names. Plain git diff --name-only lists the unstaged file instead."
           }
         ]
       },
@@ -33550,6 +33586,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "parser.py is staged and notes.txt is modified but not staged. After git commit -m \"Add parser\", what does git status --short show for notes.txt?",
+            "options": [
+              " M notes.txt: modified, still not staged",
+              "M  notes.txt: staged for the next commit",
+              "Nothing: it was committed too"
+            ],
+            "correct": 0,
+            "explanation": "A commit records the index only. notes.txt keeps its unstaged edit, shown with M in the second column."
+          }
         ]
       },
       {
@@ -33601,6 +33649,18 @@ const LEARNING_PATHS = [
             "section": "Description: intentionally untracked files; tracked-file caveat",
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "local.env is listed in .gitignore and has never been tracked. What does git status --short show after you edit it?",
+            "options": [
+              "Nothing for local.env",
+              "?? local.env",
+              " M local.env"
+            ],
+            "correct": 0,
+            "explanation": "An ignored, untracked file is left out of status. git check-ignore -v local.env shows which rule ignores it."
           }
         ]
       },
@@ -33751,7 +33811,19 @@ const LEARNING_PATHS = [
               "explanation": "A branch is a movable reference. Useful detached work needs a named reference before leaving it."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "How many parents does the commit created by git merge --no-ff topic have?",
+            "options": [
+              "2",
+              "1",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "A merge commit records both histories it joins: the previous tip of the current branch and the tip of topic. git log --pretty=%P -n 1 lists them."
+          }
+        ]
       },
       {
         "id": "branch-switch",
@@ -33802,6 +33874,18 @@ const LEARNING_PATHS = [
             "section": "Description and local-change safeguards",
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "On main you run git switch -c feature and make no commits. Which commit does feature point to?",
+            "options": [
+              "The same commit as main",
+              "A new empty commit",
+              "The first commit in the repository"
+            ],
+            "correct": 0,
+            "explanation": "Creating a branch adds a reference to the current commit. It copies no files and creates no commit until you commit on it."
           }
         ]
       },
@@ -33854,6 +33938,18 @@ const LEARNING_PATHS = [
             "section": "Description: restore source, --staged and --worktree",
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "notes.txt has an unstaged edit. What does git restore -- notes.txt, without --staged, do?",
+            "options": [
+              "Discards the edit, restoring the file from the index",
+              "Unstages the file and keeps the edit",
+              "Creates a commit that undoes the edit"
+            ],
+            "correct": 0,
+            "explanation": "Without --staged, restore rewrites the working file from the index, so the unstaged edit is lost. Copy anything you might need first."
           }
         ]
       },
@@ -33913,6 +34009,18 @@ const LEARNING_PATHS = [
             "section": "Fast-forward merge and true merge",
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "main has not moved since topic branched from it. What does git merge topic do by default?",
+            "options": [
+              "Moves main forward to topic's commit, with no merge commit",
+              "Creates a merge commit with two parents",
+              "Refuses until you add --no-ff"
+            ],
+            "correct": 0,
+            "explanation": "When the current branch is an ancestor of topic, Git fast-forwards: main simply moves to topic's commit. --no-ff forces a merge commit instead."
           }
         ]
       },
@@ -34075,7 +34183,19 @@ const LEARNING_PATHS = [
               "explanation": "The fixture verifies restoration after abort; clean preconditions make recovery more predictable."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A merge stops with a conflict in config.txt. What does git status --short show for that file?",
+            "options": [
+              "UU config.txt",
+              "M  config.txt",
+              "?? config.txt"
+            ],
+            "correct": 0,
+            "explanation": "UU means both sides changed the file and the conflict is unresolved. After you edit and stage the resolution, it shows as an ordinary staged change."
+          }
+        ]
       },
       {
         "id": "remotes-fetch",
@@ -34236,7 +34356,19 @@ const LEARNING_PATHS = [
               "explanation": "ff-only refuses unexpected divergence. Updating refs requires a separate integration choice."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "After git fetch, origin/main has 2 commits that your main lacks, and main has none of its own. What does git status report?",
+            "options": [
+              "Behind origin/main by 2 commits and can be fast-forwarded",
+              "Up to date with origin/main",
+              "Diverged from origin/main"
+            ],
+            "correct": 0,
+            "explanation": "Fetch updated origin/main but not your branch. Status compares the two and says you are behind; git merge --ff-only or git pull integrates them."
+          }
+        ]
       },
       {
         "id": "pull-request-review",
@@ -34287,6 +34419,18 @@ const LEARNING_PATHS = [
             "section": "Description: summarize changes between commits",
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "After feature branched, main gained a commit that changes other.txt. What does git diff main...feature (three dots) show?",
+            "options": [
+              "Only feature's changes since the common ancestor",
+              "feature's changes plus the reversal of main's new commit",
+              "Only main's new commit"
+            ],
+            "correct": 0,
+            "explanation": "Three dots diff from the merge base to feature, which is what a reviewer of feature needs. Two dots would compare the two tips and show main's change as if feature removed it."
           }
         ]
       },
@@ -34340,6 +34484,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "HEAD added the line \"beta\" to notes.txt. What does git revert HEAD produce?",
+            "options": [
+              "A new commit that removes the line; the original stays in history",
+              "The branch moves back one commit and the original disappears",
+              "An unstaged edit that removes the line"
+            ],
+            "correct": 0,
+            "explanation": "Revert records a compensating commit on top. History gains a commit rather than losing one, which is why it suits shared branches."
+          }
         ]
       },
       {
@@ -34391,6 +34547,18 @@ const LEARNING_PATHS = [
             "section": "Description and expiry",
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "You run git reset --hard HEAD~1 by mistake. Which reference names the commit you just left?",
+            "options": [
+              "HEAD@{1}",
+              "HEAD~1",
+              "ORIG_MAIN"
+            ],
+            "correct": 0,
+            "explanation": "The reflog records where HEAD pointed before each move, so HEAD@{1} is the previous position. HEAD~1 is now the parent of the new HEAD."
           }
         ]
       },
@@ -34553,7 +34721,19 @@ const LEARNING_PATHS = [
               "explanation": "Reproduce the candidate and its parent before concluding causation; leave bisect mode afterward."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "git bisect starts with 16 commits after the known good one, the last of them known bad. Git checks out a midpoint and prints \"Bisecting: 7 revisions left to test after this (roughly K steps)\". What is K?",
+            "options": [
+              "3",
+              "7",
+              "15"
+            ],
+            "correct": 0,
+            "explanation": "The first midpoint already halves the 16 candidates, so about 8 remain and log2(8) = 3 more tests find the first bad commit: about log2(16) = 4 tests in all."
+          }
+        ]
       },
       {
         "id": "cherry-pick",
@@ -34604,6 +34784,18 @@ const LEARNING_PATHS = [
             "section": "Description and sequencer continue/abort",
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does git cherry-pick -x C add to the new commit's message?",
+            "options": [
+              "A line naming C: (cherry picked from commit followed by C's ID)",
+              "Nothing; -x only checks for conflicts",
+              "C's author name in place of yours"
+            ],
+            "correct": 0,
+            "explanation": "-x appends a reference to the original commit, so a maintenance branch records where the fix came from."
           }
         ]
       },
@@ -35166,7 +35358,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "topic has 3 commits that main lacks. After git rebase main, how many commits does git rev-list --count main..topic report?",
+            "options": [
+              "3, each with a new ID",
+              "1, the commits squashed",
+              "0, the commits moved into main"
+            ],
+            "correct": 0,
+            "explanation": "Rebase replays each commit onto main's tip. The topic keeps three commits, but their parents change, so their IDs change. main itself does not move."
+          }
+        ]
       },
       {
         "id": "stash",
@@ -35217,6 +35421,18 @@ const LEARNING_PATHS = [
             "section": "Description, --include-untracked and apply",
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "notes.txt is tracked and modified. After git stash, what does git status --short show?",
+            "options": [
+              "Nothing: the working tree matches HEAD",
+              " M notes.txt",
+              "?? notes.txt"
+            ],
+            "correct": 0,
+            "explanation": "An ordinary stash saves tracked changes and resets them to HEAD. git stash pop reapplies them."
           }
         ]
       },
@@ -35269,6 +35485,18 @@ const LEARNING_PATHS = [
             "section": "Description, annotated tags and signing",
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "You tag a commit v1.0 with git tag -a, then make one more commit. What does git describe print?",
+            "options": [
+              "v1.0-1-g followed by the short commit ID",
+              "v1.0",
+              "v1.1"
+            ],
+            "correct": 0,
+            "explanation": "describe names the nearest annotated tag, the number of commits since it, and g plus the abbreviated ID of the current commit."
           }
         ]
       },
@@ -35335,6 +35563,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.55.0.windows.5. Commands in lessons run only in owned training repositories; hosting policies are separate."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A release fails after deployment. Which step does the course's workflow take before choosing a revert or a forward fix?",
+            "options": [
+              "Preserve evidence and stop the harmful rollout",
+              "Force-push main back to the previous tag",
+              "Delete the release tag"
+            ],
+            "correct": 0,
+            "explanation": "The lesson's recovery order is to preserve evidence, stop harmful rollout, identify the failing candidate, then choose a tested revert or forward fix. Rewriting shared history as a surprise is ruled out."
+          }
         ]
       }
     ],
@@ -35365,7 +35605,39 @@ const LEARNING_PATHS = [
             "Report separates mechanical checks from release verification."
           ],
           "solution": "Use `python -B sandbox.py --stage foundation --workspace-parent .`. The fixture commits one, stages two, edits three and commits the index. At the staged commit HEAD contains two and the working file three; evidence.json preserves both diffs. The completed repository has restored the working file to two and retains all commits for independent git show. It then restores the generated file, adds an ignore rule, and verifies the synthetic local.env stays untracked. Record git_version and observed assertions; do not claim tests/builds or remote policy were exercised."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "notes.txt is modified, staged, then modified again. What does git status --short show?",
+            "options": [
+              "MM notes.txt",
+              "M  notes.txt",
+              " M notes.txt"
+            ],
+            "correct": 0,
+            "explanation": "The first column is the index compared with HEAD and the second is the working tree compared with the index. Both differ, so both show M."
+          },
+          {
+            "question": "You run git commit --amend -m \"Better message\" on your latest, unpublished commit. What happens to its ID?",
+            "options": [
+              "A new commit with a new ID replaces it on the branch, with the same parent",
+              "The ID stays the same because only the message changed",
+              "The commit gains a second parent"
+            ],
+            "correct": 0,
+            "explanation": "The message is part of the commit object, so amending creates a different commit. The branch moves to it; the old one stays reachable from the reflog for a while."
+          },
+          {
+            "question": "Which command prints the parent IDs of the current commit?",
+            "options": [
+              "git log --pretty=%P -n 1",
+              "git diff --cached",
+              "git status --short"
+            ],
+            "correct": 0,
+            "explanation": "%P is the parent hashes placeholder. A normal commit has one parent and a merge commit has two."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -35394,7 +35666,39 @@ const LEARNING_PATHS = [
             "The review names the candidate commit and states that no hosted approval was obtained."
           ],
           "solution": "Use `python -B sandbox.py --stage intermediate --workspace-parent .`. The first merge conflict is aborted and main content is asserted; a repeated merge is resolved to main and feature and committed with two parents. A local clone fetches the new release commit while preserving its own HEAD, then fast-forwards. Write review.md describing purpose, exact candidate/base and assertions. No push, PR publication or remote protection is performed."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "main and topic each change a different, distant line of the same file. What does git merge topic do?",
+            "options": [
+              "Merges cleanly and creates a merge commit",
+              "Stops with a conflict in that file",
+              "Fast-forwards main to topic"
+            ],
+            "correct": 0,
+            "explanation": "Git merges line ranges, not whole files. Separate, non-adjacent changes combine without a conflict. The branches diverged, so a merge commit records both."
+          },
+          {
+            "question": "You run git revert on a merge commit without any options. What happens?",
+            "options": [
+              "Git refuses until -m names the parent to keep",
+              "Git reverts both parents' changes",
+              "Git reverts the merge and deletes the topic branch"
+            ],
+            "correct": 0,
+            "explanation": "A merge has two parents, so Git cannot tell which side's changes to undo. -m 1 keeps the first parent's history and reverts what the merge brought in."
+          },
+          {
+            "question": "After git fetch, what does git log main..origin/main list?",
+            "options": [
+              "Commits on origin/main that main does not have",
+              "Commits on main that origin/main does not have",
+              "Every commit on both branches"
+            ],
+            "correct": 0,
+            "explanation": "A..B lists commits reachable from B but not from A. Here that is what fetching brought in and you have not integrated yet."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -35423,7 +35727,39 @@ const LEARNING_PATHS = [
             "Release records do not equate a tag with trusted deployment evidence."
           ],
           "solution": "Use `python -B sandbox.py --stage advanced --workspace-parent .`. It bisects safe/bug history, reverts the bug while preserving unrelated contents, recovers a private committed experiment from reflog, cherry-picks it onto main, rebases a private topic and creates an annotated training tag. Attach the JSON results and a release-review.md with candidate, checks, integration decisions and a separate unexecuted artifact/remote/deployment section."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "You run git tag v1.0 with no -a, -m or -s option. What does git cat-file -t v1.0 report?",
+            "options": [
+              "commit: a lightweight tag points straight at the commit",
+              "tag: every tag creates a tag object",
+              "blob: tags store a file"
+            ],
+            "correct": 0,
+            "explanation": "Without -a, -m or -s, a tag is just a reference to a commit with no tag object, tagger or message. Annotated tags create a tag object."
+          },
+          {
+            "question": "During git bisect run, the test script exits with code 125 for one revision. How does Git treat that revision?",
+            "options": [
+              "Skips it as untestable",
+              "Marks it bad",
+              "Stops the bisection with an error"
+            ],
+            "correct": 0,
+            "explanation": "125 is reserved for revisions that cannot be tested. Git skips them and keeps searching, as the lesson recommends for unrelated build failures."
+          },
+          {
+            "question": "You cherry-pick a commit whose change is already on the current branch. What does Git do by default?",
+            "options": [
+              "Stops and reports that the cherry-pick is empty",
+              "Creates a second commit with the same change",
+              "Removes the original commit from its branch"
+            ],
+            "correct": 0,
+            "explanation": "Applying the change produces no difference, so Git stops and asks whether to skip it or commit it with --allow-empty. Nothing is duplicated silently."
+          }
+        ]
       }
     ],
     "resources": {
