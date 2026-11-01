@@ -17,12 +17,33 @@ const NotebookLoader = (() => {
    document.head.append(tag);
   });pending.set(file,promise);return promise;
  }
+ // Lesson-only code and styles (highlighting, concept scenes, diagrams) wait in index.html as placeholders, in cascade and
+ // execution order. The first page that shows lesson content adds each real tag beside its placeholder; other pages never fetch them.
+ let lessonAssets=null,lessonReady=null;
+ function lessonPending(){
+  lessonAssets??=[...(document.querySelectorAll?.('meta[name="lesson-asset"]')||[])].map(mark=>({mark,done:false}));
+  return lessonAssets.some(a=>!a.done);
+ }
+ function loadLessonAssets(){
+  if(lessonReady)return lessonReady;
+  lessonReady=Promise.all(lessonAssets.filter(a=>!a.done).map(asset=>new Promise((resolve,reject)=>{
+   const file=asset.mark.content,css=file.split('?')[0].endsWith('.css'),tag=document.createElement(css?'link':'script');
+   if(css){tag.rel='stylesheet';tag.href=file;}else{tag.async=false;tag.src=file;}
+   tag.onload=()=>{asset.done=true;resolve();};
+   tag.onerror=()=>{tag.remove();reject(Error('Could not load '+file));};
+   asset.mark.after(tag);
+  }))).catch(error=>{lessonReady=null;throw error;});
+  return lessonReady;
+ }
  function prepare(route,id,render){
   const turn=++epoch,hash=location.hash;
   const p=LEARNING_PATHS.find(p=>p.id===id&&p.status==='ready');
   let work;
   if(route==='search'&&!searchReady)work=()=>script(NOTEBOOK_SEARCH_FILE).then(()=>{if(typeof NOTEBOOK_SEARCH==='undefined')throw Error('Missing search index');searchReady=true;});
-  else if(['path','topic','pack','resources'].includes(route)&&p&&(!p.href||route==='resources')&&!loaded.has(id))work=()=>script(p.dataFile).then(()=>{if(!loaded.has(id))throw Error('Missing course data');});
+  else if(['path','topic','pack','resources'].includes(route)&&p&&(!p.href||route==='resources')){
+   const course=!loaded.has(id),assets=lessonPending();
+   if(course||assets)work=()=>Promise.all([course?script(p.dataFile).then(()=>{if(!loaded.has(id))throw Error('Missing course data');}):null,assets?loadLessonAssets():null]);
+  }
   // Review loads only the courses whose questions are due.
   const reviewing=route==='review'&&typeof NotebookReview!=='undefined'?NotebookReview.dueCourses().map(id=>LEARNING_PATHS.find(p=>p.id===id)).filter(p=>p&&p.dataFile&&!loaded.has(p.id)):[];
   if(reviewing.length)work=()=>Promise.all(reviewing.map(p=>script(p.dataFile))).then(()=>{if(reviewing.some(p=>!loaded.has(p.id)))throw Error('Missing course data');});
