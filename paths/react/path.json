@@ -271,7 +271,7 @@
       "references": [
         {
           "title": "JavaScript types",
-          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Data_structures",
           "section": "Primitive values",
           "reviewed": "2026-09-27",
           "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."

@@ -35,7 +35,7 @@
     },
     {
       "title": "Python built-in types",
-      "url": "https://docs.python.org/3/library/stdtypes.html"
+      "url": "https://docs.python.org/3/builtins/stdtypes.html"
     }
   ],
   "stages": [
@@ -168,7 +168,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Numeric types: integer comparisons and addition",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -233,7 +233,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Numeric comparisons; mutable sequence append",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -298,7 +298,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Common sequence operations: len and indexing",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -363,7 +363,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Numeric types: integer comparisons and addition",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -428,7 +428,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "String methods: lower, split with an explicit separator, and join",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -493,7 +493,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Common sequence operations: indexing; integer subtraction",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -558,7 +558,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Set types: membership and add; mutable sequence append",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -623,7 +623,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Mapping types: dict.get and assignment",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -688,7 +688,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Mutable sequence operations: indexing, append and assignment",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -753,7 +753,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "String indexing; mapping membership and assignment; list append",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -818,7 +818,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Mapping types: dict.get, indexing and assignment",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -883,7 +883,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence indexing and numeric comparisons",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -948,7 +948,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence indexing and mutable sequence append",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1013,7 +1013,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence indexing and integer arithmetic",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1078,7 +1078,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence indexing and integer arithmetic",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1143,7 +1143,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "List indexing including negative indices; mutable sequence append",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1208,7 +1208,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Numeric types: integer addition, subtraction and equality",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1273,7 +1273,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence indexing; numeric comparisons and floor division",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1345,7 +1345,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "List append and pop; string and dictionary membership",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1410,7 +1410,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "String slicing; list append and pop",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1475,7 +1475,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "String methods: strip with explicit characters, startswith and partition; mapping assignment",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1540,7 +1540,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Dictionary membership and assignment; list indexing",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1605,7 +1605,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence comparisons and mutable sequence assignment",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1670,7 +1670,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence comparisons and numeric comparisons",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1735,7 +1735,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence indexing and integer arithmetic",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1800,7 +1800,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "String split and membership; integer conversion",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1865,7 +1865,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "String split; integer conversion and numeric comparisons",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1930,7 +1930,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Set types: subset comparison and add; mapping indexing",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -1995,7 +1995,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Dictionary copy, get and assignment",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -2060,7 +2060,7 @@
       "references": [
         {
           "title": "Python documentation: built-in types",
-          "url": "https://docs.python.org/3/library/stdtypes.html",
+          "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence indexing; numeric comparisons",
           "reviewed": "2026-10-02",
           "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."

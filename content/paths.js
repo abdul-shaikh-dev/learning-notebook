@@ -38744,7 +38744,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "JavaScript types",
-            "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Data_structures",
             "section": "Primitive values",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
@@ -46413,7 +46413,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
-            "url": "https://eprints.whiterose.ac.uk/91437/8/3_PDFsam_Does%20monitoring%20goal.pdf",
+            "url": "https://eprints.whiterose.ac.uk/id/eprint/91437/8/3_PDFsam_Does%20monitoring%20goal.pdf",
             "section": "Accepted manuscript; monitoring results, moderator analyses and limitations",
             "reviewed": "2026-10-02",
             "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
@@ -46934,7 +46934,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Harkin et al. (2016), Does monitoring goal progress promote goal attainment?",
-            "url": "https://eprints.whiterose.ac.uk/91437/8/3_PDFsam_Does%20monitoring%20goal.pdf",
+            "url": "https://eprints.whiterose.ac.uk/id/eprint/91437/8/3_PDFsam_Does%20monitoring%20goal.pdf",
             "section": "Accepted manuscript; monitoring results, moderator analyses and limitations",
             "reviewed": "2026-10-02",
             "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
@@ -52748,7 +52748,7 @@ const LEARNING_PATHS = [
           },
           {
             "title": "Pika blocking channel operations",
-            "url": "https://pika.readthedocs.io/en/stable/modules/adapters/blocking.html",
+            "url": "https://pika.github.io/pika/latest/modules/adapters/blocking/",
             "section": "basic_get, basic_ack and publisher confirmation",
             "reviewed": "2026-10-02",
             "scope": "Primary API documentation for the optional mechanism lab. Runtime prerequisites and execution evidence are separate in mechanism-lab.md."
@@ -66900,7 +66900,7 @@ const LEARNING_PATHS = [
       },
       {
         "title": "Python built-in types",
-        "url": "https://docs.python.org/3/library/stdtypes.html"
+        "url": "https://docs.python.org/3/builtins/stdtypes.html"
       }
     ],
     "stages": [
@@ -67033,7 +67033,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Numeric types: integer comparisons and addition",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -67098,7 +67098,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Numeric comparisons; mutable sequence append",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -67163,7 +67163,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Common sequence operations: len and indexing",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -67228,7 +67228,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Numeric types: integer comparisons and addition",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -67293,7 +67293,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "String methods: lower, split with an explicit separator, and join",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -67358,7 +67358,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Common sequence operations: indexing; integer subtraction",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -67423,7 +67423,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Set types: membership and add; mutable sequence append",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -67488,7 +67488,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Mapping types: dict.get and assignment",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -67553,7 +67553,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Mutable sequence operations: indexing, append and assignment",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -67618,7 +67618,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "String indexing; mapping membership and assignment; list append",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -67683,7 +67683,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Mapping types: dict.get, indexing and assignment",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -67748,7 +67748,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence indexing and numeric comparisons",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -67813,7 +67813,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence indexing and mutable sequence append",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -67878,7 +67878,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence indexing and integer arithmetic",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -67943,7 +67943,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence indexing and integer arithmetic",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -68008,7 +68008,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "List indexing including negative indices; mutable sequence append",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -68073,7 +68073,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Numeric types: integer addition, subtraction and equality",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -68138,7 +68138,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence indexing; numeric comparisons and floor division",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -68210,7 +68210,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "List append and pop; string and dictionary membership",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -68275,7 +68275,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "String slicing; list append and pop",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -68340,7 +68340,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "String methods: strip with explicit characters, startswith and partition; mapping assignment",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -68405,7 +68405,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Dictionary membership and assignment; list indexing",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -68470,7 +68470,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence comparisons and mutable sequence assignment",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -68535,7 +68535,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence comparisons and numeric comparisons",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -68600,7 +68600,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence indexing and integer arithmetic",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -68665,7 +68665,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "String split and membership; integer conversion",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -68730,7 +68730,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "String split; integer conversion and numeric comparisons",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -68795,7 +68795,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Set types: subset comparison and add; mapping indexing",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -68860,7 +68860,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Dictionary copy, get and assignment",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -68925,7 +68925,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python documentation: built-in types",
-            "url": "https://docs.python.org/3/library/stdtypes.html",
+            "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence indexing; numeric comparisons",
             "reviewed": "2026-10-02",
             "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
@@ -77392,7 +77392,7 @@ const LEARNING_PATHS = [
       },
       {
         "title": "AWS Builders Library: timeouts, retries and jitter",
-        "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+        "url": "https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter"
       },
       {
         "title": "AWS Builders Library: idempotent APIs",
@@ -79548,7 +79548,7 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "AWS Builders Library: timeouts, retries and jitter",
-            "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
+            "url": "https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter",
             "section": "Timeouts; retries and backoff; jitter",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
@@ -79844,7 +79844,7 @@ const LEARNING_PATHS = [
           "sources": [
             {
               "title": "Timeouts, retries and jitter",
-              "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+              "url": "https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter"
             }
           ]
         }

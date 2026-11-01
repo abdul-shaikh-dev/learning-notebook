@@ -54,4 +54,4 @@ dedicated teaching credentials; it does not accept arbitrary broker URLs.
 Mechanism documentation checked 2026-10-02; execution evidence is separate.
 
 - https://www.rabbitmq.com/docs/confirms
-- https://pika.readthedocs.io/en/stable/modules/adapters/blocking.html
+- https://pika.github.io/pika/latest/modules/adapters/blocking/
