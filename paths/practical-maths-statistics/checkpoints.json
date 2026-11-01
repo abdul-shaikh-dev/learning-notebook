@@ -1,0 +1,84 @@
+{
+  "lessons": {
+    "logic-and-conditions": [
+      {"question": "Approve when age >= 18 and (member or spend > 100). Is a 17-year-old member who spent 200 approved?", "options": ["No", "Yes"], "correct": 0, "explanation": "Both sides of the and must hold. The bracket is true, but age >= 18 is false, so the whole rule is false."}
+    ],
+    "sets-and-overlap": [
+      {"question": "What is {2, 3, 4} - {1, 2, 3}?", "options": ["{4}", "{1}", "{1, 4}"], "correct": 0, "explanation": "A difference keeps members of the left set that are absent from the right one. Only 4 qualifies; reversing the operands would give {1}."}
+    ],
+    "functions-and-domains": [
+      {"question": "f(x) = √(x − 2) over the real numbers. Which input is outside its domain?", "options": ["1", "2", "6"], "correct": 0, "explanation": "x − 2 must not be negative. At x = 1 it is −1, which has no real square root; 2 gives 0 and 6 gives 2."}
+    ],
+    "units-and-rates": [
+      {"question": "A job processes 120 records per minute. How many does it process in 45 seconds?", "options": ["90", "5,400", "160"], "correct": 0, "explanation": "Convert the rate first: 120 per minute is 2 per second, and 2 × 45 = 90. Multiplying 120 by 45 mixes minutes with seconds."}
+    ],
+    "percentages-and-change": [
+      {"question": "A price rises from 80 to 100. What is the percentage increase?", "options": ["25%", "20%", "80%"], "correct": 0, "explanation": "The change is 20 and the original value is 80, so 20 / 80 = 25%. Dividing by the new value, 100, gives the 20% distractor."}
+    ],
+    "powers-and-growth": [
+      {"question": "A value of 100 grows by 10% in each of three periods. What is it afterwards?", "options": ["133.1", "130", "110"], "correct": 0, "explanation": "Each period multiplies by 1.1: 100 × 1.1³ = 133.1. Adding 10 three times would give 130, which ignores growth on growth."}
+    ],
+    "algebra-and-scaling": [
+      {"question": "3x + 5 = 20. What is x?", "options": ["5", "8.33", "15"], "correct": 0, "explanation": "Subtract 5 to get 3x = 15, then divide by 3. Substituting back, 3 × 5 + 5 = 20, which confirms it."}
+    ],
+    "mean-median-and-outliers": [
+      {"question": "Latencies are 10, 11, 12, 13 and 200 ms. What are the mean and median?", "options": ["Mean 49.2 ms, median 12 ms", "Mean 12 ms, median 49.2 ms", "Mean 13 ms, median 12 ms"], "correct": 0, "explanation": "The mean is 246 / 5 = 49.2 ms because 200 pulls it up. The median is the middle value, 12 ms, which ignores how slow the outlier is."}
+    ],
+    "variance-and-spread": [
+      {"question": "What is the population standard deviation of 2, 4, 4, 4, 5, 5, 7 and 9?", "options": ["2", "4", "5"], "correct": 0, "explanation": "The mean is 5, the squared deviations average to 4, and the square root of 4 is 2. 4 is the variance, in squared units."}
+    ],
+    "probability-and-complements": [
+      {"question": "Two fair coins are tossed. What is P(at least one head)?", "options": ["3/4", "1/2", "1/4"], "correct": 0, "explanation": "The complement, no heads, is one outcome of four: TT. So P(at least one head) = 1 − 1/4 = 3/4."}
+    ],
+    "conditional-probability": [
+      {"question": "Two fair dice are rolled. Given that the sum is 8, what is P(both show 4)?", "options": ["1/5", "1/36", "1/6"], "correct": 0, "explanation": "Five equally likely outcomes sum to 8: (2,6), (3,5), (4,4), (5,3), (6,2). Conditioning makes those five the denominator."}
+    ],
+    "sampling-and-selection": [
+      {"question": "To learn why people stop using an app, a team surveys 10,000 current users. What is the main problem?", "options": ["It excludes the people who already stopped", "10,000 responses are too few", "Current users answer too quickly"], "correct": 0, "explanation": "The question is about leavers, who are missing from the sampling frame. A larger sample of current users cannot fix that."}
+    ],
+    "expected-value": [
+      {"question": "A bet costs 1 and pays 5 with probability 0.1, and nothing otherwise. What is the expected net gain per bet?", "options": ["-0.5", "0.5", "4"], "correct": 0, "explanation": "Expected payout is 0.1 × 5 = 0.5; subtracting the cost of 1 gives −0.5 per bet on average, even though a single bet wins 4 or loses 1."}
+    ],
+    "uncertainty-and-intervals": [
+      {"question": "With the same spread, the sample size is quadrupled. What happens to the width of a confidence interval for the mean?", "options": ["It roughly halves", "It becomes a quarter", "It stays the same"], "correct": 0, "explanation": "Width scales with 1 / √n, and √4 = 2. Precision improves more slowly than the sample grows."}
+    ],
+    "vectors-and-coordinates": [
+      {"question": "What is 2 × (1, −1) + (2, 3)?", "options": ["(4, 1)", "(3, 2)", "(6, 4)"], "correct": 0, "explanation": "Scale each coordinate first, (2, −2), then add matching coordinates: (2 + 2, −2 + 3) = (4, 1)."}
+    ],
+    "dot-products-and-scores": [
+      {"question": "Weights are (0.5, 0.3, 0.2) and scores are (80, 60, 90). What is the weighted score?", "options": ["76", "70", "230"], "correct": 0, "explanation": "Multiply matching coordinates and add: 40 + 18 + 18 = 76. 230 is the unweighted sum."}
+    ],
+    "matrices-and-shapes": [
+      {"question": "What is the matrix [[1, 2], [3, 4]] times the vector (1, 1)?", "options": ["(3, 7)", "(4, 6)", "(1, 4)"], "correct": 0, "explanation": "Each output is one row dotted with the vector: 1 + 2 = 3 and 3 + 4 = 7. (4, 6) sums the columns instead."}
+    ],
+    "correlation-and-causation": [
+      {"question": "y = x² for x = −2, −1, 0, 1, 2. What is the Pearson correlation between x and y?", "options": ["0", "1", "-1"], "correct": 0, "explanation": "y depends exactly on x, but the relationship is symmetric rather than linear, so the linear correlation is 0."}
+    ],
+    "experiments-and-confounding": [
+      {"question": "Students who volunteered for a new study tool scored higher. Why does this not show that the tool caused it?", "options": ["Volunteers may differ from others, for example in motivation", "The scores were too high to compare", "Correlations only appear in large samples"], "correct": 0, "explanation": "Self-selection mixes the tool's effect with pre-existing differences. Random assignment would separate them."}
+    ],
+    "feature-scaling": [
+      {"question": "Points are a = (1, 1000), b = (2, 1000) and c = (1, 1010). Without scaling, which is closer to a by Euclidean distance?", "options": ["b", "c", "Both are equally close"], "correct": 0, "explanation": "b is 1 unit away and c is 10. Whether 10 units of the second feature matter more than 1 of the first depends on units, which is why scaling is a choice."}
+    ],
+    "decision-and-capstone": [
+      {"question": "Candidate A scores 76.0 and B scores 75.8 using weights chosen by judgement. What is the honest conclusion?", "options": ["A near tie that depends on the chosen weights", "A is clearly better", "B should be chosen to be safe"], "correct": 0, "explanation": "A 0.2 gap under judgement-based weights is within what a different reasonable weighting could reverse. The report should say so."}
+    ]
+  },
+  "stages": {
+    "foundation": [
+      {"question": "A 1,500 MB download runs at 25 MB/s. How long does it take?", "options": ["1 minute", "6 seconds", "60 minutes"], "correct": 0, "explanation": "MB cancels, leaving 1,500 / 25 = 60 seconds. Keeping units in the calculation shows the answer is in seconds."},
+      {"question": "A price falls by 20% and then rises by 20%. What is the overall change?", "options": ["-4%", "0%", "+4%"], "correct": 0, "explanation": "0.8 × 1.2 = 0.96, a 4% fall. The rise is 20% of a smaller value, so it does not undo the fall."},
+      {"question": "Which condition is equivalent to not (x > 3 and x < 7) for whole numbers?", "options": ["x <= 3 or x >= 7", "x <= 3 and x >= 7", "x > 3 or x < 7"], "correct": 0, "explanation": "De Morgan's law turns not (A and B) into not A or not B, and not (x > 3) is x <= 3."}
+    ],
+    "intermediate": [
+      {"question": "A test detects 90% of cases and correctly clears 90% of non-cases. 1% of people have the condition. Roughly what share of positive results are true cases?", "options": ["About 8%", "About 90%", "About 1%"], "correct": 0, "explanation": "Per 1,000 people: 9 true positives and 99 false positives, so 9 / 108 ≈ 8%. The large non-case group dominates the positives."},
+      {"question": "What does statistics.median([1, 2, 3, 4]) return?", "options": ["2.5", "2", "3"], "correct": 0, "explanation": "With an even count there is no single middle value, so the median is the mean of the two middle values, 2 and 3."},
+      {"question": "A fair die is rolled until a 6 appears. What is the expected number of rolls?", "options": ["6", "3.5", "36"], "correct": 0, "explanation": "Each roll succeeds with probability 1/6, and the expected wait for a success with probability p is 1/p."}
+    ],
+    "advanced": [
+      {"question": "What is the cosine similarity of (1, 0) and (0, 1)?", "options": ["0", "1", "-1"], "correct": 0, "explanation": "Their dot product is 0, so the vectors are perpendicular: they share no direction."},
+      {"question": "Min–max scaling maps the smallest value to 0 and the largest to 1. What does it give for [10, 20, 30]?", "options": ["[0.0, 0.5, 1.0]", "[0.1, 0.2, 0.3]", "[-1.0, 0.0, 1.0]"], "correct": 0, "explanation": "Each value becomes (x − 10) / (30 − 10). The middle value sits halfway, at 0.5."},
+      {"question": "A scores (9, 4) and B scores (5, 7). Which wins with weights (0.5, 0.5), and which with (0.2, 0.8)?", "options": ["A with the first, B with the second", "A with both", "B with both"], "correct": 0, "explanation": "Equal weights give A 6.5 and B 6.0; weights favouring the second criterion give A 5.0 and B 6.6. The winner depends on the weights."}
+    ]
+  }
+}

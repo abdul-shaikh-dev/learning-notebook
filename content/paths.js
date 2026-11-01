@@ -18773,6 +18773,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "i = 1, then while i < n: i *= 2. For n = 1024, how many times does the loop body run?",
+            "options": [
+              "10",
+              "512",
+              "1024"
+            ],
+            "correct": 0,
+            "explanation": "i doubles each time: 1, 2, 4 … 512 are all below 1024, which is 10 values. Doubling toward n takes about log2(n) steps, not n."
+          }
         ]
       },
       {
@@ -18821,6 +18833,18 @@ const LEARNING_PATHS = [
             "section": "Resizing arrays and linked lists",
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which Python list operation is O(1) on average?",
+            "options": [
+              "xs.append(v)",
+              "xs.insert(0, v)",
+              "xs.pop(0)"
+            ],
+            "correct": 0,
+            "explanation": "Appending writes after the last element, with occasional resizing spread across many appends. Inserting or removing at the front shifts every existing element."
           }
         ]
       },
@@ -18871,6 +18895,18 @@ const LEARNING_PATHS = [
             "section": "Hash tables",
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "d = {'a': 1, 'a': 2}. What is d['a']?",
+            "options": [
+              "1",
+              "2",
+              "KeyError"
+            ],
+            "correct": 1,
+            "explanation": "A dict holds one value per key. The later 'a': 2 replaces the earlier entry, so the dict has one key whose value is 2."
           }
         ]
       },
@@ -19154,7 +19190,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "q = deque([1, 2, 3]), then q.append(4). What does q.popleft() return?",
+            "options": [
+              "1",
+              "3",
+              "4"
+            ],
+            "correct": 0,
+            "explanation": "append adds at the right and popleft removes from the left, so the deque behaves as a FIFO queue and the oldest item, 1, leaves first."
+          }
+        ]
       },
       {
         "id": "binary-search",
@@ -19344,7 +19392,19 @@ const LEARNING_PATHS = [
               "explanation": "Every update shrinks the interval, eventually finding a match or exhausting it."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does bisect.bisect_left([1, 3, 3, 3, 5], 3) return?",
+            "options": [
+              "1",
+              "3",
+              "4"
+            ],
+            "correct": 0,
+            "explanation": "bisect_left returns the first position where 3 could be inserted while keeping order, which is before every existing 3: index 1."
+          }
+        ]
       },
       {
         "id": "sorting",
@@ -19783,7 +19843,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "rows = [('b', 2), ('a', 2), ('c', 1)]. What are the first two items of sorted(rows, key=lambda r: r[1])?",
+            "options": [
+              "[('c', 1), ('b', 2)]",
+              "[('c', 1), ('a', 2)]",
+              "[('a', 2), ('b', 2)]"
+            ],
+            "correct": 0,
+            "explanation": "The key compares only the numbers. Python's sort is stable, so ('b', 2) and ('a', 2) keep their original order after ('c', 1)."
+          }
+        ]
       },
       {
         "id": "recursion",
@@ -20213,7 +20285,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "def depth(n): return 0 if n == 0 else 1 + depth(n - 1). What happens on depth(-1)?",
+            "options": [
+              "It returns -1",
+              "It returns 0",
+              "It raises RecursionError"
+            ],
+            "correct": 2,
+            "explanation": "From -1, n - 1 moves away from 0, so the base case is never reached and Python stops the call chain at its recursion limit."
+          }
+        ]
       },
       {
         "id": "binary-search-tree",
@@ -20645,7 +20729,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Insert 10, 5, 20 and 15 into an empty unbalanced binary search tree, in that order. Which key is the left child of 20?",
+            "options": [
+              "15",
+              "5",
+              "None: 20 has no left child"
+            ],
+            "correct": 0,
+            "explanation": "15 is greater than 10, so it goes right to 20, then less than 20, so it becomes 20's left child."
+          }
+        ]
       },
       {
         "id": "graphs",
@@ -21077,7 +21173,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "An undirected graph has edges A–B, A–C, B–D, C–D and D–E. How many edges are on the shortest path from A to E?",
+            "options": [
+              "2",
+              "3",
+              "4"
+            ],
+            "correct": 1,
+            "explanation": "BFS reaches B and C at distance 1, D at distance 2 and E at distance 3. No route reaches E in fewer edges."
+          }
+        ]
       },
       {
         "id": "heaps",
@@ -21125,6 +21233,18 @@ const LEARNING_PATHS = [
             "section": "Binary heaps",
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Push 5, 1 and 4 onto an empty heapq list. What does the second heappop return?",
+            "options": [
+              "1",
+              "4",
+              "5"
+            ],
+            "correct": 1,
+            "explanation": "heapq is a min-heap: the first pop returns 1 and the second returns the next smallest, 4."
           }
         ]
       },
@@ -21181,6 +21301,18 @@ const LEARNING_PATHS = [
             "section": "Dynamic programming lectures 19–22",
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "With coins 1 and 2, how many ways can you make 5 if order does not matter?",
+            "options": [
+              "3",
+              "5",
+              "8"
+            ],
+            "correct": 0,
+            "explanation": "The combinations are 1+1+1+1+1, 1+1+1+2 and 1+2+2. Counting orderings separately would give 8, which answers a different question."
           }
         ]
       },
@@ -21514,7 +21646,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Nodes are linked a → b → c. After a.next = c, and with no other references to b, what is true of b?",
+            "options": [
+              "It is no longer reachable from a",
+              "It is copied into c",
+              "It moves to the end of the list"
+            ],
+            "correct": 0,
+            "explanation": "Changing one link bypasses b. Nothing is copied or moved; b is simply no longer reachable by following links from a."
+          }
+        ]
       },
       {
         "id": "merge-sort",
@@ -21567,6 +21711,18 @@ const LEARNING_PATHS = [
             "section": "Top-down mergesort",
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Merging [1, 4] and [2, 3] compares the two front values until one run is empty. How many comparisons does it make?",
+            "options": [
+              "2",
+              "3",
+              "4"
+            ],
+            "correct": 1,
+            "explanation": "1 vs 2, then 4 vs 2, then 4 vs 3. The right run is then empty, so 4 is appended without a comparison."
           }
         ]
       },
@@ -21731,7 +21887,19 @@ const LEARNING_PATHS = [
               "explanation": "Each move shortens the interval; the loop ends with a pair or None."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Values [1, 2, 4, 7, 11] are sorted and the target sum is 15. With left at 1 and right at 11, the sum is 12. Which pointer moves?",
+            "options": [
+              "left moves right",
+              "right moves left",
+              "both move inward"
+            ],
+            "correct": 0,
+            "explanation": "The sum is too small. Pairing 1 with any value left of 11 is smaller still, so 1 cannot be part of a solution and left moves right."
+          }
+        ]
       },
       {
         "id": "sliding-window",
@@ -21791,6 +21959,18 @@ const LEARNING_PATHS = [
             "section": "Dictionary operations supporting maintained state",
             "reviewed": "2026-09-27",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What is the length of the longest substring of 'abcabcbb' with no repeated character?",
+            "options": [
+              "3",
+              "4",
+              "7"
+            ],
+            "correct": 0,
+            "explanation": "Windows such as 'abc' and 'bca' have 3 distinct characters. Any window of 4 repeats one of a, b or c."
           }
         ]
       },
@@ -21977,7 +22157,19 @@ const LEARNING_PATHS = [
               "explanation": "A partial order is not success: un-emitted vertices reveal a directed cycle."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "TopologicalSorter({'b': {'a'}, 'c': {'b'}}) maps each node to its predecessors. What is list(ts.static_order())?",
+            "options": [
+              "['a', 'b', 'c']",
+              "['c', 'b', 'a']",
+              "['b', 'c', 'a']"
+            ],
+            "correct": 0,
+            "explanation": "b depends on a and c depends on b, so the only valid order is a, b, c. graphlib returns predecessors first."
+          }
+        ]
       },
       {
         "id": "dijkstra",
@@ -22134,7 +22326,19 @@ const LEARNING_PATHS = [
               "explanation": "When the old B=8 entry is popped, it differs from distance[B] and is skipped."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Directed edges are A→B (1), B→C (1) and A→C (5). What is the minimum cost from A to C?",
+            "options": [
+              "2",
+              "5",
+              "1"
+            ],
+            "correct": 0,
+            "explanation": "The direct edge has one hop but costs 5. The two-hop route through B costs 1 + 1 = 2, which is the minimum."
+          }
+        ]
       },
       {
         "id": "greedy",
@@ -22195,6 +22399,18 @@ const LEARNING_PATHS = [
             "section": "Lecture 1, pages 2-4: interval scheduling and the exchange proof",
             "reviewed": "2026-10-02",
             "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Coins are 1, 3 and 4. Taking the largest coin that fits each time, how many coins make 6?",
+            "options": [
+              "2",
+              "3",
+              "6"
+            ],
+            "correct": 1,
+            "explanation": "Greedy takes 4, then 1 and 1: three coins. The optimum is 3 + 3, two coins, so this greedy rule is not safe for these coins."
           }
         ]
       },
@@ -22352,7 +22568,19 @@ const LEARNING_PATHS = [
               "explanation": "Pop after inclusion so the caller sees the selection it had before this choice."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Backtracking over [1, 2, 3] chooses include or exclude for each value and records the selection at every leaf. How many selections are recorded?",
+            "options": [
+              "3",
+              "6",
+              "8"
+            ],
+            "correct": 2,
+            "explanation": "Each of the 3 values has 2 choices, so the search tree has 2 × 2 × 2 = 8 leaves, including the empty selection."
+          }
+        ]
       },
       {
         "id": "knapsack",
@@ -22503,7 +22731,19 @@ const LEARNING_PATHS = [
               "explanation": "dp[4] stays 3. An upward traversal would reuse newly updated dp[2] and incorrectly produce 6."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Capacity is 4 and each item can be used once. Items as (weight, value) are (1, 15), (3, 20) and (4, 30). What is the best total value?",
+            "options": [
+              "30",
+              "35",
+              "45"
+            ],
+            "correct": 1,
+            "explanation": "Weights 1 + 3 fit exactly for 15 + 20 = 35, which beats the single (4, 30) item. 45 would need the first item twice."
+          }
+        ]
       },
       {
         "id": "algorithm-review",
@@ -22647,7 +22887,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A new sort matches sorted() on 1,000 random lists. What does that evidence show?",
+            "options": [
+              "Agreement on those inputs, not a proof for every input",
+              "That the sort runs in O(n log n)",
+              "That the sort is correct for every input"
+            ],
+            "correct": 0,
+            "explanation": "A comparison test is strong evidence on the inputs it tried. Correctness for all inputs needs an argument, and cost needs separate analysis."
+          }
+        ]
       }
     ],
     "stages": [
@@ -22677,7 +22929,39 @@ const LEARNING_PATHS = [
             "Complexity claims name their assumptions."
           ],
           "solution": "Scan commands once. For a new add ID, record the ID permanently, add minutes under its topic and push the accepted event onto a history list. Ignore duplicate IDs without pushing. Undo pops only the active history and subtracts that event's minutes while retaining the topic key. Empty undo is a no-op. This contract counts each ID at most once across the whole command stream, including after undo; it is not redo support."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "For each of n user IDs, code checks `uid in blocked`, where blocked is a list of m IDs. What is the total cost?",
+            "options": [
+              "O(n + m)",
+              "O(n × m)",
+              "O(log m)"
+            ],
+            "correct": 1,
+            "explanation": "Each membership test scans the list, up to m steps, and it runs n times. Converting blocked to a set first makes the total about O(n + m)."
+          },
+          {
+            "question": "What does collections.Counter('banana').most_common(1) return?",
+            "options": [
+              "[('a', 3)]",
+              "[('b', 1)]",
+              "[('n', 2)]"
+            ],
+            "correct": 0,
+            "explanation": "Counter maps each character to its count: a 3, n 2, b 1. most_common(1) returns a list with the single highest pair."
+          },
+          {
+            "question": "An editor's undo should reverse the most recent change first. Which structure fits?",
+            "options": [
+              "A stack",
+              "A queue",
+              "A set"
+            ],
+            "correct": 0,
+            "explanation": "Undo is last in, first out: the newest change is reversed first, which is exactly what a stack provides."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -22706,7 +22990,39 @@ const LEARNING_PATHS = [
             "Tests cover empty input, one vertex and shared prerequisites."
           ],
           "solution": "Use Kahn's topological order implementation. Build indegrees for every vertex, enqueue zero-indegree vertices, decrement neighbors and compare output count to vertex count. Validate every returned order by mapping vertices to positions. Keep completion eligibility as a separate check of all prerequisites."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does bisect.bisect_right([1, 2, 2, 2, 3], 2) return?",
+            "options": [
+              "1",
+              "3",
+              "4"
+            ],
+            "correct": 2,
+            "explanation": "bisect_right returns the position after every existing 2, which is index 4. bisect_left would return 1."
+          },
+          {
+            "question": "A breadth-first traversal's queue is replaced with a stack, and nothing else changes. What order does the traversal now follow?",
+            "options": [
+              "A depth-first order",
+              "The same layers as before",
+              "Sorted order of node names"
+            ],
+            "correct": 0,
+            "explanation": "A stack takes the newest discovered node first, so the traversal follows one branch deep before returning. Distances are then no longer by layer."
+          },
+          {
+            "question": "fib(n) is memoised with functools.cache and returns n for n < 2. How many distinct calls does computing fib(30) evaluate?",
+            "options": [
+              "30",
+              "31",
+              "1,346,269"
+            ],
+            "correct": 1,
+            "explanation": "Each value fib(0) through fib(30) is computed once and then reused: 31 evaluations. Without the cache, the call tree has 2,692,537 calls."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -22737,7 +23053,39 @@ const LEARNING_PATHS = [
             "Results remain correct without performance optimizations."
           ],
           "solution": "Use lazy-heap Dijkstra for nonnegative costs, earliest-finish greedy for unweighted interval count, and descending-capacity 0/1 knapsack for the budget problem. The advanced_algorithms.py download contains reference functions and checks. Extend it with independent small-input oracles and document why each algorithm applies."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "Intervals are (1, 4), (3, 5), (0, 6), (5, 7), (8, 9) and (5, 9). Repeatedly choosing the earliest-finishing interval that does not overlap, how many are chosen?",
+            "options": [
+              "2",
+              "3",
+              "4"
+            ],
+            "correct": 1,
+            "explanation": "Earliest finish picks (1, 4), then (5, 7), then (8, 9). For interval scheduling this greedy rule is provably optimal."
+          },
+          {
+            "question": "A one-dimensional knapsack table is filled with capacities iterated upward for each item. How often can an item be used?",
+            "options": [
+              "Any number of times",
+              "At most once",
+              "Never"
+            ],
+            "correct": 0,
+            "explanation": "Iterating upward reads cells already updated for the same item, so it can be added again. That solves the unbounded problem; 0/1 knapsack iterates downward."
+          },
+          {
+            "question": "A shortest-path implementation passes five hand-made graphs. Which further test adds the most evidence?",
+            "options": [
+              "Compare it with brute-force path enumeration on many small random graphs",
+              "Run the five graphs again on a faster machine",
+              "Check that it returns a number for every graph"
+            ],
+            "correct": 0,
+            "explanation": "A brute-force reference on many small inputs explores cases nobody thought to write by hand. Speed and return types say nothing about correctness."
+          }
+        ]
       }
     ],
     "resources": {
@@ -25635,7 +25983,39 @@ const LEARNING_PATHS = [
             "Tests assert observable behavior, including failures."
           ],
           "solution": "Use validate_titles to return an immutable tuple, formatter_for to select lines or JSON and a workflow that delegates once. Keep format-specific logic out of validation. The downloadable workshop demonstrates these seams; its tests cover empty data, rejected values and format selection."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does sorted(['ccc', 'a', 'bb'], key=len) return?",
+            "options": [
+              "['a', 'bb', 'ccc']",
+              "['ccc', 'bb', 'a']",
+              "['bb', 'a', 'ccc']"
+            ],
+            "correct": 0,
+            "explanation": "key passes a policy into sorted, which compares lengths 1, 2 and 3. It is a small Strategy built into the language."
+          },
+          {
+            "question": "Base.save(item) accepts any item. A subclass's save raises unless the item has an 'id' key. Is the subclass substitutable for Base?",
+            "options": [
+              "No: it accepts fewer inputs than the base contract promises",
+              "Yes: the method name and signature match",
+              "Yes: raising an error is always allowed"
+            ],
+            "correct": 0,
+            "explanation": "Callers written against Base may pass items without an id. A substitute must accept at least what the base accepts."
+          },
+          {
+            "question": "def send(msg, channel): return channel + ': ' + msg. What does functools.partial(send, channel='email')('hi') return?",
+            "options": [
+              "'email: hi'",
+              "'hi: email'",
+              "TypeError"
+            ],
+            "correct": 0,
+            "explanation": "partial fixes channel and returns a function that needs only msg. Composition can configure a collaborator without a new class."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -25662,7 +26042,39 @@ const LEARNING_PATHS = [
             "The design note explains one case where each wrapper would be unnecessary."
           ],
           "solution": "Keep the adapter responsible for seconds validation/conversion; keep formatting independent. Wrap the chosen formatter with a success-size recorder, then call it through export_preview. The workshop uses no delivery side effect, so it does not need retry or transaction logic. Add explicit tests before changing that boundary."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A decorator returns its inner function wrapper without functools.wraps. greet is decorated with it. What is greet.__name__?",
+            "options": [
+              "'wrapper'",
+              "'greet'",
+              "None"
+            ],
+            "correct": 0,
+            "explanation": "The name greet now refers to wrapper, which keeps its own metadata. functools.wraps copies the original name and docstring."
+          },
+          {
+            "question": "def load(): calls.append(1); yield 1. After calls = [] and g = load(), how many entries are in calls before next(g)?",
+            "options": [
+              "0",
+              "1",
+              "2"
+            ],
+            "correct": 0,
+            "explanation": "Calling a generator function only creates the generator. Its body, including the append, runs on the first next()."
+          },
+          {
+            "question": "What separates Adapter from Facade?",
+            "options": [
+              "Adapter makes one interface fit a consumer; Facade offers a simpler entry to several operations",
+              "Adapter is for classes; Facade is for functions",
+              "They are two names for the same pattern"
+            ],
+            "correct": 0,
+            "explanation": "Adapter translates an existing contract. Facade coordinates a subsystem behind a smaller workflow."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -25692,7 +26104,39 @@ const LEARNING_PATHS = [
             "The refactoring plan preserves public contracts and can be reviewed in small changes."
           ],
           "solution": "The reference uses immutable lesson records, a repository for identity lookup and a sequential copy-on-write unit of work. complete_lesson validates the current lifecycle before replacing a record; exceptions avoid publishing the working copy. A production variant needs actual database transactions, a conflict/version policy, authorization and provider integration tests. If notifications must survive crashes, evaluate an outbox and duplicate handling rather than sending mail inside the local commit block."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "TRANSITIONS = {'draft': {'submit': 'submitted'}, 'submitted': {'pay': 'paid'}}. What does TRANSITIONS['draft'].get('pay') return?",
+            "options": [
+              "None",
+              "'paid'",
+              "KeyError"
+            ],
+            "correct": 0,
+            "explanation": "draft has no pay transition, so get returns None. Code using the table must treat that as an illegal transition, not ignore it."
+          },
+          {
+            "question": "A refactoring changes a function to return a generator instead of a list with the same values. Is it behavior-preserving?",
+            "options": [
+              "No: callers that use len() or loop twice now break",
+              "Yes: both can be looped over",
+              "Yes, as long as the values are the same"
+            ],
+            "correct": 0,
+            "explanation": "A generator has no len() and is exhausted after one pass. Callers depended on list behavior, so the change is visible."
+          },
+          {
+            "question": "commands = [lambda: log.append(i) for i in range(3)]. Each command is run once, in order, after log = []. What is log?",
+            "options": [
+              "[2, 2, 2]",
+              "[0, 1, 2]",
+              "[0, 0, 0]"
+            ],
+            "correct": 0,
+            "explanation": "Each lambda looks up i when it runs, not when it was created, and by then i is 2. A command must capture its inputs, for example with lambda i=i: log.append(i)."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -25771,6 +26215,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Original-author interview supports contextual use of patterns, not automatic abstraction or a full replacement for the catalog."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A team wraps a pricing function in a Strategy interface. There is one pricing rule and it has never changed. What is the main cost?",
+            "options": [
+              "Indirection that no current source of change justifies",
+              "Python runs the function more slowly",
+              "The function can no longer be tested"
+            ],
+            "correct": 0,
+            "explanation": "A pattern earns its indirection by absorbing a real change. With one stable rule, readers pay for an extra layer and get nothing back yet."
+          }
         ]
       },
       {
@@ -25825,6 +26281,18 @@ const LEARNING_PATHS = [
             "section": "Sections 1–2: subtype requirement and motivation",
             "reviewed": "2026-09-27",
             "scope": "Original 1994 behavioral-subtyping paper; Python 3.11+ examples illustrate contracts without claiming formal proof."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "def total(prices): prices.sort(); return sum(prices). After p = [3, 1, 2] and total(p), what is p?",
+            "options": [
+              "[1, 2, 3]",
+              "[3, 1, 2]",
+              "None"
+            ],
+            "correct": 0,
+            "explanation": "list.sort changes the caller's list in place. Reordering the caller's data is a side effect, so it belongs in the contract or should be avoided with sorted()."
           }
         ]
       },
@@ -25984,7 +26452,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             3
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "def remind(name, fmt, send): send(fmt(name)). After sent = [] and remind('Ada', str.upper, sent.append), what is sent?",
+            "options": [
+              "['ADA']",
+              "['Ada']",
+              "[]"
+            ],
+            "correct": 0,
+            "explanation": "remind receives both collaborators: str.upper formats the name and sent.append delivers it. The test can then inspect what was delivered."
+          }
+        ]
       },
       {
         "id": "solid",
@@ -26039,6 +26519,18 @@ const LEARNING_PATHS = [
             "section": "S, O, L, I and D discussions",
             "reviewed": "2026-09-27",
             "scope": "Original author discussion (2020); principles are design review questions in this Python 3.11+ course."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A report function creates SmtpClient() inside itself. Which change applies dependency inversion?",
+            "options": [
+              "Accept a send function or client as a parameter",
+              "Move SmtpClient into the same file",
+              "Rename the function send_report_via_smtp"
+            ],
+            "correct": 0,
+            "explanation": "The report should depend on a small abstraction it is given, not construct a concrete client. Callers and tests then choose the delivery."
           }
         ]
       },
@@ -26402,7 +26894,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "def checkout(total, discount=lambda t: t): return discount(total). What does checkout(100, lambda t: t * 0.9) return?",
+            "options": [
+              "90.0",
+              "100",
+              "0.9"
+            ],
+            "correct": 0,
+            "explanation": "The second argument replaces the default policy, so checkout returns 100 * 0.9. In Python a plain callable is often enough for Strategy."
+          }
+        ]
       },
       {
         "id": "factories",
@@ -26574,7 +27078,19 @@ const LEARNING_PATHS = [
               "explanation": "The consumer supplies titles to that callable. Do not interpret format names as executable code."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "def make(kind): return {'csv': list, 'json': dict}[kind](). What does make('xml') do?",
+            "options": [
+              "Raises KeyError",
+              "Returns an empty list",
+              "Returns None"
+            ],
+            "correct": 0,
+            "explanation": "The lookup has no 'xml' key, so it fails at once. A factory should reject unknown kinds clearly rather than silently returning a default product."
+          }
+        ]
       },
       {
         "id": "builder",
@@ -26708,7 +27224,19 @@ const LEARNING_PATHS = [
               "explanation": "Return a trimmed title and tuple(self.fields); later adding minutes to the builder does not alter r.fields."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A builder's add(part) appends to self.parts but returns nothing. What does Builder().add('a').add('b') do?",
+            "options": [
+              "Raises AttributeError",
+              "Adds both parts",
+              "Adds only 'b'"
+            ],
+            "correct": 0,
+            "explanation": "The first add returns None, and None has no add method. Chaining only works when each step returns the builder."
+          }
+        ]
       },
       {
         "id": "adapter",
@@ -27035,7 +27563,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A legacy lookup returns None for a missing record; the consumer's contract raises KeyError. An adapter only renames the method. What goes wrong?",
+            "options": [
+              "Callers expecting KeyError receive None and may carry on with missing data",
+              "Nothing: the method now has the expected name",
+              "The legacy lookup becomes slower"
+            ],
+            "correct": 0,
+            "explanation": "Matching the name is not matching the contract. The adapter must translate None into the consumer's KeyError."
+          }
+        ]
       },
       {
         "id": "facade",
@@ -27189,7 +27729,19 @@ const LEARNING_PATHS = [
               "explanation": "Return len(titles) only after delivery succeeds."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A facade's publish() calls validate, render and upload. Upload fails after render succeeds. What should publish() do?",
+            "options": [
+              "Report the upload failure to the caller",
+              "Return success because most steps worked",
+              "Retry forever until the upload succeeds"
+            ],
+            "correct": 0,
+            "explanation": "A facade simplifies the workflow but must keep meaningful failures visible. Reporting success would hide that nothing was published."
+          }
+        ]
       },
       {
         "id": "decorator",
@@ -27511,7 +28063,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "bold wraps a result in <b>…</b> and italic in <i>…</i>. hi returns 'hi' and is decorated with @bold above @italic. What does hi() return?",
+            "options": [
+              "'<b><i>hi</i></b>'",
+              "'<i><b>hi</b></i>'",
+              "'<b>hi</b>'"
+            ],
+            "correct": 0,
+            "explanation": "Decorators apply bottom-up: italic wraps hi first, then bold wraps that result. The outermost decorator is the one listed first."
+          }
+        ]
       },
       {
         "id": "composite",
@@ -27669,7 +28233,19 @@ const LEARNING_PATHS = [
               "explanation": "The root receives 10 and 20 and returns 30. Empty modules sum to zero."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "def size(node): return node if isinstance(node, int) else sum(size(c) for c in node). What is size([1, [2, 3], [[4]]])?",
+            "options": [
+              "10",
+              "4",
+              "3"
+            ],
+            "correct": 0,
+            "explanation": "Leaves return their value and groups sum their children, at any depth: 1 + (2 + 3) + 4 = 10."
+          }
+        ]
       },
       {
         "id": "proxy",
@@ -27822,7 +28398,19 @@ const LEARNING_PATHS = [
               "explanation": "A later get sees loaded=True and returns None without another loader call."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A lazy proxy calls its loader on first access and caches the result. Its value is read three times. How many times does the loader run?",
+            "options": [
+              "1",
+              "3",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "The first read loads and stores the value; later reads return the cached copy. The proxy delays work and then avoids repeating it."
+          }
+        ]
       },
       {
         "id": "observer",
@@ -28166,7 +28754,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "publish calls three subscribers in order with no error handling: the first appends 'a' to log, the second raises, the third appends 'c'. After catching the error, what is log?",
+            "options": [
+              "['a']",
+              "['a', 'c']",
+              "[]"
+            ],
+            "correct": 0,
+            "explanation": "Synchronous delivery stops at the exception, so the third subscriber never runs. Whether one failure stops the rest is a policy the publisher must state."
+          }
+        ]
       },
       {
         "id": "chain-of-responsibility",
@@ -28329,7 +28929,19 @@ const LEARNING_PATHS = [
               "explanation": "If the whole chain declines, LookupError reports unhandled input. Handler exceptions never mean automatic fallback."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A chain stops at the first handler whose result is not None. Handlers return None, 0 and 'x' in that order. What does the chain return?",
+            "options": [
+              "0",
+              "'x'",
+              "None"
+            ],
+            "correct": 0,
+            "explanation": "0 is not None, so the second handler accepts the request. Testing truthiness instead would wrongly skip a valid 0 result."
+          }
+        ]
       },
       {
         "id": "command",
@@ -28384,6 +28996,18 @@ const LEARNING_PATHS = [
             "section": "Command",
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A counter starts at 0. Commands add 5 and then add 3 run, and each records its inverse. Undo is called once. What is the counter?",
+            "options": [
+              "5",
+              "0",
+              "8"
+            ],
+            "correct": 0,
+            "explanation": "Undo reverses the most recent command only, subtracting 3 from 8. Recording each action and its inverse makes this possible."
           }
         ]
       },
@@ -28526,7 +29150,19 @@ const LEARNING_PATHS = [
               "explanation": "Finishing from draft is illegal; the table supplies no outgoing transition from done."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "An order moves draft → submitted → paid. pay() is called while the order is a draft. What should happen?",
+            "options": [
+              "Reject the transition and leave the order as a draft",
+              "Mark it paid, skipping submitted",
+              "Silently ignore the call"
+            ],
+            "correct": 0,
+            "explanation": "The lifecycle defines which transitions are legal. An illegal one should fail visibly without changing state."
+          }
+        ]
       },
       {
         "id": "mediator",
@@ -28675,7 +29311,19 @@ const LEARNING_PATHS = [
               "explanation": "Each successful transition has one local notification. External delivery would need a separate contract."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Why do collaborators report events to a mediator instead of calling one another?",
+            "options": [
+              "Each depends only on the mediator, not on its peers",
+              "Messages travel faster through one object",
+              "The mediator removes the need for tests"
+            ],
+            "correct": 0,
+            "explanation": "Interaction rules live in one place, so adding or changing a collaborator does not ripple through its peers."
+          }
+        ]
       },
       {
         "id": "template-method",
@@ -28730,6 +29378,18 @@ const LEARNING_PATHS = [
             "section": "Template Method",
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Report.render returns self.header() + self.body(); header returns 'H;' and body raises NotImplementedError. Sales overrides body to return 'S'. What does Sales().render() return?",
+            "options": [
+              "'H;S'",
+              "'S'",
+              "NotImplementedError"
+            ],
+            "correct": 0,
+            "explanation": "The base class fixes the order of steps and the subclass supplies the missing one, so render combines the base header with the Sales body."
           }
         ]
       },
@@ -28793,6 +29453,18 @@ const LEARNING_PATHS = [
             "section": "Behavioral patterns: Iterator",
             "reviewed": "2026-09-27",
             "scope": "Original 1994 catalog intent; publisher provenance, not free full chapter text."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "it = iter([1, 2, 3]). What is list(zip(it, it))?",
+            "options": [
+              "[(1, 2)]",
+              "[(1, 1), (2, 2), (3, 3)]",
+              "[(1, 2), (3, None)]"
+            ],
+            "correct": 0,
+            "explanation": "Both arguments are the same iterator, so zip takes 1 and 2 for the first pair, then finds only 3 left and stops."
           }
         ]
       },
@@ -28928,7 +29600,19 @@ const LEARNING_PATHS = [
               "explanation": "Call records.append with that record. The assertion checks the recorded time."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "With dependency injection and no framework, where should concrete collaborators be created?",
+            "options": [
+              "In the composition root, such as main()",
+              "Inside each class that uses them",
+              "In a global variable each module imports"
+            ],
+            "correct": 0,
+            "explanation": "One place builds the real objects and passes them in. Components then receive collaborators instead of finding or constructing them."
+          }
+        ]
       },
       {
         "id": "repository",
@@ -28983,6 +29667,18 @@ const LEARNING_PATHS = [
             "section": "Repository",
             "reviewed": "2026-09-27",
             "scope": "Original architectural pattern description; Python 3.11+ in-memory teaching adaptations. No durability/concurrency claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An in-memory repository stores the dicts it is given. After repo.add(e), the code sets e['name'] = 'b' without saving. What does repo.get(e['id'])['name'] return?",
+            "options": [
+              "'b'",
+              "The original name",
+              "KeyError"
+            ],
+            "correct": 0,
+            "explanation": "The repository holds a reference to the same dict, so the unsaved change is visible. A database-backed repository would return the stored value, so this test would not carry over."
           }
         ]
       },
@@ -29173,7 +29869,19 @@ const LEARNING_PATHS = [
               "explanation": "A ValueError raised in the body prevents those replacement statements from running."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A Unit of Work stages three changes, and the third fails validation before commit. With correct rollback, how many of the changes are stored?",
+            "options": [
+              "None of them",
+              "The first two",
+              "All three"
+            ],
+            "correct": 0,
+            "explanation": "The changes belong to one business operation, so they commit together or not at all."
+          }
+        ]
       },
       {
         "id": "refactoring",
@@ -29343,7 +30051,19 @@ const LEARNING_PATHS = [
               "explanation": "Add output and malformed-title checks; record the actual variation point."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Before extracting a Strategy from a pricing function, what should be in place?",
+            "options": [
+              "Tests that pin the current outputs, including edge cases",
+              "A diagram of the new classes",
+              "A decision to change the prices"
+            ],
+            "correct": 0,
+            "explanation": "A refactoring must preserve behavior, and tests that capture today's results are how you show it did."
+          }
+        ]
       },
       {
         "id": "selection",
@@ -29411,6 +30131,18 @@ const LEARNING_PATHS = [
             "section": "Authors discuss designing for change and refactoring toward patterns",
             "reviewed": "2026-10-02",
             "scope": "Original-author interview supports contextual use of patterns, not automatic abstraction or a full replacement for the catalog."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which situation most clearly suggests Observer?",
+            "options": [
+              "Several independent reactions to one event, changing on different schedules",
+              "A single function that is called from one place",
+              "Two classes that must share a database transaction"
+            ],
+            "correct": 0,
+            "explanation": "Observer pays off when a publisher should not know who reacts. With one caller, a direct call is simpler."
           }
         ]
       }
@@ -59103,6 +59835,17 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Approve when age >= 18 and (member or spend > 100). Is a 17-year-old member who spent 200 approved?",
+            "options": [
+              "No",
+              "Yes"
+            ],
+            "correct": 0,
+            "explanation": "Both sides of the and must hold. The bracket is true, but age >= 18 is false, so the whole rule is false."
+          }
         ]
       },
       {
@@ -59158,6 +59901,18 @@ const LEARNING_PATHS = [
             "section": "Boolean operations, numeric types and set types",
             "reviewed": "2026-10-02",
             "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What is {2, 3, 4} - {1, 2, 3}?",
+            "options": [
+              "{4}",
+              "{1}",
+              "{1, 4}"
+            ],
+            "correct": 0,
+            "explanation": "A difference keeps members of the left set that are absent from the right one. Only 4 qualifies; reversing the operands would give {1}."
           }
         ]
       },
@@ -59215,6 +59970,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "f(x) = √(x − 2) over the real numbers. Which input is outside its domain?",
+            "options": [
+              "1",
+              "2",
+              "6"
+            ],
+            "correct": 0,
+            "explanation": "x − 2 must not be negative. At x = 1 it is −1, which has no real square root; 2 gives 0 and 6 gives 2."
+          }
         ]
       },
       {
@@ -59270,6 +60037,18 @@ const LEARNING_PATHS = [
             "section": "mean, median, pvariance, variance and correlation",
             "reviewed": "2026-10-02",
             "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A job processes 120 records per minute. How many does it process in 45 seconds?",
+            "options": [
+              "90",
+              "5,400",
+              "160"
+            ],
+            "correct": 0,
+            "explanation": "Convert the rate first: 120 per minute is 2 per second, and 2 × 45 = 90. Multiplying 120 by 45 mixes minutes with seconds."
           }
         ]
       },
@@ -59327,6 +60106,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A price rises from 80 to 100. What is the percentage increase?",
+            "options": [
+              "25%",
+              "20%",
+              "80%"
+            ],
+            "correct": 0,
+            "explanation": "The change is 20 and the original value is 80, so 20 / 80 = 25%. Dividing by the new value, 100, gives the 20% distractor."
+          }
         ]
       },
       {
@@ -59383,6 +60174,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Positive real arguments and valid logarithm bases; lesson uses exact powers of two and three."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A value of 100 grows by 10% in each of three periods. What is it afterwards?",
+            "options": [
+              "133.1",
+              "130",
+              "110"
+            ],
+            "correct": 0,
+            "explanation": "Each period multiplies by 1.1: 100 × 1.1³ = 133.1. Adding 10 three times would give 130, which ignores growth on growth."
+          }
         ]
       },
       {
@@ -59438,6 +60241,18 @@ const LEARNING_PATHS = [
             "section": "2.2, solving linear equations and checking solutions",
             "reviewed": "2026-10-02",
             "scope": "Elementary real-number algebra; application-specific nonnegative integer domains are stated in each example."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "3x + 5 = 20. What is x?",
+            "options": [
+              "5",
+              "8.33",
+              "15"
+            ],
+            "correct": 0,
+            "explanation": "Subtract 5 to get 3x = 15, then divide by 3. Substituting back, 3 × 5 + 5 = 20, which confirms it."
           }
         ]
       },
@@ -59971,7 +60786,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Latencies are 10, 11, 12, 13 and 200 ms. What are the mean and median?",
+            "options": [
+              "Mean 49.2 ms, median 12 ms",
+              "Mean 12 ms, median 49.2 ms",
+              "Mean 13 ms, median 12 ms"
+            ],
+            "correct": 0,
+            "explanation": "The mean is 246 / 5 = 49.2 ms because 200 pulls it up. The median is the middle value, 12 ms, which ignores how slow the outlier is."
+          }
+        ]
       },
       {
         "id": "variance-and-spread",
@@ -60026,6 +60853,18 @@ const LEARNING_PATHS = [
             "section": "mean, median, pvariance, variance and correlation",
             "reviewed": "2026-10-02",
             "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What is the population standard deviation of 2, 4, 4, 4, 5, 5, 7 and 9?",
+            "options": [
+              "2",
+              "4",
+              "5"
+            ],
+            "correct": 0,
+            "explanation": "The mean is 5, the squared deviations average to 4, and the square root of 4 is 2. 4 is the variance, in squared units."
           }
         ]
       },
@@ -60083,6 +60922,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Finite probability models; equal likelihood must be justified before dividing event counts by total outcomes."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Two fair coins are tossed. What is P(at least one head)?",
+            "options": [
+              "3/4",
+              "1/2",
+              "1/4"
+            ],
+            "correct": 0,
+            "explanation": "The complement, no heads, is one outcome of four: TT. So P(at least one head) = 1 − 1/4 = 3/4."
+          }
         ]
       },
       {
@@ -60138,6 +60989,18 @@ const LEARNING_PATHS = [
             "section": "3.3, multiplication rule and addition rule",
             "reviewed": "2026-10-02",
             "scope": "Introductory probability. Counts in lessons are fictional and probabilities depend on the stated sampling model."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Two fair dice are rolled. Given that the sum is 8, what is P(both show 4)?",
+            "options": [
+              "1/5",
+              "1/36",
+              "1/6"
+            ],
+            "correct": 0,
+            "explanation": "Five equally likely outcomes sum to 8: (2,6), (3,5), (4,4), (5,3), (6,2). Conditioning makes those five the denominator."
           }
         ]
       },
@@ -60195,6 +61058,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Sampling methods and selection bias; the finite population and samples are original examples."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "To learn why people stop using an app, a team surveys 10,000 current users. What is the main problem?",
+            "options": [
+              "It excludes the people who already stopped",
+              "10,000 responses are too few",
+              "Current users answer too quickly"
+            ],
+            "correct": 0,
+            "explanation": "The question is about leavers, who are missing from the sampling frame. A larger sample of current users cannot fix that."
+          }
         ]
       },
       {
@@ -60250,6 +61125,18 @@ const LEARNING_PATHS = [
             "section": "4.2, mean of a discrete probability distribution",
             "reviewed": "2026-10-02",
             "scope": "Finite distributions with stated probabilities; fictional job-cost examples are original."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A bet costs 1 and pays 5 with probability 0.1, and nothing otherwise. What is the expected net gain per bet?",
+            "options": [
+              "-0.5",
+              "0.5",
+              "4"
+            ],
+            "correct": 0,
+            "explanation": "Expected payout is 0.1 × 5 = 0.5; subtracting the cost of 1 gives −0.5 per bet on average, even though a single bet wins 4 or loses 1."
           }
         ]
       },
@@ -60307,6 +61194,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Known-sigma normal interval only. The course does not apply this formula to an unknown-sigma small sample."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "With the same spread, the sample size is quadrupled. What happens to the width of a confidence interval for the mean?",
+            "options": [
+              "It roughly halves",
+              "It becomes a quarter",
+              "It stays the same"
+            ],
+            "correct": 0,
+            "explanation": "Width scales with 1 / √n, and √4 = 2. Precision improves more slowly than the sample grows."
+          }
         ]
       },
       {
@@ -60362,6 +61261,18 @@ const LEARNING_PATHS = [
             "section": "Dot products, length and orthogonality",
             "reviewed": "2026-10-02",
             "scope": "Finite real vectors; course examples use small coordinate lists without a numerical linear algebra library."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What is 2 × (1, −1) + (2, 3)?",
+            "options": [
+              "(4, 1)",
+              "(3, 2)",
+              "(6, 4)"
+            ],
+            "correct": 0,
+            "explanation": "Scale each coordinate first, (2, −2), then add matching coordinates: (2 + 2, −2 + 3) = (4, 1)."
           }
         ]
       },
@@ -60419,6 +61330,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Finite real vectors; course examples use small coordinate lists without a numerical linear algebra library."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Weights are (0.5, 0.3, 0.2) and scores are (80, 60, 90). What is the weighted score?",
+            "options": [
+              "76",
+              "70",
+              "230"
+            ],
+            "correct": 0,
+            "explanation": "Multiply matching coordinates and add: 40 + 18 + 18 = 76. 230 is the unweighted sum."
+          }
         ]
       },
       {
@@ -60474,6 +61397,18 @@ const LEARNING_PATHS = [
             "section": "Matrix multiplication, dimensions and composition",
             "reviewed": "2026-10-02",
             "scope": "Finite real matrices; hand calculations illustrate the operation rather than efficient implementation."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What is the matrix [[1, 2], [3, 4]] times the vector (1, 1)?",
+            "options": [
+              "(3, 7)",
+              "(4, 6)",
+              "(1, 4)"
+            ],
+            "correct": 0,
+            "explanation": "Each output is one row dotted with the vector: 1 + 2 = 3 and 3 + 4 = 7. (4, 6) sums the columns instead."
           }
         ]
       },
@@ -60531,6 +61466,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "y = x² for x = −2, −1, 0, 1, 2. What is the Pearson correlation between x and y?",
+            "options": [
+              "0",
+              "1",
+              "-1"
+            ],
+            "correct": 0,
+            "explanation": "y depends exactly on x, but the relationship is symmetric rather than linear, so the linear correlation is 0."
+          }
         ]
       },
       {
@@ -60587,6 +61534,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Introductory experimental design; the local demonstration does not establish a real treatment effect."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Students who volunteered for a new study tool scored higher. Why does this not show that the tool caused it?",
+            "options": [
+              "Volunteers may differ from others, for example in motivation",
+              "The scores were too high to compare",
+              "Correlations only appear in large samples"
+            ],
+            "correct": 0,
+            "explanation": "Self-selection mixes the tool's effect with pre-existing differences. Random assignment would separate them."
+          }
         ]
       },
       {
@@ -60642,6 +61601,18 @@ const LEARNING_PATHS = [
             "section": "Definition z=(x-u)/s, fitted mean and scale, zero-variance handling",
             "reviewed": "2026-10-02",
             "scope": "Conceptual reference checked in the current documentation. This exercise implements the arithmetic with the Python standard library, not a scikit-learn dependency."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Points are a = (1, 1000), b = (2, 1000) and c = (1, 1010). Without scaling, which is closer to a by Euclidean distance?",
+            "options": [
+              "b",
+              "c",
+              "Both are equally close"
+            ],
+            "correct": 0,
+            "explanation": "b is 1 unit away and c is 10. Whether 10 units of the second feature matter more than 1 of the first depends on units, which is why scaling is a choice."
           }
         ]
       },
@@ -60700,6 +61671,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Finite real vectors; course examples use small coordinate lists without a numerical linear algebra library."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Candidate A scores 76.0 and B scores 75.8 using weights chosen by judgement. What is the honest conclusion?",
+            "options": [
+              "A near tie that depends on the chosen weights",
+              "A is clearly better",
+              "B should be chosen to be safe"
+            ],
+            "correct": 0,
+            "explanation": "A 0.2 gap under judgement-based weights is within what a different reasonable weighting could reverse. The report should say so."
+          }
         ]
       }
     ],
@@ -60733,7 +61716,39 @@ const LEARNING_PATHS = [
             "The explanation names the denominator and units."
           ],
           "solution": "\"\"\"Unit-aware calculations. Python 3.11+, standard library only.\"\"\"\nimport math\n\ndef finite(value):\n    if type(value) not in (int, float) or not math.isfinite(value):\n        raise ValueError(\"finite number required\")\n    return value\n\ndef rate(count, seconds):\n    count, seconds = finite(count), finite(seconds)\n    if count < 0 or seconds <= 0:\n        raise ValueError(\"nonnegative count and positive seconds required\")\n    return count / seconds\n\ndef relative_change(old, new):\n    old, new = finite(old), finite(new)\n    if old <= 0 or new < 0:\n        raise ValueError(\"positive base and nonnegative new count required\")\n    return (new - old) / old\n\ndef combined_rate(counts, durations):\n    if not counts or len(counts) != len(durations):\n        raise ValueError(\"nonempty matching observations required\")\n    for count, seconds in zip(counts, durations):\n        rate(count, seconds)\n    return rate(sum(counts), sum(durations))\n\nif __name__ == \"__main__\":\n    print(combined_rate([100,100], [10,30]))\n    print(relative_change(50,40))\n"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A 1,500 MB download runs at 25 MB/s. How long does it take?",
+            "options": [
+              "1 minute",
+              "6 seconds",
+              "60 minutes"
+            ],
+            "correct": 0,
+            "explanation": "MB cancels, leaving 1,500 / 25 = 60 seconds. Keeping units in the calculation shows the answer is in seconds."
+          },
+          {
+            "question": "A price falls by 20% and then rises by 20%. What is the overall change?",
+            "options": [
+              "-4%",
+              "0%",
+              "+4%"
+            ],
+            "correct": 0,
+            "explanation": "0.8 × 1.2 = 0.96, a 4% fall. The rise is 20% of a smaller value, so it does not undo the fall."
+          },
+          {
+            "question": "Which condition is equivalent to not (x > 3 and x < 7) for whole numbers?",
+            "options": [
+              "x <= 3 or x >= 7",
+              "x <= 3 and x >= 7",
+              "x > 3 or x < 7"
+            ],
+            "correct": 0,
+            "explanation": "De Morgan's law turns not (A and B) into not A or not B, and not (x > 3) is x <= 3."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -60758,7 +61773,39 @@ const LEARNING_PATHS = [
             "Reject empty conditioned groups and explain why the interval is not a range for individual requests."
           ],
           "solution": "\"\"\"Descriptive summaries and a deliberately restricted interval model.\"\"\"\nimport math\nfrom statistics import mean, median, variance\nfrom foundation_project import finite\n\ndef summarize(values):\n    values = [finite(v) for v in values]\n    if len(values) < 2:\n        raise ValueError(\"at least two observations required\")\n    return {\"n\": len(values), \"mean\": mean(values), \"median\": median(values),\n            \"sample_variance\": variance(values)}\n\ndef conditional_count(joint, conditioned):\n    if (type(joint) is not int or type(conditioned) is not int\n            or conditioned <= 0 or not 0 <= joint <= conditioned):\n        raise ValueError(\"valid counts and nonempty condition required\")\n    return joint / conditioned\n\ndef known_sigma_interval(average, sigma, n):\n    average, sigma = finite(average), finite(sigma)\n    if sigma < 0 or type(n) is not int or n <= 0:\n        raise ValueError(\"nonnegative sigma and positive integer n required\")\n    margin = 1.96 * sigma / math.sqrt(n)\n    return average - margin, average + margin\n\nif __name__ == \"__main__\":\n    print(summarize([10,10,10,10,100]))\n    print(round(conditional_count(8,17),4))\n    print(known_sigma_interval(50,10,100))\n"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A test detects 90% of cases and correctly clears 90% of non-cases. 1% of people have the condition. Roughly what share of positive results are true cases?",
+            "options": [
+              "About 8%",
+              "About 90%",
+              "About 1%"
+            ],
+            "correct": 0,
+            "explanation": "Per 1,000 people: 9 true positives and 99 false positives, so 9 / 108 ≈ 8%. The large non-case group dominates the positives."
+          },
+          {
+            "question": "What does statistics.median([1, 2, 3, 4]) return?",
+            "options": [
+              "2.5",
+              "2",
+              "3"
+            ],
+            "correct": 0,
+            "explanation": "With an even count there is no single middle value, so the median is the mean of the two middle values, 2 and 3."
+          },
+          {
+            "question": "A fair die is rolled until a 6 appears. What is the expected number of rolls?",
+            "options": [
+              "6",
+              "3.5",
+              "36"
+            ],
+            "correct": 0,
+            "explanation": "Each roll succeeds with probability 1/6, and the expected wait for a success with probability p is 1/p."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -60783,7 +61830,39 @@ const LEARNING_PATHS = [
             "The conclusion separates a chosen scoring preference from a demonstrated causal effect."
           ],
           "solution": "\"\"\"Small real-vector operations, with explicit shape validation.\"\"\"\nimport math\nfrom foundation_project import finite\n\ndef vector(values):\n    result = [finite(v) for v in values]\n    if not result:\n        raise ValueError(\"nonempty vector required\")\n    return result\n\ndef dot(left, right):\n    left, right = vector(left), vector(right)\n    if len(left) != len(right):\n        raise ValueError(\"matching dimensions required\")\n    return sum(a*b for a,b in zip(left,right))\n\ndef matvec(matrix, values):\n    values = vector(values)\n    rows = [vector(row) for row in matrix]\n    if not rows or any(len(row) != len(values) for row in rows):\n        raise ValueError(\"nonempty rectangular matrix must match vector\")\n    return [dot(row,values) for row in rows]\n\ndef cosine(left, right):\n    left, right = vector(left), vector(right)\n    numerator = dot(left,right)\n    denominator = math.sqrt(dot(left,left)) * math.sqrt(dot(right,right))\n    if denominator == 0:\n        raise ValueError(\"zero vector has no cosine direction\")\n    return numerator / denominator\n\nif __name__ == \"__main__\":\n    candidates = [[0.9,0.4],[0.6,0.8]]\n    for weights in ([0.8,0.2],[0.5,0.5]):\n        print([round(v,2) for v in matvec(candidates,weights)])\n"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What is the cosine similarity of (1, 0) and (0, 1)?",
+            "options": [
+              "0",
+              "1",
+              "-1"
+            ],
+            "correct": 0,
+            "explanation": "Their dot product is 0, so the vectors are perpendicular: they share no direction."
+          },
+          {
+            "question": "Min–max scaling maps the smallest value to 0 and the largest to 1. What does it give for [10, 20, 30]?",
+            "options": [
+              "[0.0, 0.5, 1.0]",
+              "[0.1, 0.2, 0.3]",
+              "[-1.0, 0.0, 1.0]"
+            ],
+            "correct": 0,
+            "explanation": "Each value becomes (x − 10) / (30 − 10). The middle value sits halfway, at 0.5."
+          },
+          {
+            "question": "A scores (9, 4) and B scores (5, 7). Which wins with weights (0.5, 0.5), and which with (0.2, 0.8)?",
+            "options": [
+              "A with the first, B with the second",
+              "A with both",
+              "B with both"
+            ],
+            "correct": 0,
+            "explanation": "Equal weights give A 6.5 and B 6.0; weights favouring the second criterion give A 5.0 and B 6.6. The winner depends on the weights."
+          }
+        ]
       }
     ],
     "resources": {

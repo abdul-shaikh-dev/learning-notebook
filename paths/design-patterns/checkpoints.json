@@ -1,0 +1,93 @@
+{
+  "lessons": {
+    "intent": [
+      {"question": "A team wraps a pricing function in a Strategy interface. There is one pricing rule and it has never changed. What is the main cost?", "options": ["Indirection that no current source of change justifies", "Python runs the function more slowly", "The function can no longer be tested"], "correct": 0, "explanation": "A pattern earns its indirection by absorbing a real change. With one stable rule, readers pay for an extra layer and get nothing back yet."}
+    ],
+    "contracts": [
+      {"question": "def total(prices): prices.sort(); return sum(prices). After p = [3, 1, 2] and total(p), what is p?", "options": ["[1, 2, 3]", "[3, 1, 2]", "None"], "correct": 0, "explanation": "list.sort changes the caller's list in place. Reordering the caller's data is a side effect, so it belongs in the contract or should be avoided with sorted()."}
+    ],
+    "composition": [
+      {"question": "def remind(name, fmt, send): send(fmt(name)). After sent = [] and remind('Ada', str.upper, sent.append), what is sent?", "options": ["['ADA']", "['Ada']", "[]"], "correct": 0, "explanation": "remind receives both collaborators: str.upper formats the name and sent.append delivers it. The test can then inspect what was delivered."}
+    ],
+    "solid": [
+      {"question": "A report function creates SmtpClient() inside itself. Which change applies dependency inversion?", "options": ["Accept a send function or client as a parameter", "Move SmtpClient into the same file", "Rename the function send_report_via_smtp"], "correct": 0, "explanation": "The report should depend on a small abstraction it is given, not construct a concrete client. Callers and tests then choose the delivery."}
+    ],
+    "strategy": [
+      {"question": "def checkout(total, discount=lambda t: t): return discount(total). What does checkout(100, lambda t: t * 0.9) return?", "options": ["90.0", "100", "0.9"], "correct": 0, "explanation": "The second argument replaces the default policy, so checkout returns 100 * 0.9. In Python a plain callable is often enough for Strategy."}
+    ],
+    "factories": [
+      {"question": "def make(kind): return {'csv': list, 'json': dict}[kind](). What does make('xml') do?", "options": ["Raises KeyError", "Returns an empty list", "Returns None"], "correct": 0, "explanation": "The lookup has no 'xml' key, so it fails at once. A factory should reject unknown kinds clearly rather than silently returning a default product."}
+    ],
+    "builder": [
+      {"question": "A builder's add(part) appends to self.parts but returns nothing. What does Builder().add('a').add('b') do?", "options": ["Raises AttributeError", "Adds both parts", "Adds only 'b'"], "correct": 0, "explanation": "The first add returns None, and None has no add method. Chaining only works when each step returns the builder."}
+    ],
+    "adapter": [
+      {"question": "A legacy lookup returns None for a missing record; the consumer's contract raises KeyError. An adapter only renames the method. What goes wrong?", "options": ["Callers expecting KeyError receive None and may carry on with missing data", "Nothing: the method now has the expected name", "The legacy lookup becomes slower"], "correct": 0, "explanation": "Matching the name is not matching the contract. The adapter must translate None into the consumer's KeyError."}
+    ],
+    "facade": [
+      {"question": "A facade's publish() calls validate, render and upload. Upload fails after render succeeds. What should publish() do?", "options": ["Report the upload failure to the caller", "Return success because most steps worked", "Retry forever until the upload succeeds"], "correct": 0, "explanation": "A facade simplifies the workflow but must keep meaningful failures visible. Reporting success would hide that nothing was published."}
+    ],
+    "decorator": [
+      {"question": "bold wraps a result in <b>…</b> and italic in <i>…</i>. hi returns 'hi' and is decorated with @bold above @italic. What does hi() return?", "options": ["'<b><i>hi</i></b>'", "'<i><b>hi</b></i>'", "'<b>hi</b>'"], "correct": 0, "explanation": "Decorators apply bottom-up: italic wraps hi first, then bold wraps that result. The outermost decorator is the one listed first."}
+    ],
+    "composite": [
+      {"question": "def size(node): return node if isinstance(node, int) else sum(size(c) for c in node). What is size([1, [2, 3], [[4]]])?", "options": ["10", "4", "3"], "correct": 0, "explanation": "Leaves return their value and groups sum their children, at any depth: 1 + (2 + 3) + 4 = 10."}
+    ],
+    "proxy": [
+      {"question": "A lazy proxy calls its loader on first access and caches the result. Its value is read three times. How many times does the loader run?", "options": ["1", "3", "0"], "correct": 0, "explanation": "The first read loads and stores the value; later reads return the cached copy. The proxy delays work and then avoids repeating it."}
+    ],
+    "observer": [
+      {"question": "publish calls three subscribers in order with no error handling: the first appends 'a' to log, the second raises, the third appends 'c'. After catching the error, what is log?", "options": ["['a']", "['a', 'c']", "[]"], "correct": 0, "explanation": "Synchronous delivery stops at the exception, so the third subscriber never runs. Whether one failure stops the rest is a policy the publisher must state."}
+    ],
+    "chain-of-responsibility": [
+      {"question": "A chain stops at the first handler whose result is not None. Handlers return None, 0 and 'x' in that order. What does the chain return?", "options": ["0", "'x'", "None"], "correct": 0, "explanation": "0 is not None, so the second handler accepts the request. Testing truthiness instead would wrongly skip a valid 0 result."}
+    ],
+    "command": [
+      {"question": "A counter starts at 0. Commands add 5 and then add 3 run, and each records its inverse. Undo is called once. What is the counter?", "options": ["5", "0", "8"], "correct": 0, "explanation": "Undo reverses the most recent command only, subtracting 3 from 8. Recording each action and its inverse makes this possible."}
+    ],
+    "state": [
+      {"question": "An order moves draft → submitted → paid. pay() is called while the order is a draft. What should happen?", "options": ["Reject the transition and leave the order as a draft", "Mark it paid, skipping submitted", "Silently ignore the call"], "correct": 0, "explanation": "The lifecycle defines which transitions are legal. An illegal one should fail visibly without changing state."}
+    ],
+    "mediator": [
+      {"question": "Why do collaborators report events to a mediator instead of calling one another?", "options": ["Each depends only on the mediator, not on its peers", "Messages travel faster through one object", "The mediator removes the need for tests"], "correct": 0, "explanation": "Interaction rules live in one place, so adding or changing a collaborator does not ripple through its peers."}
+    ],
+    "template-method": [
+      {"question": "Report.render returns self.header() + self.body(); header returns 'H;' and body raises NotImplementedError. Sales overrides body to return 'S'. What does Sales().render() return?", "options": ["'H;S'", "'S'", "NotImplementedError"], "correct": 0, "explanation": "The base class fixes the order of steps and the subclass supplies the missing one, so render combines the base header with the Sales body."}
+    ],
+    "iterator": [
+      {"question": "it = iter([1, 2, 3]). What is list(zip(it, it))?", "options": ["[(1, 2)]", "[(1, 1), (2, 2), (3, 3)]", "[(1, 2), (3, None)]"], "correct": 0, "explanation": "Both arguments are the same iterator, so zip takes 1 and 2 for the first pair, then finds only 3 left and stops."}
+    ],
+    "dependency-injection": [
+      {"question": "With dependency injection and no framework, where should concrete collaborators be created?", "options": ["In the composition root, such as main()", "Inside each class that uses them", "In a global variable each module imports"], "correct": 0, "explanation": "One place builds the real objects and passes them in. Components then receive collaborators instead of finding or constructing them."}
+    ],
+    "repository": [
+      {"question": "An in-memory repository stores the dicts it is given. After repo.add(e), the code sets e['name'] = 'b' without saving. What does repo.get(e['id'])['name'] return?", "options": ["'b'", "The original name", "KeyError"], "correct": 0, "explanation": "The repository holds a reference to the same dict, so the unsaved change is visible. A database-backed repository would return the stored value, so this test would not carry over."}
+    ],
+    "unit-of-work": [
+      {"question": "A Unit of Work stages three changes, and the third fails validation before commit. With correct rollback, how many of the changes are stored?", "options": ["None of them", "The first two", "All three"], "correct": 0, "explanation": "The changes belong to one business operation, so they commit together or not at all."}
+    ],
+    "refactoring": [
+      {"question": "Before extracting a Strategy from a pricing function, what should be in place?", "options": ["Tests that pin the current outputs, including edge cases", "A diagram of the new classes", "A decision to change the prices"], "correct": 0, "explanation": "A refactoring must preserve behavior, and tests that capture today's results are how you show it did."}
+    ],
+    "selection": [
+      {"question": "Which situation most clearly suggests Observer?", "options": ["Several independent reactions to one event, changing on different schedules", "A single function that is called from one place", "Two classes that must share a database transaction"], "correct": 0, "explanation": "Observer pays off when a publisher should not know who reacts. With one caller, a direct call is simpler."}
+    ]
+  },
+  "stages": {
+    "foundation": [
+      {"question": "What does sorted(['ccc', 'a', 'bb'], key=len) return?", "options": ["['a', 'bb', 'ccc']", "['ccc', 'bb', 'a']", "['bb', 'a', 'ccc']"], "correct": 0, "explanation": "key passes a policy into sorted, which compares lengths 1, 2 and 3. It is a small Strategy built into the language."},
+      {"question": "Base.save(item) accepts any item. A subclass's save raises unless the item has an 'id' key. Is the subclass substitutable for Base?", "options": ["No: it accepts fewer inputs than the base contract promises", "Yes: the method name and signature match", "Yes: raising an error is always allowed"], "correct": 0, "explanation": "Callers written against Base may pass items without an id. A substitute must accept at least what the base accepts."},
+      {"question": "def send(msg, channel): return channel + ': ' + msg. What does functools.partial(send, channel='email')('hi') return?", "options": ["'email: hi'", "'hi: email'", "TypeError"], "correct": 0, "explanation": "partial fixes channel and returns a function that needs only msg. Composition can configure a collaborator without a new class."}
+    ],
+    "intermediate": [
+      {"question": "A decorator returns its inner function wrapper without functools.wraps. greet is decorated with it. What is greet.__name__?", "options": ["'wrapper'", "'greet'", "None"], "correct": 0, "explanation": "The name greet now refers to wrapper, which keeps its own metadata. functools.wraps copies the original name and docstring."},
+      {"question": "def load(): calls.append(1); yield 1. After calls = [] and g = load(), how many entries are in calls before next(g)?", "options": ["0", "1", "2"], "correct": 0, "explanation": "Calling a generator function only creates the generator. Its body, including the append, runs on the first next()."},
+      {"question": "What separates Adapter from Facade?", "options": ["Adapter makes one interface fit a consumer; Facade offers a simpler entry to several operations", "Adapter is for classes; Facade is for functions", "They are two names for the same pattern"], "correct": 0, "explanation": "Adapter translates an existing contract. Facade coordinates a subsystem behind a smaller workflow."}
+    ],
+    "advanced": [
+      {"question": "TRANSITIONS = {'draft': {'submit': 'submitted'}, 'submitted': {'pay': 'paid'}}. What does TRANSITIONS['draft'].get('pay') return?", "options": ["None", "'paid'", "KeyError"], "correct": 0, "explanation": "draft has no pay transition, so get returns None. Code using the table must treat that as an illegal transition, not ignore it."},
+      {"question": "A refactoring changes a function to return a generator instead of a list with the same values. Is it behavior-preserving?", "options": ["No: callers that use len() or loop twice now break", "Yes: both can be looped over", "Yes, as long as the values are the same"], "correct": 0, "explanation": "A generator has no len() and is exhausted after one pass. Callers depended on list behavior, so the change is visible."},
+      {"question": "commands = [lambda: log.append(i) for i in range(3)]. Each command is run once, in order, after log = []. What is log?", "options": ["[2, 2, 2]", "[0, 1, 2]", "[0, 0, 0]"], "correct": 0, "explanation": "Each lambda looks up i when it runs, not when it was created, and by then i is 2. A command must capture its inputs, for example with lambda i=i: log.append(i)."}
+    ]
+  }
+}
