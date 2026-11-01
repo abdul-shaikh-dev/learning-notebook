@@ -57,3 +57,4 @@ require('./browser-practice.cjs');
 require('./python-runner.cjs');
 require('./lesson-examples.cjs');
 require('./link-check.cjs');
+require('./lesson-assets.cjs');
