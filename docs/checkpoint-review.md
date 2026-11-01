@@ -45,4 +45,22 @@ Extra questions appear under the lesson's main checkpoint. Stage checks appear a
 
 The Python course has one extra question per lesson and three questions per stage. Every answer that depends on code behavior (for example `7 // 2`, aliasing after `second = first`, mutable defaults, JSON key conversion, generator exhaustion, `argparse` accepting `-5`, unenforced dataclass annotations, `ThreadPoolExecutor.map` order and a blocking `time.sleep` inside a coroutine) was checked by running it on Python 3.14.
 
+### Data Structures & Algorithms, Design Patterns, Practical maths & statistics
+
+These courses also have one extra question per lesson and three per stage: 66 lesson questions and 27 stage questions. 72 of the 93 answers depend on code or arithmetic, for example `bisect_left` on repeated values, stable sorting with a key, a memoised Fibonacci call count, decorator order, `zip` over one shared iterator, late-binding lambdas in a list of commands, `functools.wraps`, the median of an even-length list, a 90%-accurate test at 1% prevalence and a zero Pearson correlation for `y = x²`.
+
+Each of those answers has a fact check in `tests/checkpoint_facts.py`: a short program, keyed by course and question key, that computes the answer and sets `answer` to the text of the correct option. `tests/browser-python.cjs` runs every fact in the bundled browser Python runtime and fails if the marked option differs, so a later edit that changes an answer or its options is caught. The remaining 21 questions are about design judgement or study design, such as when a pattern earns its indirection, and have no program to run. The bundled runtime has no `sqlite3`, so the Unit of Work question is phrased without a database.
+
+When adding a code-based question to a Python course, add its fact in the same change.
+
+### Plan for the remaining courses
+
+Work one course per change, in this order, so that each answer can be checked against something that runs or a cited source:
+
+1. **Courses whose answers run in another tool:** Data analysis with Python and Machine learning foundations (CPython with the course's packages), SQL Server & T-SQL (a local SQL Server or the course's scripts), C# & .NET (`dotnet run`), JavaScript → TypeScript → React (Node), Git & Team Workflows (commands in a scratch repository) and Linux & Operating Systems (a shell). Record each check in this document, as for the Python course, because only the bundled Python runtime is part of `tests/browser-python.cjs`.
+2. **Courses checked against their cited sources:** Testing & Debugging, AI Agents, Agent Harnesses, Application Security, Kubernetes, Cloud & Infrastructure as Code, Networking & the Web, Messaging & Event-Driven Systems, Observability & Performance, Delivery & Operations, Data Engineering, System Design, UI Design & Accessibility, Full-Stack Project Journey and Requirements & software maintenance. Each answer should trace to a lesson source or a primary reference such as a specification or WCAG success criterion.
+3. **Personal effectiveness and development courses:** Learning How to Learn, Habits & Behaviour Change, Self-Awareness & Communication, Task & Project Management, Time, Attention & Energy and Plan and Review Your Week. Questions should test the course's own model and avoid claims stronger than its sources.
+
+Python Problem Solving is left out because its lessons are challenges with tests, and Financial foundations because it has its own course page and question format.
+
 Code: `assets/js/notebook-review.js`, with rendering in `assets/js/catalog.js`. Tests: `tests/notebook-review.cjs`, `tests/checkpoint-questions.cjs`, the checkpoint cases in `tests/notebook-backup.cjs`, and the lesson-page check in `tests/programming-paths.cjs`.

@@ -1,0 +1,84 @@
+{
+  "lessons": {
+    "cost": [
+      {"question": "i = 1, then while i < n: i *= 2. For n = 1024, how many times does the loop body run?", "options": ["10", "512", "1024"], "correct": 0, "explanation": "i doubles each time: 1, 2, 4 … 512 are all below 1024, which is 10 values. Doubling toward n takes about log2(n) steps, not n."}
+    ],
+    "arrays": [
+      {"question": "Which Python list operation is O(1) on average?", "options": ["xs.append(v)", "xs.insert(0, v)", "xs.pop(0)"], "correct": 0, "explanation": "Appending writes after the last element, with occasional resizing spread across many appends. Inserting or removing at the front shifts every existing element."}
+    ],
+    "maps": [
+      {"question": "d = {'a': 1, 'a': 2}. What is d['a']?", "options": ["1", "2", "KeyError"], "correct": 1, "explanation": "A dict holds one value per key. The later 'a': 2 replaces the earlier entry, so the dict has one key whose value is 2."}
+    ],
+    "stacks-queues": [
+      {"question": "q = deque([1, 2, 3]), then q.append(4). What does q.popleft() return?", "options": ["1", "3", "4"], "correct": 0, "explanation": "append adds at the right and popleft removes from the left, so the deque behaves as a FIFO queue and the oldest item, 1, leaves first."}
+    ],
+    "binary-search": [
+      {"question": "What does bisect.bisect_left([1, 3, 3, 3, 5], 3) return?", "options": ["1", "3", "4"], "correct": 0, "explanation": "bisect_left returns the first position where 3 could be inserted while keeping order, which is before every existing 3: index 1."}
+    ],
+    "sorting": [
+      {"question": "rows = [('b', 2), ('a', 2), ('c', 1)]. What are the first two items of sorted(rows, key=lambda r: r[1])?", "options": ["[('c', 1), ('b', 2)]", "[('c', 1), ('a', 2)]", "[('a', 2), ('b', 2)]"], "correct": 0, "explanation": "The key compares only the numbers. Python's sort is stable, so ('b', 2) and ('a', 2) keep their original order after ('c', 1)."}
+    ],
+    "recursion": [
+      {"question": "def depth(n): return 0 if n == 0 else 1 + depth(n - 1). What happens on depth(-1)?", "options": ["It returns -1", "It returns 0", "It raises RecursionError"], "correct": 2, "explanation": "From -1, n - 1 moves away from 0, so the base case is never reached and Python stops the call chain at its recursion limit."}
+    ],
+    "binary-search-tree": [
+      {"question": "Insert 10, 5, 20 and 15 into an empty unbalanced binary search tree, in that order. Which key is the left child of 20?", "options": ["15", "5", "None: 20 has no left child"], "correct": 0, "explanation": "15 is greater than 10, so it goes right to 20, then less than 20, so it becomes 20's left child."}
+    ],
+    "graphs": [
+      {"question": "An undirected graph has edges A–B, A–C, B–D, C–D and D–E. How many edges are on the shortest path from A to E?", "options": ["2", "3", "4"], "correct": 1, "explanation": "BFS reaches B and C at distance 1, D at distance 2 and E at distance 3. No route reaches E in fewer edges."}
+    ],
+    "heaps": [
+      {"question": "Push 5, 1 and 4 onto an empty heapq list. What does the second heappop return?", "options": ["1", "4", "5"], "correct": 1, "explanation": "heapq is a min-heap: the first pop returns 1 and the second returns the next smallest, 4."}
+    ],
+    "dynamic-programming": [
+      {"question": "With coins 1 and 2, how many ways can you make 5 if order does not matter?", "options": ["3", "5", "8"], "correct": 0, "explanation": "The combinations are 1+1+1+1+1, 1+1+1+2 and 1+2+2. Counting orderings separately would give 8, which answers a different question."}
+    ],
+    "linked-nodes": [
+      {"question": "Nodes are linked a → b → c. After a.next = c, and with no other references to b, what is true of b?", "options": ["It is no longer reachable from a", "It is copied into c", "It moves to the end of the list"], "correct": 0, "explanation": "Changing one link bypasses b. Nothing is copied or moved; b is simply no longer reachable by following links from a."}
+    ],
+    "merge-sort": [
+      {"question": "Merging [1, 4] and [2, 3] compares the two front values until one run is empty. How many comparisons does it make?", "options": ["2", "3", "4"], "correct": 1, "explanation": "1 vs 2, then 4 vs 2, then 4 vs 3. The right run is then empty, so 4 is appended without a comparison."}
+    ],
+    "two-pointers": [
+      {"question": "Values [1, 2, 4, 7, 11] are sorted and the target sum is 15. With left at 1 and right at 11, the sum is 12. Which pointer moves?", "options": ["left moves right", "right moves left", "both move inward"], "correct": 0, "explanation": "The sum is too small. Pairing 1 with any value left of 11 is smaller still, so 1 cannot be part of a solution and left moves right."}
+    ],
+    "sliding-window": [
+      {"question": "What is the length of the longest substring of 'abcabcbb' with no repeated character?", "options": ["3", "4", "7"], "correct": 0, "explanation": "Windows such as 'abc' and 'bca' have 3 distinct characters. Any window of 4 repeats one of a, b or c."}
+    ],
+    "topological": [
+      {"question": "TopologicalSorter({'b': {'a'}, 'c': {'b'}}) maps each node to its predecessors. What is list(ts.static_order())?", "options": ["['a', 'b', 'c']", "['c', 'b', 'a']", "['b', 'c', 'a']"], "correct": 0, "explanation": "b depends on a and c depends on b, so the only valid order is a, b, c. graphlib returns predecessors first."}
+    ],
+    "dijkstra": [
+      {"question": "Directed edges are A→B (1), B→C (1) and A→C (5). What is the minimum cost from A to C?", "options": ["2", "5", "1"], "correct": 0, "explanation": "The direct edge has one hop but costs 5. The two-hop route through B costs 1 + 1 = 2, which is the minimum."}
+    ],
+    "greedy": [
+      {"question": "Coins are 1, 3 and 4. Taking the largest coin that fits each time, how many coins make 6?", "options": ["2", "3", "6"], "correct": 1, "explanation": "Greedy takes 4, then 1 and 1: three coins. The optimum is 3 + 3, two coins, so this greedy rule is not safe for these coins."}
+    ],
+    "backtracking": [
+      {"question": "Backtracking over [1, 2, 3] chooses include or exclude for each value and records the selection at every leaf. How many selections are recorded?", "options": ["3", "6", "8"], "correct": 2, "explanation": "Each of the 3 values has 2 choices, so the search tree has 2 × 2 × 2 = 8 leaves, including the empty selection."}
+    ],
+    "knapsack": [
+      {"question": "Capacity is 4 and each item can be used once. Items as (weight, value) are (1, 15), (3, 20) and (4, 30). What is the best total value?", "options": ["30", "35", "45"], "correct": 1, "explanation": "Weights 1 + 3 fit exactly for 15 + 20 = 35, which beats the single (4, 30) item. 45 would need the first item twice."}
+    ],
+    "algorithm-review": [
+      {"question": "A new sort matches sorted() on 1,000 random lists. What does that evidence show?", "options": ["Agreement on those inputs, not a proof for every input", "That the sort runs in O(n log n)", "That the sort is correct for every input"], "correct": 0, "explanation": "A comparison test is strong evidence on the inputs it tried. Correctness for all inputs needs an argument, and cost needs separate analysis."}
+    ]
+  },
+  "stages": {
+    "foundation": [
+      {"question": "For each of n user IDs, code checks `uid in blocked`, where blocked is a list of m IDs. What is the total cost?", "options": ["O(n + m)", "O(n × m)", "O(log m)"], "correct": 1, "explanation": "Each membership test scans the list, up to m steps, and it runs n times. Converting blocked to a set first makes the total about O(n + m)."},
+      {"question": "What does collections.Counter('banana').most_common(1) return?", "options": ["[('a', 3)]", "[('b', 1)]", "[('n', 2)]"], "correct": 0, "explanation": "Counter maps each character to its count: a 3, n 2, b 1. most_common(1) returns a list with the single highest pair."},
+      {"question": "An editor's undo should reverse the most recent change first. Which structure fits?", "options": ["A stack", "A queue", "A set"], "correct": 0, "explanation": "Undo is last in, first out: the newest change is reversed first, which is exactly what a stack provides."}
+    ],
+    "intermediate": [
+      {"question": "What does bisect.bisect_right([1, 2, 2, 2, 3], 2) return?", "options": ["1", "3", "4"], "correct": 2, "explanation": "bisect_right returns the position after every existing 2, which is index 4. bisect_left would return 1."},
+      {"question": "A breadth-first traversal's queue is replaced with a stack, and nothing else changes. What order does the traversal now follow?", "options": ["A depth-first order", "The same layers as before", "Sorted order of node names"], "correct": 0, "explanation": "A stack takes the newest discovered node first, so the traversal follows one branch deep before returning. Distances are then no longer by layer."},
+      {"question": "fib(n) is memoised with functools.cache and returns n for n < 2. How many distinct calls does computing fib(30) evaluate?", "options": ["30", "31", "1,346,269"], "correct": 1, "explanation": "Each value fib(0) through fib(30) is computed once and then reused: 31 evaluations. Without the cache, the call tree has 2,692,537 calls."}
+    ],
+    "advanced": [
+      {"question": "Intervals are (1, 4), (3, 5), (0, 6), (5, 7), (8, 9) and (5, 9). Repeatedly choosing the earliest-finishing interval that does not overlap, how many are chosen?", "options": ["2", "3", "4"], "correct": 1, "explanation": "Earliest finish picks (1, 4), then (5, 7), then (8, 9). For interval scheduling this greedy rule is provably optimal."},
+      {"question": "A one-dimensional knapsack table is filled with capacities iterated upward for each item. How often can an item be used?", "options": ["Any number of times", "At most once", "Never"], "correct": 0, "explanation": "Iterating upward reads cells already updated for the same item, so it can be added again. That solves the unbounded problem; 0/1 knapsack iterates downward."},
+      {"question": "A shortest-path implementation passes five hand-made graphs. Which further test adds the most evidence?", "options": ["Compare it with brute-force path enumeration on many small random graphs", "Run the five graphs again on a faster machine", "Check that it returns a number for every graph"], "correct": 0, "explanation": "A brute-force reference on many small inputs explores cases nobody thought to write by hand. Speed and return types say nothing about correctness."}
+    ]
+  }
+}

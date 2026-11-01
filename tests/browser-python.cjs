@@ -26,6 +26,18 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
  const runnable=course.filter(l=>!l.exercise.runLocally&&l.exercise.solutionFormat!=='prose');
  assert.equal(runnable.length,21,'Two lessons are marked to run locally');
  for(const l of runnable){const r=await runCode(l.exercise.solution);assert.equal(r.ok,true,l.id+': '+r.error);assert.ok(r.output,l.id+': the reference prints its result');}
+ // Checkpoint answers that depend on code behaviour are recomputed here and must equal the marked option.
+ const manifest=require(path.resolve('scripts/manifest.cjs')).readPaths();
+ py.runPython(fs.readFileSync('tests/checkpoint_facts.py','utf8'));
+ const facts=py.globals.get('FACTS').toJs();
+ for(const [name,code] of facts){
+  const [course,...rest]=name.split('/'),key=rest.join('/'),p=manifest.find(x=>x.id===course);
+  const q=key.startsWith('stage/')?p?.stages.find(s=>s.id===rest[1])?.stageCheck?.[rest[2]-1]:p?.lessons.find(l=>l.id===rest[0])?.extraQuiz?.[rest[1]-2];
+  assert.ok(q,name+': names a checkpoint question');
+  const scope=py.globals.get('dict')();py.runPython(code,{globals:scope});
+  assert.equal(scope.get('answer'),q.options[q.correct],name+': the marked answer matches the code');scope.destroy();
+ }
+ assert.equal(facts.size,72,'Code-based checkpoint answers checked');
  // Lesson examples in runExamples courses run unchanged, with the practice modules they name, and show a result.
  const runExample=async(code,files)=>{const messages=[],self={postMessage:data=>messages.push(data)};vm.runInNewContext(source,{self,importScripts:()=>{},loadPyodide:async()=>py,JSON,String});await self.onmessage({data:{mode:'run',runtime,code,files}});return messages.at(-1);};
  const examples={};
@@ -52,5 +64,5 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
   ['def broken(',r=>!r.ok&&/SyntaxError/.test(r.error)],
   ['import sys; print("oops", file=sys.stderr)',r=>r.ok&&r.output==='oops\n']
  ]){const r=await runCode(code);assert.ok(check(r),code+' -> '+JSON.stringify(r));}
- console.log('PASS: real browser Python runtime executes all 30 references / 192 cases and rejects wrong answers, types, mutation, syntax, missing functions and SystemExit; runs 21 Python course references and 68 lesson examples (4 with their practice modules) as scripts with bounded output, exit codes, no stdin and learner-only tracebacks.');
+ console.log('PASS: real browser Python runtime executes all 30 references / 192 cases and rejects wrong answers, types, mutation, syntax, missing functions and SystemExit; checks 72 code-based checkpoint answers; runs 21 Python course references and 68 lesson examples (4 with their practice modules) as scripts with bounded output, exit codes, no stdin and learner-only tracebacks.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
