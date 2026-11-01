@@ -58,7 +58,7 @@ The maths, data analysis and machine learning paths build from hand-calculated e
 
 On the hosted site, open **Offline & install** to install the notebook where your browser supports it, or save individual courses for offline reading. Saved courses include their lesson assets and practice files. External sources, live APIs and workshop dependencies still need their own connection or installation. Browser storage can be evicted, so check your downloads before travelling. See [offline behavior and validation](docs/pwa.md).
 
-Reading progress is stored in the current browser for the current site address. There is no account or automatic synchronization between your phone, PC and local file copy. Use **Progress & backups** to export and restore a JSON backup when moving devices or browsers. Keep personal exports outside this public repository.
+Reading progress is stored in the current browser for the current site address. There is no account or automatic synchronization between your phone, PC and local file copy. **Progress & backups** opens with a dashboard of each started course (lessons read, projects self-checked, challenges solved and the next step) and your checkpoint review (due, missed, scheduled and retired), all worked out from this browser's storage. Below it, export and restore a JSON backup when moving devices or browsers. Keep personal exports outside this public repository.
 
 ## Run locally
 

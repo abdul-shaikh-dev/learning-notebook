@@ -262,13 +262,15 @@ const NotebookBackup = (() => {
       '<p>Read lessons and self-checks are combined. Missing challenge drafts are imported. Existing local code, challenge status, quiz answers and last-opened locations win conflicts. For review checkpoints, the more recent answer is kept. Nothing is marked unread or reset.</p>';
   }
   function view() {
-    let saved;
+    let saved, failed = false;
     try { saved = summary(read().progress); }
-    catch (error) { saved = '<p role="alert">'+esc(error.message)+'</p>'; }
-    return '<section class="notebook-backup backup-panel"><p class="eyebrow">Your learning, portable</p><h1>Progress & backups</h1>'+
-      '<section aria-label="Saved progress"><h2>Your progress</h2><div id="nb-local">'+saved+'</div></section><h2>Back up progress</h2>'+
+    catch (error) { saved = '<p role="alert">'+esc(error.message)+'</p>'; failed = true; }
+    const dashboard = typeof NotebookProgress === 'undefined' ? '' : '<div id="nb-dashboard">'+NotebookProgress.view()+'</div>';
+    return '<section class="notebook-backup backup-panel"><p class="eyebrow">Your learning, in this browser</p><h1>Progress & backups</h1>'+dashboard+
+      '<h2>Back up progress</h2>'+
       '<p class="intro">Keep all learning paths together in one JSON backup. Downloads and imports happen in this browser; nothing is uploaded.</p>'+
       '<p>Progress belongs to this browser and site address. Move it between your phone and computer by downloading a backup, transferring the file yourself, then previewing and importing it here.</p>'+
+      '<details class="backup-contents"'+(failed?' open':'')+'><summary>What a backup holds</summary><div id="nb-local">'+saved+'</div></details>'+
       '<div class="backup-actions"><button type="button" class="primary" id="nb-export">Download notebook backup</button></div>'+
       '<h2>Restore from a file</h2><p>Import combines completed readings and self-checks with your current progress. Missing challenge drafts are added. Local code, challenge status and quiz answers win conflicts. Nothing is reset.</p>'+
       '<label for="nb-file">Choose a Learning Notebook JSON backup (up to 1 MB)</label><input id="nb-file" type="file" accept=".json,application/json">'+
@@ -311,6 +313,8 @@ const NotebookBackup = (() => {
         }
         const after = apply(candidate.plan);
         get('nb-local').innerHTML = summary(after);
+        const dashboard = main.querySelector('#nb-dashboard');
+        if (dashboard && typeof NotebookProgress !== 'undefined') dashboard.innerHTML = NotebookProgress.view();
         candidate = null; button.disabled = true; input.value = '';
         get('nb-preview').innerHTML = '';
         status.textContent = 'Progress merged and saved in this browser. Reopen any other notebook tabs to load the updated progress.';
