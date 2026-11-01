@@ -2,7 +2,7 @@
 // on every page type, light and dark, desktop and phone. Needs Chrome; set CHROME_PATH if it is elsewhere.
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),http=require('node:http'),{spawn,spawnSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..');
-const routes=['index.html','index.html#path/python','index.html#path/python/variables','index.html#search','index.html#review','index.html#backup','offline.html','course.html','course.html#explore','handbook.html'];
+const routes=['index.html','index.html#path/python','index.html#path/python/variables','index.html#topic/design-patterns/mediator','index.html#search','index.html#review','index.html#backup','offline.html','course.html','course.html#explore','handbook.html'];
 const views=[{width:1440,height:900,dark:false},{width:1440,height:900,dark:true},{width:390,height:844,dark:false},{width:390,height:844,dark:true}];
 const types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.webmanifest':'application/manifest+json','.woff2':'font/woff2','.wasm':'application/wasm'};
 

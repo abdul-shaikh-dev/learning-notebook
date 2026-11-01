@@ -6,6 +6,10 @@ self.onmessage=async ({data})=>{
   self.postMessage({type:'ready'});
   // Lesson starters: run as a script, keep at most 20,000 characters of output and show only the learner's frames.
   if(data.mode==='run'){
+   // Lesson examples may import the course's own practice modules, written beside the code.
+   py.FS.mkdirTree('/lesson');
+   for(const file of data.files||[])py.FS.writeFile('/lesson/'+file.name,file.source);
+   py.runPython("import sys\nif '/lesson' not in sys.path: sys.path.insert(0,'/lesson')");
    py.globals.set('_code',data.code);
    const output=py.runPython(String.raw`
 import json, contextlib, traceback, sys, io

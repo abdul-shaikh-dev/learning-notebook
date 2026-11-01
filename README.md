@@ -146,3 +146,5 @@ This is a personal learning resource, with sources, worked examples and practice
 ## Browser Python practice
 
 Python Problem Solving now includes an in-browser editor with Run tests, Stop, saved drafts and separate practice status. Downloadable terminal exercises remain available. Saving the course offline includes its approximately 12 MB Python runtime. Progress backups include challenge code and status. See [browser Python implementation and verification](docs/browser-python.md) and the [selected learning journey review](docs/journey-review-2026-10-02.md).
+
+Design Patterns, Data Structures & Algorithms and Practical Maths & Statistics set `runExamples` in `path.json`: each Python lesson example gets Run and Edit, using the same runtime, which those courses also save offline. An example that imports a practice module names it in `exampleFiles`, and the module is loaded beside the code. `exampleFormat: "text"` marks an example that is not runnable Python, such as a text diagram. `tests/browser-python.cjs` runs every enabled example and requires it to print a result or check one with `assert`.

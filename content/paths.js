@@ -18655,6 +18655,7 @@ const LEARNING_PATHS = [
     "status": "ready",
     "description": "Choose data structures and algorithms using their preconditions, invariants and costs. Practise graph traversal, greedy reasoning and dynamic programming in tested projects.",
     "level": "Foundations → intermediate → selected advanced topics",
+    "runExamples": true,
     "prerequisites": [
       "Complete Python variables, loops, functions and collections first, or translate the examples into a language you know.",
       "You only need arithmetic and a willingness to trace a few steps on paper."
@@ -20240,7 +20241,10 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Insert 10, 5, 20, 15, 17 and 30. To delete root 10, find the smallest key in its right subtree: 15. Copy 15 into the root, then replace the original 15 link with its right child 17. Copying a key without removing its old node would introduce a duplicate; removing that node without reconnecting 17 would lose an entire subtree."
             ],
-            "example": "from trees_graphs import BinarySearchTree\ntree = BinarySearchTree()\nfor key in [10, 5, 20, 15, 17, 30]:\n    tree.insert(key)\nassert tree.delete(10)\nassert tree.keys() == [5, 15, 17, 20, 30]\nassert not tree.insert(15)\nassert not tree.delete(99)"
+            "example": "from trees_graphs import BinarySearchTree\ntree = BinarySearchTree()\nfor key in [10, 5, 20, 15, 17, 30]:\n    tree.insert(key)\nassert tree.delete(10)\nassert tree.keys() == [5, 15, 17, 20, 30]\nassert not tree.insert(15)\nassert not tree.delete(99)",
+            "exampleFiles": [
+              "practice/trees_graphs.py"
+            ]
           },
           {
             "title": "Verify the invariant beyond a sample",
@@ -21821,7 +21825,10 @@ const LEARNING_PATHS = [
               "Run `directed_dfs` in `trees_graphs.py`. It returns preorder across every component, including isolated and neighbor-only vertices, and a directed cycle witness `[v, ..., v]` or an empty list. White is unseen, gray is on the active path, black is finished. Only an edge to gray proves a directed cycle; an edge to a finished shared prerequisite does not.",
               "An explicit stack retains each adjacency iterator and active-path index. Each vertex/edge is processed once: O(V+E) time and space including normalized adjacency. The tests compare all 512 directed three-vertex graphs with an independent transitive-closure oracle, check witness edges, and cover a 3,000-edge chain without recursion."
             ],
-            "example": "from trees_graphs import directed_dfs\nassert directed_dfs({'A':['B'],'B':['A']})[1] == ['A','B','A']\nassert directed_dfs({'A':['B','C'],'C':['B']})[1] == []"
+            "example": "from trees_graphs import directed_dfs\nassert directed_dfs({'A':['B'],'B':['A']})[1] == ['A','B','A']\nassert directed_dfs({'A':['B','C'],'C':['B']})[1] == []",
+            "exampleFiles": [
+              "practice/trees_graphs.py"
+            ]
           }
         ],
         "exercise": {
@@ -22515,7 +22522,8 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "The review separates correctness from cost and evidence: establish the contract, invariant and termination, then justify the bound and test against an oracle and adversarial cases."
             ],
-            "example": "Review checklist:\nContract → invariant → termination → result correctness\nRepresentation → operations counted → worst-case bound\nTests → oracle → adversarial cases → resource limits"
+            "example": "Review checklist:\nContract → invariant → termination → result correctness\nRepresentation → operations counted → worst-case bound\nTests → oracle → adversarial cases → resource limits",
+            "exampleFormat": "text"
           },
           {
             "title": "Correctness and cost",
@@ -25533,6 +25541,7 @@ const LEARNING_PATHS = [
     "status": "ready",
     "description": "Study contracts, composition, object creation, wrappers, lifecycle behavior and persistence in 24 lessons. Use three projects to compare named patterns with simpler designs.",
     "level": "Foundations → intermediate → selected advanced topics",
+    "runExamples": true,
     "prerequisites": [
       "Basic programming: functions, collections, exceptions and simple classes. Python learners should reach classes-and-dataclasses; the beginner foundation stage alone does not cover classes.",
       "Examples use Python 3.11+ and only the standard library; ideas transfer to C#, TypeScript and other languages."
@@ -25851,7 +25860,8 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "The diagram shows the exercise version, with both formatting and delivery supplied as functions. The arrows show call order. The test checks the messages recorded by the delivery function, and all calls run in one process."
             ],
-            "example": "# Application entry point\n#       | supplies collaborators\n#       v\n#    remind ----> message formatter\n#       |             |\n#       | <---- formatted message\n#       v\n#    delivery ----> recorded message\n#\n# The arrows describe dependencies and call order, not inheritance."
+            "example": "# Application entry point\n#       | supplies collaborators\n#       v\n#    remind ----> message formatter\n#       |             |\n#       | <---- formatted message\n#       v\n#    delivery ----> recorded message\n#\n# The arrows describe dependencies and call order, not inheritance.",
+            "exampleFormat": "text"
           }
         ],
         "exercise": {
@@ -28176,7 +28186,10 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "The first handler below declines JSON by returning `None`. The second produces JSON, so the last handler is never called. If two handlers accept the same request, their order decides the result. Do not use truthiness to detect acceptance: a valid `False` result still stops the chain."
             ],
-            "example": "from collaboration import handle_request\nimport json\ndef lines(request):\n    return '\\n'.join(request['titles']) if request['format'] == 'lines' else None\ndef json_format(request):\n    return json.dumps(request['titles']) if request['format'] == 'json' else None\nassert handle_request({'format':'json','titles':['Patterns']}, [lines, json_format]) == '[\"Patterns\"]'\nassert handle_request('x', [lambda r: False, lambda r: 'later']) is False"
+            "example": "from collaboration import handle_request\nimport json\ndef lines(request):\n    return '\\n'.join(request['titles']) if request['format'] == 'lines' else None\ndef json_format(request):\n    return json.dumps(request['titles']) if request['format'] == 'json' else None\nassert handle_request({'format':'json','titles':['Patterns']}, [lines, json_format]) == '[\"Patterns\"]'\nassert handle_request('x', [lambda r: False, lambda r: 'later']) is False",
+            "exampleFiles": [
+              "collaboration.py"
+            ]
           },
           {
             "title": "Compare failure and fan-out contracts",
@@ -28533,7 +28546,10 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "The next lesson depends on intro. Trying next first fails before any state change or notification. Completing intro then next changes both states and records one local notification per successful transition. Repeating next fails according to the explicit active-to-done contract."
             ],
-            "example": "from collaboration import CompletionMediator\nm = CompletionMediator({'intro':'active','next':'active'}, {'next':['intro']})\ntry:\n    m.complete('next')\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError('unfinished prerequisite accepted')\nassert m.notifications == []\nassert m.states['next'] == 'active'\nm.complete('intro')\nm.complete('next')\nassert m.notifications == [('completed','intro'),('completed','next')]"
+            "example": "from collaboration import CompletionMediator\nm = CompletionMediator({'intro':'active','next':'active'}, {'next':['intro']})\ntry:\n    m.complete('next')\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError('unfinished prerequisite accepted')\nassert m.notifications == []\nassert m.states['next'] == 'active'\nm.complete('intro')\nm.complete('next')\nassert m.notifications == [('completed','intro'),('completed','next')]",
+            "exampleFiles": [
+              "collaboration.py"
+            ]
           },
           {
             "title": "Keep the coordinator boundary honest",
@@ -58962,6 +58978,7 @@ const LEARNING_PATHS = [
     "status": "ready",
     "description": "Use logic, probability, statistics and small matrix calculations to check software and data claims.",
     "level": "Foundations to applied comparisons",
+    "runExamples": true,
     "prerequisites": [
       "Python functions, lists, loops and basic arithmetic. No calculus required."
     ],

@@ -5,6 +5,7 @@
   "status": "ready",
   "description": "Use logic, probability, statistics and small matrix calculations to check software and data claims.",
   "level": "Foundations to applied comparisons",
+  "runExamples": true,
   "prerequisites": [
     "Python functions, lists, loops and basic arithmetic. No calculus required."
   ],

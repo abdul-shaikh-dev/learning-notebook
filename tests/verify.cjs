@@ -55,3 +55,4 @@ require('./problem-solving.cjs');
 
 require('./browser-practice.cjs');
 require('./python-runner.cjs');
+require('./lesson-examples.cjs');
