@@ -53,12 +53,20 @@ Each of those answers has a fact check in `tests/checkpoint_facts.py`: a short p
 
 When adding a code-based question to a Python course, add its fact in the same change.
 
+### Git & Team Workflows
+
+2026-11-01: one extra question per lesson and three per stage (20 lesson questions, 9 stage questions). 28 of the 29 answers depend on Git behaviour, for example what plain `git diff` shows after a staged and a later unstaged edit, `UU` for a merge conflict, fast-forward by default, `git diff main...feature` showing only the feature's changes, `HEAD@{1}` after a hard reset, the `-x` line from cherry-pick, `git describe` after a tag, exit code 125 skipping a revision in `git bisect run`, and an empty cherry-pick stopping.
+
+`tests/git_checkpoint_facts.py` checks each of those 28 with real Git. Each fact builds a fresh repository with the course's own `Sandbox` from `paths/git-team-workflows/sandbox.py`, so it isolates configuration and hooks and never pushes. It fails if Git's result supports a different option than the one marked correct, and lists any question without a fact. The remaining answer, the order of recovery steps after a failed release, is cited from lesson 20. The check runs in the `python` CI job on Python 3.11 and 3.14 and needs Git 2.28 or later; run it locally with `python tests/git_checkpoint_facts.py`.
+
+Writing the facts corrected one draft answer: with 16 commits to bisect, Git reports "7 revisions left to test after this (roughly 3 steps)" once it checks out the first midpoint, not 4, so the question asks for the number Git prints.
+
 ### Plan for the remaining courses
 
 Work one course per change, in this order, so that each answer can be checked against something that runs or a cited source:
 
-1. **Courses whose answers run in another tool:** Data analysis with Python and Machine learning foundations (CPython with the course's packages), SQL Server & T-SQL (a local SQL Server or the course's scripts), C# & .NET (`dotnet run`), JavaScript → TypeScript → React (Node), Git & Team Workflows (commands in a scratch repository) and Linux & Operating Systems (a shell). Record each check in this document, as for the Python course, because only the bundled Python runtime is part of `tests/browser-python.cjs`.
-2. **Courses checked against their cited sources:** Testing & Debugging, AI Agents, Agent Harnesses, Application Security, Kubernetes, Cloud & Infrastructure as Code, Networking & the Web, Messaging & Event-Driven Systems, Observability & Performance, Delivery & Operations, Data Engineering, System Design, UI Design & Accessibility, Full-Stack Project Journey and Requirements & software maintenance. Each answer should trace to a lesson source or a primary reference such as a specification or WCAG success criterion.
+1. **Courses whose answers run in another tool:** Data analysis with Python and Machine learning foundations (CPython with the course's packages), SQL Server & T-SQL (a local SQL Server or the course's scripts), C# & .NET (`dotnet run`), JavaScript → TypeScript → React (Node) and Linux & Operating Systems (a shell). Record each check in this document, as for the Python course, because only the bundled Python runtime is part of `tests/browser-python.cjs`.
+2. **Courses checked against their cited sources:** Networking & the Web, Messaging & Event-Driven Systems and Data Engineering first, where answers can also run against the course labs; then Testing & Debugging, AI Agents, Agent Harnesses, Application Security, Kubernetes, Cloud & Infrastructure as Code, Observability & Performance, Delivery & Operations, System Design, UI Design & Accessibility, Full-Stack Project Journey and Requirements & software maintenance. Each answer should trace to a lesson source or a primary reference such as a specification or WCAG success criterion.
 3. **Personal effectiveness and development courses:** Learning How to Learn, Habits & Behaviour Change, Self-Awareness & Communication, Task & Project Management, Time, Attention & Energy and Plan and Review Your Week. Questions should test the course's own model and avoid claims stronger than its sources.
 
 Python Problem Solving is left out because its lessons are challenges with tests, and Financial foundations because it has its own course page and question format.
