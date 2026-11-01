@@ -1,0 +1,384 @@
+{
+ "dns-cache": {
+  "title": "A cached answer has an exact end",
+  "intro": "Follow one DNS answer to the end of its TTL, then compare it with a connection that was opened before the address changed.",
+  "scope": "The offline teaching cache from the lab: an entry stored at now with a TTL expires at now + TTL, and a lookup at or after that time returns None. The clock is injected; no DNS query or socket is made. Real resolvers follow more rules (RFC 1035). Addresses are from the 203.0.113.0/24 documentation range.",
+  "sources": [
+   {
+    "title": "IETF RFC 1035: DNS, section 3.2.1 TTL field",
+    "url": "https://www.rfc-editor.org/rfc/rfc1035.html"
+   }
+  ],
+  "scenarios": [
+   {
+    "id": "expiry",
+    "label": "Re-resolve after the TTL",
+    "steps": [
+     {
+      "title": "Remember the answer",
+      "explanation": "remember() at t=10 with TTL 5 stores the address with an expiry of 10 + 5 = 15. The clock is passed in, so the test never sleeps.",
+      "nodes": [
+       {
+        "id": "clock",
+        "label": "Injected clock",
+        "detail": "now = 10",
+        "tone": "neutral",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "cache",
+        "label": "Resolver cache",
+        "detail": "api.example.test → 203.0.113.10 until t=15",
+        "tone": "active",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "lookup",
+        "label": "Lookup result",
+        "detail": "No lookup yet",
+        "tone": "neutral",
+        "x": 510,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "clock",
+        "to": "cache",
+        "label": "stored at t=10, TTL 5"
+       }
+      ]
+     },
+     {
+      "title": "Look up just before expiry",
+      "focus": [
+       "dns-clock",
+       "dns-lookup"
+      ],
+      "explanation": "lookup() at t=14.99 still returns 203.0.113.10, because 14.99 is earlier than the expiry at 15.",
+      "nodes": [
+       {
+        "id": "clock",
+        "label": "Injected clock",
+        "detail": "now = 14.99",
+        "tone": "neutral",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "cache",
+        "label": "Resolver cache",
+        "detail": "api.example.test → 203.0.113.10 until t=15",
+        "tone": "neutral",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "lookup",
+        "label": "Lookup result",
+        "detail": "lookup(14.99) → 203.0.113.10",
+        "tone": "success",
+        "x": 510,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "cache",
+        "to": "lookup",
+        "label": "14.99 < 15: cached answer"
+       }
+      ]
+     },
+     {
+      "title": "Look up at the expiry",
+      "focus": [
+       "dns-cache",
+       "dns-lookup"
+      ],
+      "explanation": "At exactly t=15 the check now < expiry fails, so the model returns None. It does not keep serving the old address until something replaces it.",
+      "nodes": [
+       {
+        "id": "clock",
+        "label": "Injected clock",
+        "detail": "now = 15",
+        "tone": "neutral",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "cache",
+        "label": "Resolver cache",
+        "detail": "Entry expired at t=15",
+        "tone": "warning",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "lookup",
+        "label": "Lookup result",
+        "detail": "lookup(15) → None",
+        "tone": "warning",
+        "x": 510,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "cache",
+        "to": "lookup",
+        "label": "15 is not < 15: no answer"
+       }
+      ]
+     },
+     {
+      "title": "Resolve again separately",
+      "focus": [
+       "dns-cache",
+       "dns-lookup"
+      ],
+      "explanation": "A new resolution is a separate step. It may return a changed address, as here, or fail. The new answer gets its own expiry, 15 + 5 = 20.",
+      "nodes": [
+       {
+        "id": "clock",
+        "label": "Injected clock",
+        "detail": "now = 15",
+        "tone": "neutral",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "cache",
+        "label": "Resolver cache",
+        "detail": "api.example.test → 203.0.113.20 until t=20",
+        "tone": "success",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "lookup",
+        "label": "Lookup result",
+        "detail": "New resolution → 203.0.113.20",
+        "tone": "success",
+        "x": 510,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "lookup",
+        "to": "cache",
+        "label": "store new answer, TTL 5"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "connection",
+    "label": "An open connection keeps the old address",
+    "steps": [
+     {
+      "title": "Remember and connect",
+      "explanation": "At t=10 the client caches 203.0.113.10 for 5 seconds and opens a connection to that address.",
+      "nodes": [
+       {
+        "id": "clock",
+        "label": "Injected clock",
+        "detail": "now = 10",
+        "tone": "neutral",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "cache",
+        "label": "Resolver cache",
+        "detail": "api.example.test → 203.0.113.10 until t=15",
+        "tone": "active",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "lookup",
+        "label": "Lookup result",
+        "detail": "lookup(10) → 203.0.113.10",
+        "tone": "neutral",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "conn",
+        "label": "Open connection",
+        "detail": "Connected to 203.0.113.10 at t=10",
+        "tone": "active",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "cache",
+        "to": "lookup",
+        "label": "cached answer"
+       },
+       {
+        "from": "lookup",
+        "to": "conn",
+        "label": "open connection"
+       }
+      ]
+     },
+     {
+      "title": "The answer is refreshed",
+      "focus": [
+       "dns-cache",
+       "dns-lookup"
+      ],
+      "explanation": "At t=15 the entry expires and a new resolution stores 203.0.113.20. New lookups now return the new address.",
+      "nodes": [
+       {
+        "id": "clock",
+        "label": "Injected clock",
+        "detail": "now = 15",
+        "tone": "neutral",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "cache",
+        "label": "Resolver cache",
+        "detail": "api.example.test → 203.0.113.20 until t=20",
+        "tone": "success",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "lookup",
+        "label": "Lookup result",
+        "detail": "lookup(15) after refresh → .20",
+        "tone": "success",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "conn",
+        "label": "Open connection",
+        "detail": "Connected to 203.0.113.10 at t=10",
+        "tone": "neutral",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "cache",
+        "to": "lookup",
+        "label": "new answer"
+       }
+      ]
+     },
+     {
+      "title": "The open connection did not move",
+      "focus": [
+       "dns-conn"
+      ],
+      "focusLabel": "Unchanged",
+      "explanation": "At t=16 the existing connection still sends to 203.0.113.10. A short TTL does not migrate an open connection: the DNS cache and connection reuse have separate lifetimes.",
+      "nodes": [
+       {
+        "id": "clock",
+        "label": "Injected clock",
+        "detail": "now = 16",
+        "tone": "neutral",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "cache",
+        "label": "Resolver cache",
+        "detail": "api.example.test → 203.0.113.20 until t=20",
+        "tone": "neutral",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "lookup",
+        "label": "Lookup result",
+        "detail": "lookup(15) after refresh → .20",
+        "tone": "neutral",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "conn",
+        "label": "Open connection",
+        "detail": "Still sending to 203.0.113.10 at t=16",
+        "tone": "warning",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "lookup",
+        "to": "conn",
+        "label": "not consulted again"
+       }
+      ]
+     },
+     {
+      "title": "Only new connections use it",
+      "focus": [
+       "dns-lookup",
+       "dns-conn"
+      ],
+      "explanation": "A connection opened after the refresh looks the name up and reaches 203.0.113.20. When to drain or close old connections is a separate decision from the TTL.",
+      "nodes": [
+       {
+        "id": "clock",
+        "label": "Injected clock",
+        "detail": "now = 17",
+        "tone": "neutral",
+        "x": 30,
+        "y": 35
+       },
+       {
+        "id": "cache",
+        "label": "Resolver cache",
+        "detail": "api.example.test → 203.0.113.20 until t=20",
+        "tone": "neutral",
+        "x": 270,
+        "y": 35
+       },
+       {
+        "id": "lookup",
+        "label": "Lookup result",
+        "detail": "lookup(17) → 203.0.113.20",
+        "tone": "success",
+        "x": 510,
+        "y": 35
+       },
+       {
+        "id": "conn",
+        "label": "Open connection",
+        "detail": "New connection to 203.0.113.20 at t=17",
+        "tone": "success",
+        "x": 750,
+        "y": 35
+       }
+      ],
+      "edges": [
+       {
+        "from": "lookup",
+        "to": "conn",
+        "label": "open new connection"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

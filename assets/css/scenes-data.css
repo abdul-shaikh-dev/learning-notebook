@@ -37,3 +37,10 @@
 @media(max-width:640px){.rate-groups{grid-template-columns:1fr}.stat-summary{gap:.4rem}.stat-summary div{padding:.5rem}.ml-lane{height:92px}.ml-ticket span{font-size:var(--size-meta)}}
 @media(prefers-reduced-motion:reduce){.scene-data *{animation:none!important;transition:none!important}}
 @media print{.data-action{display:none!important}}
+/* Batch replay: input file, the stores written together, and the call's result. */
+.replay-flow{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:.7rem;align-items:stretch}.replay-card,.replay-result{padding:.7rem;background:var(--surface);border:1px solid var(--control);border-left:4px solid var(--control);border-radius:10px;min-width:0}.replay-card h4{margin:0 0 .3rem;font-size:var(--size-small)}.replay-card p{margin:0;font-size:var(--size-small);overflow-wrap:anywhere}.replay-card .replay-count{margin-top:.4rem;font:700 var(--size-meta) var(--font-code)}
+.replay-store{display:grid;gap:.5rem;padding:.55rem;border:1.5px dashed var(--control);border-radius:12px}.replay-store>span{font-size:var(--size-meta);font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--link)}
+.replay-result{display:flex;flex-direction:column;justify-content:center;gap:.3rem}.replay-result span{font-size:var(--size-meta)}.replay-result strong{overflow-wrap:anywhere}
+.scene-data .replay-flow .tone-success{border-left-color:var(--green-line)}.scene-data .replay-flow .tone-active{border-left-color:var(--blue-line)}.scene-data .replay-flow .tone-warning{color:var(--text);border-left-color:var(--amber-line);background:var(--amber-bg)}
+@media(max-width:640px){.replay-flow{grid-template-columns:1fr}}
+@media print{.replay-card,.replay-result,.replay-store{break-inside:avoid}}

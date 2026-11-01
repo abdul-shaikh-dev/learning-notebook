@@ -15,7 +15,7 @@ const ids=[...html.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.le
 }
 const pack=ctx.visualExplorerView(l,true);const ids=[...pack.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size,l.id+' print IDs');
 }
-assert.equal(lessons,30);assert.equal(frames,184);console.log('PASS: 30 concrete scenes, 184 snapshot renders, preserved explanations/details and unique print IDs.');
+assert.equal(lessons,34);assert.equal(frames,212);console.log('PASS: 34 concrete scenes, 212 snapshot renders, preserved explanations/details and unique print IDs.');
 const all=require('../scripts/manifest.cjs').readPaths();
 const rendered=(path,id,scenarioIndex,index)=>{const scenario=all.find(p=>p.id===path).lessons.find(l=>l.id===id).visual.scenarios[scenarioIndex];return ctx.NotebookScenes.render(id,scenario.steps[index],{scenario,scenarioIndex,index,key:'assert'});};
 assert(!rendered('react','state',0,0).includes('Called three times'));
@@ -41,3 +41,14 @@ for(const [i,s] of ml.scenarios.entries())for(const [j,step] of s.steps.entries(
  for(const [name,score,,decision] of step.tables[0].rows)assert.equal(decision==='Flag',Number(score)>=Number(step.tables[1].rows[0][0]),name+': flagged at or above the threshold');}
 assert.deepEqual(ml.scenarios.map(s=>s.steps.map(step=>step.tables[1].rows[0][1])),[['5','4','1','5'],['5','1','1']],'validation picks 0.3; retuning on the test hides the miss');
 console.log('PASS: pending/result timing, failed observer boundary, and computed mean/median, group rates and threshold costs.');
+// Replay, TTL, rebase and inbox scenes: what is drawn follows the authored snapshot.
+const replay=(i,j)=>text(rendered('data-engineering','idempotency-and-replay',i,j));
+assert(replay(0,0).includes('2 rows · 2,000 cents')&&replay(0,2).includes('2 rows · 2,000 cents')&&!replay(0,2).includes('duplicate'),'replay and conflict add no orders');
+assert(replay(1,1).includes('4 rows · 4,000 cents · 2 duplicates'),'an append-only re-run doubles the orders');
+const dns=(i,j)=>rendered('networking-web','dns-cache',i,j);
+assert(dns(0,1).includes('--at:49.9')&&dns(0,1).includes('cached until t=15')&&dns(0,2).includes('>expired<')&&dns(0,3).includes('cached until t=20'),'the clock and expiry come from the snapshot');
+const git=(i,j)=>text(rendered('git-team-workflows','rebase',i,j));
+assert(git(0,1).includes('T1′ e5f6a7b on M1')&&!git(0,0).includes('teammate')&&git(1,2).includes('Merge 9a8b7c6 T2 + T1′'),'replayed commits name their new parent');
+const inbox=(i,j)=>text(rendered('messaging-events','idempotent-consumers',i,j));
+assert(inbox(0,1).includes('total 7')&&inbox(1,2).includes('total 14'),'the inbox keeps one effect; the memory set does not');
+console.log('PASS: replay row counts, TTL expiry on the clock, rebased parents and inbox totals are drawn from each snapshot.');

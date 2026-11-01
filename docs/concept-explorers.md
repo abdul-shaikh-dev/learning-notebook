@@ -6,7 +6,7 @@ Each entry has `title`, `intro`, `scope`, optional `sources` (title/url), and `s
 
 Nodes: id, label, detail, x, y, tone (`neutral`, `active`, `success`, `warning`). Use up to six 200×90 boxes on the 1000×450 coordinate canvas; x 0–780, y 0–330. Keep labels short (25 characters) and detail below 52 characters. Edges reference node IDs with `from`, `to`, and `label`. Tables have caption, columns, and rows; every row must match the column count. State what changes in prose; never encode meaning in color alone. Explain teaching-model boundaries and cite primary sources where appropriate.
 
-Run `node scripts/sync-catalog.cjs`, `node verify.cjs`, and `node scripts/build-pages.cjs`. The concept explorer tests check every snapshot, all interaction boundaries, print coverage and selected algorithm outcomes. The current 30-explorer coverage assertion should be updated intentionally when adding more lessons. Inspect desktop and phone layouts; diagrams scroll locally on narrow screens, with text alternatives and semantic tables.
+Run `node scripts/sync-catalog.cjs`, `node verify.cjs`, and `node scripts/build-pages.cjs`. The concept explorer tests check every snapshot, all interaction boundaries, print coverage and selected algorithm outcomes. The current 34-explorer coverage assertion should be updated intentionally when adding more lessons. Inspect desktop and phone layouts; diagrams scroll locally on narrow screens, with text alternatives and semantic tables.
 
 2026-09-27: added 27 explorers across .NET, React, DSA, SQL Server, Design Patterns, System Design and Kubernetes (54 scenarios; 164 snapshots). This supplements existing diagrams and finance stories; it does not imply every lesson requires a diagram.
 
@@ -15,13 +15,13 @@ For movable values, author a stable motionKey on each node across snapshots. Sor
 
 ## Concrete scenes
 
-All 30 current explorers register a concept-specific renderer through `NotebookScenes.register(lessonId, render)` in `assets/js/scenes-{dsa,apps,infra,patterns,data}.js`. Load the registry before the family modules and `learning-tools.js`. New lessons without a renderer retain the generic diagram fallback.
+All 34 current explorers register a concept-specific renderer through `NotebookScenes.register(lessonId, render)` in `assets/js/scenes-{dsa,apps,infra,patterns,data}.js`. Load the registry before the family modules and `learning-tools.js`. New lessons without a renderer retain the generic diagram fallback.
 
 Renderers receive the authored snapshot plus `{scenario, scenarioIndex, index, previous, key, print}`. Use `NotebookScenes.escape` for authored text. Derive displayed outcomes from that snapshot; do not display completed work during a pending step. Keep stable `data-motion-node` identities for the same logical object across snapshots, and change identity when an instance is replaced. Scope SVG IDs with `key` so printed packs do not collide.
 
 The shared controller owns playback, manual steps, reduced-motion handling and focus restoration. An optional `data-scene-next` button advances the teaching sequence, not a live external operation. Preserve all explanations, source tables, connection descriptions and model boundaries below the scene. Wide diagrams need keyboard-accessible scroll regions and a mobile scroll cue. Print hides interactive scene actions.
 
-Run `node tests/verify.cjs` and `node scripts/build-pages.cjs`. `tests/concrete-scenes.cjs` renders all 184 snapshots and checks scene coverage, text preservation and unique print IDs. Browser-check any new scene at desktop and phone widths, including alternative scenarios and final states.
+Run `node tests/verify.cjs` and `node scripts/build-pages.cjs`. `tests/concrete-scenes.cjs` renders all 212 snapshots and checks scene coverage, text preservation and unique print IDs. Browser-check any new scene at desktop and phone widths, including alternative scenarios and final states.
 
 ## Step focus
 
@@ -42,3 +42,14 @@ Choose the change the explanation is about, not every element whose wording diff
 - **Machine Learning, "Choose a threshold with explicit costs":** validation costs (4 × FN + FP) of 5, 4 and 1 at thresholds 0.5, 0.7 and 0.3 choose 0.3. The frozen rule costs 5 on the test; lowering it to 0.2 after seeing the test reports 1, but the test has then chosen the rule.
 
 These renderers read their data from each snapshot's tables (observations, ticket scores and the rule), compute the summaries themselves and draw them; `tests/concrete-scenes.cjs` checks that the drawn figures match the authored text. The groupby scene's ten tickets are fixed in the renderer, and its per-team summary table is checked against them. All figures come from the lessons' worked examples and the lab's `score >= threshold` rule in `paths/machine-learning-foundations/practice/metrics_lab.py`; the code-based ones (mean, median, rates, confusion counts) were also checked with Python's `statistics` module.
+
+## Networking, Git, data engineering and messaging explorers
+
+2026-11-01: added four explorers (8 scenarios; 28 snapshots). The DNS, rebase and inbox scenes are in `assets/js/scenes-infra.js`; the batch replay scene is in `assets/js/scenes-data.js`. Each pair contrasts a correct and an incorrect outcome:
+
+- **Networking & the Web, "TTL and stale DNS observations":** an answer stored at t=10 with TTL 5 is returned at t=14.99 and not at t=15; a new resolution is a separate step. A connection opened at t=10 keeps sending to the old address after the cache refreshes. The rule is the lab's `now < expiry` in `paths/networking-web/practice/network_foundation.py`.
+- **Git & Team Workflows, "Rebase private history":** rebasing an unpublished topic gives T1 a new parent and ID. Rebasing a topic a teammate built on leaves the same change twice after their merge; coordinating lets them replay their work onto the new commit. Commit IDs are illustrative.
+- **Data Engineering, "Safe replay and batch identity":** `import_csv` commits sept-01 once, returns replay for the same bytes and rejects changed bytes. An append-only loader run twice holds 4 rows and 4,000 cents for a 2-order, 2,000-cent file. The scene counts rows and cents from the snapshot's orders table.
+- **Messaging, "Durable inbox and idempotency":** with the inbox, a redelivered e-17 leaves the audit total at 7, a second consumer processes it under its own key and a changed payload is rejected. With an in-memory set, a restart forgets e-17 and the total becomes 14, as the lab's additive projection would.
+
+`tests/concrete-scenes.cjs` checks the drawn row counts, TTL marks, commit parents and totals against the authored snapshots.
