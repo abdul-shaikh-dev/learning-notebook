@@ -55053,7 +55053,39 @@ const LEARNING_PATHS = [
             "The model is labeled incomplete and separate from real DNS."
           ],
           "solution": "Compare origin tuples and DnsCache lookups before and exactly at expiry. Run the two named ProtocolModels tests. The address is documentation-only; no DNS request occurs. Leave retry_allowed for methods-retries in the next stage."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does origin('http://Example.test/read') return?",
+            "options": [
+              "('http', 'example.test', 80)",
+              "('http', 'Example.test', None)",
+              "('http', 'example.test', 443)"
+            ],
+            "correct": 0,
+            "explanation": "The helper lowercases the host and fills in the scheme's default port: 80 for http and 443 for https."
+          },
+          {
+            "question": "What does DnsCache.remember('lessons.example', '192.0.2.10', 2.5, 0) do?",
+            "options": [
+              "Raises ValueError: the TTL must be a nonnegative whole number",
+              "Stores the answer until t=2.5",
+              "Stores the answer until t=2, rounding down"
+            ],
+            "correct": 0,
+            "explanation": "The model accepts only nonnegative integer TTLs, as in DNS, where a TTL is a whole number of seconds. Rejecting bad input is safer than guessing."
+          },
+          {
+            "question": "Over real loopback TCP, a client sends b'caf\\xc3' and then b'\\xa9\\nsecond\\n'. What does exchange return?",
+            "options": [
+              "['café', 'second']",
+              "UnicodeDecodeError, because the first send is not valid UTF-8",
+              "['caf', 'second']"
+            ],
+            "correct": 0,
+            "explanation": "receive_lines collects bytes until the newline and decodes only the complete frame, so the é split across sends is rebuilt. Decoding each chunk separately would fail."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -55081,7 +55113,39 @@ const LEARNING_PATHS = [
             "Evidence is HTTP/1.1 loopback, with no TLS or browser enforcement claim."
           ],
           "solution": "Use the supplied local_server and fetch helpers to compare GET, HEAD, conditional GET and cookie denial. Run the four selected tests, including the read-retry policy and TLS configuration assertions. The fixed cookie does not authenticate accounts; redirects and stalled responses are revisited in the advanced project."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "The lab's /lesson response sends Cache-Control: public, max-age=5. For how long may a cache reuse it without revalidating?",
+            "options": [
+              "5 seconds",
+              "5 minutes",
+              "Until the ETag changes"
+            ],
+            "correct": 0,
+            "explanation": "max-age gives the freshness lifetime in seconds. After it, a cache needs a new response or a revalidation, for example with If-None-Match."
+          },
+          {
+            "question": "What Cache-Control does /private send when the request includes the synthetic session cookie?",
+            "options": [
+              "private, no-store",
+              "public, max-age=5",
+              "No Cache-Control field"
+            ],
+            "correct": 0,
+            "explanation": "User-specific output must stay out of shared caches, and no-store goes further by asking no cache to keep it."
+          },
+          {
+            "question": "What does HEAD /missing return from the lab server?",
+            "options": [
+              "404 with an empty body",
+              "404 with the JSON error body",
+              "200 with an empty body"
+            ],
+            "correct": 0,
+            "explanation": "HEAD gets the same status and fields GET would, but never content. A client must not treat the empty body as a parse failure."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -55111,7 +55175,39 @@ const LEARNING_PATHS = [
             "Callback timeouts, backoff and complete HTTP caching remain named extensions."
           ],
           "solution": "network_resilience.py implements the observation decoder, private-excluding SharedCache and bounded_get with an injected clock. ResilienceTests checks contract errors, cache expiry and retry counts; ProtocolModels only verifies default TLS settings. The retry callback must itself be bounded and this model has no jitter or production HTTP cache parser."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "bounded_get is called when its clock already reads past the deadline. What happens?",
+            "options": [
+              "It raises TimeoutError and makes no call",
+              "It makes one call, then stops",
+              "It makes max_attempts calls"
+            ],
+            "correct": 0,
+            "explanation": "The deadline is checked before each dispatch, so an exhausted budget means no new request is sent."
+          },
+          {
+            "question": "decode_observation receives a valid lesson with Content-Type: application/json; charset=utf-8. What happens?",
+            "options": [
+              "It is accepted: the media type before the parameters is application/json",
+              "It is rejected, because the content type is not exactly application/json",
+              "It is rejected, because JSON must not declare a charset"
+            ],
+            "correct": 0,
+            "explanation": "The decoder compares only the media type, ignoring parameters and case. The body is then decoded as strict UTF-8 regardless."
+          },
+          {
+            "question": "decode_observation receives 200, application/json and {\"lesson\":\"http\",\"version\":1,\"extra\":true}. What happens?",
+            "options": [
+              "ProtocolError: the contract allows exactly the fields lesson and version",
+              "It is accepted and the extra field is ignored",
+              "It is accepted and the extra field is kept"
+            ],
+            "correct": 0,
+            "explanation": "The lab's contract is exact, so an unknown field is rejected rather than ignored. A real API might allow extensions, but it should say so in its contract."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -55264,7 +55360,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "You fetch /bad-json from the lab's local server. What happens?",
+            "options": [
+              "The status is 200, and decode_observation raises ProtocolError",
+              "The status is 500, because the body is broken",
+              "The status is 200, and the lesson is accepted"
+            ],
+            "correct": 0,
+            "explanation": "The HTTP layer succeeded: the server returned 200 with a JSON content type. The body then fails JSON parsing, which is an application observation error at a separate, later stage."
+          }
+        ]
       },
       {
         "id": "addresses-ports",
@@ -55312,6 +55420,18 @@ const LEARNING_PATHS = [
             "section": "socket.bind; getsockname; create_connection",
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The lab server binds ('127.0.0.1', 0). What does server.server_port hold once it is listening?",
+            "options": [
+              "A nonzero port chosen by the operating system",
+              "0",
+              "8000, the default HTTP port for the lab"
+            ],
+            "correct": 0,
+            "explanation": "Port zero asks the operating system for any free port. The client reads the assigned port from server_port, so no fixed port can collide with another program."
           }
         ]
       },
@@ -55361,6 +55481,18 @@ const LEARNING_PATHS = [
             "section": "Sections 3.2.1–3.2.2: resource record format and types",
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Why does the course use 192.0.2.10 as its example address?",
+            "options": [
+              "It is in 192.0.2.0/24, a range reserved for documentation, not a live host",
+              "It is a loopback address",
+              "It is the address of a public DNS resolver"
+            ],
+            "correct": 0,
+            "explanation": "RFC 5737 reserves 192.0.2.0/24 (TEST-NET-1) for examples. The offline model stores it without sending a DNS query, so the example never reaches a real machine."
           }
         ]
       },
@@ -55875,7 +56007,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "DnsCache.remember stores lessons.example with TTL 0 at t=10. What does lookup return at t=10?",
+            "options": [
+              "None: there is no cached answer",
+              "The address, until t=11",
+              "It raises ValueError, because TTL 0 is invalid"
+            ],
+            "correct": 0,
+            "explanation": "The entry expires at now + 0 and lookup only answers before expiry. As the lesson notes, a TTL 0 record may serve the current transaction but must not be reused from cache; the model models reuse only."
+          }
+        ]
       },
       {
         "id": "transport",
@@ -55933,6 +56077,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A peer sends b'incomplete' with no newline and then closes the connection. What does receive_lines in tcp_framing.py do?",
+            "options": [
+              "Raises ValueError: EOF inside a frame",
+              "Returns ['incomplete']",
+              "Returns an empty list"
+            ],
+            "correct": 0,
+            "explanation": "The newline delimiter ends a frame. Bytes still pending when the stream ends belong to a truncated message, so the parser reports it instead of accepting a partial frame."
+          }
         ]
       },
       {
@@ -55981,6 +56137,18 @@ const LEARNING_PATHS = [
             "section": "urlsplit; URL parsing security",
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does the lab's origin() helper do with https://example.test/page#top?",
+            "options": [
+              "Raises ValueError: request URLs must not include a fragment",
+              "Returns ('https', 'example.test', 443)",
+              "Returns ('https', 'example.test#top', 443)"
+            ],
+            "correct": 0,
+            "explanation": "A fragment identifies a client-side location and is never sent as the request target. The helper's explicit request policy rejects it rather than silently dropping it."
           }
         ]
       },
@@ -56044,6 +56212,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "RFC 8259 requires UTF-8 outside closed ecosystems. This lab deliberately accepts only UTF-8 and rejects other encodings."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How many bytes does the text café (with an accented final e) take in UTF-8?",
+            "options": [
+              "5",
+              "4",
+              "8"
+            ],
+            "correct": 0,
+            "explanation": "c, a and f take one byte each and é takes two, so the four characters need five bytes. That is why Content-Length must be measured on bytes, not characters."
+          }
         ]
       },
       {
@@ -56092,6 +56272,18 @@ const LEARNING_PATHS = [
             "section": "Sections 6 and 9.3.2: message abstraction and HEAD",
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The lab's GET /lesson body is 29 bytes. What does HEAD /lesson return?",
+            "options": [
+              "Content-Length: 29 and an empty body",
+              "Content-Length: 0 and an empty body",
+              "No Content-Length field and an empty body"
+            ],
+            "correct": 0,
+            "explanation": "HEAD describes the same representation as GET, so the length field still says 29, but no content is sent. The field describes the representation, not the bytes of this response."
           }
         ]
       },
@@ -56142,6 +56334,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does the lab's /private route return to a request without the session cookie?",
+            "options": [
+              "401 with a WWW-Authenticate field",
+              "403 with an empty body",
+              "404, to hide the route"
+            ],
+            "correct": 0,
+            "explanation": "401 means the request lacks acceptable credentials, and the server names the expected scheme in WWW-Authenticate. The route is synthetic: it demonstrates status handling, not real authentication."
+          }
         ]
       },
       {
@@ -56190,6 +56394,18 @@ const LEARNING_PATHS = [
             "section": "Sections 9.2.1–9.2.2: safe and idempotent methods",
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does retry_allowed('HEAD', 1, 3, 0) return?",
+            "options": [
+              "False: no time remains",
+              "True: HEAD is safe and attempts remain",
+              "It raises ValueError"
+            ],
+            "correct": 0,
+            "explanation": "The policy needs all three conditions: a safe read method, an attempt left and time left. A safe method with an exhausted time budget still gets no retry."
           }
         ]
       },
@@ -56240,6 +56456,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What is the verify_mode of a context from ssl.create_default_context()?",
+            "options": [
+              "CERT_REQUIRED",
+              "CERT_OPTIONAL",
+              "CERT_NONE"
+            ],
+            "correct": 0,
+            "explanation": "The default client context requires the server to present a certificate that verifies against the trust roots. This is a configuration fact; it is not evidence that any encrypted connection took place."
+          }
         ]
       },
       {
@@ -56288,6 +56516,18 @@ const LEARNING_PATHS = [
             "section": "create_default_context; security considerations",
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "On a default client context, you set verify_mode = ssl.CERT_NONE while check_hostname is still True. What does Python do?",
+            "options": [
+              "Raises ValueError: hostname checking must be turned off first",
+              "Disables both checks silently",
+              "Keeps verifying certificates and ignores the change"
+            ],
+            "correct": 0,
+            "explanation": "Python refuses an inconsistent context: hostname checking needs a verified certificate. The error is a reminder that turning verification off is a deliberate, two-step weakening, not a fix for an unknown error."
           }
         ]
       },
@@ -56418,7 +56658,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which attributes does the lab's /cookie response set on the session cookie?",
+            "options": [
+              "Path=/, HttpOnly and SameSite=Lax, but not Secure",
+              "Secure, HttpOnly and SameSite=Strict",
+              "Only Path=/"
+            ],
+            "correct": 0,
+            "explanation": "The lab runs plain HTTP, so it deliberately does not set Secure. HttpOnly keeps the cookie from scripts and SameSite=Lax limits cross-site sending."
+          }
+        ]
       },
       {
         "id": "browser-boundaries",
@@ -56547,7 +56799,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Are https://lessons.test and https://lessons.test:443/read the same origin?",
+            "options": [
+              "Yes: 443 is the default HTTPS port",
+              "No: one URL names the port and the other does not",
+              "No: the paths differ"
+            ],
+            "correct": 0,
+            "explanation": "An origin is scheme, host and port, with the default port filled in, and the path is not part of it. Both URLs normalise to ('https', 'lessons.test', 443)."
+          }
+        ]
       },
       {
         "id": "cache",
@@ -56595,6 +56859,18 @@ const LEARNING_PATHS = [
             "section": "Sections 3 and 5.2.2: storing responses and response directives",
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does SharedCache.store_public(key, body, 5, now, private=True) do?",
+            "options": [
+              "Returns False and stores nothing",
+              "Stores the body for 5 seconds",
+              "Raises ValueError"
+            ],
+            "correct": 0,
+            "explanation": "A shared cache must not store a response marked private, so the model refuses the insertion. A later get for that key finds nothing."
           }
         ]
       },
@@ -56749,7 +57025,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A client sends GET /lesson with If-None-Match: \"lesson-v2\", but the server's ETag is \"lesson-v1\". What comes back?",
+            "options": [
+              "200 with the full body and ETag \"lesson-v1\"",
+              "304 with no body",
+              "412 Precondition Failed"
+            ],
+            "correct": 0,
+            "explanation": "The validator does not match, so the stored copy is out of date and the server sends the current representation with its current ETag. Only a match produces 304."
+          }
+        ]
       },
       {
         "id": "redirects",
@@ -56878,7 +57166,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A request to http://127.0.0.1:8080/a/redirect returns Location: /lesson. Which URL does that reference resolve to?",
+            "options": [
+              "http://127.0.0.1:8080/lesson",
+              "http://127.0.0.1:8080/a/lesson",
+              "http://lesson/"
+            ],
+            "correct": 0,
+            "explanation": "A Location starting with / replaces the whole path of the request URL and keeps its scheme, host and port. Validate the resolved target before following it."
+          }
+        ]
       },
       {
         "id": "proxies",
@@ -57007,7 +57307,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A request reaches the origin with an X-Forwarded-For field that the client itself supplied. What does it prove?",
+            "options": [
+              "Nothing on its own: only a trusted proxy that removes incoming copies can vouch for it",
+              "The client's real IP address",
+              "That the request passed through a proxy"
+            ],
+            "correct": 0,
+            "explanation": "Any client can send any field. Forwarded metadata is evidence only when a defined intermediary sets it and strips spoofed copies at the trusted boundary."
+          }
+        ]
       },
       {
         "id": "timeouts",
@@ -57157,7 +57469,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "fetch(server, '/stall', timeout=0.15) raises TimeoutError. Had the server received the request?",
+            "options": [
+              "Yes: the handler had started; the client only stopped waiting",
+              "No: a timeout means the request was never delivered",
+              "It cannot have, because the timeout was shorter than the connection time"
+            ],
+            "correct": 0,
+            "explanation": "The /stall handler signals that it started before it waits. The client's timeout bounds its own wait for a response; it says nothing about what the server did."
+          }
+        ]
       },
       {
         "id": "retry-budgets",
@@ -57315,7 +57639,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "bounded_get with max_attempts=3 meets 503, 503, 503 before the deadline. How many calls are made?",
+            "options": [
+              "3, then it returns 503 with three trace entries",
+              "4: the first call plus three retries",
+              "1, because 503 is not retried"
+            ],
+            "correct": 0,
+            "explanation": "max_attempts counts every call, including the first. After the third 503 no attempt remains, so the helper returns the final status rather than raising."
+          }
+        ]
       },
       {
         "id": "body-contracts",
@@ -57456,7 +57792,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "decode_observation receives 200, application/json and {\"lesson\":\"http\",\"version\":true}. What happens?",
+            "options": [
+              "ProtocolError: true is a boolean, not an integer version",
+              "It is accepted, because True == 1 in Python",
+              "It is accepted with version converted to 1"
+            ],
+            "correct": 0,
+            "explanation": "The schema checks the exact type, so a boolean is rejected even though Python treats True as equal to 1. Loose comparison would let incompatible data through."
+          }
+        ]
       },
       {
         "id": "diagnostics",
@@ -57504,6 +57852,18 @@ const LEARNING_PATHS = [
             "section": "White-box versus black-box monitoring; symptoms and causes",
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "bounded_get records a trace for 503 then 200. Which fields does each trace entry contain?",
+            "options": [
+              "Only attempt and status",
+              "Status and the response headers",
+              "Status and the full response body"
+            ],
+            "correct": 0,
+            "explanation": "The trace keeps the minimum needed to show what happened: [{attempt: 1, status: 503}, {attempt: 2, status: 200}]. No cookies or bodies are copied into it."
           }
         ]
       },
@@ -57554,6 +57914,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A client moves from HTTP/1.1 to HTTP/2. What happens to the meaning of a 404 response?",
+            "options": [
+              "It stays the same: status semantics are shared across HTTP versions",
+              "It changes, because HTTP/2 defines its own status codes",
+              "It disappears, because HTTP/2 has no status codes"
+            ],
+            "correct": 0,
+            "explanation": "HTTP/1.1, HTTP/2 and HTTP/3 carry the same methods, status codes and fields over different wire protocols. Behaviour such as multiplexing still needs testing on the new stack."
+          }
         ]
       },
       {
@@ -57602,6 +57974,18 @@ const LEARNING_PATHS = [
             "section": "Security considerations; ThreadingHTTPServer",
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which claim in the final review needs a separate drill the local lab does not run?",
+            "options": [
+              "Real certificate validation against a server",
+              "Malformed lesson JSON is rejected",
+              "Private data never enters the shared model cache"
+            ],
+            "correct": 0,
+            "explanation": "The lab uses plain loopback HTTP and only inspects TLS settings. The other two claims are backed by its /bad-json integration test and the private-flag cache test."
           }
         ]
       }
