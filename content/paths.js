@@ -75092,6 +75092,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does SELECT COUNT(DISTINCT CustomerId) FROM #LNOrders return for the course fixture?",
+            "options": [
+              "3",
+              "5",
+              "4"
+            ],
+            "correct": 0,
+            "explanation": "Five orders belong to customers 1, 2 and 3. Dia, customer 4, has no order, so she does not appear in the orders table at all."
+          }
         ]
       },
       {
@@ -75151,6 +75163,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How many #LNCustomers rows does WHERE Email IS NULL return?",
+            "options": [
+              "2",
+              "0",
+              "4"
+            ],
+            "correct": 0,
+            "explanation": "Ben and Dia have no known email. IS NULL tests for a missing value; = NULL compares with UNKNOWN and matches nothing."
+          }
         ]
       },
       {
@@ -75209,6 +75233,18 @@ const LEARNING_PATHS = [
             "section": "Logical processing order",
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does SELECT 5/2 return in SQL Server?",
+            "options": [
+              "2",
+              "2.5",
+              "3"
+            ],
+            "correct": 0,
+            "explanation": "Both operands are integers, so the division is integer division and truncates. CAST one side to decimal to keep the fraction."
           }
         ]
       },
@@ -75834,7 +75870,19 @@ const LEARNING_PATHS = [
               "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/joins?view=sql-server-ver17"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does SUM(o.Amount) return over #LNOrders INNER JOIN #LNPayments ON the OrderId?",
+            "options": [
+              "370",
+              "390",
+              "285"
+            ],
+            "correct": 0,
+            "explanation": "Order 101 has two payments, so its 100 is counted twice, and order 104 has none, so its 120 is dropped: 100 + 100 + 50 + 80 + 40 = 370. A plausible-looking total can still be wrong; aggregate payments to the order grain first."
+          }
+        ]
       },
       {
         "id": "group-and-reconcile",
@@ -75892,6 +75940,18 @@ const LEARNING_PATHS = [
             "section": "GROUP BY arguments",
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How many rows does SELECT CustomerId, SUM(Amount) FROM #LNOrders GROUP BY CustomerId return?",
+            "options": [
+              "3",
+              "4",
+              "5"
+            ],
+            "correct": 0,
+            "explanation": "Grouping makes one row per customer present in the orders. Dia has no order, so she has no group; start from #LNCustomers if every customer must appear."
           }
         ]
       },
@@ -76036,7 +76096,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "How many #LNOrders rows does WHERE OrderId NOT IN (101, NULL) return?",
+            "options": [
+              "0",
+              "4",
+              "5"
+            ],
+            "correct": 0,
+            "explanation": "For every other order, OrderId <> NULL is UNKNOWN, so NOT IN is never true. NOT EXISTS with an explicit equality avoids this trap."
+          }
+        ]
       },
       {
         "id": "window-functions",
@@ -76094,6 +76166,18 @@ const LEARNING_PATHS = [
             "section": "General remarks: determinism",
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "ROW_NUMBER() OVER (PARTITION BY CustomerId ORDER BY OrderDate DESC, OrderId DESC) numbers the orders. Which order gets 1 for customer 1?",
+            "options": [
+              "102",
+              "101",
+              "104"
+            ],
+            "correct": 0,
+            "explanation": "Customer 1 has orders 101 on January 1 and 102 on January 2. Descending date puts 102 first, so it is the latest order."
           }
         ]
       },
@@ -76161,6 +76245,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "sys.sp_executesql runs SELECT COUNT(*) FROM #LNCustomers WHERE CustomerName = @Name with @Name nvarchar(50) set to ' OR 1=1 --. What is the count?",
+            "options": [
+              "0: the whole value is compared as a name",
+              "4: the condition becomes always true",
+              "An error, because the comment ends the statement"
+            ],
+            "correct": 0,
+            "explanation": "A bound parameter is data, never SQL text. No customer is called ' OR 1=1 --, so nothing matches and the statement is unchanged."
+          }
         ]
       },
       {
@@ -76219,6 +76315,18 @@ const LEARNING_PATHS = [
             "section": "Temporary tables",
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An UPDATE changes two rows, and then a PRINT statement runs. What does @@ROWCOUNT return next?",
+            "options": [
+              "0",
+              "2",
+              "1"
+            ],
+            "correct": 0,
+            "explanation": "PRINT resets @@ROWCOUNT to 0, so the update's count is lost. Capture it in a variable in the statement right after the UPDATE."
           }
         ]
       },
@@ -76384,7 +76492,19 @@ const LEARNING_PATHS = [
               "explanation": "The final SELECT returns 100, not 999. The demonstration catches the error for teaching; production code should usually propagate failure."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "With SET XACT_ABORT ON, a duplicate-key INSERT fails inside BEGIN TRY ... BEGIN TRAN. What does XACT_STATE() return in the CATCH block?",
+            "options": [
+              "-1: the transaction cannot commit and must be rolled back",
+              "1: the transaction can still commit",
+              "0: there is no transaction"
+            ],
+            "correct": 0,
+            "explanation": "XACT_ABORT dooms the transaction on a run-time error. The only valid next step is ROLLBACK, which the CATCH block should do before reporting the error."
+          }
+        ]
       },
       {
         "id": "indexes-and-plans",
@@ -76756,7 +76876,19 @@ const LEARNING_PATHS = [
               "url": "https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-index-design-guide?view=sql-server-ver17"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does an INCLUDE column add to a nonclustered index?",
+            "options": [
+              "Output it can supply without being part of the search key",
+              "A second sort key for seeks",
+              "A uniqueness constraint"
+            ],
+            "correct": 0,
+            "explanation": "Included columns are stored at the leaf level so the index can cover a query's output. They do not order the index or help a seek find rows."
+          }
+        ]
       },
       {
         "id": "reconciliation-capstone",
@@ -76937,7 +77069,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "In the foundation reconciliation, which order is overpaid, and by how much?",
+            "options": [
+              "105, by 5",
+              "103, by 10",
+              "101, by 0"
+            ],
+            "correct": 0,
+            "explanation": "Order 105 is due 40 and has one payment of 45. Order 103 is underpaid by 10, and order 101's two payments total exactly its 100."
+          }
+        ]
       },
       {
         "id": "schema-contracts",
@@ -77004,6 +77148,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does TRY_CONVERT(decimal(12,2), N'1.005') return?",
+            "options": [
+              "1.01",
+              "1.00",
+              "NULL"
+            ],
+            "correct": 0,
+            "explanation": "Converting to two decimal places rounds the extra digit, half away from zero. The lab treats this as an accepted scale conversion; rejecting extra precision would need its own check."
+          }
         ]
       },
       {
@@ -77065,6 +77221,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How many rows does SELECT CustomerId FROM #LNOrders UNION SELECT CustomerId FROM #LNCustomers return?",
+            "options": [
+              "4",
+              "9",
+              "3"
+            ],
+            "correct": 0,
+            "explanation": "UNION removes duplicates across the combined rows, leaving customers 1 to 4. UNION ALL would keep all nine rows."
+          }
         ]
       },
       {
@@ -77124,6 +77292,18 @@ const LEARNING_PATHS = [
             "section": "ROWS and RANGE frames",
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does LAG(Amount) OVER (ORDER BY OrderDate, OrderId) return for order 101, the first row?",
+            "options": [
+              "NULL",
+              "0",
+              "100"
+            ],
+            "correct": 0,
+            "explanation": "There is no earlier row, so LAG returns NULL unless a default is supplied. Using 0 instead would claim a previous amount of zero."
           }
         ]
       },
@@ -77194,6 +77374,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which predicate on OrderDate lets an index on that column be searched for 2026?",
+            "options": [
+              "OrderDate >= '20260101' AND OrderDate < '20270101'",
+              "YEAR(OrderDate) = 2026",
+              "CONVERT(char(4), OrderDate, 112) = '2026'"
+            ],
+            "correct": 0,
+            "explanation": "A half-open range on the bare column is sargable. Wrapping the column in a function makes the engine compute it for every row before comparing."
+          }
         ]
       },
       {
@@ -77253,6 +77445,18 @@ const LEARNING_PATHS = [
             "section": "Uncommittable transactions and XACT_STATE",
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An UPDATE on the work copy uses WHERE OrderId = 999, which matches no row. What happens?",
+            "options": [
+              "No error is raised, and @@ROWCOUNT is 0",
+              "SQL Server raises a not-found error",
+              "It inserts order 999"
+            ],
+            "correct": 0,
+            "explanation": "Matching zero rows is not an error in SQL. That is why the lesson's procedure checks @@ROWCOUNT and raises 51102 itself."
           }
         ]
       },
@@ -77319,6 +77523,18 @@ const LEARNING_PATHS = [
             "section": "Return types and failed conversions",
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A NOT EXISTS loader has loaded E1 = 10 and E2 = 20. The batch is replayed with E1 changed to 11. What is the target total?",
+            "options": [
+              "30: the changed E1 is skipped without any warning",
+              "31: E1 is updated to 11",
+              "41: E1 is added again"
+            ],
+            "correct": 0,
+            "explanation": "The loader only checks whether E1 exists, so a conflicting value looks like a replay. Detecting it needs a comparison of the stored and incoming payload."
           }
         ]
       },
@@ -77407,6 +77623,18 @@ const LEARNING_PATHS = [
             "section": "object_id and query_parameterization_type",
             "reviewed": "2026-09-27",
             "scope": "Module identity for the dedicated Query Store lab; verified on Express 17.0.1000.7."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A Query Store plan query returns no rows. What does that establish?",
+            "options": [
+              "Nothing on its own: capture settings, a new database or no matching workload could explain it",
+              "That no queries ran in that database",
+              "That Query Store is disabled"
+            ],
+            "correct": 0,
+            "explanation": "An empty result has several causes. Check the database's Query Store options and the capture mode before concluding anything about the workload."
           }
         ]
       },
@@ -77829,7 +78057,19 @@ const LEARNING_PATHS = [
               "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/set-transaction-isolation-level-transact-sql?view=sql-server-ver17"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A row is at Revision 2. A request still holding Revision 1 runs UPDATE ... WHERE Id = 1 AND Revision = 1. How many rows does it change?",
+            "options": [
+              "0, which the caller must treat as a conflict",
+              "1, overwriting the newer change",
+              "It raises a concurrency error"
+            ],
+            "correct": 0,
+            "explanation": "The version predicate makes a stale write match nothing. SQL raises no error, so the caller has to check the row count and reload or reject."
+          }
+        ]
       },
       {
         "id": "deadlocks-retries",
@@ -78001,7 +78241,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which error number tells a session that SQL Server chose it as a deadlock victim and rolled back its transaction?",
+            "options": [
+              "1205",
+              "1222",
+              "-2"
+            ],
+            "correct": 0,
+            "explanation": "1205 identifies a deadlock victim. 1222 is a lock request timeout and -2 is a client command timeout, which can leave the outcome uncertain."
+          }
+        ]
       },
       {
         "id": "least-privilege-dynamic-sql",
@@ -78060,6 +78312,18 @@ const LEARNING_PATHS = [
             "section": "Parameters and SQL injection caution",
             "reviewed": "2026-09-27",
             "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does QUOTENAME(N'a]b') return?",
+            "options": [
+              "[a]]b]",
+              "[a]b]",
+              "[ab]"
+            ],
+            "correct": 0,
+            "explanation": "QUOTENAME wraps the name in brackets and doubles any closing bracket, so the result is one valid identifier. It does not decide whether the caller may use that identifier."
           }
         ]
       },
@@ -78211,7 +78475,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A work table's Note column still has one NULL. What does ALTER TABLE ... ALTER COLUMN Note nvarchar(20) NOT NULL do?",
+            "options": [
+              "Fails with error 515, leaving the column nullable",
+              "Succeeds and fills the NULL with an empty string",
+              "Succeeds and leaves the NULL in place"
+            ],
+            "correct": 0,
+            "explanation": "The engine checks existing rows before tightening nullability. That is why the migration backfills and verifies that no NULL remains first."
+          }
+        ]
       },
       {
         "id": "advanced-import-capstone",
@@ -78405,7 +78681,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "On the advanced fixture's first pass, how many raw rows does the classifier mark as duplicate?",
+            "options": [
+              "1",
+              "2",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "E001 appears twice with identical bytes. The first copy is accepted and the second is a duplicate; an orphan, an invalid amount and two more accepted rows make up the six."
+          }
+        ]
       }
     ],
     "downloads": [
@@ -78466,7 +78754,39 @@ const LEARNING_PATHS = [
             "Evidence: show queries, outputs and at least one deliberately wrong query corrected."
           ],
           "solution": ";WITH Paid AS (\n SELECT OrderId,COUNT(*) AS PaymentCount,SUM(Amount) AS PaidAmount\n FROM #LNPayments GROUP BY OrderId\n)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing'\n      WHEN p.PaidAmount=o.Amount THEN 'paid'\n      WHEN p.PaidAmount<o.Amount THEN 'underpaid'\n      ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId\nORDER BY o.OrderId;\nSELECT p.PaymentId,p.OrderId,p.Amount FROM #LNPayments p\nWHERE NOT EXISTS (SELECT 1 FROM #LNOrders o WHERE o.OrderId=p.OrderId)\nORDER BY p.PaymentId;\n--Customer coverage: select all customers and use NOT EXISTS to identify Dia.\n--Accepted evidence: due 390 = paid 265 + net 125; payments 285 = matched 265 + orphan 20."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What do COUNT(*) and COUNT(Email) return over #LNCustomers?",
+            "options": [
+              "4 and 2",
+              "4 and 4",
+              "2 and 2"
+            ],
+            "correct": 0,
+            "explanation": "COUNT(*) counts rows; COUNT(column) counts non-NULL values. Two of the four customers have no email."
+          },
+          {
+            "question": "How many rows does GROUP BY CustomerId HAVING COUNT(*) > 1 return over #LNOrders?",
+            "options": [
+              "2",
+              "3",
+              "1"
+            ],
+            "correct": 0,
+            "explanation": "Customers 1 and 2 have two orders each; customer 3 has one. HAVING filters groups after aggregation."
+          },
+          {
+            "question": "How many customers have at least one order with a payment, using EXISTS?",
+            "options": [
+              "3",
+              "4",
+              "2"
+            ],
+            "correct": 0,
+            "explanation": "Orders 101, 102, 103 and 105 have payments, so customers 1, 2 and 3 qualify. EXISTS answers yes or no without multiplying rows."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -78493,7 +78813,39 @@ const LEARNING_PATHS = [
             "Evidence: documents expected results separately from results actually executed."
           ],
           "solution": "IF OBJECT_ID('tempdb..#LNReplayTarget') IS NULL\n CREATE TABLE #LNReplayTarget(EventId nvarchar(20) NOT NULL PRIMARY KEY,Amount decimal(12,2) NOT NULL);\nINSERT #LNReplayTarget(EventId,Amount)\nSELECT s.EventId,s.Amount FROM (VALUES(N'E1',CAST(10 AS decimal(12,2))),(N'E2',CAST(20 AS decimal(12,2)))) s(EventId,Amount)\nWHERE NOT EXISTS(SELECT 1 FROM #LNReplayTarget t WHERE t.EventId=s.EventId);\nSELECT @@ROWCOUNT AS InsertedNow;\nSELECT COUNT(*) AS Events,SUM(Amount) AS Total FROM #LNReplayTarget;\n--First run 2, then 0; target always 2/30. Single-session demo only.\n\nSELECT s.EventId,t.Amount AS StoredAmount,s.Amount AS IncomingAmount\nFROM (VALUES(N'E1',CAST(11 AS decimal(12,2)))) s(EventId,Amount)\nJOIN #LNReplayTarget t ON t.EventId=s.EventId WHERE t.Amount<>s.Amount;\n--E1,10.00,11.00\n\nSELECT c.CustomerId, recent.OrderId, recent.Amount\nFROM #LNCustomers c\nOUTER APPLY (\n SELECT TOP(1) o.OrderId,o.Amount FROM #LNOrders o\n WHERE o.CustomerId=c.CustomerId ORDER BY o.OrderDate DESC,o.OrderId DESC\n) recent ORDER BY c.CustomerId;\n--1/102/50,2/104/120,3/105/40,4/NULL/NULL\n--Contract: source/event unique key; immutable accepted payload; governed revision for changes.\n--Procedure: own transaction or documented caller participation, never an accidental mixture."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does SELECT CustomerId FROM #LNCustomers EXCEPT SELECT CustomerId FROM #LNOrders return?",
+            "options": [
+              "Only customer 4",
+              "Customers 1 to 4",
+              "No rows"
+            ],
+            "correct": 0,
+            "explanation": "EXCEPT returns distinct left-side values absent from the right. Dia is the only customer with no order."
+          },
+          {
+            "question": "SUM(Amount) OVER (ORDER BY OrderDate, OrderId ROWS BETWEEN 1 PRECEDING AND CURRENT ROW): what is the value for order 105?",
+            "options": [
+              "160",
+              "40",
+              "390"
+            ],
+            "correct": 0,
+            "explanation": "The frame is at most two rows: order 104 (120) and order 105 (40). It counts rows, not days, and crosses customers."
+          },
+          {
+            "question": "Three units cost 12.345. What is the result of rounding each line to two places and summing, compared with rounding the total?",
+            "options": [
+              "37.05 and 37.04",
+              "37.04 for both",
+              "37.05 for both"
+            ],
+            "correct": 0,
+            "explanation": "Each line rounds to 12.35, giving 37.05; the exact total 37.035 rounds to 37.04. The business rule must say where rounding happens."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -78523,7 +78875,39 @@ const LEARNING_PATHS = [
             "Distinguish source review and arithmetic checks from tests run against SQL Server for concurrency and durability."
           ],
           "solution": "--Prerequisite: setup.sql then advanced-lab.sql in this same session.\n--Single-session educational loader; not a proof of production concurrency safety.\nIF OBJECT_ID('tempdb..#LNRawEvents') IS NULL OR OBJECT_ID('tempdb..#LNEventLedger') IS NULL\n THROW 51300,'Run setup.sql and advanced-lab.sql first.',1;\nIF @@TRANCOUNT<>0 THROW 51300,'Finish the existing transaction first.',1;\nIF OBJECT_ID('tempdb..#LNClassifiedEvents') IS NOT NULL DROP TABLE #LNClassifiedEvents;\n;WITH RawTyped AS (\n SELECT r.*,TRY_CONVERT(decimal(12,2),NULLIF(LTRIM(RTRIM(AmountText)),N'')) AS ParsedAmount\n FROM #LNRawEvents r\n), Ranked AS (\n SELECT t.*,ROW_NUMBER() OVER(PARTITION BY t.EventId ORDER BY t.RawRowId) AS rn,\n CASE WHEN EXISTS (\n  SELECT 1 FROM #LNRawEvents other WHERE other.EventId=t.EventId\n  AND (other.OrderId<>t.OrderId\n   OR DATALENGTH(other.AmountText)<>DATALENGTH(t.AmountText)\n   OR CONVERT(varbinary(60),other.AmountText)<>CONVERT(varbinary(60),t.AmountText))\n ) THEN 1 ELSE 0 END AS HasConflict\n FROM RawTyped t\n)\nSELECT r.*,\n CASE WHEN HasConflict=1 THEN 'conflict'\n      WHEN rn>1 THEN 'duplicate'\n      WHEN ParsedAmount IS NULL OR ParsedAmount<0 THEN 'invalid'\n      WHEN o.OrderId IS NULL THEN 'orphan'\n      ELSE 'accepted' END AS Disposition\nINTO #LNClassifiedEvents\nFROM Ranked r LEFT JOIN #LNOrders o ON o.OrderId=r.OrderId;\nSELECT RawRowId,EventId,OrderId,AmountText,Disposition FROM #LNClassifiedEvents ORDER BY RawRowId;\n--Conservative conflict policy: differently formatted payload strings also require review.\n--TRY_CONVERT rounds valid extra decimal places; the lab accepts this scale conversion.\n--A strict source-scale contract would require a separate precision check before acceptance.\nSET XACT_ABORT ON;\nDECLARE @Inserted int;\nBEGIN TRY\n BEGIN TRAN;\n IF EXISTS(SELECT 1 FROM #LNClassifiedEvents s JOIN #LNEventLedger t ON t.EventId=s.EventId\n  WHERE s.Disposition='accepted' AND (s.OrderId<>t.OrderId OR s.ParsedAmount<>t.Amount))\n  THROW 51301,'Accepted event conflicts with the existing ledger.',1;\n INSERT #LNEventLedger(EventId,OrderId,Amount)\n SELECT s.EventId,s.OrderId,s.ParsedAmount FROM #LNClassifiedEvents s\n WHERE s.Disposition='accepted' AND NOT EXISTS(SELECT 1 FROM #LNEventLedger t WHERE t.EventId=s.EventId);\n SET @Inserted=@@ROWCOUNT;\n COMMIT;\nEND TRY\nBEGIN CATCH\n IF XACT_STATE()<>0 ROLLBACK;\n THROW;\nEND CATCH;\nSELECT @Inserted AS InsertedNow; --3 first pass; 0 replay\nSELECT Disposition,COUNT(*) AS RawRows FROM #LNClassifiedEvents GROUP BY Disposition ORDER BY Disposition;\nSELECT COUNT(*) AS LedgerEvents,SUM(Amount) AS LedgerAmount FROM #LNEventLedger; --3/215\n;WITH Paid AS(SELECT OrderId,SUM(Amount) AS PaidAmount FROM #LNEventLedger GROUP BY OrderId)\nSELECT o.OrderId,o.Amount AS Due,COALESCE(p.PaidAmount,0) AS Paid,\n o.Amount-COALESCE(p.PaidAmount,0) AS Outstanding,\n CASE WHEN p.OrderId IS NULL THEN 'missing' WHEN o.Amount=p.PaidAmount THEN 'paid'\n WHEN o.Amount>p.PaidAmount THEN 'underpaid' ELSE 'overpaid' END AS Status\nFROM #LNOrders o LEFT JOIN Paid p ON p.OrderId=o.OrderId ORDER BY o.OrderId;\n--Five rows: 101 paid 0; 102 missing 50; 103 underpaid 10; 104 missing 120; 105 overpaid -5.\n--Due 390; paid 215; net outstanding 175. Raw row counts 6 = accepted 3 + duplicate 1 + invalid 1 + orphan 1.\n\n--Design review: permanent unique source/event keys; durable batch/disposition storage;\n--source-format rules; approved concurrent import strategy; client idempotency key;\n--least-privilege execution; expand/backfill/validate/contract migrations;\n--measured Query Store/plan evidence and supervised cross-session failure tests."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does TRY_CONVERT(int, N'') return?",
+            "options": [
+              "0",
+              "NULL",
+              "It raises a conversion error"
+            ],
+            "correct": 0,
+            "explanation": "An empty string converts to integer 0, so a blank field would silently become zero. That is why the classifier applies NULLIF(..., N'') before converting."
+          },
+          {
+            "question": "BEGIN TRAN runs twice, so @@TRANCOUNT is 2. What is @@TRANCOUNT after a single ROLLBACK?",
+            "options": [
+              "0",
+              "1",
+              "2"
+            ],
+            "correct": 0,
+            "explanation": "ROLLBACK without a savepoint name rolls back the outermost transaction and every nested level. Nested BEGIN TRAN does not create independent transactions."
+          },
+          {
+            "question": "A table has a rowversion column. After an UPDATE to the row, how does its rowversion compare with the value read before?",
+            "options": [
+              "It is greater: every change gets a new, higher value",
+              "It is the same, because only another column changed",
+              "It is reset to zero"
+            ],
+            "correct": 0,
+            "explanation": "The database generates a new rowversion on each insert or update, so comparing it detects any change since a read."
+          }
+        ]
       }
     ],
     "resources": {

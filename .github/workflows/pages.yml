@@ -158,6 +158,10 @@ jobs:
         env:
           TMPDIR: /tmp
         run: python -B tests/sql-conflicts.py --server localhost --user sa --trust-server-certificate --sqlcmd "$RUNNER_TEMP/sqlcmd"
+      - name: Check SQL Server checkpoint answers against the engine
+        env:
+          TMPDIR: /tmp
+        run: python -B tests/sql_checkpoint_facts.py --server localhost --user sa --trust-server-certificate --sqlcmd "$RUNNER_TEMP/sqlcmd"
 
   deploy:
     if: github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/main'
