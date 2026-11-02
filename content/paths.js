@@ -52581,7 +52581,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "CancelExport requests cancellation and belongs to the export workflow owner; ExportFailed reports an observed failure; GetExportStatus queries that owner's recorded status. ExportRequested may follow a committed accepted job, while ExportCompleted follows durable completion. Cancellation can be rejected when the job has already completed.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which of these names an event rather than a command?",
+            "options": [
+              "ExportRequested",
+              "GenerateExport",
+              "SendExportEmail"
+            ],
+            "correct": 0,
+            "explanation": "An event reports something that already happened, so it is named in the past tense. GenerateExport and SendExportEmail ask an owner to do something, which it can accept or reject."
+          }
+        ]
       },
       {
         "id": "topologies",
@@ -52743,7 +52755,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Ten export jobs go onto one work queue served by two competing workers. How many completed jobs should there be?",
+            "options": [
+              "10",
+              "20",
+              "5"
+            ],
+            "correct": 0,
+            "explanation": "Competing workers on one subscription share the work: each job goes to one of them. Independent copies, such as for audit and notifications, need separate subscriptions."
+          }
+        ]
       },
       {
         "id": "envelopes",
@@ -52814,7 +52838,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Use job j-4 with event e-17 for ExportRequested and a different stable event ID for ExportCompleted. Repeated e-17 delivery is suppressed within the same consumer, while the new completion fact is retained. Correlation links both facts to the original request; it is not the deduplication key.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does the lab's validate() do with a v1 event that also carries a correlation_id field?",
+            "options": [
+              "Raises ValueError: unexpected or missing envelope fields",
+              "Accepts it and ignores correlation_id",
+              "Accepts it and keeps correlation_id"
+            ],
+            "correct": 0,
+            "explanation": "The v1 teaching envelope is strict: exactly id, job_id, type, version and value. Adding correlation metadata is a versioned contract change, covered in lesson 14."
+          }
+        ]
       },
       {
         "id": "acceptance",
@@ -52965,7 +53001,19 @@ const LEARNING_PATHS = [
             2,
             3
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A producer loses the confirm for e-17 (value 7) and republishes it, so consumer 'projection' receives it twice. What is the projection total afterwards?",
+            "options": [
+              "7: the second consume returns False and changes nothing",
+              "14: each delivery adds 7",
+              "0: the duplicate cancels the first"
+            ],
+            "correct": 0,
+            "explanation": "The inbox key (consumer, event ID) already exists for the second delivery, so consume skips the effect. Republishing with the same ID is safe because the consumer deduplicates."
+          }
+        ]
       },
       {
         "id": "delivery-semantics",
@@ -53027,7 +53075,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "The SQLite inbox/projection transaction establishes one committed local effect per consumer/event key across repeated delivery. Sending an email is outside that transaction. Use a provider idempotency key or retained receipts and reconciliation; if those are unavailable, preserve the uncertain state and acknowledge that duplicates cannot be eliminated by the local inbox alone.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A consumer commits its inbox row and projection update in one SQLite transaction, and sends an email between those statements. Which effect is made effectively once?",
+            "options": [
+              "The projection update; the email falls outside SQLite rollback",
+              "Both the projection update and the email",
+              "Neither, because delivery is at-least-once"
+            ],
+            "correct": 0,
+            "explanation": "A local transaction makes one database effect effectively once for a stable key. The email is an external effect; it needs a provider idempotency key or reconciliation."
+          }
+        ]
       },
       {
         "id": "consumer-lifecycle",
@@ -53197,7 +53257,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "consume(db, 'projection', event, crash=True) fails before its transaction commits, and the broker redelivers the event. What does the second consume return, and what is the total?",
+            "options": [
+              "True, and the total is 7: the crash rolled back the inbox row",
+              "False, and the total is 0: the inbox row survived the crash",
+              "False, and the total is 7"
+            ],
+            "correct": 0,
+            "explanation": "The crash happens inside the transaction, so the inbox row and the projection change both roll back. Replay must then do the work, and it does."
+          }
+        ]
       },
       {
         "id": "durability",
@@ -53245,7 +53317,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Process restart requires durable local state and broker definitions/messages appropriate to the product. Host loss may also require replicated durable storage and a tested failover path. Operator deletion needs separately protected backup/recovery and ownership controls. The local SQLite suite does not test broker replication or recovery after deletion.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "create_job writes j-4 and e-17 to a file-backed database, the connection closes and a new connection opens the same file. What does pending() return?",
+            "options": [
+              "The e-17 event, still unsent",
+              "An empty list, because the connection closed",
+              "Two copies of e-17"
+            ],
+            "correct": 0,
+            "explanation": "The committed outbox row is on disk, so a restarted relay finds it. This shows durability across a restart of one file, not survival of disk or host loss."
+          }
+        ]
       },
       {
         "id": "routing",
@@ -53300,7 +53384,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Use ExportRequested for the authorized export worker and ExportCompleted for independent audit and notification subscribers. Document routing keys, subscriber owners and retry/retention policies. An unroutable critical event needs a visible return/error or equivalent broker-specific observation; it cannot silently disappear while the UI reports success.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Consumers 'audit' and 'notifications' each consume e-17 for job j-4 with value 7. What are their projection totals?",
+            "options": [
+              "7 for each consumer",
+              "7 for the first consumer and 0 for the second",
+              "14 for each consumer"
+            ],
+            "correct": 0,
+            "explanation": "Each logical subscriber has its own inbox key, so each processes e-17 once. Deduplication is scoped to the consumer, not global."
+          }
+        ]
       },
       {
         "id": "idempotent-consumers",
@@ -53754,7 +53850,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Consumer 'projection' already processed e-17 with value 7. Another event arrives with ID e-17 but value 8. What does consume do?",
+            "options": [
+              "Raises ValueError: event identity collision",
+              "Returns False, treating it as a duplicate",
+              "Adds 8 to the total"
+            ],
+            "correct": 0,
+            "explanation": "The inbox stores the original payload. The same ID with a different payload is a collision, not a replay, so the lab rejects it instead of hiding it."
+          }
+        ]
       },
       {
         "id": "transactional-outbox",
@@ -53900,7 +54008,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "create_job(db, 'j-4', 'e-17', 7, crash=True) fails after inserting the job and before inserting the outbox row. What remains in the database?",
+            "options": [
+              "Neither the job row nor the outbox row",
+              "The job row only",
+              "The outbox row only"
+            ],
+            "correct": 0,
+            "explanation": "Both inserts are in one transaction, so the crash rolls back the job too. There is never a committed business change without its pending event."
+          }
+        ]
       },
       {
         "id": "retry-budget",
@@ -53956,7 +54076,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "An invalid required field will not become valid if the payload stays unchanged. Quarantine the message immediately. A transient dependency failure gets bounded attempts and usefulness deadlines; the reference returns retry delays 1 and 2 for attempts 1 and 2, then quarantine at attempt 3. Timed execution and persistence are not implemented by this classifier.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does retry_decision(1, False) return?",
+            "options": [
+              "Quarantine at once, because the failure is not transient",
+              "Retry after 1 second",
+              "Retry after 2 seconds"
+            ],
+            "correct": 0,
+            "explanation": "Malformed or permanent failures are not retried: retrying would repeat the same failure. Only transient failures within the attempt budget get a delay."
+          }
+        ]
       },
       {
         "id": "dead-letter-replay",
@@ -54106,7 +54238,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A version 2 ExportRequested event reaches the v1 lab consumer. What happens?",
+            "options": [
+              "validate raises 'unsupported version' and no inbox row is written",
+              "The consumer stores it and skips the effect",
+              "The consumer applies it as if it were version 1"
+            ],
+            "correct": 0,
+            "explanation": "Validation runs before the transaction, so nothing is recorded. The event should go to quarantine until a compatible consumer is deployed and a bounded replay is tested."
+          }
+        ]
       },
       {
         "id": "ordering",
@@ -54161,7 +54305,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "A1 before A2 and B1 before B2 are per-aggregate constraints; A and B can usually process concurrently. Arrival and completion ordering differ under retry or multiple workers. Version checks can detect gaps/stale state, but increment ledgers cannot arbitrarily discard an earlier operation. Partition changes require reviewing how keys remain consistently ordered.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Version 4 of a change arrives before version 3. Which projection can safely ignore the late version 3?",
+            "options": [
+              "A last-value projection whose contract allows it",
+              "An incrementing ledger",
+              "Any projection, as long as it has a timestamp"
+            ],
+            "correct": 0,
+            "explanation": "A last-value view only needs the newest state, so a stale update can be dropped. A ledger must apply every change, so it has to buffer or fetch the missing version."
+          }
+        ]
       },
       {
         "id": "schemas",
@@ -54217,7 +54373,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Test all producer-v1/v2 and consumer-v1/v2 combinations actually supported. Retain job/event identity types. Quarantine a malformed payload rather than changing its values to make it pass validation. The supplied strict v1 parser rejects unknown fields, so adding display_name requires a parser/contract change and tests before its producer is released.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A producer starts sending job_id as the integer 4 instead of the string 'j-4'. What does the lab's validate() do?",
+            "options": [
+              "Raises ValueError: job_id must be a string identifier",
+              "Accepts it and stores 4",
+              "Converts it to the string '4'"
+            ],
+            "correct": 0,
+            "explanation": "Changing an identifier's type breaks deduplication and needs a deliberate migration. A strict reader rejects it rather than coercing it silently."
+          }
+        ]
       },
       {
         "id": "backpressure",
@@ -54273,7 +54441,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "The burst adds 1200 jobs. At 95 arrivals/s and 100 completions/s, net drain is 5/s and ideal drain time is 240 seconds. Bound worker concurrency and outstanding deliveries against downstream limits. If queue age approaches expiry, reject/defer new work under an explicit policy rather than accept inevitable failure.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Jobs arrive at 150/s while workers complete 100/s for 30 seconds. Arrivals then drop to 70/s. Ideally, how long does the backlog take to drain?",
+            "options": [
+              "50 seconds",
+              "30 seconds",
+              "21 seconds"
+            ],
+            "correct": 0,
+            "explanation": "The burst adds (150 − 100) × 30 = 1,500 jobs. At 70/s the net drain is 100 − 70 = 30 jobs/s, so 1,500 / 30 = 50 seconds, ignoring variable service time and retries."
+          }
+        ]
       },
       {
         "id": "stream-replay",
@@ -54321,7 +54501,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "A consumer ten days behind a seven-day retained log cannot read already expired history. Recover from a protected snapshot or authoritative source, then reconcile the retained tail. Build the new analytics projection with a separate identity and suppressed external effects; offset reset alone cannot recover deleted records.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A log consumer commits its offset before performing the effect, then crashes. What happens after restart?",
+            "options": [
+              "It resumes after that record, so the effect may be skipped",
+              "It replays that record, so the effect may happen twice",
+              "Nothing is lost, because the record is retained"
+            ],
+            "correct": 0,
+            "explanation": "The committed offset says the record is done. Committing after the effect instead permits replay, which requires duplicate-safe effects."
+          }
+        ]
       },
       {
         "id": "sagas",
@@ -54369,7 +54561,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Track reservation, payment pending/uncertain, confirmed, release pending and manual-intervention states durably. Reconcile uncertain charges before charging again or releasing as failed. A permanent charge failure can trigger reservation release; failed release/refund requires an owner and retry/reconciliation. An email has no true transactional inverse.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "In a seat-booking saga, the outcome of the charge is uncertain after a timeout. What should the workflow do next?",
+            "options": [
+              "Reconcile with the provider before charging again or declaring failure",
+              "Charge again immediately",
+              "Release the seat and report failure"
+            ],
+            "correct": 0,
+            "explanation": "The charge may have succeeded. Retrying could charge twice and releasing could lose a paid seat, so the uncertain step is resolved first and recorded durably."
+          }
+        ]
       },
       {
         "id": "security",
@@ -54431,7 +54635,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Grant the exporter only its request consumption and completion publication actions, audit only sanitized completion reads, and replay operators separately reviewed access. Check tenant data against trusted ownership. Plan actual broker allowed/denied tests and TLS evidence; the Python suite does not authenticate a broker principal.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "An authenticated producer sends a message containing tenant_id 'acme'. What does that field establish?",
+            "options": [
+              "Nothing on its own: it must be checked against the trusted context",
+              "That the producer belongs to acme",
+              "That acme authorized the message"
+            ],
+            "correct": 0,
+            "explanation": "A field in a payload is data, not authorization. The consumer compares it with the identity the broker authenticated and the rights granted to that identity."
+          }
+        ]
       },
       {
         "id": "observability",
@@ -54486,7 +54702,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Correlate job ID, event ID and attempt through accepted, retried and completed states. Completion latency includes queue wait plus processing. Alert on oldest pending age and dead-letter age with an owner/runbook. Compare worker availability and error classes to distinguish unavailable capacity from poison messages.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Event e-17 is delivered twice to the same consumer. How many completed exports should the business metric count?",
+            "options": [
+              "1",
+              "2",
+              "0, until the duplicate is resolved"
+            ],
+            "correct": 0,
+            "explanation": "Only the first consume applies the effect; the second returns False. Count duplicate deliveries separately so they do not inflate completions."
+          }
+        ]
       },
       {
         "id": "failure-tests",
@@ -54548,7 +54776,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Run the supplied suite and retain actual runtime/output. Add a replay after reopening the database between consumption and sent marking; one projection effect must remain. For a real broker, close the consumer connection before and after commit, inspect redelivery and test configured durable queue recovery. These are different execution boundaries.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does mark_sent(db, 'e-99') do when no outbox row has that ID?",
+            "options": [
+              "Raises ValueError: unknown outbox event",
+              "Does nothing and returns",
+              "Inserts e-99 as already sent"
+            ],
+            "correct": 0,
+            "explanation": "The update must change exactly one row. Failing loudly exposes a relay bug instead of reporting success for an event that was never recorded."
+          }
+        ]
       },
       {
         "id": "broker-choice",
@@ -54610,7 +54850,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Write an ADR comparing a conventional or managed work queue with a retained log. State required routing, replay window, ordering scope, workload assumptions, access control and operations owner. Define a representative measured experiment that could reverse the choice; do not invent benchmark throughput or cost.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Before introducing a separate broker for the notebook's small export queue, what does the lesson say to consider?",
+            "options": [
+              "Whether a database-backed job worker is sufficient",
+              "Which product has the highest published throughput",
+              "Whether a partitioned log can replace the database"
+            ],
+            "correct": 0,
+            "explanation": "Choose from required semantics and operating costs, not product names. A small queue and independent audit events may not need new infrastructure yet."
+          }
+        ]
       },
       {
         "id": "launch-review",
@@ -54672,7 +54924,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Inventory business database, outbox, inbox, broker and projection recovery points. Restoring an older inbox can repeat previously committed external effects, so compare durable receipts and reconcile uncertainty before resuming relay. Define stop criteria for duplicate effects, oldest-job age and poison records; distinguish local tests from live broker evidence.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The business database is restored from an older backup, including its inbox table. What risk does that create?",
+            "options": [
+              "Events processed after the backup can apply their effects again",
+              "Every event is permanently lost",
+              "Nothing, because the broker keeps acknowledgements"
+            ],
+            "correct": 0,
+            "explanation": "The restored inbox no longer remembers later event IDs, so redelivered or replayed events look new. Recovery needs reconciliation and an isolated replay mode."
+          }
+        ]
       }
     ],
     "stages": [
@@ -54701,7 +54965,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Use GenerateExport to request work; commit ExportRequested with a job; worker commits completion before acknowledging; ExportCompleted reaches independent audit and notification subscribers. Stable event IDs make uncertain delivery replay recognizable.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does validate() do with an event whose id is ' e-17' (with a leading space)?",
+            "options": [
+              "Raises ValueError: identifiers must not have surrounding whitespace",
+              "Strips the space and accepts e-17",
+              "Accepts ' e-17' as a different ID"
+            ],
+            "correct": 0,
+            "explanation": "Quietly trimming or accepting near-identical IDs would make deduplication unreliable. The strict contract rejects them."
+          },
+          {
+            "question": "create_job(db, 'j-4', 'e-17', 7) runs twice with the same arguments. How many job and outbox rows exist?",
+            "options": [
+              "One job row and one outbox row",
+              "Two of each",
+              "It raises an integrity error on the second call"
+            ],
+            "correct": 0,
+            "explanation": "The second call finds e-17 with the same payload in the outbox and returns without writing, so a retried request is safe."
+          },
+          {
+            "question": "What does validate() do with an event of type ExportCompleted?",
+            "options": [
+              "Raises ValueError: unsupported type",
+              "Accepts it, since any past-tense event is valid",
+              "Accepts it and converts it to ExportRequested"
+            ],
+            "correct": 0,
+            "explanation": "The v1 lab consumer understands one event type. Unknown types are rejected so they can be routed or quarantined deliberately."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -54728,7 +55024,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Commit job/outbox together and relay stable IDs; commit inbox/projection together. On a post-commit pre-ack crash, replay reads the inbox and skips the effect. Invalid schema goes to quarantine; transient failure retries inside a finite usefulness budget.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does retry_decision(3, True) return with the default max_attempts of 3?",
+            "options": [
+              "Quarantine: the attempt budget is used up",
+              "Retry after 4 seconds",
+              "Retry after 3 seconds"
+            ],
+            "correct": 0,
+            "explanation": "Even a transient failure stops at the attempt limit and moves to quarantine with its ID and failure details."
+          },
+          {
+            "question": "With max_attempts=4, retry_decision schedules retries after attempts 1, 2 and 3 of a transient failure. What is their total wait, and does it fit a job that expires after 5 seconds?",
+            "options": [
+              "7 seconds, which already exceeds the 5-second expiry",
+              "6 seconds, which exceeds it",
+              "3 seconds, which fits"
+            ],
+            "correct": 0,
+            "explanation": "The delays double: 1 + 2 + 4 = 7 seconds before counting handler time. The retry budget must respect the job's usefulness deadline."
+          },
+          {
+            "question": "The relay publishes e-17 and the consumer applies it, but the relay crashes before mark_sent commits. After restart, what does pending() return?",
+            "options": [
+              "e-17, so it will be published again",
+              "An empty list",
+              "e-17 marked as sent"
+            ],
+            "correct": 0,
+            "explanation": "The sent marker never committed, so the relay retries the same event ID. That duplicate is by design; the consumer's inbox makes it harmless."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -54755,7 +55083,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Separate the locally proven SQLite transaction from optional real broker durability, ACL and connection-loss tests. Rebuild projections in isolated mode; reconcile uncertain external effects; inspect restored inbox/outbox histories before resuming relay.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does validate() do with value 2**63?",
+            "options": [
+              "Raises ValueError: the value must fit a signed 64-bit SQLite integer",
+              "Stores it as a float",
+              "Stores it, since Python integers have no limit"
+            ],
+            "correct": 0,
+            "explanation": "SQLite integers are signed 64-bit, so the contract bounds the value before it reaches the database rather than failing inside a transaction."
+          },
+          {
+            "question": "To rebuild a projection, e-17 is consumed again under the new consumer name 'projection-v2'. 'projection' had already processed it. What happens?",
+            "options": [
+              "It returns True; projection-v2 totals 7 and projection is unchanged",
+              "It returns False, because e-17 was already processed",
+              "Both projections total 14"
+            ],
+            "correct": 0,
+            "explanation": "A new consumer identity has its own inbox keys, so the rebuild processes history once without touching the live projection."
+          },
+          {
+            "question": "Two events for job j-4, e-17 (value 7) and e-18 (value 5), are consumed by 'projection'. What is the total?",
+            "options": [
+              "12",
+              "7, because events for the same job are deduplicated",
+              "5, the latest value"
+            ],
+            "correct": 0,
+            "explanation": "Deduplication is by event ID, not business key. Deduplicating by job would wrongly discard later facts about the same job."
+          }
+        ]
       }
     ],
     "downloads": [
