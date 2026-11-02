@@ -72,6 +72,8 @@ jobs:
         run: python tests/network_checkpoint_facts.py
       - name: Check Messaging checkpoint answers against the course lab
         run: python tests/messaging_checkpoint_facts.py
+      - name: Check Data Engineering checkpoint answers against the course labs
+        run: python tests/data_engineering_checkpoint_facts.py
 
   react:
     runs-on: ubuntu-latest

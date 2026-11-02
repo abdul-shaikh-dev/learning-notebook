@@ -16685,6 +16685,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "After importing sample_orders.csv (o1: 1250 cents and o2: 750 cents, both on September 1), what does reconcile() report under utc_days?",
+            "options": [
+              "One row: 2026-09-01 with 2000 cents",
+              "Two rows, one per order",
+              "One row with 2 orders and no total"
+            ],
+            "correct": 0,
+            "explanation": "The stored grain is one row per order; the daily view groups those rows by UTC day. Changing grain is a deliberate transformation, not a property of the stored rows."
+          }
         ]
       },
       {
@@ -16847,7 +16859,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Where should a pipeline keep source records exactly as they arrived?",
+            "options": [
+              "In the raw zone, under its access and retention policy",
+              "In the curated zone, beside the validated results",
+              "Nowhere: discard them once the target is loaded"
+            ],
+            "correct": 0,
+            "explanation": "The raw zone keeps source records for lineage and reprocessing; the curated zone holds validated data prepared for a consumer. Raw does not mean unrestricted or permanent."
+          }
+        ]
       },
       {
         "id": "csv-and-encoding",
@@ -16909,6 +16933,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "sample_orders.csv is saved as UTF-8 with a byte-order mark. What does read_batch do?",
+            "options": [
+              "Raises ValueError: exact ordered headers required",
+              "Imports both orders normally",
+              "Raises UnicodeDecodeError"
+            ],
+            "correct": 0,
+            "explanation": "Strict UTF-8 decoding keeps the mark as \\ufeff at the start of the first header, so it no longer reads order_id. Accept utf-8-sig only if the producer contract says so."
+          }
         ]
       },
       {
@@ -16963,6 +16999,18 @@ const LEARNING_PATHS = [
             "section": "SQLite and Python types",
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A row has amount_cents 12.50. What does read_batch do?",
+            "options": [
+              "Raises ValueError: amount contract",
+              "Stores 1250 cents",
+              "Stores 12 cents"
+            ],
+            "correct": 0,
+            "explanation": "The contract is nonnegative integer cents written as digits. A decimal amount is a different representation, so it is rejected rather than converted by guesswork."
           }
         ]
       },
@@ -17019,6 +17067,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "practice.db already holds the two sample orders. A second, three-row batch with one negative amount is imported under a new batch ID. How many orders does practice.db hold afterwards?",
+            "options": [
+              "2: the whole second batch is rejected before anything is written",
+              "4: the two valid rows are kept",
+              "0: the failure rolls back the earlier batch too"
+            ],
+            "correct": 0,
+            "explanation": "The reference rejects the entire batch at validation, before it opens a transaction. Earlier committed batches are unaffected."
+          }
         ]
       },
       {
@@ -17073,6 +17133,18 @@ const LEARNING_PATHS = [
             "section": "Aware and naive objects",
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An order occurred at 2026-09-01T23:30:00Z. On which calendar date did it happen at UTC+05:30?",
+            "options": [
+              "2026-09-02",
+              "2026-09-01",
+              "2026-08-31"
+            ],
+            "correct": 0,
+            "explanation": "23:30 UTC plus 5 hours 30 minutes is 05:00 the next day. The UTC-day report places it on September 1; which calendar a business reports by belongs in the data contract."
           }
         ]
       },
@@ -17136,6 +17208,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In Python, what does 0.10 + 0.20 == 0.30 evaluate to?",
+            "options": [
+              "False",
+              "True",
+              "It raises TypeError"
+            ],
+            "correct": 0,
+            "explanation": "Binary floating point cannot represent 0.1, 0.2 or 0.3 exactly, so the sum is 0.30000000000000004. Integer cents or Decimal keep exact amounts."
+          }
         ]
       },
       {
@@ -17198,6 +17282,18 @@ const LEARNING_PATHS = [
             "section": "Connection context manager",
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "practice.db holds o1 and o2 from batch sept-01. Batch sept-02 contains o3 and then o1 again. What does practice.db hold after the import fails?",
+            "options": [
+              "Only o1 and o2: o3 and the sept-02 run marker were rolled back",
+              "o1, o2 and o3, with no sept-02 marker",
+              "o1, o2 and o3, with a sept-02 marker"
+            ],
+            "correct": 0,
+            "explanation": "The repeated o1 violates the primary key, so the transaction rolls back every write in it, including o3 and the run marker."
           }
         ]
       },
@@ -17808,7 +17904,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "sample_orders.csv was imported as sept-01. The same two orders are saved with Windows (CRLF) line endings and imported again as sept-01. What happens?",
+            "options": [
+              "ValueError: batch identity conflicts with payload",
+              "replay, because the orders are the same",
+              "committed, adding two more orders"
+            ],
+            "correct": 0,
+            "explanation": "The fingerprint is a hash of the exact bytes, and CRLF changes the bytes. Equivalent formatting is a conflict unless a stable canonicalization policy says otherwise."
+          }
+        ]
       },
       {
         "id": "incremental-watermarks",
@@ -17878,6 +17986,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An extractor saved a watermark of occurred_at = 10:05. A row for an event at 09:59 is inserted afterwards. Does WHERE occurred_at > '10:05' return it?",
+            "options": [
+              "No, not in this or any later run",
+              "Yes, in the next run",
+              "Yes, once the rows are sorted"
+            ],
+            "correct": 0,
+            "explanation": "The filter excludes the row before any sorting. Event time describes the business event; a reliable cursor tracks source changes, such as a sequence number."
+          }
         ]
       },
       {
@@ -17932,6 +18052,18 @@ const LEARNING_PATHS = [
             "section": "SQL Server CDC overview",
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In revision_lab, order A has revision 2 worth 150 cents on 2026-09-28. Revision 3 arrives as a tombstone (deleted, 0 cents). What does totals() return?",
+            "options": [
+              "{}: the day has no live orders",
+              "{'2026-09-28': 150}",
+              "{'2026-09-28': 0}"
+            ],
+            "correct": 0,
+            "explanation": "The tombstone is a meaningful change: the projection marks the order deleted and totals counts only live orders."
           }
         ]
       },
@@ -18074,7 +18206,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "TB"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Two orders for customer c1 total 2000 cents. c1 appears three times in the customer dimension. What does SUM(o.amount_cents) over the join return?",
+            "options": [
+              "6000",
+              "2000",
+              "4000"
+            ],
+            "correct": 0,
+            "explanation": "Each order matches all three customer rows, so the join yields six rows and three times the real total. Test key uniqueness before aggregating."
+          }
+        ]
       },
       {
         "id": "slowly-changing-dimensions",
@@ -18143,6 +18287,18 @@ const LEARNING_PATHS = [
             "section": "SQL Server table constraints",
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Two versions of a customer cover 2026-09-01 to 2026-09-10 and 2026-09-10 onwards, but the join uses BETWEEN, which includes both ends. How many versions does an event on 2026-09-10 join to?",
+            "options": [
+              "2",
+              "1",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "BETWEEN treats both ranges as closed, so the boundary day falls in both and the fact is counted twice. Half-open [start, end) intervals give each instant one version."
           }
         ]
       },
@@ -18299,7 +18455,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "TB"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "In the lesson's DAG, extract → validate → load → reconcile → publish, what must publish depend on?",
+            "options": [
+              "Successful reconciliation",
+              "Only a successful load",
+              "The notification task"
+            ],
+            "correct": 0,
+            "explanation": "Publishing before reconciliation would release unchecked results. The notification task observes publication; it is not a prerequisite for it."
+          }
+        ]
       },
       {
         "id": "late-data-and-windows",
@@ -18368,6 +18536,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Concept and type behavior checked against primary documentation; the local lab does not execute the external platform."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In revision_lab, order A's revision 1 contributes 100 cents to 2026-09-28. Revision 2 changes it to 150 cents. What does totals() return?",
+            "options": [
+              "{'2026-09-28': 150}",
+              "{'2026-09-28': 250}",
+              "{'2026-09-28': 100}"
+            ],
+            "correct": 0,
+            "explanation": "The projection keeps the current revision of each order and sums those, so the corrected contribution replaces the old one instead of adding to it."
+          }
         ]
       },
       {
@@ -18430,6 +18610,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Concept and type behavior checked against primary documentation; the local lab does not execute the external platform."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A 300 KiB file that is also not valid UTF-8 is passed to read_batch. Which error is raised?",
+            "options": [
+              "ValueError: batch exceeds byte limit",
+              "UnicodeDecodeError",
+              "ValueError: exact ordered headers required"
+            ],
+            "correct": 0,
+            "explanation": "The reader takes at most MAX_BYTES + 1 bytes and checks the size before decoding anything, so an oversized file is rejected without materializing or parsing it."
+          }
         ]
       },
       {
@@ -18485,6 +18677,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A producer adds a currency column at the end of the header. What does the v1 read_batch do?",
+            "options": [
+              "Raises ValueError: exact ordered headers required",
+              "Imports the rows and ignores currency",
+              "Imports the rows and stores currency"
+            ],
+            "correct": 0,
+            "explanation": "Adding currency changes how amounts may be summed, so it needs a new contract version rather than a looser reader."
+          }
         ]
       },
       {
@@ -18539,6 +18743,18 @@ const LEARNING_PATHS = [
             "section": "Query result iteration",
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The two sample orders are written in the opposite row order and imported into a fresh database. Compared with the original file, what changes?",
+            "options": [
+              "The fingerprint differs; the orders, IDs and 2000-cent total are the same",
+              "Nothing: the fingerprint and totals match",
+              "The total changes because the rows moved"
+            ],
+            "correct": 0,
+            "explanation": "A hash detects byte changes, not business changes. Reconciliation compares counts, identifiers and amounts to show what the data actually says."
           }
         ]
       },
@@ -18602,6 +18818,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A customer deletion request applies to the orders dataset. Which copies may it need to reach?",
+            "options": [
+              "Raw zones, curated tables, backups and downstream exports, as the policy requires",
+              "Only the curated table that users query",
+              "None, if the data is encrypted"
+            ],
+            "correct": 0,
+            "explanation": "Data is copied as it moves through a pipeline, so deletion must follow it. Encryption does not decide access or retention."
+          }
         ]
       },
       {
@@ -18664,6 +18892,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Concept and type behavior checked against primary documentation; the local lab does not execute the external platform."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The optional T-SQL schema stores occurred_at as DATETIME2. What does that type record about the timezone?",
+            "options": [
+              "Nothing: the application must normalize and enforce UTC",
+              "The UTC offset of each value",
+              "The server's local timezone"
+            ],
+            "correct": 0,
+            "explanation": "DATETIME2 has no offset, so UTC is a contract the application keeps. DATETIMEOFFSET is the deliberate alternative when the offset must be stored."
+          }
         ]
       },
       {
@@ -18718,6 +18958,18 @@ const LEARNING_PATHS = [
             "section": "Transaction commit and rollback",
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An import fails with 'batch identity conflicts with payload'. The same call is retried three more times. What happens?",
+            "options": [
+              "The same conflict every time, with no rows written",
+              "The third retry succeeds",
+              "Each retry adds the new orders"
+            ],
+            "correct": 0,
+            "explanation": "A conflict is permanent for that ID and payload: retrying cannot fix it. Inspect the stored run and the new file, then make a reviewed attempt."
           }
         ]
       },
@@ -18774,6 +19026,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which claim does the passing local baseline not establish?",
+            "options": [
+              "That the SQL Server adapter and distributed orchestration work",
+              "That the same batch replays without new rows",
+              "That a conflicting payload is rejected"
+            ],
+            "correct": 0,
+            "explanation": "The baseline is single-process SQLite. Replay and conflict handling are tested; SQL Server, orchestration, streaming and scale are separate extensions."
+          }
         ]
       }
     ],
@@ -18805,7 +19069,39 @@ const LEARNING_PATHS = [
             "Unknown/missing amounts are not silently replaced with zero."
           ],
           "solution": "from pathlib import Path\nfrom pipeline_lab import read_batch\nrows, fingerprint = read_batch(Path(\"sample_orders.csv\"))\nassert len(rows) == 2\nassert sum(row[3] for row in rows) == 2000\n# Compare read_batch only after writing your independent parser."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A row has order_id 'o 1' (with a space). What does read_batch do?",
+            "options": [
+              "Raises ValueError: identifier contract",
+              "Stores it as o1",
+              "Stores it as 'o 1'"
+            ],
+            "correct": 0,
+            "explanation": "Identifiers are 1 to 64 letters, digits, hyphens or underscores. Rejecting near-identical IDs keeps primary keys and joins reliable."
+          },
+          {
+            "question": "A row has occurred_at 2026-09-01T10:00:00+00:00. What does read_batch do?",
+            "options": [
+              "Raises ValueError: UTC seconds timestamp required",
+              "Accepts it, because +00:00 is UTC",
+              "Converts it to local time"
+            ],
+            "correct": 0,
+            "explanation": "The contract requires the exact form ending in Z. +00:00 is the same instant, but accepting several spellings complicates comparison and fingerprints."
+          },
+          {
+            "question": "A row has five values: o1,c1,2026-09-01T10:00:00Z,1250,extra. What does read_batch do?",
+            "options": [
+              "Raises ValueError: row field count",
+              "Imports the first four values",
+              "Imports the row and stores extra in a new column"
+            ],
+            "correct": 0,
+            "explanation": "csv.DictReader collects surplus values under a None key. The reader checks for it rather than silently dropping data."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -18834,7 +19130,39 @@ const LEARNING_PATHS = [
             "Explains exact-byte fingerprint and single-process trusted-database assumptions."
           ],
           "solution": "\"\"\"Bounded single-process SQLite ETL reference. Python 3.11+, no packages.\n\nFour-field CSV, nonnegative integer cents, UTC Z timestamps, exact-byte batch\nfingerprints. Transaction coordinates orders and run marker. Not a live SQL\nServer adapter, orchestrator, streaming engine or power-loss certification.\n\"\"\"\nimport argparse\nimport csv\nfrom datetime import datetime, timezone\nimport hashlib\nimport io\nfrom pathlib import Path\nimport re\nimport sqlite3\nfrom tempfile import TemporaryDirectory\n\nFIELDS=['order_id','customer_id','occurred_at','amount_cents']\nMAX_BYTES=262144\nMAX_ROWS=1000\nSCHEMA=\"\"\"\nCREATE TABLE IF NOT EXISTS runs (\n    batch_id TEXT PRIMARY KEY, fingerprint TEXT NOT NULL, row_count INTEGER NOT NULL);\nCREATE TABLE IF NOT EXISTS orders (\n    order_id TEXT PRIMARY KEY, customer_id TEXT NOT NULL,\n    occurred_at TEXT NOT NULL, amount_cents INTEGER NOT NULL CHECK(amount_cents >= 0));\n\"\"\"\n\ndef identifier(value):\n    if not isinstance(value,str) or not re.fullmatch(r'[A-Za-z0-9_-]{1,64}',value):\n        raise ValueError('identifier contract')\n    return value\n\ndef read_batch(source):\n    with Path(source).open('rb') as stream: raw=stream.read(MAX_BYTES+1)\n    if len(raw)>MAX_BYTES: raise ValueError('batch exceeds byte limit')\n    text=raw.decode('utf-8')\n    reader=csv.DictReader(io.StringIO(text,newline=''),strict=True)\n    if reader.fieldnames != FIELDS: raise ValueError('exact ordered headers required')\n    records=[]\n    seen=set()\n    for number,row in enumerate(reader,start=1):\n        if number>MAX_ROWS: raise ValueError('batch exceeds row limit')\n        if set(row)!=set(FIELDS) or any(v is None for v in row.values()):\n            raise ValueError('row field count')\n        order=identifier(row['order_id']); customer=identifier(row['customer_id'])\n        if order in seen: raise ValueError('duplicate order in source')\n        seen.add(order)\n        value=row['amount_cents']\n        if not re.fullmatch(r'[0-9]{1,12}',value): raise ValueError('amount contract')\n        amount=int(value)\n        instant=row['occurred_at']\n        if not re.fullmatch(r'\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z',instant):\n            raise ValueError('UTC seconds timestamp required')\n        parsed=datetime.fromisoformat(instant.replace('Z','+00:00'))\n        if parsed.utcoffset()!=timezone.utc.utcoffset(parsed): raise ValueError('UTC required')\n        records.append((order,customer,instant,amount))\n    return records,hashlib.sha256(raw).hexdigest()\n\ndef import_csv(source,database,batch_id):\n    batch_id=identifier(batch_id)\n    if Path(source).resolve()==Path(database).resolve():\n        raise ValueError('source and target must be different paths')\n    records,fingerprint=read_batch(source)\n    connection=sqlite3.connect(database,timeout=2)\n    try:\n        # Schema initialization is separate; this single-process lab assumes a\n        # trusted compatible database. Data/marker transaction is explicit.\n        connection.executescript(SCHEMA)\n        with connection:\n            connection.execute('BEGIN IMMEDIATE')\n            existing=connection.execute('SELECT fingerprint FROM runs WHERE batch_id=?',(batch_id,)).fetchone()\n            if existing:\n                if existing[0]!=fingerprint: raise ValueError('batch identity conflicts with payload')\n                return 'replay'\n            connection.executemany('INSERT INTO orders VALUES (?,?,?,?)',records)\n            connection.execute('INSERT INTO runs VALUES (?,?,?)',(batch_id,fingerprint,len(records)))\n        return 'committed'\n    finally: connection.close()\n\ndef reconcile(database):\n    connection=sqlite3.connect(database)\n    try:\n        count,total=connection.execute('SELECT COUNT(*),COALESCE(SUM(amount_cents),0) FROM orders').fetchone()\n        ids=[r[0] for r in connection.execute('SELECT order_id FROM orders ORDER BY order_id')]\n        days=list(connection.execute('SELECT substr(occurred_at,1,10),SUM(amount_cents) FROM orders GROUP BY substr(occurred_at,1,10) ORDER BY 1'))\n        return {'orders':count,'total_cents':total,'ids':ids,'utc_days':days}\n    finally: connection.close()\n\ndef demo():\n    source=Path(__file__).with_name('sample_orders.csv')\n    with TemporaryDirectory() as folder:\n        database=Path(folder)/'practice.db'\n        print(import_csv(source,database,'sept-01'))\n        print(import_csv(source,database,'sept-01'))\n        result=reconcile(database)\n        print(f'orders={result[\"orders\"]} total_cents={result[\"total_cents\"]}')\n\ndef main():\n    parser=argparse.ArgumentParser(description=__doc__)\n    parser.add_argument('--demo',action='store_true')\n    parser.add_argument('source',nargs='?',type=Path)\n    parser.add_argument('database',nargs='?',type=Path)\n    parser.add_argument('batch_id',nargs='?')\n    args=parser.parse_args()\n    if args.demo and any((args.source,args.database,args.batch_id)): parser.error('choose demo or three arguments')\n    if not args.demo and not all((args.source,args.database,args.batch_id)): parser.error('provide source database batch_id')\n    try:\n        if args.demo: demo()\n        else:\n            print(import_csv(args.source,args.database,args.batch_id))\n            print(reconcile(args.database))\n        return 0\n    except (OSError,ValueError,csv.Error,sqlite3.Error) as error:\n        import sys\n        # Deliberately omit source rows and driver detail from shared output.\n        print(f'import failed: {type(error).__name__}; inspect the contract and local evidence',file=sys.stderr)\n        return 1\n\nif __name__=='__main__': raise SystemExit(main())\n"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "In revision_lab, revision 2 of order A has been applied. Revision 1 is then delivered again. What does apply return?",
+            "options": [
+              "'stale', and the total is unchanged",
+              "'applied', restoring revision 1",
+              "'replay'"
+            ],
+            "correct": 0,
+            "explanation": "A version number lets the projection detect an out-of-date change and keep the newer state."
+          },
+          {
+            "question": "Revision 2 of order A (150 cents) has been applied. Another revision 2 arrives with 175 cents. What does apply do?",
+            "options": [
+              "Raises ValueError: conflicting revision",
+              "Returns 'replay'",
+              "Replaces the amount with 175"
+            ],
+            "correct": 0,
+            "explanation": "The same revision must carry the same content. A different payload under one revision is a producer bug, so it fails loudly."
+          },
+          {
+            "question": "Order A is 100 cents on 2026-09-28. Revision 2 moves it, still 100 cents, to 2026-09-29. What does totals() return?",
+            "options": [
+              "{'2026-09-29': 100}",
+              "{'2026-09-28': 100, '2026-09-29': 100}",
+              "{'2026-09-28': 0, '2026-09-29': 100}"
+            ],
+            "correct": 0,
+            "explanation": "Both days are affected: the old day loses the order and the new day gains it. Rebuilding from the current revision handles both."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -18863,7 +19191,39 @@ const LEARNING_PATHS = [
             "Actual SQLite evidence is separate from optional orchestration/CDC/SQL Server work."
           ],
           "solution": "from pathlib import Path\nfrom tempfile import TemporaryDirectory\nfrom pipeline_lab import import_csv, reconcile\nwith TemporaryDirectory() as folder:\n    db = Path(folder) / \"portfolio.db\"\n    import_csv(Path(\"sample_orders.csv\"), db, \"portfolio-1\")\n    result = reconcile(db)\n    assert result[\"ids\"] == [\"o1\", \"o2\"]\n    assert result[\"orders\"] == 2 and result[\"total_cents\"] == 2000\n# Reference establishes baseline reconciliation. Implement extension separately."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "sample_orders.csv was committed as sept-01. The same file is imported again under a new batch ID, sept-01-retry. What happens?",
+            "options": [
+              "It fails on the duplicate order IDs, and no sept-01-retry run is recorded",
+              "replay",
+              "committed, adding two more orders"
+            ],
+            "correct": 0,
+            "explanation": "Replay protection is per batch ID, but order IDs are also globally unique. A new ID cannot sneak the same business orders in twice."
+          },
+          {
+            "question": "Two orders occurred at 2026-09-01T23:30:00Z and 2026-09-02T00:30:00Z, one hour apart. How many rows does reconcile() report under utc_days?",
+            "options": [
+              "2",
+              "1",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "The reference groups by UTC calendar date, so the orders fall on different days even though they are an hour apart."
+          },
+          {
+            "question": "In Python, what does Decimal('0.10') + Decimal('0.20') == Decimal('0.30') evaluate to?",
+            "options": [
+              "True",
+              "False",
+              "It raises TypeError"
+            ],
+            "correct": 0,
+            "explanation": "Decimal stores decimal digits exactly, so the sum is exactly 0.30. It suits domains that need decimal scale beyond integer cents."
+          }
+        ]
       }
     ],
     "downloads": [
