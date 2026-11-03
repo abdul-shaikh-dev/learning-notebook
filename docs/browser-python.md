@@ -12,6 +12,10 @@ Two lessons set `exercise.runLocally` with a reason and keep the static, copyabl
 
 The Python course's offline download includes the runtime files published by Python Problem Solving. The service worker serves a file listed by several courses from any saved owner.
 
+## Data analysis examples stay static
+
+Data analysis with Python shows each lesson's worked example as a highlighted, copyable code panel ending in an `# Output:` block, but has no Run button. Running them in the browser would need NumPy and pandas, with python-dateutil, pytz and six, loaded into the bundled runtime: an estimated 10 MB more to fetch and to save for offline use, on top of the 12 MB runtime. The pinned Pyodide 0.28.2 also ships NumPy 2.2.5 and pandas 2.3.1, not the course's pinned NumPy 2.5.3 and pandas 3.0.6, so its printed output could differ from what the lessons state. The examples are checked instead by `tests/data_analysis_examples.py` in the `data-science` CI job, which runs each one with the pinned libraries in a copy of the practice folder and fails if the printed output differs from the lesson.
+
 ## Runtime and offline use
 
 The first browser run fetches approximately 12 MB of runtime assets from this notebook's own host. Runtime files live with the course, outside the global offline shell. Saving Python Problem Solving in Offline & install includes the runtime, cases and lessons in the existing hash-verified course download. No external package installation is implemented. No account, API key, LLM or execution server is needed. The worker is an isolation mechanism for responsiveness, not a security boundary for hostile code; Python's JavaScript bridge exists. The notebook itself does not send draft code to a remote judge.
