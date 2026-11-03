@@ -54,8 +54,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "Two tickets take 10 and 30 hours. One has five messages and the other has one. The ticket mean is 20 hours. Expanding to message rows gives 80/6 hours, which answers a different question."
-          ]
+            "Two tickets take 10 and 30 hours; one has five messages and the other has one. At one row per ticket the mean is 20 hours. Repeating each ticket once per message gives six rows totalling 80 hours, a mean of 80/6 hours. That weights busy tickets more heavily and answers a different question."
+          ],
+          "example": "import pandas as pd\n\ntickets = pd.DataFrame({\"ticket_id\": [\"T1\", \"T2\"],\n                        \"hours\": [10, 30],\n                        \"messages\": [5, 1]})\nmessage_rows = tickets.loc[tickets.index.repeat(tickets[\"messages\"])]\n\nprint(tickets[\"hours\"].mean())\nprint(len(message_rows), message_rows[\"hours\"].sum())\nprint(round(message_rows[\"hours\"].mean(), 2))\n\n# Output:\n# 20.0\n# 6 80\n# 13.33"
         }
       ],
       "exercise": {
@@ -103,8 +104,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "`df = pd.read_csv(\"support_tickets.csv\")`; `df.shape` should be `(24, 8)`. `df[\"ticket_id\"].nunique()` should be 24. A shape of `(24, 1)` suggests a delimiter problem."
-          ]
+            "Run this from the practice folder. The file loads as 24 rows and 8 columns with 24 distinct ticket IDs. Reading it with the wrong delimiter still succeeds, but each line lands in a single column: a shape of `(24, 1)` signals a delimiter problem."
+          ],
+          "example": "import pandas as pd\n\ndf = pd.read_csv(\"support_tickets.csv\", dtype={\"ticket_id\": \"string\"})\nprint(df.shape)\nprint(df[\"ticket_id\"].nunique())\n\nwrong = pd.read_csv(\"support_tickets.csv\", sep=\";\")\nprint(wrong.shape)\n\n# Output:\n# (24, 8)\n# 24\n# (24, 1)"
         }
       ],
       "exercise": {
@@ -152,8 +154,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "`np.array([[1, 2, 3], [4, 5, 6]]).sum(axis=0)` returns `[5, 7, 9]`. Summing `axis=1` returns `[6, 15]`. The result length is a useful sanity check."
-          ]
+            "Summing `axis=0` collapses the two rows into one value per column; `axis=1` gives one value per row. NumPy prints arrays without commas. Multiplying an array by 60 converts each value, while multiplying a list repeats it. The length of each result is a useful sanity check."
+          ],
+          "example": "import numpy as np\n\ntable = np.array([[1, 2, 3], [4, 5, 6]])\nprint(table.shape)\nprint(table.sum(axis=0))\nprint(table.sum(axis=1))\n\nprint(np.array([2, 4, 6], dtype=float) * 60)\nprint([2, 4] * 2)\n\n# Output:\n# (2, 3)\n# [5 7 9]\n# [ 6 15]\n# [120. 240. 360.]\n# [2, 4, 2, 4]"
         }
       ],
       "exercise": {
@@ -201,8 +204,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "`pd.to_numeric(pd.Series([\"8\", \"bad\"]), errors=\"coerce\")` gives 8 and a missing value. That does not prove the second ticket resolved in zero hours."
-          ]
+            "Coercion turns `\"bad\"` into a missing value and counts one gap; it does not prove the second ticket resolved in zero hours. `errors=\"raise\"` stops instead. Kept as a string, the identifier `007` keeps its leading zeros; converted to a number it becomes 7."
+          ],
+          "example": "import pandas as pd\n\nraw = pd.Series([\"8\", \"bad\"])\nhours = pd.to_numeric(raw, errors=\"coerce\")\nprint(hours.tolist())\nprint(hours.isna().sum())\n\ntry:\n    pd.to_numeric(raw, errors=\"raise\")\nexcept ValueError:\n    print(\"errors='raise' stops at 'bad'\")\n\nids = pd.Series([\"007\"])\nprint(ids.iloc[0], pd.to_numeric(ids).iloc[0])\n\n# Output:\n# [8.0, nan]\n# 1\n# errors='raise' stops at 'bad'\n# 007 7"
         }
       ],
       "exercise": {
@@ -250,8 +254,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "`mask = (df[\"priority\"] == \"high\") & (df[\"resolution_hours\"] > 24)`. `df.loc[mask, [\"ticket_id\", \"resolution_hours\"]]` lists high-priority breaches only."
-          ]
+            "Each comparison sits in its own parentheses and `&` combines the two masks. Of 24 tickets, two are high priority and over 24 hours. Printing the row count before and after the filter shows that it changed the population, not only the columns."
+          ],
+          "example": "import pandas as pd\n\ndf = pd.read_csv(\"support_tickets.csv\", dtype={\"ticket_id\": \"string\"})\nmask = (df[\"priority\"] == \"high\") & (df[\"resolution_hours\"] > 24)\nprint(len(df), mask.sum())\nprint(df.loc[mask, [\"ticket_id\", \"resolution_hours\"]].to_string(index=False))\n\n# Output:\n# 24 2\n# ticket_id  resolution_hours\n#      T005                30\n#      T017                32"
         }
       ],
       "exercise": {
@@ -299,8 +304,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "Durations [4, missing, 8] have a known-value mean of 6 and a known count of 2. Filling the gap with zero gives 4 and changes the meaning of the measurement."
-          ]
+            "Durations 4, missing and 8 have one gap, two known values and a known-value mean of 6. Filling the gap with zero gives a mean of 4, which changes the meaning of the measurement. `duplicated` marks the second `T2` as a repeat of the first."
+          ],
+          "example": "import pandas as pd\n\nhours = pd.Series([4, None, 8])\nprint(hours.isna().sum(), hours.count(), hours.mean())\nprint(hours.fillna(0).mean())\n\nids = pd.Series([\"T1\", \"T2\", \"T2\"])\nprint(ids.duplicated().tolist())\n\n# Output:\n# 1 2 6.0\n# 4.0\n# [False, False, True]"
         }
       ],
       "exercise": {
@@ -348,8 +354,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "`Series([10, 20], index=[\"A\", \"B\"])` plus `Series([1, 2], index=[\"B\", \"A\"])` gives A=12 and B=21. The first stored values are not paired."
-          ]
+            "pandas pairs values by index label, so A gets 10 + 2 and B gets 20 + 1. Converting both Series to NumPy arrays pairs them by position instead. Adding a Series with no matching labels produces missing values for all three labels."
+          ],
+          "example": "import pandas as pd\n\nleft = pd.Series([10, 20], index=[\"A\", \"B\"])\nright = pd.Series([1, 2], index=[\"B\", \"A\"])\nprint((left + right).to_dict())\nprint(left.to_numpy() + right.to_numpy())\n\nunmatched = left + pd.Series([5], index=[\"C\"])\nprint(unmatched.isna().sum())\n\n# Output:\n# {'A': 12, 'B': 21}\n# [11 22]\n# 3"
         }
       ],
       "exercise": {
@@ -397,8 +404,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "`np.array([23.9, 24.0, 24.1]) > 24` produces `[False, False, True]`. Multiplying a duration by 60 changes units; it does not change which cases breach if the threshold also becomes 1440 minutes."
-          ]
+            "Exactly 24 hours does not breach, because the rule is strictly greater than 24. Converting to minutes changes the units but not which cases breach, as long as the threshold also becomes 1440 minutes."
+          ],
+          "example": "import numpy as np\n\nhours = np.array([23.9, 24.0, 24.1])\nprint(hours > 24)\n\nminutes = hours * 60\nprint(minutes > 24 * 60)\n\n# Output:\n# [False False  True]\n# [False False  True]"
         }
       ],
       "exercise": {
@@ -446,8 +454,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "Team A has 1 breach in 2 tickets and B has 1 in 8. Their unweighted mean rate is 31.25%. The overall ticket rate is 2/10 or 20%."
-          ]
+            "Team A has 1 breach in 2 tickets and team B has 1 in 8. The unweighted mean of their rates is 31.25%. The overall ticket rate is 2/10, or 20%, because it weights each team by its tickets."
+          ],
+          "example": "import pandas as pd\n\ndf = pd.DataFrame({\"team\": [\"A\"] * 2 + [\"B\"] * 8,\n                   \"breached\": [1, 0] + [1] + [0] * 7})\nsummary = df.groupby(\"team\").agg(tickets=(\"breached\", \"size\"),\n                                 breaches=(\"breached\", \"sum\"),\n                                 rate=(\"breached\", \"mean\"))\nprint(summary)\nprint(summary[\"rate\"].mean())\nprint(df[\"breached\"].mean())\n\n# Output:\n#       tickets  breaches   rate\n# team\n# A           2         1  0.500\n# B           8         1  0.125\n# 0.3125\n# 0.2"
         }
       ],
       "exercise": {
@@ -495,8 +504,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "Two billing tickets merged with two billing owner rows produce four rows. The intended many-to-one merge should reject that lookup before aggregation."
-          ]
+            "Two billing tickets merged with two billing owner rows produce four rows. Declaring the merge many-to-one rejects that lookup before any count or sum is computed."
+          ],
+          "example": "import pandas as pd\n\ntickets = pd.DataFrame({\"ticket_id\": [\"T1\", \"T2\"],\n                        \"team\": [\"billing\", \"billing\"]})\nowners = pd.DataFrame({\"team\": [\"billing\", \"billing\"],\n                       \"owner\": [\"Asha\", \"Ravi\"]})\nprint(len(tickets.merge(owners, on=\"team\", how=\"left\")))\n\ntry:\n    tickets.merge(owners, on=\"team\", how=\"left\", validate=\"many_to_one\")\nexcept pd.errors.MergeError:\n    print(\"MergeError: billing appears twice in the lookup\")\n\n# Output:\n# 4\n# MergeError: billing appears twice in the lookup"
         }
       ],
       "exercise": {
@@ -544,8 +554,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "For [2, 3, 4, 5, 86], the mean is 20 hours and the median is 4. Both calculations are correct. The 86-hour case accounts for much of the total waiting time."
-          ]
+            "For durations 2, 3, 4, 5 and 86, the mean is 20 hours and the median is 4. Both are correct. The 86-hour case accounts for 86% of the total waiting time."
+          ],
+          "example": "import pandas as pd\n\nhours = pd.Series([2, 3, 4, 5, 86])\nprint(hours.mean(), hours.median())\nprint(round(86 / hours.sum(), 2))\n\n# Output:\n# 20.0 4.0\n# 0.86"
         }
       ],
       "exercise": {
@@ -594,8 +605,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "Three tickets created Monday resolve Tuesday and Wednesday. Grouping by `created_date` places all three on Monday. A closure workload chart would need resolved timestamps instead."
-          ]
+            "Three tickets created on Monday resolve on Tuesday and Wednesday. Grouping by creation date places all three on Monday. A closure workload chart would need the resolution dates instead."
+          ],
+          "example": "import pandas as pd\n\ndf = pd.DataFrame({\n    \"created_date\": pd.to_datetime([\"2026-01-05\"] * 3),\n    \"resolved_date\": pd.to_datetime([\"2026-01-06\", \"2026-01-06\",\n                                     \"2026-01-07\"]),\n})\nprint(df[\"created_date\"].dt.day_name().value_counts().to_dict())\nprint(df[\"resolved_date\"].dt.day_name().value_counts().to_dict())\n\n# Output:\n# {'Monday': 3}\n# {'Tuesday': 2, 'Wednesday': 1}"
         }
       ],
       "exercise": {
@@ -643,8 +655,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "The kit writes `counts.png` with team on the horizontal axis and ticket count on the vertical axis. The report repeats the numeric counts so the image is not the only way to read them."
-          ]
+            "The bar chart puts team on the horizontal axis and ticket count on the vertical axis, with a zero baseline. The kit's report saves this chart as `counts.png` and repeats the numeric counts, so the image is not the only way to read them."
+          ],
+          "example": "import matplotlib\nmatplotlib.use(\"Agg\")\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\ncounts = pd.read_csv(\"support_tickets.csv\").groupby(\"team\").size()\nfig, ax = plt.subplots()\nax.bar(counts.index, counts.to_numpy())\nax.set(xlabel=\"Team\", ylabel=\"Ticket count\")\nprint(ax.get_xlabel(), \"|\", ax.get_ylabel(), \"| baseline\", ax.get_ylim()[0])\nprint(counts.to_dict())\nplt.close(fig)\n\n# Output:\n# Team | Ticket count | baseline 0.0\n# {'billing': 12, 'technical': 12}"
         }
       ],
       "exercise": {
@@ -692,8 +705,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "Billing has two low-priority tickets and one high-priority ticket. A grouped count followed by `unstack` produces a billing row with `low=2` and `high=1`. A sum of `resolution_hours` would measure something else."
-          ]
+            "Billing has two low-priority tickets and one high-priority ticket. Counting first and then unstacking produces one billing row with `low` 2 and `high` 1. A direct `pivot` of durations fails because billing and low occur together twice. A sum of `resolution_hours` would measure something else."
+          ],
+          "example": "import pandas as pd\n\ndf = pd.DataFrame({\"team\": [\"billing\"] * 3,\n                   \"priority\": [\"low\", \"low\", \"high\"],\n                   \"resolution_hours\": [4, 6, 30]})\nprint(df.groupby([\"team\", \"priority\"]).size().unstack(fill_value=0))\n\ntry:\n    df.pivot(index=\"team\", columns=\"priority\", values=\"resolution_hours\")\nexcept ValueError:\n    print(\"pivot fails: billing and low appear together twice\")\n\n# Output:\n# priority  high  low\n# team\n# billing      1    2\n# pivot fails: billing and low appear together twice"
         }
       ],
       "exercise": {
@@ -741,8 +755,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "If email has longer durations and also contains most high-priority tickets, switching everyone to chat is not a justified recommendation. The data does not show what would happen to the same cases under a different channel."
-          ]
+            "Email averages 24 hours and chat 12. Within each priority, the two channels take the same time: email simply carries more high-priority tickets. Switching everyone to chat is not a justified recommendation, because the data does not show what would happen to the same cases under a different channel."
+          ],
+          "example": "import pandas as pd\n\ndf = pd.DataFrame({\n    \"channel\":  [\"email\"] * 4 + [\"chat\"] * 4,\n    \"priority\": [\"high\", \"high\", \"high\", \"low\", \"high\", \"low\", \"low\", \"low\"],\n    \"hours\":    [30, 30, 30, 6, 30, 6, 6, 6],\n})\nprint(df.groupby(\"channel\")[\"hours\"].mean().to_dict())\nprint(df.pivot_table(index=\"priority\", columns=\"channel\",\n                     values=\"hours\", aggfunc=\"mean\"))\n\n# Output:\n# {'chat': 12.0, 'email': 24.0}\n# channel   chat  email\n# priority\n# high      30.0   30.0\n# low        6.0    6.0"
         }
       ],
       "exercise": {
@@ -797,8 +812,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "The test suite changes one duration to -1 and expects `ValueError`. It also duplicates an ID and inserts an unknown team. A report that prints plausible totals despite those changes has failed its input contract."
-          ]
+            "This uses the kit's `validate` function. The supplied file is accepted. A negative duration, a repeated ID and an unknown team are each rejected with `ValueError`. A report that prints plausible totals despite those changes has failed its input contract."
+          ],
+          "example": "import pandas as pd\nfrom analysis import validate\n\ndef rejection(frame):\n    try:\n        validate(frame)\n    except ValueError as error:\n        return str(error)\n    return \"accepted\"\n\ngood = pd.read_csv(\"support_tickets.csv\", dtype={\"ticket_id\": \"string\"})\nprint(rejection(good))\n\nnegative = good.copy()\nnegative.loc[0, \"resolution_hours\"] = -1\nprint(rejection(negative))\n\nduplicate = good.copy()\nduplicate.loc[1, \"ticket_id\"] = duplicate.loc[0, \"ticket_id\"]\nprint(rejection(duplicate))\n\nunknown = good.copy()\nunknown.loc[0, \"team\"] = \"sales\"\nprint(rejection(unknown))\n\n# Output:\n# accepted\n# Negative duration\n# Ticket IDs must be nonblank and unique\n# Unknown team"
         }
       ],
       "exercise": {
@@ -846,8 +862,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "For billing durations [4, 28] and technical [24, 48], both groups have two tickets and one breach. Their means are 16 and 36 hours. These literal expectations catch several common aggregation errors."
-          ]
+            "This uses the kit's `summarize` function. Billing durations 4 and 28 and technical durations 24 and 48 give both teams two tickets and one breach, with means of 16 and 36 hours. These literal expectations catch several common aggregation errors."
+          ],
+          "example": "import pandas as pd\nfrom analysis import summarize\n\ndf = pd.DataFrame({\"ticket_id\": [\"B1\", \"B2\", \"T1\", \"T2\"],\n                   \"team\": [\"billing\", \"billing\", \"technical\", \"technical\"],\n                   \"resolution_hours\": [4, 28, 24, 48]})\ndf[\"breached\"] = (df[\"resolution_hours\"] > 24).astype(int)\n\ntable = summarize(df)\nassert table[\"tickets\"].tolist() == [2, 2]\nassert table[\"breaches\"].tolist() == [1, 1]\nassert table[\"mean_hours\"].tolist() == [16.0, 36.0]\nprint(table.to_string(index=False))\n\n# Output:\n#      team  tickets  breaches  breach_rate  mean_hours\n#   billing        2         1          0.5        16.0\n# technical        2         1          0.5        36.0"
         }
       ],
       "exercise": {
@@ -895,8 +912,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "A first chunk has two durations with mean 10 and a second has eight with mean 30. The combined mean is (2*10 + 8*30)/10 = 26, not the unweighted mean 20."
-          ]
+            "A first chunk has two durations with mean 10 and a second has eight with mean 30. Keeping the sum and the count of known values gives the combined mean (2 × 10 + 8 × 30) / 10 = 26, not the unweighted mean 20."
+          ],
+          "example": "import pandas as pd\n\nchunks = [pd.Series([5, 15]), pd.Series([30] * 8)]\nprint(chunks[0].mean(), chunks[1].mean())\n\ntotal = sum(chunk.sum() for chunk in chunks)\nknown = sum(chunk.count() for chunk in chunks)\nprint(total / known)\nprint(sum(chunk.mean() for chunk in chunks) / len(chunks))\n\n# Output:\n# 10.0 30.0\n# 26.0\n# 20.0"
         }
       ],
       "exercise": {
@@ -944,8 +962,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "`python analysis.py --out report-output` produces both files. Running it twice with the same environment and input preserves the JSON content. A changed source will normally have a different SHA-256. Matching hashes are a practical identity check, not a mathematical guarantee that two files are identical."
-          ]
+            "From the command line, `python analysis.py --out report-output` does the same as calling `run`. It produces both files, and running it twice with the same environment and input preserves the JSON content. A changed source would normally have a different SHA-256. Matching hashes are a practical identity check, not a mathematical guarantee that two files are identical."
+          ],
+          "example": "import tempfile\nfrom pathlib import Path\nfrom analysis import run\n\nwith tempfile.TemporaryDirectory() as folder:\n    first, second = Path(folder, \"first\"), Path(folder, \"second\")\n    report = run(first)\n    run(second)\n    print(sorted(path.name for path in first.iterdir()))\n    first_json = (first / \"report.json\").read_text()\n    same = first_json == (second / \"report.json\").read_text()\n    print(report[\"rows\"], len(report[\"source_sha256\"]), same)\n\n# Output:\n# ['counts.png', 'report.json']\n# 24 64 True"
         }
       ],
       "exercise": {
@@ -1000,8 +1019,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "Durations [8, 24, 40, 60] breach thresholds 12, 24 and 48 at rates 75%, 50% and 25%. Equality remains nonbreaching in each case."
-          ]
+            "Durations 8, 24, 40 and 60 breach thresholds of 12, 24 and 48 hours at rates of 75%, 50% and 25%. Equality remains nonbreaching in each case."
+          ],
+          "example": "import pandas as pd\n\nhours = pd.Series([8, 24, 40, 60])\nfor threshold in [12, 24, 48]:\n    print(threshold, (hours > threshold).mean())\n\n# Output:\n# 12 0.75\n# 24 0.5\n# 48 0.25"
         }
       ],
       "exercise": {
@@ -1049,8 +1069,9 @@
         {
           "title": "Worked example",
           "paragraphs": [
-            "`customer_messages` in this kit means messages supplied at intake. If another export uses total messages over the entire case, the same column name would leak future information. The data dictionary determines which interpretation is valid."
-          ]
+            "In this kit, `customer_messages` means messages supplied at intake, so it can be a feature. If another export counted messages over the entire case, the same column name would leak future information. The data dictionary determines which interpretation is valid."
+          ],
+          "example": "import pandas as pd\n\nknown_at_intake = {\"created_date\", \"channel\", \"priority\", \"team\",\n                   \"customer_messages\"}\ncolumns = pd.read_csv(\"support_tickets.csv\").columns\n\nprint([c for c in columns if c in known_at_intake])\nprint([c for c in columns if c not in known_at_intake and c != \"ticket_id\"])\n\n# Output:\n# ['created_date', 'channel', 'priority', 'team', 'customer_messages']\n# ['resolution_hours', 'breached']"
         }
       ],
       "exercise": {
