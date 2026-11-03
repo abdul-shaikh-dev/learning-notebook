@@ -1,0 +1,642 @@
+{
+ "authorization-ownership": {
+  "title": "Check the record, not just the session",
+  "intro": "Alice (tenant red) edits document a, then changes only the ID in the path. Compare the lab's handler with one that checks the session alone.",
+  "scope": "The lab's authorized(principal, document, action) and the PATCH /documents/{id} handler in security_http.py, which loads the row and checks tenant, owner and action before updating, answering 404 for missing and denied alike. The session-only handler is a deliberately broken contrast: an IDOR. Every request has a valid session and CSRF token.",
+  "sources": [
+   {
+    "title": "OWASP API Security Top 10 2023: Broken Object Level Authorization",
+    "url": "https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/"
+   }
+  ],
+  "scenarios": [
+   {
+    "id": "checked",
+    "label": "Tenant, owner and action: denied",
+    "steps": [
+     {
+      "title": "Alice updates her own document",
+      "explanation": "Alice is in tenant red and owns a, and update is a supported action, so authorized() allows it. The handler updates the title and answers 200.",
+      "nodes": [
+       {
+        "id": "request",
+        "label": "Request",
+        "detail": "alice/red PATCH /documents/a",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "handler",
+        "label": "Handler",
+        "detail": "Row a: red, owner alice",
+        "tone": "success",
+        "x": 280,
+        "y": 40
+       },
+       {
+        "id": "response",
+        "label": "Response",
+        "detail": "200 · a retitled",
+        "tone": "success",
+        "x": 530,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "request",
+        "to": "handler",
+        "label": "load row a"
+       },
+       {
+        "from": "handler",
+        "to": "response",
+        "label": "decide"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Request",
+        "columns": [
+         "Principal",
+         "Path",
+         "Action"
+        ],
+        "rows": [
+         [
+          "alice/red/member",
+          "/documents/a",
+          "update"
+         ]
+        ]
+       },
+       {
+        "caption": "Handler",
+        "columns": [
+         "Check"
+        ],
+        "rows": [
+         [
+          "tenant + owner + action"
+         ]
+        ]
+       },
+       {
+        "caption": "documents",
+        "columns": [
+         "id",
+         "tenant",
+         "owner",
+         "title"
+        ],
+        "rows": [
+         [
+          "a",
+          "red",
+          "alice",
+          "Edited by Alice"
+         ],
+         [
+          "b",
+          "red",
+          "bob",
+          "Bob private"
+         ],
+         [
+          "c",
+          "blue",
+          "alice",
+          "Other tenant"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Change the ID to b",
+      "focus": [
+       "request",
+       "handler",
+       "response"
+      ],
+      "explanation": "The session is still valid, but b belongs to Bob. authorized() refuses, so the handler rolls back and answers 404, the same reply as a missing document. Bob's title is unchanged.",
+      "nodes": [
+       {
+        "id": "request",
+        "label": "Request",
+        "detail": "alice/red PATCH /documents/b",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "handler",
+        "label": "Handler",
+        "detail": "Row b: owner bob, not alice",
+        "tone": "warning",
+        "x": 280,
+        "y": 40
+       },
+       {
+        "id": "response",
+        "label": "Response",
+        "detail": "404 · b unchanged",
+        "tone": "success",
+        "x": 530,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "request",
+        "to": "handler",
+        "label": "load row b"
+       },
+       {
+        "from": "handler",
+        "to": "response",
+        "label": "decide"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Request",
+        "columns": [
+         "Principal",
+         "Path",
+         "Action"
+        ],
+        "rows": [
+         [
+          "alice/red/member",
+          "/documents/b",
+          "update"
+         ]
+        ]
+       },
+       {
+        "caption": "Handler",
+        "columns": [
+         "Check"
+        ],
+        "rows": [
+         [
+          "tenant + owner + action"
+         ]
+        ]
+       },
+       {
+        "caption": "documents",
+        "columns": [
+         "id",
+         "tenant",
+         "owner",
+         "title"
+        ],
+        "rows": [
+         [
+          "a",
+          "red",
+          "alice",
+          "Edited by Alice"
+         ],
+         [
+          "b",
+          "red",
+          "bob",
+          "Bob private"
+         ],
+         [
+          "c",
+          "blue",
+          "alice",
+          "Other tenant"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Change the ID to c",
+      "focus": [
+       "request",
+       "handler",
+       "response"
+      ],
+      "explanation": "Document c names alice as owner, but it is in tenant blue. The tenant check fails before ownership is considered, so the answer is 404 again.",
+      "nodes": [
+       {
+        "id": "request",
+        "label": "Request",
+        "detail": "alice/red PATCH /documents/c",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "handler",
+        "label": "Handler",
+        "detail": "Row c: tenant blue, not red",
+        "tone": "warning",
+        "x": 280,
+        "y": 40
+       },
+       {
+        "id": "response",
+        "label": "Response",
+        "detail": "404 · c unchanged",
+        "tone": "success",
+        "x": 530,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "request",
+        "to": "handler",
+        "label": "load row c"
+       },
+       {
+        "from": "handler",
+        "to": "response",
+        "label": "decide"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Request",
+        "columns": [
+         "Principal",
+         "Path",
+         "Action"
+        ],
+        "rows": [
+         [
+          "alice/red/member",
+          "/documents/c",
+          "update"
+         ]
+        ]
+       },
+       {
+        "caption": "Handler",
+        "columns": [
+         "Check"
+        ],
+        "rows": [
+         [
+          "tenant + owner + action"
+         ]
+        ]
+       },
+       {
+        "caption": "documents",
+        "columns": [
+         "id",
+         "tenant",
+         "owner",
+         "title"
+        ],
+        "rows": [
+         [
+          "a",
+          "red",
+          "alice",
+          "Edited by Alice"
+         ],
+         [
+          "b",
+          "red",
+          "bob",
+          "Bob private"
+         ],
+         [
+          "c",
+          "blue",
+          "alice",
+          "Other tenant"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "idor",
+    "label": "Session only: IDOR",
+    "steps": [
+     {
+      "title": "Alice updates her own document",
+      "explanation": "With a valid session the session-only handler updates a and answers 200, the same as the checked handler. A test of this request alone cannot tell them apart.",
+      "nodes": [
+       {
+        "id": "request",
+        "label": "Request",
+        "detail": "alice/red PATCH /documents/a",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "handler",
+        "label": "Handler",
+        "detail": "Session valid; row not checked",
+        "tone": "warning",
+        "x": 280,
+        "y": 40
+       },
+       {
+        "id": "response",
+        "label": "Response",
+        "detail": "200 · a retitled",
+        "tone": "success",
+        "x": 530,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "request",
+        "to": "handler",
+        "label": "load row a"
+       },
+       {
+        "from": "handler",
+        "to": "response",
+        "label": "decide"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Request",
+        "columns": [
+         "Principal",
+         "Path",
+         "Action"
+        ],
+        "rows": [
+         [
+          "alice/red/member",
+          "/documents/a",
+          "update"
+         ]
+        ]
+       },
+       {
+        "caption": "Handler",
+        "columns": [
+         "Check"
+        ],
+        "rows": [
+         [
+          "session only"
+         ]
+        ]
+       },
+       {
+        "caption": "documents",
+        "columns": [
+         "id",
+         "tenant",
+         "owner",
+         "title"
+        ],
+        "rows": [
+         [
+          "a",
+          "red",
+          "alice",
+          "Edited by Alice"
+         ],
+         [
+          "b",
+          "red",
+          "bob",
+          "Bob private"
+         ],
+         [
+          "c",
+          "blue",
+          "alice",
+          "Other tenant"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Change the ID to b",
+      "focus": [
+       "request",
+       "handler",
+       "response",
+       "doc-b"
+      ],
+      "explanation": "The handler never compares b's owner with Alice, so it overwrites Bob's title and answers 200. Guessing an ID was enough.",
+      "nodes": [
+       {
+        "id": "request",
+        "label": "Request",
+        "detail": "alice/red PATCH /documents/b",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "handler",
+        "label": "Handler",
+        "detail": "Session valid; row not checked",
+        "tone": "warning",
+        "x": 280,
+        "y": 40
+       },
+       {
+        "id": "response",
+        "label": "Response",
+        "detail": "200 · Bob's b overwritten",
+        "tone": "warning",
+        "x": 530,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "request",
+        "to": "handler",
+        "label": "load row b"
+       },
+       {
+        "from": "handler",
+        "to": "response",
+        "label": "decide"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Request",
+        "columns": [
+         "Principal",
+         "Path",
+         "Action"
+        ],
+        "rows": [
+         [
+          "alice/red/member",
+          "/documents/b",
+          "update"
+         ]
+        ]
+       },
+       {
+        "caption": "Handler",
+        "columns": [
+         "Check"
+        ],
+        "rows": [
+         [
+          "session only"
+         ]
+        ]
+       },
+       {
+        "caption": "documents",
+        "columns": [
+         "id",
+         "tenant",
+         "owner",
+         "title"
+        ],
+        "rows": [
+         [
+          "a",
+          "red",
+          "alice",
+          "Edited by Alice"
+         ],
+         [
+          "b",
+          "red",
+          "bob",
+          "Edited by Alice"
+         ],
+         [
+          "c",
+          "blue",
+          "alice",
+          "Other tenant"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Change the ID to c",
+      "focus": [
+       "request",
+       "response",
+       "doc-c"
+      ],
+      "explanation": "The same request crosses into tenant blue and overwrites c. A role or session check cannot stand in for checking this object for this action.",
+      "nodes": [
+       {
+        "id": "request",
+        "label": "Request",
+        "detail": "alice/red PATCH /documents/c",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "handler",
+        "label": "Handler",
+        "detail": "Session valid; row not checked",
+        "tone": "warning",
+        "x": 280,
+        "y": 40
+       },
+       {
+        "id": "response",
+        "label": "Response",
+        "detail": "200 · tenant blue's c overwritten",
+        "tone": "warning",
+        "x": 530,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "request",
+        "to": "handler",
+        "label": "load row c"
+       },
+       {
+        "from": "handler",
+        "to": "response",
+        "label": "decide"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Request",
+        "columns": [
+         "Principal",
+         "Path",
+         "Action"
+        ],
+        "rows": [
+         [
+          "alice/red/member",
+          "/documents/c",
+          "update"
+         ]
+        ]
+       },
+       {
+        "caption": "Handler",
+        "columns": [
+         "Check"
+        ],
+        "rows": [
+         [
+          "session only"
+         ]
+        ]
+       },
+       {
+        "caption": "documents",
+        "columns": [
+         "id",
+         "tenant",
+         "owner",
+         "title"
+        ],
+        "rows": [
+         [
+          "a",
+          "red",
+          "alice",
+          "Edited by Alice"
+         ],
+         [
+          "b",
+          "red",
+          "bob",
+          "Edited by Alice"
+         ],
+         [
+          "c",
+          "blue",
+          "alice",
+          "Edited by Alice"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

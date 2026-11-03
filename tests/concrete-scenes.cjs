@@ -1,10 +1,10 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const ctx={};ctx.window=ctx;vm.createContext(ctx);
-for(const f of ['concrete-scenes','scenes-dsa','scenes-apps','scenes-infra','scenes-patterns','scenes-data'])vm.runInContext(fs.readFileSync('assets/js/'+f+'.js','utf8'),ctx);
+for(const f of ['concrete-scenes','scenes-dsa','scenes-apps','scenes-infra','scenes-patterns','scenes-data','scenes-engineering'])vm.runInContext(fs.readFileSync('assets/js/'+f+'.js','utf8'),ctx);
 ctx.escapeText=ctx.NotebookScenes.escape;
 vm.runInContext(fs.readFileSync('assets/js/learning-tools.js','utf8'),ctx);
-let lessons=0,frames=0;
-for(const p of require('../scripts/manifest.cjs').readPaths())for(const l of (Array.isArray(p.lessons)?p.lessons:[])){if(!l.visual)continue;lessons++;
+let lessons=0,frames=0;const visualIds=[];
+for(const p of require('../scripts/manifest.cjs').readPaths())for(const l of (Array.isArray(p.lessons)?p.lessons:[])){if(!l.visual)continue;lessons++;visualIds.push(l.id);
 assert(ctx.NotebookScenes.keys().includes(l.id),l.id);
 for(const [scenarioIndex,scenario] of l.visual.scenarios.entries())for(const [index,step] of scenario.steps.entries()){
 const html=ctx.visualFrame(step,l.id+'-'+scenarioIndex+'-'+index,scenario.steps[index-1],l.id,{scenario,scenarioIndex,index});frames++;
@@ -15,7 +15,9 @@ const ids=[...html.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.le
 }
 const pack=ctx.visualExplorerView(l,true);const ids=[...pack.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size,l.id+' print IDs');
 }
-assert.equal(lessons,34);assert.equal(frames,212);console.log('PASS: 34 concrete scenes, 212 snapshot renders, preserved explanations/details and unique print IDs.');
+assert.equal(new Set(visualIds).size,visualIds.length,'explorer lesson IDs are unique, because renderers are registered by lesson ID');
+assert.deepEqual([...ctx.NotebookScenes.keys()].filter(k=>!visualIds.includes(k)),[],'every renderer belongs to an explorer lesson');
+assert(lessons>=40,'at least 40 explorers; a lower count means some were lost');console.log(`PASS: ${lessons} concrete scenes, ${frames} snapshot renders, a renderer for every explorer, preserved explanations/details and unique print IDs.`);
 const all=require('../scripts/manifest.cjs').readPaths();
 const rendered=(path,id,scenarioIndex,index)=>{const scenario=all.find(p=>p.id===path).lessons.find(l=>l.id===id).visual.scenarios[scenarioIndex];return ctx.NotebookScenes.render(id,scenario.steps[index],{scenario,scenarioIndex,index,key:'assert'});};
 assert(!rendered('react','state',0,0).includes('Called three times'));
@@ -52,3 +54,21 @@ assert(git(0,1).includes('T1′ e5f6a7b on M1')&&!git(0,0).includes('teammate')&
 const inbox=(i,j)=>text(rendered('messaging-events','idempotent-consumers',i,j));
 assert(inbox(0,1).includes('total 7')&&inbox(1,2).includes('total 14'),'the inbox keeps one effect; the memory set does not');
 console.log('PASS: replay row counts, TTL expiry on the clock, rebased parents and inbox totals are drawn from each snapshot.');
+// Engineering scenes: budgets, operation IDs, authorization, clocks, percentiles and permission bits are computed from each snapshot.
+const scenario=(path,id)=>all.find(p=>p.id===path).lessons.find(l=>l.id===id).visual.scenarios;
+const drawn=(path,id)=>scenario(path,id).map((s,i)=>s.steps.map((_,j)=>text(rendered(path,id,i,j))));
+const loop=drawn('ai-agents','loop');
+assert(loop[0][0].includes('1 of 3 proposals used')&&loop[0][2].includes('3 of 3 proposals used · 0 left')&&loop[0][2].includes('status: budget_exhausted')&&!loop[0][2].includes('6.'),'the budget stops the run after three proposals');
+assert(loop[1][2].includes('6 proposals · no limit')&&loop[1][3].includes('status: running')&&loop[1].every(t=>t.includes('Evidence observed: SQL-07')),'the unbounded loop keeps calling without new evidence');
+const ops=drawn('agent-harnesses','idempotent-effects');
+assert.deepEqual(ops.map(s=>s.map(t=>t.match(/(\d) notes? for 1 intent/)[1])),[['1','1','1'],['1','2','2']],'the same ID keeps one note; a new ID writes a second');
+for(const [i,s] of scenario('application-security','authorization-ownership').entries())for(const [j,step] of s.steps.entries()){const code=text(rendered('application-security','authorization-ownership',i,j)).match(/(200|404) (OK|unavailable)/)[1];assert(step.nodes.find(n=>n.id==='response').detail.startsWith(code),`${s.id}/${j}: drawn ${code} matches the response`);}
+const clock=drawn('testing-debugging','flaky-tests');
+assert.deepEqual(clock.map(s=>s.map(t=>t.match(/test (passes|fails)/)[1])),[['passes','fails','passes'],['passes','passes','passes']],'the wall clock flips the result; the injected clock does not');
+assert(clock[1][1].includes('At 1030 s the token is expired'),'expiry is exclusive: now < issued + ttl');
+const tail=drawn('observability-performance','latency-percentiles');
+for(const t of [tail[0][2],tail[1][2]])assert(/Release A · 20 requests.*Mean 42 ms p95 \(rank 19 of 20\) 60 ms.*Release B · 20 requests.*Mean 33 ms p95 \(rank 19 of 20\) 150 ms/.test(t),'mean and nearest-rank p95 for both releases');
+const perm=drawn('linux-operating-systems','permissions-and-identities');
+assert(perm[0][1].includes('bo can read /srv/reports/q3.csv')&&perm[0][2].includes('Permission denied at /srv/reports/q3.csv')&&perm[0][0].includes('group bits r-x: traverse allowed'),'750/640: group can enter and read, not write');
+assert(perm[1].every(t=>t.includes('Permission denied at /srv/reports'))&&perm[1][2].includes('not reached'),'700: denied at the directory, whatever the file mode');
+console.log('PASS: agent budget, operation IDs, object authorization, injected clock, p95 and permission bits are drawn from each snapshot.');

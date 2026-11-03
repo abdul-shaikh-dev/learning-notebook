@@ -6,7 +6,7 @@ Each entry has `title`, `intro`, `scope`, optional `sources` (title/url), and `s
 
 Nodes: id, label, detail, x, y, tone (`neutral`, `active`, `success`, `warning`). Use up to six 200×90 boxes on the 1000×450 coordinate canvas; x 0–780, y 0–330. Keep labels short (25 characters) and detail below 52 characters. Edges reference node IDs with `from`, `to`, and `label`. Tables have caption, columns, and rows; every row must match the column count. State what changes in prose; never encode meaning in color alone. Explain teaching-model boundaries and cite primary sources where appropriate.
 
-Run `node scripts/sync-catalog.cjs`, `node verify.cjs`, and `node scripts/build-pages.cjs`. The concept explorer tests check every snapshot, all interaction boundaries, print coverage and selected algorithm outcomes. The current 34-explorer coverage assertion should be updated intentionally when adding more lessons. Inspect desktop and phone layouts; diagrams scroll locally on narrow screens, with text alternatives and semantic tables.
+Run `node scripts/sync-catalog.cjs`, `node verify.cjs`, and `node scripts/build-pages.cjs`. The concept explorer tests check every snapshot, all interaction boundaries, print coverage and selected algorithm outcomes. They count explorers rather than expecting a total, failing only below a floor of 40, so adding an explorer needs no test edit. Inspect desktop and phone layouts; diagrams scroll locally on narrow screens, with text alternatives and semantic tables.
 
 2026-09-27: added 27 explorers across .NET, React, DSA, SQL Server, Design Patterns, System Design and Kubernetes (54 scenarios; 164 snapshots). This supplements existing diagrams and finance stories; it does not imply every lesson requires a diagram.
 
@@ -15,13 +15,13 @@ For movable values, author a stable motionKey on each node across snapshots. Sor
 
 ## Concrete scenes
 
-All 34 current explorers register a concept-specific renderer through `NotebookScenes.register(lessonId, render)` in `assets/js/scenes-{dsa,apps,infra,patterns,data}.js`. Load the registry before the family modules and `learning-tools.js`. New lessons without a renderer retain the generic diagram fallback.
+Every explorer registers a concept-specific renderer through `NotebookScenes.register(lessonId, render)` in `assets/js/scenes-{dsa,apps,infra,patterns,data,engineering}.js`. Renderers are keyed by lesson ID alone, so an explorer lesson's ID must not be used by any other explorer lesson, in any course. Load the registry before the family modules and `learning-tools.js`. New lessons without a renderer retain the generic diagram fallback.
 
 Renderers receive the authored snapshot plus `{scenario, scenarioIndex, index, previous, key, print}`. Use `NotebookScenes.escape` for authored text. Derive displayed outcomes from that snapshot; do not display completed work during a pending step. Keep stable `data-motion-node` identities for the same logical object across snapshots, and change identity when an instance is replaced. Scope SVG IDs with `key` so printed packs do not collide.
 
 The shared controller owns playback, manual steps, reduced-motion handling and focus restoration. An optional `data-scene-next` button advances the teaching sequence, not a live external operation. Preserve all explanations, source tables, connection descriptions and model boundaries below the scene. Wide diagrams need keyboard-accessible scroll regions and a mobile scroll cue. Print hides interactive scene actions.
 
-Run `node tests/verify.cjs` and `node scripts/build-pages.cjs`. `tests/concrete-scenes.cjs` renders all 212 snapshots and checks scene coverage, text preservation and unique print IDs. Browser-check any new scene at desktop and phone widths, including alternative scenarios and final states.
+Run `node tests/verify.cjs` and `node scripts/build-pages.cjs`. `tests/concrete-scenes.cjs` renders every snapshot and checks that every explorer has a renderer and every renderer an explorer, text preservation and unique print IDs. Browser-check any new scene at desktop and phone widths, including alternative scenarios and final states.
 
 ## Step focus
 
@@ -53,3 +53,16 @@ These renderers read their data from each snapshot's tables (observations, ticke
 - **Messaging, "Durable inbox and idempotency":** with the inbox, a redelivered e-17 leaves the audit total at 7, a second consumer processes it under its own key and a changed payload is rejected. With an in-memory set, a restart forgets e-17 and the total becomes 14, as the lab's additive projection would.
 
 `tests/concrete-scenes.cjs` checks the drawn row counts, TTL marks, commit parents and totals against the authored snapshots.
+
+## Agents, harness, security, testing, observability and Linux explorers
+
+2026-11-04: added six explorers to courses that had none (12 scenarios; 37 snapshots), drawn by `assets/js/scenes-engineering.js`. Each pair contrasts a correct and an incorrect outcome:
+
+- **AI Agents, "Follow one bounded agent loop":** a script that only searches runs through `run(ScriptedSource(script), max_steps=3)` and stops as `budget_exhausted` after three proposals, with SQL-07 as its only evidence and no answer. The same script in a loop with no counter makes six calls and never reaches a terminal status.
+- **Agent Harnesses, "Operation identity and uncertain effects":** the fake store commits note N1 and receipt C2, then the reply is lost. Retrying with C2 returns N1 without writing again, and reusing C2 with changed text raises `IntentConflict`. Retrying as a new call C3 writes a second note, N2.
+- **Application Security, "Enforce tenant, owner and action authorization":** Alice (red) may update her document a. With the lab's check, changing the path to Bob's b or to tenant blue's c answers 404 and changes nothing. A handler that checks only the session answers 200 and overwrites both.
+- **Testing & Debugging, "Diagnose flakiness before rerunning":** a 30-second token issued at 1000 s is checked after real work. The check lands at 1012, 1031 and 1015 s on different runs, so the test passes, fails and passes. With an injected `FakeClock`, `advance(29)` is valid and one more second reaches the exclusive expiry at 1030 s on every run.
+- **Observability & Performance, "Percentiles and the slow tail":** twenty requests per release. Release A has a mean of 42 ms and a nearest-rank p95 of 60 ms; release B has a mean of 33 ms and a p95 of 150 ms. Judged by the mean alone, B looks 9 ms faster.
+- **Linux & Operating Systems, "Users, groups and permission bits":** bo, in group analysts, can traverse `/srv/reports` at mode 750 and read `q3.csv` at 640, but not write it. At directory mode 700 the open fails at the directory, and changing the file to 666 does not help.
+
+The renderers compute each outcome from the snapshot's tables: the proposal count against the budget, notes per intent, the handler's tenant and owner checks, the token's expiry, the mean and nearest-rank p95, and the permission class and bits. `tests/concrete-scenes.cjs` checks that what is drawn matches the authored text. `tests/explorer_lab_facts.py` replays the agent, harness, security and observability figures against `workshop.py`, `harness_workshop.py`, `security_lab.py` and `telemetry.py`. The testing and Linux kits have no clock or permission code, so those two scenes apply the lessons' rules: valid while `now < issued + ttl`, and a directory needs x to traverse.

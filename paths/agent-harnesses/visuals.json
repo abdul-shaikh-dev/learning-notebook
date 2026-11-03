@@ -1,0 +1,477 @@
+{
+ "idempotent-effects": {
+  "title": "Retry a save with its operation ID",
+  "intro": "The reply to save_note is lost after the fake store commits. Retry once with the same operation ID, then once with a new one.",
+  "scope": "The workshop's FakeStore: save(key, fingerprint, …) writes a note and its receipt in one method, returns the stored receipt for a known key and raises IntentConflict for the same key with a different fingerprint. The harness itself reconciles with lookup() instead of resending; both read the same receipt. One process, no durability: a real tool must honour the key itself.",
+  "scenarios": [
+   {
+    "id": "same-id",
+    "label": "Same operation ID: one note",
+    "steps": [
+     {
+      "title": "Save, then lose the reply",
+      "explanation": "Call C2 asks to save a note on lesson L1. The fake store records note N1 and receipt C2 together, then the reply is lost. The harness has no result, so its status is uncertain, not failed.",
+      "nodes": [
+       {
+        "id": "call",
+        "label": "save_note call",
+        "detail": "C2 · L1 · Review index tradeoffs",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "store",
+        "label": "Store reply",
+        "detail": "Lost after commit",
+        "tone": "success",
+        "x": 280,
+        "y": 40
+       },
+       {
+        "id": "harness",
+        "label": "Harness status",
+        "detail": "uncertain: outcome unknown",
+        "tone": "warning",
+        "x": 530,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "call",
+        "to": "store",
+        "label": "save(key, fingerprint)"
+       },
+       {
+        "from": "store",
+        "to": "harness",
+        "label": "reply"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Notes",
+        "columns": [
+         "Note",
+         "Text"
+        ],
+        "rows": [
+         [
+          "N1",
+          "Review index tradeoffs"
+         ]
+        ]
+       },
+       {
+        "caption": "Receipts",
+        "columns": [
+         "Operation ID",
+         "Note"
+        ],
+        "rows": [
+         [
+          "C2",
+          "N1"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Retry with C2",
+      "focus": [
+       "store",
+       "harness"
+      ],
+      "explanation": "The retry carries the same key and fingerprint. The store finds receipt C2 and returns N1 without writing again, so the harness confirms the save.",
+      "nodes": [
+       {
+        "id": "call",
+        "label": "save_note call",
+        "detail": "C2 again · same text",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "store",
+        "label": "Store reply",
+        "detail": "Receipt C2 → N1, no new write",
+        "tone": "success",
+        "x": 280,
+        "y": 40
+       },
+       {
+        "id": "harness",
+        "label": "Harness status",
+        "detail": "confirmed: N1",
+        "tone": "success",
+        "x": 530,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "call",
+        "to": "store",
+        "label": "save(key, fingerprint)"
+       },
+       {
+        "from": "store",
+        "to": "harness",
+        "label": "reply"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Notes",
+        "columns": [
+         "Note",
+         "Text"
+        ],
+        "rows": [
+         [
+          "N1",
+          "Review index tradeoffs"
+         ]
+        ]
+       },
+       {
+        "caption": "Receipts",
+        "columns": [
+         "Operation ID",
+         "Note"
+        ],
+        "rows": [
+         [
+          "C2",
+          "N1"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Same ID, different text",
+      "focus": [
+       "call",
+       "store",
+       "harness"
+      ],
+      "explanation": "A retry that reuses C2 with changed text has a different fingerprint. The store raises IntentConflict and writes nothing; one ID means one intent.",
+      "nodes": [
+       {
+        "id": "call",
+        "label": "save_note call",
+        "detail": "C2 · text changed",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "store",
+        "label": "Store reply",
+        "detail": "IntentConflict, nothing written",
+        "tone": "warning",
+        "x": 280,
+        "y": 40
+       },
+       {
+        "id": "harness",
+        "label": "Harness status",
+        "detail": "rejected: intent_conflict",
+        "tone": "success",
+        "x": 530,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "call",
+        "to": "store",
+        "label": "save(key, fingerprint)"
+       },
+       {
+        "from": "store",
+        "to": "harness",
+        "label": "reply"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Notes",
+        "columns": [
+         "Note",
+         "Text"
+        ],
+        "rows": [
+         [
+          "N1",
+          "Review index tradeoffs"
+         ]
+        ]
+       },
+       {
+        "caption": "Receipts",
+        "columns": [
+         "Operation ID",
+         "Note"
+        ],
+        "rows": [
+         [
+          "C2",
+          "N1"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "new-id",
+    "label": "New ID on retry: duplicate note",
+    "steps": [
+     {
+      "title": "Save, then lose the reply",
+      "explanation": "Call C2 asks to save a note on lesson L1. The fake store records note N1 and receipt C2 together, then the reply is lost. The harness has no result, so its status is uncertain, not failed.",
+      "nodes": [
+       {
+        "id": "call",
+        "label": "save_note call",
+        "detail": "C2 · L1 · Review index tradeoffs",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "store",
+        "label": "Store reply",
+        "detail": "Lost after commit",
+        "tone": "success",
+        "x": 280,
+        "y": 40
+       },
+       {
+        "id": "harness",
+        "label": "Harness status",
+        "detail": "uncertain: outcome unknown",
+        "tone": "warning",
+        "x": 530,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "call",
+        "to": "store",
+        "label": "save(key, fingerprint)"
+       },
+       {
+        "from": "store",
+        "to": "harness",
+        "label": "reply"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Notes",
+        "columns": [
+         "Note",
+         "Text"
+        ],
+        "rows": [
+         [
+          "N1",
+          "Review index tradeoffs"
+         ]
+        ]
+       },
+       {
+        "caption": "Receipts",
+        "columns": [
+         "Operation ID",
+         "Note"
+        ],
+        "rows": [
+         [
+          "C2",
+          "N1"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Retry as C3",
+      "focus": [
+       "call",
+       "store",
+       "note-N2",
+       "receipt-C3",
+       "count"
+      ],
+      "explanation": "The retry is sent as a new call, C3. The store has no receipt C3, so it writes note N2 and receipt C3 as if this were a new request.",
+      "nodes": [
+       {
+        "id": "call",
+        "label": "save_note call",
+        "detail": "C3 · L1 · Review index tradeoffs",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "store",
+        "label": "Store reply",
+        "detail": "New receipt C3 → N2",
+        "tone": "warning",
+        "x": 280,
+        "y": 40
+       },
+       {
+        "id": "harness",
+        "label": "Harness status",
+        "detail": "confirmed: N2",
+        "tone": "warning",
+        "x": 530,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "call",
+        "to": "store",
+        "label": "save(key, fingerprint)"
+       },
+       {
+        "from": "store",
+        "to": "harness",
+        "label": "reply"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Notes",
+        "columns": [
+         "Note",
+         "Text"
+        ],
+        "rows": [
+         [
+          "N1",
+          "Review index tradeoffs"
+         ],
+         [
+          "N2",
+          "Review index tradeoffs"
+         ]
+        ]
+       },
+       {
+        "caption": "Receipts",
+        "columns": [
+         "Operation ID",
+         "Note"
+        ],
+        "rows": [
+         [
+          "C2",
+          "N1"
+         ],
+         [
+          "C3",
+          "N2"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Two notes for one request",
+      "focus": [
+       "count"
+      ],
+      "explanation": "The learner asked for one note and now has two with the same text. Nothing in the store links C3 to C2; a new call ID is not evidence of a new intent.",
+      "nodes": [
+       {
+        "id": "call",
+        "label": "save_note call",
+        "detail": "One intent, sent twice",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "store",
+        "label": "Store reply",
+        "detail": "N1 and N2 both stored",
+        "tone": "warning",
+        "x": 280,
+        "y": 40
+       },
+       {
+        "id": "harness",
+        "label": "Harness status",
+        "detail": "confirmed twice",
+        "tone": "warning",
+        "x": 530,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "call",
+        "to": "store",
+        "label": "save(key, fingerprint)"
+       },
+       {
+        "from": "store",
+        "to": "harness",
+        "label": "reply"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Notes",
+        "columns": [
+         "Note",
+         "Text"
+        ],
+        "rows": [
+         [
+          "N1",
+          "Review index tradeoffs"
+         ],
+         [
+          "N2",
+          "Review index tradeoffs"
+         ]
+        ]
+       },
+       {
+        "caption": "Receipts",
+        "columns": [
+         "Operation ID",
+         "Note"
+        ],
+        "rows": [
+         [
+          "C2",
+          "N1"
+         ],
+         [
+          "C3",
+          "N2"
+         ]
+        ]
+       }
+      ],
+      "focusLabel": "Check"
+     }
+    ]
+   }
+  ]
+ }
+}

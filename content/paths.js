@@ -1441,6 +1441,481 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
+        },
+        "visual": {
+          "title": "Retry a save with its operation ID",
+          "intro": "The reply to save_note is lost after the fake store commits. Retry once with the same operation ID, then once with a new one.",
+          "scope": "The workshop's FakeStore: save(key, fingerprint, …) writes a note and its receipt in one method, returns the stored receipt for a known key and raises IntentConflict for the same key with a different fingerprint. The harness itself reconciles with lookup() instead of resending; both read the same receipt. One process, no durability: a real tool must honour the key itself.",
+          "scenarios": [
+            {
+              "id": "same-id",
+              "label": "Same operation ID: one note",
+              "steps": [
+                {
+                  "title": "Save, then lose the reply",
+                  "explanation": "Call C2 asks to save a note on lesson L1. The fake store records note N1 and receipt C2 together, then the reply is lost. The harness has no result, so its status is uncertain, not failed.",
+                  "nodes": [
+                    {
+                      "id": "call",
+                      "label": "save_note call",
+                      "detail": "C2 · L1 · Review index tradeoffs",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "store",
+                      "label": "Store reply",
+                      "detail": "Lost after commit",
+                      "tone": "success",
+                      "x": 280,
+                      "y": 40
+                    },
+                    {
+                      "id": "harness",
+                      "label": "Harness status",
+                      "detail": "uncertain: outcome unknown",
+                      "tone": "warning",
+                      "x": 530,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "call",
+                      "to": "store",
+                      "label": "save(key, fingerprint)"
+                    },
+                    {
+                      "from": "store",
+                      "to": "harness",
+                      "label": "reply"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Notes",
+                      "columns": [
+                        "Note",
+                        "Text"
+                      ],
+                      "rows": [
+                        [
+                          "N1",
+                          "Review index tradeoffs"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Receipts",
+                      "columns": [
+                        "Operation ID",
+                        "Note"
+                      ],
+                      "rows": [
+                        [
+                          "C2",
+                          "N1"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Retry with C2",
+                  "focus": [
+                    "store",
+                    "harness"
+                  ],
+                  "explanation": "The retry carries the same key and fingerprint. The store finds receipt C2 and returns N1 without writing again, so the harness confirms the save.",
+                  "nodes": [
+                    {
+                      "id": "call",
+                      "label": "save_note call",
+                      "detail": "C2 again · same text",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "store",
+                      "label": "Store reply",
+                      "detail": "Receipt C2 → N1, no new write",
+                      "tone": "success",
+                      "x": 280,
+                      "y": 40
+                    },
+                    {
+                      "id": "harness",
+                      "label": "Harness status",
+                      "detail": "confirmed: N1",
+                      "tone": "success",
+                      "x": 530,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "call",
+                      "to": "store",
+                      "label": "save(key, fingerprint)"
+                    },
+                    {
+                      "from": "store",
+                      "to": "harness",
+                      "label": "reply"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Notes",
+                      "columns": [
+                        "Note",
+                        "Text"
+                      ],
+                      "rows": [
+                        [
+                          "N1",
+                          "Review index tradeoffs"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Receipts",
+                      "columns": [
+                        "Operation ID",
+                        "Note"
+                      ],
+                      "rows": [
+                        [
+                          "C2",
+                          "N1"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Same ID, different text",
+                  "focus": [
+                    "call",
+                    "store",
+                    "harness"
+                  ],
+                  "explanation": "A retry that reuses C2 with changed text has a different fingerprint. The store raises IntentConflict and writes nothing; one ID means one intent.",
+                  "nodes": [
+                    {
+                      "id": "call",
+                      "label": "save_note call",
+                      "detail": "C2 · text changed",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "store",
+                      "label": "Store reply",
+                      "detail": "IntentConflict, nothing written",
+                      "tone": "warning",
+                      "x": 280,
+                      "y": 40
+                    },
+                    {
+                      "id": "harness",
+                      "label": "Harness status",
+                      "detail": "rejected: intent_conflict",
+                      "tone": "success",
+                      "x": 530,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "call",
+                      "to": "store",
+                      "label": "save(key, fingerprint)"
+                    },
+                    {
+                      "from": "store",
+                      "to": "harness",
+                      "label": "reply"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Notes",
+                      "columns": [
+                        "Note",
+                        "Text"
+                      ],
+                      "rows": [
+                        [
+                          "N1",
+                          "Review index tradeoffs"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Receipts",
+                      "columns": [
+                        "Operation ID",
+                        "Note"
+                      ],
+                      "rows": [
+                        [
+                          "C2",
+                          "N1"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "new-id",
+              "label": "New ID on retry: duplicate note",
+              "steps": [
+                {
+                  "title": "Save, then lose the reply",
+                  "explanation": "Call C2 asks to save a note on lesson L1. The fake store records note N1 and receipt C2 together, then the reply is lost. The harness has no result, so its status is uncertain, not failed.",
+                  "nodes": [
+                    {
+                      "id": "call",
+                      "label": "save_note call",
+                      "detail": "C2 · L1 · Review index tradeoffs",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "store",
+                      "label": "Store reply",
+                      "detail": "Lost after commit",
+                      "tone": "success",
+                      "x": 280,
+                      "y": 40
+                    },
+                    {
+                      "id": "harness",
+                      "label": "Harness status",
+                      "detail": "uncertain: outcome unknown",
+                      "tone": "warning",
+                      "x": 530,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "call",
+                      "to": "store",
+                      "label": "save(key, fingerprint)"
+                    },
+                    {
+                      "from": "store",
+                      "to": "harness",
+                      "label": "reply"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Notes",
+                      "columns": [
+                        "Note",
+                        "Text"
+                      ],
+                      "rows": [
+                        [
+                          "N1",
+                          "Review index tradeoffs"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Receipts",
+                      "columns": [
+                        "Operation ID",
+                        "Note"
+                      ],
+                      "rows": [
+                        [
+                          "C2",
+                          "N1"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Retry as C3",
+                  "focus": [
+                    "call",
+                    "store",
+                    "note-N2",
+                    "receipt-C3",
+                    "count"
+                  ],
+                  "explanation": "The retry is sent as a new call, C3. The store has no receipt C3, so it writes note N2 and receipt C3 as if this were a new request.",
+                  "nodes": [
+                    {
+                      "id": "call",
+                      "label": "save_note call",
+                      "detail": "C3 · L1 · Review index tradeoffs",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "store",
+                      "label": "Store reply",
+                      "detail": "New receipt C3 → N2",
+                      "tone": "warning",
+                      "x": 280,
+                      "y": 40
+                    },
+                    {
+                      "id": "harness",
+                      "label": "Harness status",
+                      "detail": "confirmed: N2",
+                      "tone": "warning",
+                      "x": 530,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "call",
+                      "to": "store",
+                      "label": "save(key, fingerprint)"
+                    },
+                    {
+                      "from": "store",
+                      "to": "harness",
+                      "label": "reply"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Notes",
+                      "columns": [
+                        "Note",
+                        "Text"
+                      ],
+                      "rows": [
+                        [
+                          "N1",
+                          "Review index tradeoffs"
+                        ],
+                        [
+                          "N2",
+                          "Review index tradeoffs"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Receipts",
+                      "columns": [
+                        "Operation ID",
+                        "Note"
+                      ],
+                      "rows": [
+                        [
+                          "C2",
+                          "N1"
+                        ],
+                        [
+                          "C3",
+                          "N2"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Two notes for one request",
+                  "focus": [
+                    "count"
+                  ],
+                  "explanation": "The learner asked for one note and now has two with the same text. Nothing in the store links C3 to C2; a new call ID is not evidence of a new intent.",
+                  "nodes": [
+                    {
+                      "id": "call",
+                      "label": "save_note call",
+                      "detail": "One intent, sent twice",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "store",
+                      "label": "Store reply",
+                      "detail": "N1 and N2 both stored",
+                      "tone": "warning",
+                      "x": 280,
+                      "y": 40
+                    },
+                    {
+                      "id": "harness",
+                      "label": "Harness status",
+                      "detail": "confirmed twice",
+                      "tone": "warning",
+                      "x": 530,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "call",
+                      "to": "store",
+                      "label": "save(key, fingerprint)"
+                    },
+                    {
+                      "from": "store",
+                      "to": "harness",
+                      "label": "reply"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Notes",
+                      "columns": [
+                        "Note",
+                        "Text"
+                      ],
+                      "rows": [
+                        [
+                          "N1",
+                          "Review index tradeoffs"
+                        ],
+                        [
+                          "N2",
+                          "Review index tradeoffs"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Receipts",
+                      "columns": [
+                        "Operation ID",
+                        "Note"
+                      ],
+                      "rows": [
+                        [
+                          "C2",
+                          "N1"
+                        ],
+                        [
+                          "C3",
+                          "N2"
+                        ]
+                      ]
+                    }
+                  ],
+                  "focusLabel": "Check"
+                }
+              ]
+            }
+          ]
         }
       },
       {
@@ -3958,6 +4433,542 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
+        },
+        "visual": {
+          "title": "A step budget ends the loop",
+          "intro": "Run a script that only ever asks to search, first through the workshop's run() with max_steps=3, then in a loop with no counter.",
+          "scope": "The workshop's run(ScriptedSource(script), max_steps=3) and its search_lessons tool. Every proposal, including a finish, uses one step. The budget bounds proposal count, not time; a live adapter also needs deadlines and cancellation. The unbounded loop is a teaching contrast, not workshop code.",
+          "scenarios": [
+            {
+              "id": "budget",
+              "label": "max_steps=3: stops as budget_exhausted",
+              "steps": [
+                {
+                  "title": "Proposal 1: search",
+                  "explanation": "The source asks for search_lessons(\"joins\"). The application validates the query, runs the local search and records SQL-07 as evidence. One of three proposals is used.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Scripted source",
+                      "detail": "Asks to search; never finishes",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "status",
+                      "label": "Run status",
+                      "detail": "Running · 2 proposals left",
+                      "tone": "active",
+                      "x": 520,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "status",
+                      "label": "proposals"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Proposals",
+                      "columns": [
+                        "Step",
+                        "Proposal",
+                        "Result"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "search_lessons: joins",
+                          "SQL-07 observed"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Run",
+                      "columns": [
+                        "Budget",
+                        "Status"
+                      ],
+                      "rows": [
+                        [
+                          "3",
+                          "running"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Proposals 2 and 3: more searching",
+                  "focus": [
+                    "p2",
+                    "p3",
+                    "budget",
+                    "status"
+                  ],
+                  "explanation": "The source asks again for \"inner joins\" and then \"join types\". The first finds SQL-07 again, the second finds nothing. No new evidence arrives, and the third proposal uses the last step.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Scripted source",
+                      "detail": "Asks to search; never finishes",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "status",
+                      "label": "Run status",
+                      "detail": "Running · 0 proposals left",
+                      "tone": "warning",
+                      "x": 520,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "status",
+                      "label": "proposals"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Proposals",
+                      "columns": [
+                        "Step",
+                        "Proposal",
+                        "Result"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "search_lessons: joins",
+                          "SQL-07 observed"
+                        ],
+                        [
+                          "2",
+                          "search_lessons: inner joins",
+                          "SQL-07 again, nothing new"
+                        ],
+                        [
+                          "3",
+                          "search_lessons: join types",
+                          "no hits"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Run",
+                      "columns": [
+                        "Budget",
+                        "Status"
+                      ],
+                      "rows": [
+                        [
+                          "3",
+                          "running"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Budget exhausted",
+                  "focus": [
+                    "status"
+                  ],
+                  "explanation": "No step remains, so run() stops with budget_exhausted. There is no answer, and a fourth proposal is never requested. Report that the task did not complete, with the trace.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Scripted source",
+                      "detail": "Asks to search; never finishes",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "status",
+                      "label": "Run status",
+                      "detail": "budget_exhausted · no answer",
+                      "tone": "success",
+                      "x": 520,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "status",
+                      "label": "proposals"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Proposals",
+                      "columns": [
+                        "Step",
+                        "Proposal",
+                        "Result"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "search_lessons: joins",
+                          "SQL-07 observed"
+                        ],
+                        [
+                          "2",
+                          "search_lessons: inner joins",
+                          "SQL-07 again, nothing new"
+                        ],
+                        [
+                          "3",
+                          "search_lessons: join types",
+                          "no hits"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Run",
+                      "columns": [
+                        "Budget",
+                        "Status"
+                      ],
+                      "rows": [
+                        [
+                          "3",
+                          "budget_exhausted"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "unbounded",
+              "label": "No counter: keeps calling",
+              "steps": [
+                {
+                  "title": "Proposal 1: search",
+                  "explanation": "The same first search runs and records SQL-07. Nothing counts the proposals.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Same script, no counter",
+                      "detail": "Asks to search; never finishes",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "status",
+                      "label": "Run status",
+                      "detail": "Running · no limit",
+                      "tone": "active",
+                      "x": 520,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "status",
+                      "label": "proposals"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Proposals",
+                      "columns": [
+                        "Step",
+                        "Proposal",
+                        "Result"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "search_lessons: joins",
+                          "SQL-07 observed"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Run",
+                      "columns": [
+                        "Budget",
+                        "Status"
+                      ],
+                      "rows": [
+                        [
+                          "none",
+                          "running"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Proposals 2 and 3",
+                  "focus": [
+                    "p2",
+                    "p3",
+                    "budget"
+                  ],
+                  "explanation": "The searches for \"inner joins\" and \"join types\" add no new evidence. With no budget, the loop asks for another proposal.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Same script, no counter",
+                      "detail": "Asks to search; never finishes",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "status",
+                      "label": "Run status",
+                      "detail": "Running · no limit",
+                      "tone": "warning",
+                      "x": 520,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "status",
+                      "label": "proposals"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Proposals",
+                      "columns": [
+                        "Step",
+                        "Proposal",
+                        "Result"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "search_lessons: joins",
+                          "SQL-07 observed"
+                        ],
+                        [
+                          "2",
+                          "search_lessons: inner joins",
+                          "SQL-07 again, nothing new"
+                        ],
+                        [
+                          "3",
+                          "search_lessons: join types",
+                          "no hits"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Run",
+                      "columns": [
+                        "Budget",
+                        "Status"
+                      ],
+                      "rows": [
+                        [
+                          "none",
+                          "running"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Proposals 4 to 6: the same searches again",
+                  "focus": [
+                    "p4",
+                    "p5",
+                    "p6",
+                    "budget",
+                    "status"
+                  ],
+                  "explanation": "The source repeats the same three queries. Six tool calls have produced one piece of evidence and no answer.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Same script, no counter",
+                      "detail": "Asks to search; never finishes",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "status",
+                      "label": "Run status",
+                      "detail": "Running · 6 calls · no answer",
+                      "tone": "warning",
+                      "x": 520,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "status",
+                      "label": "proposals"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Proposals",
+                      "columns": [
+                        "Step",
+                        "Proposal",
+                        "Result"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "search_lessons: joins",
+                          "SQL-07 observed"
+                        ],
+                        [
+                          "2",
+                          "search_lessons: inner joins",
+                          "SQL-07 again, nothing new"
+                        ],
+                        [
+                          "3",
+                          "search_lessons: join types",
+                          "no hits"
+                        ],
+                        [
+                          "4",
+                          "search_lessons: joins",
+                          "SQL-07 again, nothing new"
+                        ],
+                        [
+                          "5",
+                          "search_lessons: inner joins",
+                          "SQL-07 again, nothing new"
+                        ],
+                        [
+                          "6",
+                          "search_lessons: join types",
+                          "no hits"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Run",
+                      "columns": [
+                        "Budget",
+                        "Status"
+                      ],
+                      "rows": [
+                        [
+                          "none",
+                          "running"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Nothing in the loop ends it",
+                  "focus": [
+                    "status"
+                  ],
+                  "explanation": "Only something outside the loop, such as a timeout, a crash or a person, can stop it now, and none of them records why. A counter in the loop gives the run a terminal status of its own.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Same script, no counter",
+                      "detail": "Asks to search; never finishes",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "status",
+                      "label": "Run status",
+                      "detail": "Still running · no terminal status",
+                      "tone": "warning",
+                      "x": 520,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "status",
+                      "label": "proposals"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Proposals",
+                      "columns": [
+                        "Step",
+                        "Proposal",
+                        "Result"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "search_lessons: joins",
+                          "SQL-07 observed"
+                        ],
+                        [
+                          "2",
+                          "search_lessons: inner joins",
+                          "SQL-07 again, nothing new"
+                        ],
+                        [
+                          "3",
+                          "search_lessons: join types",
+                          "no hits"
+                        ],
+                        [
+                          "4",
+                          "search_lessons: joins",
+                          "SQL-07 again, nothing new"
+                        ],
+                        [
+                          "5",
+                          "search_lessons: inner joins",
+                          "SQL-07 again, nothing new"
+                        ],
+                        [
+                          "6",
+                          "search_lessons: join types",
+                          "no hits"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Run",
+                      "columns": [
+                        "Budget",
+                        "Status"
+                      ],
+                      "rows": [
+                        [
+                          "none",
+                          "running"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       },
       {
@@ -6414,6 +7425,646 @@ const LEARNING_PATHS = [
                 3,
                 4,
                 5
+              ]
+            }
+          ]
+        },
+        "visual": {
+          "title": "Check the record, not just the session",
+          "intro": "Alice (tenant red) edits document a, then changes only the ID in the path. Compare the lab's handler with one that checks the session alone.",
+          "scope": "The lab's authorized(principal, document, action) and the PATCH /documents/{id} handler in security_http.py, which loads the row and checks tenant, owner and action before updating, answering 404 for missing and denied alike. The session-only handler is a deliberately broken contrast: an IDOR. Every request has a valid session and CSRF token.",
+          "sources": [
+            {
+              "title": "OWASP API Security Top 10 2023: Broken Object Level Authorization",
+              "url": "https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/"
+            }
+          ],
+          "scenarios": [
+            {
+              "id": "checked",
+              "label": "Tenant, owner and action: denied",
+              "steps": [
+                {
+                  "title": "Alice updates her own document",
+                  "explanation": "Alice is in tenant red and owns a, and update is a supported action, so authorized() allows it. The handler updates the title and answers 200.",
+                  "nodes": [
+                    {
+                      "id": "request",
+                      "label": "Request",
+                      "detail": "alice/red PATCH /documents/a",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "handler",
+                      "label": "Handler",
+                      "detail": "Row a: red, owner alice",
+                      "tone": "success",
+                      "x": 280,
+                      "y": 40
+                    },
+                    {
+                      "id": "response",
+                      "label": "Response",
+                      "detail": "200 · a retitled",
+                      "tone": "success",
+                      "x": 530,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "request",
+                      "to": "handler",
+                      "label": "load row a"
+                    },
+                    {
+                      "from": "handler",
+                      "to": "response",
+                      "label": "decide"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Request",
+                      "columns": [
+                        "Principal",
+                        "Path",
+                        "Action"
+                      ],
+                      "rows": [
+                        [
+                          "alice/red/member",
+                          "/documents/a",
+                          "update"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Handler",
+                      "columns": [
+                        "Check"
+                      ],
+                      "rows": [
+                        [
+                          "tenant + owner + action"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "documents",
+                      "columns": [
+                        "id",
+                        "tenant",
+                        "owner",
+                        "title"
+                      ],
+                      "rows": [
+                        [
+                          "a",
+                          "red",
+                          "alice",
+                          "Edited by Alice"
+                        ],
+                        [
+                          "b",
+                          "red",
+                          "bob",
+                          "Bob private"
+                        ],
+                        [
+                          "c",
+                          "blue",
+                          "alice",
+                          "Other tenant"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Change the ID to b",
+                  "focus": [
+                    "request",
+                    "handler",
+                    "response"
+                  ],
+                  "explanation": "The session is still valid, but b belongs to Bob. authorized() refuses, so the handler rolls back and answers 404, the same reply as a missing document. Bob's title is unchanged.",
+                  "nodes": [
+                    {
+                      "id": "request",
+                      "label": "Request",
+                      "detail": "alice/red PATCH /documents/b",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "handler",
+                      "label": "Handler",
+                      "detail": "Row b: owner bob, not alice",
+                      "tone": "warning",
+                      "x": 280,
+                      "y": 40
+                    },
+                    {
+                      "id": "response",
+                      "label": "Response",
+                      "detail": "404 · b unchanged",
+                      "tone": "success",
+                      "x": 530,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "request",
+                      "to": "handler",
+                      "label": "load row b"
+                    },
+                    {
+                      "from": "handler",
+                      "to": "response",
+                      "label": "decide"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Request",
+                      "columns": [
+                        "Principal",
+                        "Path",
+                        "Action"
+                      ],
+                      "rows": [
+                        [
+                          "alice/red/member",
+                          "/documents/b",
+                          "update"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Handler",
+                      "columns": [
+                        "Check"
+                      ],
+                      "rows": [
+                        [
+                          "tenant + owner + action"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "documents",
+                      "columns": [
+                        "id",
+                        "tenant",
+                        "owner",
+                        "title"
+                      ],
+                      "rows": [
+                        [
+                          "a",
+                          "red",
+                          "alice",
+                          "Edited by Alice"
+                        ],
+                        [
+                          "b",
+                          "red",
+                          "bob",
+                          "Bob private"
+                        ],
+                        [
+                          "c",
+                          "blue",
+                          "alice",
+                          "Other tenant"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Change the ID to c",
+                  "focus": [
+                    "request",
+                    "handler",
+                    "response"
+                  ],
+                  "explanation": "Document c names alice as owner, but it is in tenant blue. The tenant check fails before ownership is considered, so the answer is 404 again.",
+                  "nodes": [
+                    {
+                      "id": "request",
+                      "label": "Request",
+                      "detail": "alice/red PATCH /documents/c",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "handler",
+                      "label": "Handler",
+                      "detail": "Row c: tenant blue, not red",
+                      "tone": "warning",
+                      "x": 280,
+                      "y": 40
+                    },
+                    {
+                      "id": "response",
+                      "label": "Response",
+                      "detail": "404 · c unchanged",
+                      "tone": "success",
+                      "x": 530,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "request",
+                      "to": "handler",
+                      "label": "load row c"
+                    },
+                    {
+                      "from": "handler",
+                      "to": "response",
+                      "label": "decide"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Request",
+                      "columns": [
+                        "Principal",
+                        "Path",
+                        "Action"
+                      ],
+                      "rows": [
+                        [
+                          "alice/red/member",
+                          "/documents/c",
+                          "update"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Handler",
+                      "columns": [
+                        "Check"
+                      ],
+                      "rows": [
+                        [
+                          "tenant + owner + action"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "documents",
+                      "columns": [
+                        "id",
+                        "tenant",
+                        "owner",
+                        "title"
+                      ],
+                      "rows": [
+                        [
+                          "a",
+                          "red",
+                          "alice",
+                          "Edited by Alice"
+                        ],
+                        [
+                          "b",
+                          "red",
+                          "bob",
+                          "Bob private"
+                        ],
+                        [
+                          "c",
+                          "blue",
+                          "alice",
+                          "Other tenant"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "idor",
+              "label": "Session only: IDOR",
+              "steps": [
+                {
+                  "title": "Alice updates her own document",
+                  "explanation": "With a valid session the session-only handler updates a and answers 200, the same as the checked handler. A test of this request alone cannot tell them apart.",
+                  "nodes": [
+                    {
+                      "id": "request",
+                      "label": "Request",
+                      "detail": "alice/red PATCH /documents/a",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "handler",
+                      "label": "Handler",
+                      "detail": "Session valid; row not checked",
+                      "tone": "warning",
+                      "x": 280,
+                      "y": 40
+                    },
+                    {
+                      "id": "response",
+                      "label": "Response",
+                      "detail": "200 · a retitled",
+                      "tone": "success",
+                      "x": 530,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "request",
+                      "to": "handler",
+                      "label": "load row a"
+                    },
+                    {
+                      "from": "handler",
+                      "to": "response",
+                      "label": "decide"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Request",
+                      "columns": [
+                        "Principal",
+                        "Path",
+                        "Action"
+                      ],
+                      "rows": [
+                        [
+                          "alice/red/member",
+                          "/documents/a",
+                          "update"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Handler",
+                      "columns": [
+                        "Check"
+                      ],
+                      "rows": [
+                        [
+                          "session only"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "documents",
+                      "columns": [
+                        "id",
+                        "tenant",
+                        "owner",
+                        "title"
+                      ],
+                      "rows": [
+                        [
+                          "a",
+                          "red",
+                          "alice",
+                          "Edited by Alice"
+                        ],
+                        [
+                          "b",
+                          "red",
+                          "bob",
+                          "Bob private"
+                        ],
+                        [
+                          "c",
+                          "blue",
+                          "alice",
+                          "Other tenant"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Change the ID to b",
+                  "focus": [
+                    "request",
+                    "handler",
+                    "response",
+                    "doc-b"
+                  ],
+                  "explanation": "The handler never compares b's owner with Alice, so it overwrites Bob's title and answers 200. Guessing an ID was enough.",
+                  "nodes": [
+                    {
+                      "id": "request",
+                      "label": "Request",
+                      "detail": "alice/red PATCH /documents/b",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "handler",
+                      "label": "Handler",
+                      "detail": "Session valid; row not checked",
+                      "tone": "warning",
+                      "x": 280,
+                      "y": 40
+                    },
+                    {
+                      "id": "response",
+                      "label": "Response",
+                      "detail": "200 · Bob's b overwritten",
+                      "tone": "warning",
+                      "x": 530,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "request",
+                      "to": "handler",
+                      "label": "load row b"
+                    },
+                    {
+                      "from": "handler",
+                      "to": "response",
+                      "label": "decide"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Request",
+                      "columns": [
+                        "Principal",
+                        "Path",
+                        "Action"
+                      ],
+                      "rows": [
+                        [
+                          "alice/red/member",
+                          "/documents/b",
+                          "update"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Handler",
+                      "columns": [
+                        "Check"
+                      ],
+                      "rows": [
+                        [
+                          "session only"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "documents",
+                      "columns": [
+                        "id",
+                        "tenant",
+                        "owner",
+                        "title"
+                      ],
+                      "rows": [
+                        [
+                          "a",
+                          "red",
+                          "alice",
+                          "Edited by Alice"
+                        ],
+                        [
+                          "b",
+                          "red",
+                          "bob",
+                          "Edited by Alice"
+                        ],
+                        [
+                          "c",
+                          "blue",
+                          "alice",
+                          "Other tenant"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Change the ID to c",
+                  "focus": [
+                    "request",
+                    "response",
+                    "doc-c"
+                  ],
+                  "explanation": "The same request crosses into tenant blue and overwrites c. A role or session check cannot stand in for checking this object for this action.",
+                  "nodes": [
+                    {
+                      "id": "request",
+                      "label": "Request",
+                      "detail": "alice/red PATCH /documents/c",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "handler",
+                      "label": "Handler",
+                      "detail": "Session valid; row not checked",
+                      "tone": "warning",
+                      "x": 280,
+                      "y": 40
+                    },
+                    {
+                      "id": "response",
+                      "label": "Response",
+                      "detail": "200 · tenant blue's c overwritten",
+                      "tone": "warning",
+                      "x": 530,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "request",
+                      "to": "handler",
+                      "label": "load row c"
+                    },
+                    {
+                      "from": "handler",
+                      "to": "response",
+                      "label": "decide"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Request",
+                      "columns": [
+                        "Principal",
+                        "Path",
+                        "Action"
+                      ],
+                      "rows": [
+                        [
+                          "alice/red/member",
+                          "/documents/c",
+                          "update"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Handler",
+                      "columns": [
+                        "Check"
+                      ],
+                      "rows": [
+                        [
+                          "session only"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "documents",
+                      "columns": [
+                        "id",
+                        "tenant",
+                        "owner",
+                        "title"
+                      ],
+                      "rows": [
+                        [
+                          "a",
+                          "red",
+                          "alice",
+                          "Edited by Alice"
+                        ],
+                        [
+                          "b",
+                          "red",
+                          "bob",
+                          "Edited by Alice"
+                        ],
+                        [
+                          "c",
+                          "blue",
+                          "alice",
+                          "Edited by Alice"
+                        ]
+                      ]
+                    }
+                  ]
+                }
               ]
             }
           ]
@@ -49028,7 +50679,363 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Primary documentation for the worked progression example; execution evidence is recorded separately."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Group access to a shared directory",
+          "intro": "bo, a member of group analysts, opens /srv/reports/q3.csv. The file grants group read; the directory decides whether bo can reach it.",
+          "scope": "Traditional mode bits only. The process's user and groups select the owner, group or other bits; a directory needs x to traverse and a file needs r to read or w to write. ACLs, capabilities, mount options and security modules can change the result and are not modelled. Names are fictional.",
+          "scenarios": [
+            {
+              "id": "group",
+              "label": "Directory 750: group can enter",
+              "steps": [
+                {
+                  "title": "Traverse /srv/reports",
+                  "explanation": "bo is not the owner ana but is in group analysts, so the group bits apply. Mode 750 gives the group r-x, and x allows traversal.",
+                  "nodes": [
+                    {
+                      "id": "result",
+                      "label": "Outcome for bo",
+                      "detail": "Can enter /srv/reports",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Identity",
+                      "columns": [
+                        "User",
+                        "Groups"
+                      ],
+                      "rows": [
+                        [
+                          "bo",
+                          "bo, analysts"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Path",
+                      "columns": [
+                        "Path",
+                        "Owner",
+                        "Group",
+                        "Mode",
+                        "Needs"
+                      ],
+                      "rows": [
+                        [
+                          "/srv/reports",
+                          "ana",
+                          "analysts",
+                          "750",
+                          "x"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Read q3.csv",
+                  "focus": [
+                    "q3-csv",
+                    "result"
+                  ],
+                  "explanation": "The file's mode 640 gives the group r--. bo has reached the file and has read, so opening it for reading succeeds.",
+                  "nodes": [
+                    {
+                      "id": "result",
+                      "label": "Outcome for bo",
+                      "detail": "Can read q3.csv",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Identity",
+                      "columns": [
+                        "User",
+                        "Groups"
+                      ],
+                      "rows": [
+                        [
+                          "bo",
+                          "bo, analysts"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Path",
+                      "columns": [
+                        "Path",
+                        "Owner",
+                        "Group",
+                        "Mode",
+                        "Needs"
+                      ],
+                      "rows": [
+                        [
+                          "/srv/reports",
+                          "ana",
+                          "analysts",
+                          "750",
+                          "x"
+                        ],
+                        [
+                          "/srv/reports/q3.csv",
+                          "ana",
+                          "analysts",
+                          "640",
+                          "r"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Try to write q3.csv",
+                  "focus": [
+                    "q3-csv",
+                    "result"
+                  ],
+                  "explanation": "The group bits r-- have no w, so writing is denied even though reading works. Each class gets only the bits its digit grants.",
+                  "nodes": [
+                    {
+                      "id": "result",
+                      "label": "Outcome for bo",
+                      "detail": "Read allowed; write denied",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Identity",
+                      "columns": [
+                        "User",
+                        "Groups"
+                      ],
+                      "rows": [
+                        [
+                          "bo",
+                          "bo, analysts"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Path",
+                      "columns": [
+                        "Path",
+                        "Owner",
+                        "Group",
+                        "Mode",
+                        "Needs"
+                      ],
+                      "rows": [
+                        [
+                          "/srv/reports",
+                          "ana",
+                          "analysts",
+                          "750",
+                          "x"
+                        ],
+                        [
+                          "/srv/reports/q3.csv",
+                          "ana",
+                          "analysts",
+                          "640",
+                          "w"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "private",
+              "label": "Directory 700: group shut out",
+              "steps": [
+                {
+                  "title": "Traverse /srv/reports",
+                  "explanation": "With mode 700 the group bits are ---. bo cannot traverse the directory, so the open fails with Permission denied.",
+                  "nodes": [
+                    {
+                      "id": "result",
+                      "label": "Outcome for bo",
+                      "detail": "Permission denied",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Identity",
+                      "columns": [
+                        "User",
+                        "Groups"
+                      ],
+                      "rows": [
+                        [
+                          "bo",
+                          "bo, analysts"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Path",
+                      "columns": [
+                        "Path",
+                        "Owner",
+                        "Group",
+                        "Mode",
+                        "Needs"
+                      ],
+                      "rows": [
+                        [
+                          "/srv/reports",
+                          "ana",
+                          "analysts",
+                          "700",
+                          "x"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "The file still grants group read",
+                  "focus": [
+                    "q3-csv",
+                    "result"
+                  ],
+                  "explanation": "q3.csv is 640, the same as before, but bo never reaches it. The failure is at the parent directory, not the file.",
+                  "nodes": [
+                    {
+                      "id": "result",
+                      "label": "Outcome for bo",
+                      "detail": "Denied before reaching q3.csv",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Identity",
+                      "columns": [
+                        "User",
+                        "Groups"
+                      ],
+                      "rows": [
+                        [
+                          "bo",
+                          "bo, analysts"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Path",
+                      "columns": [
+                        "Path",
+                        "Owner",
+                        "Group",
+                        "Mode",
+                        "Needs"
+                      ],
+                      "rows": [
+                        [
+                          "/srv/reports",
+                          "ana",
+                          "analysts",
+                          "700",
+                          "x"
+                        ],
+                        [
+                          "/srv/reports/q3.csv",
+                          "ana",
+                          "analysts",
+                          "640",
+                          "r"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "chmod the file, not the directory",
+                  "focus": [
+                    "q3-csv"
+                  ],
+                  "explanation": "Changing the file to 666 does not help: the directory is still 700. Granting the group r-x on the directory, mode 750, fixes the path without opening it to everyone as chmod 777 would.",
+                  "nodes": [
+                    {
+                      "id": "result",
+                      "label": "Outcome for bo",
+                      "detail": "Still denied: fix the directory",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Identity",
+                      "columns": [
+                        "User",
+                        "Groups"
+                      ],
+                      "rows": [
+                        [
+                          "bo",
+                          "bo, analysts"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Path",
+                      "columns": [
+                        "Path",
+                        "Owner",
+                        "Group",
+                        "Mode",
+                        "Needs"
+                      ],
+                      "rows": [
+                        [
+                          "/srv/reports",
+                          "ana",
+                          "analysts",
+                          "700",
+                          "x"
+                        ],
+                        [
+                          "/srv/reports/q3.csv",
+                          "ana",
+                          "analysts",
+                          "666",
+                          "r"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "processes-and-exit-status",
@@ -59477,7 +61484,315 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
-        ]
+        ],
+        "visual": {
+          "title": "p95 sees the tail the mean hides",
+          "intro": "Twenty requests before and after a release. Judge the change by its nearest-rank p95, then by its mean alone.",
+          "scope": "The lab's percentile(values, p) in telemetry.py: sort the values and take index ceil(p × n) − 1. With 20 fictional durations per release, p95 is the 19th smallest value. Twenty observations cannot support precise tail claims; show the sample size and estimator beside every percentile.",
+          "scenarios": [
+            {
+              "id": "p95",
+              "label": "p95: the release is slower",
+              "steps": [
+                {
+                  "title": "Before: release A",
+                  "explanation": "Eighteen requests take 40 ms and two take 60 ms. The mean is 42 ms and the 19th smallest value, the p95, is 60 ms.",
+                  "nodes": [
+                    {
+                      "id": "verdict",
+                      "label": "Verdict",
+                      "detail": "Baseline: mean 42 ms, p95 60 ms",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Release A (ms)",
+                      "columns": [
+                        "Duration",
+                        "Requests"
+                      ],
+                      "rows": [
+                        [
+                          "40",
+                          "18"
+                        ],
+                        [
+                          "60",
+                          "2"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "After: release B",
+                  "focus": [
+                    "b-mean",
+                    "b-p95"
+                  ],
+                  "explanation": "Eighteen requests now take 20 ms, but two take 150 ms. The mean falls to 33 ms, while the p95 rises to 150 ms.",
+                  "nodes": [
+                    {
+                      "id": "verdict",
+                      "label": "Verdict",
+                      "detail": "p95 60 → 150 ms: tail regression",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Release A (ms)",
+                      "columns": [
+                        "Duration",
+                        "Requests"
+                      ],
+                      "rows": [
+                        [
+                          "40",
+                          "18"
+                        ],
+                        [
+                          "60",
+                          "2"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Release B (ms)",
+                      "columns": [
+                        "Duration",
+                        "Requests"
+                      ],
+                      "rows": [
+                        [
+                          "20",
+                          "18"
+                        ],
+                        [
+                          "150",
+                          "2"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Read the tail",
+                  "focus": [
+                    "a-p95",
+                    "b-p95",
+                    "verdict"
+                  ],
+                  "explanation": "Two of the twenty requests, 10%, now wait 150 ms instead of 60 ms. Treat release B as a regression for those users, and gather more requests before claiming a precise p95.",
+                  "nodes": [
+                    {
+                      "id": "verdict",
+                      "label": "Verdict",
+                      "detail": "Investigate the 2 slow requests",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Release A (ms)",
+                      "columns": [
+                        "Duration",
+                        "Requests"
+                      ],
+                      "rows": [
+                        [
+                          "40",
+                          "18"
+                        ],
+                        [
+                          "60",
+                          "2"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Release B (ms)",
+                      "columns": [
+                        "Duration",
+                        "Requests"
+                      ],
+                      "rows": [
+                        [
+                          "20",
+                          "18"
+                        ],
+                        [
+                          "150",
+                          "2"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "mean",
+              "label": "Mean only: looks faster",
+              "steps": [
+                {
+                  "title": "Before: release A",
+                  "explanation": "The same twenty requests average 42 ms.",
+                  "nodes": [
+                    {
+                      "id": "verdict",
+                      "label": "Verdict",
+                      "detail": "Baseline: mean 42 ms",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Release A (ms)",
+                      "columns": [
+                        "Duration",
+                        "Requests"
+                      ],
+                      "rows": [
+                        [
+                          "40",
+                          "18"
+                        ],
+                        [
+                          "60",
+                          "2"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "After: release B",
+                  "focus": [
+                    "b-mean",
+                    "verdict"
+                  ],
+                  "explanation": "The average falls from 42 to 33 ms, so a mean-only dashboard reports the release as 9 ms faster.",
+                  "nodes": [
+                    {
+                      "id": "verdict",
+                      "label": "Verdict",
+                      "detail": "Mean 42 → 33 ms: ship it",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Release A (ms)",
+                      "columns": [
+                        "Duration",
+                        "Requests"
+                      ],
+                      "rows": [
+                        [
+                          "40",
+                          "18"
+                        ],
+                        [
+                          "60",
+                          "2"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Release B (ms)",
+                      "columns": [
+                        "Duration",
+                        "Requests"
+                      ],
+                      "rows": [
+                        [
+                          "20",
+                          "18"
+                        ],
+                        [
+                          "150",
+                          "2"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "What the mean left out",
+                  "focus": [
+                    "b-p95"
+                  ],
+                  "explanation": "The mean fell because eighteen requests got faster. It has no way to show that the slowest two went from 60 to 150 ms; the p95 does.",
+                  "nodes": [
+                    {
+                      "id": "verdict",
+                      "label": "Verdict",
+                      "detail": "Mean improved; slowest 2 got worse",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Release A (ms)",
+                      "columns": [
+                        "Duration",
+                        "Requests"
+                      ],
+                      "rows": [
+                        [
+                          "40",
+                          "18"
+                        ],
+                        [
+                          "60",
+                          "2"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Release B (ms)",
+                      "columns": [
+                        "Duration",
+                        "Requests"
+                      ],
+                      "rows": [
+                        [
+                          "20",
+                          "18"
+                        ],
+                        [
+                          "150",
+                          "2"
+                        ]
+                      ]
+                    }
+                  ],
+                  "focusLabel": "Compare"
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "golden-signals",
@@ -87494,7 +89809,330 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Inject the clock a test depends on",
+          "intro": "A test issues a 30-second token, does some work and asserts the token is still valid. Run it against the wall clock, then against a clock the test controls.",
+          "scope": "A teaching token that is valid while now < issued + ttl, with times in seconds on a monotonic clock. The course kit has no clock code of its own; the rule is the same strict comparison as Networking's DNS cache lab. A rerun is diagnostic evidence, not a repair (this lesson).",
+          "scenarios": [
+            {
+              "id": "wall",
+              "label": "Wall clock: passes, then fails",
+              "steps": [
+                {
+                  "title": "Run on a laptop",
+                  "explanation": "The token is issued at 1000 s and expires at 1030 s. The work takes 12 seconds, so the check at 1012 s finds it valid and the test passes.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Clock",
+                      "detail": "time.monotonic() · real time",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "test",
+                      "label": "Test",
+                      "detail": "Expects valid · laptop run",
+                      "tone": "success",
+                      "x": 400,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "test",
+                      "label": "now"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Token",
+                      "columns": [
+                        "Issued (s)",
+                        "TTL (s)",
+                        "Checked (s)",
+                        "Expect"
+                      ],
+                      "rows": [
+                        [
+                          "1000",
+                          "30",
+                          "1012",
+                          "valid"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "The same test on a loaded CI runner",
+                  "focus": [
+                    "checked",
+                    "test"
+                  ],
+                  "explanation": "Nothing in the code changed, but the work took 31 seconds. The check at 1031 s is after the expiry, so the assertion fails.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Clock",
+                      "detail": "time.monotonic() · real time",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "test",
+                      "label": "Test",
+                      "detail": "Expects valid · slow CI run",
+                      "tone": "warning",
+                      "x": 400,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "test",
+                      "label": "now"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Token",
+                      "columns": [
+                        "Issued (s)",
+                        "TTL (s)",
+                        "Checked (s)",
+                        "Expect"
+                      ],
+                      "rows": [
+                        [
+                          "1000",
+                          "30",
+                          "1031",
+                          "valid"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Rerun: green again",
+                  "focus": [
+                    "checked",
+                    "test"
+                  ],
+                  "explanation": "A rerun happens to check at 1015 s and passes. The duration of the work still decides the result, so the failure will return.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Clock",
+                      "detail": "time.monotonic() · real time",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "test",
+                      "label": "Test",
+                      "detail": "Expects valid · rerun",
+                      "tone": "success",
+                      "x": 400,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "test",
+                      "label": "now"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Token",
+                      "columns": [
+                        "Issued (s)",
+                        "TTL (s)",
+                        "Checked (s)",
+                        "Expect"
+                      ],
+                      "rows": [
+                        [
+                          "1000",
+                          "30",
+                          "1015",
+                          "valid"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "injected",
+              "label": "Injected clock: same result every run",
+              "steps": [
+                {
+                  "title": "Advance a FakeClock by 29 seconds",
+                  "explanation": "The test passes a FakeClock starting at 1000 s and calls clock.advance(29). The check at 1029 s is one second before expiry, so the token is valid.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Clock",
+                      "detail": "FakeClock(1000) · advance(29)",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "test",
+                      "label": "Test",
+                      "detail": "Expects valid · any machine",
+                      "tone": "success",
+                      "x": 400,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "test",
+                      "label": "now"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Token",
+                      "columns": [
+                        "Issued (s)",
+                        "TTL (s)",
+                        "Checked (s)",
+                        "Expect"
+                      ],
+                      "rows": [
+                        [
+                          "1000",
+                          "30",
+                          "1029",
+                          "valid"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Advance one more second",
+                  "focus": [
+                    "checked",
+                    "test"
+                  ],
+                  "explanation": "clock.advance(1) moves the check to 1030 s, exactly the expiry. now < expiry is false, so a second test asserts the token has expired, and it passes.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Clock",
+                      "detail": "FakeClock · advance(1)",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "test",
+                      "label": "Test",
+                      "detail": "Expects expired · boundary",
+                      "tone": "success",
+                      "x": 400,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "test",
+                      "label": "now"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Token",
+                      "columns": [
+                        "Issued (s)",
+                        "TTL (s)",
+                        "Checked (s)",
+                        "Expect"
+                      ],
+                      "rows": [
+                        [
+                          "1000",
+                          "30",
+                          "1030",
+                          "expired"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Run it on a slow runner",
+                  "focus": [
+                    "source"
+                  ],
+                  "explanation": "The work can take any real time now. The token only sees the clock the test controls, so the check stays at 1029 s and the test passes on every run.",
+                  "nodes": [
+                    {
+                      "id": "source",
+                      "label": "Clock",
+                      "detail": "FakeClock(1000) · advance(29)",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 40
+                    },
+                    {
+                      "id": "test",
+                      "label": "Test",
+                      "detail": "Expects valid · slow CI run",
+                      "tone": "success",
+                      "x": 400,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "from": "source",
+                      "to": "test",
+                      "label": "now"
+                    }
+                  ],
+                  "tables": [
+                    {
+                      "caption": "Token",
+                      "columns": [
+                        "Issued (s)",
+                        "TTL (s)",
+                        "Checked (s)",
+                        "Expect"
+                      ],
+                      "rows": [
+                        [
+                          "1000",
+                          "30",
+                          "1029",
+                          "valid"
+                        ]
+                      ]
+                    }
+                  ],
+                  "focusLabel": "Compare"
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "async-debugging",
