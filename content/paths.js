@@ -85444,7 +85444,39 @@ const LEARNING_PATHS = [
             "The simplest proposed architecture is justified and limitations are explicit."
           ],
           "solution": "Start with one modular API and a relational database behind HTTPS. Use user/lesson identity, a unique progress key and conditional version updates. The scenario gives 400,000 requests/day, 4.63 average requests/s and 37.04 assumed peak. Set a chosen user-facing save SLO separately from latency; targets require agreement, not copying. Authorize per-user access and test uncertain outcomes. See the workbook for an example ADR and calculation table."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does workload(1000, 10, 0.5, 100) do?",
+            "options": [
+              "Raises ValueError: peak_multiplier must be >= 1",
+              "Returns a peak below the average",
+              "Returns a peak equal to the average"
+            ],
+            "correct": 0,
+            "explanation": "A peak cannot be lower than the average it multiplies, so the model refuses the input."
+          },
+          {
+            "question": "What does allowed_bad_requests(1000, 1.5) do?",
+            "options": [
+              "Raises ValueError: success_target must be at most 1",
+              "Returns -500",
+              "Returns 0"
+            ],
+            "correct": 0,
+            "explanation": "A success target is a fraction. A value above 1 is rejected rather than producing a negative budget."
+          },
+          {
+            "question": "What does retained_bytes(1000, 100, 30, 0.5) do?",
+            "options": [
+              "Raises ValueError: overhead_factor must be >= 1; compression is outside this model",
+              "Returns 1.5 MB modeled",
+              "Returns 3 MB modeled"
+            ],
+            "correct": 0,
+            "explanation": "The model only adds overhead. Compression needs its own measured assumption."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -85472,7 +85504,39 @@ const LEARNING_PATHS = [
             "Queue age, replay responsibility and private export authorization are specified."
           ],
           "solution": "Keep workshop capacity and booking changes under one transactional owner. Add durable caller-scoped idempotency records and uniqueness for active bookings. Serve public versioned lesson content through cache while bookings consult authority. Use an export queue with durable job status and idempotent output naming. Route dependent reads consistently and allow bounded stale public content during partitions while rejecting unsupported authoritative writes. The design remains a paper exercise until actual concurrency and fault tests pass."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A learner books a two-seat workshop twice, using two different keys. What happens to the second request?",
+            "options": [
+              "sqlite3.IntegrityError, and 1 seat remains",
+              "A second booking, and 0 seats remain",
+              "A replay of the first booking"
+            ],
+            "correct": 0,
+            "explanation": "UNIQUE(workshop_id, learner) rejects the second booking, and the transaction rolls back its seat decrement."
+          },
+          {
+            "question": "What does backlog_after(500, 80, 100, 60) return?",
+            "options": [
+              "0",
+              "-700",
+              "500"
+            ],
+            "correct": 0,
+            "explanation": "The backlog drains and stops at zero. Spare capacity while idle is not banked for later."
+          },
+          {
+            "question": "workload(8640, 10, 1, 0) models 86,400 requests a day. What is average_rps?",
+            "options": [
+              "1",
+              "10",
+              "86400"
+            ],
+            "correct": 0,
+            "explanation": "86,400 seconds in a day, so 86,400 daily requests average one per second."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -85501,7 +85565,39 @@ const LEARNING_PATHS = [
             "No benchmark, availability or cost claim is invented from calculator output."
           ],
           "solution": "The reference workbook links requirements to mechanisms and experiments. Protect interactive work with separate bounded concurrency from exports; centralize intentional retries and stop at the deadline. Record booking and outbox event atomically, then make consumers duplicate-safe. A restore drill must validate correctness and elapsed recovery time. Use additive migration steps while versions coexist. Retain a modular deployment unless measured isolation needs justify extraction. A completed self-review is practice evidence, not certification or a production approval."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does drain_seconds(0, 120, 100) return?",
+            "options": [
+              "0",
+              "None",
+              "-0"
+            ],
+            "correct": 0,
+            "explanation": "An empty backlog needs no time to drain, even when arrivals exceed service."
+          },
+          {
+            "question": "A booking's event has already been relayed. What does the next relay_one call return?",
+            "options": [
+              "None",
+              "The same event ID",
+              "A new event ID"
+            ],
+            "correct": 0,
+            "explanation": "No unsent rows remain, so the relay has nothing to publish."
+          },
+          {
+            "question": "What does book(path, 'alice', 'K1', workshop_id='X') do when workshop X does not exist?",
+            "options": [
+              "Raises ValueError: sold out or unknown workshop",
+              "Creates workshop X",
+              "Raises sqlite3.IntegrityError"
+            ],
+            "correct": 0,
+            "explanation": "The conditional UPDATE matches no row, so the booking stops before any insert."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -85559,6 +85655,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does booking_lab.initialize(path, seats=-1) do?",
+            "options": [
+              "Raises ValueError: seats must be a nonnegative integer",
+              "Creates a workshop with no seats",
+              "Creates a workshop with -1 seats"
+            ],
+            "correct": 0,
+            "explanation": "Remaining seats can never be negative. The invariant is enforced at setup and again by the table's CHECK constraint."
+          }
         ]
       },
       {
@@ -85614,6 +85722,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does allowed_bad_requests(1000000, 0.999) return?",
+            "options": [
+              "1000",
+              "999",
+              "1"
+            ],
+            "correct": 0,
+            "explanation": "A 99.9% success target leaves 0.1% of eligible requests as the error budget."
+          }
         ]
       },
       {
@@ -85668,6 +85788,18 @@ const LEARNING_PATHS = [
             "section": "Choosing an initial SLO; implementing SLOs",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "workload(10000, 40, 8, 2000) models 10,000 daily users making 40 requests each with an 8× peak. What is peak_rps, to the nearest whole number?",
+            "options": [
+              "37",
+              "5",
+              "400000"
+            ],
+            "correct": 0,
+            "explanation": "400,000 requests over 86,400 seconds averages about 4.6 per second. The 8× multiplier gives about 37."
           }
         ]
       },
@@ -85730,6 +85862,18 @@ const LEARNING_PATHS = [
             "section": "Prometheus histograms and summaries",
             "reviewed": "2026-10-02",
             "scope": "Quantile aggregation rules; no Prometheus deployment or load test."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does mean_in_flight(200, 0.25) return?",
+            "options": [
+              "50",
+              "800",
+              "200.25"
+            ],
+            "correct": 0,
+            "explanation": "Little's law: 200 arrivals per second × 0.25 seconds each. It describes means in a stable system, not percentiles."
           }
         ]
       },
@@ -86093,7 +86237,19 @@ const LEARNING_PATHS = [
               "url": "https://www.rfc-editor.org/rfc/rfc9110.html"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A booking reply is lost. Why retry with the same operation ID rather than as a new booking?",
+            "options": [
+              "A new intent cannot tell whether the first one committed",
+              "A new booking would be slower",
+              "The server rejects new bookings after a timeout"
+            ],
+            "correct": 0,
+            "explanation": "The first booking may have committed with its reply lost. A stable ID lets the server look up the original intent."
+          }
+        ]
       },
       {
         "id": "api-contracts",
@@ -86147,6 +86303,18 @@ const LEARNING_PATHS = [
             "section": "Sections 3–9: HTTP architecture, messages and methods",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A learner books workshop W with key K1, then sends K1 again for workshop X. What does book() do?",
+            "options": [
+              "Raises ValueError: key reused for different workshop",
+              "Books workshop X",
+              "Returns the W booking as a replay"
+            ],
+            "correct": 0,
+            "explanation": "An idempotency key names one intent. Reusing it with different parameters is an error, not a replay."
           }
         ]
       },
@@ -86210,6 +86378,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Multi-column index ordering for the teaching access pattern; actual plans depend on engine and data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Notebook progress must hold exactly one record per learner and lesson. What expresses that rule?",
+            "options": [
+              "A composite key on learner and lesson",
+              "A timestamp on each record",
+              "An index on lesson title"
+            ],
+            "correct": 0,
+            "explanation": "The uniqueness rule becomes part of the key, so the database enforces it on every write."
+          }
         ]
       },
       {
@@ -86272,6 +86452,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Index access and write overhead as a concrete database example; no PostgreSQL benchmark."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "retained_bytes(200000, 500, 30, 1.5, 3) models a month of events with 1.5× overhead and three copies. What are raw and modeled bytes?",
+            "options": [
+              "3 GB raw, 13.5 GB modeled",
+              "3 GB raw, 4.5 GB modeled",
+              "13.5 GB raw, 13.5 GB modeled"
+            ],
+            "correct": 0,
+            "explanation": "200,000 × 500 × 30 = 3 billion raw bytes. Overhead and copies multiply it: 3 × 1.5 × 3 = 13.5 GB."
+          }
         ]
       },
       {
@@ -86326,6 +86518,18 @@ const LEARNING_PATHS = [
             "section": "The four golden signals",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does instance_count(370, 100, 0.7, 1) return?",
+            "options": [
+              "7",
+              "6",
+              "4"
+            ],
+            "correct": 0,
+            "explanation": "Each instance is planned at 70 of its measured 100 rps, so 370 needs ceil(370 ÷ 70) = 6, plus one to tolerate a loss."
           }
         ]
       },
@@ -86522,7 +86726,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A stale cached display still shows 1 seat after the last seat sold. What does book() do for the next learner?",
+            "options": [
+              "Raises ValueError: sold out or unknown workshop",
+              "Books the seat shown in the cache",
+              "Waits for the cache to refresh"
+            ],
+            "correct": 0,
+            "explanation": "The booking transaction rechecks remaining seats. A cache can serve browsing but must not authorize the last seat."
+          }
+        ]
       },
       {
         "id": "queues",
@@ -86853,7 +87069,19 @@ const LEARNING_PATHS = [
               "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "relay_one publishes an event, then crashes before marking it sent. The relay restarts. Which event IDs were published?",
+            "options": [
+              "1 twice",
+              "1 once",
+              "None"
+            ],
+            "correct": 0,
+            "explanation": "The outbox row stays unsent, so the restarted relay publishes it again. Consumers must tolerate duplicate delivery."
+          }
+        ]
       },
       {
         "id": "replication",
@@ -86996,7 +87224,19 @@ const LEARNING_PATHS = [
             1
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A learner saves progress, then reads from an asynchronously replicated follower. What might they see?",
+            "options": [
+              "Their old value, because the follower lags",
+              "An error, because followers reject reads",
+              "Always the new value"
+            ],
+            "correct": 0,
+            "explanation": "Asynchronous followers can lag the leader. Make the stale-read case explicit rather than treating replicas as interchangeable."
+          }
+        ]
       },
       {
         "id": "consistency-cap",
@@ -87050,6 +87290,18 @@ const LEARNING_PATHS = [
             "section": "Definitions and impossibility theorem",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "During a partition, a node returns an error instead of a result. Is it available in CAP's sense?",
+            "options": [
+              "No: an error is not a valid result",
+              "Yes: it responded",
+              "Yes, if uptime stays above 99.9%"
+            ],
+            "correct": 0,
+            "explanation": "CAP availability means a non-failing node eventually returns a valid result. It is not an operational uptime percentage."
           }
         ]
       },
@@ -87105,6 +87357,18 @@ const LEARNING_PATHS = [
             "section": "Solution; issues and considerations",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Progress is hash-partitioned by user_id. What can still overload a single partition?",
+            "options": [
+              "One large tenant or a celebrity workshop",
+              "Adding more learners",
+              "Nothing: hashing spreads load evenly"
+            ],
+            "correct": 0,
+            "explanation": "Hashing spreads keys, not activity. A hot key concentrates traffic wherever it lands."
           }
         ]
       },
@@ -87251,7 +87515,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "book() runs with fail_after_decrement=True on a one-seat workshop. What remains afterwards?",
+            "options": [
+              "1 seat, with no booking",
+              "0 seats, with no booking",
+              "0 seats, with one booking"
+            ],
+            "correct": 0,
+            "explanation": "The decrement and the booking insert share one transaction. The injected failure rolls both back."
+          }
+        ]
       },
       {
         "id": "idempotency",
@@ -87484,7 +87760,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A learner sends the same booking key twice for a two-seat workshop. What happens?",
+            "options": [
+              "The same booking ID both times, the second marked as a replay; 1 seat left",
+              "Two bookings; 0 seats left",
+              "A ValueError on the second request"
+            ],
+            "correct": 0,
+            "explanation": "The intent row maps the key to the original booking, so a retry returns that result without another decrement."
+          }
+        ]
       },
       {
         "id": "resilience",
@@ -87841,7 +88129,19 @@ const LEARNING_PATHS = [
               "url": "https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A request has 1,000 ms, reserves 100 ms for its response, and allows 300 ms per attempt with 100 ms backoffs. How long can a third attempt get?",
+            "options": [
+              "100 ms",
+              "300 ms",
+              "0 ms"
+            ],
+            "correct": 0,
+            "explanation": "Two attempts and two backoffs use 800 ms of the 900 ms budget, leaving 100 ms. A fresh 300 ms timeout would overrun it."
+          }
+        ]
       },
       {
         "id": "backpressure",
@@ -87944,6 +88244,18 @@ const LEARNING_PATHS = [
             "section": "Solution; issues and considerations",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does backlog_after(0, 120, 100, 60) return?",
+            "options": [
+              "1200",
+              "0",
+              "7200"
+            ],
+            "correct": 0,
+            "explanation": "Arrivals exceed service by 20 jobs per second, so 60 seconds builds a backlog of 1,200."
           }
         ]
       },
@@ -88107,7 +88419,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A booking commits. What does the outbox hold for it?",
+            "options": [
+              "One row, with sent 0 until the relay runs",
+              "Nothing until the relay runs",
+              "One row, already marked sent"
+            ],
+            "correct": 0,
+            "explanation": "The event is written in the same transaction as the booking. Publishing happens later, from the outbox."
+          }
+        ]
       },
       {
         "id": "observability",
@@ -88161,6 +88485,18 @@ const LEARNING_PATHS = [
             "section": "Traces, metrics and logs",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An export returns HTTP 200 but contains the wrong rows. How should it be counted?",
+            "options": [
+              "As a failure: the user outcome is wrong",
+              "As a success: the status was 200",
+              "Not at all, because exports are background work"
+            ],
+            "correct": 0,
+            "explanation": "A successful response with an incorrect result is still a product failure. Measure user outcomes, not only status codes."
           }
         ]
       },
@@ -88310,7 +88646,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A client sends tenant_id in the request body. What is that value?",
+            "options": [
+              "An input to validate, not proof of membership",
+              "Proof that the caller belongs to the tenant",
+              "A secret the server can trust"
+            ],
+            "correct": 0,
+            "explanation": "Authorization is decided server-side from verified identity. Client-supplied identifiers are claims to check."
+          }
+        ]
       },
       {
         "id": "recovery",
@@ -88443,7 +88791,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Backups run every night. Does that prove a 24-hour recovery point?",
+            "options": [
+              "No: the newest backup may be unusable until a restore is tested",
+              "Yes: the schedule sets the recovery point",
+              "Yes, if the backups are replicated"
+            ],
+            "correct": 0,
+            "explanation": "A recovery point is shown by a validated restore, not by a schedule. The latest backup may be incomplete."
+          }
+        ]
       },
       {
         "id": "evolution",
@@ -88590,7 +88950,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "An application rollback follows a migration that dropped a column. Is the column back?",
+            "options": [
+              "No: rolling back binaries does not reverse the migration",
+              "Yes: the rollback restores the schema",
+              "Yes, after the next deploy"
+            ],
+            "correct": 0,
+            "explanation": "Destructive schema changes outlive a binary rollback. Expand-and-contract keeps old and new versions compatible meanwhile."
+          }
+        ]
       },
       {
         "id": "design-review",
@@ -88665,6 +89037,18 @@ const LEARNING_PATHS = [
             "section": "Four questions; system decomposition and validation",
             "reviewed": "2026-09-27",
             "scope": "Repeatable design worksheet; not security certification."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does drain_seconds(1200, 100, 100) return?",
+            "options": [
+              "None: the backlog never drains",
+              "12",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "With service equal to arrivals there is no spare capacity, so a positive backlog stays. A capacity claim needs that case stated."
           }
         ]
       }

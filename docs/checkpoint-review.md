@@ -87,30 +87,6 @@ Writing the facts corrected one draft answer: with 16 commits to bisect, Git rep
 
 Writing the facts corrected one draft answer: the join of orders to payments totals 370, not 470, because order 101 is counted twice and order 104, with no payment, is dropped.
 
-### Plan for the remaining courses
-
-Work one course per change, in this order, so that each answer can be checked against something that runs or a cited source:
-
-1. **Courses whose answers run in another tool:** Data analysis with Python and Machine learning foundations (CPython with the course's packages), C# & .NET (`dotnet run`), JavaScript → TypeScript → React (Node) and Linux & Operating Systems (a shell). Record each check in this document, as for the Python course, because only the bundled Python runtime is part of `tests/browser-python.cjs`.
-2. **Courses checked against their cited sources:** Networking & the Web, Messaging & Event-Driven Systems and Data Engineering are done; next come Testing & Debugging, AI Agents, Agent Harnesses, Application Security, Kubernetes, Cloud & Infrastructure as Code, Observability & Performance, Delivery & Operations, System Design, UI Design & Accessibility, Full-Stack Project Journey and Requirements & software maintenance. Each answer should trace to a lesson source or a primary reference such as a specification or WCAG success criterion.
-3. **Personal effectiveness and development courses:** Learning How to Learn, Habits & Behaviour Change, Self-Awareness & Communication, Task & Project Management, Time, Attention & Energy and Plan and Review Your Week. Questions should test the course's own model and avoid claims stronger than its sources.
-
-Python Problem Solving is left out because its lessons are challenges with tests, and Financial foundations because it has its own course page and question format.
-
-Code: `assets/js/notebook-review.js`, with rendering in `assets/js/catalog.js`. Tests: `tests/notebook-review.cjs`, `tests/checkpoint-questions.cjs`, the checkpoint cases in `tests/notebook-backup.cjs`, and the lesson-page check in `tests/programming-paths.cjs`.
-
-## Exercise attempts
-
-Each lesson's "Practice this idea" exercise has an answer box. The answer is saved in this browser as it is typed (at most 5,000 characters) under `learning-notebook:path:<id>:exercises:v1`, keyed by lesson ID. The worked solution opens when the learner compares a written attempt with it; "Show the solution without answering" opens it at any time. Coding challenges in Python Problem Solving keep their own editor and are unchanged. Printed packs still show the prompt, checklist and solution.
-
-After comparing, the learner rates the attempt against the checklist: matched it, partly or missed it.
-
-- A first attempt that matches is saved but not scheduled.
-- Partly or missed puts the exercise into Review at once, on the checkpoint schedule: it stays due until an attempt matches, then returns after 1, 3 and 7 days and retires after a match following the 7-day gap.
-- Changing the rating on the same visit replaces the earlier choice instead of adding to the streak.
-
-Review lists due exercises beside due questions. An exercise in review starts with an empty box; the earlier answer appears beside the worked solution, and an empty box never erases it. Progress counts exercises attempted per course. Backups include a course's `exercises` only when it has some, and on import the more recent change to each exercise (answer or rating) wins, with this browser winning a tie. `tests/exercise-attempts.cjs` covers saving, rating, scheduling, the review page, backups and progress.
-
 ### AI Agents
 
 2026-11-06: one extra question per lesson and three per stage (24 lesson questions, 9 stage questions). 26 of the 33 answers depend on how the course's offline labs behave, for example a tool name outside the registry being denied before it starts, a search with no hits still counting as `tool_succeeded`, a finish with `max_steps=1` never being asked for, an unobserved or duplicated citation making the run invalid, four hits from an adapter failing the three-hit observation bound, a paraphrased query finding nothing in the lexical search, and the injection case's heuristic failing an answer that repeats the forbidden marker.
@@ -140,3 +116,33 @@ Review lists due exercises beside due questions. An exercise in review starts wi
 2026-11-06: one extra question per lesson and three per stage (21 lesson questions, 9 stage questions; the stages split lessons 7/7/7). 21 of the 30 answers depend on how the course's offline labs behave, for example nearest-rank p95 hiding one slow request in 20, a fast 500 counting as bad, the inclusive 100 ms threshold, an empty window reporting `good_fraction` None, burn rates of 2 and 10, a 100% target being refused, B finishing last and keeping its span when it fails, mostly-sleeping children using little CPU, and the loopback service failing every fifth request and rejecting unknown profiles, paths and non-integer `n`.
 
 `tests/observability_checkpoint_facts.py` checks each of those 21 by running `telemetry.py`, `trace_investigation.py` and the `benchmark.py` lookups, and by serving `service.py`'s handler on an ephemeral 127.0.0.1 port. No outside network is used. It fails if a result supports a different option than the one marked correct, and lists any question without a fact. The other nine are about measurement judgement and are cited from lessons 1, 3, 4, 9, 13, 16, 17, 18 and 19: starting from outcomes, route templates, error ratios, label cardinality, tail sampling limits, allocation versus retention, open-loop load, Little's law and browser rendering. The check runs in the `python` CI job on Python 3.11 and 3.14; run it locally with `python tests/observability_checkpoint_facts.py`.
+
+### System Design
+
+2026-11-06: one extra question per lesson and three per stage (24 lesson questions, 9 stage questions). 23 of the 33 answers depend on how the course's offline labs behave, for example a failure between the seat decrement and the insert rolling both back, a repeated key returning the original booking without a second decrement, a reused key for another workshop being refused, a second booking by the same learner failing its unique constraint, a crashed relay publishing the same event twice, a stale seat display not letting the last seat be sold twice, and the capacity arithmetic for peak rate, work in flight, retained bytes, instance count, backlog growth and drain time.
+
+`tests/system_design_checkpoint_facts.py` checks each of those 23 by running `booking_lab.py` against a SQLite file in a temporary folder and calling `capacity_calculator.py`. No network or external effects are used. It fails if a result supports a different option than the one marked correct, and lists any question without a fact. The other ten are about design judgement and are cited from lessons 5, 7, 12, 13, 14, 17, 20, 21, 22 and 23: stable operation IDs, composite keys, follower lag, CAP availability, hot keys, the worked retry budget, user outcomes, client-supplied tenant IDs, tested restores and destructive migrations. The check runs in the `python` CI job on Python 3.11 and 3.14; run it locally with `python tests/system_design_checkpoint_facts.py`.
+
+### Plan for the remaining courses
+
+Work one course per change, in this order, so that each answer can be checked against something that runs or a cited source:
+
+1. **Courses whose answers run in another tool:** Data analysis with Python and Machine learning foundations (CPython with the course's packages), C# & .NET (`dotnet run`), JavaScript → TypeScript → React (Node) and Linux & Operating Systems (a shell). Record each check in this document, as for the Python course, because only the bundled Python runtime is part of `tests/browser-python.cjs`.
+2. **Courses checked against their cited sources:** Networking & the Web, Messaging & Event-Driven Systems, Data Engineering, AI Agents, Agent Harnesses, Application Security, Testing & Debugging, Observability & Performance and System Design are done; next come Kubernetes, Cloud & Infrastructure as Code, Delivery & Operations, UI Design & Accessibility, Full-Stack Project Journey and Requirements & software maintenance. Each answer should trace to a lesson source or a primary reference such as a specification or WCAG success criterion.
+3. **Personal effectiveness and development courses:** Learning How to Learn, Habits & Behaviour Change, Self-Awareness & Communication, Task & Project Management, Time, Attention & Energy and Plan and Review Your Week. Questions should test the course's own model and avoid claims stronger than its sources.
+
+Python Problem Solving is left out because its lessons are challenges with tests, and Financial foundations because it has its own course page and question format.
+
+Code: `assets/js/notebook-review.js`, with rendering in `assets/js/catalog.js`. Tests: `tests/notebook-review.cjs`, `tests/checkpoint-questions.cjs`, the checkpoint cases in `tests/notebook-backup.cjs`, and the lesson-page check in `tests/programming-paths.cjs`.
+
+## Exercise attempts
+
+Each lesson's "Practice this idea" exercise has an answer box. The answer is saved in this browser as it is typed (at most 5,000 characters) under `learning-notebook:path:<id>:exercises:v1`, keyed by lesson ID. The worked solution opens when the learner compares a written attempt with it; "Show the solution without answering" opens it at any time. Coding challenges in Python Problem Solving keep their own editor and are unchanged. Printed packs still show the prompt, checklist and solution.
+
+After comparing, the learner rates the attempt against the checklist: matched it, partly or missed it.
+
+- A first attempt that matches is saved but not scheduled.
+- Partly or missed puts the exercise into Review at once, on the checkpoint schedule: it stays due until an attempt matches, then returns after 1, 3 and 7 days and retires after a match following the 7-day gap.
+- Changing the rating on the same visit replaces the earlier choice instead of adding to the streak.
+
+Review lists due exercises beside due questions. An exercise in review starts with an empty box; the earlier answer appears beside the worked solution, and an empty box never erases it. Progress counts exercises attempted per course. Backups include a course's `exercises` only when it has some, and on import the more recent change to each exercise (answer or rating) wins, with this browser winning a tie. `tests/exercise-attempts.cjs` covers saving, rating, scheduling, the review page, backups and progress.
