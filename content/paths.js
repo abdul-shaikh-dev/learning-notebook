@@ -28094,7 +28094,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "distinct_artifact_drill saves a note under v1, then reads notes under v1, v2 and v1 again. How many of those reads succeed?",
+            "options": [
+              "All 3, and the note survives the rollback",
+              "2: the v2 read fails",
+              "1: only the first v1 read"
+            ],
+            "correct": 0,
+            "explanation": "The drill tests the user contract across the whole release path: the same data is readable on the candidate and after rolling back."
+          }
+        ]
       },
       {
         "id": "environments",
@@ -28143,7 +28155,19 @@ const LEARNING_PATHS = [
             "scope": "GitHub Actions current security guidance; example workflow is opt-in and contains no deployment credentials. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "A container listens on 0.0.0.0, and its host port is published on 127.0.0.1. Who can reach the service from another machine?",
+            "options": [
+              "Nobody: the host binding is loopback only",
+              "Anyone on the network",
+              "Only machines in the same subnet"
+            ],
+            "correct": 0,
+            "explanation": "The container must listen on all its interfaces for port forwarding to work. The host binding is a separate boundary."
+          }
+        ]
       },
       {
         "id": "source-release",
@@ -28192,7 +28216,19 @@ const LEARNING_PATHS = [
             "scope": "Current Actions artifact lifecycle; local byte hashing is separately tested. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "Two byte-identical copies of release_app.py sit in different folders. Do their release_tools.digest values match?",
+            "options": [
+              "Yes: the digest depends only on the bytes",
+              "No: the path is part of the digest",
+              "Only if the files have the same timestamp"
+            ],
+            "correct": 0,
+            "explanation": "A SHA-256 checksum identifies content. It says nothing about who built it or whether it was tested."
+          }
+        ]
       },
       {
         "id": "reproducible-builds",
@@ -28241,7 +28277,19 @@ const LEARNING_PATHS = [
             "scope": "npm 11; applies to the existing React kit, not the package-free Python lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "The Dockerfile uses the python:3.13-slim tag. Does that tag always name the same image?",
+            "options": [
+              "No: tags can move; a digest pins one image",
+              "Yes: tags are immutable",
+              "Yes, within the same minor version"
+            ],
+            "correct": 0,
+            "explanation": "Record the resolved digest with test results. A tag is a readable pointer that can be updated."
+          }
+        ]
       },
       {
         "id": "test-gates",
@@ -28296,7 +28344,19 @@ const LEARNING_PATHS = [
             "scope": "Python 3.11+ learning-only HTTP service; official docs exclude production use. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "test_release_app.py fails. Why can the Dockerfile still not produce a runtime image?",
+            "options": [
+              "The test stage runs the tests, and the runtime stage copies from it",
+              "Docker skips images whose repository has failing tests",
+              "The HEALTHCHECK fails the build"
+            ],
+            "correct": 0,
+            "explanation": "The runtime stage depends on the test stage, so a failing RUN stops the build before anything is copied."
+          }
+        ]
       },
       {
         "id": "containers",
@@ -28345,7 +28405,19 @@ const LEARNING_PATHS = [
             "scope": "Linux containers/BuildKit; local Python 3.13 image lab, not a production hardening certification. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "Which user does the Dockerfile's runtime image run as?",
+            "options": [
+              "UID 10001, not root",
+              "root",
+              "The user who ran docker build"
+            ],
+            "correct": 0,
+            "explanation": "The USER instruction drops root before CMD. The process can then write only where that user has access."
+          }
+        ]
       },
       {
         "id": "docker-build",
@@ -28394,7 +28466,19 @@ const LEARNING_PATHS = [
             "scope": "BuildKit multi-stage mechanism; supplied Dockerfile reviewed, daemon exercise optional. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "Which files does the Dockerfile's runtime stage copy from the test stage?",
+            "options": [
+              "Only release_app.py",
+              "release_app.py and the tests",
+              "The whole source folder"
+            ],
+            "correct": 0,
+            "explanation": "Copying only the runtime file keeps tests and build leftovers out of the shipped image."
+          }
+        ]
       },
       {
         "id": "runtime-configuration",
@@ -28443,7 +28527,19 @@ const LEARNING_PATHS = [
             "scope": "Dockerfile stable instructions; runtime and build behavior reviewed, daemon execution remains optional. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "release_app.py is started with no BIND_HOST set. Which address does it listen on?",
+            "options": [
+              "127.0.0.1",
+              "0.0.0.0",
+              "The host's network address"
+            ],
+            "correct": 0,
+            "explanation": "The default is loopback. The image sets BIND_HOST=0.0.0.0 explicitly, because port forwarding needs it inside the container."
+          }
+        ]
       },
       {
         "id": "secrets",
@@ -28492,7 +28588,19 @@ const LEARNING_PATHS = [
             "scope": "GitHub Actions current security guidance; example workflow is opt-in and contains no deployment credentials. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "extraQuiz": [
+          {
+            "question": "A build passes a token through ARG and ENV. Where might it remain?",
+            "options": [
+              "In the image's metadata or layers",
+              "Nowhere, once the build finishes",
+              "Only in the build log"
+            ],
+            "correct": 0,
+            "explanation": "Inject secrets at runtime, or use a build secret mount when one is truly needed during the build."
+          }
+        ]
       },
       {
         "id": "web-topology",
@@ -28646,7 +28754,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which value may appear in the React build's configuration?",
+            "options": [
+              "The API's public URL",
+              "The SQL connection password",
+              "The API's signing key"
+            ],
+            "correct": 0,
+            "explanation": "Browser build-time configuration is public. The database identity lives in server-side runtime configuration."
+          }
+        ]
       },
       {
         "id": "schema-evolution",
@@ -29213,7 +29333,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "During the expand step, label has been added but not backfilled. What does new_reader return for an existing row?",
+            "options": [
+              "Its title, through COALESCE",
+              "NULL",
+              "An error, because label is empty"
+            ],
+            "correct": 0,
+            "explanation": "The new reader falls back to the old column, so old and new versions can run together before the backfill."
+          }
+        ]
       },
       {
         "id": "ci-pipeline",
@@ -29354,7 +29486,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which permission does ci-example.yaml give the workflow token?",
+            "options": [
+              "contents: read only",
+              "contents: write",
+              "All repository permissions"
+            ],
+            "correct": 0,
+            "explanation": "Checks need to read the code, not change it. Checkout also sets persist-credentials: false."
+          }
+        ]
       },
       {
         "id": "artifact-promotion",
@@ -29492,7 +29636,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does ci-example.yaml upload as its build artifact?",
+            "options": [
+              "release_app.py with its SHA-256 file",
+              "The whole repository",
+              "A Docker image"
+            ],
+            "correct": 0,
+            "explanation": "The checked source and its digest travel together, so a later step can confirm it promotes the same bytes."
+          }
+        ]
       },
       {
         "id": "health-contracts",
@@ -29613,7 +29769,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "In distinct_artifact_drill, what does the v2 candidate's /ready return while its hold file exists?",
+            "options": [
+              "503",
+              "200",
+              "404"
+            ],
+            "correct": 0,
+            "explanation": "The candidate runs but declares itself not ready, so it can be held out of traffic until the gate is removed."
+          }
+        ]
       },
       {
         "id": "deployment-strategies",
@@ -29662,7 +29830,19 @@ const LEARNING_PATHS = [
             "scope": "General deployment isolation strategy; local two-port comparison is a teaching simulation. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "extraQuiz": [
+          {
+            "question": "The lab has no reverse proxy or orchestrator. How does it model a traffic switch?",
+            "options": [
+              "By changing which local port the client calls",
+              "By editing DNS",
+              "By restarting the old version"
+            ],
+            "correct": 0,
+            "explanation": "A manual port switch shows the decision without claiming high availability or automated canary analysis."
+          }
+        ]
       },
       {
         "id": "rollback",
@@ -29792,7 +29972,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "After the contract step drops the title column, what happens when old_reader runs?",
+            "options": [
+              "sqlite3.OperationalError: no such column",
+              "It returns the labels",
+              "It returns empty titles"
+            ],
+            "correct": 0,
+            "explanation": "Once the old column is gone, rolling back to a binary that reads it fails. Contraction ends the safe rollback window."
+          }
+        ]
       },
       {
         "id": "structured-logs",
@@ -29841,7 +30033,19 @@ const LEARNING_PATHS = [
             "scope": "OpenTelemetry signal concepts; bundled stdout JSON is not an OTLP exporter. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "release_app receives GET /admin?debug=1. Which route does its log line record?",
+            "options": [
+              "unknown",
+              "/admin?debug=1",
+              "/admin"
+            ],
+            "correct": 0,
+            "explanation": "Only known routes are logged by name. Anything else becomes one bounded value, so raw paths and queries never enter the logs."
+          }
+        ]
       },
       {
         "id": "metrics",
@@ -29890,7 +30094,19 @@ const LEARNING_PATHS = [
             "scope": "Service monitoring principles; numeric examples are local teaching scenarios. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "A fresh release_app gets two /live probes and no user requests. What request total does /metrics then report?",
+            "options": [
+              "2",
+              "0",
+              "3"
+            ],
+            "correct": 0,
+            "explanation": "The totals count probes too, so they are not a user-request SLI. The /metrics call itself is counted after its snapshot."
+          }
+        ]
       },
       {
         "id": "slos",
@@ -29939,7 +30155,19 @@ const LEARNING_PATHS = [
             "scope": "Request-based SLO scenario; no observed production reliability claim. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "What does release_tools.budget(10000, 12, 0.999) report?",
+            "options": [
+              "10 allowed, so remaining is -2 and the burn rate is 1.2",
+              "12 allowed, so remaining is 0",
+              "10 allowed, so remaining is 2"
+            ],
+            "correct": 0,
+            "explanation": "0.1% of 10,000 is 10 allowed bad requests. Twelve overspends the budget by two."
+          }
+        ]
       },
       {
         "id": "load-testing",
@@ -29988,7 +30216,19 @@ const LEARNING_PATHS = [
             "scope": "General overload behavior; local helper is bounded sequential timing, not a production load generator. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "What does release_tools.local_load('http://example.com/', 10) do?",
+            "options": [
+              "Raises ValueError before sending any request",
+              "Sends 10 requests",
+              "Sends 1 request, then stops"
+            ],
+            "correct": 0,
+            "explanation": "The load helper refuses anything but a loopback HTTP URL, so it cannot be pointed at a system you do not own."
+          }
+        ]
       },
       {
         "id": "backups",
@@ -30037,7 +30277,19 @@ const LEARNING_PATHS = [
             "scope": "Python sqlite3 Connection.backup; synthetic local SQLite data only. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "What does python release_tools.py backup print after copying a database?",
+            "options": [
+              "Backup complete; perform a separate restore check.",
+              "Backup verified.",
+              "Nothing"
+            ],
+            "correct": 0,
+            "explanation": "A copy is not proof of recovery. The tool says so and leaves the restore check as its own step."
+          }
+        ]
       },
       {
         "id": "restore-drill",
@@ -30187,7 +30439,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A backup is taken after one note is saved. What do PRAGMA integrity_check and a notes query report on the copy?",
+            "options": [
+              "ok, and the note is present",
+              "ok, but the table is empty",
+              "An error, because the copy is locked"
+            ],
+            "correct": 0,
+            "explanation": "A restore check opens the copy, checks its integrity and confirms the expected data, not just that a file exists."
+          }
+        ]
       },
       {
         "id": "incident-response",
@@ -30328,7 +30592,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A release went out an hour before an incident started. Is the release the cause?",
+            "options": [
+              "Not necessarily: compare the symptoms with recent changes first",
+              "Yes: the newest deploy is always the cause",
+              "No: releases cannot cause incidents"
+            ],
+            "correct": 0,
+            "explanation": "Recent changes are candidates, not conclusions. A rollback helps only if the failure mechanism supports it."
+          }
+        ]
       },
       {
         "id": "release-review",
@@ -30377,7 +30653,19 @@ const LEARNING_PATHS = [
             "scope": "Release reproducibility and process principles; course uses a bounded local stand-in. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "Besides the local tests that passed, what belongs in the release record?",
+            "options": [
+              "Which Docker, staging and production checks remain untested",
+              "A statement that all risks are solved",
+              "The review date as a safety certificate"
+            ],
+            "correct": 0,
+            "explanation": "Separate local evidence from the boundaries it does not cover, so another operator can see what is still open."
+          }
+        ]
       }
     ],
     "stages": [
@@ -30407,7 +30695,39 @@ const LEARNING_PATHS = [
             "The learning-only HTTP server scope is explicit."
           ],
           "solution": "Use a fresh extracted folder, Python 3.11+ and temporary test fixtures. The packet maps existing-note readability to tested restart persistence and backup values. Record the file digest and v1 label separately; /ready 503 with /live 200 is a recoverable routing condition, not process failure. Docker build/run stays reviewed-only unless actually executed."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does release_tools.digest return for an empty file?",
+            "options": [
+              "The SHA-256 of zero bytes, beginning e3b0c442",
+              "An empty string",
+              "ValueError"
+            ],
+            "correct": 0,
+            "explanation": "Every input, including no bytes, has a fixed SHA-256 digest. The value is well known, which makes it a useful sanity check."
+          },
+          {
+            "question": "Which endpoint does the Dockerfile's HEALTHCHECK call?",
+            "options": [
+              "/ready",
+              "/live",
+              "/version"
+            ],
+            "correct": 0,
+            "explanation": "The image's health reflects readiness, including the database check, rather than only whether the process runs."
+          },
+          {
+            "question": "Which base image do both Dockerfile stages use?",
+            "options": [
+              "python:3.13-slim",
+              "python:3.13",
+              "alpine"
+            ],
+            "correct": 0,
+            "explanation": "Both stages use the same tag, so the tests run on the same runtime that ships."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -30436,7 +30756,39 @@ const LEARNING_PATHS = [
             "No build or runtime credential is embedded in public assets."
           ],
           "solution": "Build the local Dockerfile only with an opted-in daemon, implement a small backward-compatible v2 change in a separate copy and retain v1 identity. The full-stack packet follows browser→proxy→API→private SQL with a separate migration identity; it requires learner-built adapters/store/auth and actual staging checks. Promote the checked artifact, not a fresh untested rebuild."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "After the first backfill, an old writer inserts a row with only a title. How many rows then have a NULL label?",
+            "options": [
+              "1",
+              "0",
+              "All of them"
+            ],
+            "correct": 0,
+            "explanation": "Old writers keep running during a rolling change, so a second backfill is needed before contraction."
+          },
+          {
+            "question": "A new writer dual-writes title and label. Do old_reader and new_reader then return the same rows?",
+            "options": [
+              "Yes",
+              "No: new_reader sees an extra row",
+              "No: old_reader fails"
+            ],
+            "correct": 0,
+            "explanation": "Dual writes keep both columns in step while old readers remain."
+          },
+          {
+            "question": "distinct_artifact_drill builds v1 and v2 from release_app.py with one edited line. Do their SHA-256 digests match?",
+            "options": [
+              "No",
+              "Yes",
+              "Only the first 8 characters"
+            ],
+            "correct": 0,
+            "explanation": "Any byte change gives a different digest, which is how the drill shows it deployed a distinct candidate."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -30465,7 +30817,39 @@ const LEARNING_PATHS = [
             "Incident decisions preserve scope and avoid secret disclosure."
           ],
           "solution": "At10,000 eligible requests and 99.9%,10 bad are allowed;12 leaves -2. The helper timing model is sequential closed-loop and cannot certify capacity. A snapshot before B restores A only. Record the same-code label simulation separately from differing-image rollout and the unexecuted full-stack/provider boundaries. Use the workbook to tie mechanism, check, result and next experiment together."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does release_tools.percentile([5, 1, 9, 3], 0.5) return?",
+            "options": [
+              "3",
+              "4",
+              "5"
+            ],
+            "correct": 0,
+            "explanation": "Nearest rank on the sorted samples 1, 3, 5, 9 picks the second value. It never interpolates."
+          },
+          {
+            "question": "What does release_tools.budget(1000, 0, 0.99) report?",
+            "options": [
+              "10 allowed, 10 remaining, burn rate 0",
+              "0 allowed",
+              "ValueError"
+            ],
+            "correct": 0,
+            "explanation": "No bad requests leaves the whole 1% budget unspent."
+          },
+          {
+            "question": "local_load sends 5 requests to a running release_app's /live on 127.0.0.1. How many errors does it report?",
+            "options": [
+              "0",
+              "5",
+              "1"
+            ],
+            "correct": 0,
+            "explanation": "The sequential client records each request's latency and counts failures. A healthy loopback endpoint gives none."
+          }
+        ]
       }
     ],
     "downloads": [
