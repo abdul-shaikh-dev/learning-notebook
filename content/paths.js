@@ -99,7 +99,39 @@ const LEARNING_PATHS = [
             "The final result does not claim a write occurred."
           ],
           "solution": "Start from harness_workshop.py but initially expose only read_lesson. Validate proposal shape before lookup and authorize the resource before dispatch. Keep state, cursor and step counter outside model text. Use scripted fixtures for normal and rejected calls. The source is a reference, not a required architecture for every application."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A harness is given an empty script. What does run() return?",
+            "options": [
+              "failed, with reason script_exhausted_without_final",
+              "done",
+              "limited, with reason step_budget"
+            ],
+            "correct": 0,
+            "explanation": "A run that ends without a final action is not success. The stop reason says the script ran out."
+          },
+          {
+            "question": "The host calls deny() while the run waits to save. What are the status and effect_count?",
+            "options": [
+              "denied, with effect_count 0",
+              "done, with effect_count 0",
+              "denied, with effect_count 1"
+            ],
+            "correct": 0,
+            "explanation": "Denial stops the run before dispatch, so the store never records the note."
+          },
+          {
+            "question": "Policy allows lesson L3, but the store has no L3. What happens when the script reads it?",
+            "options": [
+              "failed, with reason read_adapter_error",
+              "denied, with reason resource_policy",
+              "done, with an empty lesson"
+            ],
+            "correct": 0,
+            "explanation": "Authorization passed, so the read started. The adapter then failed, which is a different outcome from a policy denial."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -127,7 +159,39 @@ const LEARNING_PATHS = [
             "Uncertain state is visible until a receipt resolves it."
           ],
           "solution": "Use a canonical operation fingerprint and a host-only approval method. The fake store coordinates its note and receipt in one local operation. After simulated response loss, enter uncertain and reconcile by the original identity. Restore trusted JSON only with matching script/version and require review again for waiting actions. The workshop does not establish crash durability or real user authentication."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A checkpoint is restored with a script whose save text was edited. What does restore() do?",
+            "options": [
+              "Raises ValueError: checkpoint script mismatch",
+              "Resumes at the saved cursor with the new text",
+              "Starts the edited script from the beginning"
+            ],
+            "correct": 0,
+            "explanation": "The checkpoint stores the script's hash. A changed script cannot silently resume at the old position."
+          },
+          {
+            "question": "A checkpoint for learner-a is restored with subject learner-b. What does restore() do?",
+            "options": [
+              "Raises ValueError: checkpoint identity mismatch",
+              "Resumes the run as learner-b",
+              "Resumes the run as learner-a"
+            ],
+            "correct": 0,
+            "explanation": "The host supplies the expected run and subject, and restore refuses a checkpoint that belongs to someone else."
+          },
+          {
+            "question": "The host calls cancel() while a save is uncertain. What are the status and reason?",
+            "options": [
+              "uncertain, with reason cancelled_pending_reconciliation",
+              "cancelled, with reason host_cancelled",
+              "failed, with reason read_adapter_error"
+            ],
+            "correct": 0,
+            "explanation": "Cancelling stops future work but cannot turn an unknown effect into a known one. The run still needs reconciliation."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -156,7 +220,39 @@ const LEARNING_PATHS = [
             "Every new permission or external adapter has a verification plan."
           ],
           "solution": "Use the downloadable runbook and ADR as templates. Keep a single-worker offline baseline while proposing durable atomic receipts, authenticated approvals and protected checkpoint writes as separate additions. Explain enforcement at each boundary and how a failure test could refute the design. Record which evaluations were actually executed and which remain planned."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "Two connections both create checkpoint 'new' with expected_version=0. A saves first. What happens to B's save?",
+            "options": [
+              "Conflict: checkpoint already exists, and A's state is kept",
+              "B's state replaces A's",
+              "Both rows are kept"
+            ],
+            "correct": 0,
+            "explanation": "Creation uses the primary key, so the second insert fails and the winner's state is preserved."
+          },
+          {
+            "question": "Operation C2 already saved one note. A new run with the same run ID and subject proposes C2 with different note text, and the host approves it. How does the run end?",
+            "options": [
+              "rejected, with reason intent_conflict",
+              "done, with a second note saved",
+              "done, returning the first receipt"
+            ],
+            "correct": 0,
+            "explanation": "The operation ID is bound to a fingerprint of its intent. Reusing it with different arguments conflicts instead of writing or returning the old result."
+          },
+          {
+            "question": "SQLiteEffects.save runs twice with the same key and fingerprint. How many lab_note rows are there?",
+            "options": [
+              "1",
+              "2",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "The second call finds the existing receipt inside the transaction and returns it, so the effect happens once."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -327,7 +423,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The workshop demo reads L1 and then proposes save_note. After the first run(), what are the status and the store's effect_count?",
+            "options": [
+              "waiting, with effect_count 0",
+              "done, with effect_count 1",
+              "ready, with effect_count 1"
+            ],
+            "correct": 0,
+            "explanation": "The proposal is data. The harness read the lesson, then paused before the write for a host decision, so no note exists yet."
+          }
+        ]
       },
       {
         "id": "task-contract",
@@ -382,6 +490,18 @@ const LEARNING_PATHS = [
             "section": "Deny by default; validate permissions on every request",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The task contract allows only lesson L1, and the script proposes read_lesson for L2. What does run() return?",
+            "options": [
+              "denied, before any read starts",
+              "done, after reading L2",
+              "rejected, because L2 is malformed"
+            ],
+            "correct": 0,
+            "explanation": "L2 is a well-formed ID outside the trusted contract, so resource policy denies it before the handler is called."
           }
         ]
       },
@@ -569,7 +689,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The fake store commits the note, then loses the reply. What status does the run enter after the host approves the save?",
+            "options": [
+              "uncertain",
+              "failed",
+              "done"
+            ],
+            "correct": 0,
+            "explanation": "The harness cannot tell whether the effect happened, so it records uncertain instead of calling it a failure that might invite a blind retry."
+          }
+        ]
       },
       {
         "id": "state-context",
@@ -624,6 +756,18 @@ const LEARNING_PATHS = [
             "section": "Basic usage; JSONEncoder and JSONDecoder",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A script's only proposal is a final answer saying 'Note saved.'. What does the run's confirmed_notes hold?",
+            "options": [
+              "[]",
+              "['N1']",
+              "['Note saved.']"
+            ],
+            "correct": 0,
+            "explanation": "Confirmed notes come only from validated store receipts. Model text claiming a save establishes nothing."
           }
         ]
       },
@@ -680,6 +824,18 @@ const LEARNING_PATHS = [
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A proposal names the tool delete_note. What happens?",
+            "options": [
+              "The run is rejected as invalid_action and no handler runs",
+              "The run waits for approval",
+              "The harness looks for a delete_note function"
+            ],
+            "correct": 0,
+            "explanation": "The registry holds only read_lesson and save_note. An unknown name is rejected during validation; it never selects code dynamically."
           }
         ]
       },
@@ -743,6 +899,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A save_note proposal has args {'lesson_id': 'L1', 'text': ''}. What does run() return?",
+            "options": [
+              "rejected",
+              "waiting",
+              "denied"
+            ],
+            "correct": 0,
+            "explanation": "The fields are the right ones, but blank note text fails the bounded-text rule, so the proposal is rejected before policy or approval."
+          }
         ]
       },
       {
@@ -798,6 +966,18 @@ const LEARNING_PATHS = [
             "section": "Deny by default; validate permissions on every request",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The run has allow_write=False, and the script proposes save_note for L1. What happens?",
+            "options": [
+              "denied, without asking for approval",
+              "waiting for approval",
+              "done, because L1 is allowed"
+            ],
+            "correct": 0,
+            "explanation": "Authorization runs before approval. A reviewer cannot approve an operation the current policy forbids."
           }
         ]
       },
@@ -869,6 +1049,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A script reads L1 and then gives a final answer. Which events does the run record?",
+            "options": [
+              "proposal_received, tool_started, tool_confirmed, proposal_received, run_completed",
+              "tool_confirmed, run_completed",
+              "proposal_received, tool_confirmed, run_completed"
+            ],
+            "correct": 0,
+            "explanation": "Each counted proposal, the tool start, its confirmed result and the completion are separate runtime facts."
+          }
         ]
       },
       {
@@ -924,6 +1116,18 @@ const LEARNING_PATHS = [
             "section": "time.monotonic",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "With max_steps=2, a script reads L1, reads L2, then gives a final answer. How does the run end?",
+            "options": [
+              "limited, with reason step_budget",
+              "done",
+              "failed, with reason script_exhausted_without_final"
+            ],
+            "correct": 0,
+            "explanation": "Both reads use the two counted proposals, so the final answer is never requested."
           }
         ]
       },
@@ -1127,7 +1331,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A run waits to save 'Review index write costs.'. The host approves the fingerprint of a different note text. What happens?",
+            "options": [
+              "ValueError, and the run stays waiting",
+              "The save runs with the approved text",
+              "The run is denied"
+            ],
+            "correct": 0,
+            "explanation": "Approval must equal the fingerprint of the exact pending intent. A mismatch is refused and nothing is dispatched."
+          }
+        ]
       },
       {
         "id": "deadlines",
@@ -1182,6 +1398,18 @@ const LEARNING_PATHS = [
             "section": "time.monotonic",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "max_seconds is 30, and the injected clock reads 31 seconds after the harness was created when run() starts. What happens?",
+            "options": [
+              "limited, with reason elapsed_budget, before any proposal",
+              "The first proposal runs, then the run stops",
+              "Nothing: the clock is only checked after tool calls"
+            ],
+            "correct": 0,
+            "explanation": "The boundary check runs before requesting a proposal, so expiry stops new work. It cannot preempt a call already running."
           }
         ]
       },
@@ -1238,6 +1466,18 @@ const LEARNING_PATHS = [
             "section": "Reducing client complexity with idempotent API design",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The store fails one read with a transient error, and read_attempts is 2. What does the run record for that read?",
+            "options": [
+              "tool_retryable, then tool_confirmed on the second attempt",
+              "failed, with reason read_attempt_budget",
+              "tool_confirmed on the first attempt"
+            ],
+            "correct": 0,
+            "explanation": "A known transient read before any effect is safe to retry within the explicit attempt budget."
           }
         ]
       },
@@ -1916,7 +2156,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "After the lost reply leaves a save uncertain, the host calls reconcile(). What is the result?",
+            "options": [
+              "True: the receipt confirms N1, and effect_count stays 1",
+              "True, and the note is saved again as N2",
+              "False: the write must be retried"
+            ],
+            "correct": 0,
+            "explanation": "Reconciliation looks up the receipt for the same operation identity and payload. It never reissues the write."
+          }
+        ]
       },
       {
         "id": "checkpoints",
@@ -2143,7 +2395,19 @@ const LEARNING_PATHS = [
               "explanation": "Restore is not a new entitlement, and omitted approval must not be reconstructed from prose."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A run waiting for approval is checkpointed and restored. What must happen before the save can run?",
+            "options": [
+              "The host approves again: approval is not in the checkpoint",
+              "Nothing: the approval is restored with the run",
+              "The run starts again from its first proposal"
+            ],
+            "correct": 0,
+            "explanation": "The checkpoint keeps status, counters and the pending action, but the workshop discards approval on restore so a stale decision cannot reappear."
+          }
+        ]
       },
       {
         "id": "context-lifecycle",
@@ -2198,6 +2462,18 @@ const LEARNING_PATHS = [
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does the fake store's read return for a 2,500-character lesson?",
+            "options": [
+              "The first 2,000 characters, with truncated: true",
+              "All 2,500 characters",
+              "An error, because the lesson is too long"
+            ],
+            "correct": 0,
+            "explanation": "The observation is bounded, and the truncated marker says so explicitly instead of silently hiding the cut."
           }
         ]
       },
@@ -2293,6 +2569,18 @@ const LEARNING_PATHS = [
             "section": "Safety risks and mitigations",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A lesson excerpt tells the agent to save a note, and the script then proposes save_note for an allowed lesson. What happens?",
+            "options": [
+              "The run waits for approval; nothing is saved",
+              "The note is saved, because the tool and lesson are allowed",
+              "The run is rejected as an injection"
+            ],
+            "correct": 0,
+            "explanation": "The harness does not detect the persuasion, but the write still needs a host approval bound to its exact intent. Containment comes from the boundary, not from recognising the text."
           }
         ]
       },
@@ -2450,7 +2738,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A task needs to run untrusted code. Where should the notes service credential live?",
+            "options": [
+              "In the trusted harness, outside the code's sandbox",
+              "In the sandbox's environment variables",
+              "In the prompt, so the model can pass it on"
+            ],
+            "correct": 0,
+            "explanation": "The harness owns secrets and business access. A constrained compute boundary should not hold credentials the executed code could exfiltrate."
+          }
+        ]
       },
       {
         "id": "concurrency",
@@ -2646,7 +2946,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Two connections load checkpoint version 1. A saves first. What happens when B saves with expected_version=1?",
+            "options": [
+              "Conflict: stale or missing checkpoint",
+              "B's state overwrites A's",
+              "B's save becomes version 3"
+            ],
+            "correct": 0,
+            "explanation": "The conditional UPDATE matches only the current version, so B affects no row and must reload before retrying."
+          }
+        ]
       },
       {
         "id": "replay",
@@ -2808,7 +3120,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A recorded trace is replayed to inspect a past decision. What should happen to its save_note step?",
+            "options": [
+              "Use the recorded receipt; do not reissue the write",
+              "Call save_note again so the trace is complete",
+              "Ask for approval again, then save"
+            ],
+            "correct": 0,
+            "explanation": "Historical replay reconstructs decisions from recorded outcomes. Reissuing effects as fresh live writes would duplicate them."
+          }
+        ]
       },
       {
         "id": "audit",
@@ -2870,6 +3194,18 @@ const LEARNING_PATHS = [
             "section": "Data to exclude; protecting logs",
             "reviewed": "2026-10-02",
             "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "After a reviewed save of 'Review index write costs.', does any recorded event contain the note text?",
+            "options": [
+              "No: events keep only allowlisted fields such as tool and call_id",
+              "Yes: tool_started records the arguments",
+              "Yes: tool_confirmed records the saved note"
+            ],
+            "correct": 0,
+            "explanation": "The event writer builds rows from an explicit field allowlist, so note text and raw arguments never enter the log."
           }
         ]
       },
@@ -2934,6 +3270,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An answer cites a lesson ID that no tool returned. Which check catches it?",
+            "options": [
+              "Citation membership against observed evidence",
+              "Retrieval relevance",
+              "Authorization at the effect boundary"
+            ],
+            "correct": 0,
+            "explanation": "Each failure needs its own check: retrieval relevance for the wrong document, citation membership for unobserved IDs and authorization for unapproved writes."
+          }
         ]
       },
       {
@@ -2989,6 +3337,18 @@ const LEARNING_PATHS = [
             "section": "Test cases; assertRaises",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A bad policy release is rolled back to the previous version. What must the rollback not do?",
+            "options": [
+              "Re-grant a permission revoked since that version",
+              "Restore the previous tool schemas",
+              "Record which version is now live"
+            ],
+            "correct": 0,
+            "explanation": "Rollback restores behaviour, not history. A permission revoked after the old version shipped must stay revoked, and saved notes need their own recovery."
           }
         ]
       },
@@ -3158,7 +3518,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A process dies after the SQLite note and receipt commit, but before its checkpoint leaves waiting. What status does restore_checkpoint give the run?",
+            "options": [
+              "uncertain",
+              "waiting",
+              "done"
+            ],
+            "correct": 0,
+            "explanation": "Restore finds a receipt for the pending operation, so it records uncertain for reconciliation rather than asking for approval to save again."
+          }
+        ]
       },
       {
         "id": "capstone",
@@ -3226,6 +3598,18 @@ const LEARNING_PATHS = [
             "section": "Read versus write transactions; transaction control",
             "reviewed": "2026-09-27",
             "scope": "Trusted local checkpoint exercise; two-connection CAS evidence, no secure sandbox or external effect atomicity."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "At the end of the workshop demo, after the host approves the save, what are the confirmed note IDs and the effect count?",
+            "options": [
+              "['N1'] and 1",
+              "[] and 0",
+              "['N1', 'N2'] and 2"
+            ],
+            "correct": 0,
+            "explanation": "One approved save produced one receipt and one effect. The final scripted step then completes the run."
           }
         ]
       }
