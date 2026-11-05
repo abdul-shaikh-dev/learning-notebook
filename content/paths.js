@@ -15376,7 +15376,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Static hosting owns web asset delivery while the learner owns content and browser behavior. A VM adds guest OS patching and service operations. Managed databases reduce selected engine operations but retain application access, backup configuration and restore verification responsibilities. Assign an owner to leaks, identity and recovery instead of assuming a service model solves them.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A notes API moves to a managed compute service. Who decides which users may read each note?",
+            "options": [
+              "The application owner",
+              "The cloud provider",
+              "Nobody: managed compute enforces it"
+            ],
+            "correct": 0,
+            "explanation": "Managed compute changes the operating work, not application authorization, data protection or backups."
+          }
+        ]
       },
       {
         "id": "azure-scope",
@@ -15431,7 +15443,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "The preflight records tenant and subscription IDs, chosen region, isolated resource-group name, owner, purpose and expiry. Verify both identity and billing scope before real actions; the fixture's fake subscription has no cloud target. Do not record tokens. A familiar name or current CLI default is insufficient scope evidence.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The optional template is planned without a subscription_id. Which subscription does the configuration fall back to?",
+            "options": [
+              "None: the variable has no default and must be supplied",
+              "The Azure CLI's current default",
+              "The first subscription the account can see"
+            ],
+            "correct": 0,
+            "explanation": "Requiring an explicit subscription ID stops a familiar resource-group name in the wrong subscription from being targeted by accident."
+          }
+        ]
       },
       {
         "id": "requirements",
@@ -15493,7 +15517,19 @@ const LEARNING_PATHS = [
             "Name a changed requirement that would reverse the decision."
           ],
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The ADR exercise chose managed application compute for 20 learners. Which new requirement is a stated reason to reconsider?",
+            "options": [
+              "A custom operating-system component",
+              "Ten more learners",
+              "A second lesson topic"
+            ],
+            "correct": 0,
+            "explanation": "Managed compute fits because no custom OS packages are needed. A requirement that breaks that assumption reopens the decision."
+          }
+        ]
       },
       {
         "id": "networking",
@@ -15650,7 +15686,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Can an application reach the template's storage account over the network as supplied?",
+            "options": [
+              "No: public access is disabled and no private endpoint exists",
+              "Yes, over its public endpoint",
+              "Yes, through the resource group's network"
+            ],
+            "correct": 0,
+            "explanation": "public_network_access_enabled is false and the template defines no private endpoint, so it is deliberately not a usable backend."
+          }
+        ]
       },
       {
         "id": "identity",
@@ -15705,7 +15753,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "The deployment identity can manage the isolated resource-group resources while the runtime identity gets only required data actions. Review broader inherited assignments because adding a narrow role does not remove wider rights. Test actual allowed/denied access in a separately chosen environment; the local matrix is only design evidence.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does infra_lab.validate do with a resource whose role is '*'?",
+            "options": [
+              "Raises ValueError: overbroad training role",
+              "Accepts it, because tags are present",
+              "Narrows it to Reader"
+            ],
+            "correct": 0,
+            "explanation": "The training policy refuses wildcard and Owner roles. Separate narrow identities are expected instead."
+          }
+        ]
       },
       {
         "id": "iac-model",
@@ -15762,7 +15822,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "The configuration expresses desired inventory while state associates addresses and observed resources may drift. The teaching plan creates absent IDs, updates changed tags and replaces changed identity/name. Its output is a local model, not Terraform provider output. A reviewed plan still requires executed operations and observation before describing a deployed result.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "infra_lab.plan compares the topology with a copy whose store has a different owner tag. What action does it give the store?",
+            "options": [
+              "update",
+              "replace",
+              "no-op"
+            ],
+            "correct": 0,
+            "explanation": "Metadata changed but the store's kind and name did not, so the model updates it in place."
+          }
+        ]
       },
       {
         "id": "provider-init",
@@ -15817,7 +15889,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Copy only the Azure template into a separate folder, initialize without a backend and validate using the selected provider. Record core and provider versions and preserve the generated lock selection. A compatible range can select different versions; initialization requires network/mirror and schema validation does not deploy or prove account availability.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The template constrains AzureRM to ~> 4.0. Which file records the exact provider version selected?",
+            "options": [
+              "The dependency lock file generated by terraform init",
+              "main.tf.json",
+              "The state file"
+            ],
+            "correct": 0,
+            "explanation": "A constraint allows a range of compatible 4.x releases. The lock file records the selection and its checksums."
+          }
+        ]
       },
       {
         "id": "variables",
@@ -15873,7 +15957,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "A hyphenated storage name fails the full template's lower-case alphanumeric 3-24 character validation. Explicit typed inputs are public configuration contracts. A sensitive flag masks output but secrets may remain in state, saved plans and logs; use an appropriate runtime identity/secret mechanism and protect those artifacts.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which storage_name passes the template's validation: notebook-store, NotebookStore1 or notebookstore1?",
+            "options": [
+              "notebookstore1 only",
+              "All three",
+              "NotebookStore1 and notebookstore1"
+            ],
+            "correct": 0,
+            "explanation": "The rule allows 3 to 24 lower-case letters or digits. A hyphen or a capital fails before any API call."
+          }
+        ]
       },
       {
         "id": "dependencies",
@@ -16008,7 +16104,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "How does the template's storage account depend on its resource group?",
+            "options": [
+              "Through references to the group's name and location, with no depends_on",
+              "Through an explicit depends_on",
+              "It does not depend on it"
+            ],
+            "correct": 0,
+            "explanation": "References in expressions create the dependency, so no artificial ordering is needed."
+          }
+        ]
       },
       {
         "id": "state",
@@ -16165,7 +16273,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A Terraform state snapshot from yesterday is restored. What does that bring back?",
+            "options": [
+              "The mapping from addresses to remote resources",
+              "Yesterday's application rows and blobs",
+              "Deleted cloud resources"
+            ],
+            "correct": 0,
+            "explanation": "State is coordination data. Application data needs its own backups."
+          }
+        ]
       },
       {
         "id": "plan-review",
@@ -16904,7 +17024,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "simulate_apply gets a desired inventory that omits the store, without allow_destroy. What happens?",
+            "options": [
+              "Raises ValueError: destructive model operation requires explicit allow_destroy",
+              "The store is destroyed",
+              "The store is kept and the plan ignored"
+            ],
+            "correct": 0,
+            "explanation": "The model refuses destructive actions unless they are opted into separately from the plan."
+          }
+        ]
       },
       {
         "id": "lifecycle",
@@ -16952,7 +17084,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "For storage rename, create a permitted new account, copy synthetic data with integrity checks, switch clients under an explicit criterion and retain rollback until the deadline. create_before_destroy does not copy data or bypass unique-name/quota constraints. Removing a block removes its prevent_destroy configuration; deletion still needs review.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "infra_lab.plan compares the topology with a copy where the store's name changed. What action does it give the store?",
+            "options": [
+              "replace",
+              "update",
+              "no-op"
+            ],
+            "correct": 0,
+            "explanation": "A name is part of the store's teaching identity, so changing it means a new resource. Its data does not move by itself."
+          }
+        ]
       },
       {
         "id": "modules",
@@ -17007,7 +17151,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "A small storage module can accept approved name, region and tags and return its resource ID while documenting connectivity prerequisites. Development and production need distinct credentials, state permissions and lifecycle ownership. Reusing module source is compatible with isolation; workspace names alone cannot enforce that access boundary.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Production gets its own Terraform workspace. Does that isolate production's credentials?",
+            "options": [
+              "No: workspaces separate state, not credentials or access",
+              "Yes: each workspace has its own identity",
+              "Yes, if the workspace is named prod"
+            ],
+            "correct": 0,
+            "explanation": "Distinct environments need separate state, access and lifecycle policies. A workspace name provides only the first."
+          }
+        ]
       },
       {
         "id": "drift-import",
@@ -17071,7 +17227,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Stop before apply. Confirm the remote identity and intended owner, reconcile the name/configuration to the existing object when that is the goal, and review a fresh plan. If replacement is intentional, establish a separate tested migration and recovery path. Import associates identity; it neither copies data nor guarantees a harmless next plan.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Configuration says public_access=false, but an operator switched the live account to true. What does a normal plan propose?",
+            "options": [
+              "Setting it back to false",
+              "Keeping it true",
+              "Nothing, until state is refreshed by hand"
+            ],
+            "correct": 0,
+            "explanation": "Refresh reads the live value, and the plan proposes the configured one. The security owner decides whether to revert or codify."
+          }
+        ]
       },
       {
         "id": "policy",
@@ -17134,7 +17302,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Changing public networking, omitting required tags or using Owner/wildcard roles must fail the selected local policy tests. An inherited Azure role or real network configuration remains outside this fixture model. Name actual provider-enforced controls and test allowed/denied behavior separately before claiming real enforcement.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does infra_lab.validate do with a storage resource that has public_network true?",
+            "options": [
+              "Raises ValueError: public storage forbidden by training policy",
+              "Accepts it with a warning",
+              "Sets public_network to false"
+            ],
+            "correct": 0,
+            "explanation": "The static check rejects the topology. It still says nothing about what a real tenant enforces."
+          }
+        ]
       },
       {
         "id": "secrets",
@@ -17189,7 +17369,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Separate developer login, trusted CI federation and compatible hosted runtime identity. Document issuance, permitted use, expiry and revocation; test both positive access and denied revoked identity in the real environment. A localhost mock token does not exercise Azure identity enforcement, and no credential is supplied by this kit.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Can clients use the template's storage account through shared access keys?",
+            "options": [
+              "No: shared_access_key_enabled is false",
+              "Yes, through the account's output",
+              "Yes: keys are always enabled"
+            ],
+            "correct": 0,
+            "explanation": "Disabling shared keys pushes access towards scoped identities, and the template outputs no keys."
+          }
+        ]
       },
       {
         "id": "cost-control",
@@ -17245,7 +17437,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "The invented teaching estimate is 20 compute units plus 4 storage units, total 24. Real review includes current regional compute, storage, transactions, egress, monitoring and idle costs. A budget needs an alert owner and response plan; it does not cap spending. Set expiry and verify teardown inventory instead of relying on tags alone.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does infra_lab.estimate(2, 10, 0.5, 8) return?",
+            "options": [
+              "24",
+              "20",
+              "4"
+            ],
+            "correct": 0,
+            "explanation": "2 units per hour for 10 hours plus 0.5 units per GB-month for 8 GB. These are invented teaching rates, not Azure prices."
+          }
+        ]
       },
       {
         "id": "deployment-pipeline",
@@ -17400,7 +17604,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A pull request runs validation checks. Should those checks receive deployment credentials?",
+            "options": [
+              "No: pull-request code may be untrusted",
+              "Yes, so the plan can be accurate",
+              "Yes, if the job is short"
+            ],
+            "correct": 0,
+            "explanation": "Run offline checks without cloud identity. A trusted release job obtains scoped credentials later."
+          }
+        ]
       },
       {
         "id": "infra-tests",
@@ -17456,7 +17672,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "JSON parsing establishes syntax; local Python tests establish this inventory model's rules; initialized Terraform validate checks language/provider schema. A real plan/deployment and allowed/denied endpoint tests require a chosen environment. Terraform test can provision by default unless explicitly configured for planned/mocked behavior with compatible versions.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "simulate_apply applies the topology, then plan() compares the result with the topology again. What does it report?",
+            "options": [
+              "no-op for both resources",
+              "update for both resources",
+              "create for both resources"
+            ],
+            "correct": 0,
+            "explanation": "A second plan after a successful model apply should find nothing to change. The model makes no network call."
+          }
+        ]
       },
       {
         "id": "resilience",
@@ -17511,7 +17739,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Lost state with surviving resources needs protected state recovery or careful adoption of their identities. Deleted storage needs application-data backups and verified restore, not just new resource definitions. Compromised identity needs revocation, rotated access and investigation before traffic resumes. Each runbook names owners and observed validation.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "An export storage account is lost, and Terraform recreates it from code. What happens to its files?",
+            "options": [
+              "They are not restored: data needs its own backup",
+              "They are restored from state",
+              "They are restored from the configuration"
+            ],
+            "correct": 0,
+            "explanation": "Reconstruction recreates infrastructure identity. Restoring data is a separate, rehearsed step."
+          }
+        ]
       },
       {
         "id": "cleanup",
@@ -17566,7 +17806,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Check exact subscription and disposable resource ownership, preserve required synthetic evidence/data, review the destroy plan and deliberately delete only owned learning resources. Verify state, portal inventory, retained/soft-deleted objects and external monitoring/backups afterward. An operation exit cannot establish that every cost source or retained copy disappeared.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "simulate_apply runs with allow_destroy=True and crash=True. What happens to the source inventory?",
+            "options": [
+              "RuntimeError, and the source inventory is unchanged",
+              "It is destroyed",
+              "It matches the desired inventory"
+            ],
+            "correct": 0,
+            "explanation": "A failed apply must not be read as completed. Check what actually remains afterwards."
+          }
+        ]
       },
       {
         "id": "launch-review",
@@ -17628,7 +17880,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Present an ADR and identity/network graph, protected state design, plan classification, data recovery, cost categories and verified-cleanup proposal. Record local executed tests, optional provider validation and unexecuted live claims separately. Three go/no-go risks can be denied-access evidence, restore integrity and private-connectivity checks, each with a concrete next experiment.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which belongs in a launch review's evidence portfolio?",
+            "options": [
+              "The tests and checks that ran, their results, and the questions they cannot answer",
+              "The finished reading list",
+              "A provider-schema validation pass alone"
+            ],
+            "correct": 0,
+            "explanation": "Readiness claims should be tied to evidence and name the remaining live experiments."
+          }
+        ]
       }
     ],
     "stages": [
@@ -17657,7 +17921,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Retain static hosting until authenticated writes are needed. Map client/API/storage identities and routes, and choose an isolated learning scope with owner and expiry. Estimate categories, then consult current regional pricing before real spend.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does infra_lab.validate do with a resource missing its expires tag?",
+            "options": [
+              "Raises ValueError: owner/purpose/expires tags required",
+              "Accepts it with no expiry",
+              "Adds a default expiry"
+            ],
+            "correct": 0,
+            "explanation": "Every resource needs an owner, a purpose and an expiry, so teardown has someone and a date attached."
+          },
+          {
+            "question": "What does infra_lab.validate do with two resources that share the id store?",
+            "options": [
+              "Raises ValueError: duplicate identity",
+              "Keeps the second",
+              "Keeps the first"
+            ],
+            "correct": 0,
+            "explanation": "Each identity must map to one resource, or plans cannot tell which one changed."
+          },
+          {
+            "question": "Which outputs does the template declare?",
+            "options": [
+              "Only the resource group ID",
+              "The storage account ID and its keys",
+              "None"
+            ],
+            "correct": 0,
+            "explanation": "Outputs expose selected results. Exposing keys would copy a secret into outputs and state."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -17684,7 +17980,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Use the teaching planner to prove its explicit policy and operation contract. The optional provider-backed template needs Terraform initialization, an actual locked AzureRM selection and validate; it does not provide private application connectivity or perform a deployment.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does infra_lab.plan([], topology) give for the two topology resources?",
+            "options": [
+              "create for group and store",
+              "no-op for both",
+              "replace for both"
+            ],
+            "correct": 0,
+            "explanation": "Nothing exists in the current inventory, so every desired resource is a create."
+          },
+          {
+            "question": "A storage resource omits public_network entirely. What does infra_lab.validate do?",
+            "options": [
+              "Raises ValueError: public storage forbidden by training policy",
+              "Accepts it, because public access was not requested",
+              "Treats it as private"
+            ],
+            "correct": 0,
+            "explanation": "The rule requires public_network to be exactly false. A missing value is not treated as safe."
+          },
+          {
+            "question": "What does infra_lab.estimate(2, -1, 0.5, 8) do?",
+            "options": [
+              "Raises ValueError: finite nonnegative numeric inputs required",
+              "Returns 2",
+              "Returns 4"
+            ],
+            "correct": 0,
+            "explanation": "Negative hours would quietly reduce the estimate, so the input is refused."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -17711,7 +18039,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Review the exact resource graph and identity scopes, protected state and credential boundaries; rehearse data recovery in an independently chosen environment. Confirm budget alerts are not a cap. Scope-check and review every deletion, then verify retained objects and cost sources.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does infra_lab.estimate(2, 730, 0.5, 8) return for a month of uptime?",
+            "options": [
+              "1464",
+              "24",
+              "730"
+            ],
+            "correct": 0,
+            "explanation": "2 × 730 hours plus 0.5 × 8 GB. Idle uptime dominates the teaching estimate."
+          },
+          {
+            "question": "simulate_apply gets a desired inventory where the store's name changed, without allow_destroy. What happens?",
+            "options": [
+              "Raises ValueError: destructive model operation requires explicit allow_destroy",
+              "The store is renamed in place",
+              "The store is updated"
+            ],
+            "correct": 0,
+            "explanation": "A rename plans a replacement, and replacements count as destructive. Data in the old store would need its own migration."
+          },
+          {
+            "question": "What does infra_lab.validate do with a resource whose role is Owner?",
+            "options": [
+              "Raises ValueError: overbroad training role",
+              "Accepts it for the deployment identity",
+              "Narrows it to Contributor"
+            ],
+            "correct": 0,
+            "explanation": "Owner is refused like a wildcard. Deployment and runtime identities need narrower scopes."
+          }
+        ]
       }
     ],
     "downloads": [

@@ -88,6 +88,8 @@ jobs:
         run: python tests/system_design_checkpoint_facts.py
       - name: Check Kubernetes checkpoint answers against the course labs
         run: python tests/kubernetes_checkpoint_facts.py
+      - name: Check Cloud & Infrastructure as Code checkpoint answers against the course labs
+        run: python tests/cloud_infrastructure_checkpoint_facts.py
       - name: Check concept explorer figures against the course labs
         run: python tests/explorer_lab_facts.py
 
