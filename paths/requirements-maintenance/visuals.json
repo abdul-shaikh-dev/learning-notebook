@@ -1,0 +1,510 @@
+{
+ "characterization": {
+  "title": "Pin what callers rely on, not the bug",
+  "intro": "Characterize the legacy report over tickets.csv before fixing it. Compare targeted checks with one snapshot of the whole output.",
+  "scope": "legacy_report.summarize_file drops zero-minute tickets, the kit's known defect, so ticket A is not counted. The reference report.summarize counts it. Both use tickets.csv from the practice kit. The agreed requirement corrects count and keeps total_minutes and the key names.",
+  "scenarios": [
+   {
+    "id": "targeted",
+    "label": "Targeted checks, defect labelled",
+    "steps": [
+     {
+      "title": "Characterize the legacy report",
+      "explanation": "The legacy report prints count 3 and total 20. The checks pin the key names and the total, which callers rely on. The count is a known defect, so it is noted, not pinned.",
+      "nodes": [
+       {
+        "id": "defect",
+        "label": "Known defect",
+        "detail": "Zero-minute ticket A is not counted",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "tickets.csv",
+        "columns": [
+         "id",
+         "status",
+         "minutes"
+        ],
+        "rows": [
+         [
+          "A",
+          "open",
+          "0"
+         ],
+         [
+          "B",
+          "closed",
+          "5"
+         ],
+         [
+          "C",
+          "open",
+          "12"
+         ],
+         [
+          "D",
+          "cancelled",
+          "3"
+         ]
+        ]
+       },
+       {
+        "caption": "Implementation",
+        "columns": [
+         "summary"
+        ],
+        "rows": [
+         [
+          "legacy"
+         ]
+        ]
+       },
+       {
+        "caption": "Checks",
+        "columns": [
+         "id",
+         "field",
+         "expects"
+        ],
+        "rows": [
+         [
+          "keys",
+          "keys",
+          "count, total_minutes"
+         ],
+         [
+          "total",
+          "total_minutes",
+          "20"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Add the agreed count",
+      "focus": [
+       "count"
+      ],
+      "explanation": "From the acceptance example, every ticket counts. The new count check expects 4 and fails on the legacy report: the failure shows the defect.",
+      "nodes": [
+       {
+        "id": "defect",
+        "label": "Known defect",
+        "detail": "Now a failing check, not a note",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "tickets.csv",
+        "columns": [
+         "id",
+         "status",
+         "minutes"
+        ],
+        "rows": [
+         [
+          "A",
+          "open",
+          "0"
+         ],
+         [
+          "B",
+          "closed",
+          "5"
+         ],
+         [
+          "C",
+          "open",
+          "12"
+         ],
+         [
+          "D",
+          "cancelled",
+          "3"
+         ]
+        ]
+       },
+       {
+        "caption": "Implementation",
+        "columns": [
+         "summary"
+        ],
+        "rows": [
+         [
+          "legacy"
+         ]
+        ]
+       },
+       {
+        "caption": "Checks",
+        "columns": [
+         "id",
+         "field",
+         "expects"
+        ],
+        "rows": [
+         [
+          "keys",
+          "keys",
+          "count, total_minutes"
+         ],
+         [
+          "total",
+          "total_minutes",
+          "20"
+         ],
+         [
+          "count",
+          "count",
+          "4"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Fix and rerun",
+      "focus": [
+       "output",
+       "count"
+      ],
+      "explanation": "The fixed summary counts A. The count check passes, and the key and total checks still pass, so callers see only the intended change.",
+      "nodes": [
+       {
+        "id": "defect",
+        "label": "Known defect",
+        "detail": "Repaired; stable behaviour unchanged",
+        "tone": "success",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "tickets.csv",
+        "columns": [
+         "id",
+         "status",
+         "minutes"
+        ],
+        "rows": [
+         [
+          "A",
+          "open",
+          "0"
+         ],
+         [
+          "B",
+          "closed",
+          "5"
+         ],
+         [
+          "C",
+          "open",
+          "12"
+         ],
+         [
+          "D",
+          "cancelled",
+          "3"
+         ]
+        ]
+       },
+       {
+        "caption": "Implementation",
+        "columns": [
+         "summary"
+        ],
+        "rows": [
+         [
+          "fixed"
+         ]
+        ]
+       },
+       {
+        "caption": "Checks",
+        "columns": [
+         "id",
+         "field",
+         "expects"
+        ],
+        "rows": [
+         [
+          "keys",
+          "keys",
+          "count, total_minutes"
+         ],
+         [
+          "total",
+          "total_minutes",
+          "20"
+         ],
+         [
+          "count",
+          "count",
+          "4"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "snapshot",
+    "label": "One snapshot pins the bug",
+    "steps": [
+     {
+      "title": "Snapshot the whole output",
+      "explanation": "One check records exactly what the legacy report prints today, count 3 included. It passes.",
+      "nodes": [
+       {
+        "id": "defect",
+        "label": "Known defect",
+        "detail": "Hidden inside the snapshot",
+        "tone": "neutral",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "tickets.csv",
+        "columns": [
+         "id",
+         "status",
+         "minutes"
+        ],
+        "rows": [
+         [
+          "A",
+          "open",
+          "0"
+         ],
+         [
+          "B",
+          "closed",
+          "5"
+         ],
+         [
+          "C",
+          "open",
+          "12"
+         ],
+         [
+          "D",
+          "cancelled",
+          "3"
+         ]
+        ]
+       },
+       {
+        "caption": "Implementation",
+        "columns": [
+         "summary"
+        ],
+        "rows": [
+         [
+          "legacy"
+         ]
+        ]
+       },
+       {
+        "caption": "Checks",
+        "columns": [
+         "id",
+         "field",
+         "expects"
+        ],
+        "rows": [
+         [
+          "whole",
+          "whole output",
+          "{\"count\": 3, \"total_minutes\": 20}"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Fix the defect",
+      "focus": [
+       "output",
+       "whole"
+      ],
+      "explanation": "The fixed summary counts ticket A, and the snapshot check fails. The test now defends the bug as if it were the requirement.",
+      "nodes": [
+       {
+        "id": "defect",
+        "label": "Known defect",
+        "detail": "The correct fix looks like a regression",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "tickets.csv",
+        "columns": [
+         "id",
+         "status",
+         "minutes"
+        ],
+        "rows": [
+         [
+          "A",
+          "open",
+          "0"
+         ],
+         [
+          "B",
+          "closed",
+          "5"
+         ],
+         [
+          "C",
+          "open",
+          "12"
+         ],
+         [
+          "D",
+          "cancelled",
+          "3"
+         ]
+        ]
+       },
+       {
+        "caption": "Implementation",
+        "columns": [
+         "summary"
+        ],
+        "rows": [
+         [
+          "fixed"
+         ]
+        ]
+       },
+       {
+        "caption": "Checks",
+        "columns": [
+         "id",
+         "field",
+         "expects"
+        ],
+        "rows": [
+         [
+          "whole",
+          "whole output",
+          "{\"count\": 3, \"total_minutes\": 20}"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Turn the failure into a decision",
+      "focus": [
+       "keys",
+       "total",
+       "count"
+      ],
+      "explanation": "Splitting the snapshot shows which part changed: keys and total still hold, and only count differs. Update count to 4 because the requirement says so, not to make the test green.",
+      "nodes": [
+       {
+        "id": "defect",
+        "label": "Known defect",
+        "detail": "Count changes by agreement",
+        "tone": "success",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "tickets.csv",
+        "columns": [
+         "id",
+         "status",
+         "minutes"
+        ],
+        "rows": [
+         [
+          "A",
+          "open",
+          "0"
+         ],
+         [
+          "B",
+          "closed",
+          "5"
+         ],
+         [
+          "C",
+          "open",
+          "12"
+         ],
+         [
+          "D",
+          "cancelled",
+          "3"
+         ]
+        ]
+       },
+       {
+        "caption": "Implementation",
+        "columns": [
+         "summary"
+        ],
+        "rows": [
+         [
+          "fixed"
+         ]
+        ]
+       },
+       {
+        "caption": "Checks",
+        "columns": [
+         "id",
+         "field",
+         "expects"
+        ],
+        "rows": [
+         [
+          "keys",
+          "keys",
+          "count, total_minutes"
+         ],
+         [
+          "total",
+          "total_minutes",
+          "20"
+         ],
+         [
+          "count",
+          "count",
+          "4"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

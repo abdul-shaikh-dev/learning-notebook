@@ -1,0 +1,412 @@
+{
+ "schema-evolution": {
+  "title": "Expand, backfill, then contract",
+  "intro": "Rename notes.title to label while old and new releases run together. Contract after the old writers stop, or contract during the rollout.",
+  "scope": "The steps follow schema_coexistence.py against SQLite: add a nullable label, read COALESCE(label, title) in new code, backfill, let a late old write arrive, then drop title. The lab runs in one process; a deployment needs evidence that no old instance can still write before contracting.",
+  "scenarios": [
+   {
+    "id": "evidence",
+    "label": "Contract after the old writers stop",
+    "steps": [
+     {
+      "title": "Expand: add a nullable label",
+      "explanation": "ALTER TABLE adds label without touching title. The old reader still selects title and the new reader falls back to it, so both read first.",
+      "nodes": [
+       {
+        "id": "plan",
+        "label": "Migration",
+        "detail": "Old and new code both work",
+        "tone": "neutral",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "notes",
+        "columns": [
+         "id",
+         "title",
+         "label"
+        ],
+        "rows": [
+         [
+          "1",
+          "first",
+          "NULL"
+         ]
+        ]
+       },
+       {
+        "caption": "Running instances",
+        "columns": [
+         "instance",
+         "release"
+        ],
+        "rows": [
+         [
+          "web-1",
+          "old"
+         ],
+         [
+          "web-2",
+          "new"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Backfill, then a late old write",
+      "focus": [
+       "row-1",
+       "row-2"
+      ],
+      "explanation": "UPDATE copies title into label. One second later web-1, still old, inserts a row with only title, so label is NULL again for row 2. COALESCE still reads it.",
+      "nodes": [
+       {
+        "id": "plan",
+        "label": "Migration",
+        "detail": "1 row still needs label",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "notes",
+        "columns": [
+         "id",
+         "title",
+         "label"
+        ],
+        "rows": [
+         [
+          "1",
+          "first",
+          "first"
+         ],
+         [
+          "2",
+          "late old write",
+          "NULL"
+         ]
+        ]
+       },
+       {
+        "caption": "Running instances",
+        "columns": [
+         "instance",
+         "release"
+        ],
+        "rows": [
+         [
+          "web-1",
+          "old"
+         ],
+         [
+          "web-2",
+          "new"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Upgrade web-1, reconcile",
+      "focus": [
+       "row-2",
+       "row-3"
+      ],
+      "explanation": "Every instance now runs the new release and writes both fields. A second backfill fills row 2, and new writes such as row 3 set label themselves.",
+      "nodes": [
+       {
+        "id": "plan",
+        "label": "Migration",
+        "detail": "No NULL labels; no old writers",
+        "tone": "success",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "notes",
+        "columns": [
+         "id",
+         "title",
+         "label"
+        ],
+        "rows": [
+         [
+          "1",
+          "first",
+          "first"
+         ],
+         [
+          "2",
+          "late old write",
+          "late old write"
+         ],
+         [
+          "3",
+          "new write",
+          "new write"
+         ]
+        ]
+       },
+       {
+        "caption": "Running instances",
+        "columns": [
+         "instance",
+         "release"
+        ],
+        "rows": [
+         [
+          "web-1",
+          "new"
+         ],
+         [
+          "web-2",
+          "new"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Contract: drop title",
+      "focus": [
+       "old-reader",
+       "new-reader"
+      ],
+      "explanation": "With evidence that no old reader or writer remains, title is dropped. Every label is set, and no running code selects title.",
+      "nodes": [
+       {
+        "id": "plan",
+        "label": "Migration",
+        "detail": "Final shape, nothing lost",
+        "tone": "success",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "notes",
+        "columns": [
+         "id",
+         "label"
+        ],
+        "rows": [
+         [
+          "1",
+          "first"
+         ],
+         [
+          "2",
+          "late old write"
+         ],
+         [
+          "3",
+          "new write"
+         ]
+        ]
+       },
+       {
+        "caption": "Running instances",
+        "columns": [
+         "instance",
+         "release"
+        ],
+        "rows": [
+         [
+          "web-1",
+          "new"
+         ],
+         [
+          "web-2",
+          "new"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "early",
+    "label": "Contract during the rollout",
+    "steps": [
+     {
+      "title": "Backfill once",
+      "explanation": "label has been added and backfilled. web-1 still runs the old release.",
+      "nodes": [
+       {
+        "id": "plan",
+        "label": "Migration",
+        "detail": "Looks finished after one backfill",
+        "tone": "neutral",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "notes",
+        "columns": [
+         "id",
+         "title",
+         "label"
+        ],
+        "rows": [
+         [
+          "1",
+          "first",
+          "first"
+         ]
+        ]
+       },
+       {
+        "caption": "Running instances",
+        "columns": [
+         "instance",
+         "release"
+        ],
+        "rows": [
+         [
+          "web-1",
+          "old"
+         ],
+         [
+          "web-2",
+          "new"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "A late old write",
+      "focus": [
+       "row-2"
+      ],
+      "explanation": "web-1 inserts a row with only title. Its label is NULL; the new reader still reads it through COALESCE.",
+      "nodes": [
+       {
+        "id": "plan",
+        "label": "Migration",
+        "detail": "1 row still needs label",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "notes",
+        "columns": [
+         "id",
+         "title",
+         "label"
+        ],
+        "rows": [
+         [
+          "1",
+          "first",
+          "first"
+         ],
+         [
+          "2",
+          "late old write",
+          "NULL"
+         ]
+        ]
+       },
+       {
+        "caption": "Running instances",
+        "columns": [
+         "instance",
+         "release"
+        ],
+        "rows": [
+         [
+          "web-1",
+          "old"
+         ],
+         [
+          "web-2",
+          "new"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Drop title too early",
+      "focus": [
+       "row-2",
+       "old-reader",
+       "new-reader"
+      ],
+      "explanation": "Dropping title now removes the only copy of row 2's text, and web-1's next SELECT title fails with no such column.",
+      "nodes": [
+       {
+        "id": "plan",
+        "label": "Migration",
+        "detail": "Data lost and old code broken",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "notes",
+        "columns": [
+         "id",
+         "label"
+        ],
+        "rows": [
+         [
+          "1",
+          "first"
+         ],
+         [
+          "2",
+          "NULL"
+         ]
+        ]
+       },
+       {
+        "caption": "Running instances",
+        "columns": [
+         "instance",
+         "release"
+        ],
+        "rows": [
+         [
+          "web-1",
+          "old"
+         ],
+         [
+          "web-2",
+          "new"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

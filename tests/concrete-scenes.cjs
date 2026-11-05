@@ -1,6 +1,6 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const ctx={};ctx.window=ctx;vm.createContext(ctx);
-for(const f of ['concrete-scenes','scenes-dsa','scenes-apps','scenes-infra','scenes-patterns','scenes-data','scenes-engineering'])vm.runInContext(fs.readFileSync('assets/js/'+f+'.js','utf8'),ctx);
+for(const f of ['concrete-scenes','scenes-dsa','scenes-apps','scenes-infra','scenes-patterns','scenes-data','scenes-engineering','scenes-practice'])vm.runInContext(fs.readFileSync('assets/js/'+f+'.js','utf8'),ctx);
 ctx.escapeText=ctx.NotebookScenes.escape;
 vm.runInContext(fs.readFileSync('assets/js/learning-tools.js','utf8'),ctx);
 let lessons=0,frames=0;const visualIds=[];
@@ -9,6 +9,8 @@ assert(ctx.NotebookScenes.keys().includes(l.id),l.id);
 for(const [scenarioIndex,scenario] of l.visual.scenarios.entries())for(const [index,step] of scenario.steps.entries()){
 const html=ctx.visualFrame(step,l.id+'-'+scenarioIndex+'-'+index,scenario.steps[index-1],l.id,{scenario,scenarioIndex,index});frames++;
 assert(html.includes('data-scene="'+l.id+'"'),l.id);assert(!/undefined|NaN/.test(html),l.id);
+// A focus label is drawn with ::before, which inside a table row becomes an extra cell; key a cell instead.
+assert(!/<tr[^>]*data-motion-node/.test(html),l.id+': focus keys go on table cells, not rows');
 assert(html.includes(ctx.escapeText(step.explanation)),l.id);
 for(const n of step.nodes)assert(html.includes(ctx.escapeText(n.detail)),l.id+': '+n.detail);
 const ids=[...html.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size,l.id);
@@ -72,3 +74,24 @@ const perm=drawn('linux-operating-systems','permissions-and-identities');
 assert(perm[0][1].includes('bo can read /srv/reports/q3.csv')&&perm[0][2].includes('Permission denied at /srv/reports/q3.csv')&&perm[0][0].includes('group bits r-x: traverse allowed'),'750/640: group can enter and read, not write');
 assert(perm[1].every(t=>t.includes('Permission denied at /srv/reports'))&&perm[1][2].includes('not reached'),'700: denied at the directory, whatever the file mode');
 console.log('PASS: agent budget, operation IDs, object authorization, injected clock, p95 and permission bits are drawn from each snapshot.');
+// Practice scenes: generator passes, expected versions, plan actions, expand-and-contract, contrast and characterization are computed from each snapshot.
+const gen=drawn('python','iterators-and-generators');
+assert(gen[0][1].includes('sum(stream) → 30')&&gen[0][2].includes('list(stream) → []')&&gen[0][2].includes('Shared stream exhausted')&&gen[0][0].includes('body not started'),'one generator object is read once');
+assert(gen[1][1].includes('list(valid_minutes(source)) → [10, 20]')&&gen[1][2].includes('sum(saved) → 30'),'a fresh call or a saved list reads again');
+const ver=drawn('full-stack-journey','conflicts');
+assert(ver[0][2].includes('version 1 → 409 Conflict')&&ver[0][2].includes('25 min · done true · version 2')&&ver[0][3].includes('40 min · done true · version 3'),'the stale save is refused and the deliberate one succeeds');
+assert(!ver[1][2].includes('409')&&ver[1][2].includes('40 min · done false · version 3'),'without the version check the stale save overwrites');
+const plan=drawn('cloud-infrastructure','plan-review');
+assert(plan[0][1].includes('store update tags differ')&&plan[0][2].includes('Applied; the store keeps its identity applied'),'a tag change updates and applies');
+assert(plan[1][1].includes('store replace name')&&plan[1][1].includes('not run yet')&&plan[1][2].includes('ValueError: destructive model operation requires explicit allow_destroy')&&plan[1][3].endsWith('applied Sequence complete → '),'a rename replaces and needs allow_destroy');
+assert(plan.every(s=>s.slice(1).every(t=>t.includes('1 of 2 resources change'))),'both changes count as one');
+const schema=drawn('delivery-operations','schema-evolution');
+assert(schema[0][3].includes('Old reader: SELECT title not running')&&schema[0][3].includes('first, late old write, new write')&&!schema[0].some(t=>/· \d+ lost/.test(t)),'contracting after evidence keeps every row');
+assert(schema[1][2].includes('no such column: title')&&schema[1][2].includes('first, NULL · 1 lost'),'contracting early loses the late write and breaks the old reader');
+const contrast=drawn('ui-accessibility','contrast-colour');
+assert(contrast[0][0].includes('4.47:1 &lt; 4.5:1 · fails')&&contrast[0][1].includes('4.54:1 ≥ 4.5:1 · passes')&&contrast[0][2].includes('7.00:1'),'ordinary text needs 4.5:1, never rounded up');
+assert(contrast[1][0].includes('3.45:1 ≥ 3:1 · passes')&&contrast[1][1].includes('1.74:1 &lt; 3:1 · fails')&&contrast[1][2].includes('3.03:1 ≥ 3:1 · passes'),'large text and non-text parts need 3:1');
+const char=drawn('requirements-maintenance','characterization'),printed=t=>t.match(/Prints \{&quot;count&quot;: (\d), &quot;total_minutes&quot;: (\d+)\}/).slice(1).join('/');
+assert.deepEqual(char.map(s=>s.map(printed)),[['3/20','3/20','4/20'],['3/20','4/20','4/20']],'legacy drops ticket A; the fix counts it');
+assert(char[0][1].includes('✗ count expects 4 , got 3')&&char[0][2].includes('✓ count expects 4')&&char[1][1].includes('✗ whole output'),'the count check finds the defect; the snapshot defends it');
+console.log('PASS: generator passes, expected versions, plan actions, expand-and-contract readers, contrast ratios and characterization checks are drawn from each snapshot.');

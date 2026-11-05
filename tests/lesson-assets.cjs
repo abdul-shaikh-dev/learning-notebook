@@ -5,8 +5,8 @@ const {lazyFiles}=require('../scripts/lazy-catalog.cjs');
 const html=fs.readFileSync('index.html','utf8');
 // index.html: every lesson-only asset is a placeholder, not a tag the home page would fetch.
 const marks=[...html.matchAll(/<meta name="lesson-asset" content="([^"]+)">/g)].map(m=>m[1]);
-const lessonOnly=/highlight\.min|code-panels|notebook-mermaid|concrete-scenes|scenes-(?:dsa|apps|infra|patterns|data|engineering)|concept-explorer|notebook-scenes-dark/;
-assert.equal(marks.length,20,'Lesson-only scripts and styles');
+const lessonOnly=/highlight\.min|code-panels|notebook-mermaid|concrete-scenes|scenes-(?:dsa|apps|infra|patterns|data|engineering|practice)|concept-explorer|notebook-scenes-dark/;
+assert.equal(marks.length,22,'Lesson-only scripts and styles');
 for(const m of html.matchAll(/<(?:script src|link rel="stylesheet" href)="([^"]+)"/g))assert.ok(!lessonOnly.test(m[1]),'Loaded on every page: '+m[1]);
 for(const file of marks)assert.ok(fs.existsSync(file.split('?')[0]),'Placeholder names a published file: '+file);
 assert.ok(html.indexOf('content="assets/css/concept-explorer.css')<html.indexOf('href="assets/css/atlas-ui.css'),'Styles keep their place in the cascade');

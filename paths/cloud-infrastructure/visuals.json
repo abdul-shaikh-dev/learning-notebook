@@ -1,0 +1,568 @@
+{
+ "plan-review": {
+  "title": "Read the action, not the count",
+  "intro": "Change the training topology two ways and read the plan the offline lab produces. One change updates in place; the other replaces storage.",
+  "scope": "The lab's plan(current, desired) in infra_lab.py: a new ID is create, a missing ID is destroy, a changed kind or name is replace, any other difference is update. simulate_apply refuses destroy or replace unless allow_destroy=True. This is a local teaching contract, not Terraform's replacement metadata, and the storage holds no real data.",
+  "scenarios": [
+   {
+    "id": "update",
+    "label": "A tag change updates in place",
+    "steps": [
+     {
+      "title": "Desired matches current",
+      "explanation": "The desired topology is the applied one, so every resource is no-op.",
+      "nodes": [
+       {
+        "id": "apply",
+        "label": "Apply",
+        "detail": "Nothing to review",
+        "tone": "neutral",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Current",
+        "columns": [
+         "id",
+         "kind",
+         "name",
+         "tags"
+        ],
+        "rows": [
+         [
+          "group",
+          "resource-group",
+          "notebook-learning-only",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ],
+         [
+          "store",
+          "storage",
+          "fictionalnotebookstore",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ]
+        ]
+       },
+       {
+        "caption": "Desired",
+        "columns": [
+         "id",
+         "kind",
+         "name",
+         "tags"
+        ],
+        "rows": [
+         [
+          "group",
+          "resource-group",
+          "notebook-learning-only",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ],
+         [
+          "store",
+          "storage",
+          "fictionalnotebookstore",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ]
+        ]
+       },
+       {
+        "caption": "Apply",
+        "columns": [
+         "flag",
+         "run"
+        ],
+        "rows": [
+         [
+          "allow_destroy=False",
+          "no"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Extend the expiry tag",
+      "focus": [
+       "store"
+      ],
+      "explanation": "Changing store's expires tag keeps its ID, kind and name, so plan() marks it update. group stays no-op.",
+      "nodes": [
+       {
+        "id": "apply",
+        "label": "Apply",
+        "detail": "One in-place change",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Current",
+        "columns": [
+         "id",
+         "kind",
+         "name",
+         "tags"
+        ],
+        "rows": [
+         [
+          "group",
+          "resource-group",
+          "notebook-learning-only",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ],
+         [
+          "store",
+          "storage",
+          "fictionalnotebookstore",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ]
+        ]
+       },
+       {
+        "caption": "Desired",
+        "columns": [
+         "id",
+         "kind",
+         "name",
+         "tags"
+        ],
+        "rows": [
+         [
+          "group",
+          "resource-group",
+          "notebook-learning-only",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ],
+         [
+          "store",
+          "storage",
+          "fictionalnotebookstore",
+          "owner=learner, purpose=offline-training, expires=2099-06-30"
+         ]
+        ]
+       },
+       {
+        "caption": "Apply",
+        "columns": [
+         "flag",
+         "run"
+        ],
+        "rows": [
+         [
+          "allow_destroy=False",
+          "no"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Apply without destroy rights",
+      "focus": [
+       "result"
+      ],
+      "explanation": "An update is not destructive, so simulate_apply succeeds with allow_destroy=False and returns the desired inventory.",
+      "nodes": [
+       {
+        "id": "apply",
+        "label": "Apply",
+        "detail": "Applied; the store keeps its identity",
+        "tone": "success",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Current",
+        "columns": [
+         "id",
+         "kind",
+         "name",
+         "tags"
+        ],
+        "rows": [
+         [
+          "group",
+          "resource-group",
+          "notebook-learning-only",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ],
+         [
+          "store",
+          "storage",
+          "fictionalnotebookstore",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ]
+        ]
+       },
+       {
+        "caption": "Desired",
+        "columns": [
+         "id",
+         "kind",
+         "name",
+         "tags"
+        ],
+        "rows": [
+         [
+          "group",
+          "resource-group",
+          "notebook-learning-only",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ],
+         [
+          "store",
+          "storage",
+          "fictionalnotebookstore",
+          "owner=learner, purpose=offline-training, expires=2099-06-30"
+         ]
+        ]
+       },
+       {
+        "caption": "Apply",
+        "columns": [
+         "flag",
+         "run"
+        ],
+        "rows": [
+         [
+          "allow_destroy=False",
+          "yes"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "replace",
+    "label": "A rename replaces storage",
+    "steps": [
+     {
+      "title": "Desired matches current",
+      "explanation": "The same starting point: both resources are no-op.",
+      "nodes": [
+       {
+        "id": "apply",
+        "label": "Apply",
+        "detail": "Nothing to review",
+        "tone": "neutral",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Current",
+        "columns": [
+         "id",
+         "kind",
+         "name",
+         "tags"
+        ],
+        "rows": [
+         [
+          "group",
+          "resource-group",
+          "notebook-learning-only",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ],
+         [
+          "store",
+          "storage",
+          "fictionalnotebookstore",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ]
+        ]
+       },
+       {
+        "caption": "Desired",
+        "columns": [
+         "id",
+         "kind",
+         "name",
+         "tags"
+        ],
+        "rows": [
+         [
+          "group",
+          "resource-group",
+          "notebook-learning-only",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ],
+         [
+          "store",
+          "storage",
+          "fictionalnotebookstore",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ]
+        ]
+       },
+       {
+        "caption": "Apply",
+        "columns": [
+         "flag",
+         "run"
+        ],
+        "rows": [
+         [
+          "allow_destroy=False",
+          "no"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Rename the store",
+      "focus": [
+       "store"
+      ],
+      "explanation": "Renaming store to fictionalnotebookstore2 changes its name, so plan() marks it replace. The count says one change, the same as the tag edit.",
+      "nodes": [
+       {
+        "id": "apply",
+        "label": "Apply",
+        "detail": "One change, but it crosses data lifetime",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Current",
+        "columns": [
+         "id",
+         "kind",
+         "name",
+         "tags"
+        ],
+        "rows": [
+         [
+          "group",
+          "resource-group",
+          "notebook-learning-only",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ],
+         [
+          "store",
+          "storage",
+          "fictionalnotebookstore",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ]
+        ]
+       },
+       {
+        "caption": "Desired",
+        "columns": [
+         "id",
+         "kind",
+         "name",
+         "tags"
+        ],
+        "rows": [
+         [
+          "group",
+          "resource-group",
+          "notebook-learning-only",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ],
+         [
+          "store",
+          "storage",
+          "fictionalnotebookstore2",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ]
+        ]
+       },
+       {
+        "caption": "Apply",
+        "columns": [
+         "flag",
+         "run"
+        ],
+        "rows": [
+         [
+          "allow_destroy=False",
+          "no"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Apply is refused",
+      "focus": [
+       "result"
+      ],
+      "explanation": "simulate_apply raises ValueError because replace is destructive and allow_destroy is False. Read the replacement reason before deciding anything.",
+      "nodes": [
+       {
+        "id": "apply",
+        "label": "Apply",
+        "detail": "Refused until destroy is explicit",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Current",
+        "columns": [
+         "id",
+         "kind",
+         "name",
+         "tags"
+        ],
+        "rows": [
+         [
+          "group",
+          "resource-group",
+          "notebook-learning-only",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ],
+         [
+          "store",
+          "storage",
+          "fictionalnotebookstore",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ]
+        ]
+       },
+       {
+        "caption": "Desired",
+        "columns": [
+         "id",
+         "kind",
+         "name",
+         "tags"
+        ],
+        "rows": [
+         [
+          "group",
+          "resource-group",
+          "notebook-learning-only",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ],
+         [
+          "store",
+          "storage",
+          "fictionalnotebookstore2",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ]
+        ]
+       },
+       {
+        "caption": "Apply",
+        "columns": [
+         "flag",
+         "run"
+        ],
+        "rows": [
+         [
+          "allow_destroy=False",
+          "yes"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Allow it deliberately",
+      "focus": [
+       "result"
+      ],
+      "explanation": "With allow_destroy=True the model applies the rename. In a real account the old store's data would not move to the new one; plan the copy or keep the name.",
+      "nodes": [
+       {
+        "id": "apply",
+        "label": "Apply",
+        "detail": "Applied only after an explicit decision",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Current",
+        "columns": [
+         "id",
+         "kind",
+         "name",
+         "tags"
+        ],
+        "rows": [
+         [
+          "group",
+          "resource-group",
+          "notebook-learning-only",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ],
+         [
+          "store",
+          "storage",
+          "fictionalnotebookstore",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ]
+        ]
+       },
+       {
+        "caption": "Desired",
+        "columns": [
+         "id",
+         "kind",
+         "name",
+         "tags"
+        ],
+        "rows": [
+         [
+          "group",
+          "resource-group",
+          "notebook-learning-only",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ],
+         [
+          "store",
+          "storage",
+          "fictionalnotebookstore2",
+          "owner=learner, purpose=offline-training, expires=2099-01-01"
+         ]
+        ]
+       },
+       {
+        "caption": "Apply",
+        "columns": [
+         "flag",
+         "run"
+        ],
+        "rows": [
+         [
+          "allow_destroy=True",
+          "yes"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}
