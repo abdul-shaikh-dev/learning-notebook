@@ -1,5 +1,5 @@
 // External link check: every course source and lesson reference, one request at a time per host.
-// Reports broken and redirected links as Markdown. It never fails the build; the scheduled workflow publishes the report.
+// Reports broken and redirected links, and lesson references due for review, as Markdown. It never fails the build; the scheduled workflow publishes the report.
 const fs=require('node:fs'),path=require('node:path');
 
 // url -> where it is cited, from course sources and lesson references.
@@ -11,6 +11,25 @@ function collectLinks(paths){
   for(const l of Array.isArray(p.lessons)?p.lessons:[])for(const r of l.references||[])add(r.url,{course:p.title,place:l.title});
  }
  return links;
+}
+
+// Lesson references whose reviewed date is more than `months` calendar months before `today` (both YYYY-MM-DD).
+// The cutoff keeps the day of the month, or the month's last day when it is shorter. A missing or invalid date counts as due.
+function reviewCutoff(today,months){
+ const [y,m,d]=today.split('-').map(Number),total=y*12+(m-1)-months,year=Math.floor(total/12),month=total%12+1;
+ const day=Math.min(d,new Date(Date.UTC(year,month,0)).getUTCDate());
+ return `${String(year).padStart(4,'0')}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+}
+const validDate=s=>{if(typeof s!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(s))return false;const [y,m,d]=s.split('-').map(Number),t=new Date(Date.UTC(y,m-1,d));return t.getUTCFullYear()===y&&t.getUTCMonth()===m-1&&t.getUTCDate()===d;};
+function staleReferences(paths,{today,months}){
+ const cutoff=reviewCutoff(today,months),due=new Map();
+ for(const p of paths)for(const l of Array.isArray(p.lessons)?p.lessons:[])for(const r of l.references||[]){
+  if(validDate(r.reviewed)&&r.reviewed>=cutoff)continue;
+  const key=p.title+'\n'+r.url+'\n'+r.reviewed;
+  if(!due.has(key))due.set(key,{course:p.title,title:r.title,url:r.url,reviewed:validDate(r.reviewed)?r.reviewed:null,lessons:[]});
+  due.get(key).lessons.push(l.title);
+ }
+ return {cutoff,months,references:[...due.values()].sort((a,b)=>a.course.localeCompare(b.course)||(a.reviewed??'').localeCompare(b.reviewed??'')||a.url.localeCompare(b.url))};
 }
 
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
@@ -68,7 +87,7 @@ async function checkLinks(urls,{fetch=globalThis.fetch,allow={hosts:{},urls:{}},
 }
 
 const cell=s=>String(s).replaceAll('|','\\|').replaceAll('\n',' ');
-function report(results,links,{date=new Date().toISOString().slice(0,10)}={}){
+function report(results,links,{date=new Date().toISOString().slice(0,10),stale}={}){
  const count=state=>results.filter(r=>r.state===state).length;
  const broken=results.filter(r=>r.state==='broken'),moved=results.filter(r=>r.state==='redirected'),skipped=results.filter(r=>r.state==='skipped');
  const cited=url=>[...new Set((links.get(url)||[]).map(w=>w.course+' · '+w.place))].slice(0,3).map(cell).join('<br>')+((links.get(url)||[]).length>3?'<br>…':'');
@@ -77,18 +96,26 @@ function report(results,links,{date=new Date().toISOString().slice(0,10)}={}){
  if(moved.length)lines.push('## Redirected','','Update these to the new address when the target is the same page.','','| Link | Now | Cited in |','| --- | --- | --- |',...moved.map(r=>`| ${cell(r.url)} | ${cell(r.final)} | ${cited(r.url)} |`),'');
  if(skipped.length)lines.push('<details><summary>Skipped by the allow list</summary>','',...skipped.map(r=>`- ${cell(r.url)}${r.final?' (redirects to '+cell(r.final)+')':''}: ${cell(r.reason)}`),'','</details>','');
  if(!broken.length&&!moved.length)lines.push('Every checked link answered directly.','');
+ if(stale){
+  const {references:due,cutoff,months}=stale;
+  lines.push('## References due for review','',`Lesson references last reviewed more than ${months} months ago, before ${cutoff}. Re-read each source, update the lesson if the source has changed, then update the reference's \`reviewed\` date.`,'');
+  if(!due.length)lines.push(`None: every lesson reference was reviewed on or after ${cutoff}.`,'');
+  for(const course of [...new Set(due.map(r=>r.course))])lines.push(`### ${cell(course)}`,'','| Reference | Reviewed | Cited in |','| --- | --- | --- |',...due.filter(r=>r.course===course).map(r=>`| [${cell(r.title)}](${cell(r.url)}) | ${r.reviewed??'Missing or invalid date'} | ${r.lessons.map(cell).join('<br>')} |`),'');
+ }
  return lines.join('\n');
 }
 
-module.exports={collectLinks,checkLinks,report};
+module.exports={collectLinks,checkLinks,reviewCutoff,staleReferences,report};
 
 if(require.main===module)(async()=>{
  const root=path.resolve(__dirname,'..'),args=process.argv.slice(2),out=args[args.indexOf('--out')+1];
- const links=collectLinks(require('./manifest.cjs').readPaths());
+ const paths=require('./manifest.cjs').readPaths(),links=collectLinks(paths);
  const allow=JSON.parse(fs.readFileSync(path.join(root,'scripts/link-allowlist.json'),'utf8'));
+ const stale=staleReferences(paths,{today:new Date().toISOString().slice(0,10),months:allow.reviewedMaxAgeMonths});
  const results=await checkLinks([...links.keys()],{allow});
- const text=report(results,links);
+ const text=report(results,links,{stale});
  if(args.includes('--out')&&out)fs.writeFileSync(out,text);else process.stdout.write(text);
  if(args.includes('--json'))fs.writeFileSync(args[args.indexOf('--json')+1],JSON.stringify(results,null,1));
- console.error(`${results.filter(r=>r.state==='broken').length} broken, ${results.filter(r=>r.state==='redirected').length} redirected of ${results.length}.`);
+ if(args.includes('--stale-json'))fs.writeFileSync(args[args.indexOf('--stale-json')+1],JSON.stringify(stale.references,null,1));
+ console.error(`${results.filter(r=>r.state==='broken').length} broken, ${results.filter(r=>r.state==='redirected').length} redirected of ${results.length}; ${stale.references.length} references due for review.`);
 })();
