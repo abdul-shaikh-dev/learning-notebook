@@ -43,7 +43,7 @@
   const checks=checked&&doc?`<ul class="eng-checks">${mark(principal[1]===doc.tenant,`tenant ${principal[1]} = ${doc.tenant}`)}${mark(principal[0]===doc.owner||(principal[2]==='reader'&&act==='read'),`${principal[0]} owns ${doc.id} (owner ${doc.owner})`)}${mark(['read','update'].includes(act),`${act} is a supported action`)}</ul>`:'<ul class="eng-checks"><li class="is-skip">Session is valid; the row is not checked</li></ul>';
   return scene('authz',`${header(`PATCH ${e(path)}`,'Valid session and CSRF token in every request.')}
 <div class="eng-row">${card(s,'authz','request')}${card(s,'authz','handler',checks)}${card(s,'authz','response',`<output class="${ok?'':'is-denied'}">${code} ${ok?'OK':'unavailable'}</output>`)}</div>
-<table class="eng-table"><caption>documents after the request</caption><thead><tr><th scope="col">id</th><th scope="col">tenant</th><th scope="col">owner</th><th scope="col">title</th></tr></thead><tbody>${docs.map(d=>`<tr data-motion-node="authz-doc-${e(d.id)}" class="${d.id===target?'is-target':''}"><th scope="row">${e(d.id)}</th><td>${e(d.tenant)}</td><td>${e(d.owner)}</td><td>${e(d.title)}</td></tr>`).join('')}</tbody></table>`,m);
+<table class="eng-table"><caption>documents after the request</caption><thead><tr><th scope="col">id</th><th scope="col">tenant</th><th scope="col">owner</th><th scope="col">title</th></tr></thead><tbody>${docs.map(d=>`<tr class="${d.id===target?'is-target':''}"><th scope="row" data-motion-node="authz-doc-${e(d.id)}">${e(d.id)}</th><td>${e(d.tenant)}</td><td>${e(d.owner)}</td><td>${e(d.title)}</td></tr>`).join('')}</tbody></table>`,m);
  });
 
  // Injected clock: the token is valid while checked < issued + ttl; the test passes when that matches its expectation.

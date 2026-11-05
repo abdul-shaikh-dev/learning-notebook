@@ -15222,6 +15222,572 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
+        },
+        "visual": {
+          "title": "Read the action, not the count",
+          "intro": "Change the training topology two ways and read the plan the offline lab produces. One change updates in place; the other replaces storage.",
+          "scope": "The lab's plan(current, desired) in infra_lab.py: a new ID is create, a missing ID is destroy, a changed kind or name is replace, any other difference is update. simulate_apply refuses destroy or replace unless allow_destroy=True. This is a local teaching contract, not Terraform's replacement metadata, and the storage holds no real data.",
+          "scenarios": [
+            {
+              "id": "update",
+              "label": "A tag change updates in place",
+              "steps": [
+                {
+                  "title": "Desired matches current",
+                  "explanation": "The desired topology is the applied one, so every resource is no-op.",
+                  "nodes": [
+                    {
+                      "id": "apply",
+                      "label": "Apply",
+                      "detail": "Nothing to review",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Current",
+                      "columns": [
+                        "id",
+                        "kind",
+                        "name",
+                        "tags"
+                      ],
+                      "rows": [
+                        [
+                          "group",
+                          "resource-group",
+                          "notebook-learning-only",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ],
+                        [
+                          "store",
+                          "storage",
+                          "fictionalnotebookstore",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Desired",
+                      "columns": [
+                        "id",
+                        "kind",
+                        "name",
+                        "tags"
+                      ],
+                      "rows": [
+                        [
+                          "group",
+                          "resource-group",
+                          "notebook-learning-only",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ],
+                        [
+                          "store",
+                          "storage",
+                          "fictionalnotebookstore",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Apply",
+                      "columns": [
+                        "flag",
+                        "run"
+                      ],
+                      "rows": [
+                        [
+                          "allow_destroy=False",
+                          "no"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Extend the expiry tag",
+                  "focus": [
+                    "store"
+                  ],
+                  "explanation": "Changing store's expires tag keeps its ID, kind and name, so plan() marks it update. group stays no-op.",
+                  "nodes": [
+                    {
+                      "id": "apply",
+                      "label": "Apply",
+                      "detail": "One in-place change",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Current",
+                      "columns": [
+                        "id",
+                        "kind",
+                        "name",
+                        "tags"
+                      ],
+                      "rows": [
+                        [
+                          "group",
+                          "resource-group",
+                          "notebook-learning-only",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ],
+                        [
+                          "store",
+                          "storage",
+                          "fictionalnotebookstore",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Desired",
+                      "columns": [
+                        "id",
+                        "kind",
+                        "name",
+                        "tags"
+                      ],
+                      "rows": [
+                        [
+                          "group",
+                          "resource-group",
+                          "notebook-learning-only",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ],
+                        [
+                          "store",
+                          "storage",
+                          "fictionalnotebookstore",
+                          "owner=learner, purpose=offline-training, expires=2099-06-30"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Apply",
+                      "columns": [
+                        "flag",
+                        "run"
+                      ],
+                      "rows": [
+                        [
+                          "allow_destroy=False",
+                          "no"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Apply without destroy rights",
+                  "focus": [
+                    "result"
+                  ],
+                  "explanation": "An update is not destructive, so simulate_apply succeeds with allow_destroy=False and returns the desired inventory.",
+                  "nodes": [
+                    {
+                      "id": "apply",
+                      "label": "Apply",
+                      "detail": "Applied; the store keeps its identity",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Current",
+                      "columns": [
+                        "id",
+                        "kind",
+                        "name",
+                        "tags"
+                      ],
+                      "rows": [
+                        [
+                          "group",
+                          "resource-group",
+                          "notebook-learning-only",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ],
+                        [
+                          "store",
+                          "storage",
+                          "fictionalnotebookstore",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Desired",
+                      "columns": [
+                        "id",
+                        "kind",
+                        "name",
+                        "tags"
+                      ],
+                      "rows": [
+                        [
+                          "group",
+                          "resource-group",
+                          "notebook-learning-only",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ],
+                        [
+                          "store",
+                          "storage",
+                          "fictionalnotebookstore",
+                          "owner=learner, purpose=offline-training, expires=2099-06-30"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Apply",
+                      "columns": [
+                        "flag",
+                        "run"
+                      ],
+                      "rows": [
+                        [
+                          "allow_destroy=False",
+                          "yes"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "replace",
+              "label": "A rename replaces storage",
+              "steps": [
+                {
+                  "title": "Desired matches current",
+                  "explanation": "The same starting point: both resources are no-op.",
+                  "nodes": [
+                    {
+                      "id": "apply",
+                      "label": "Apply",
+                      "detail": "Nothing to review",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Current",
+                      "columns": [
+                        "id",
+                        "kind",
+                        "name",
+                        "tags"
+                      ],
+                      "rows": [
+                        [
+                          "group",
+                          "resource-group",
+                          "notebook-learning-only",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ],
+                        [
+                          "store",
+                          "storage",
+                          "fictionalnotebookstore",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Desired",
+                      "columns": [
+                        "id",
+                        "kind",
+                        "name",
+                        "tags"
+                      ],
+                      "rows": [
+                        [
+                          "group",
+                          "resource-group",
+                          "notebook-learning-only",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ],
+                        [
+                          "store",
+                          "storage",
+                          "fictionalnotebookstore",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Apply",
+                      "columns": [
+                        "flag",
+                        "run"
+                      ],
+                      "rows": [
+                        [
+                          "allow_destroy=False",
+                          "no"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Rename the store",
+                  "focus": [
+                    "store"
+                  ],
+                  "explanation": "Renaming store to fictionalnotebookstore2 changes its name, so plan() marks it replace. The count says one change, the same as the tag edit.",
+                  "nodes": [
+                    {
+                      "id": "apply",
+                      "label": "Apply",
+                      "detail": "One change, but it crosses data lifetime",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Current",
+                      "columns": [
+                        "id",
+                        "kind",
+                        "name",
+                        "tags"
+                      ],
+                      "rows": [
+                        [
+                          "group",
+                          "resource-group",
+                          "notebook-learning-only",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ],
+                        [
+                          "store",
+                          "storage",
+                          "fictionalnotebookstore",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Desired",
+                      "columns": [
+                        "id",
+                        "kind",
+                        "name",
+                        "tags"
+                      ],
+                      "rows": [
+                        [
+                          "group",
+                          "resource-group",
+                          "notebook-learning-only",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ],
+                        [
+                          "store",
+                          "storage",
+                          "fictionalnotebookstore2",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Apply",
+                      "columns": [
+                        "flag",
+                        "run"
+                      ],
+                      "rows": [
+                        [
+                          "allow_destroy=False",
+                          "no"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Apply is refused",
+                  "focus": [
+                    "result"
+                  ],
+                  "explanation": "simulate_apply raises ValueError because replace is destructive and allow_destroy is False. Read the replacement reason before deciding anything.",
+                  "nodes": [
+                    {
+                      "id": "apply",
+                      "label": "Apply",
+                      "detail": "Refused until destroy is explicit",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Current",
+                      "columns": [
+                        "id",
+                        "kind",
+                        "name",
+                        "tags"
+                      ],
+                      "rows": [
+                        [
+                          "group",
+                          "resource-group",
+                          "notebook-learning-only",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ],
+                        [
+                          "store",
+                          "storage",
+                          "fictionalnotebookstore",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Desired",
+                      "columns": [
+                        "id",
+                        "kind",
+                        "name",
+                        "tags"
+                      ],
+                      "rows": [
+                        [
+                          "group",
+                          "resource-group",
+                          "notebook-learning-only",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ],
+                        [
+                          "store",
+                          "storage",
+                          "fictionalnotebookstore2",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Apply",
+                      "columns": [
+                        "flag",
+                        "run"
+                      ],
+                      "rows": [
+                        [
+                          "allow_destroy=False",
+                          "yes"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Allow it deliberately",
+                  "focus": [
+                    "result"
+                  ],
+                  "explanation": "With allow_destroy=True the model applies the rename. In a real account the old store's data would not move to the new one; plan the copy or keep the name.",
+                  "nodes": [
+                    {
+                      "id": "apply",
+                      "label": "Apply",
+                      "detail": "Applied only after an explicit decision",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Current",
+                      "columns": [
+                        "id",
+                        "kind",
+                        "name",
+                        "tags"
+                      ],
+                      "rows": [
+                        [
+                          "group",
+                          "resource-group",
+                          "notebook-learning-only",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ],
+                        [
+                          "store",
+                          "storage",
+                          "fictionalnotebookstore",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Desired",
+                      "columns": [
+                        "id",
+                        "kind",
+                        "name",
+                        "tags"
+                      ],
+                      "rows": [
+                        [
+                          "group",
+                          "resource-group",
+                          "notebook-learning-only",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ],
+                        [
+                          "store",
+                          "storage",
+                          "fictionalnotebookstore2",
+                          "owner=learner, purpose=offline-training, expires=2099-01-01"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Apply",
+                      "columns": [
+                        "flag",
+                        "run"
+                      ],
+                      "rows": [
+                        [
+                          "allow_destroy=True",
+                          "yes"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       },
       {
@@ -26761,6 +27327,416 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
+        },
+        "visual": {
+          "title": "Expand, backfill, then contract",
+          "intro": "Rename notes.title to label while old and new releases run together. Contract after the old writers stop, or contract during the rollout.",
+          "scope": "The steps follow schema_coexistence.py against SQLite: add a nullable label, read COALESCE(label, title) in new code, backfill, let a late old write arrive, then drop title. The lab runs in one process; a deployment needs evidence that no old instance can still write before contracting.",
+          "scenarios": [
+            {
+              "id": "evidence",
+              "label": "Contract after the old writers stop",
+              "steps": [
+                {
+                  "title": "Expand: add a nullable label",
+                  "explanation": "ALTER TABLE adds label without touching title. The old reader still selects title and the new reader falls back to it, so both read first.",
+                  "nodes": [
+                    {
+                      "id": "plan",
+                      "label": "Migration",
+                      "detail": "Old and new code both work",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "notes",
+                      "columns": [
+                        "id",
+                        "title",
+                        "label"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "first",
+                          "NULL"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Running instances",
+                      "columns": [
+                        "instance",
+                        "release"
+                      ],
+                      "rows": [
+                        [
+                          "web-1",
+                          "old"
+                        ],
+                        [
+                          "web-2",
+                          "new"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Backfill, then a late old write",
+                  "focus": [
+                    "row-1",
+                    "row-2"
+                  ],
+                  "explanation": "UPDATE copies title into label. One second later web-1, still old, inserts a row with only title, so label is NULL again for row 2. COALESCE still reads it.",
+                  "nodes": [
+                    {
+                      "id": "plan",
+                      "label": "Migration",
+                      "detail": "1 row still needs label",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "notes",
+                      "columns": [
+                        "id",
+                        "title",
+                        "label"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "first",
+                          "first"
+                        ],
+                        [
+                          "2",
+                          "late old write",
+                          "NULL"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Running instances",
+                      "columns": [
+                        "instance",
+                        "release"
+                      ],
+                      "rows": [
+                        [
+                          "web-1",
+                          "old"
+                        ],
+                        [
+                          "web-2",
+                          "new"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Upgrade web-1, reconcile",
+                  "focus": [
+                    "row-2",
+                    "row-3"
+                  ],
+                  "explanation": "Every instance now runs the new release and writes both fields. A second backfill fills row 2, and new writes such as row 3 set label themselves.",
+                  "nodes": [
+                    {
+                      "id": "plan",
+                      "label": "Migration",
+                      "detail": "No NULL labels; no old writers",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "notes",
+                      "columns": [
+                        "id",
+                        "title",
+                        "label"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "first",
+                          "first"
+                        ],
+                        [
+                          "2",
+                          "late old write",
+                          "late old write"
+                        ],
+                        [
+                          "3",
+                          "new write",
+                          "new write"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Running instances",
+                      "columns": [
+                        "instance",
+                        "release"
+                      ],
+                      "rows": [
+                        [
+                          "web-1",
+                          "new"
+                        ],
+                        [
+                          "web-2",
+                          "new"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Contract: drop title",
+                  "focus": [
+                    "old-reader",
+                    "new-reader"
+                  ],
+                  "explanation": "With evidence that no old reader or writer remains, title is dropped. Every label is set, and no running code selects title.",
+                  "nodes": [
+                    {
+                      "id": "plan",
+                      "label": "Migration",
+                      "detail": "Final shape, nothing lost",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "notes",
+                      "columns": [
+                        "id",
+                        "label"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "first"
+                        ],
+                        [
+                          "2",
+                          "late old write"
+                        ],
+                        [
+                          "3",
+                          "new write"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Running instances",
+                      "columns": [
+                        "instance",
+                        "release"
+                      ],
+                      "rows": [
+                        [
+                          "web-1",
+                          "new"
+                        ],
+                        [
+                          "web-2",
+                          "new"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "early",
+              "label": "Contract during the rollout",
+              "steps": [
+                {
+                  "title": "Backfill once",
+                  "explanation": "label has been added and backfilled. web-1 still runs the old release.",
+                  "nodes": [
+                    {
+                      "id": "plan",
+                      "label": "Migration",
+                      "detail": "Looks finished after one backfill",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "notes",
+                      "columns": [
+                        "id",
+                        "title",
+                        "label"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "first",
+                          "first"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Running instances",
+                      "columns": [
+                        "instance",
+                        "release"
+                      ],
+                      "rows": [
+                        [
+                          "web-1",
+                          "old"
+                        ],
+                        [
+                          "web-2",
+                          "new"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "A late old write",
+                  "focus": [
+                    "row-2"
+                  ],
+                  "explanation": "web-1 inserts a row with only title. Its label is NULL; the new reader still reads it through COALESCE.",
+                  "nodes": [
+                    {
+                      "id": "plan",
+                      "label": "Migration",
+                      "detail": "1 row still needs label",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "notes",
+                      "columns": [
+                        "id",
+                        "title",
+                        "label"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "first",
+                          "first"
+                        ],
+                        [
+                          "2",
+                          "late old write",
+                          "NULL"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Running instances",
+                      "columns": [
+                        "instance",
+                        "release"
+                      ],
+                      "rows": [
+                        [
+                          "web-1",
+                          "old"
+                        ],
+                        [
+                          "web-2",
+                          "new"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Drop title too early",
+                  "focus": [
+                    "row-2",
+                    "old-reader",
+                    "new-reader"
+                  ],
+                  "explanation": "Dropping title now removes the only copy of row 2's text, and web-1's next SELECT title fails with no such column.",
+                  "nodes": [
+                    {
+                      "id": "plan",
+                      "label": "Migration",
+                      "detail": "Data lost and old code broken",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "notes",
+                      "columns": [
+                        "id",
+                        "label"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "first"
+                        ],
+                        [
+                          "2",
+                          "NULL"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Running instances",
+                      "columns": [
+                        "instance",
+                        "release"
+                      ],
+                      "rows": [
+                        [
+                          "web-1",
+                          "old"
+                        ],
+                        [
+                          "web-2",
+                          "new"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       },
       {
@@ -34094,6 +35070,504 @@ const LEARNING_PATHS = [
                 3
               ],
               "explanation": "Second write cannot match version 1; it does not overwrite version 2."
+            }
+          ]
+        },
+        "visual": {
+          "title": "Expected versions stop a stale save",
+          "intro": "Two tabs read the same task at version 1 and both save. Compare an update that names the version it read with one that does not.",
+          "scope": "The reference API's rule: PUT /api/tasks/{id} sends the version it read; the store updates only when that version is current, increments it, and otherwise answers 409. SQL does the comparison in UPDATE … WHERE Id=@id AND Version=@version, so no check-then-write race remains. acceptance.py races the same two saves and expects one 200 and one 409.",
+          "scenarios": [
+            {
+              "id": "checked",
+              "label": "Expected version: 409 for the stale tab",
+              "steps": [
+                {
+                  "title": "Both tabs read version 1",
+                  "explanation": "Tab A and Tab B load the same task: SQL study, 0 minutes, not done, version 1.",
+                  "nodes": [
+                    {
+                      "id": "tabs",
+                      "label": "Tabs",
+                      "detail": "A and B both hold version 1",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Row read by both tabs",
+                      "columns": [
+                        "title",
+                        "minutes",
+                        "done",
+                        "version"
+                      ],
+                      "rows": [
+                        [
+                          "SQL study",
+                          "0",
+                          "false",
+                          "1"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Update",
+                      "columns": [
+                        "predicate"
+                      ],
+                      "rows": [
+                        [
+                          "WHERE Id=@id AND Version=@version"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Requests",
+                      "columns": [
+                        "n",
+                        "tab",
+                        "minutes",
+                        "done",
+                        "version"
+                      ],
+                      "rows": []
+                    }
+                  ]
+                },
+                {
+                  "title": "Tab A saves first",
+                  "focus": [
+                    "req-1",
+                    "row"
+                  ],
+                  "explanation": "Tab A sends minutes 25, done true and version 1. The version matches, so the row updates and becomes version 2.",
+                  "nodes": [
+                    {
+                      "id": "tabs",
+                      "label": "Tabs",
+                      "detail": "A now shows version 2; B still shows 1",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Row read by both tabs",
+                      "columns": [
+                        "title",
+                        "minutes",
+                        "done",
+                        "version"
+                      ],
+                      "rows": [
+                        [
+                          "SQL study",
+                          "0",
+                          "false",
+                          "1"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Update",
+                      "columns": [
+                        "predicate"
+                      ],
+                      "rows": [
+                        [
+                          "WHERE Id=@id AND Version=@version"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Requests",
+                      "columns": [
+                        "n",
+                        "tab",
+                        "minutes",
+                        "done",
+                        "version"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "Tab A",
+                          "25",
+                          "true",
+                          "1"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Tab B's stale save",
+                  "focus": [
+                    "req-2"
+                  ],
+                  "explanation": "Tab B sends minutes 40, not done, version 1. No row has version 1 any more, so the update changes nothing and the API answers 409. A's completion is kept.",
+                  "nodes": [
+                    {
+                      "id": "tabs",
+                      "label": "Tabs",
+                      "detail": "B is told to reload and compare",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Row read by both tabs",
+                      "columns": [
+                        "title",
+                        "minutes",
+                        "done",
+                        "version"
+                      ],
+                      "rows": [
+                        [
+                          "SQL study",
+                          "0",
+                          "false",
+                          "1"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Update",
+                      "columns": [
+                        "predicate"
+                      ],
+                      "rows": [
+                        [
+                          "WHERE Id=@id AND Version=@version"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Requests",
+                      "columns": [
+                        "n",
+                        "tab",
+                        "minutes",
+                        "done",
+                        "version"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "Tab A",
+                          "25",
+                          "true",
+                          "1"
+                        ],
+                        [
+                          "2",
+                          "Tab B",
+                          "40",
+                          "false",
+                          "1"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Reload, compare, then save",
+                  "focus": [
+                    "req-3",
+                    "row"
+                  ],
+                  "explanation": "Tab B reloads version 2, sees A marked the session done, and decides to keep done while recording 40 minutes. Its save names version 2 and succeeds as version 3.",
+                  "nodes": [
+                    {
+                      "id": "tabs",
+                      "label": "Tabs",
+                      "detail": "B's choice was made with A's change in view",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Row read by both tabs",
+                      "columns": [
+                        "title",
+                        "minutes",
+                        "done",
+                        "version"
+                      ],
+                      "rows": [
+                        [
+                          "SQL study",
+                          "0",
+                          "false",
+                          "1"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Update",
+                      "columns": [
+                        "predicate"
+                      ],
+                      "rows": [
+                        [
+                          "WHERE Id=@id AND Version=@version"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Requests",
+                      "columns": [
+                        "n",
+                        "tab",
+                        "minutes",
+                        "done",
+                        "version"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "Tab A",
+                          "25",
+                          "true",
+                          "1"
+                        ],
+                        [
+                          "2",
+                          "Tab B",
+                          "40",
+                          "false",
+                          "1"
+                        ],
+                        [
+                          "3",
+                          "Tab B",
+                          "40",
+                          "true",
+                          "2"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "blind",
+              "label": "Last write wins: A's change is lost",
+              "steps": [
+                {
+                  "title": "Both tabs read version 1",
+                  "explanation": "The same two tabs, but the update matches the row by ID only.",
+                  "nodes": [
+                    {
+                      "id": "tabs",
+                      "label": "Tabs",
+                      "detail": "A and B both hold version 1",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Row read by both tabs",
+                      "columns": [
+                        "title",
+                        "minutes",
+                        "done",
+                        "version"
+                      ],
+                      "rows": [
+                        [
+                          "SQL study",
+                          "0",
+                          "false",
+                          "1"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Update",
+                      "columns": [
+                        "predicate"
+                      ],
+                      "rows": [
+                        [
+                          "WHERE Id=@id"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Requests",
+                      "columns": [
+                        "n",
+                        "tab",
+                        "minutes",
+                        "done",
+                        "version"
+                      ],
+                      "rows": []
+                    }
+                  ]
+                },
+                {
+                  "title": "Tab A saves first",
+                  "focus": [
+                    "req-1",
+                    "row"
+                  ],
+                  "explanation": "Tab A records 25 minutes and marks the session done. The update succeeds.",
+                  "nodes": [
+                    {
+                      "id": "tabs",
+                      "label": "Tabs",
+                      "detail": "A's completion is saved",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Row read by both tabs",
+                      "columns": [
+                        "title",
+                        "minutes",
+                        "done",
+                        "version"
+                      ],
+                      "rows": [
+                        [
+                          "SQL study",
+                          "0",
+                          "false",
+                          "1"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Update",
+                      "columns": [
+                        "predicate"
+                      ],
+                      "rows": [
+                        [
+                          "WHERE Id=@id"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Requests",
+                      "columns": [
+                        "n",
+                        "tab",
+                        "minutes",
+                        "done",
+                        "version"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "Tab A",
+                          "25",
+                          "true",
+                          "1"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Tab B overwrites it",
+                  "focus": [
+                    "req-2",
+                    "row"
+                  ],
+                  "explanation": "Tab B's save from its stale view also succeeds. The row now says 40 minutes and not done: A's completion is gone, and neither tab was told.",
+                  "nodes": [
+                    {
+                      "id": "tabs",
+                      "label": "Tabs",
+                      "detail": "200 for both saves; one decision vanished",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Row read by both tabs",
+                      "columns": [
+                        "title",
+                        "minutes",
+                        "done",
+                        "version"
+                      ],
+                      "rows": [
+                        [
+                          "SQL study",
+                          "0",
+                          "false",
+                          "1"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Update",
+                      "columns": [
+                        "predicate"
+                      ],
+                      "rows": [
+                        [
+                          "WHERE Id=@id"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Requests",
+                      "columns": [
+                        "n",
+                        "tab",
+                        "minutes",
+                        "done",
+                        "version"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "Tab A",
+                          "25",
+                          "true",
+                          "1"
+                        ],
+                        [
+                          "2",
+                          "Tab B",
+                          "40",
+                          "false",
+                          "1"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -69144,6 +70618,391 @@ const LEARNING_PATHS = [
             }
           ]
         },
+        "visual": {
+          "title": "A generator is read once",
+          "intro": "Read the same filtered minutes twice: once through one generator object, then through a fresh call or a saved list.",
+          "scope": "The lesson's valid_minutes generator yields each value of [10, -1, 20] that is at least 0. A generator object keeps its position, so a second reader starts where the first stopped. Lists are reusable iterables; materializing one keeps every value in memory.",
+          "sources": [
+            {
+              "title": "Python documentation: Generators",
+              "url": "https://docs.python.org/3/howto/functional.html#generators"
+            }
+          ],
+          "scenarios": [
+            {
+              "id": "shared",
+              "label": "One stream, two readers",
+              "steps": [
+                {
+                  "title": "Create the generator",
+                  "explanation": "stream = valid_minutes(source) creates a generator object. Its body has not run yet, so nothing is filtered or yielded.",
+                  "nodes": [
+                    {
+                      "id": "reader",
+                      "label": "Readers",
+                      "detail": "No reader has asked for a value",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Source",
+                      "columns": [
+                        "values"
+                      ],
+                      "rows": [
+                        [
+                          "10"
+                        ],
+                        [
+                          "-1"
+                        ],
+                        [
+                          "20"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Stream",
+                      "columns": [
+                        "object"
+                      ],
+                      "rows": [
+                        [
+                          "stream = valid_minutes(source)"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Calls",
+                      "columns": [
+                        "n",
+                        "op",
+                        "target"
+                      ],
+                      "rows": []
+                    }
+                  ]
+                },
+                {
+                  "title": "sum reads every value",
+                  "focus": [
+                    "stream",
+                    "call-1"
+                  ],
+                  "explanation": "sum(stream) pulls values until StopIteration: 10, then 20, skipping -1. It returns 30 and leaves the stream exhausted.",
+                  "nodes": [
+                    {
+                      "id": "reader",
+                      "label": "Readers",
+                      "detail": "sum consumed the stream",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Source",
+                      "columns": [
+                        "values"
+                      ],
+                      "rows": [
+                        [
+                          "10"
+                        ],
+                        [
+                          "-1"
+                        ],
+                        [
+                          "20"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Stream",
+                      "columns": [
+                        "object"
+                      ],
+                      "rows": [
+                        [
+                          "stream = valid_minutes(source)"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Calls",
+                      "columns": [
+                        "n",
+                        "op",
+                        "target"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "sum",
+                          "stream"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "list finds nothing left",
+                  "focus": [
+                    "call-2"
+                  ],
+                  "explanation": "list(stream) asks the same generator object for more values. It is already exhausted, so the list is empty, with no error.",
+                  "nodes": [
+                    {
+                      "id": "reader",
+                      "label": "Readers",
+                      "detail": "The second reader gets [] silently",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Source",
+                      "columns": [
+                        "values"
+                      ],
+                      "rows": [
+                        [
+                          "10"
+                        ],
+                        [
+                          "-1"
+                        ],
+                        [
+                          "20"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Stream",
+                      "columns": [
+                        "object"
+                      ],
+                      "rows": [
+                        [
+                          "stream = valid_minutes(source)"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Calls",
+                      "columns": [
+                        "n",
+                        "op",
+                        "target"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "sum",
+                          "stream"
+                        ],
+                        [
+                          "2",
+                          "list",
+                          "stream"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "fresh",
+              "label": "A fresh pass each time",
+              "steps": [
+                {
+                  "title": "sum over a fresh generator",
+                  "explanation": "sum(valid_minutes(source)) creates a generator, reads it to the end and returns 30. No shared stream is kept.",
+                  "nodes": [
+                    {
+                      "id": "reader",
+                      "label": "Readers",
+                      "detail": "Each call creates its own generator",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Source",
+                      "columns": [
+                        "values"
+                      ],
+                      "rows": [
+                        [
+                          "10"
+                        ],
+                        [
+                          "-1"
+                        ],
+                        [
+                          "20"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Calls",
+                      "columns": [
+                        "n",
+                        "op",
+                        "target"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "sum",
+                          "fresh"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "list over another call",
+                  "focus": [
+                    "call-2"
+                  ],
+                  "explanation": "list(valid_minutes(source)) calls the generator function again, so this reader starts at the first value and gets [10, 20].",
+                  "nodes": [
+                    {
+                      "id": "reader",
+                      "label": "Readers",
+                      "detail": "A new call starts from the beginning",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Source",
+                      "columns": [
+                        "values"
+                      ],
+                      "rows": [
+                        [
+                          "10"
+                        ],
+                        [
+                          "-1"
+                        ],
+                        [
+                          "20"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Calls",
+                      "columns": [
+                        "n",
+                        "op",
+                        "target"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "sum",
+                          "fresh"
+                        ],
+                        [
+                          "2",
+                          "list",
+                          "fresh"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Or save the values once",
+                  "focus": [
+                    "call-3",
+                    "call-4"
+                  ],
+                  "explanation": "saved = list(valid_minutes(source)) keeps [10, 20] in a list. A list can be read again, so sum(saved) is still 30, at the cost of holding every value.",
+                  "nodes": [
+                    {
+                      "id": "reader",
+                      "label": "Readers",
+                      "detail": "A list trades memory for reuse",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Source",
+                      "columns": [
+                        "values"
+                      ],
+                      "rows": [
+                        [
+                          "10"
+                        ],
+                        [
+                          "-1"
+                        ],
+                        [
+                          "20"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Calls",
+                      "columns": [
+                        "n",
+                        "op",
+                        "target"
+                      ],
+                      "rows": [
+                        [
+                          "1",
+                          "sum",
+                          "fresh"
+                        ],
+                        [
+                          "2",
+                          "list",
+                          "fresh"
+                        ],
+                        [
+                          "3",
+                          "save",
+                          "saved"
+                        ],
+                        [
+                          "4",
+                          "sum",
+                          "saved"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
         "extraQuiz": [
           {
             "question": "When does the body of a generator function start running?",
@@ -73392,7 +75251,515 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Pin what callers rely on, not the bug",
+          "intro": "Characterize the legacy report over tickets.csv before fixing it. Compare targeted checks with one snapshot of the whole output.",
+          "scope": "legacy_report.summarize_file drops zero-minute tickets, the kit's known defect, so ticket A is not counted. The reference report.summarize counts it. Both use tickets.csv from the practice kit. The agreed requirement corrects count and keeps total_minutes and the key names.",
+          "scenarios": [
+            {
+              "id": "targeted",
+              "label": "Targeted checks, defect labelled",
+              "steps": [
+                {
+                  "title": "Characterize the legacy report",
+                  "explanation": "The legacy report prints count 3 and total 20. The checks pin the key names and the total, which callers rely on. The count is a known defect, so it is noted, not pinned.",
+                  "nodes": [
+                    {
+                      "id": "defect",
+                      "label": "Known defect",
+                      "detail": "Zero-minute ticket A is not counted",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "tickets.csv",
+                      "columns": [
+                        "id",
+                        "status",
+                        "minutes"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "open",
+                          "0"
+                        ],
+                        [
+                          "B",
+                          "closed",
+                          "5"
+                        ],
+                        [
+                          "C",
+                          "open",
+                          "12"
+                        ],
+                        [
+                          "D",
+                          "cancelled",
+                          "3"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Implementation",
+                      "columns": [
+                        "summary"
+                      ],
+                      "rows": [
+                        [
+                          "legacy"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Checks",
+                      "columns": [
+                        "id",
+                        "field",
+                        "expects"
+                      ],
+                      "rows": [
+                        [
+                          "keys",
+                          "keys",
+                          "count, total_minutes"
+                        ],
+                        [
+                          "total",
+                          "total_minutes",
+                          "20"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Add the agreed count",
+                  "focus": [
+                    "count"
+                  ],
+                  "explanation": "From the acceptance example, every ticket counts. The new count check expects 4 and fails on the legacy report: the failure shows the defect.",
+                  "nodes": [
+                    {
+                      "id": "defect",
+                      "label": "Known defect",
+                      "detail": "Now a failing check, not a note",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "tickets.csv",
+                      "columns": [
+                        "id",
+                        "status",
+                        "minutes"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "open",
+                          "0"
+                        ],
+                        [
+                          "B",
+                          "closed",
+                          "5"
+                        ],
+                        [
+                          "C",
+                          "open",
+                          "12"
+                        ],
+                        [
+                          "D",
+                          "cancelled",
+                          "3"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Implementation",
+                      "columns": [
+                        "summary"
+                      ],
+                      "rows": [
+                        [
+                          "legacy"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Checks",
+                      "columns": [
+                        "id",
+                        "field",
+                        "expects"
+                      ],
+                      "rows": [
+                        [
+                          "keys",
+                          "keys",
+                          "count, total_minutes"
+                        ],
+                        [
+                          "total",
+                          "total_minutes",
+                          "20"
+                        ],
+                        [
+                          "count",
+                          "count",
+                          "4"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Fix and rerun",
+                  "focus": [
+                    "output",
+                    "count"
+                  ],
+                  "explanation": "The fixed summary counts A. The count check passes, and the key and total checks still pass, so callers see only the intended change.",
+                  "nodes": [
+                    {
+                      "id": "defect",
+                      "label": "Known defect",
+                      "detail": "Repaired; stable behaviour unchanged",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "tickets.csv",
+                      "columns": [
+                        "id",
+                        "status",
+                        "minutes"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "open",
+                          "0"
+                        ],
+                        [
+                          "B",
+                          "closed",
+                          "5"
+                        ],
+                        [
+                          "C",
+                          "open",
+                          "12"
+                        ],
+                        [
+                          "D",
+                          "cancelled",
+                          "3"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Implementation",
+                      "columns": [
+                        "summary"
+                      ],
+                      "rows": [
+                        [
+                          "fixed"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Checks",
+                      "columns": [
+                        "id",
+                        "field",
+                        "expects"
+                      ],
+                      "rows": [
+                        [
+                          "keys",
+                          "keys",
+                          "count, total_minutes"
+                        ],
+                        [
+                          "total",
+                          "total_minutes",
+                          "20"
+                        ],
+                        [
+                          "count",
+                          "count",
+                          "4"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "snapshot",
+              "label": "One snapshot pins the bug",
+              "steps": [
+                {
+                  "title": "Snapshot the whole output",
+                  "explanation": "One check records exactly what the legacy report prints today, count 3 included. It passes.",
+                  "nodes": [
+                    {
+                      "id": "defect",
+                      "label": "Known defect",
+                      "detail": "Hidden inside the snapshot",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "tickets.csv",
+                      "columns": [
+                        "id",
+                        "status",
+                        "minutes"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "open",
+                          "0"
+                        ],
+                        [
+                          "B",
+                          "closed",
+                          "5"
+                        ],
+                        [
+                          "C",
+                          "open",
+                          "12"
+                        ],
+                        [
+                          "D",
+                          "cancelled",
+                          "3"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Implementation",
+                      "columns": [
+                        "summary"
+                      ],
+                      "rows": [
+                        [
+                          "legacy"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Checks",
+                      "columns": [
+                        "id",
+                        "field",
+                        "expects"
+                      ],
+                      "rows": [
+                        [
+                          "whole",
+                          "whole output",
+                          "{\"count\": 3, \"total_minutes\": 20}"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Fix the defect",
+                  "focus": [
+                    "output",
+                    "whole"
+                  ],
+                  "explanation": "The fixed summary counts ticket A, and the snapshot check fails. The test now defends the bug as if it were the requirement.",
+                  "nodes": [
+                    {
+                      "id": "defect",
+                      "label": "Known defect",
+                      "detail": "The correct fix looks like a regression",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "tickets.csv",
+                      "columns": [
+                        "id",
+                        "status",
+                        "minutes"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "open",
+                          "0"
+                        ],
+                        [
+                          "B",
+                          "closed",
+                          "5"
+                        ],
+                        [
+                          "C",
+                          "open",
+                          "12"
+                        ],
+                        [
+                          "D",
+                          "cancelled",
+                          "3"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Implementation",
+                      "columns": [
+                        "summary"
+                      ],
+                      "rows": [
+                        [
+                          "fixed"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Checks",
+                      "columns": [
+                        "id",
+                        "field",
+                        "expects"
+                      ],
+                      "rows": [
+                        [
+                          "whole",
+                          "whole output",
+                          "{\"count\": 3, \"total_minutes\": 20}"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Turn the failure into a decision",
+                  "focus": [
+                    "keys",
+                    "total",
+                    "count"
+                  ],
+                  "explanation": "Splitting the snapshot shows which part changed: keys and total still hold, and only count differs. Update count to 4 because the requirement says so, not to make the test green.",
+                  "nodes": [
+                    {
+                      "id": "defect",
+                      "label": "Known defect",
+                      "detail": "Count changes by agreement",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "tickets.csv",
+                      "columns": [
+                        "id",
+                        "status",
+                        "minutes"
+                      ],
+                      "rows": [
+                        [
+                          "A",
+                          "open",
+                          "0"
+                        ],
+                        [
+                          "B",
+                          "closed",
+                          "5"
+                        ],
+                        [
+                          "C",
+                          "open",
+                          "12"
+                        ],
+                        [
+                          "D",
+                          "cancelled",
+                          "3"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Implementation",
+                      "columns": [
+                        "summary"
+                      ],
+                      "rows": [
+                        [
+                          "fixed"
+                        ]
+                      ]
+                    },
+                    {
+                      "caption": "Checks",
+                      "columns": [
+                        "id",
+                        "field",
+                        "expects"
+                      ],
+                      "rows": [
+                        [
+                          "keys",
+                          "keys",
+                          "count, total_minutes"
+                        ],
+                        [
+                          "total",
+                          "total_minutes",
+                          "20"
+                        ],
+                        [
+                          "count",
+                          "count",
+                          "4"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "first-project",
@@ -94451,7 +96818,280 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "WCAG 2.2 criterion-specific primary guidance checked. Exceptions apply; a local demonstration is not a complete conformance audit."
           }
-        ]
+        ],
+        "visual": {
+          "title": "Contrast ratios against their threshold",
+          "intro": "Measure text and control colours against white with the course's contrast utility. Ordinary text needs 4.5:1; large text and non-text parts need 3:1.",
+          "scope": "contrast.cjs computes WCAG 2.2 relative luminance for two solid sRGB colours. Ratios are shown cut to two decimals, never rounded up to a threshold. The thresholds are the AA text criterion (1.4.3) and non-text contrast (1.4.11), which have exceptions; a passing ratio does not make thin text readable.",
+          "sources": [
+            {
+              "title": "WCAG 2.2: Contrast (Minimum)",
+              "url": "https://www.w3.org/TR/WCAG22/#contrast-minimum"
+            },
+            {
+              "title": "WCAG 2.2: Non-text Contrast",
+              "url": "https://www.w3.org/TR/WCAG22/#non-text-contrast"
+            }
+          ],
+          "scenarios": [
+            {
+              "id": "text",
+              "label": "Ordinary text: 4.5:1",
+              "steps": [
+                {
+                  "title": "Grey body text",
+                  "explanation": "#777777 on white measures 4.47:1. It looks close to 4.5, but it is below the threshold, so it fails.",
+                  "nodes": [
+                    {
+                      "id": "verdict",
+                      "label": "Verdict",
+                      "detail": "Do not round 4.47 up to 4.5",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Colour pairs",
+                      "columns": [
+                        "id",
+                        "use",
+                        "foreground",
+                        "background",
+                        "kind"
+                      ],
+                      "rows": [
+                        [
+                          "body",
+                          "Body text",
+                          "777777",
+                          "ffffff",
+                          "ordinary text"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "One step darker",
+                  "focus": [
+                    "body"
+                  ],
+                  "explanation": "#767676 measures 4.54:1 and passes. The smallest change that passes is still a change worth measuring, not guessing.",
+                  "nodes": [
+                    {
+                      "id": "verdict",
+                      "label": "Verdict",
+                      "detail": "Passes, with almost no margin",
+                      "tone": "active",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Colour pairs",
+                      "columns": [
+                        "id",
+                        "use",
+                        "foreground",
+                        "background",
+                        "kind"
+                      ],
+                      "rows": [
+                        [
+                          "body",
+                          "Body text",
+                          "767676",
+                          "ffffff",
+                          "ordinary text"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Leave room for thin type",
+                  "focus": [
+                    "body",
+                    "verdict"
+                  ],
+                  "explanation": "#595959 measures 7.00:1. Thin or small text can look faint even when it passes, so a darker grey leaves margin.",
+                  "nodes": [
+                    {
+                      "id": "verdict",
+                      "label": "Verdict",
+                      "detail": "Comfortable for long reading",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Colour pairs",
+                      "columns": [
+                        "id",
+                        "use",
+                        "foreground",
+                        "background",
+                        "kind"
+                      ],
+                      "rows": [
+                        [
+                          "body",
+                          "Body text",
+                          "595959",
+                          "ffffff",
+                          "ordinary text"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "three",
+              "label": "Large text and controls: 3:1",
+              "steps": [
+                {
+                  "title": "A large heading",
+                  "explanation": "#8a8a8a measures 3.45:1. As qualifying large text it passes 3:1; the same colour as body text would fail 4.5:1.",
+                  "nodes": [
+                    {
+                      "id": "verdict",
+                      "label": "Verdict",
+                      "detail": "The threshold depends on the use",
+                      "tone": "neutral",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Colour pairs",
+                      "columns": [
+                        "id",
+                        "use",
+                        "foreground",
+                        "background",
+                        "kind"
+                      ],
+                      "rows": [
+                        [
+                          "heading",
+                          "Large heading",
+                          "8a8a8a",
+                          "ffffff",
+                          "large text"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "A pale input border",
+                  "focus": [
+                    "border"
+                  ],
+                  "explanation": "The text field's border, #c4c4c4, measures 1.74:1. A border needed to find the field is a non-text part, and it fails 3:1.",
+                  "nodes": [
+                    {
+                      "id": "verdict",
+                      "label": "Verdict",
+                      "detail": "The field's edge is hard to see",
+                      "tone": "warning",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Colour pairs",
+                      "columns": [
+                        "id",
+                        "use",
+                        "foreground",
+                        "background",
+                        "kind"
+                      ],
+                      "rows": [
+                        [
+                          "heading",
+                          "Large heading",
+                          "8a8a8a",
+                          "ffffff",
+                          "large text"
+                        ],
+                        [
+                          "border",
+                          "Input border",
+                          "c4c4c4",
+                          "ffffff",
+                          "non-text"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Darken the border",
+                  "focus": [
+                    "border",
+                    "verdict"
+                  ],
+                  "explanation": "#949494 measures 3.03:1 and passes. An error also needs words, such as Title is required, not a red border alone.",
+                  "nodes": [
+                    {
+                      "id": "verdict",
+                      "label": "Verdict",
+                      "detail": "Both parts pass; meaning is in text",
+                      "tone": "success",
+                      "x": 30,
+                      "y": 40
+                    }
+                  ],
+                  "edges": [],
+                  "tables": [
+                    {
+                      "caption": "Colour pairs",
+                      "columns": [
+                        "id",
+                        "use",
+                        "foreground",
+                        "background",
+                        "kind"
+                      ],
+                      "rows": [
+                        [
+                          "heading",
+                          "Large heading",
+                          "8a8a8a",
+                          "ffffff",
+                          "large text"
+                        ],
+                        [
+                          "border",
+                          "Input border",
+                          "949494",
+                          "ffffff",
+                          "non-text"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "id": "type-content",

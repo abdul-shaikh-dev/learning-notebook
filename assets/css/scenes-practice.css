@@ -1,0 +1,28 @@
+.scene-prc{color:var(--text);display:grid;gap:.9rem;min-width:0}.scene-prc *{box-sizing:border-box;min-width:0}.scene-prc h4{margin:0 0 .3rem;font-size:var(--size-small)}
+.prc-caption{display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:.7rem}.prc-caption strong{font:700 var(--size-small) var(--font-code);overflow-wrap:anywhere}.prc-caption span{font-size:var(--size-small);max-width:60ch}
+.prc-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:.7rem;align-items:start}
+.prc-card{padding:.7rem .8rem;background:var(--surface);border:1px solid var(--control);border-left:4px solid var(--control);border-radius:8px}.prc-card p{margin:0;font-size:var(--size-small);overflow-wrap:anywhere}
+.prc-card output{display:block;margin-top:.5rem;font:700 var(--size-small) var(--font-code);overflow-wrap:anywhere}
+.scene-prc .tone-success{border-left-color:var(--green-line)}.scene-prc .tone-active{border-left-color:var(--blue-line)}.scene-prc .tone-warning{border-left-color:var(--amber-line);background:var(--amber-bg)}
+.scene-prc .is-denied{color:var(--red-text)}
+.prc-fact{margin:0;font-size:var(--size-small);align-self:center}
+.prc-action{min-height:44px;justify-self:start}
+.prc-store{display:grid;gap:.5rem;padding:.55rem;border:1.5px dashed var(--control);border-radius:10px}.prc-store>span{font-size:var(--size-meta);font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--link)}
+.prc-store ul{list-style:none;margin:0;padding:0;display:grid;gap:.25rem;font-size:var(--size-small)}.prc-store li{padding:.25rem .45rem;border:1px solid var(--line);border-radius:4px;background:var(--surface);overflow-wrap:anywhere}
+.prc-meter{display:grid;gap:.3rem;align-content:center;padding:.7rem .8rem;border:2px solid var(--green-line);border-radius:8px;background:var(--page)}.prc-meter>span{font-size:var(--size-meta);font-weight:700}.prc-meter strong{font:700 var(--size-small) var(--font-code);overflow-wrap:anywhere}.prc-meter.is-empty{border-style:dashed;border-color:var(--amber-line)}
+.prc-list{margin:0;padding:0;list-style:none;display:grid;gap:.35rem;font-size:var(--size-small)}.prc-list li{padding:.4rem .6rem;border:1px solid var(--line);border-radius:6px;background:var(--surface);overflow-wrap:anywhere}.prc-list output{font:700 var(--size-small) var(--font-code)}
+.prc-total{justify-self:start;padding:.6rem .9rem;border:2px solid var(--green-line);border-radius:6px;background:var(--surface);font:700 var(--size-small) var(--font-code);overflow-wrap:anywhere}
+/* Generator source values: skipped ones are struck through, not only greyed. */
+ol.prc-values{display:flex;flex-wrap:wrap;gap:.35rem;list-style:none;margin:0;padding:0}.prc-values li{display:grid;justify-items:center;padding:.3rem .6rem;border:1px solid var(--line);border-radius:4px;background:var(--surface);font-size:var(--size-meta)}.prc-values code{font-weight:700}.prc-values li.is-skip code{text-decoration:line-through}
+.prc-table{border-collapse:collapse;font-size:var(--size-small);background:var(--surface);width:100%}.prc-table caption{text-align:left;font-weight:600;padding-bottom:.3rem}.prc-table :is(th,td){border:1px solid var(--line);padding:.35rem .6rem;text-align:left;overflow-wrap:anywhere}
+.prc-table tr.is-null{background:var(--amber-bg)}.prc-table tr.act-replace,.prc-table tr.act-destroy{background:var(--amber-bg)}.prc-table tr.act-update,.prc-table tr.act-create{background:var(--sunken)}
+/* Contrast pairs: the sample uses the measured colours themselves. */
+.prc-pairs{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}.prc-pairs li{display:grid;grid-template-columns:auto 1fr;gap:.3rem .8rem;align-items:center;padding:.6rem .75rem;border:1px solid var(--control);border-left:4px solid var(--green-line);border-radius:8px;background:var(--surface);font-size:var(--size-small)}.prc-pairs li.is-fail{border-left-color:var(--amber-line);background:var(--amber-bg)}
+.prc-pairs output{grid-column:1/-1;font:700 var(--size-small) var(--font-code)}
+.prc-swatch{display:grid;place-items:center;width:3.2rem;height:2.4rem;border:2px solid;border-radius:6px;font:700 var(--size-label) var(--font-text)}
+.prc-checks .is-fail{color:var(--red-text);font-weight:700}
+/* The focus badge overlaps the top edge; a result line inside a card needs room under it. */
+.prc-card output[data-change]{padding:.75rem .3rem .2rem}
+
+@media(prefers-reduced-motion:reduce){.scene-prc *{animation:none!important;transition:none!important}}
+@media print{.prc-action{display:none!important}.prc-card,.prc-pairs li,.prc-table{break-inside:avoid}}

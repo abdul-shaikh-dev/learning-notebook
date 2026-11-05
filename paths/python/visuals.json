@@ -1,0 +1,387 @@
+{
+ "iterators-and-generators": {
+  "title": "A generator is read once",
+  "intro": "Read the same filtered minutes twice: once through one generator object, then through a fresh call or a saved list.",
+  "scope": "The lesson's valid_minutes generator yields each value of [10, -1, 20] that is at least 0. A generator object keeps its position, so a second reader starts where the first stopped. Lists are reusable iterables; materializing one keeps every value in memory.",
+  "sources": [
+   {
+    "title": "Python documentation: Generators",
+    "url": "https://docs.python.org/3/howto/functional.html#generators"
+   }
+  ],
+  "scenarios": [
+   {
+    "id": "shared",
+    "label": "One stream, two readers",
+    "steps": [
+     {
+      "title": "Create the generator",
+      "explanation": "stream = valid_minutes(source) creates a generator object. Its body has not run yet, so nothing is filtered or yielded.",
+      "nodes": [
+       {
+        "id": "reader",
+        "label": "Readers",
+        "detail": "No reader has asked for a value",
+        "tone": "neutral",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Source",
+        "columns": [
+         "values"
+        ],
+        "rows": [
+         [
+          "10"
+         ],
+         [
+          "-1"
+         ],
+         [
+          "20"
+         ]
+        ]
+       },
+       {
+        "caption": "Stream",
+        "columns": [
+         "object"
+        ],
+        "rows": [
+         [
+          "stream = valid_minutes(source)"
+         ]
+        ]
+       },
+       {
+        "caption": "Calls",
+        "columns": [
+         "n",
+         "op",
+         "target"
+        ],
+        "rows": []
+       }
+      ]
+     },
+     {
+      "title": "sum reads every value",
+      "focus": [
+       "stream",
+       "call-1"
+      ],
+      "explanation": "sum(stream) pulls values until StopIteration: 10, then 20, skipping -1. It returns 30 and leaves the stream exhausted.",
+      "nodes": [
+       {
+        "id": "reader",
+        "label": "Readers",
+        "detail": "sum consumed the stream",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Source",
+        "columns": [
+         "values"
+        ],
+        "rows": [
+         [
+          "10"
+         ],
+         [
+          "-1"
+         ],
+         [
+          "20"
+         ]
+        ]
+       },
+       {
+        "caption": "Stream",
+        "columns": [
+         "object"
+        ],
+        "rows": [
+         [
+          "stream = valid_minutes(source)"
+         ]
+        ]
+       },
+       {
+        "caption": "Calls",
+        "columns": [
+         "n",
+         "op",
+         "target"
+        ],
+        "rows": [
+         [
+          "1",
+          "sum",
+          "stream"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "list finds nothing left",
+      "focus": [
+       "call-2"
+      ],
+      "explanation": "list(stream) asks the same generator object for more values. It is already exhausted, so the list is empty, with no error.",
+      "nodes": [
+       {
+        "id": "reader",
+        "label": "Readers",
+        "detail": "The second reader gets [] silently",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Source",
+        "columns": [
+         "values"
+        ],
+        "rows": [
+         [
+          "10"
+         ],
+         [
+          "-1"
+         ],
+         [
+          "20"
+         ]
+        ]
+       },
+       {
+        "caption": "Stream",
+        "columns": [
+         "object"
+        ],
+        "rows": [
+         [
+          "stream = valid_minutes(source)"
+         ]
+        ]
+       },
+       {
+        "caption": "Calls",
+        "columns": [
+         "n",
+         "op",
+         "target"
+        ],
+        "rows": [
+         [
+          "1",
+          "sum",
+          "stream"
+         ],
+         [
+          "2",
+          "list",
+          "stream"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "fresh",
+    "label": "A fresh pass each time",
+    "steps": [
+     {
+      "title": "sum over a fresh generator",
+      "explanation": "sum(valid_minutes(source)) creates a generator, reads it to the end and returns 30. No shared stream is kept.",
+      "nodes": [
+       {
+        "id": "reader",
+        "label": "Readers",
+        "detail": "Each call creates its own generator",
+        "tone": "neutral",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Source",
+        "columns": [
+         "values"
+        ],
+        "rows": [
+         [
+          "10"
+         ],
+         [
+          "-1"
+         ],
+         [
+          "20"
+         ]
+        ]
+       },
+       {
+        "caption": "Calls",
+        "columns": [
+         "n",
+         "op",
+         "target"
+        ],
+        "rows": [
+         [
+          "1",
+          "sum",
+          "fresh"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "list over another call",
+      "focus": [
+       "call-2"
+      ],
+      "explanation": "list(valid_minutes(source)) calls the generator function again, so this reader starts at the first value and gets [10, 20].",
+      "nodes": [
+       {
+        "id": "reader",
+        "label": "Readers",
+        "detail": "A new call starts from the beginning",
+        "tone": "success",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Source",
+        "columns": [
+         "values"
+        ],
+        "rows": [
+         [
+          "10"
+         ],
+         [
+          "-1"
+         ],
+         [
+          "20"
+         ]
+        ]
+       },
+       {
+        "caption": "Calls",
+        "columns": [
+         "n",
+         "op",
+         "target"
+        ],
+        "rows": [
+         [
+          "1",
+          "sum",
+          "fresh"
+         ],
+         [
+          "2",
+          "list",
+          "fresh"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Or save the values once",
+      "focus": [
+       "call-3",
+       "call-4"
+      ],
+      "explanation": "saved = list(valid_minutes(source)) keeps [10, 20] in a list. A list can be read again, so sum(saved) is still 30, at the cost of holding every value.",
+      "nodes": [
+       {
+        "id": "reader",
+        "label": "Readers",
+        "detail": "A list trades memory for reuse",
+        "tone": "success",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Source",
+        "columns": [
+         "values"
+        ],
+        "rows": [
+         [
+          "10"
+         ],
+         [
+          "-1"
+         ],
+         [
+          "20"
+         ]
+        ]
+       },
+       {
+        "caption": "Calls",
+        "columns": [
+         "n",
+         "op",
+         "target"
+        ],
+        "rows": [
+         [
+          "1",
+          "sum",
+          "fresh"
+         ],
+         [
+          "2",
+          "list",
+          "fresh"
+         ],
+         [
+          "3",
+          "save",
+          "saved"
+         ],
+         [
+          "4",
+          "sum",
+          "saved"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

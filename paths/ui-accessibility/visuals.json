@@ -1,0 +1,275 @@
+{
+ "contrast-colour": {
+  "title": "Contrast ratios against their threshold",
+  "intro": "Measure text and control colours against white with the course's contrast utility. Ordinary text needs 4.5:1; large text and non-text parts need 3:1.",
+  "scope": "contrast.cjs computes WCAG 2.2 relative luminance for two solid sRGB colours. Ratios are shown cut to two decimals, never rounded up to a threshold. The thresholds are the AA text criterion (1.4.3) and non-text contrast (1.4.11), which have exceptions; a passing ratio does not make thin text readable.",
+  "sources": [
+   {
+    "title": "WCAG 2.2: Contrast (Minimum)",
+    "url": "https://www.w3.org/TR/WCAG22/#contrast-minimum"
+   },
+   {
+    "title": "WCAG 2.2: Non-text Contrast",
+    "url": "https://www.w3.org/TR/WCAG22/#non-text-contrast"
+   }
+  ],
+  "scenarios": [
+   {
+    "id": "text",
+    "label": "Ordinary text: 4.5:1",
+    "steps": [
+     {
+      "title": "Grey body text",
+      "explanation": "#777777 on white measures 4.47:1. It looks close to 4.5, but it is below the threshold, so it fails.",
+      "nodes": [
+       {
+        "id": "verdict",
+        "label": "Verdict",
+        "detail": "Do not round 4.47 up to 4.5",
+        "tone": "neutral",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Colour pairs",
+        "columns": [
+         "id",
+         "use",
+         "foreground",
+         "background",
+         "kind"
+        ],
+        "rows": [
+         [
+          "body",
+          "Body text",
+          "777777",
+          "ffffff",
+          "ordinary text"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "One step darker",
+      "focus": [
+       "body"
+      ],
+      "explanation": "#767676 measures 4.54:1 and passes. The smallest change that passes is still a change worth measuring, not guessing.",
+      "nodes": [
+       {
+        "id": "verdict",
+        "label": "Verdict",
+        "detail": "Passes, with almost no margin",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Colour pairs",
+        "columns": [
+         "id",
+         "use",
+         "foreground",
+         "background",
+         "kind"
+        ],
+        "rows": [
+         [
+          "body",
+          "Body text",
+          "767676",
+          "ffffff",
+          "ordinary text"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Leave room for thin type",
+      "focus": [
+       "body",
+       "verdict"
+      ],
+      "explanation": "#595959 measures 7.00:1. Thin or small text can look faint even when it passes, so a darker grey leaves margin.",
+      "nodes": [
+       {
+        "id": "verdict",
+        "label": "Verdict",
+        "detail": "Comfortable for long reading",
+        "tone": "success",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Colour pairs",
+        "columns": [
+         "id",
+         "use",
+         "foreground",
+         "background",
+         "kind"
+        ],
+        "rows": [
+         [
+          "body",
+          "Body text",
+          "595959",
+          "ffffff",
+          "ordinary text"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "three",
+    "label": "Large text and controls: 3:1",
+    "steps": [
+     {
+      "title": "A large heading",
+      "explanation": "#8a8a8a measures 3.45:1. As qualifying large text it passes 3:1; the same colour as body text would fail 4.5:1.",
+      "nodes": [
+       {
+        "id": "verdict",
+        "label": "Verdict",
+        "detail": "The threshold depends on the use",
+        "tone": "neutral",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Colour pairs",
+        "columns": [
+         "id",
+         "use",
+         "foreground",
+         "background",
+         "kind"
+        ],
+        "rows": [
+         [
+          "heading",
+          "Large heading",
+          "8a8a8a",
+          "ffffff",
+          "large text"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "A pale input border",
+      "focus": [
+       "border"
+      ],
+      "explanation": "The text field's border, #c4c4c4, measures 1.74:1. A border needed to find the field is a non-text part, and it fails 3:1.",
+      "nodes": [
+       {
+        "id": "verdict",
+        "label": "Verdict",
+        "detail": "The field's edge is hard to see",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Colour pairs",
+        "columns": [
+         "id",
+         "use",
+         "foreground",
+         "background",
+         "kind"
+        ],
+        "rows": [
+         [
+          "heading",
+          "Large heading",
+          "8a8a8a",
+          "ffffff",
+          "large text"
+         ],
+         [
+          "border",
+          "Input border",
+          "c4c4c4",
+          "ffffff",
+          "non-text"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Darken the border",
+      "focus": [
+       "border",
+       "verdict"
+      ],
+      "explanation": "#949494 measures 3.03:1 and passes. An error also needs words, such as Title is required, not a red border alone.",
+      "nodes": [
+       {
+        "id": "verdict",
+        "label": "Verdict",
+        "detail": "Both parts pass; meaning is in text",
+        "tone": "success",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Colour pairs",
+        "columns": [
+         "id",
+         "use",
+         "foreground",
+         "background",
+         "kind"
+        ],
+        "rows": [
+         [
+          "heading",
+          "Large heading",
+          "8a8a8a",
+          "ffffff",
+          "large text"
+         ],
+         [
+          "border",
+          "Input border",
+          "949494",
+          "ffffff",
+          "non-text"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}
