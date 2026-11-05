@@ -10,6 +10,10 @@ The Python course's starter code is an editable block with Run, Stop and Reset t
 
 Two lessons set `exercise.runLocally` with a reason and keep the static, copyable block: `modules-and-environments` needs two files, and `concurrency-models` uses `asyncio.run`, which needs WebAssembly stack switching. Print packs always show the static block. `tests/browser-python.cjs` runs all 21 other reference solutions in run mode against the real runtime, plus output, exit, stdin and traceback cases. `tests/python-runner.cjs` covers the editor.
 
+## Python course lesson examples
+
+The Python course sets `runExamples`, so 25 of its 27 lesson examples have Run and Edit, as in Design Patterns, Data Structures & Algorithms and Practical Maths & Statistics. Each runs unchanged in run mode, and `tests/browser-python.cjs` checks that its printed output matches its `# Expected output:` block, or that it checks its result with `assert`. The `concurrency-models` and `robust-import-capstone` examples use `ThreadPoolExecutor`; the runtime cannot start threads, so they set `exampleRunLocally` and stay static, highlighted Python with that reason below them. The test runs both and requires the thread error, so if the runtime ever gains threads the test fails and both can be made runnable.
+
 The Python course's offline download includes the runtime files published by Python Problem Solving. The service worker serves a file listed by several courses from any saved owner.
 
 ## Data analysis examples stay static

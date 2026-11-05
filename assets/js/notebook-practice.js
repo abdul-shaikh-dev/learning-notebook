@@ -82,8 +82,8 @@ const NotebookPractice=(()=>{
   code.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key==='Enter'){event.preventDefault();if(!run.disabled)run.click();}});
  }
  // Lesson examples in courses marked runExamples run unchanged, with any practice modules they import.
- // exampleFormat marks an example that is not runnable Python, such as a text diagram.
- const exampleRunnable=(p,s)=>!!p?.runExamples&&!!s?.example&&!s.exampleFormat;
+ // exampleFormat marks an example that is not runnable Python, such as a text diagram; exampleRunLocally gives the reason a Python example cannot run in the browser.
+ const exampleRunnable=(p,s)=>!!p?.runExamples&&!!s?.example&&!s.exampleFormat&&!s.exampleRunLocally;
  function exampleControls(p,s,i){
   if(!exampleRunnable(p,s))return '';
   const rows=Math.min(Math.max(s.example.split('\n').length+1,4),24);

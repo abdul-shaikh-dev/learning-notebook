@@ -30,6 +30,8 @@ const tick=()=>new Promise(resolve=>setImmediate(resolve));
  assert.equal(f.api.exampleControls(course,lesson.sections[1],1),'','A text diagram is not run');
  assert.equal(f.api.exampleControls(course,lesson.sections[2],2),'','A section without an example has no controls');
  assert.equal(f.api.exampleControls({id:'sql-server'},lesson.sections[3],3),'','Only courses marked runExamples run their examples');
+ const local={example:'print(1)',exampleRunLocally:'Runs locally: <threads>.'};
+ assert.equal(f.api.exampleControls(course,local,5),'','An example marked to run locally gets no controls');
  assert(!e('example-run-1').click,'No handlers are bound for the diagram');
  // Run: the shown example, unchanged, in a fresh run-mode worker; the button becomes Stop.
  e('example-run-3').click();await tick();let w=f.workers.at(-1);
@@ -65,9 +67,11 @@ const tick=()=>new Promise(resolve=>setImmediate(resolve));
  const shown=tools.lessonExample(lesson,lesson.sections[3],3,course);assert(shown.startsWith('<pre class="example" id="example-code-3" data-language="python">')&&shown.includes('example-run-3'));
  assert.equal(tools.lessonExample(lesson,lesson.sections[1],1,course),'<pre class="example" data-language="plaintext"># a --> b</pre>');
  assert(!tools.lessonExample(lesson,lesson.sections[3],3,{id:'react'}).includes('example-run'),'Other courses keep plain examples');
- // Data: the three Python courses run their examples, and every named module is a published course file.
+ assert.equal(tools.lessonExample(lesson,local,5,course),'<pre class="example">print(1)</pre><p class="example-local">Runs locally: &lt;threads>.</p>','A local-only example stays highlighted Python and says why');
+ // Data: the four Python-based courses run their examples, and every named module is a published course file.
  const paths=require(path.resolve('scripts/manifest.cjs')).readPaths();
- assert.deepEqual(paths.filter(p=>p.runExamples).map(p=>p.id).sort(),['data-structures-algorithms','design-patterns','practical-maths-statistics']);
+ assert.deepEqual(paths.filter(p=>p.runExamples).map(p=>p.id).sort(),['data-structures-algorithms','design-patterns','practical-maths-statistics','python']);
+ for(const p of paths)for(const l of Array.isArray(p.lessons)?p.lessons:[])for(const s of l.sections||[])if(s.exampleRunLocally)assert.ok(p.runExamples&&s.example&&!s.exampleFormat&&/^Runs locally: .{20,}/.test(s.exampleRunLocally),p.id+'/'+l.id+': a local-only example gives its reason');
  for(const p of paths)for(const l of Array.isArray(p.lessons)?p.lessons:[])for(const s of l.sections||[])for(const file of s.exampleFiles||[]){assert.ok(p.runExamples&&p.publicFiles.includes(file),p.id+'/'+l.id+': '+file);assert.match(s.example,new RegExp('^(from|import) '+file.split('/').pop().replace('.py','')+'\\b','m'));}
- console.log('PASS: lesson example runner: runnable examples only, run mode, practice modules, assert-only results, edit, Ctrl+Enter, stop, 5-second limit, load failures, cleanup and rendering.');
+ console.log('PASS: lesson example runner: runnable examples only, local-only reasons, run mode, practice modules, assert-only results, edit, Ctrl+Enter, stop, 5-second limit, load failures, cleanup and rendering.');
 })().catch(e=>{console.error(e);process.exitCode=1;});
