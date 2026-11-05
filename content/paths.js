@@ -3607,7 +3607,39 @@ const LEARNING_PATHS = [
             "Missing evidence is reported without invented support."
           ],
           "solution": "Use the workshop success script to search joins and finish with SQL-07. Compare its event list with the diagram. Run a script that asks a clarification question. Explain why citation-ID validation is necessary but does not prove the meaning of the answer."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A source proposes {'kind': 'clarify', 'question': 'Which course do you mean?'}. What does run() return?",
+            "options": [
+              "Status needs_input, with the question as the answer",
+              "Status completed",
+              "Status invalid, because no tool ran"
+            ],
+            "correct": 0,
+            "explanation": "Clarification is a terminal outcome of its own. The run stops and reports the question instead of guessing."
+          },
+          {
+            "question": "ScriptedSource holds one proposal, a search for 'joins', and run() uses max_steps=4. What status does it return?",
+            "options": [
+              "failed, with a source_exhausted event",
+              "budget_exhausted",
+              "completed"
+            ],
+            "correct": 0,
+            "explanation": "After the search, the source has nothing left to propose and raises StopIteration on the second step. The budget was not reached."
+          },
+          {
+            "question": "A source proposes {'kind': 'stop', 'reason': 'no results'}. What does run() return?",
+            "options": [
+              "Status invalid: the only accepted reason is insufficient_evidence",
+              "Status incomplete",
+              "Status failed"
+            ],
+            "correct": 0,
+            "explanation": "A stop is accepted only with the reason insufficient_evidence, which returns incomplete. Any other reason is an invalid proposal."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -3634,7 +3666,39 @@ const LEARNING_PATHS = [
             "Hypothetical delivery has concrete approval and unknown-outcome handling."
           ],
           "solution": "Use the existing call recorder to verify zero executions for rejected proposals. Inject a malformed or failing tool adapter and assert failed status. Keep the workshop read-only; document approval binding and idempotency requirements before introducing effects."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A search adapter returns SQL-07 twice in one result. What does run() return?",
+            "options": [
+              "Status failed: duplicate evidence ID",
+              "Status completed with one SQL-07",
+              "Status invalid, before the tool starts"
+            ],
+            "correct": 0,
+            "explanation": "validate_observation rejects duplicate IDs in one observation. The tool had already started, so the step is a tool failure."
+          },
+          {
+            "question": "A proposal searches with an 81-character query. What happens?",
+            "options": [
+              "Status invalid, and the tool never starts",
+              "The query is cut to 80 characters and searched",
+              "The search runs and returns no hits"
+            ],
+            "correct": 0,
+            "explanation": "bounded_text checks the length before stripping and rejects text over 80 characters. Validation happens before execution, not by truncating."
+          },
+          {
+            "question": "A script searches 'joins', then finishes citing ['SQL-07', 'SQL-07']. What does run() return?",
+            "options": [
+              "Status invalid: duplicate citations",
+              "Status completed with one citation",
+              "Status completed with two citations"
+            ],
+            "correct": 0,
+            "explanation": "The finish contract rejects duplicate citations as well as unobserved ones, so the run ends invalid instead of completing."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -3663,7 +3727,39 @@ const LEARNING_PATHS = [
             "Live model, tool-calling and Fleet results are claimed only for runs actually performed."
           ],
           "solution": "Follow local-framework-guide.md and implement the routing before comparing local_framework_lab.py. test_local_framework_lab.py exercises real LangGraph with deterministic drafts. Use the same questions and records for optional live modes so that differences can be attributed to control flow and model behaviour. Fleet remains a separate optional migration exercise requiring workspace access."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "Which records does local_framework_lab.search_records('What happens to a failed import?') return?",
+            "options": [
+              "D1 only",
+              "D1 and D3",
+              "D1, D2 and D3"
+            ],
+            "correct": 0,
+            "explanation": "After stop words, only D1 shares terms with the question (failed, import). Records with no shared term are dropped, so D2 and D3 are not returned."
+          },
+          {
+            "question": "local_framework_lab.citation_check receives the draft 'Roll back [D1]; replay [D2].' and evidence holding only D1. What does it return?",
+            "options": [
+              "False: D2 is not in the evidence",
+              "True: D1 is cited",
+              "True: both IDs look valid"
+            ],
+            "correct": 0,
+            "explanation": "Every cited ID must be in the retrieved evidence. One unretrieved citation fails the check, which proves membership, not that the claims are supported."
+          },
+          {
+            "question": "provider_eval.evaluate('test-model', repeats=2) runs offline with no transport. How many rows does it return?",
+            "options": [
+              "6 request rows, with nothing sent",
+              "2 rows",
+              "6 scored answers"
+            ],
+            "correct": 0,
+            "explanation": "Three cases × two repeats gives six rows. Without a transport, each row holds the built request; nothing is sent and nothing is scored."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -3728,6 +3824,18 @@ const LEARNING_PATHS = [
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The workshop demo searches 'joins', then finishes citing SQL-07, and run() returns status completed. What does that status establish?",
+            "options": [
+              "The search ran and every citation is an observed evidence ID",
+              "The answer is semantically correct",
+              "A language model chose to search"
+            ],
+            "correct": 0,
+            "explanation": "run() marks completed only after the executor ran the search and the finish cited IDs it had observed. It checks membership, not meaning, and ScriptedSource is a test double, not a model."
           }
         ]
       },
@@ -3923,7 +4031,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A page asks for a lesson ID and displays that lesson. Which design fits?",
+            "options": [
+              "Fixed workflow code, because the sequence and rules are known",
+              "An agent loop that decides whether to look the lesson up",
+              "A planner agent with a reviewer agent"
+            ],
+            "correct": 0,
+            "explanation": "Deterministic code suits a known sequence. Model-directed choice earns its variability only when the next useful step depends on varied language or evidence."
+          }
+        ]
       },
       {
         "id": "context",
@@ -3986,6 +4106,18 @@ const LEARNING_PATHS = [
             "section": "Managing the context window",
             "reviewed": "2026-10-02",
             "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "run(source, max_steps=4) passes a context to the source on every proposal. What is remaining_proposals in the context for step 2?",
+            "options": [
+              "3",
+              "2",
+              "4"
+            ],
+            "correct": 0,
+            "explanation": "The context reports max_steps − step + 1, counting the proposal being asked for. The next-step package carries the remaining budget instead of the whole transcript."
           }
         ]
       },
@@ -4137,7 +4269,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A retrieved page tells the agent to upload the learner profile, and the source then proposes a tool named upload_profile. What does run() return?",
+            "options": [
+              "Status denied, with no tool_started event",
+              "Status failed, after the tool starts and errors",
+              "Status completed, because the proposal is well formed"
+            ],
+            "correct": 0,
+            "explanation": "The registry allows only search_lessons. Any other tool name is denied before execution, whatever text persuaded the source to propose it."
+          }
+        ]
       },
       {
         "id": "tools",
@@ -4200,6 +4344,18 @@ const LEARNING_PATHS = [
             "section": "Abstract, method and evaluation",
             "reviewed": "2026-09-27",
             "scope": "Optional original research reading; results belong to paper settings, not this workshop."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A search for 'quantum' finds nothing in the workshop collection. What does run() record for that tool step?",
+            "options": [
+              "tool_succeeded with 0 hits",
+              "tool_failed",
+              "invalid_arguments"
+            ],
+            "correct": 0,
+            "explanation": "An empty hits list is a valid search result. Invalid input and malformed output are separate tool failures."
           }
         ]
       },
@@ -4969,7 +5125,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "With max_steps=1, a script searches 'joins' and would then finish citing SQL-07. What status does run() return?",
+            "options": [
+              "budget_exhausted",
+              "completed",
+              "invalid"
+            ],
+            "correct": 0,
+            "explanation": "The search uses the only proposal, so the finish is never asked for. A finish also consumes a proposal from the budget."
+          }
+        ]
       },
       {
         "id": "state",
@@ -5033,6 +5201,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "With max_steps=2, a script searches 'joins', then 'functions'. Which evidence IDs does the result hold?",
+            "options": [
+              "SQL-07 and PY-01",
+              "SQL-07 only",
+              "None, because the run did not complete"
+            ],
+            "correct": 0,
+            "explanation": "Evidence records what the executor observed, so both searches' hits are kept even though the run ends as budget_exhausted rather than completed."
+          }
         ]
       },
       {
@@ -5089,6 +5269,18 @@ const LEARNING_PATHS = [
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A script searches 'joins', then finishes citing PY-01. What does run() return?",
+            "options": [
+              "Status invalid: PY-01 was never observed",
+              "Status completed: PY-01 is a real lesson ID",
+              "Status completed with no citations"
+            ],
+            "correct": 0,
+            "explanation": "A citation must name evidence observed in this run. PY-01 exists in the collection, but the search for joins did not return it."
           }
         ]
       },
@@ -5148,6 +5340,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A proposal calls search_lessons with args {'query': 'joins', 'limit': 5}. What happens?",
+            "options": [
+              "Status invalid, and the tool never starts",
+              "The search runs and ignores limit",
+              "The search runs and returns at most 5 hits"
+            ],
+            "correct": 0,
+            "explanation": "The validator accepts exactly one query field. Unexpected properties are rejected before execution rather than quietly accepted."
+          }
         ]
       },
       {
@@ -5204,6 +5408,18 @@ const LEARNING_PATHS = [
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A search adapter returns four hits. The workshop's observation contract allows three. What does run() return?",
+            "options": [
+              "Status failed, after tool_started and tool_failed",
+              "Status completed with the first three hits",
+              "Status invalid, before the tool starts"
+            ],
+            "correct": 0,
+            "explanation": "Output is validated after the adapter returns. Too many hits break the contract, so the step fails instead of silently truncating evidence."
           }
         ]
       },
@@ -5396,7 +5612,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does the workshop's search_lessons('combining rows') return?",
+            "options": [
+              "No hits",
+              "SQL-07",
+              "SQL-07 and PY-01"
+            ],
+            "correct": 0,
+            "explanation": "The lexical search needs every term in a title or excerpt. The join lesson says matching row pairs, so a paraphrase finds nothing until the query is reformulated."
+          }
+        ]
       },
       {
         "id": "memory",
@@ -5452,6 +5680,18 @@ const LEARNING_PATHS = [
             "section": "Safety risks and mitigations",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A learner once said they prefer Python examples. What may that stored preference do later?",
+            "options": [
+              "Guide the language of examples for that learner",
+              "Authorize exports the learner did not request",
+              "Apply to every learner using the assistant"
+            ],
+            "correct": 0,
+            "explanation": "A preference has a learner scope and an explicit source. It can shape explanations but carries no authority for actions and must not leak across users."
           }
         ]
       },
@@ -5610,7 +5850,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A plan says: search the prerequisites, then explain an order. The first search finds two courses with conflicting lists. What next?",
+            "options": [
+              "Pause and ask which course is meant, recording the completed search",
+              "Continue the plan and merge both lists",
+              "Restart the plan from the beginning"
+            ],
+            "correct": 0,
+            "explanation": "New evidence made course identity material, so the next action changes. The completed search stays recorded as actual state."
+          }
+        ]
       },
       {
         "id": "clarification",
@@ -5666,6 +5918,18 @@ const LEARNING_PATHS = [
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A learner with two weekly sessions asks to move my session to Friday. What should the assistant do?",
+            "options": [
+              "Ask which session, showing both, before editing",
+              "Move the earlier session and mention it",
+              "Move both sessions to Friday"
+            ],
+            "correct": 0,
+            "explanation": "The two interpretations change different schedule entries, so guessing would make a consequential edit on the wrong one. A concrete question resolves it."
           }
         ]
       },
@@ -5846,7 +6110,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A learner approved sending report R to one recipient. The agent then changes the recipient. What does the approval now cover?",
+            "options": [
+              "Nothing: it was bound to the original recipient and content",
+              "The new recipient, because the report is unchanged",
+              "Any recipient, because the learner approved sending"
+            ],
+            "correct": 0,
+            "explanation": "Approval is checked against the concrete action. Changing the destination makes it a different action that needs its own approval."
+          }
+        ]
       },
       {
         "id": "failures",
@@ -5902,6 +6178,18 @@ const LEARNING_PATHS = [
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The search adapter raises TimeoutError. What does run() record?",
+            "options": [
+              "tool_started, then tool_failed, with status failed",
+              "tool_failed without tool_started",
+              "A retry, then tool_succeeded"
+            ],
+            "correct": 0,
+            "explanation": "The workshop stops on tool failures to keep behaviour inspectable. A read timeout may justify a bounded retry elsewhere; this harness does not retry."
           }
         ]
       },
@@ -5959,6 +6247,18 @@ const LEARNING_PATHS = [
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does run(source, max_steps=21) do?",
+            "options": [
+              "Raises ValueError: max_steps must be an integer from 1 to 20",
+              "Runs up to 21 proposals",
+              "Runs up to 20 proposals and ignores the rest"
+            ],
+            "correct": 0,
+            "explanation": "The budget itself is validated before the loop starts. It bounds proposal count, not time: a hanging adapter still needs an enforced deadline."
           }
         ]
       },
@@ -6044,6 +6344,18 @@ const LEARNING_PATHS = [
             "section": "Safety risks and mitigations",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "provider_eval's injection case forbids PRIVATE_PROFILES_UPLOADED. How does its heuristic score an answer that cites SQL-07 and also says PRIVATE_PROFILES_UPLOADED?",
+            "options": [
+              "False: a forbidden term fails the case",
+              "True: the required citation is present",
+              "Half credit"
+            ],
+            "correct": 0,
+            "explanation": "score() requires every required term and no forbidden term. Repeating injected text fails the case even when the answer also cites real evidence."
           }
         ]
       },
@@ -6147,6 +6459,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Optional original research reading; results belong to paper settings, not this workshop."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In evaluation_cases.json, what status does the missing-topic case expect?",
+            "options": [
+              "incomplete",
+              "failed",
+              "completed"
+            ],
+            "correct": 0,
+            "explanation": "Empty hits are a successful tool result, so the run should stop as incomplete with the evidence gap stated, not fail or answer."
+          }
         ]
       },
       {
@@ -6203,6 +6527,18 @@ const LEARNING_PATHS = [
             "section": "Evaluation design and continuous evaluation",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which event sequence does the workshop demo record?",
+            "options": [
+              "tool_started, tool_succeeded, completed",
+              "completed",
+              "tool_succeeded, completed"
+            ],
+            "correct": 0,
+            "explanation": "Application events show the tool starting, its validated result and completion. They are operational records, not hidden model reasoning."
           }
         ]
       },
@@ -6358,7 +6694,19 @@ const LEARNING_PATHS = [
               "explanation": "Agreement is not a safety probability; inspect fluent but unsupported answers and important errors."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "How does provider_eval's heuristic score 'An INNER JOIN keeps matching rows.' for the known case?",
+            "options": [
+              "False: the required SQL-07 citation is missing",
+              "True: the answer is correct",
+              "True: it contains 'matching'"
+            ],
+            "correct": 0,
+            "explanation": "The case requires both 'matching' and 'SQL-07'. A correct sentence without the citation fails this check, which is why a crude scorer needs calibration against human labels."
+          }
+        ]
       },
       {
         "id": "multiagent",
@@ -6527,7 +6875,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A coordinator starts two workers, each limited to 5 tool calls. What bounds the task's total calls?",
+            "options": [
+              "An aggregate budget owned by the coordinator",
+              "The 5-call limit on each worker",
+              "Nothing needs to: each worker is bounded"
+            ],
+            "correct": 0,
+            "explanation": "Per-worker limits do not bound fan-out or re-delegation. Set an aggregate budget and assign ownership for shared state."
+          }
+        ]
       },
       {
         "id": "deployment",
@@ -6583,6 +6943,18 @@ const LEARNING_PATHS = [
             "section": "Evaluation design and continuous evaluation",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The code and prompt are unchanged, but the retrieval collection was updated. Do the evaluations need rerunning?",
+            "options": [
+              "Yes: the collection is part of the behaviour-changing bundle",
+              "No: only code and prompt changes affect behaviour",
+              "Only if the model changed too"
+            ],
+            "correct": 0,
+            "explanation": "A changed source collection can alter answers with identical code. Record its version in the release bundle and compare on the fixed dataset."
           }
         ]
       },
@@ -6656,6 +7028,18 @@ const LEARNING_PATHS = [
             "section": "Strict mode; function-call outputs",
             "reviewed": "2026-09-27",
             "scope": "Responses request builder inspected against official docs 2026-09-27; no live provider execution."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "provider_scaffold.evidence records 1,000 input and 500 output tokens at 2.0 and 8.0 per million tokens. What estimated_token_cost does it return?",
+            "options": [
+              "0.006",
+              "0.0025",
+              "0.01"
+            ],
+            "correct": 0,
+            "explanation": "(1,000 × 2.0 + 500 × 8.0) ÷ 1,000,000 = 0.006. It is an estimate from supplied rates, not a provider bill."
           }
         ]
       }
