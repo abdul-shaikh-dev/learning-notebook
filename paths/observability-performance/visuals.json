@@ -1,0 +1,310 @@
+{
+ "latency-percentiles": {
+  "title": "p95 sees the tail the mean hides",
+  "intro": "Twenty requests before and after a release. Judge the change by its nearest-rank p95, then by its mean alone.",
+  "scope": "The lab's percentile(values, p) in telemetry.py: sort the values and take index ceil(p × n) − 1. With 20 fictional durations per release, p95 is the 19th smallest value. Twenty observations cannot support precise tail claims; show the sample size and estimator beside every percentile.",
+  "scenarios": [
+   {
+    "id": "p95",
+    "label": "p95: the release is slower",
+    "steps": [
+     {
+      "title": "Before: release A",
+      "explanation": "Eighteen requests take 40 ms and two take 60 ms. The mean is 42 ms and the 19th smallest value, the p95, is 60 ms.",
+      "nodes": [
+       {
+        "id": "verdict",
+        "label": "Verdict",
+        "detail": "Baseline: mean 42 ms, p95 60 ms",
+        "tone": "neutral",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Release A (ms)",
+        "columns": [
+         "Duration",
+         "Requests"
+        ],
+        "rows": [
+         [
+          "40",
+          "18"
+         ],
+         [
+          "60",
+          "2"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "After: release B",
+      "focus": [
+       "b-mean",
+       "b-p95"
+      ],
+      "explanation": "Eighteen requests now take 20 ms, but two take 150 ms. The mean falls to 33 ms, while the p95 rises to 150 ms.",
+      "nodes": [
+       {
+        "id": "verdict",
+        "label": "Verdict",
+        "detail": "p95 60 → 150 ms: tail regression",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Release A (ms)",
+        "columns": [
+         "Duration",
+         "Requests"
+        ],
+        "rows": [
+         [
+          "40",
+          "18"
+         ],
+         [
+          "60",
+          "2"
+         ]
+        ]
+       },
+       {
+        "caption": "Release B (ms)",
+        "columns": [
+         "Duration",
+         "Requests"
+        ],
+        "rows": [
+         [
+          "20",
+          "18"
+         ],
+         [
+          "150",
+          "2"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Read the tail",
+      "focus": [
+       "a-p95",
+       "b-p95",
+       "verdict"
+      ],
+      "explanation": "Two of the twenty requests, 10%, now wait 150 ms instead of 60 ms. Treat release B as a regression for those users, and gather more requests before claiming a precise p95.",
+      "nodes": [
+       {
+        "id": "verdict",
+        "label": "Verdict",
+        "detail": "Investigate the 2 slow requests",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Release A (ms)",
+        "columns": [
+         "Duration",
+         "Requests"
+        ],
+        "rows": [
+         [
+          "40",
+          "18"
+         ],
+         [
+          "60",
+          "2"
+         ]
+        ]
+       },
+       {
+        "caption": "Release B (ms)",
+        "columns": [
+         "Duration",
+         "Requests"
+        ],
+        "rows": [
+         [
+          "20",
+          "18"
+         ],
+         [
+          "150",
+          "2"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "mean",
+    "label": "Mean only: looks faster",
+    "steps": [
+     {
+      "title": "Before: release A",
+      "explanation": "The same twenty requests average 42 ms.",
+      "nodes": [
+       {
+        "id": "verdict",
+        "label": "Verdict",
+        "detail": "Baseline: mean 42 ms",
+        "tone": "neutral",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Release A (ms)",
+        "columns": [
+         "Duration",
+         "Requests"
+        ],
+        "rows": [
+         [
+          "40",
+          "18"
+         ],
+         [
+          "60",
+          "2"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "After: release B",
+      "focus": [
+       "b-mean",
+       "verdict"
+      ],
+      "explanation": "The average falls from 42 to 33 ms, so a mean-only dashboard reports the release as 9 ms faster.",
+      "nodes": [
+       {
+        "id": "verdict",
+        "label": "Verdict",
+        "detail": "Mean 42 → 33 ms: ship it",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Release A (ms)",
+        "columns": [
+         "Duration",
+         "Requests"
+        ],
+        "rows": [
+         [
+          "40",
+          "18"
+         ],
+         [
+          "60",
+          "2"
+         ]
+        ]
+       },
+       {
+        "caption": "Release B (ms)",
+        "columns": [
+         "Duration",
+         "Requests"
+        ],
+        "rows": [
+         [
+          "20",
+          "18"
+         ],
+         [
+          "150",
+          "2"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "What the mean left out",
+      "focus": [
+       "b-p95"
+      ],
+      "explanation": "The mean fell because eighteen requests got faster. It has no way to show that the slowest two went from 60 to 150 ms; the p95 does.",
+      "nodes": [
+       {
+        "id": "verdict",
+        "label": "Verdict",
+        "detail": "Mean improved; slowest 2 got worse",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Release A (ms)",
+        "columns": [
+         "Duration",
+         "Requests"
+        ],
+        "rows": [
+         [
+          "40",
+          "18"
+         ],
+         [
+          "60",
+          "2"
+         ]
+        ]
+       },
+       {
+        "caption": "Release B (ms)",
+        "columns": [
+         "Duration",
+         "Requests"
+        ],
+        "rows": [
+         [
+          "20",
+          "18"
+         ],
+         [
+          "150",
+          "2"
+         ]
+        ]
+       }
+      ],
+      "focusLabel": "Compare"
+     }
+    ]
+   }
+  ]
+ }
+}

@@ -5,8 +5,8 @@ const {lazyFiles}=require('../scripts/lazy-catalog.cjs');
 const html=fs.readFileSync('index.html','utf8');
 // index.html: every lesson-only asset is a placeholder, not a tag the home page would fetch.
 const marks=[...html.matchAll(/<meta name="lesson-asset" content="([^"]+)">/g)].map(m=>m[1]);
-const lessonOnly=/highlight\.min|code-panels|notebook-mermaid|concrete-scenes|scenes-(?:dsa|apps|infra|patterns|data)|concept-explorer|notebook-scenes-dark/;
-assert.equal(marks.length,18,'Lesson-only scripts and styles');
+const lessonOnly=/highlight\.min|code-panels|notebook-mermaid|concrete-scenes|scenes-(?:dsa|apps|infra|patterns|data|engineering)|concept-explorer|notebook-scenes-dark/;
+assert.equal(marks.length,20,'Lesson-only scripts and styles');
 for(const m of html.matchAll(/<(?:script src|link rel="stylesheet" href)="([^"]+)"/g))assert.ok(!lessonOnly.test(m[1]),'Loaded on every page: '+m[1]);
 for(const file of marks)assert.ok(fs.existsSync(file.split('?')[0]),'Placeholder names a published file: '+file);
 assert.ok(html.indexOf('content="assets/css/concept-explorer.css')<html.indexOf('href="assets/css/atlas-ui.css'),'Styles keep their place in the cascade');
@@ -35,7 +35,7 @@ const flush=async()=>{for(let i=0;i<10;i++)await Promise.resolve();};
  // A lesson requests its course and every lesson asset, styles as stylesheets and scripts in order.
  ctx.location.hash='#topic/react/forms';assert.equal(ctx.loader.prepare('topic','react',render),true);
  const course=added.find(t=>t.src?.startsWith('content/courses/react.js')),assets=added.filter(t=>t!==course);
- assert.ok(course);assert.equal(assets.length,18);
+ assert.ok(course);assert.equal(assets.length,marks.length);
  assert.deepEqual(assets.map(t=>t.href||t.src),marks,'Each tag is added beside its placeholder, in order');
  assert.ok(assets.filter(t=>t.name==='link').every(t=>t.rel==='stylesheet'));
  assert.ok(assets.filter(t=>t.name==='script').every(t=>t.async===false),'Scripts run in document order');
@@ -55,5 +55,5 @@ const flush=async()=>{for(let i=0;i<10;i++)await Promise.resolve();};
  ctx.loader.prepare('pack','react',render);const again=added.slice(before);
  assert.deepEqual(again.map(t=>t.href||t.src),[marks[3]],'Only the failed asset is requested again');
  again[0].onload();await flush();assert.equal(renders,2);
- console.log('PASS: lesson-only assets: 18 placeholders in cascade and run order, none fetched on home, progress or review, loaded before a lesson, course page or pack renders, once only, with retry of failures.');
+ console.log('PASS: lesson-only assets: '+marks.length+' placeholders in cascade and run order, none fetched on home, progress or review, loaded before a lesson, course page or pack renders, once only, with retry of failures.');
 })().catch(e=>{console.error(e);process.exitCode=1;});

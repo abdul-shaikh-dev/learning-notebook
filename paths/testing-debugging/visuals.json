@@ -1,0 +1,325 @@
+{
+ "flaky-tests": {
+  "title": "Inject the clock a test depends on",
+  "intro": "A test issues a 30-second token, does some work and asserts the token is still valid. Run it against the wall clock, then against a clock the test controls.",
+  "scope": "A teaching token that is valid while now < issued + ttl, with times in seconds on a monotonic clock. The course kit has no clock code of its own; the rule is the same strict comparison as Networking's DNS cache lab. A rerun is diagnostic evidence, not a repair (this lesson).",
+  "scenarios": [
+   {
+    "id": "wall",
+    "label": "Wall clock: passes, then fails",
+    "steps": [
+     {
+      "title": "Run on a laptop",
+      "explanation": "The token is issued at 1000 s and expires at 1030 s. The work takes 12 seconds, so the check at 1012 s finds it valid and the test passes.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Clock",
+        "detail": "time.monotonic() · real time",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "test",
+        "label": "Test",
+        "detail": "Expects valid · laptop run",
+        "tone": "success",
+        "x": 400,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "test",
+        "label": "now"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Token",
+        "columns": [
+         "Issued (s)",
+         "TTL (s)",
+         "Checked (s)",
+         "Expect"
+        ],
+        "rows": [
+         [
+          "1000",
+          "30",
+          "1012",
+          "valid"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "The same test on a loaded CI runner",
+      "focus": [
+       "checked",
+       "test"
+      ],
+      "explanation": "Nothing in the code changed, but the work took 31 seconds. The check at 1031 s is after the expiry, so the assertion fails.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Clock",
+        "detail": "time.monotonic() · real time",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "test",
+        "label": "Test",
+        "detail": "Expects valid · slow CI run",
+        "tone": "warning",
+        "x": 400,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "test",
+        "label": "now"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Token",
+        "columns": [
+         "Issued (s)",
+         "TTL (s)",
+         "Checked (s)",
+         "Expect"
+        ],
+        "rows": [
+         [
+          "1000",
+          "30",
+          "1031",
+          "valid"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Rerun: green again",
+      "focus": [
+       "checked",
+       "test"
+      ],
+      "explanation": "A rerun happens to check at 1015 s and passes. The duration of the work still decides the result, so the failure will return.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Clock",
+        "detail": "time.monotonic() · real time",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "test",
+        "label": "Test",
+        "detail": "Expects valid · rerun",
+        "tone": "success",
+        "x": 400,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "test",
+        "label": "now"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Token",
+        "columns": [
+         "Issued (s)",
+         "TTL (s)",
+         "Checked (s)",
+         "Expect"
+        ],
+        "rows": [
+         [
+          "1000",
+          "30",
+          "1015",
+          "valid"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "injected",
+    "label": "Injected clock: same result every run",
+    "steps": [
+     {
+      "title": "Advance a FakeClock by 29 seconds",
+      "explanation": "The test passes a FakeClock starting at 1000 s and calls clock.advance(29). The check at 1029 s is one second before expiry, so the token is valid.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Clock",
+        "detail": "FakeClock(1000) · advance(29)",
+        "tone": "success",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "test",
+        "label": "Test",
+        "detail": "Expects valid · any machine",
+        "tone": "success",
+        "x": 400,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "test",
+        "label": "now"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Token",
+        "columns": [
+         "Issued (s)",
+         "TTL (s)",
+         "Checked (s)",
+         "Expect"
+        ],
+        "rows": [
+         [
+          "1000",
+          "30",
+          "1029",
+          "valid"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Advance one more second",
+      "focus": [
+       "checked",
+       "test"
+      ],
+      "explanation": "clock.advance(1) moves the check to 1030 s, exactly the expiry. now < expiry is false, so a second test asserts the token has expired, and it passes.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Clock",
+        "detail": "FakeClock · advance(1)",
+        "tone": "success",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "test",
+        "label": "Test",
+        "detail": "Expects expired · boundary",
+        "tone": "success",
+        "x": 400,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "test",
+        "label": "now"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Token",
+        "columns": [
+         "Issued (s)",
+         "TTL (s)",
+         "Checked (s)",
+         "Expect"
+        ],
+        "rows": [
+         [
+          "1000",
+          "30",
+          "1030",
+          "expired"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Run it on a slow runner",
+      "focus": [
+       "source"
+      ],
+      "explanation": "The work can take any real time now. The token only sees the clock the test controls, so the check stays at 1029 s and the test passes on every run.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Clock",
+        "detail": "FakeClock(1000) · advance(29)",
+        "tone": "success",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "test",
+        "label": "Test",
+        "detail": "Expects valid · slow CI run",
+        "tone": "success",
+        "x": 400,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "test",
+        "label": "now"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Token",
+        "columns": [
+         "Issued (s)",
+         "TTL (s)",
+         "Checked (s)",
+         "Expect"
+        ],
+        "rows": [
+         [
+          "1000",
+          "30",
+          "1029",
+          "valid"
+         ]
+        ]
+       }
+      ],
+      "focusLabel": "Compare"
+     }
+    ]
+   }
+  ]
+ }
+}

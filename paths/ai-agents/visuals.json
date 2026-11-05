@@ -1,0 +1,538 @@
+{
+ "loop": {
+  "title": "A step budget ends the loop",
+  "intro": "Run a script that only ever asks to search, first through the workshop's run() with max_steps=3, then in a loop with no counter.",
+  "scope": "The workshop's run(ScriptedSource(script), max_steps=3) and its search_lessons tool. Every proposal, including a finish, uses one step. The budget bounds proposal count, not time; a live adapter also needs deadlines and cancellation. The unbounded loop is a teaching contrast, not workshop code.",
+  "scenarios": [
+   {
+    "id": "budget",
+    "label": "max_steps=3: stops as budget_exhausted",
+    "steps": [
+     {
+      "title": "Proposal 1: search",
+      "explanation": "The source asks for search_lessons(\"joins\"). The application validates the query, runs the local search and records SQL-07 as evidence. One of three proposals is used.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Scripted source",
+        "detail": "Asks to search; never finishes",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "status",
+        "label": "Run status",
+        "detail": "Running · 2 proposals left",
+        "tone": "active",
+        "x": 520,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "status",
+        "label": "proposals"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Proposals",
+        "columns": [
+         "Step",
+         "Proposal",
+         "Result"
+        ],
+        "rows": [
+         [
+          "1",
+          "search_lessons: joins",
+          "SQL-07 observed"
+         ]
+        ]
+       },
+       {
+        "caption": "Run",
+        "columns": [
+         "Budget",
+         "Status"
+        ],
+        "rows": [
+         [
+          "3",
+          "running"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Proposals 2 and 3: more searching",
+      "focus": [
+       "p2",
+       "p3",
+       "budget",
+       "status"
+      ],
+      "explanation": "The source asks again for \"inner joins\" and then \"join types\". The first finds SQL-07 again, the second finds nothing. No new evidence arrives, and the third proposal uses the last step.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Scripted source",
+        "detail": "Asks to search; never finishes",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "status",
+        "label": "Run status",
+        "detail": "Running · 0 proposals left",
+        "tone": "warning",
+        "x": 520,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "status",
+        "label": "proposals"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Proposals",
+        "columns": [
+         "Step",
+         "Proposal",
+         "Result"
+        ],
+        "rows": [
+         [
+          "1",
+          "search_lessons: joins",
+          "SQL-07 observed"
+         ],
+         [
+          "2",
+          "search_lessons: inner joins",
+          "SQL-07 again, nothing new"
+         ],
+         [
+          "3",
+          "search_lessons: join types",
+          "no hits"
+         ]
+        ]
+       },
+       {
+        "caption": "Run",
+        "columns": [
+         "Budget",
+         "Status"
+        ],
+        "rows": [
+         [
+          "3",
+          "running"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Budget exhausted",
+      "focus": [
+       "status"
+      ],
+      "explanation": "No step remains, so run() stops with budget_exhausted. There is no answer, and a fourth proposal is never requested. Report that the task did not complete, with the trace.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Scripted source",
+        "detail": "Asks to search; never finishes",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "status",
+        "label": "Run status",
+        "detail": "budget_exhausted · no answer",
+        "tone": "success",
+        "x": 520,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "status",
+        "label": "proposals"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Proposals",
+        "columns": [
+         "Step",
+         "Proposal",
+         "Result"
+        ],
+        "rows": [
+         [
+          "1",
+          "search_lessons: joins",
+          "SQL-07 observed"
+         ],
+         [
+          "2",
+          "search_lessons: inner joins",
+          "SQL-07 again, nothing new"
+         ],
+         [
+          "3",
+          "search_lessons: join types",
+          "no hits"
+         ]
+        ]
+       },
+       {
+        "caption": "Run",
+        "columns": [
+         "Budget",
+         "Status"
+        ],
+        "rows": [
+         [
+          "3",
+          "budget_exhausted"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "unbounded",
+    "label": "No counter: keeps calling",
+    "steps": [
+     {
+      "title": "Proposal 1: search",
+      "explanation": "The same first search runs and records SQL-07. Nothing counts the proposals.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Same script, no counter",
+        "detail": "Asks to search; never finishes",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "status",
+        "label": "Run status",
+        "detail": "Running · no limit",
+        "tone": "active",
+        "x": 520,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "status",
+        "label": "proposals"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Proposals",
+        "columns": [
+         "Step",
+         "Proposal",
+         "Result"
+        ],
+        "rows": [
+         [
+          "1",
+          "search_lessons: joins",
+          "SQL-07 observed"
+         ]
+        ]
+       },
+       {
+        "caption": "Run",
+        "columns": [
+         "Budget",
+         "Status"
+        ],
+        "rows": [
+         [
+          "none",
+          "running"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Proposals 2 and 3",
+      "focus": [
+       "p2",
+       "p3",
+       "budget"
+      ],
+      "explanation": "The searches for \"inner joins\" and \"join types\" add no new evidence. With no budget, the loop asks for another proposal.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Same script, no counter",
+        "detail": "Asks to search; never finishes",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "status",
+        "label": "Run status",
+        "detail": "Running · no limit",
+        "tone": "warning",
+        "x": 520,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "status",
+        "label": "proposals"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Proposals",
+        "columns": [
+         "Step",
+         "Proposal",
+         "Result"
+        ],
+        "rows": [
+         [
+          "1",
+          "search_lessons: joins",
+          "SQL-07 observed"
+         ],
+         [
+          "2",
+          "search_lessons: inner joins",
+          "SQL-07 again, nothing new"
+         ],
+         [
+          "3",
+          "search_lessons: join types",
+          "no hits"
+         ]
+        ]
+       },
+       {
+        "caption": "Run",
+        "columns": [
+         "Budget",
+         "Status"
+        ],
+        "rows": [
+         [
+          "none",
+          "running"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Proposals 4 to 6: the same searches again",
+      "focus": [
+       "p4",
+       "p5",
+       "p6",
+       "budget",
+       "status"
+      ],
+      "explanation": "The source repeats the same three queries. Six tool calls have produced one piece of evidence and no answer.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Same script, no counter",
+        "detail": "Asks to search; never finishes",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "status",
+        "label": "Run status",
+        "detail": "Running · 6 calls · no answer",
+        "tone": "warning",
+        "x": 520,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "status",
+        "label": "proposals"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Proposals",
+        "columns": [
+         "Step",
+         "Proposal",
+         "Result"
+        ],
+        "rows": [
+         [
+          "1",
+          "search_lessons: joins",
+          "SQL-07 observed"
+         ],
+         [
+          "2",
+          "search_lessons: inner joins",
+          "SQL-07 again, nothing new"
+         ],
+         [
+          "3",
+          "search_lessons: join types",
+          "no hits"
+         ],
+         [
+          "4",
+          "search_lessons: joins",
+          "SQL-07 again, nothing new"
+         ],
+         [
+          "5",
+          "search_lessons: inner joins",
+          "SQL-07 again, nothing new"
+         ],
+         [
+          "6",
+          "search_lessons: join types",
+          "no hits"
+         ]
+        ]
+       },
+       {
+        "caption": "Run",
+        "columns": [
+         "Budget",
+         "Status"
+        ],
+        "rows": [
+         [
+          "none",
+          "running"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Nothing in the loop ends it",
+      "focus": [
+       "status"
+      ],
+      "explanation": "Only something outside the loop, such as a timeout, a crash or a person, can stop it now, and none of them records why. A counter in the loop gives the run a terminal status of its own.",
+      "nodes": [
+       {
+        "id": "source",
+        "label": "Same script, no counter",
+        "detail": "Asks to search; never finishes",
+        "tone": "active",
+        "x": 30,
+        "y": 40
+       },
+       {
+        "id": "status",
+        "label": "Run status",
+        "detail": "Still running · no terminal status",
+        "tone": "warning",
+        "x": 520,
+        "y": 40
+       }
+      ],
+      "edges": [
+       {
+        "from": "source",
+        "to": "status",
+        "label": "proposals"
+       }
+      ],
+      "tables": [
+       {
+        "caption": "Proposals",
+        "columns": [
+         "Step",
+         "Proposal",
+         "Result"
+        ],
+        "rows": [
+         [
+          "1",
+          "search_lessons: joins",
+          "SQL-07 observed"
+         ],
+         [
+          "2",
+          "search_lessons: inner joins",
+          "SQL-07 again, nothing new"
+         ],
+         [
+          "3",
+          "search_lessons: join types",
+          "no hits"
+         ],
+         [
+          "4",
+          "search_lessons: joins",
+          "SQL-07 again, nothing new"
+         ],
+         [
+          "5",
+          "search_lessons: inner joins",
+          "SQL-07 again, nothing new"
+         ],
+         [
+          "6",
+          "search_lessons: join types",
+          "no hits"
+         ]
+        ]
+       },
+       {
+        "caption": "Run",
+        "columns": [
+         "Budget",
+         "Status"
+        ],
+        "rows": [
+         [
+          "none",
+          "running"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

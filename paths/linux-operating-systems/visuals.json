@@ -1,0 +1,358 @@
+{
+ "permissions-and-identities": {
+  "title": "Group access to a shared directory",
+  "intro": "bo, a member of group analysts, opens /srv/reports/q3.csv. The file grants group read; the directory decides whether bo can reach it.",
+  "scope": "Traditional mode bits only. The process's user and groups select the owner, group or other bits; a directory needs x to traverse and a file needs r to read or w to write. ACLs, capabilities, mount options and security modules can change the result and are not modelled. Names are fictional.",
+  "scenarios": [
+   {
+    "id": "group",
+    "label": "Directory 750: group can enter",
+    "steps": [
+     {
+      "title": "Traverse /srv/reports",
+      "explanation": "bo is not the owner ana but is in group analysts, so the group bits apply. Mode 750 gives the group r-x, and x allows traversal.",
+      "nodes": [
+       {
+        "id": "result",
+        "label": "Outcome for bo",
+        "detail": "Can enter /srv/reports",
+        "tone": "success",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Identity",
+        "columns": [
+         "User",
+         "Groups"
+        ],
+        "rows": [
+         [
+          "bo",
+          "bo, analysts"
+         ]
+        ]
+       },
+       {
+        "caption": "Path",
+        "columns": [
+         "Path",
+         "Owner",
+         "Group",
+         "Mode",
+         "Needs"
+        ],
+        "rows": [
+         [
+          "/srv/reports",
+          "ana",
+          "analysts",
+          "750",
+          "x"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Read q3.csv",
+      "focus": [
+       "q3-csv",
+       "result"
+      ],
+      "explanation": "The file's mode 640 gives the group r--. bo has reached the file and has read, so opening it for reading succeeds.",
+      "nodes": [
+       {
+        "id": "result",
+        "label": "Outcome for bo",
+        "detail": "Can read q3.csv",
+        "tone": "success",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Identity",
+        "columns": [
+         "User",
+         "Groups"
+        ],
+        "rows": [
+         [
+          "bo",
+          "bo, analysts"
+         ]
+        ]
+       },
+       {
+        "caption": "Path",
+        "columns": [
+         "Path",
+         "Owner",
+         "Group",
+         "Mode",
+         "Needs"
+        ],
+        "rows": [
+         [
+          "/srv/reports",
+          "ana",
+          "analysts",
+          "750",
+          "x"
+         ],
+         [
+          "/srv/reports/q3.csv",
+          "ana",
+          "analysts",
+          "640",
+          "r"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "Try to write q3.csv",
+      "focus": [
+       "q3-csv",
+       "result"
+      ],
+      "explanation": "The group bits r-- have no w, so writing is denied even though reading works. Each class gets only the bits its digit grants.",
+      "nodes": [
+       {
+        "id": "result",
+        "label": "Outcome for bo",
+        "detail": "Read allowed; write denied",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Identity",
+        "columns": [
+         "User",
+         "Groups"
+        ],
+        "rows": [
+         [
+          "bo",
+          "bo, analysts"
+         ]
+        ]
+       },
+       {
+        "caption": "Path",
+        "columns": [
+         "Path",
+         "Owner",
+         "Group",
+         "Mode",
+         "Needs"
+        ],
+        "rows": [
+         [
+          "/srv/reports",
+          "ana",
+          "analysts",
+          "750",
+          "x"
+         ],
+         [
+          "/srv/reports/q3.csv",
+          "ana",
+          "analysts",
+          "640",
+          "w"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "private",
+    "label": "Directory 700: group shut out",
+    "steps": [
+     {
+      "title": "Traverse /srv/reports",
+      "explanation": "With mode 700 the group bits are ---. bo cannot traverse the directory, so the open fails with Permission denied.",
+      "nodes": [
+       {
+        "id": "result",
+        "label": "Outcome for bo",
+        "detail": "Permission denied",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Identity",
+        "columns": [
+         "User",
+         "Groups"
+        ],
+        "rows": [
+         [
+          "bo",
+          "bo, analysts"
+         ]
+        ]
+       },
+       {
+        "caption": "Path",
+        "columns": [
+         "Path",
+         "Owner",
+         "Group",
+         "Mode",
+         "Needs"
+        ],
+        "rows": [
+         [
+          "/srv/reports",
+          "ana",
+          "analysts",
+          "700",
+          "x"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "The file still grants group read",
+      "focus": [
+       "q3-csv",
+       "result"
+      ],
+      "explanation": "q3.csv is 640, the same as before, but bo never reaches it. The failure is at the parent directory, not the file.",
+      "nodes": [
+       {
+        "id": "result",
+        "label": "Outcome for bo",
+        "detail": "Denied before reaching q3.csv",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Identity",
+        "columns": [
+         "User",
+         "Groups"
+        ],
+        "rows": [
+         [
+          "bo",
+          "bo, analysts"
+         ]
+        ]
+       },
+       {
+        "caption": "Path",
+        "columns": [
+         "Path",
+         "Owner",
+         "Group",
+         "Mode",
+         "Needs"
+        ],
+        "rows": [
+         [
+          "/srv/reports",
+          "ana",
+          "analysts",
+          "700",
+          "x"
+         ],
+         [
+          "/srv/reports/q3.csv",
+          "ana",
+          "analysts",
+          "640",
+          "r"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "title": "chmod the file, not the directory",
+      "focus": [
+       "q3-csv"
+      ],
+      "explanation": "Changing the file to 666 does not help: the directory is still 700. Granting the group r-x on the directory, mode 750, fixes the path without opening it to everyone as chmod 777 would.",
+      "nodes": [
+       {
+        "id": "result",
+        "label": "Outcome for bo",
+        "detail": "Still denied: fix the directory",
+        "tone": "warning",
+        "x": 30,
+        "y": 40
+       }
+      ],
+      "edges": [],
+      "tables": [
+       {
+        "caption": "Identity",
+        "columns": [
+         "User",
+         "Groups"
+        ],
+        "rows": [
+         [
+          "bo",
+          "bo, analysts"
+         ]
+        ]
+       },
+       {
+        "caption": "Path",
+        "columns": [
+         "Path",
+         "Owner",
+         "Group",
+         "Mode",
+         "Needs"
+        ],
+        "rows": [
+         [
+          "/srv/reports",
+          "ana",
+          "analysts",
+          "700",
+          "x"
+         ],
+         [
+          "/srv/reports/q3.csv",
+          "ana",
+          "analysts",
+          "666",
+          "r"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}
