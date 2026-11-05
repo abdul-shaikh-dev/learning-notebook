@@ -47,6 +47,13 @@ async function request(url,{fetch,timeout,userAgent}){
  }
 }
 
+// The same host and path, keeping every original query value and only adding new ones, such as ?hl=vi or ?view=sql-server-ver17.
+function addsSettings(from,to){
+ const a=new URL(from),b=new URL(to);
+ if(a.origin!==b.origin||a.pathname!==b.pathname||[...b.searchParams].length<=[...a.searchParams].length)return false;
+ return [...a.searchParams.keys()].every(k=>b.searchParams.getAll(k).join('\n')===a.searchParams.getAll(k).join('\n'));
+}
+
 // Follow redirects by hand so the report can show where a link now points.
 async function check(url,options){
  const {retries,backoff,wait}=options;let current=url,hops=0;
@@ -65,8 +72,8 @@ async function check(url,options){
    continue;
   }
   const ok=result.status>=200&&result.status<300;
-  // A DOI always redirects to its publisher, and an added trailing slash is the same page; neither needs updating.
-  const same=current===url||current===url+'/'||new URL(url).host==='doi.org';
+  // A DOI always redirects to its publisher, and an added trailing slash or added query settings (a language or version) leave the same page; none needs updating.
+  const same=current===url||current===url+'/'||new URL(url).host==='doi.org'||addsSettings(url,current);
   return {url,status:result.status,error:result.error,final:current===url?null:current,state:ok?(same?'ok':'redirected'):'broken'};
  }
 }

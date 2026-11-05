@@ -27,6 +27,10 @@ const web={
  'https://publisher.test/article':[200],
  'https://doi.org/10.1/y':[[302,{location:'https://blocked.test/article'}]],
  'https://nohead.test/x':[405,200],
+ 'https://lang.test/page?id=1':[[302,{location:'/page?id=1&hl=vi'}]],
+ 'https://lang.test/page?id=1&hl=vi':[200],
+ 'https://lang.test/swap?id=1':[[302,{location:'/swap?id=2&hl=vi'}]],
+ 'https://lang.test/swap?id=2&hl=vi':[200],
  'https://skip.test/x':[]
 };
 const calls=[],waits=[];
@@ -38,7 +42,7 @@ const fetch=async(url,{method,redirect})=>{
  return {status,headers:{get:k=>headers[k]??null}};
 };
 (async()=>{
- const urls=Object.keys(web).filter(u=>!['https://moved.test/new','https://slash.test/page/','https://publisher.test/article'].includes(u));
+ const urls=Object.keys(web).filter(u=>!['https://moved.test/new','https://slash.test/page/','https://publisher.test/article','https://lang.test/page?id=1&hl=vi','https://lang.test/swap?id=2&hl=vi'].includes(u));
  const results=await checkLinks(urls,{fetch,wait:async ms=>{waits.push(ms);},allow:{hosts:{'skip.test':'Blocks robots.','blocked.test':'Answers 403.'},urls:{}},retries:2,backoff:100,perHost:1000});
  const by=Object.fromEntries(results.map(r=>[r.url,r]));
  assert.equal(by['https://ok.test/a'].state,'ok');
@@ -49,6 +53,8 @@ const fetch=async(url,{method,redirect})=>{
  assert.deepEqual([by['https://moved.test/old'].state,by['https://moved.test/old'].final],['redirected','https://moved.test/new'],'A moved page reports its new address');
  assert.equal(by['https://slash.test/page'].state,'ok','An added trailing slash is the same page');
  assert.equal(by['https://doi.org/10.1/x'].state,'ok','A resolving DOI is fine');
+ assert.equal(by['https://lang.test/page?id=1'].state,'ok','Added query settings, such as a language or version, leave the same page');
+ assert.deepEqual([by['https://lang.test/swap?id=1'].state,by['https://lang.test/swap?id=1'].final],['redirected','https://lang.test/swap?id=2&hl=vi'],'A changed query value is a different page');
  assert.deepEqual([by['https://doi.org/10.1/y'].state,by['https://doi.org/10.1/y'].reason],['skipped','Answers 403.'],'A redirect onto an allow-listed host is skipped after the first hop');
  assert.equal(by['https://nohead.test/x'].state,'ok');assert.ok(calls.includes('HEAD https://nohead.test/x')&&calls.includes('GET https://nohead.test/x'),'A refused HEAD falls back to GET');
  assert.equal(by['https://skip.test/x'].state,'skipped');assert.ok(!calls.some(c=>c.includes('skip.test')),'Allow-listed hosts are not requested');
@@ -56,7 +62,7 @@ const fetch=async(url,{method,redirect})=>{
  // The report leads with the broken link, shows where it is cited and never lists OK links.
  const links=new Map(urls.map(u=>[u,[{course:'Course',place:u.includes('dead')?'3. Lesson | pipes':'Course sources'}]]));
  const text=report(results,links,{date:'2026-11-01'});
- assert.match(text,/Checked 2026-11-01: 12 links\. \*\*2 broken\*\*, 1 redirected, 7 OK, 2 skipped/);
+ assert.match(text,/Checked 2026-11-01: 14 links\. \*\*2 broken\*\*, 2 redirected, 8 OK, 2 skipped/);
  assert.ok(text.indexOf('## Broken')<text.indexOf('## Redirected'));
  assert.ok(text.includes('| https://dead.test/gone | HTTP 404 | Course · 3. Lesson \\| pipes |'),'Table cells are escaped');
  assert.ok(text.includes('| https://down.test/x | ECONNREFUSED |'));
@@ -86,5 +92,5 @@ const fetch=async(url,{method,redirect})=>{
  const none=report([],links,{stale:staleReferences(dated.slice(0,1),{today:'2026-11-05',months:12})});
  assert.ok(none.includes('None: every lesson reference was reviewed on or after 2025-11-05.')&&!none.includes('###'),'Says when nothing is due');
  assert.ok(!report([],links).includes('References due for review'),'The section appears only when review ages are passed');
- console.log('PASS: external link check: '+real.size+' links collected; broken, redirected, retried, rate-limited, HEAD fallback, DOI, trailing slash and allow-listed links; per-host spacing, review age and the Markdown report.');
+ console.log('PASS: external link check: '+real.size+' links collected; broken, redirected, retried, rate-limited, HEAD fallback, DOI, trailing slash, added query settings and allow-listed links; per-host spacing, review age and the Markdown report.');
 })().catch(e=>{console.error(e);process.exitCode=1;});
