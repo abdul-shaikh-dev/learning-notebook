@@ -77825,7 +77825,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Trace the truthiness branch, preserve the default keys and all-status selection, and request a count of 1 for a zero-minute ticket. Use the examples in CONTRACT.md; state strict validation as a new explicit policy.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does legacy_report print for the supplied tickets.csv?",
+            "options": [
+              "{\"count\": 3, \"total_minutes\": 20}",
+              "{\"count\": 4, \"total_minutes\": 20}",
+              "{\"count\": 3, \"total_minutes\": 17}"
+            ],
+            "correct": 0,
+            "explanation": "Ticket A has zero minutes and is dropped, so the count is one short while the total still looks right."
+          },
+          {
+            "question": "legacy_report reads a row whose minutes is abc. What happens?",
+            "options": [
+              "Raises ValueError: invalid literal for int() with base 10: 'abc'",
+              "It skips the row",
+              "It counts the row as 0"
+            ],
+            "correct": 0,
+            "explanation": "The starter has no validation of its own, so the error comes from int() with no row number."
+          },
+          {
+            "question": "legacy_report reads the row A,archived,4. What happens?",
+            "options": [
+              "It counts the row: the starter never reads status",
+              "It rejects the row",
+              "It skips the row"
+            ],
+            "correct": 0,
+            "explanation": "Status is ignored entirely, which is why the filter is new behaviour rather than a fix."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -77854,7 +77886,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Parse complete validated Ticket records, filter only after parsing and count selected records directly. Compare the default fixture (4,20) and open selection (2,12). Use subprocess tests for the public command, not just summary unit tests.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "read_tickets receives minutes 00000. What happens?",
+            "options": [
+              "Raises ValueError: row 2: minutes must be 0..1440 using at most four ASCII digits",
+              "It is accepted as 0",
+              "It is accepted as the text 00000"
+            ],
+            "correct": 0,
+            "explanation": "Five digits exceed the length limit even though the value is zero."
+          },
+          {
+            "question": "read_tickets receives the id ' A', with a leading space. What happens?",
+            "options": [
+              "Raises ValueError: row 2: id must be nonblank, unique and unpadded",
+              "The space is trimmed and A is accepted",
+              "It is accepted as written"
+            ],
+            "correct": 0,
+            "explanation": "Padded IDs are rejected rather than trimmed, so ' A' and 'A' cannot be mistaken for the same ticket."
+          },
+          {
+            "question": "read_tickets receives A,open,1 followed by A,closed,2. Which row does the error name?",
+            "options": [
+              "row 3",
+              "row 2",
+              "No error: the later row wins"
+            ],
+            "correct": 0,
+            "explanation": "Rows are numbered by file line, with the header as line 1, so the duplicate on the third line is reported."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -77883,7 +77947,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Create the temporary file beside the destination, close it and call os.replace only after validation and serialization. Clean up on failure. Keep an explicit backup if successful replacement must be reversible. Plan archived status as a separate changed-case exercise.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "report.py is given --output in a directory that does not exist. What happens?",
+            "options": [
+              "Exit 2, with no temporary file left behind",
+              "The directory is created",
+              "Exit 0, with the JSON printed instead"
+            ],
+            "correct": 0,
+            "explanation": "The temporary file cannot be created beside the destination, so the command fails cleanly instead of writing somewhere else."
+          },
+          {
+            "question": "read_tickets reads a file with blank lines around the row A,open,2. What does summarize return?",
+            "options": [
+              "{'count': 1, 'total_minutes': 2}",
+              "An error about the blank lines",
+              "{'count': 3, 'total_minutes': 2}"
+            ],
+            "correct": 0,
+            "explanation": "Python's CSV reader ignores completely blank lines, and the contract follows it."
+          },
+          {
+            "question": "write_report succeeds with the text {}. What does the destination file then contain?",
+            "options": [
+              "{} followed by a newline",
+              "{} with no newline",
+              "{} followed by a Windows line ending"
+            ],
+            "correct": 0,
+            "explanation": "The file is opened with newline set to a single line feed, so the output is the same on every platform."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -77934,6 +78030,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "General engineering context. This small software exercise uses a short decision record, not NASA project compliance."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does report.py print for the supplied tickets.csv, with no --status?",
+            "options": [
+              "{\"count\": 4, \"total_minutes\": 20}",
+              "{\"count\": 3, \"total_minutes\": 20}",
+              "{\"count\": 4, \"total_minutes\": 17}"
+            ],
+            "correct": 0,
+            "explanation": "Every valid record counts, including the zero-minute ticket A. The figure is recorded effort, not remaining work."
+          }
         ]
       },
       {
@@ -77982,6 +78090,18 @@ const LEARNING_PATHS = [
             "section": "Given, When and Then example structure",
             "reviewed": "2026-10-02",
             "scope": "Author explanation of behavior examples. The ticket-report requirements here are original fictional policies."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A valid file has only open tickets. What does report.py return with --status closed?",
+            "options": [
+              "{\"count\": 0, \"total_minutes\": 0}",
+              "An error: no matching rows",
+              "Empty output"
+            ],
+            "correct": 0,
+            "explanation": "The contract makes a valid selection with no matches an explicit example: both values are zero and the command succeeds."
           }
         ]
       },
@@ -78032,6 +78152,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "General engineering context. This small software exercise uses a short decision record, not NASA project compliance."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The changed-requirements list mentions an archived status. What does the current reference do with a row whose status is archived?",
+            "options": [
+              "Raises ValueError: row 2: unknown status",
+              "Counts it with the open tickets",
+              "Skips the row"
+            ],
+            "correct": 0,
+            "explanation": "Archived is a deferred idea, not part of the agreed change. The reference rejects it until someone writes its expectations first."
+          }
         ]
       },
       {
@@ -78081,6 +78213,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does legacy_report.summarize_file return for a one-row file containing A,open,0?",
+            "options": [
+              "{'count': 0, 'total_minutes': 0}",
+              "{'count': 1, 'total_minutes': 0}",
+              "An error"
+            ],
+            "correct": 0,
+            "explanation": "One header line and one row are the smallest input that shows the defect, which makes it the input to save with the exact command."
+          }
         ]
       },
       {
@@ -78129,6 +78273,18 @@ const LEARNING_PATHS = [
             "section": "Functionality, complexity, tests and documentation",
             "reviewed": "2026-10-02",
             "scope": "Review guidance, not a mandatory review process or guarantee of correctness."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "legacy_report reads the rows A,open,0 and B,open,7. Which count does it report?",
+            "options": [
+              "1, although there are 2 tickets",
+              "2",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "The zero-minute row is dropped at the truthiness branch, so only B is counted. The total of 7 is still right, which hides the bug."
           }
         ]
       },
@@ -78687,7 +78843,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does legacy_report do with a row whose minutes is -1?",
+            "options": [
+              "Counts it, giving total_minutes -1",
+              "Rejects the file",
+              "Skips the row"
+            ],
+            "correct": 0,
+            "explanation": "-1 is truthy, so it is kept. Recording that observation does not make it correct: the contract rejects negative minutes."
+          }
+        ]
       },
       {
         "id": "first-project",
@@ -78735,6 +78903,18 @@ const LEARNING_PATHS = [
             "section": "Given, When and Then example structure",
             "reviewed": "2026-10-02",
             "scope": "Author explanation of behavior examples. The ticket-report requirements here are original fictional policies."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "legacy_report reads a row whose minutes is ' 5', with a leading space. What happens?",
+            "options": [
+              "It is counted as 5, because int() ignores surrounding spaces",
+              "It is rejected",
+              "It is counted as 0"
+            ],
+            "correct": 0,
+            "explanation": "The starter accepts padding without saying so. Rejecting it in the repair is a new policy, and the change brief should state it explicitly."
           }
         ]
       },
@@ -78785,6 +78965,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How many tests does python -m unittest test_report run against the reference, and how many fail?",
+            "options": [
+              "13 tests, none failing",
+              "12 tests, 1 failing",
+              "13 tests, 1 failing"
+            ],
+            "correct": 0,
+            "explanation": "The suite includes a regression test that runs the legacy starter and the reference on the same zero-minute input and expects different results."
+          }
         ]
       },
       {
@@ -78833,6 +79025,18 @@ const LEARNING_PATHS = [
             "section": "DictReader; reading CSV with newline=\"\"",
             "reviewed": "2026-10-02",
             "scope": "Standard-library CSV parsing. Field validation is a separate policy implemented by the lab."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "report.py runs with --status open, and a closed row on line 3 has minutes -1. What happens?",
+            "options": [
+              "Exit 2 with a diagnostic naming row 3, although that row is not selected",
+              "It reports the open rows and ignores the bad row",
+              "Exit 0 with a warning"
+            ],
+            "correct": 0,
+            "explanation": "Every row is validated before the filter runs, so a bad excluded row still fails the command instead of producing a misleading report."
           }
         ]
       },
@@ -78883,6 +79087,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Review guidance, not a mandatory review process or guarantee of correctness."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "summarize(tickets, 'missing') is called directly, without the command line. What happens?",
+            "options": [
+              "Raises ValueError: unknown status",
+              "Returns count 0",
+              "Returns every ticket"
+            ],
+            "correct": 0,
+            "explanation": "The function that owns the filter also checks its input, so a caller that bypasses argparse's choices still cannot ask for an unknown status."
+          }
         ]
       },
       {
@@ -78931,6 +79147,18 @@ const LEARNING_PATHS = [
             "section": "Basic example; assert methods; command-line interface",
             "reviewed": "2026-10-02",
             "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "read_tickets receives minutes 0001. What happens?",
+            "options": [
+              "It is accepted as 1: leading zeroes are allowed within four digits",
+              "It is rejected for its leading zeroes",
+              "It is read as the text 0001"
+            ],
+            "correct": 0,
+            "explanation": "The length limit, not the leading zero, is the boundary: 0001 has four digits and passes, while 00000 has five and is rejected."
           }
         ]
       },
@@ -78981,6 +79209,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "The lab uses stable Python 3.11+ APIs. Invalid arguments use argparse error handling."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "report.py succeeds on a valid file with no options. What are its exit code and stderr?",
+            "options": [
+              "Exit 0 and empty stderr",
+              "Exit 0 and a summary line on stderr",
+              "Exit 1 and empty stderr"
+            ],
+            "correct": 0,
+            "explanation": "Callers may rely on a clean stderr and exit 0, so the repair keeps that default contract unchanged."
+          }
         ]
       },
       {
@@ -79030,6 +79270,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Review guidance, not a mandatory review process or guarantee of correctness."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A reviewer asks what happens with the row A,open,1,extra. What does read_tickets raise?",
+            "options": [
+              "ValueError: row 2: wrong field count",
+              "Nothing: the extra field is ignored",
+              "ValueError: unknown status"
+            ],
+            "correct": 0,
+            "explanation": "A concrete input and the observed result make the review point checkable, and the diagnostic names the row."
+          }
         ]
       },
       {
@@ -79078,6 +79330,18 @@ const LEARNING_PATHS = [
             "section": "Basic example; assert methods; command-line interface",
             "reviewed": "2026-10-02",
             "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does report.py return for tickets.csv with --status cancelled?",
+            "options": [
+              "{\"count\": 1, \"total_minutes\": 3}",
+              "{\"count\": 0, \"total_minutes\": 0}",
+              "{\"count\": 4, \"total_minutes\": 20}"
+            ],
+            "correct": 0,
+            "explanation": "Each status has a known fixture result in CONTRACT.md, so every filter value can be checked, not only the one that was asked for."
           }
         ]
       },
@@ -79223,7 +79487,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "write_report's replace step fails with OSError. What is left in the destination directory?",
+            "options": [
+              "The old report bytes, and no .report-*.tmp file",
+              "A half-written report",
+              "The old report and a leftover temporary file"
+            ],
+            "correct": 0,
+            "explanation": "The temporary file is removed in a finally block, and the destination is touched only by the replace call that failed."
+          }
+        ]
       },
       {
         "id": "change-history",
@@ -79271,6 +79547,18 @@ const LEARNING_PATHS = [
             "section": "Basic bisect commands; bisect run",
             "reviewed": "2026-10-02",
             "scope": "Use a disposable local repository for the optional history exercise. A failing commit still needs diagnosis."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "During a bisect, a chosen revision fails to build for a reason unrelated to the zero-minute check. How should it be treated?",
+            "options": [
+              "Not as evidence that the regression is present",
+              "As a bad revision",
+              "As a good revision"
+            ],
+            "correct": 0,
+            "explanation": "Classify each revision with the same reproduction. A build failure says nothing about the behaviour being traced."
           }
         ]
       },
@@ -79320,6 +79608,18 @@ const LEARNING_PATHS = [
             "section": "Items 1, 6, 7 and 8",
             "reviewed": "2026-10-02",
             "scope": "Applies when a project declares a public API and adopts Semantic Versioning. The lab does not publish a package."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which keys does report.py's default JSON contain?",
+            "options": [
+              "Exactly count and total_minutes",
+              "count, total_minutes and status",
+              "count only"
+            ],
+            "correct": 0,
+            "explanation": "A caller may reject extra keys, so adding one can be a breaking change even if the existing values stay the same."
           }
         ]
       },
@@ -79372,6 +79672,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Review guidance applied to a fictional dependency-change example. Consult the actual dependency release notes before a real update."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which third-party packages does report.py import?",
+            "options": [
+              "None: it uses only the standard library",
+              "pandas",
+              "click"
+            ],
+            "correct": 0,
+            "explanation": "With no third-party imports, a dependency update cannot change its behaviour, though a Python version change still can."
+          }
         ]
       },
       {
@@ -79420,6 +79732,18 @@ const LEARNING_PATHS = [
             "section": "Basic example; assert methods; command-line interface",
             "reviewed": "2026-10-02",
             "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "report.py runs with --output report.json and succeeds. What does it print to stdout?",
+            "options": [
+              "Nothing: the JSON goes to the file",
+              "The JSON, and it also writes the file",
+              "The output path"
+            ],
+            "correct": 0,
+            "explanation": "The contract keeps stdout empty when exporting, so a check should read the written file rather than the terminal."
           }
         ]
       },
@@ -79470,6 +79794,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Same-filesystem replacement in the local lab. Atomic name replacement alone is not power-loss durability or concurrency control."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "report.py is given the same path for input and --output. What happens?",
+            "options": [
+              "Exit 2, and the input file is unchanged",
+              "The input is replaced by the report",
+              "Exit 0 with no file written"
+            ],
+            "correct": 0,
+            "explanation": "Replacing the input would destroy the only copy of the data, so the command refuses before reading or writing."
+          }
         ]
       },
       {
@@ -79518,6 +79854,18 @@ const LEARNING_PATHS = [
             "section": "Functionality, complexity, tests and documentation",
             "reviewed": "2026-10-02",
             "scope": "Review guidance, not a mandatory review process or guarantee of correctness."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "One changed requirement calls a zero-byte input an empty valid dataset. What does the reference do with a zero-byte file?",
+            "options": [
+              "Raises ValueError, because the required header is missing",
+              "Returns count 0",
+              "Returns count 0 with a warning"
+            ],
+            "correct": 0,
+            "explanation": "CONTRACT.md says an empty file is invalid, so the requirement conflicts with it. Decide which one wins, then add the smallest test that tells them apart."
           }
         ]
       }
