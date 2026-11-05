@@ -63757,7 +63757,39 @@ const LEARNING_PATHS = [
             "Parent/child elapsed time is not double-counted."
           ],
           "solution": "Use a small duration sample to calculate mean, median and nearest-rank p95. Run the three selected percentile checks, then interpret the nested span timeline. Keep units, sample size and safe correlation fields explicit. The intermediate project adds good-event objectives and a running HTTP service."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does percentile([100, 1, 3, 2, 4], 1.0) return?",
+            "options": [
+              "100",
+              "4",
+              "ValueError"
+            ],
+            "correct": 0,
+            "explanation": "p = 1 is allowed and picks the last sorted value, the maximum."
+          },
+          {
+            "question": "What does percentile([5], 0) do?",
+            "options": [
+              "Raises ValueError: nonempty sample and 0<p<=1 required",
+              "Returns 5",
+              "Returns 0"
+            ],
+            "correct": 0,
+            "explanation": "p must be greater than 0. There is no zeroth nearest-rank value."
+          },
+          {
+            "question": "summary() receives a row with status 999. What happens?",
+            "options": [
+              "Raises ValueError: invalid status",
+              "The row is counted as bad",
+              "The row is skipped"
+            ],
+            "correct": 0,
+            "explanation": "HTTP statuses run from 100 to 599. Corrupt input is rejected instead of quietly shifting the SLI."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -63787,7 +63819,39 @@ const LEARNING_PATHS = [
             "The benchmark claim matches its timed boundary."
           ],
           "solution": "Run the service and bounded client in separate terminals. Record actual outputs for each profile; fail should show four HTTP failures of 20, while slow should raise the tail. Keep this closed-loop evidence separate from production load and collector integration."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does burn_rate(0.90, 0.99) return?",
+            "options": [
+              "10",
+              "0.1",
+              "9"
+            ],
+            "correct": 0,
+            "explanation": "10% bad against a 1% allowance spends the error budget ten times faster than planned."
+          },
+          {
+            "question": "What does burn_rate(0.99, 1.0) do?",
+            "options": [
+              "Raises ValueError: invalid fractions",
+              "Returns 0",
+              "Returns infinity"
+            ],
+            "correct": 0,
+            "explanation": "A 100% target leaves no error budget to burn, so the target must be below 1."
+          },
+          {
+            "question": "summary() receives 20 rows of 10 ms each, where every fifth status is 503 and the rest are 200. What is good_fraction?",
+            "options": [
+              "0.8",
+              "0.95",
+              "1.0"
+            ],
+            "correct": 0,
+            "explanation": "Four of the 20 are errors, so 16 are good. Their speed does not matter."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -63817,7 +63881,39 @@ const LEARNING_PATHS = [
             "Production and external-service limits remain explicit."
           ],
           "solution": "Use cProfile to locate lookup cost, benchmark without profiler overhead and compare equivalent output. Design a memory retention experiment, record the loopback runbook and document all unexecuted collector/backend/paging checks. Avoid universal speedup or capacity claims."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "experiment(fail_b=True) runs with B failing. What happens to B's span?",
+            "options": [
+              "It is kept, with status error",
+              "It is dropped",
+              "It is kept, with status ok"
+            ],
+            "correct": 0,
+            "explanation": "A failed dependency still took measured time. Keeping its span is what shows where the error and the wait came from."
+          },
+          {
+            "question": "service.py receives GET /metrics. What status comes back?",
+            "options": [
+              "404",
+              "200",
+              "400"
+            ],
+            "correct": 0,
+            "explanation": "The lab serves only /work. The loopback service makes no claim to expose a metrics endpoint."
+          },
+          {
+            "question": "service.py receives GET /work?n=abc. What status comes back?",
+            "options": [
+              "400",
+              "500",
+              "200"
+            ],
+            "correct": 0,
+            "explanation": "A non-integer n is rejected as a client error before any work or injected delay."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -63870,6 +63966,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The CPU dashboard is green, but learners report that imports are slow. Where should the investigation start?",
+            "options": [
+              "With the user outcome: import duration and errors",
+              "By adding more CPU gauges",
+              "By trusting the dashboard"
+            ],
+            "correct": 0,
+            "explanation": "Start from the symptom and use internal metrics to explain it. Healthy resource gauges can coexist with a broken user task."
+          }
         ]
       },
       {
@@ -63920,6 +64028,18 @@ const LEARNING_PATHS = [
             "section": "time.perf_counter and monotonic clocks",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does percentile([True, 5], 0.5) do?",
+            "options": [
+              "Raises ValueError: durations must be finite nonnegative numbers",
+              "Returns True",
+              "Returns 5"
+            ],
+            "correct": 0,
+            "explanation": "The contract accepts durations only. A bool is an int in Python, so it is rejected explicitly rather than counted as 1."
           }
         ]
       },
@@ -63972,6 +64092,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which route value belongs in a structured log field?",
+            "options": [
+              "A bounded route template rather than the raw URL",
+              "The raw URL, including its query string",
+              "The full request body"
+            ],
+            "correct": 0,
+            "explanation": "Raw URLs can carry personal identifiers or secrets and have unbounded values. A template supports filtering safely."
+          }
         ]
       },
       {
@@ -64022,6 +64154,18 @@ const LEARNING_PATHS = [
             "section": "Metric names, base units and type suffixes",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Errors rose from 10 to 20 per minute while traffic doubled. What happened to the error ratio?",
+            "options": [
+              "Nothing: errors divided by requests stayed the same",
+              "It doubled",
+              "It halved"
+            ],
+            "correct": 0,
+            "explanation": "An error counter alone moves with traffic. Divide by eligible requests in the same scope and window."
           }
         ]
       },
@@ -64382,7 +64526,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "20 durations: 19 at 10 ms and one at 900 ms. What does percentile(values, 0.95) return?",
+            "options": [
+              "10",
+              "900",
+              "455"
+            ],
+            "correct": 0,
+            "explanation": "Nearest rank picks the 19th of 20 sorted values. One slow request in 20 sits above p95, so the tail needs its own look."
+          }
+        ]
       },
       {
         "id": "golden-signals",
@@ -64432,6 +64588,18 @@ const LEARNING_PATHS = [
             "section": "The four golden signals",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "summary() receives one 500 response that took 1 ms. Is it counted good or bad?",
+            "options": [
+              "Bad: a fast failure is still an error",
+              "Good: it was under the latency threshold",
+              "Neither: it is excluded"
+            ],
+            "correct": 0,
+            "explanation": "A good event needs a 2xx status and a duration within the threshold. Fast errors must not improve the latency picture."
           }
         ]
       },
@@ -64615,7 +64783,19 @@ const LEARNING_PATHS = [
               "explanation": "Finish after both required calls; the path through B dominates."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "In trace_investigation.experiment(), children A and B sleep 40 ms and 80 ms in parallel. Which finishes last?",
+            "options": [
+              "B",
+              "A",
+              "Neither: they finish together"
+            ],
+            "correct": 0,
+            "explanation": "B's longer wait ends last, so it is the critical path for the parent span."
+          }
+        ]
       },
       {
         "id": "context-propagation",
@@ -64769,7 +64949,19 @@ const LEARNING_PATHS = [
               "explanation": "Check identity and access independently of trace metadata."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "service.py receives GET /work?n=7. Which request_id does it return?",
+            "options": [
+              "lab-7",
+              "7",
+              "A new random ID"
+            ],
+            "correct": 0,
+            "explanation": "The ID comes from the request, so the client's record and the server's response can be joined on it."
+          }
+        ]
       },
       {
         "id": "cardinality",
@@ -64819,6 +65011,18 @@ const LEARNING_PATHS = [
             "section": "Labels; avoid high-cardinality labels",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A metric has labels for 3 routes, 5 status classes and 4 instances. How many series can it create?",
+            "options": [
+              "Up to 60",
+              "12",
+              "Up to 15"
+            ],
+            "correct": 0,
+            "explanation": "Every combination can become a series: 3 × 5 × 4. Each added label multiplies the count."
           }
         ]
       },
@@ -64878,6 +65082,18 @@ const LEARNING_PATHS = [
             "section": "Histograms; errors of quantile estimation; aggregation",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "summary() uses threshold_ms=100. How are 200 responses taking 100 ms and 101 ms counted?",
+            "options": [
+              "100 ms is good; 101 ms is bad",
+              "Both are good",
+              "Both are bad"
+            ],
+            "correct": 0,
+            "explanation": "The boundary is inclusive. A bucket edge at exactly the SLO threshold is what lets a histogram count this split."
           }
         ]
       },
@@ -65038,7 +65254,19 @@ const LEARNING_PATHS = [
               "explanation": "Compare observed bad events with allowed bad events for the window."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What good_fraction does summary([]) report?",
+            "options": [
+              "None",
+              "1.0",
+              "0.0"
+            ],
+            "correct": 0,
+            "explanation": "No eligible events means the SLI is unknown. Reporting 100% for an empty window would hide an outage in collection."
+          }
+        ]
       },
       {
         "id": "burn-rate-alerts",
@@ -65088,6 +65316,18 @@ const LEARNING_PATHS = [
             "section": "Burn rate; multiple windows; low-traffic services",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does burn_rate(0.99, 0.995) return?",
+            "options": [
+              "2",
+              "0.5",
+              "1"
+            ],
+            "correct": 0,
+            "explanation": "1% bad against a 0.5% allowance is (1 − 0.99) ÷ (1 − 0.995): the budget is spent twice as fast as planned."
           }
         ]
       },
@@ -65140,6 +65380,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Head sampling drops a trace before export. Can a tail sampler keep it later?",
+            "options": [
+              "No: it never receives the trace",
+              "Yes, if the trace contains an error",
+              "Yes, after retention is extended"
+            ],
+            "correct": 0,
+            "explanation": "A tail policy can only choose among traces that reach it. Earlier drops limit what it sees."
+          }
         ]
       },
       {
@@ -65190,6 +65442,18 @@ const LEARNING_PATHS = [
             "section": "perf_counter; elapsed wall-clock measurement",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In benchmark.py, what do linear and indexed return for the missing query ID 99999?",
+            "options": [
+              "None from both",
+              "None from linear and a KeyError from indexed",
+              "0 from both"
+            ],
+            "correct": 0,
+            "explanation": "The two implementations must agree on every query, including a miss, before their timings are comparable."
           }
         ]
       },
@@ -65263,6 +65527,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Python standard-library cProfile; profiling and benchmark boundaries differ. Primary page checked; local commands executed separately."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "experiment() runs two children that mostly sleep. How does process_cpu compare with parent_wall?",
+            "options": [
+              "Much smaller: sleeping is waiting, not CPU work",
+              "About the same",
+              "Larger, because two threads ran"
+            ],
+            "correct": 0,
+            "explanation": "Wall time includes waiting. A CPU profile of this request would show little, because the time is spent blocked."
+          }
         ]
       },
       {
@@ -65313,6 +65589,18 @@ const LEARNING_PATHS = [
             "section": "Snapshot comparison; tracked allocations; current and peak size",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Memory peaks during a workload, then falls back once references are released. Is that a leak?",
+            "options": [
+              "No: temporary allocation is not retention",
+              "Yes: any peak is a leak",
+              "Only if the peak is above 100 MB"
+            ],
+            "correct": 0,
+            "explanation": "A leak is memory that stays reachable beyond its intended lifetime. Compare snapshots across a controlled workload."
           }
         ]
       },
@@ -65371,6 +65659,18 @@ const LEARNING_PATHS = [
             "section": "Correcting coordinated omission; constant throughput",
             "reviewed": "2026-09-30",
             "scope": "Primary implementation documentation explains constant-throughput and coordinated-omission concerns. This kit uses a bounded closed-loop client, not wrk2."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An open-loop test targets a fixed arrival rate. What happens to the offered rate as the service slows?",
+            "options": [
+              "It stays at the target, within the generator's capacity",
+              "It falls, because workers wait",
+              "It rises to compensate"
+            ],
+            "correct": 0,
+            "explanation": "Open-loop arrivals do not wait for responses, unlike a fixed-worker closed loop. The generator can still become the bottleneck."
           }
         ]
       },
@@ -65437,6 +65737,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Average queueing quantities require corresponding boundaries and existence of long-run limits; not a transient capacity guarantee."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A stable queue receives 20 items per second, and each spends 0.5 seconds in the system. How many items are in it on average?",
+            "options": [
+              "10",
+              "40",
+              "20.5"
+            ],
+            "correct": 0,
+            "explanation": "Little's law gives L = λ × W = 20 × 0.5. It holds for steady-state averages with matching units."
+          }
         ]
       },
       {
@@ -65487,6 +65799,18 @@ const LEARNING_PATHS = [
             "section": "Latency contributors and processing boundaries",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The API responds in 50 ms, but the page then renders thousands of rows slowly. Where is the delay?",
+            "options": [
+              "In browser rendering",
+              "In the database",
+              "In the network"
+            ],
+            "correct": 0,
+            "explanation": "A fast API does not guarantee a fast visible result. Locate the measured delay before choosing an optimisation."
           }
         ]
       },
@@ -65648,7 +65972,19 @@ const LEARNING_PATHS = [
               "explanation": "Repeat the task and check that backlog and failures recover."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "With profile=fail, which of service.py's requests 1 to 10 return 503?",
+            "options": [
+              "5 and 10",
+              "Only 10",
+              "None of them"
+            ],
+            "correct": 0,
+            "explanation": "The injected fault hits every fifth request. A repeatable failure lets the runbook's hypothesis be tested."
+          }
+        ]
       },
       {
         "id": "telemetry-release",
@@ -65705,6 +66041,18 @@ const LEARNING_PATHS = [
             "section": "Security considerations; ThreadingHTTPServer",
             "reviewed": "2026-09-30",
             "scope": "Standard-library HTTP server for local teaching only; not recommended for production."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "service.py receives GET /work?n=1&profile=burst. What status comes back?",
+            "options": [
+              "400",
+              "200",
+              "503"
+            ],
+            "correct": 0,
+            "explanation": "Profiles are an allowlist of healthy, slow and fail. An unknown value is a client error, not a new behaviour."
           }
         ]
       }
