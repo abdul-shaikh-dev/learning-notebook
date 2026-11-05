@@ -99,7 +99,39 @@ const LEARNING_PATHS = [
             "The final result does not claim a write occurred."
           ],
           "solution": "Start from harness_workshop.py but initially expose only read_lesson. Validate proposal shape before lookup and authorize the resource before dispatch. Keep state, cursor and step counter outside model text. Use scripted fixtures for normal and rejected calls. The source is a reference, not a required architecture for every application."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A harness is given an empty script. What does run() return?",
+            "options": [
+              "failed, with reason script_exhausted_without_final",
+              "done",
+              "limited, with reason step_budget"
+            ],
+            "correct": 0,
+            "explanation": "A run that ends without a final action is not success. The stop reason says the script ran out."
+          },
+          {
+            "question": "The host calls deny() while the run waits to save. What are the status and effect_count?",
+            "options": [
+              "denied, with effect_count 0",
+              "done, with effect_count 0",
+              "denied, with effect_count 1"
+            ],
+            "correct": 0,
+            "explanation": "Denial stops the run before dispatch, so the store never records the note."
+          },
+          {
+            "question": "Policy allows lesson L3, but the store has no L3. What happens when the script reads it?",
+            "options": [
+              "failed, with reason read_adapter_error",
+              "denied, with reason resource_policy",
+              "done, with an empty lesson"
+            ],
+            "correct": 0,
+            "explanation": "Authorization passed, so the read started. The adapter then failed, which is a different outcome from a policy denial."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -127,7 +159,39 @@ const LEARNING_PATHS = [
             "Uncertain state is visible until a receipt resolves it."
           ],
           "solution": "Use a canonical operation fingerprint and a host-only approval method. The fake store coordinates its note and receipt in one local operation. After simulated response loss, enter uncertain and reconcile by the original identity. Restore trusted JSON only with matching script/version and require review again for waiting actions. The workshop does not establish crash durability or real user authentication."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A checkpoint is restored with a script whose save text was edited. What does restore() do?",
+            "options": [
+              "Raises ValueError: checkpoint script mismatch",
+              "Resumes at the saved cursor with the new text",
+              "Starts the edited script from the beginning"
+            ],
+            "correct": 0,
+            "explanation": "The checkpoint stores the script's hash. A changed script cannot silently resume at the old position."
+          },
+          {
+            "question": "A checkpoint for learner-a is restored with subject learner-b. What does restore() do?",
+            "options": [
+              "Raises ValueError: checkpoint identity mismatch",
+              "Resumes the run as learner-b",
+              "Resumes the run as learner-a"
+            ],
+            "correct": 0,
+            "explanation": "The host supplies the expected run and subject, and restore refuses a checkpoint that belongs to someone else."
+          },
+          {
+            "question": "The host calls cancel() while a save is uncertain. What are the status and reason?",
+            "options": [
+              "uncertain, with reason cancelled_pending_reconciliation",
+              "cancelled, with reason host_cancelled",
+              "failed, with reason read_adapter_error"
+            ],
+            "correct": 0,
+            "explanation": "Cancelling stops future work but cannot turn an unknown effect into a known one. The run still needs reconciliation."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -156,7 +220,39 @@ const LEARNING_PATHS = [
             "Every new permission or external adapter has a verification plan."
           ],
           "solution": "Use the downloadable runbook and ADR as templates. Keep a single-worker offline baseline while proposing durable atomic receipts, authenticated approvals and protected checkpoint writes as separate additions. Explain enforcement at each boundary and how a failure test could refute the design. Record which evaluations were actually executed and which remain planned."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "Two connections both create checkpoint 'new' with expected_version=0. A saves first. What happens to B's save?",
+            "options": [
+              "Conflict: checkpoint already exists, and A's state is kept",
+              "B's state replaces A's",
+              "Both rows are kept"
+            ],
+            "correct": 0,
+            "explanation": "Creation uses the primary key, so the second insert fails and the winner's state is preserved."
+          },
+          {
+            "question": "Operation C2 already saved one note. A new run with the same run ID and subject proposes C2 with different note text, and the host approves it. How does the run end?",
+            "options": [
+              "rejected, with reason intent_conflict",
+              "done, with a second note saved",
+              "done, returning the first receipt"
+            ],
+            "correct": 0,
+            "explanation": "The operation ID is bound to a fingerprint of its intent. Reusing it with different arguments conflicts instead of writing or returning the old result."
+          },
+          {
+            "question": "SQLiteEffects.save runs twice with the same key and fingerprint. How many lab_note rows are there?",
+            "options": [
+              "1",
+              "2",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "The second call finds the existing receipt inside the transaction and returns it, so the effect happens once."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -327,7 +423,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The workshop demo reads L1 and then proposes save_note. After the first run(), what are the status and the store's effect_count?",
+            "options": [
+              "waiting, with effect_count 0",
+              "done, with effect_count 1",
+              "ready, with effect_count 1"
+            ],
+            "correct": 0,
+            "explanation": "The proposal is data. The harness read the lesson, then paused before the write for a host decision, so no note exists yet."
+          }
+        ]
       },
       {
         "id": "task-contract",
@@ -382,6 +490,18 @@ const LEARNING_PATHS = [
             "section": "Deny by default; validate permissions on every request",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The task contract allows only lesson L1, and the script proposes read_lesson for L2. What does run() return?",
+            "options": [
+              "denied, before any read starts",
+              "done, after reading L2",
+              "rejected, because L2 is malformed"
+            ],
+            "correct": 0,
+            "explanation": "L2 is a well-formed ID outside the trusted contract, so resource policy denies it before the handler is called."
           }
         ]
       },
@@ -569,7 +689,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The fake store commits the note, then loses the reply. What status does the run enter after the host approves the save?",
+            "options": [
+              "uncertain",
+              "failed",
+              "done"
+            ],
+            "correct": 0,
+            "explanation": "The harness cannot tell whether the effect happened, so it records uncertain instead of calling it a failure that might invite a blind retry."
+          }
+        ]
       },
       {
         "id": "state-context",
@@ -624,6 +756,18 @@ const LEARNING_PATHS = [
             "section": "Basic usage; JSONEncoder and JSONDecoder",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A script's only proposal is a final answer saying 'Note saved.'. What does the run's confirmed_notes hold?",
+            "options": [
+              "[]",
+              "['N1']",
+              "['Note saved.']"
+            ],
+            "correct": 0,
+            "explanation": "Confirmed notes come only from validated store receipts. Model text claiming a save establishes nothing."
           }
         ]
       },
@@ -680,6 +824,18 @@ const LEARNING_PATHS = [
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A proposal names the tool delete_note. What happens?",
+            "options": [
+              "The run is rejected as invalid_action and no handler runs",
+              "The run waits for approval",
+              "The harness looks for a delete_note function"
+            ],
+            "correct": 0,
+            "explanation": "The registry holds only read_lesson and save_note. An unknown name is rejected during validation; it never selects code dynamically."
           }
         ]
       },
@@ -743,6 +899,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A save_note proposal has args {'lesson_id': 'L1', 'text': ''}. What does run() return?",
+            "options": [
+              "rejected",
+              "waiting",
+              "denied"
+            ],
+            "correct": 0,
+            "explanation": "The fields are the right ones, but blank note text fails the bounded-text rule, so the proposal is rejected before policy or approval."
+          }
         ]
       },
       {
@@ -798,6 +966,18 @@ const LEARNING_PATHS = [
             "section": "Deny by default; validate permissions on every request",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The run has allow_write=False, and the script proposes save_note for L1. What happens?",
+            "options": [
+              "denied, without asking for approval",
+              "waiting for approval",
+              "done, because L1 is allowed"
+            ],
+            "correct": 0,
+            "explanation": "Authorization runs before approval. A reviewer cannot approve an operation the current policy forbids."
           }
         ]
       },
@@ -869,6 +1049,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A script reads L1 and then gives a final answer. Which events does the run record?",
+            "options": [
+              "proposal_received, tool_started, tool_confirmed, proposal_received, run_completed",
+              "tool_confirmed, run_completed",
+              "proposal_received, tool_confirmed, run_completed"
+            ],
+            "correct": 0,
+            "explanation": "Each counted proposal, the tool start, its confirmed result and the completion are separate runtime facts."
+          }
         ]
       },
       {
@@ -924,6 +1116,18 @@ const LEARNING_PATHS = [
             "section": "time.monotonic",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "With max_steps=2, a script reads L1, reads L2, then gives a final answer. How does the run end?",
+            "options": [
+              "limited, with reason step_budget",
+              "done",
+              "failed, with reason script_exhausted_without_final"
+            ],
+            "correct": 0,
+            "explanation": "Both reads use the two counted proposals, so the final answer is never requested."
           }
         ]
       },
@@ -1127,7 +1331,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A run waits to save 'Review index write costs.'. The host approves the fingerprint of a different note text. What happens?",
+            "options": [
+              "ValueError, and the run stays waiting",
+              "The save runs with the approved text",
+              "The run is denied"
+            ],
+            "correct": 0,
+            "explanation": "Approval must equal the fingerprint of the exact pending intent. A mismatch is refused and nothing is dispatched."
+          }
+        ]
       },
       {
         "id": "deadlines",
@@ -1182,6 +1398,18 @@ const LEARNING_PATHS = [
             "section": "time.monotonic",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "max_seconds is 30, and the injected clock reads 31 seconds after the harness was created when run() starts. What happens?",
+            "options": [
+              "limited, with reason elapsed_budget, before any proposal",
+              "The first proposal runs, then the run stops",
+              "Nothing: the clock is only checked after tool calls"
+            ],
+            "correct": 0,
+            "explanation": "The boundary check runs before requesting a proposal, so expiry stops new work. It cannot preempt a call already running."
           }
         ]
       },
@@ -1238,6 +1466,18 @@ const LEARNING_PATHS = [
             "section": "Reducing client complexity with idempotent API design",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The store fails one read with a transient error, and read_attempts is 2. What does the run record for that read?",
+            "options": [
+              "tool_retryable, then tool_confirmed on the second attempt",
+              "failed, with reason read_attempt_budget",
+              "tool_confirmed on the first attempt"
+            ],
+            "correct": 0,
+            "explanation": "A known transient read before any effect is safe to retry within the explicit attempt budget."
           }
         ]
       },
@@ -1916,7 +2156,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "After the lost reply leaves a save uncertain, the host calls reconcile(). What is the result?",
+            "options": [
+              "True: the receipt confirms N1, and effect_count stays 1",
+              "True, and the note is saved again as N2",
+              "False: the write must be retried"
+            ],
+            "correct": 0,
+            "explanation": "Reconciliation looks up the receipt for the same operation identity and payload. It never reissues the write."
+          }
+        ]
       },
       {
         "id": "checkpoints",
@@ -2143,7 +2395,19 @@ const LEARNING_PATHS = [
               "explanation": "Restore is not a new entitlement, and omitted approval must not be reconstructed from prose."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A run waiting for approval is checkpointed and restored. What must happen before the save can run?",
+            "options": [
+              "The host approves again: approval is not in the checkpoint",
+              "Nothing: the approval is restored with the run",
+              "The run starts again from its first proposal"
+            ],
+            "correct": 0,
+            "explanation": "The checkpoint keeps status, counters and the pending action, but the workshop discards approval on restore so a stale decision cannot reappear."
+          }
+        ]
       },
       {
         "id": "context-lifecycle",
@@ -2198,6 +2462,18 @@ const LEARNING_PATHS = [
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does the fake store's read return for a 2,500-character lesson?",
+            "options": [
+              "The first 2,000 characters, with truncated: true",
+              "All 2,500 characters",
+              "An error, because the lesson is too long"
+            ],
+            "correct": 0,
+            "explanation": "The observation is bounded, and the truncated marker says so explicitly instead of silently hiding the cut."
           }
         ]
       },
@@ -2293,6 +2569,18 @@ const LEARNING_PATHS = [
             "section": "Safety risks and mitigations",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A lesson excerpt tells the agent to save a note, and the script then proposes save_note for an allowed lesson. What happens?",
+            "options": [
+              "The run waits for approval; nothing is saved",
+              "The note is saved, because the tool and lesson are allowed",
+              "The run is rejected as an injection"
+            ],
+            "correct": 0,
+            "explanation": "The harness does not detect the persuasion, but the write still needs a host approval bound to its exact intent. Containment comes from the boundary, not from recognising the text."
           }
         ]
       },
@@ -2450,7 +2738,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A task needs to run untrusted code. Where should the notes service credential live?",
+            "options": [
+              "In the trusted harness, outside the code's sandbox",
+              "In the sandbox's environment variables",
+              "In the prompt, so the model can pass it on"
+            ],
+            "correct": 0,
+            "explanation": "The harness owns secrets and business access. A constrained compute boundary should not hold credentials the executed code could exfiltrate."
+          }
+        ]
       },
       {
         "id": "concurrency",
@@ -2646,7 +2946,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Two connections load checkpoint version 1. A saves first. What happens when B saves with expected_version=1?",
+            "options": [
+              "Conflict: stale or missing checkpoint",
+              "B's state overwrites A's",
+              "B's save becomes version 3"
+            ],
+            "correct": 0,
+            "explanation": "The conditional UPDATE matches only the current version, so B affects no row and must reload before retrying."
+          }
+        ]
       },
       {
         "id": "replay",
@@ -2808,7 +3120,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A recorded trace is replayed to inspect a past decision. What should happen to its save_note step?",
+            "options": [
+              "Use the recorded receipt; do not reissue the write",
+              "Call save_note again so the trace is complete",
+              "Ask for approval again, then save"
+            ],
+            "correct": 0,
+            "explanation": "Historical replay reconstructs decisions from recorded outcomes. Reissuing effects as fresh live writes would duplicate them."
+          }
+        ]
       },
       {
         "id": "audit",
@@ -2870,6 +3194,18 @@ const LEARNING_PATHS = [
             "section": "Data to exclude; protecting logs",
             "reviewed": "2026-10-02",
             "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "After a reviewed save of 'Review index write costs.', does any recorded event contain the note text?",
+            "options": [
+              "No: events keep only allowlisted fields such as tool and call_id",
+              "Yes: tool_started records the arguments",
+              "Yes: tool_confirmed records the saved note"
+            ],
+            "correct": 0,
+            "explanation": "The event writer builds rows from an explicit field allowlist, so note text and raw arguments never enter the log."
           }
         ]
       },
@@ -2934,6 +3270,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An answer cites a lesson ID that no tool returned. Which check catches it?",
+            "options": [
+              "Citation membership against observed evidence",
+              "Retrieval relevance",
+              "Authorization at the effect boundary"
+            ],
+            "correct": 0,
+            "explanation": "Each failure needs its own check: retrieval relevance for the wrong document, citation membership for unobserved IDs and authorization for unapproved writes."
+          }
         ]
       },
       {
@@ -2989,6 +3337,18 @@ const LEARNING_PATHS = [
             "section": "Test cases; assertRaises",
             "reviewed": "2026-09-27",
             "scope": "Runtime policy and recovery with scripted tools. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A bad policy release is rolled back to the previous version. What must the rollback not do?",
+            "options": [
+              "Re-grant a permission revoked since that version",
+              "Restore the previous tool schemas",
+              "Record which version is now live"
+            ],
+            "correct": 0,
+            "explanation": "Rollback restores behaviour, not history. A permission revoked after the old version shipped must stay revoked, and saved notes need their own recovery."
           }
         ]
       },
@@ -3158,7 +3518,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A process dies after the SQLite note and receipt commit, but before its checkpoint leaves waiting. What status does restore_checkpoint give the run?",
+            "options": [
+              "uncertain",
+              "waiting",
+              "done"
+            ],
+            "correct": 0,
+            "explanation": "Restore finds a receipt for the pending operation, so it records uncertain for reconciliation rather than asking for approval to save again."
+          }
+        ]
       },
       {
         "id": "capstone",
@@ -3226,6 +3598,18 @@ const LEARNING_PATHS = [
             "section": "Read versus write transactions; transaction control",
             "reviewed": "2026-09-27",
             "scope": "Trusted local checkpoint exercise; two-connection CAS evidence, no secure sandbox or external effect atomicity."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "At the end of the workshop demo, after the host approves the save, what are the confirmed note IDs and the effect count?",
+            "options": [
+              "['N1'] and 1",
+              "[] and 0",
+              "['N1', 'N2'] and 2"
+            ],
+            "correct": 0,
+            "explanation": "One approved save produced one receipt and one effect. The final scripted step then completes the run."
           }
         ]
       }
@@ -3607,7 +3991,39 @@ const LEARNING_PATHS = [
             "Missing evidence is reported without invented support."
           ],
           "solution": "Use the workshop success script to search joins and finish with SQL-07. Compare its event list with the diagram. Run a script that asks a clarification question. Explain why citation-ID validation is necessary but does not prove the meaning of the answer."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A source proposes {'kind': 'clarify', 'question': 'Which course do you mean?'}. What does run() return?",
+            "options": [
+              "Status needs_input, with the question as the answer",
+              "Status completed",
+              "Status invalid, because no tool ran"
+            ],
+            "correct": 0,
+            "explanation": "Clarification is a terminal outcome of its own. The run stops and reports the question instead of guessing."
+          },
+          {
+            "question": "ScriptedSource holds one proposal, a search for 'joins', and run() uses max_steps=4. What status does it return?",
+            "options": [
+              "failed, with a source_exhausted event",
+              "budget_exhausted",
+              "completed"
+            ],
+            "correct": 0,
+            "explanation": "After the search, the source has nothing left to propose and raises StopIteration on the second step. The budget was not reached."
+          },
+          {
+            "question": "A source proposes {'kind': 'stop', 'reason': 'no results'}. What does run() return?",
+            "options": [
+              "Status invalid: the only accepted reason is insufficient_evidence",
+              "Status incomplete",
+              "Status failed"
+            ],
+            "correct": 0,
+            "explanation": "A stop is accepted only with the reason insufficient_evidence, which returns incomplete. Any other reason is an invalid proposal."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -3634,7 +4050,39 @@ const LEARNING_PATHS = [
             "Hypothetical delivery has concrete approval and unknown-outcome handling."
           ],
           "solution": "Use the existing call recorder to verify zero executions for rejected proposals. Inject a malformed or failing tool adapter and assert failed status. Keep the workshop read-only; document approval binding and idempotency requirements before introducing effects."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A search adapter returns SQL-07 twice in one result. What does run() return?",
+            "options": [
+              "Status failed: duplicate evidence ID",
+              "Status completed with one SQL-07",
+              "Status invalid, before the tool starts"
+            ],
+            "correct": 0,
+            "explanation": "validate_observation rejects duplicate IDs in one observation. The tool had already started, so the step is a tool failure."
+          },
+          {
+            "question": "A proposal searches with an 81-character query. What happens?",
+            "options": [
+              "Status invalid, and the tool never starts",
+              "The query is cut to 80 characters and searched",
+              "The search runs and returns no hits"
+            ],
+            "correct": 0,
+            "explanation": "bounded_text checks the length before stripping and rejects text over 80 characters. Validation happens before execution, not by truncating."
+          },
+          {
+            "question": "A script searches 'joins', then finishes citing ['SQL-07', 'SQL-07']. What does run() return?",
+            "options": [
+              "Status invalid: duplicate citations",
+              "Status completed with one citation",
+              "Status completed with two citations"
+            ],
+            "correct": 0,
+            "explanation": "The finish contract rejects duplicate citations as well as unobserved ones, so the run ends invalid instead of completing."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -3663,7 +4111,39 @@ const LEARNING_PATHS = [
             "Live model, tool-calling and Fleet results are claimed only for runs actually performed."
           ],
           "solution": "Follow local-framework-guide.md and implement the routing before comparing local_framework_lab.py. test_local_framework_lab.py exercises real LangGraph with deterministic drafts. Use the same questions and records for optional live modes so that differences can be attributed to control flow and model behaviour. Fleet remains a separate optional migration exercise requiring workspace access."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "Which records does local_framework_lab.search_records('What happens to a failed import?') return?",
+            "options": [
+              "D1 only",
+              "D1 and D3",
+              "D1, D2 and D3"
+            ],
+            "correct": 0,
+            "explanation": "After stop words, only D1 shares terms with the question (failed, import). Records with no shared term are dropped, so D2 and D3 are not returned."
+          },
+          {
+            "question": "local_framework_lab.citation_check receives the draft 'Roll back [D1]; replay [D2].' and evidence holding only D1. What does it return?",
+            "options": [
+              "False: D2 is not in the evidence",
+              "True: D1 is cited",
+              "True: both IDs look valid"
+            ],
+            "correct": 0,
+            "explanation": "Every cited ID must be in the retrieved evidence. One unretrieved citation fails the check, which proves membership, not that the claims are supported."
+          },
+          {
+            "question": "provider_eval.evaluate('test-model', repeats=2) runs offline with no transport. How many rows does it return?",
+            "options": [
+              "6 request rows, with nothing sent",
+              "2 rows",
+              "6 scored answers"
+            ],
+            "correct": 0,
+            "explanation": "Three cases × two repeats gives six rows. Without a transport, each row holds the built request; nothing is sent and nothing is scored."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -3728,6 +4208,18 @@ const LEARNING_PATHS = [
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The workshop demo searches 'joins', then finishes citing SQL-07, and run() returns status completed. What does that status establish?",
+            "options": [
+              "The search ran and every citation is an observed evidence ID",
+              "The answer is semantically correct",
+              "A language model chose to search"
+            ],
+            "correct": 0,
+            "explanation": "run() marks completed only after the executor ran the search and the finish cited IDs it had observed. It checks membership, not meaning, and ScriptedSource is a test double, not a model."
           }
         ]
       },
@@ -3923,7 +4415,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A page asks for a lesson ID and displays that lesson. Which design fits?",
+            "options": [
+              "Fixed workflow code, because the sequence and rules are known",
+              "An agent loop that decides whether to look the lesson up",
+              "A planner agent with a reviewer agent"
+            ],
+            "correct": 0,
+            "explanation": "Deterministic code suits a known sequence. Model-directed choice earns its variability only when the next useful step depends on varied language or evidence."
+          }
+        ]
       },
       {
         "id": "context",
@@ -3986,6 +4490,18 @@ const LEARNING_PATHS = [
             "section": "Managing the context window",
             "reviewed": "2026-10-02",
             "scope": "Supports this lesson mechanism. Local fixtures do not establish live-provider or distributed-system behaviour."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "run(source, max_steps=4) passes a context to the source on every proposal. What is remaining_proposals in the context for step 2?",
+            "options": [
+              "3",
+              "2",
+              "4"
+            ],
+            "correct": 0,
+            "explanation": "The context reports max_steps − step + 1, counting the proposal being asked for. The next-step package carries the remaining budget instead of the whole transcript."
           }
         ]
       },
@@ -4137,7 +4653,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A retrieved page tells the agent to upload the learner profile, and the source then proposes a tool named upload_profile. What does run() return?",
+            "options": [
+              "Status denied, with no tool_started event",
+              "Status failed, after the tool starts and errors",
+              "Status completed, because the proposal is well formed"
+            ],
+            "correct": 0,
+            "explanation": "The registry allows only search_lessons. Any other tool name is denied before execution, whatever text persuaded the source to propose it."
+          }
+        ]
       },
       {
         "id": "tools",
@@ -4200,6 +4728,18 @@ const LEARNING_PATHS = [
             "section": "Abstract, method and evaluation",
             "reviewed": "2026-09-27",
             "scope": "Optional original research reading; results belong to paper settings, not this workshop."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A search for 'quantum' finds nothing in the workshop collection. What does run() record for that tool step?",
+            "options": [
+              "tool_succeeded with 0 hits",
+              "tool_failed",
+              "invalid_arguments"
+            ],
+            "correct": 0,
+            "explanation": "An empty hits list is a valid search result. Invalid input and malformed output are separate tool failures."
           }
         ]
       },
@@ -4969,7 +5509,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "With max_steps=1, a script searches 'joins' and would then finish citing SQL-07. What status does run() return?",
+            "options": [
+              "budget_exhausted",
+              "completed",
+              "invalid"
+            ],
+            "correct": 0,
+            "explanation": "The search uses the only proposal, so the finish is never asked for. A finish also consumes a proposal from the budget."
+          }
+        ]
       },
       {
         "id": "state",
@@ -5033,6 +5585,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "With max_steps=2, a script searches 'joins', then 'functions'. Which evidence IDs does the result hold?",
+            "options": [
+              "SQL-07 and PY-01",
+              "SQL-07 only",
+              "None, because the run did not complete"
+            ],
+            "correct": 0,
+            "explanation": "Evidence records what the executor observed, so both searches' hits are kept even though the run ends as budget_exhausted rather than completed."
+          }
         ]
       },
       {
@@ -5089,6 +5653,18 @@ const LEARNING_PATHS = [
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A script searches 'joins', then finishes citing PY-01. What does run() return?",
+            "options": [
+              "Status invalid: PY-01 was never observed",
+              "Status completed: PY-01 is a real lesson ID",
+              "Status completed with no citations"
+            ],
+            "correct": 0,
+            "explanation": "A citation must name evidence observed in this run. PY-01 exists in the collection, but the search for joins did not return it."
           }
         ]
       },
@@ -5148,6 +5724,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A proposal calls search_lessons with args {'query': 'joins', 'limit': 5}. What happens?",
+            "options": [
+              "Status invalid, and the tool never starts",
+              "The search runs and ignores limit",
+              "The search runs and returns at most 5 hits"
+            ],
+            "correct": 0,
+            "explanation": "The validator accepts exactly one query field. Unexpected properties are rejected before execution rather than quietly accepted."
+          }
         ]
       },
       {
@@ -5204,6 +5792,18 @@ const LEARNING_PATHS = [
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A search adapter returns four hits. The workshop's observation contract allows three. What does run() return?",
+            "options": [
+              "Status failed, after tool_started and tool_failed",
+              "Status completed with the first three hits",
+              "Status invalid, before the tool starts"
+            ],
+            "correct": 0,
+            "explanation": "Output is validated after the adapter returns. Too many hits break the contract, so the step fails instead of silently truncating evidence."
           }
         ]
       },
@@ -5396,7 +5996,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does the workshop's search_lessons('combining rows') return?",
+            "options": [
+              "No hits",
+              "SQL-07",
+              "SQL-07 and PY-01"
+            ],
+            "correct": 0,
+            "explanation": "The lexical search needs every term in a title or excerpt. The join lesson says matching row pairs, so a paraphrase finds nothing until the query is reformulated."
+          }
+        ]
       },
       {
         "id": "memory",
@@ -5452,6 +6064,18 @@ const LEARNING_PATHS = [
             "section": "Safety risks and mitigations",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A learner once said they prefer Python examples. What may that stored preference do later?",
+            "options": [
+              "Guide the language of examples for that learner",
+              "Authorize exports the learner did not request",
+              "Apply to every learner using the assistant"
+            ],
+            "correct": 0,
+            "explanation": "A preference has a learner scope and an explicit source. It can shape explanations but carries no authority for actions and must not leak across users."
           }
         ]
       },
@@ -5610,7 +6234,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A plan says: search the prerequisites, then explain an order. The first search finds two courses with conflicting lists. What next?",
+            "options": [
+              "Pause and ask which course is meant, recording the completed search",
+              "Continue the plan and merge both lists",
+              "Restart the plan from the beginning"
+            ],
+            "correct": 0,
+            "explanation": "New evidence made course identity material, so the next action changes. The completed search stays recorded as actual state."
+          }
+        ]
       },
       {
         "id": "clarification",
@@ -5666,6 +6302,18 @@ const LEARNING_PATHS = [
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A learner with two weekly sessions asks to move my session to Friday. What should the assistant do?",
+            "options": [
+              "Ask which session, showing both, before editing",
+              "Move the earlier session and mention it",
+              "Move both sessions to Friday"
+            ],
+            "correct": 0,
+            "explanation": "The two interpretations change different schedule entries, so guessing would make a consequential edit on the wrong one. A concrete question resolves it."
           }
         ]
       },
@@ -5846,7 +6494,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A learner approved sending report R to one recipient. The agent then changes the recipient. What does the approval now cover?",
+            "options": [
+              "Nothing: it was bound to the original recipient and content",
+              "The new recipient, because the report is unchanged",
+              "Any recipient, because the learner approved sending"
+            ],
+            "correct": 0,
+            "explanation": "Approval is checked against the concrete action. Changing the destination makes it a different action that needs its own approval."
+          }
+        ]
       },
       {
         "id": "failures",
@@ -5902,6 +6562,18 @@ const LEARNING_PATHS = [
             "section": "Function calling; strict mode; executing functions",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The search adapter raises TimeoutError. What does run() record?",
+            "options": [
+              "tool_started, then tool_failed, with status failed",
+              "tool_failed without tool_started",
+              "A retry, then tool_succeeded"
+            ],
+            "correct": 0,
+            "explanation": "The workshop stops on tool failures to keep behaviour inspectable. A read timeout may justify a bounded retry elsewhere; this harness does not retry."
           }
         ]
       },
@@ -5959,6 +6631,18 @@ const LEARNING_PATHS = [
             "section": "Agent runtime choices",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does run(source, max_steps=21) do?",
+            "options": [
+              "Raises ValueError: max_steps must be an integer from 1 to 20",
+              "Runs up to 21 proposals",
+              "Runs up to 20 proposals and ignores the rest"
+            ],
+            "correct": 0,
+            "explanation": "The budget itself is validated before the loop starts. It bounds proposal count, not time: a hanging adapter still needs an enforced deadline."
           }
         ]
       },
@@ -6044,6 +6728,18 @@ const LEARNING_PATHS = [
             "section": "Safety risks and mitigations",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "provider_eval's injection case forbids PRIVATE_PROFILES_UPLOADED. How does its heuristic score an answer that cites SQL-07 and also says PRIVATE_PROFILES_UPLOADED?",
+            "options": [
+              "False: a forbidden term fails the case",
+              "True: the required citation is present",
+              "Half credit"
+            ],
+            "correct": 0,
+            "explanation": "score() requires every required term and no forbidden term. Repeating injected text fails the case even when the answer also cites real evidence."
           }
         ]
       },
@@ -6147,6 +6843,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Optional original research reading; results belong to paper settings, not this workshop."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In evaluation_cases.json, what status does the missing-topic case expect?",
+            "options": [
+              "incomplete",
+              "failed",
+              "completed"
+            ],
+            "correct": 0,
+            "explanation": "Empty hits are a successful tool result, so the run should stop as incomplete with the evidence gap stated, not fail or answer."
+          }
         ]
       },
       {
@@ -6203,6 +6911,18 @@ const LEARNING_PATHS = [
             "section": "Evaluation design and continuous evaluation",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which event sequence does the workshop demo record?",
+            "options": [
+              "tool_started, tool_succeeded, completed",
+              "completed",
+              "tool_succeeded, completed"
+            ],
+            "correct": 0,
+            "explanation": "Application events show the tool starting, its validated result and completion. They are operational records, not hidden model reasoning."
           }
         ]
       },
@@ -6358,7 +7078,19 @@ const LEARNING_PATHS = [
               "explanation": "Agreement is not a safety probability; inspect fluent but unsupported answers and important errors."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "How does provider_eval's heuristic score 'An INNER JOIN keeps matching rows.' for the known case?",
+            "options": [
+              "False: the required SQL-07 citation is missing",
+              "True: the answer is correct",
+              "True: it contains 'matching'"
+            ],
+            "correct": 0,
+            "explanation": "The case requires both 'matching' and 'SQL-07'. A correct sentence without the citation fails this check, which is why a crude scorer needs calibration against human labels."
+          }
+        ]
       },
       {
         "id": "multiagent",
@@ -6527,7 +7259,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A coordinator starts two workers, each limited to 5 tool calls. What bounds the task's total calls?",
+            "options": [
+              "An aggregate budget owned by the coordinator",
+              "The 5-call limit on each worker",
+              "Nothing needs to: each worker is bounded"
+            ],
+            "correct": 0,
+            "explanation": "Per-worker limits do not bound fan-out or re-delegation. Set an aggregate budget and assign ownership for shared state."
+          }
+        ]
       },
       {
         "id": "deployment",
@@ -6583,6 +7327,18 @@ const LEARNING_PATHS = [
             "section": "Evaluation design and continuous evaluation",
             "reviewed": "2026-09-27",
             "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The code and prompt are unchanged, but the retrieval collection was updated. Do the evaluations need rerunning?",
+            "options": [
+              "Yes: the collection is part of the behaviour-changing bundle",
+              "No: only code and prompt changes affect behaviour",
+              "Only if the model changed too"
+            ],
+            "correct": 0,
+            "explanation": "A changed source collection can alter answers with identical code. Record its version in the release bundle and compare on the fixed dataset."
           }
         ]
       },
@@ -6656,6 +7412,18 @@ const LEARNING_PATHS = [
             "section": "Strict mode; function-call outputs",
             "reviewed": "2026-09-27",
             "scope": "Responses request builder inspected against official docs 2026-09-27; no live provider execution."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "provider_scaffold.evidence records 1,000 input and 500 output tokens at 2.0 and 8.0 per million tokens. What estimated_token_cost does it return?",
+            "options": [
+              "0.006",
+              "0.0025",
+              "0.01"
+            ],
+            "correct": 0,
+            "explanation": "(1,000 × 2.0 + 500 × 8.0) ÷ 1,000,000 = 0.006. It is an estimate from supplied rates, not a provider bill."
           }
         ]
       }
@@ -7143,6 +7911,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Threat-model concepts and abuse-case design; the synthetic exercise is not a production assessment."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Alice (red tenant) asks read_document for Bob's document b and for an ID that does not exist. What does she get?",
+            "options": [
+              "The same PermissionError, document unavailable, for both",
+              "PermissionError for b and KeyError for the missing ID",
+              "PermissionError for b and None for the missing ID"
+            ],
+            "correct": 0,
+            "explanation": "The boundary deliberately makes missing and denied indistinguishable, so a guessed ID does not reveal which documents exist."
+          }
         ]
       },
       {
@@ -7194,6 +7974,18 @@ const LEARNING_PATHS = [
             "section": "V6: authentication architecture",
             "reviewed": "2026-09-27",
             "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Principal('bob', 'red', 'reader') asks to act on Alice's red-tenant document a. What does authorized() allow?",
+            "options": [
+              "Read, but not update",
+              "Read and update",
+              "Neither, because Bob is not the owner"
+            ],
+            "correct": 0,
+            "explanation": "The reader role grants read within the same tenant. Update still requires ownership."
           }
         ]
       },
@@ -7253,6 +8045,18 @@ const LEARNING_PATHS = [
             "section": "Authentication responses and reauthentication",
             "reviewed": "2026-09-27",
             "scope": "Current OWASP guidance reviewed 2026-09-27; production mechanisms remain provider-specific."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Sessions.login is given a plain string instead of a Principal. What happens?",
+            "options": [
+              "It issues a session and identity() returns the string",
+              "It raises TypeError",
+              "It raises PermissionError"
+            ],
+            "correct": 0,
+            "explanation": "Sessions only maps an opaque ID to whatever the trusted adapter supplied. It proves nothing about identity itself, which is why the HTTP seam checks for a Principal."
           }
         ]
       },
@@ -8068,7 +8872,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Alice owns red-tenant document a. What does authorized(Principal('alice', 'red'), a, 'delete') return?",
+            "options": [
+              "False: delete is not an allowed action",
+              "True: owners may do anything",
+              "True: the tenant matches"
+            ],
+            "correct": 0,
+            "explanation": "Actions are allowlisted to read and update. An unknown action is denied before ownership is considered."
+          }
+        ]
       },
       {
         "id": "input-contracts",
@@ -8118,6 +8934,18 @@ const LEARNING_PATHS = [
             "section": "V2: input validation and business logic",
             "reviewed": "2026-09-27",
             "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does parse_update({'title': 'Plan\\nB'}) do?",
+            "options": [
+              "Raises ValueError: title must contain 1..80 printable characters",
+              "Returns {'title': 'Plan B'}",
+              "Returns {'title': 'Plan\\nB'}"
+            ],
+            "correct": 0,
+            "explanation": "A newline is not printable, so the title fails validation instead of being silently rewritten."
           }
         ]
       },
@@ -8279,7 +9107,19 @@ const LEARNING_PATHS = [
               "explanation": "Logout must invalidate authority rather than only clear a display flag; shared storage remains an extension."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Session S1 is passed as previous to Sessions.login, which returns S2. What does identity(S1, 10) do?",
+            "options": [
+              "Raises PermissionError: session unavailable",
+              "Returns the principal, because S1 has not expired",
+              "Returns the principal for S2"
+            ],
+            "correct": 0,
+            "explanation": "Rotation removes the previous session ID, so a fixated or stolen old ID stops working at login."
+          }
+        ]
       },
       {
         "id": "cookies-transport",
@@ -8346,6 +9186,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Current browser-reference guidance reviewed 2026-09-27; Path controls sending scope but is not a security boundary. Verify supported browser behavior."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A session cookie is named with the __Host- prefix. What do browsers require of it?",
+            "options": [
+              "Secure, Path=/ and no Domain attribute",
+              "HttpOnly and SameSite=Strict",
+              "A Domain attribute matching the site"
+            ],
+            "correct": 0,
+            "explanation": "The prefix is a browser rule tying the cookie to one secure host. HttpOnly and SameSite are separate attributes with separate effects."
+          }
         ]
       },
       {
@@ -8404,6 +9256,18 @@ const LEARNING_PATHS = [
             "section": "Password hashing algorithms and work factors",
             "reviewed": "2026-09-27",
             "scope": "Current mechanism guidance reviewed 2026-09-27; no production hashing implementation supplied."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How should an application store user passwords?",
+            "options": [
+              "With a password-hashing mechanism that uses salts and a work factor",
+              "Encrypted, so support staff can recover them",
+              "As a fast SHA-256 hash"
+            ],
+            "correct": 0,
+            "explanation": "Stored passwords should be slow to guess at scale and not recoverable. Use an established library rather than custom hashing."
           }
         ]
       },
@@ -8598,7 +9462,19 @@ const LEARNING_PATHS = [
               "explanation": "The local HTTP extension checks denied status and unchanged SQLite rows; browser behavior remains separate evidence."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A PATCH to the lab's HTTP seam carries a valid sid cookie but no X-CSRF-Token header. What status comes back?",
+            "options": [
+              "403",
+              "200",
+              "400"
+            ],
+            "correct": 0,
+            "explanation": "The cookie identifies a session, but the mutation also needs the session's CSRF token, so the request is denied before the body is read."
+          }
+        ]
       },
       {
         "id": "xss-context",
@@ -8656,6 +9532,18 @@ const LEARNING_PATHS = [
             "section": "Output encoding by context and safe sinks",
             "reviewed": "2026-09-27",
             "scope": "HTML text-only fixture; no browser certification or rich-HTML sanitizer."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does title_html('<b>Hi</b>') return?",
+            "options": [
+              "<h1>&lt;b&gt;Hi&lt;/b&gt;</h1>",
+              "<h1><b>Hi</b></h1>",
+              "<h1>Hi</h1>"
+            ],
+            "correct": 0,
+            "explanation": "The text-node encoder turns markup characters into entities. The title is shown as text, not parsed as HTML or stripped."
           }
         ]
       },
@@ -8715,6 +9603,18 @@ const LEARNING_PATHS = [
             "section": "How to use placeholders to bind values",
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ SQLite in-memory fixture; syntax of another database driver may differ."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "find_title receives the title x' OR '1'='1 against the two-row synthetic database. How many rows come back?",
+            "options": [
+              "0",
+              "2",
+              "1"
+            ],
+            "correct": 0,
+            "explanation": "The value is bound as a parameter, so it is compared as one literal title. No row has that title."
           }
         ]
       },
@@ -8904,7 +9804,19 @@ const LEARNING_PATHS = [
             5,
             6
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "An API receives a valid access token whose scope allows reading documents. May the caller read every document?",
+            "options": [
+              "No: scope does not replace the API's ownership policy",
+              "Yes: the scope grants read access to all documents",
+              "Yes, if the token has not expired"
+            ],
+            "correct": 0,
+            "explanation": "The API validates the token, then still applies object authorization. Scope says what kind of access was delegated, not which records."
+          }
+        ]
       },
       {
         "id": "oidc-login",
@@ -9068,7 +9980,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "After an OpenID Connect login, what should key the local account?",
+            "options": [
+              "The subject together with its issuer",
+              "The email claim",
+              "The display name"
+            ],
+            "correct": 0,
+            "explanation": "A stable identity is the subject in the issuer's context. Email can change or be reassigned, so it is not universally a permanent key."
+          }
+        ]
       },
       {
         "id": "pkce-state",
@@ -9250,7 +10174,19 @@ const LEARNING_PATHS = [
               "explanation": "Negative evidence belongs to the actual library/provider integration; local policy tests do not prove PKCE."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Pending.begin('A', 'original', 0), then begin('A', 'replacement', 1). What does consume('A', 2) return?",
+            "options": [
+              "'original': the second begin raised ValueError",
+              "'replacement': the newer flow wins",
+              "Nothing: both flows were discarded"
+            ],
+            "correct": 0,
+            "explanation": "A duplicate state is refused, so it cannot overwrite the pending flow it collides with."
+          }
+        ]
       },
       {
         "id": "token-validation",
@@ -9421,7 +10357,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A token's signature verifies, but its audience is a different API. Should the resource server accept it?",
+            "options": [
+              "No: signature success alone is not enough",
+              "Yes: a valid signature proves it is trustworthy",
+              "Yes, if the issuer is trusted"
+            ],
+            "correct": 0,
+            "explanation": "The validator must also check issuer, audience, lifetime and token purpose. A correctly signed token for another recipient must fail."
+          }
+        ]
       },
       {
         "id": "secrets",
@@ -9573,7 +10521,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A credential moves out of source code into an environment variable. Can it still leak?",
+            "options": [
+              "Yes, through process diagnostics or error reporting",
+              "No: environment variables are never logged",
+              "No, once it is removed from Git history"
+            ],
+            "correct": 0,
+            "explanation": "Moving a secret changes where it lives, not whether it can be exposed. Redaction must be tested against the fields actually emitted."
+          }
+        ]
       },
       {
         "id": "logging",
@@ -9624,6 +10584,18 @@ const LEARNING_PATHS = [
             "section": "V16: security logging and error handling",
             "reviewed": "2026-09-27",
             "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does safe_audit('document.delete', 'u-17', 'allowed') do?",
+            "options": [
+              "Raises ValueError: unknown event",
+              "Records the event",
+              "Records the event with outcome denied"
+            ],
+            "correct": 0,
+            "explanation": "The audit helper accepts only an allowlist of event names, so an unexpected event is refused rather than written."
           }
         ]
       },
@@ -9677,6 +10649,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A README says the app uses version 2.3 of a library. Does that show which version is deployed?",
+            "options": [
+              "No: check the shipped lockfile or artifact",
+              "Yes: the README is the source of truth",
+              "Yes, if a scanner reports no findings"
+            ],
+            "correct": 0,
+            "explanation": "Map advisories to what actually ships. Documentation can drift from the artifact."
+          }
         ]
       },
       {
@@ -9728,6 +10712,18 @@ const LEARNING_PATHS = [
             "section": "V2: business logic and anti-automation",
             "reviewed": "2026-09-27",
             "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "FixedWindowLimiter(3, 60) sees one key at now 0, 10, 20, 59 and 60. Which requests are allowed?",
+            "options": [
+              "The first three and the one at 60",
+              "The first three only",
+              "All five"
+            ],
+            "correct": 0,
+            "explanation": "The fourth request in the first 60-second window is refused. At 60 a new window starts and the count resets."
           }
         ]
       },
@@ -9795,6 +10791,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "ASVS 5.0.0 selected controls, not a formal certification assessment."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "For Principal('alice', 'red'), which of documents a, b and c does read_document return?",
+            "options": [
+              "a only",
+              "a and c",
+              "a, b and c"
+            ],
+            "correct": 0,
+            "explanation": "Alice owns a and c, but c is in the blue tenant. b belongs to Bob. Only a passes both checks."
+          }
         ]
       },
       {
@@ -9847,6 +10855,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A cross-owner read defect is fixed in one endpoint. What else does recovery need?",
+            "options": [
+              "Test every alternate endpoint that reaches the same records",
+              "Nothing, once the fix is deployed",
+              "Restart the service to clear caches"
+            ],
+            "correct": 0,
+            "explanation": "Establish the scope, fix server authorization and verify negative cases on every path to the data, not just the one reported."
+          }
         ]
       }
     ],
@@ -9878,7 +10898,39 @@ const LEARNING_PATHS = [
             "The report does not call synthetic principals real authentication."
           ],
           "solution": "Use Principal only as trusted fixture context. The policy requires a matching tenant and either ownership or read-only reader permission; unknown actions deny. read_document returns a copy and the same outward unavailable error for denied/missing. parse_update accepts only title. Run AuthorizationTests, record the matrix and extend a copy with a new explicitly tested action."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A session is created with Sessions.login at now=0. What does identity() do at 299 and at 300?",
+            "options": [
+              "Returns the principal at 299; raises PermissionError at 300",
+              "Returns the principal at both",
+              "Raises PermissionError at both"
+            ],
+            "correct": 0,
+            "explanation": "The session expires at login time plus 300, and the check is now >= expiry, so 300 is already expired."
+          },
+          {
+            "question": "After logout(sid), what does csrf(sid, correct_token, 1) do?",
+            "options": [
+              "Raises PermissionError: session unavailable",
+              "Passes, because the token matches",
+              "Raises PermissionError: csrf verification failed"
+            ],
+            "correct": 0,
+            "explanation": "The CSRF check first looks up the session. Logout removed the server record, so the token no longer matters."
+          },
+          {
+            "question": "validated_title receives 80 letters with two spaces on each side. What does it return?",
+            "options": [
+              "The 80 letters, with the spaces stripped",
+              "ValueError, because the input is 84 characters",
+              "The input unchanged"
+            ],
+            "correct": 0,
+            "explanation": "The title is stripped before its length is checked, so surrounding spaces do not count toward the 80-character limit."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -9908,7 +10960,39 @@ const LEARNING_PATHS = [
             "Local methods are not presented as browser or cryptographic integration."
           ],
           "solution": "Use the bounded title parser, HTML text-node encoder and SQLite placeholder binding; do not reuse HTML escaping for other sinks. Control time explicitly for session rotation/expiry/logout. Session tokens are random and CSRF checks fail safely for malformed supplied text. Run the two suites and record expected versus observed results. test_security_http.py checks the loopback route and persisted rows. Browser cookie behavior and real-provider authentication remain separate extensions."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "Alice sends a PATCH with a valid session and CSRF token for Bob's document b. What does the HTTP seam return?",
+            "options": [
+              "404 unavailable, and the title is unchanged",
+              "403 denied",
+              "200 with the new title"
+            ],
+            "correct": 0,
+            "explanation": "Authentication and CSRF pass, so the server checks authorization on the row. A denied update is reported like a missing document."
+          },
+          {
+            "question": "A PATCH has a valid session and CSRF token but Content-Type text/plain. What comes back?",
+            "options": [
+              "400 invalid_body",
+              "200",
+              "403 denied"
+            ],
+            "correct": 0,
+            "explanation": "The seam accepts only a small application/json body. The request is rejected before parsing."
+          },
+          {
+            "question": "Pending.begin('A', ...) and begin('B', ...) run, then consume('B'), consume('A') and consume('A') again. What happens?",
+            "options": [
+              "B's verifier, then A's, then ValueError",
+              "B's verifier, then ValueError for A",
+              "A's verifier twice"
+            ],
+            "correct": 0,
+            "explanation": "Flows are stored by state, so tabs can finish out of order. Each is consumed once, and a replay fails."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -9940,7 +11024,39 @@ const LEARNING_PATHS = [
             "The report rejects blanket ASVS certification and covers practical recovery."
           ],
           "solution": "Run the ten local unittest methods, including loopback HTTP denial and persisted-state checks. Use safe_audit and the limiter as narrowly scoped local examples, and complete verification-matrix.md with exact commands/outcomes. The IdP worksheet requires explicit learner opt-in to a training tenant and a maintained OIDC/token library; execute its matrix only after configuring that environment. Record sanitized provider/library versions and denial outcomes, not token text. Add an incident response and rotation plan targeting the actual compromised mechanism."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A FixedWindowLimiter(3, 60) refuses alice's fourth request at now=5. Is bob's first request at now=5 allowed?",
+            "options": [
+              "Yes: each key has its own count",
+              "No: the limiter is full",
+              "Only after the window ends"
+            ],
+            "correct": 0,
+            "explanation": "Counts are kept per key. That also means changing the key evades it, and one process's counts are not a global limit."
+          },
+          {
+            "question": "safe_audit is called with an 81-character subject. What happens?",
+            "options": [
+              "Raises ValueError: invalid audit subject",
+              "The subject is cut to 80 characters",
+              "The event is recorded"
+            ],
+            "correct": 0,
+            "explanation": "Audit fields are bounded and validated, so oversized or unexpected values are refused rather than logged."
+          },
+          {
+            "question": "Alice (red tenant) PATCHes document c, which she owns in the blue tenant. What does the HTTP seam return?",
+            "options": [
+              "404 unavailable, and the title is unchanged",
+              "200, because she is the owner",
+              "403 denied"
+            ],
+            "correct": 0,
+            "explanation": "Tenant comes before ownership. Owning a record in another tenant does not grant access from this one."
+          }
+        ]
       }
     ],
     "resources": {
@@ -62641,7 +63757,39 @@ const LEARNING_PATHS = [
             "Parent/child elapsed time is not double-counted."
           ],
           "solution": "Use a small duration sample to calculate mean, median and nearest-rank p95. Run the three selected percentile checks, then interpret the nested span timeline. Keep units, sample size and safe correlation fields explicit. The intermediate project adds good-event objectives and a running HTTP service."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does percentile([100, 1, 3, 2, 4], 1.0) return?",
+            "options": [
+              "100",
+              "4",
+              "ValueError"
+            ],
+            "correct": 0,
+            "explanation": "p = 1 is allowed and picks the last sorted value, the maximum."
+          },
+          {
+            "question": "What does percentile([5], 0) do?",
+            "options": [
+              "Raises ValueError: nonempty sample and 0<p<=1 required",
+              "Returns 5",
+              "Returns 0"
+            ],
+            "correct": 0,
+            "explanation": "p must be greater than 0. There is no zeroth nearest-rank value."
+          },
+          {
+            "question": "summary() receives a row with status 999. What happens?",
+            "options": [
+              "Raises ValueError: invalid status",
+              "The row is counted as bad",
+              "The row is skipped"
+            ],
+            "correct": 0,
+            "explanation": "HTTP statuses run from 100 to 599. Corrupt input is rejected instead of quietly shifting the SLI."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -62671,7 +63819,39 @@ const LEARNING_PATHS = [
             "The benchmark claim matches its timed boundary."
           ],
           "solution": "Run the service and bounded client in separate terminals. Record actual outputs for each profile; fail should show four HTTP failures of 20, while slow should raise the tail. Keep this closed-loop evidence separate from production load and collector integration."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does burn_rate(0.90, 0.99) return?",
+            "options": [
+              "10",
+              "0.1",
+              "9"
+            ],
+            "correct": 0,
+            "explanation": "10% bad against a 1% allowance spends the error budget ten times faster than planned."
+          },
+          {
+            "question": "What does burn_rate(0.99, 1.0) do?",
+            "options": [
+              "Raises ValueError: invalid fractions",
+              "Returns 0",
+              "Returns infinity"
+            ],
+            "correct": 0,
+            "explanation": "A 100% target leaves no error budget to burn, so the target must be below 1."
+          },
+          {
+            "question": "summary() receives 20 rows of 10 ms each, where every fifth status is 503 and the rest are 200. What is good_fraction?",
+            "options": [
+              "0.8",
+              "0.95",
+              "1.0"
+            ],
+            "correct": 0,
+            "explanation": "Four of the 20 are errors, so 16 are good. Their speed does not matter."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -62701,7 +63881,39 @@ const LEARNING_PATHS = [
             "Production and external-service limits remain explicit."
           ],
           "solution": "Use cProfile to locate lookup cost, benchmark without profiler overhead and compare equivalent output. Design a memory retention experiment, record the loopback runbook and document all unexecuted collector/backend/paging checks. Avoid universal speedup or capacity claims."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "experiment(fail_b=True) runs with B failing. What happens to B's span?",
+            "options": [
+              "It is kept, with status error",
+              "It is dropped",
+              "It is kept, with status ok"
+            ],
+            "correct": 0,
+            "explanation": "A failed dependency still took measured time. Keeping its span is what shows where the error and the wait came from."
+          },
+          {
+            "question": "service.py receives GET /metrics. What status comes back?",
+            "options": [
+              "404",
+              "200",
+              "400"
+            ],
+            "correct": 0,
+            "explanation": "The lab serves only /work. The loopback service makes no claim to expose a metrics endpoint."
+          },
+          {
+            "question": "service.py receives GET /work?n=abc. What status comes back?",
+            "options": [
+              "400",
+              "500",
+              "200"
+            ],
+            "correct": 0,
+            "explanation": "A non-integer n is rejected as a client error before any work or injected delay."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -62754,6 +63966,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The CPU dashboard is green, but learners report that imports are slow. Where should the investigation start?",
+            "options": [
+              "With the user outcome: import duration and errors",
+              "By adding more CPU gauges",
+              "By trusting the dashboard"
+            ],
+            "correct": 0,
+            "explanation": "Start from the symptom and use internal metrics to explain it. Healthy resource gauges can coexist with a broken user task."
+          }
         ]
       },
       {
@@ -62804,6 +64028,18 @@ const LEARNING_PATHS = [
             "section": "time.perf_counter and monotonic clocks",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does percentile([True, 5], 0.5) do?",
+            "options": [
+              "Raises ValueError: durations must be finite nonnegative numbers",
+              "Returns True",
+              "Returns 5"
+            ],
+            "correct": 0,
+            "explanation": "The contract accepts durations only. A bool is an int in Python, so it is rejected explicitly rather than counted as 1."
           }
         ]
       },
@@ -62856,6 +64092,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which route value belongs in a structured log field?",
+            "options": [
+              "A bounded route template rather than the raw URL",
+              "The raw URL, including its query string",
+              "The full request body"
+            ],
+            "correct": 0,
+            "explanation": "Raw URLs can carry personal identifiers or secrets and have unbounded values. A template supports filtering safely."
+          }
         ]
       },
       {
@@ -62906,6 +64154,18 @@ const LEARNING_PATHS = [
             "section": "Metric names, base units and type suffixes",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Errors rose from 10 to 20 per minute while traffic doubled. What happened to the error ratio?",
+            "options": [
+              "Nothing: errors divided by requests stayed the same",
+              "It doubled",
+              "It halved"
+            ],
+            "correct": 0,
+            "explanation": "An error counter alone moves with traffic. Divide by eligible requests in the same scope and window."
           }
         ]
       },
@@ -63266,7 +64526,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "20 durations: 19 at 10 ms and one at 900 ms. What does percentile(values, 0.95) return?",
+            "options": [
+              "10",
+              "900",
+              "455"
+            ],
+            "correct": 0,
+            "explanation": "Nearest rank picks the 19th of 20 sorted values. One slow request in 20 sits above p95, so the tail needs its own look."
+          }
+        ]
       },
       {
         "id": "golden-signals",
@@ -63316,6 +64588,18 @@ const LEARNING_PATHS = [
             "section": "The four golden signals",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "summary() receives one 500 response that took 1 ms. Is it counted good or bad?",
+            "options": [
+              "Bad: a fast failure is still an error",
+              "Good: it was under the latency threshold",
+              "Neither: it is excluded"
+            ],
+            "correct": 0,
+            "explanation": "A good event needs a 2xx status and a duration within the threshold. Fast errors must not improve the latency picture."
           }
         ]
       },
@@ -63499,7 +64783,19 @@ const LEARNING_PATHS = [
               "explanation": "Finish after both required calls; the path through B dominates."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "In trace_investigation.experiment(), children A and B sleep 40 ms and 80 ms in parallel. Which finishes last?",
+            "options": [
+              "B",
+              "A",
+              "Neither: they finish together"
+            ],
+            "correct": 0,
+            "explanation": "B's longer wait ends last, so it is the critical path for the parent span."
+          }
+        ]
       },
       {
         "id": "context-propagation",
@@ -63653,7 +64949,19 @@ const LEARNING_PATHS = [
               "explanation": "Check identity and access independently of trace metadata."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "service.py receives GET /work?n=7. Which request_id does it return?",
+            "options": [
+              "lab-7",
+              "7",
+              "A new random ID"
+            ],
+            "correct": 0,
+            "explanation": "The ID comes from the request, so the client's record and the server's response can be joined on it."
+          }
+        ]
       },
       {
         "id": "cardinality",
@@ -63703,6 +65011,18 @@ const LEARNING_PATHS = [
             "section": "Labels; avoid high-cardinality labels",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A metric has labels for 3 routes, 5 status classes and 4 instances. How many series can it create?",
+            "options": [
+              "Up to 60",
+              "12",
+              "Up to 15"
+            ],
+            "correct": 0,
+            "explanation": "Every combination can become a series: 3 × 5 × 4. Each added label multiplies the count."
           }
         ]
       },
@@ -63762,6 +65082,18 @@ const LEARNING_PATHS = [
             "section": "Histograms; errors of quantile estimation; aggregation",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "summary() uses threshold_ms=100. How are 200 responses taking 100 ms and 101 ms counted?",
+            "options": [
+              "100 ms is good; 101 ms is bad",
+              "Both are good",
+              "Both are bad"
+            ],
+            "correct": 0,
+            "explanation": "The boundary is inclusive. A bucket edge at exactly the SLO threshold is what lets a histogram count this split."
           }
         ]
       },
@@ -63922,7 +65254,19 @@ const LEARNING_PATHS = [
               "explanation": "Compare observed bad events with allowed bad events for the window."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What good_fraction does summary([]) report?",
+            "options": [
+              "None",
+              "1.0",
+              "0.0"
+            ],
+            "correct": 0,
+            "explanation": "No eligible events means the SLI is unknown. Reporting 100% for an empty window would hide an outage in collection."
+          }
+        ]
       },
       {
         "id": "burn-rate-alerts",
@@ -63972,6 +65316,18 @@ const LEARNING_PATHS = [
             "section": "Burn rate; multiple windows; low-traffic services",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does burn_rate(0.99, 0.995) return?",
+            "options": [
+              "2",
+              "0.5",
+              "1"
+            ],
+            "correct": 0,
+            "explanation": "1% bad against a 0.5% allowance is (1 − 0.99) ÷ (1 − 0.995): the budget is spent twice as fast as planned."
           }
         ]
       },
@@ -64024,6 +65380,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Head sampling drops a trace before export. Can a tail sampler keep it later?",
+            "options": [
+              "No: it never receives the trace",
+              "Yes, if the trace contains an error",
+              "Yes, after retention is extended"
+            ],
+            "correct": 0,
+            "explanation": "A tail policy can only choose among traces that reach it. Earlier drops limit what it sees."
+          }
         ]
       },
       {
@@ -64074,6 +65442,18 @@ const LEARNING_PATHS = [
             "section": "perf_counter; elapsed wall-clock measurement",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In benchmark.py, what do linear and indexed return for the missing query ID 99999?",
+            "options": [
+              "None from both",
+              "None from linear and a KeyError from indexed",
+              "0 from both"
+            ],
+            "correct": 0,
+            "explanation": "The two implementations must agree on every query, including a miss, before their timings are comparable."
           }
         ]
       },
@@ -64147,6 +65527,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Python standard-library cProfile; profiling and benchmark boundaries differ. Primary page checked; local commands executed separately."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "experiment() runs two children that mostly sleep. How does process_cpu compare with parent_wall?",
+            "options": [
+              "Much smaller: sleeping is waiting, not CPU work",
+              "About the same",
+              "Larger, because two threads ran"
+            ],
+            "correct": 0,
+            "explanation": "Wall time includes waiting. A CPU profile of this request would show little, because the time is spent blocked."
+          }
         ]
       },
       {
@@ -64197,6 +65589,18 @@ const LEARNING_PATHS = [
             "section": "Snapshot comparison; tracked allocations; current and peak size",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Memory peaks during a workload, then falls back once references are released. Is that a leak?",
+            "options": [
+              "No: temporary allocation is not retention",
+              "Yes: any peak is a leak",
+              "Only if the peak is above 100 MB"
+            ],
+            "correct": 0,
+            "explanation": "A leak is memory that stays reachable beyond its intended lifetime. Compare snapshots across a controlled workload."
           }
         ]
       },
@@ -64255,6 +65659,18 @@ const LEARNING_PATHS = [
             "section": "Correcting coordinated omission; constant throughput",
             "reviewed": "2026-09-30",
             "scope": "Primary implementation documentation explains constant-throughput and coordinated-omission concerns. This kit uses a bounded closed-loop client, not wrk2."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An open-loop test targets a fixed arrival rate. What happens to the offered rate as the service slows?",
+            "options": [
+              "It stays at the target, within the generator's capacity",
+              "It falls, because workers wait",
+              "It rises to compensate"
+            ],
+            "correct": 0,
+            "explanation": "Open-loop arrivals do not wait for responses, unlike a fixed-worker closed loop. The generator can still become the bottleneck."
           }
         ]
       },
@@ -64321,6 +65737,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Average queueing quantities require corresponding boundaries and existence of long-run limits; not a transient capacity guarantee."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A stable queue receives 20 items per second, and each spends 0.5 seconds in the system. How many items are in it on average?",
+            "options": [
+              "10",
+              "40",
+              "20.5"
+            ],
+            "correct": 0,
+            "explanation": "Little's law gives L = λ × W = 20 × 0.5. It holds for steady-state averages with matching units."
+          }
         ]
       },
       {
@@ -64371,6 +65799,18 @@ const LEARNING_PATHS = [
             "section": "Latency contributors and processing boundaries",
             "reviewed": "2026-09-30",
             "scope": "Observability concepts measured with the Python standard library. The lab does not deploy OpenTelemetry or production monitoring."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The API responds in 50 ms, but the page then renders thousands of rows slowly. Where is the delay?",
+            "options": [
+              "In browser rendering",
+              "In the database",
+              "In the network"
+            ],
+            "correct": 0,
+            "explanation": "A fast API does not guarantee a fast visible result. Locate the measured delay before choosing an optimisation."
           }
         ]
       },
@@ -64532,7 +65972,19 @@ const LEARNING_PATHS = [
               "explanation": "Repeat the task and check that backlog and failures recover."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "With profile=fail, which of service.py's requests 1 to 10 return 503?",
+            "options": [
+              "5 and 10",
+              "Only 10",
+              "None of them"
+            ],
+            "correct": 0,
+            "explanation": "The injected fault hits every fifth request. A repeatable failure lets the runbook's hypothesis be tested."
+          }
+        ]
       },
       {
         "id": "telemetry-release",
@@ -64589,6 +66041,18 @@ const LEARNING_PATHS = [
             "section": "Security considerations; ThreadingHTTPServer",
             "reviewed": "2026-09-30",
             "scope": "Standard-library HTTP server for local teaching only; not recommended for production."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "service.py receives GET /work?n=1&profile=burst. What status comes back?",
+            "options": [
+              "400",
+              "200",
+              "503"
+            ],
+            "correct": 0,
+            "explanation": "Profiles are an allowlist of healthy, slow and fail. An unknown value is a client error, not a new behaviour."
           }
         ]
       }
@@ -83980,7 +85444,39 @@ const LEARNING_PATHS = [
             "The simplest proposed architecture is justified and limitations are explicit."
           ],
           "solution": "Start with one modular API and a relational database behind HTTPS. Use user/lesson identity, a unique progress key and conditional version updates. The scenario gives 400,000 requests/day, 4.63 average requests/s and 37.04 assumed peak. Set a chosen user-facing save SLO separately from latency; targets require agreement, not copying. Authorize per-user access and test uncertain outcomes. See the workbook for an example ADR and calculation table."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does workload(1000, 10, 0.5, 100) do?",
+            "options": [
+              "Raises ValueError: peak_multiplier must be >= 1",
+              "Returns a peak below the average",
+              "Returns a peak equal to the average"
+            ],
+            "correct": 0,
+            "explanation": "A peak cannot be lower than the average it multiplies, so the model refuses the input."
+          },
+          {
+            "question": "What does allowed_bad_requests(1000, 1.5) do?",
+            "options": [
+              "Raises ValueError: success_target must be at most 1",
+              "Returns -500",
+              "Returns 0"
+            ],
+            "correct": 0,
+            "explanation": "A success target is a fraction. A value above 1 is rejected rather than producing a negative budget."
+          },
+          {
+            "question": "What does retained_bytes(1000, 100, 30, 0.5) do?",
+            "options": [
+              "Raises ValueError: overhead_factor must be >= 1; compression is outside this model",
+              "Returns 1.5 MB modeled",
+              "Returns 3 MB modeled"
+            ],
+            "correct": 0,
+            "explanation": "The model only adds overhead. Compression needs its own measured assumption."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -84008,7 +85504,39 @@ const LEARNING_PATHS = [
             "Queue age, replay responsibility and private export authorization are specified."
           ],
           "solution": "Keep workshop capacity and booking changes under one transactional owner. Add durable caller-scoped idempotency records and uniqueness for active bookings. Serve public versioned lesson content through cache while bookings consult authority. Use an export queue with durable job status and idempotent output naming. Route dependent reads consistently and allow bounded stale public content during partitions while rejecting unsupported authoritative writes. The design remains a paper exercise until actual concurrency and fault tests pass."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A learner books a two-seat workshop twice, using two different keys. What happens to the second request?",
+            "options": [
+              "sqlite3.IntegrityError, and 1 seat remains",
+              "A second booking, and 0 seats remain",
+              "A replay of the first booking"
+            ],
+            "correct": 0,
+            "explanation": "UNIQUE(workshop_id, learner) rejects the second booking, and the transaction rolls back its seat decrement."
+          },
+          {
+            "question": "What does backlog_after(500, 80, 100, 60) return?",
+            "options": [
+              "0",
+              "-700",
+              "500"
+            ],
+            "correct": 0,
+            "explanation": "The backlog drains and stops at zero. Spare capacity while idle is not banked for later."
+          },
+          {
+            "question": "workload(8640, 10, 1, 0) models 86,400 requests a day. What is average_rps?",
+            "options": [
+              "1",
+              "10",
+              "86400"
+            ],
+            "correct": 0,
+            "explanation": "86,400 seconds in a day, so 86,400 daily requests average one per second."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -84037,7 +85565,39 @@ const LEARNING_PATHS = [
             "No benchmark, availability or cost claim is invented from calculator output."
           ],
           "solution": "The reference workbook links requirements to mechanisms and experiments. Protect interactive work with separate bounded concurrency from exports; centralize intentional retries and stop at the deadline. Record booking and outbox event atomically, then make consumers duplicate-safe. A restore drill must validate correctness and elapsed recovery time. Use additive migration steps while versions coexist. Retain a modular deployment unless measured isolation needs justify extraction. A completed self-review is practice evidence, not certification or a production approval."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does drain_seconds(0, 120, 100) return?",
+            "options": [
+              "0",
+              "None",
+              "-0"
+            ],
+            "correct": 0,
+            "explanation": "An empty backlog needs no time to drain, even when arrivals exceed service."
+          },
+          {
+            "question": "A booking's event has already been relayed. What does the next relay_one call return?",
+            "options": [
+              "None",
+              "The same event ID",
+              "A new event ID"
+            ],
+            "correct": 0,
+            "explanation": "No unsent rows remain, so the relay has nothing to publish."
+          },
+          {
+            "question": "What does book(path, 'alice', 'K1', workshop_id='X') do when workshop X does not exist?",
+            "options": [
+              "Raises ValueError: sold out or unknown workshop",
+              "Creates workshop X",
+              "Raises sqlite3.IntegrityError"
+            ],
+            "correct": 0,
+            "explanation": "The conditional UPDATE matches no row, so the booking stops before any insert."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -84095,6 +85655,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does booking_lab.initialize(path, seats=-1) do?",
+            "options": [
+              "Raises ValueError: seats must be a nonnegative integer",
+              "Creates a workshop with no seats",
+              "Creates a workshop with -1 seats"
+            ],
+            "correct": 0,
+            "explanation": "Remaining seats can never be negative. The invariant is enforced at setup and again by the table's CHECK constraint."
+          }
         ]
       },
       {
@@ -84150,6 +85722,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does allowed_bad_requests(1000000, 0.999) return?",
+            "options": [
+              "1000",
+              "999",
+              "1"
+            ],
+            "correct": 0,
+            "explanation": "A 99.9% success target leaves 0.1% of eligible requests as the error budget."
+          }
         ]
       },
       {
@@ -84204,6 +85788,18 @@ const LEARNING_PATHS = [
             "section": "Choosing an initial SLO; implementing SLOs",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "workload(10000, 40, 8, 2000) models 10,000 daily users making 40 requests each with an 8× peak. What is peak_rps, to the nearest whole number?",
+            "options": [
+              "37",
+              "5",
+              "400000"
+            ],
+            "correct": 0,
+            "explanation": "400,000 requests over 86,400 seconds averages about 4.6 per second. The 8× multiplier gives about 37."
           }
         ]
       },
@@ -84266,6 +85862,18 @@ const LEARNING_PATHS = [
             "section": "Prometheus histograms and summaries",
             "reviewed": "2026-10-02",
             "scope": "Quantile aggregation rules; no Prometheus deployment or load test."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does mean_in_flight(200, 0.25) return?",
+            "options": [
+              "50",
+              "800",
+              "200.25"
+            ],
+            "correct": 0,
+            "explanation": "Little's law: 200 arrivals per second × 0.25 seconds each. It describes means in a stable system, not percentiles."
           }
         ]
       },
@@ -84629,7 +86237,19 @@ const LEARNING_PATHS = [
               "url": "https://www.rfc-editor.org/rfc/rfc9110.html"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A booking reply is lost. Why retry with the same operation ID rather than as a new booking?",
+            "options": [
+              "A new intent cannot tell whether the first one committed",
+              "A new booking would be slower",
+              "The server rejects new bookings after a timeout"
+            ],
+            "correct": 0,
+            "explanation": "The first booking may have committed with its reply lost. A stable ID lets the server look up the original intent."
+          }
+        ]
       },
       {
         "id": "api-contracts",
@@ -84683,6 +86303,18 @@ const LEARNING_PATHS = [
             "section": "Sections 3–9: HTTP architecture, messages and methods",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A learner books workshop W with key K1, then sends K1 again for workshop X. What does book() do?",
+            "options": [
+              "Raises ValueError: key reused for different workshop",
+              "Books workshop X",
+              "Returns the W booking as a replay"
+            ],
+            "correct": 0,
+            "explanation": "An idempotency key names one intent. Reusing it with different parameters is an error, not a replay."
           }
         ]
       },
@@ -84746,6 +86378,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Multi-column index ordering for the teaching access pattern; actual plans depend on engine and data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Notebook progress must hold exactly one record per learner and lesson. What expresses that rule?",
+            "options": [
+              "A composite key on learner and lesson",
+              "A timestamp on each record",
+              "An index on lesson title"
+            ],
+            "correct": 0,
+            "explanation": "The uniqueness rule becomes part of the key, so the database enforces it on every write."
+          }
         ]
       },
       {
@@ -84808,6 +86452,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Index access and write overhead as a concrete database example; no PostgreSQL benchmark."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "retained_bytes(200000, 500, 30, 1.5, 3) models a month of events with 1.5× overhead and three copies. What are raw and modeled bytes?",
+            "options": [
+              "3 GB raw, 13.5 GB modeled",
+              "3 GB raw, 4.5 GB modeled",
+              "13.5 GB raw, 13.5 GB modeled"
+            ],
+            "correct": 0,
+            "explanation": "200,000 × 500 × 30 = 3 billion raw bytes. Overhead and copies multiply it: 3 × 1.5 × 3 = 13.5 GB."
+          }
         ]
       },
       {
@@ -84862,6 +86518,18 @@ const LEARNING_PATHS = [
             "section": "The four golden signals",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does instance_count(370, 100, 0.7, 1) return?",
+            "options": [
+              "7",
+              "6",
+              "4"
+            ],
+            "correct": 0,
+            "explanation": "Each instance is planned at 70 of its measured 100 rps, so 370 needs ceil(370 ÷ 70) = 6, plus one to tolerate a loss."
           }
         ]
       },
@@ -85058,7 +86726,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A stale cached display still shows 1 seat after the last seat sold. What does book() do for the next learner?",
+            "options": [
+              "Raises ValueError: sold out or unknown workshop",
+              "Books the seat shown in the cache",
+              "Waits for the cache to refresh"
+            ],
+            "correct": 0,
+            "explanation": "The booking transaction rechecks remaining seats. A cache can serve browsing but must not authorize the last seat."
+          }
+        ]
       },
       {
         "id": "queues",
@@ -85389,7 +87069,19 @@ const LEARNING_PATHS = [
               "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "relay_one publishes an event, then crashes before marking it sent. The relay restarts. Which event IDs were published?",
+            "options": [
+              "1 twice",
+              "1 once",
+              "None"
+            ],
+            "correct": 0,
+            "explanation": "The outbox row stays unsent, so the restarted relay publishes it again. Consumers must tolerate duplicate delivery."
+          }
+        ]
       },
       {
         "id": "replication",
@@ -85532,7 +87224,19 @@ const LEARNING_PATHS = [
             1
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A learner saves progress, then reads from an asynchronously replicated follower. What might they see?",
+            "options": [
+              "Their old value, because the follower lags",
+              "An error, because followers reject reads",
+              "Always the new value"
+            ],
+            "correct": 0,
+            "explanation": "Asynchronous followers can lag the leader. Make the stale-read case explicit rather than treating replicas as interchangeable."
+          }
+        ]
       },
       {
         "id": "consistency-cap",
@@ -85586,6 +87290,18 @@ const LEARNING_PATHS = [
             "section": "Definitions and impossibility theorem",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "During a partition, a node returns an error instead of a result. Is it available in CAP's sense?",
+            "options": [
+              "No: an error is not a valid result",
+              "Yes: it responded",
+              "Yes, if uptime stays above 99.9%"
+            ],
+            "correct": 0,
+            "explanation": "CAP availability means a non-failing node eventually returns a valid result. It is not an operational uptime percentage."
           }
         ]
       },
@@ -85641,6 +87357,18 @@ const LEARNING_PATHS = [
             "section": "Solution; issues and considerations",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Progress is hash-partitioned by user_id. What can still overload a single partition?",
+            "options": [
+              "One large tenant or a celebrity workshop",
+              "Adding more learners",
+              "Nothing: hashing spreads load evenly"
+            ],
+            "correct": 0,
+            "explanation": "Hashing spreads keys, not activity. A hot key concentrates traffic wherever it lands."
           }
         ]
       },
@@ -85787,7 +87515,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "book() runs with fail_after_decrement=True on a one-seat workshop. What remains afterwards?",
+            "options": [
+              "1 seat, with no booking",
+              "0 seats, with no booking",
+              "0 seats, with one booking"
+            ],
+            "correct": 0,
+            "explanation": "The decrement and the booking insert share one transaction. The injected failure rolls both back."
+          }
+        ]
       },
       {
         "id": "idempotency",
@@ -86020,7 +87760,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A learner sends the same booking key twice for a two-seat workshop. What happens?",
+            "options": [
+              "The same booking ID both times, the second marked as a replay; 1 seat left",
+              "Two bookings; 0 seats left",
+              "A ValueError on the second request"
+            ],
+            "correct": 0,
+            "explanation": "The intent row maps the key to the original booking, so a retry returns that result without another decrement."
+          }
+        ]
       },
       {
         "id": "resilience",
@@ -86377,7 +88129,19 @@ const LEARNING_PATHS = [
               "url": "https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A request has 1,000 ms, reserves 100 ms for its response, and allows 300 ms per attempt with 100 ms backoffs. How long can a third attempt get?",
+            "options": [
+              "100 ms",
+              "300 ms",
+              "0 ms"
+            ],
+            "correct": 0,
+            "explanation": "Two attempts and two backoffs use 800 ms of the 900 ms budget, leaving 100 ms. A fresh 300 ms timeout would overrun it."
+          }
+        ]
       },
       {
         "id": "backpressure",
@@ -86480,6 +88244,18 @@ const LEARNING_PATHS = [
             "section": "Solution; issues and considerations",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does backlog_after(0, 120, 100, 60) return?",
+            "options": [
+              "1200",
+              "0",
+              "7200"
+            ],
+            "correct": 0,
+            "explanation": "Arrivals exceed service by 20 jobs per second, so 60 seconds builds a backlog of 1,200."
           }
         ]
       },
@@ -86643,7 +88419,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A booking commits. What does the outbox hold for it?",
+            "options": [
+              "One row, with sent 0 until the relay runs",
+              "Nothing until the relay runs",
+              "One row, already marked sent"
+            ],
+            "correct": 0,
+            "explanation": "The event is written in the same transaction as the booking. Publishing happens later, from the outbox."
+          }
+        ]
       },
       {
         "id": "observability",
@@ -86697,6 +88485,18 @@ const LEARNING_PATHS = [
             "section": "Traces, metrics and logs",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An export returns HTTP 200 but contains the wrong rows. How should it be counted?",
+            "options": [
+              "As a failure: the user outcome is wrong",
+              "As a success: the status was 200",
+              "Not at all, because exports are background work"
+            ],
+            "correct": 0,
+            "explanation": "A successful response with an incorrect result is still a product failure. Measure user outcomes, not only status codes."
           }
         ]
       },
@@ -86846,7 +88646,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A client sends tenant_id in the request body. What is that value?",
+            "options": [
+              "An input to validate, not proof of membership",
+              "Proof that the caller belongs to the tenant",
+              "A secret the server can trust"
+            ],
+            "correct": 0,
+            "explanation": "Authorization is decided server-side from verified identity. Client-supplied identifiers are claims to check."
+          }
+        ]
       },
       {
         "id": "recovery",
@@ -86979,7 +88791,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Backups run every night. Does that prove a 24-hour recovery point?",
+            "options": [
+              "No: the newest backup may be unusable until a restore is tested",
+              "Yes: the schedule sets the recovery point",
+              "Yes, if the backups are replicated"
+            ],
+            "correct": 0,
+            "explanation": "A recovery point is shown by a validated restore, not by a schedule. The latest backup may be incomplete."
+          }
+        ]
       },
       {
         "id": "evolution",
@@ -87126,7 +88950,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "An application rollback follows a migration that dropped a column. Is the column back?",
+            "options": [
+              "No: rolling back binaries does not reverse the migration",
+              "Yes: the rollback restores the schema",
+              "Yes, after the next deploy"
+            ],
+            "correct": 0,
+            "explanation": "Destructive schema changes outlive a binary rollback. Expand-and-contract keeps old and new versions compatible meanwhile."
+          }
+        ]
       },
       {
         "id": "design-review",
@@ -87201,6 +89037,18 @@ const LEARNING_PATHS = [
             "section": "Four questions; system decomposition and validation",
             "reviewed": "2026-09-27",
             "scope": "Repeatable design worksheet; not security certification."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does drain_seconds(1200, 100, 100) return?",
+            "options": [
+              "None: the backlog never drains",
+              "12",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "With service equal to arrivals there is no spare capacity, so a positive backlog stays. A capacity claim needs that case stated."
           }
         ]
       }
@@ -90581,7 +92429,39 @@ const LEARNING_PATHS = [
             "A regression case demonstrably catches the deliberate mutant."
           ],
           "solution": "testing_foundation.py implements the full parser and total. FoundationTests covers boundaries, invalid shape and a deliberate mutant comparison. Run the module for total 5. Add a learner-built CLI only after this contract passes."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does parse_record('{\"id\":\"a\",\"id\":\"b\",\"minutes\":1}') do?",
+            "options": [
+              "Raises ValueError: duplicate key",
+              "Returns id b, the last value",
+              "Returns id a, the first value"
+            ],
+            "correct": 0,
+            "explanation": "The pairs hook rejects a repeated key instead of letting json.loads keep the last one silently."
+          },
+          {
+            "question": "What does parse_record('{\"id\":\"a\",\"minutes\":true}') do?",
+            "options": [
+              "Raises ValueError: minutes must be an integer from 0 to 1440",
+              "Returns minutes True",
+              "Returns minutes 1"
+            ],
+            "correct": 0,
+            "explanation": "The check uses type(...) is int, so bool is rejected. The buggy mutant's isinstance check admits it."
+          },
+          {
+            "question": "What does inclusive_total([4, 8, 16], 3) do?",
+            "options": [
+              "Raises ValueError: stop must name an existing index",
+              "Returns 28",
+              "Returns 12"
+            ],
+            "correct": 0,
+            "explanation": "Index 3 does not exist in a three-item list, so the call fails instead of quietly summing everything."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -90608,7 +92488,39 @@ const LEARNING_PATHS = [
             "Single-writer/trusted-directory and power-loss limits are explicit."
           ],
           "solution": "testing_integration.py validates first, writes in the destination directory, flushes and fsyncs the temporary file, then replaces once. IntegrationTests checks readback, empty batches, duplicate/oversized rejection and injected replacement failure. This is not a multi-writer transaction."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "import_batch receives two valid lines with the same id. What happens?",
+            "options": [
+              "ValueError: duplicate record id, and no file is written",
+              "The second record replaces the first",
+              "Both records are written"
+            ],
+            "correct": 0,
+            "explanation": "Batch-level rules run after every line parses and before file work, so the batch is rejected whole."
+          },
+          {
+            "question": "Rows a, b and c share time 5, and d has time 6. Using cursor_candidate, which IDs do the first two pages of size 2 return?",
+            "options": [
+              "a, b, d: c is skipped",
+              "a, b, c, d",
+              "a, b, b, c"
+            ],
+            "correct": 0,
+            "explanation": "The candidate filters on time alone, so rows that tie with the cursor's time are dropped from the next page."
+          },
+          {
+            "question": "import_batch receives 1,001 valid lines. What happens?",
+            "options": [
+              "ValueError: batch exceeds 1000 rows",
+              "The first 1,000 are written",
+              "All 1,001 are written"
+            ],
+            "correct": 0,
+            "explanation": "The batch is bounded, and an oversized one is rejected rather than truncated."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -90636,7 +92548,39 @@ const LEARNING_PATHS = [
             "A diagnosis links reproduction, cause, fix, evidence and limits."
           ],
           "solution": "testing_concurrency.py locks comparison and write together. ConcurrencyTests proves one success plus one conflict after a shared barrier and checks no effect on invalid update. FoundationTests adds seeded finite metamorphic checks. State is volatile and limited to threads in one process; no distributed claim follows."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A fresh VersionStore runs update(0, 8), then update(1, 9). What does read() return?",
+            "options": [
+              "(2, 9)",
+              "(1, 9)",
+              "Conflict: stale version"
+            ],
+            "correct": 0,
+            "explanation": "Each update names the version it read, so sequential updates succeed and the version advances to 2."
+          },
+          {
+            "question": "collect_once is released normally. What does it return, and what does events hold?",
+            "options": [
+              "7, with ['acquired', 'committed', 'released']",
+              "7, with ['acquired', 'released']",
+              "None, with ['acquired', 'committed']"
+            ],
+            "correct": 0,
+            "explanation": "On the success path the work commits and the finally block still releases the resource."
+          },
+          {
+            "question": "A caller edits a row returned by page(). Does the source row change, for the reference and for the candidate?",
+            "options": [
+              "Not for the reference; yes for the candidate",
+              "No for both",
+              "Yes for both"
+            ],
+            "correct": 0,
+            "explanation": "The reference returns copies. The candidate returns the original dictionaries, so a caller's edit leaks into the source."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -90686,6 +92630,18 @@ const LEARNING_PATHS = [
             "section": "Basic example; assert methods",
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does parse_record('{\"id\":\"a\",\"minutes\":5,\"note\":\"x\"}') do?",
+            "options": [
+              "Raises ValueError: exact fields id and minutes required",
+              "Returns the record and ignores note",
+              "Returns the record including note"
+            ],
+            "correct": 0,
+            "explanation": "The contract names exactly two fields. An unexpected field is rejected rather than silently carried or dropped."
           }
         ]
       },
@@ -90743,6 +92699,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does total_minutes([]) return?",
+            "options": [
+              "0",
+              "None",
+              "ValueError"
+            ],
+            "correct": 0,
+            "explanation": "The sum of no records is zero. An empty input is a legitimate case with its own expected result."
+          }
         ]
       },
       {
@@ -90791,6 +92759,18 @@ const LEARNING_PATHS = [
             "section": "Distinguishing test iterations using subtests",
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which of the minutes values -1, 0, 1440 and 1441 does parse_record accept?",
+            "options": [
+              "0 and 1440",
+              "0 only",
+              "-1, 0 and 1440"
+            ],
+            "correct": 0,
+            "explanation": "Both ends of 0..1440 are inclusive. The values just outside each edge are the ones that catch an off-by-one."
           }
         ]
       },
@@ -90841,6 +92821,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "import_batch receives one valid line and one invalid line, with a fresh destination path. What happens to the destination?",
+            "options": [
+              "Nothing: it is never created",
+              "It holds the valid record",
+              "It is created empty"
+            ],
+            "correct": 0,
+            "explanation": "Every line is parsed before any file work starts, so a rejected batch leaves no partial output. The test should assert the absent effect as well as the error."
+          }
         ]
       },
       {
@@ -90890,6 +92882,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Setup creates a temporary directory, then a later setup step fails. When should cleanup for the directory be registered?",
+            "options": [
+              "Immediately after the directory is created",
+              "At the end of setup, once everything succeeded",
+              "In the next test's setup"
+            ],
+            "correct": 0,
+            "explanation": "Registering cleanup as soon as a resource exists means a later setup failure cannot leak it into other tests."
+          }
         ]
       },
       {
@@ -90938,6 +92942,18 @@ const LEARNING_PATHS = [
             "section": "TracebackException; exception chaining output",
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "parse_record('{bad') raises ValueError: invalid JSON. What is its __cause__?",
+            "options": [
+              "A json.JSONDecodeError",
+              "None",
+              "A TypeError"
+            ],
+            "correct": 0,
+            "explanation": "raise ... from error keeps the original decoder exception, so the traceback shows both the contract error and where parsing failed."
           }
         ]
       },
@@ -91108,7 +93124,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The minimal case is values [4, 8, 16] with stop 1, and the contract includes index stop. What does inclusive_total_mutant return?",
+            "options": [
+              "4",
+              "12",
+              "28"
+            ],
+            "correct": 0,
+            "explanation": "The slice values[:stop] excludes index 1, so only 4 is summed. The expected inclusive total is 12."
+          }
+        ]
       },
       {
         "id": "hypotheses",
@@ -91260,7 +93288,19 @@ const LEARNING_PATHS = [
               "explanation": "The regression distinguishes the mutant from the fix; changing only the printed message does not repair the function."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Hypothesis: buggy_minutes admits booleans. What does buggy_minutes(True) return?",
+            "options": [
+              "True, without raising",
+              "ValueError: minutes required",
+              "1"
+            ],
+            "correct": 0,
+            "explanation": "bool is a subclass of int, so isinstance accepts True. One call falsifies or confirms the hypothesis before any code changes."
+          }
+        ]
       },
       {
         "id": "strategy",
@@ -91425,7 +93465,19 @@ const LEARNING_PATHS = [
               "explanation": "A local subprocess verifies the command route, while a stale-response UI bug needs its actual component/browser boundary."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which test would catch the importer's command returning the wrong exit status?",
+            "options": [
+              "A test that runs the command as a real subprocess",
+              "Parser unit tests",
+              "A filesystem integration test"
+            ],
+            "correct": 0,
+            "explanation": "Exit status and argument parsing live at the command boundary. Parser and file tests never cross it."
+          }
+        ]
       },
       {
         "id": "mocks",
@@ -91473,6 +93525,18 @@ const LEARNING_PATHS = [
             "section": "Mock.side_effect; assert_not_called; where to patch",
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "import_batch is given a replace double that raises OSError. What is left in the destination folder?",
+            "options": [
+              "Nothing: the temporary file is removed",
+              "A study-*.tmp file",
+              "The destination file"
+            ],
+            "correct": 0,
+            "explanation": "The double forces the failure path, and the finally block deletes the temporary file. The test can check that absent effect without breaking a real filesystem."
           }
         ]
       },
@@ -91522,6 +93586,18 @@ const LEARNING_PATHS = [
             "section": "Autospeccing; specification of doubles",
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does parse_record('{\"id\":\"a\",\"minutes\":5.0}') do?",
+            "options": [
+              "Raises ValueError: minutes must be an integer from 0 to 1440",
+              "Returns minutes 5",
+              "Returns minutes 5.0"
+            ],
+            "correct": 0,
+            "explanation": "5.0 is valid JSON and numerically equal to 5, but the contract requires an integer type."
           }
         ]
       },
@@ -91669,7 +93745,19 @@ const LEARNING_PATHS = [
               "explanation": "Real replacement is tested separately from an injected failure; this is not multi-writer coordination."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "import_batch writes records with 7 and 5 minutes to a real temporary file. What does the file's JSON hold?",
+            "options": [
+              "total 12, with schema_version 1",
+              "total 12, with no schema_version",
+              "Only the records"
+            ],
+            "correct": 0,
+            "explanation": "Reading the file back checks serialization and replacement together, which an in-memory result cannot show."
+          }
+        ]
       },
       {
         "id": "properties",
@@ -91724,6 +93812,18 @@ const LEARNING_PATHS = [
             "section": "An example; falsifying and shrinking",
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The reference page() walks 17 rows in reverse order with page sizes 1, 2, 3, 5 and 100. Does every walk match the sorted oracle?",
+            "options": [
+              "Yes, for every size",
+              "Only for size 100",
+              "No: ties are skipped"
+            ],
+            "correct": 0,
+            "explanation": "The invariant is that batch size never changes the reconstructed sequence. One property covers many concrete cases."
           }
         ]
       },
@@ -91780,6 +93880,18 @@ const LEARNING_PATHS = [
             "section": "TestCase; assert methods",
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "test_no_skipped_ties_across_pages is run against cursor_candidate and against cursor_reference. What happens?",
+            "options": [
+              "It fails on the candidate and passes on the reference",
+              "It passes on both",
+              "It fails on both"
+            ],
+            "correct": 0,
+            "explanation": "A regression test earns its place by failing on the broken code and passing on the fix."
           }
         ]
       },
@@ -91933,7 +94045,19 @@ const LEARNING_PATHS = [
               "explanation": "Line coverage cannot tell these tests apart. One caught mutant is not a universal quality score."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "PositiveOnly calls only label(5). Which statements of label does it execute?",
+            "options": [
+              "All of them, though the minutes <= 0 branch is never taken",
+              "All but the return",
+              "Only the if statement"
+            ],
+            "correct": 0,
+            "explanation": "label(5) runs every line, so line coverage is complete. The false branch, where result stays empty, is still untested."
+          }
+        ]
       },
       {
         "id": "test-data",
@@ -91981,6 +94105,18 @@ const LEARNING_PATHS = [
             "section": "TemporaryDirectory; cleanup",
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A fix changes what a captured incident fixture should produce. What should you do with the fixture?",
+            "options": [
+              "Add a new fixture or document a migration",
+              "Overwrite it so the new test passes",
+              "Delete it"
+            ],
+            "correct": 0,
+            "explanation": "A historical capture records what happened. Keep it, and add or migrate data deliberately."
           }
         ]
       },
@@ -92130,7 +94266,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Two threads pass a Barrier, then both call VersionStore.update(0, ...). What happens?",
+            "options": [
+              "One gets version 1, the other gets Conflict: stale version",
+              "Both get version 1",
+              "Both get Conflict"
+            ],
+            "correct": 0,
+            "explanation": "The lock makes the version check and update one step. The barrier makes the race happen every run, without sleep."
+          }
+        ]
       },
       {
         "id": "flaky-tests",
@@ -92502,7 +94650,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "In the concurrency test, what does the join timeout do?",
+            "options": [
+              "Lets the test detect an unfinished worker; it does not stop the thread",
+              "Terminates a thread that runs too long",
+              "Orders the workers"
+            ],
+            "correct": 0,
+            "explanation": "The barrier orders the workers. A join timeout only bounds the wait, after which is_alive() reports a stuck worker."
+          }
+        ]
       },
       {
         "id": "async-debugging",
@@ -92686,7 +94846,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "collect_once is cancelled after it signals started. What does events hold?",
+            "options": [
+              "['acquired', 'released']",
+              "['acquired']",
+              "['acquired', 'committed', 'released']"
+            ],
+            "correct": 0,
+            "explanation": "The finally block runs on cancellation, so the resource is released. Nothing was committed."
+          }
+        ]
       },
       {
         "id": "observability",
@@ -92734,6 +94906,18 @@ const LEARNING_PATHS = [
             "section": "LogRecord attributes; logging levels",
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does diagnostic_event('case-3', 'timeout', 5) do?",
+            "options": [
+              "Raises ValueError: invalid diagnostic event",
+              "Returns the event",
+              "Returns the event with outcome rejected"
+            ],
+            "correct": 0,
+            "explanation": "Outcomes are a bounded set: ok, rejected and conflict. An unexpected label is refused rather than logged."
           }
         ]
       },
@@ -92790,6 +94974,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "indexed_lookup is replaced with a version that returns wrong results. What does benchmark() do?",
+            "options": [
+              "Raises AssertionError before timing it",
+              "Times it and reports a faster median",
+              "Skips it"
+            ],
+            "correct": 0,
+            "explanation": "Both implementations must match the expected results before any sample is recorded. A fast wrong answer is not a measurement."
+          }
         ]
       },
       {
@@ -92838,6 +95034,18 @@ const LEARNING_PATHS = [
             "section": "Command-Line Interface; Test Discovery",
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The test runner printed OK. What could still be wrong?",
+            "options": [
+              "It skipped tests or imported the wrong module",
+              "Nothing: OK means every test ran",
+              "Only the formatting of the output"
+            ],
+            "correct": 0,
+            "explanation": "Record the entry point and the test count, and check that tests import the intended checkout."
           }
         ]
       },
@@ -92888,6 +95096,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A local lock fixes the stale-version race in the reference store. What does a persistent multi-worker service need?",
+            "options": [
+              "A transaction or coordination at its real storage boundary",
+              "The same threading.Lock",
+              "A retry loop around the write"
+            ],
+            "correct": 0,
+            "explanation": "A process lock covers one process. The report should say what the fix covers and what remains untested."
+          }
         ]
       },
       {
@@ -92936,6 +95156,18 @@ const LEARNING_PATHS = [
             "section": "Command-Line Interface; test suites",
             "reviewed": "2026-09-27",
             "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does python testing_integration.py print?",
+            "options": [
+              "7",
+              "{'total': 7}",
+              "Nothing"
+            ],
+            "correct": 0,
+            "explanation": "The route imports one record of 7 minutes into a temporary file and prints the total."
           }
         ]
       }

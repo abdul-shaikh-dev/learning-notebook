@@ -1,0 +1,93 @@
+{
+  "lessons": {
+    "contracts": [
+      {"question": "What does parse_record('{\"id\":\"a\",\"minutes\":5,\"note\":\"x\"}') do?", "options": ["Raises ValueError: exact fields id and minutes required", "Returns the record and ignores note", "Returns the record including note"], "correct": 0, "explanation": "The contract names exactly two fields. An unexpected field is rejected rather than silently carried or dropped."}
+    ],
+    "first-test": [
+      {"question": "What does total_minutes([]) return?", "options": ["0", "None", "ValueError"], "correct": 0, "explanation": "The sum of no records is zero. An empty input is a legitimate case with its own expected result."}
+    ],
+    "boundaries": [
+      {"question": "Which of the minutes values -1, 0, 1440 and 1441 does parse_record accept?", "options": ["0 and 1440", "0 only", "-1, 0 and 1440"], "correct": 0, "explanation": "Both ends of 0..1440 are inclusive. The values just outside each edge are the ones that catch an off-by-one."}
+    ],
+    "failures": [
+      {"question": "import_batch receives one valid line and one invalid line, with a fresh destination path. What happens to the destination?", "options": ["Nothing: it is never created", "It holds the valid record", "It is created empty"], "correct": 0, "explanation": "Every line is parsed before any file work starts, so a rejected batch leaves no partial output. The test should assert the absent effect as well as the error."}
+    ],
+    "fixtures": [
+      {"question": "Setup creates a temporary directory, then a later setup step fails. When should cleanup for the directory be registered?", "options": ["Immediately after the directory is created", "At the end of setup, once everything succeeded", "In the next test's setup"], "correct": 0, "explanation": "Registering cleanup as soon as a resource exists means a later setup failure cannot leak it into other tests."}
+    ],
+    "tracebacks": [
+      {"question": "parse_record('{bad') raises ValueError: invalid JSON. What is its __cause__?", "options": ["A json.JSONDecodeError", "None", "A TypeError"], "correct": 0, "explanation": "raise ... from error keeps the original decoder exception, so the traceback shows both the contract error and where parsing failed."}
+    ],
+    "reproduce": [
+      {"question": "The minimal case is values [4, 8, 16] with stop 1, and the contract includes index stop. What does inclusive_total_mutant return?", "options": ["4", "12", "28"], "correct": 0, "explanation": "The slice values[:stop] excludes index 1, so only 4 is summed. The expected inclusive total is 12."}
+    ],
+    "hypotheses": [
+      {"question": "Hypothesis: buggy_minutes admits booleans. What does buggy_minutes(True) return?", "options": ["True, without raising", "ValueError: minutes required", "1"], "correct": 0, "explanation": "bool is a subclass of int, so isinstance accepts True. One call falsifies or confirms the hypothesis before any code changes."}
+    ],
+    "strategy": [
+      {"question": "Which test would catch the importer's command returning the wrong exit status?", "options": ["A test that runs the command as a real subprocess", "Parser unit tests", "A filesystem integration test"], "correct": 0, "explanation": "Exit status and argument parsing live at the command boundary. Parser and file tests never cross it."}
+    ],
+    "mocks": [
+      {"question": "import_batch is given a replace double that raises OSError. What is left in the destination folder?", "options": ["Nothing: the temporary file is removed", "A study-*.tmp file", "The destination file"], "correct": 0, "explanation": "The double forces the failure path, and the finally block deletes the temporary file. The test can check that absent effect without breaking a real filesystem."}
+    ],
+    "contracts-adapters": [
+      {"question": "What does parse_record('{\"id\":\"a\",\"minutes\":5.0}') do?", "options": ["Raises ValueError: minutes must be an integer from 0 to 1440", "Returns minutes 5", "Returns minutes 5.0"], "correct": 0, "explanation": "5.0 is valid JSON and numerically equal to 5, but the contract requires an integer type."}
+    ],
+    "integration-files": [
+      {"question": "import_batch writes records with 7 and 5 minutes to a real temporary file. What does the file's JSON hold?", "options": ["total 12, with schema_version 1", "total 12, with no schema_version", "Only the records"], "correct": 0, "explanation": "Reading the file back checks serialization and replacement together, which an in-memory result cannot show."}
+    ],
+    "properties": [
+      {"question": "The reference page() walks 17 rows in reverse order with page sizes 1, 2, 3, 5 and 100. Does every walk match the sorted oracle?", "options": ["Yes, for every size", "Only for size 100", "No: ties are skipped"], "correct": 0, "explanation": "The invariant is that batch size never changes the reconstructed sequence. One property covers many concrete cases."}
+    ],
+    "regressions": [
+      {"question": "test_no_skipped_ties_across_pages is run against cursor_candidate and against cursor_reference. What happens?", "options": ["It fails on the candidate and passes on the reference", "It passes on both", "It fails on both"], "correct": 0, "explanation": "A regression test earns its place by failing on the broken code and passing on the fix."}
+    ],
+    "coverage": [
+      {"question": "PositiveOnly calls only label(5). Which statements of label does it execute?", "options": ["All of them, though the minutes <= 0 branch is never taken", "All but the return", "Only the if statement"], "correct": 0, "explanation": "label(5) runs every line, so line coverage is complete. The false branch, where result stays empty, is still untested."}
+    ],
+    "test-data": [
+      {"question": "A fix changes what a captured incident fixture should produce. What should you do with the fixture?", "options": ["Add a new fixture or document a migration", "Overwrite it so the new test passes", "Delete it"], "correct": 0, "explanation": "A historical capture records what happened. Keep it, and add or migrate data deliberately."}
+    ],
+    "concurrency": [
+      {"question": "Two threads pass a Barrier, then both call VersionStore.update(0, ...). What happens?", "options": ["One gets version 1, the other gets Conflict: stale version", "Both get version 1", "Both get Conflict"], "correct": 0, "explanation": "The lock makes the version check and update one step. The barrier makes the race happen every run, without sleep."}
+    ],
+    "flaky-tests": [
+      {"question": "In the concurrency test, what does the join timeout do?", "options": ["Lets the test detect an unfinished worker; it does not stop the thread", "Terminates a thread that runs too long", "Orders the workers"], "correct": 0, "explanation": "The barrier orders the workers. A join timeout only bounds the wait, after which is_alive() reports a stuck worker."}
+    ],
+    "async-debugging": [
+      {"question": "collect_once is cancelled after it signals started. What does events hold?", "options": ["['acquired', 'released']", "['acquired']", "['acquired', 'committed', 'released']"], "correct": 0, "explanation": "The finally block runs on cancellation, so the resource is released. Nothing was committed."}
+    ],
+    "observability": [
+      {"question": "What does diagnostic_event('case-3', 'timeout', 5) do?", "options": ["Raises ValueError: invalid diagnostic event", "Returns the event", "Returns the event with outcome rejected"], "correct": 0, "explanation": "Outcomes are a bounded set: ok, rejected and conflict. An unexpected label is refused rather than logged."}
+    ],
+    "performance": [
+      {"question": "indexed_lookup is replaced with a version that returns wrong results. What does benchmark() do?", "options": ["Raises AssertionError before timing it", "Times it and reports a faster median", "Skips it"], "correct": 0, "explanation": "Both implementations must match the expected results before any sample is recorded. A fast wrong answer is not a measurement."}
+    ],
+    "release-evidence": [
+      {"question": "The test runner printed OK. What could still be wrong?", "options": ["It skipped tests or imported the wrong module", "Nothing: OK means every test ran", "Only the formatting of the output"], "correct": 0, "explanation": "Record the entry point and the test count, and check that tests import the intended checkout."}
+    ],
+    "debug-report": [
+      {"question": "A local lock fixes the stale-version race in the reference store. What does a persistent multi-worker service need?", "options": ["A transaction or coordination at its real storage boundary", "The same threading.Lock", "A retry loop around the write"], "correct": 0, "explanation": "A process lock covers one process. The report should say what the fix covers and what remains untested."}
+    ],
+    "cli-route": [
+      {"question": "What does python testing_integration.py print?", "options": ["7", "{'total': 7}", "Nothing"], "correct": 0, "explanation": "The route imports one record of 7 minutes into a temporary file and prints the total."}
+    ]
+  },
+  "stages": {
+    "foundation": [
+      {"question": "What does parse_record('{\"id\":\"a\",\"id\":\"b\",\"minutes\":1}') do?", "options": ["Raises ValueError: duplicate key", "Returns id b, the last value", "Returns id a, the first value"], "correct": 0, "explanation": "The pairs hook rejects a repeated key instead of letting json.loads keep the last one silently."},
+      {"question": "What does parse_record('{\"id\":\"a\",\"minutes\":true}') do?", "options": ["Raises ValueError: minutes must be an integer from 0 to 1440", "Returns minutes True", "Returns minutes 1"], "correct": 0, "explanation": "The check uses type(...) is int, so bool is rejected. The buggy mutant's isinstance check admits it."},
+      {"question": "What does inclusive_total([4, 8, 16], 3) do?", "options": ["Raises ValueError: stop must name an existing index", "Returns 28", "Returns 12"], "correct": 0, "explanation": "Index 3 does not exist in a three-item list, so the call fails instead of quietly summing everything."}
+    ],
+    "intermediate": [
+      {"question": "import_batch receives two valid lines with the same id. What happens?", "options": ["ValueError: duplicate record id, and no file is written", "The second record replaces the first", "Both records are written"], "correct": 0, "explanation": "Batch-level rules run after every line parses and before file work, so the batch is rejected whole."},
+      {"question": "Rows a, b and c share time 5, and d has time 6. Using cursor_candidate, which IDs do the first two pages of size 2 return?", "options": ["a, b, d: c is skipped", "a, b, c, d", "a, b, b, c"], "correct": 0, "explanation": "The candidate filters on time alone, so rows that tie with the cursor's time are dropped from the next page."},
+      {"question": "import_batch receives 1,001 valid lines. What happens?", "options": ["ValueError: batch exceeds 1000 rows", "The first 1,000 are written", "All 1,001 are written"], "correct": 0, "explanation": "The batch is bounded, and an oversized one is rejected rather than truncated."}
+    ],
+    "advanced": [
+      {"question": "A fresh VersionStore runs update(0, 8), then update(1, 9). What does read() return?", "options": ["(2, 9)", "(1, 9)", "Conflict: stale version"], "correct": 0, "explanation": "Each update names the version it read, so sequential updates succeed and the version advances to 2."},
+      {"question": "collect_once is released normally. What does it return, and what does events hold?", "options": ["7, with ['acquired', 'committed', 'released']", "7, with ['acquired', 'released']", "None, with ['acquired', 'committed']"], "correct": 0, "explanation": "On the success path the work commits and the finally block still releases the resource."},
+      {"question": "A caller edits a row returned by page(). Does the source row change, for the reference and for the candidate?", "options": ["Not for the reference; yes for the candidate", "No for both", "Yes for both"], "correct": 0, "explanation": "The reference returns copies. The candidate returns the original dictionaries, so a caller's edit leaks into the source."}
+    ]
+  }
+}

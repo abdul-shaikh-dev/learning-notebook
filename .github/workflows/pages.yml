@@ -74,6 +74,18 @@ jobs:
         run: python tests/messaging_checkpoint_facts.py
       - name: Check Data Engineering checkpoint answers against the course labs
         run: python tests/data_engineering_checkpoint_facts.py
+      - name: Check AI Agents checkpoint answers against the course labs
+        run: python tests/ai_agents_checkpoint_facts.py
+      - name: Check Agent Harnesses checkpoint answers against the course labs
+        run: python tests/agent_harnesses_checkpoint_facts.py
+      - name: Check Application Security checkpoint answers against the course labs
+        run: python tests/application_security_checkpoint_facts.py
+      - name: Check Testing & Debugging checkpoint answers against the course labs
+        run: python tests/testing_debugging_checkpoint_facts.py
+      - name: Check Observability & Performance checkpoint answers against the course labs
+        run: python tests/observability_checkpoint_facts.py
+      - name: Check System Design checkpoint answers against the course labs
+        run: python tests/system_design_checkpoint_facts.py
       - name: Check concept explorer figures against the course labs
         run: python tests/explorer_lab_facts.py
 
