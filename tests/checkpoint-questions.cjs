@@ -33,7 +33,7 @@ for(const p of paths){
  if(slots.size)assert.ok(slots.size>1,p.id+': correct answers do not all sit in one position');
 }
 // Courses with extra questions carry one per lesson and three per stage.
-const extended=['python','data-structures-algorithms','design-patterns','practical-maths-statistics','git-team-workflows','networking-web','messaging-events','data-engineering','sql-server','ai-agents','agent-harnesses','application-security','testing-debugging','observability-performance','system-design','kubernetes','cloud-infrastructure','delivery-operations','ui-accessibility'].map(id=>paths.find(x=>x.id===id));
+const extended=['python','data-structures-algorithms','design-patterns','practical-maths-statistics','git-team-workflows','networking-web','messaging-events','data-engineering','sql-server','ai-agents','agent-harnesses','application-security','testing-debugging','observability-performance','system-design','kubernetes','cloud-infrastructure','delivery-operations','ui-accessibility','full-stack-journey'].map(id=>paths.find(x=>x.id===id));
 assert.deepEqual(paths.filter(x=>x.lessons.some(l=>l.extraQuiz)).map(x=>x.id).sort(),extended.map(x=>x.id).sort(),'Courses with extra questions');
 for(const p of extended){
  assert.ok(p.lessons.every(l=>l.extraQuiz?.length===1),p.id+': one extra question per lesson');assert.deepEqual(p.stages.map(s=>s.stageCheck.length),p.stages.map(()=>3),p.id+': three questions per stage');
