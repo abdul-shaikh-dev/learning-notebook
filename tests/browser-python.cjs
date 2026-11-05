@@ -39,19 +39,25 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
  }
  assert.equal(facts.size,72,'Code-based checkpoint answers checked');
  // Lesson examples in runExamples courses run unchanged, with the practice modules they name, and show a result.
+ // An "# Expected output:" block at the end of an example must match what it prints.
  const runExample=async(code,files)=>{const messages=[],self={postMessage:data=>messages.push(data)};vm.runInNewContext(source,{self,importScripts:()=>{},loadPyodide:async()=>py,JSON,String});await self.onmessage({data:{mode:'run',runtime,code,files}});return messages.at(-1);};
- const examples={};
+ const examples={};let stated=0,local=0;
  for(const p of require(path.resolve('scripts/manifest.cjs')).readPaths().filter(p=>p.runExamples)){
-  const enabled=p.lessons.flatMap(l=>l.sections.map((s,i)=>({l,s,i}))).filter(({s})=>s.example&&!s.exampleFormat);
+  const all=p.lessons.flatMap(l=>l.sections.map((s,i)=>({l,s,i}))).filter(({s})=>s.example&&!s.exampleFormat),enabled=all.filter(({s})=>!s.exampleRunLocally);
+  // An example kept for local running really cannot run here, for the reason it states.
+  for(const {l,s,i} of all.filter(({s})=>s.exampleRunLocally)){const r=await runExample(s.example,[]);assert.ok(!r.ok&&/can't start new thread/.test(r.error)&&/threads/.test(s.exampleRunLocally),p.id+'/'+l.id+' example '+i+' cannot run in the browser for its stated reason');local++;}
   examples[p.id]=[enabled.length,enabled.filter(({s})=>s.exampleFiles).length];
   for(const {l,s,i} of enabled){
    const files=(s.exampleFiles||[]).map(f=>{assert.ok(p.publicFiles.includes(f),'Example module is published for offline use: '+f);return {name:f.split('/').pop(),source:fs.readFileSync('paths/'+p.id+'/'+f,'utf8')};});
    const r=await runExample(s.example,files),where=p.id+'/'+l.id+' example '+i;
    assert.equal(r.ok,true,where+': '+r.error);
    assert.ok(r.output||/^\s*assert\b/m.test(s.example),where+': prints a result or checks one with assert');
+   const expected=s.example.match(/^# Expected output:\n((?:#.*(?:\n|$))+)$/m);
+   if(expected){stated++;assert.equal(r.output.trimEnd(),expected[1].trimEnd().split('\n').map(x=>x.replace(/^# ?/,'')).join('\n'),where+': prints its stated output');}
   }
  }
- assert.deepEqual(examples,{'data-structures-algorithms':[23,2],'design-patterns':[24,2],'practical-maths-statistics':[21,0]},'Enabled examples per course, and those that import practice modules');
+ assert.deepEqual(examples,{'data-structures-algorithms':[23,2],'design-patterns':[24,2],'practical-maths-statistics':[21,0],python:[25,0]},'Enabled examples per course, and those that import practice modules');
+ assert.equal(local,2,'Python course examples kept for local running');
  const missing=await runExample('from practice_helpers import solve',[]);assert.ok(!missing.ok&&/ModuleNotFoundError: No module named 'practice_helpers'/.test(missing.error),'An import that is not supplied fails clearly');
  for(const [code,check] of [
   ['print("a")\nprint("b")',r=>r.ok&&r.output==='a\nb\n'&&!r.error],
@@ -64,5 +70,5 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
   ['def broken(',r=>!r.ok&&/SyntaxError/.test(r.error)],
   ['import sys; print("oops", file=sys.stderr)',r=>r.ok&&r.output==='oops\n']
  ]){const r=await runCode(code);assert.ok(check(r),code+' -> '+JSON.stringify(r));}
- console.log('PASS: real browser Python runtime executes all 30 references / 192 cases and rejects wrong answers, types, mutation, syntax, missing functions and SystemExit; checks 72 code-based checkpoint answers; runs 21 Python course references and 68 lesson examples (4 with their practice modules) as scripts with bounded output, exit codes, no stdin and learner-only tracebacks.');
+ console.log('PASS: real browser Python runtime executes all 30 references / 192 cases and rejects wrong answers, types, mutation, syntax, missing functions and SystemExit; checks 72 code-based checkpoint answers; runs 21 Python course references and 93 lesson examples (4 with their practice modules; '+stated+' matching their stated output), confirms 2 thread examples cannot run in the browser, as scripts with bounded output, exit codes, no stdin and learner-only tracebacks.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

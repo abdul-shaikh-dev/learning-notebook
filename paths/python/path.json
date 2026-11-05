@@ -420,14 +420,14 @@
             "Suppose the input topics are Python 20, SQL 30 and Python 10. A list preserves individual sessions; a dictionary answers the different question of total time per topic. Start with an empty dictionary, add 20 under Python, add 30 under SQL, then update Python to 30. Choosing a structure follows the question you need to answer.",
             "Each item is a two-value tuple. The loop assigns its first value to `topic` and its second to `minutes`. `totals.get(topic, 0)` starts a missing topic at zero; adding minutes updates that topic without erasing earlier sessions. Two sessions with the same topic and duration may both be valid, so do not remove them with a set."
           ],
-          "example": "totals = {}\nfor topic, minutes in [(\"Python\", 20), (\"SQL\", 30), (\"Python\", 10)]:\n    totals[topic] = totals.get(topic, 0) + minutes\nprint(totals)\n# Expected: {\"Python\": 30, \"SQL\": 30}"
+          "example": "totals = {}\nfor topic, minutes in [(\"Python\", 20), (\"SQL\", 30), (\"Python\", 10)]:\n    totals[topic] = totals.get(topic, 0) + minutes\nprint(totals)\n\n# Expected output:\n# {'Python': 30, 'SQL': 30}"
         },
         {
           "title": "Keep the index when you need it",
           "paragraphs": [
             "`enumerate` pairs each item with its zero-based index. In for index, label, Python assigns those two values to separate names. Use the index when a problem asks where a match occurs, and the value when it asks what matched."
           ],
-          "example": "labels = [\"read\", \"code\"]\nfor index, label in enumerate(labels):\n    print(index, label)\n# 0 read\n# 1 code"
+          "example": "labels = [\"read\", \"code\"]\nfor index, label in enumerate(labels):\n    print(index, label)\n\n# Expected output:\n# 0 read\n# 1 code"
         }
       ],
       "exercise": {
@@ -1232,7 +1232,8 @@
           "paragraphs": [
             "`Executor.map` returns results in input order even if completion order differs. The caller aggregates returned values rather than workers changing shared totals. This tiny calculation demonstrates mechanics, not a speedup. The exercise uses simulated async I/O without any service."
           ],
-          "example": "from concurrent.futures import ThreadPoolExecutor\ndef score(value):\n    return value * value\nwith ThreadPoolExecutor(max_workers=2) as pool:\n    results = list(pool.map(score, [3, 1, 2]))\nprint(results)\nprint(sum(results))\n\n# Expected output:\n# [9, 1, 4]\n# 14"
+          "example": "from concurrent.futures import ThreadPoolExecutor\ndef score(value):\n    return value * value\nwith ThreadPoolExecutor(max_workers=2) as pool:\n    results = list(pool.map(score, [3, 1, 2]))\nprint(results)\nprint(sum(results))\n\n# Expected output:\n# [9, 1, 4]\n# 14",
+          "exampleRunLocally": "Runs locally: the browser's Python cannot start threads, so copy this into a file and run it with Python."
         },
         {
           "title": "From threads to async tasks",
@@ -1471,7 +1472,8 @@
           "paragraphs": [
             "The mini example shows ordered workers and batch validation. `advanced_project.py` adds frozen domain records, duplicate JSON-key rejection, limits, logging and same-directory replacement. Run `--demo` with temporary files, then run `test_projects.py` before extending it. Threads demonstrate composition, not a promised speed advantage."
           ],
-          "example": "import json\nfrom concurrent.futures import ThreadPoolExecutor\ndef parse_line(text):\n    value = json.loads(text)\n    if type(value) is not dict or set(value) != {\"id\", \"minutes\"}:\n        raise ValueError(\"invalid fields\")\n    if not isinstance(value[\"id\"], str) or not value[\"id\"]:\n        raise ValueError(\"invalid id\")\n    if type(value[\"minutes\"]) is not int or value[\"minutes\"] < 0:\n        raise ValueError(\"invalid minutes\")\n    return value\ndef import_batch(lines):\n    with ThreadPoolExecutor(max_workers=2) as pool:\n        rows = list(pool.map(parse_line, lines))\n    if len({row[\"id\"] for row in rows}) != len(rows):\n        raise ValueError(\"duplicate id\")\n    return rows\nrows = import_batch(['{\"id\":\"a\",\"minutes\":10}', '{\"id\":\"b\",\"minutes\":20}'])\nprint([r[\"id\"] for r in rows])\nprint(sum(r[\"minutes\"] for r in rows))\n\n# Expected output:\n# ['a', 'b']\n# 30"
+          "example": "import json\nfrom concurrent.futures import ThreadPoolExecutor\ndef parse_line(text):\n    value = json.loads(text)\n    if type(value) is not dict or set(value) != {\"id\", \"minutes\"}:\n        raise ValueError(\"invalid fields\")\n    if not isinstance(value[\"id\"], str) or not value[\"id\"]:\n        raise ValueError(\"invalid id\")\n    if type(value[\"minutes\"]) is not int or value[\"minutes\"] < 0:\n        raise ValueError(\"invalid minutes\")\n    return value\ndef import_batch(lines):\n    with ThreadPoolExecutor(max_workers=2) as pool:\n        rows = list(pool.map(parse_line, lines))\n    if len({row[\"id\"] for row in rows}) != len(rows):\n        raise ValueError(\"duplicate id\")\n    return rows\nrows = import_batch(['{\"id\":\"a\",\"minutes\":10}', '{\"id\":\"b\",\"minutes\":20}'])\nprint([r[\"id\"] for r in rows])\nprint(sum(r[\"minutes\"] for r in rows))\n\n# Expected output:\n# ['a', 'b']\n# 30",
+          "exampleRunLocally": "Runs locally: the browser's Python cannot start threads, so copy this into a file and run it with Python."
         },
         {
           "title": "Tradeoffs",
@@ -1653,5 +1655,6 @@
       "title": "Local I/O failure checks",
       "href": "paths/python/practice/test_io_failure_bridge.py"
     }
-  ]
+  ],
+  "runExamples": true
 }

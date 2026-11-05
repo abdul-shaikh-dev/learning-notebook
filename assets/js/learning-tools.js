@@ -142,6 +142,6 @@ function lessonExample(l,s,index,p){
  // Courses marked runExamples add Run and Edit below each Python example.
  const controls=p&&typeof NotebookPractice!=='undefined'?NotebookPractice.exampleControls(p,s,index):'';
  if(controls)return '<pre class="example" id="example-code-'+index+'" data-language="python">'+escapeText(s.example)+'</pre>'+controls;
- const example='<pre class="example"'+(s.exampleFormat==='text'?' data-language="plaintext"':'')+'>'+escapeText(s.example)+'</pre>';
+ const example='<pre class="example"'+(s.exampleFormat==='text'?' data-language="plaintext"':'')+'>'+escapeText(s.example)+'</pre>'+(p?.runExamples&&s.exampleRunLocally?'<p class="example-local">'+escapeText(s.exampleRunLocally)+'</p>':'');
  return l.diagram?.textExampleSections?.includes(index)?'<div class="flow-text-alternative"><button class="quiet" data-jump="lesson-diagram">View this flow as a diagram ↓</button><details><summary>Read the original flow as text</summary>'+example+'</details></div>':example;
 }
