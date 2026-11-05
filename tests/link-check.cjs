@@ -1,7 +1,7 @@
-// External link check without the network: collection, results, retries, redirects, the allow list, per-host spacing and the report.
+// External link check without the network: collection, results, retries, redirects, the allow list, per-host spacing, review age and the report.
 const path=require('node:path'),assert=require('node:assert/strict');
 process.chdir(process.env.LEARNING_REPO||path.resolve(__dirname,'..'));
-const {collectLinks,checkLinks,report}=require('../scripts/check-links.cjs');
+const {collectLinks,checkLinks,reviewCutoff,staleReferences,report}=require('../scripts/check-links.cjs');
 // Every course source and lesson reference is collected once, with where it is cited.
 const real=collectLinks(require('../scripts/manifest.cjs').readPaths());
 assert.ok(real.size>400,'Course sources and lesson references are collected: '+real.size);
@@ -63,5 +63,28 @@ const fetch=async(url,{method,redirect})=>{
  assert.ok(text.includes('| https://moved.test/old | https://moved.test/new |'));
  assert.ok(!text.includes('https://ok.test/a'));
  assert.ok(report([{url:'https://ok.test/a',state:'ok'}],links).includes('Every checked link answered directly.'));
- console.log('PASS: external link check: '+real.size+' links collected; broken, redirected, retried, rate-limited, HEAD fallback, DOI, trailing slash and allow-listed links; per-host spacing and the Markdown report.');
+ // Review age: calendar months back from a fixed day, keeping the day or using the month's last day.
+ assert.equal(allow.reviewedMaxAgeMonths,12,'The review age is set beside the allow list');
+ assert.equal(reviewCutoff('2027-10-01',12),'2026-10-01');
+ assert.equal(reviewCutoff('2028-02-29',12),'2027-02-28','A shorter month uses its last day');
+ assert.equal(reviewCutoff('2027-03-31',1),'2027-02-28');
+ assert.equal(reviewCutoff('2027-01-15',1),'2026-12-15','Crosses a year');
+ const course=(title,lessons)=>({title,lessons:lessons.map(([lesson,refs])=>({title:lesson,references:refs.map(([url,reviewed])=>({title:'Ref '+url.slice(-1),url,reviewed}))}))});
+ const dated=[course('Beta',[['1. One',[['https://b.test/a','2026-09-30'],['https://b.test/b','2026-10-01']]],['2. Two',[['https://b.test/a','2026-09-30']]]]),
+  course('Alpha',[['1. First',[['https://a.test/x','2026-10-02'],['https://a.test/y','2026-02-30'],['https://a.test/z',undefined]]]])];
+ const due=staleReferences(dated,{today:'2027-10-01',months:12});
+ assert.equal(due.cutoff,'2026-10-01');
+ assert.deepEqual(due.references.map(r=>[r.course,r.url,r.reviewed,r.lessons.join(' + ')]),[
+  ['Alpha','https://a.test/y',null,'1. First'],['Alpha','https://a.test/z',null,'1. First'],
+  ['Beta','https://b.test/a','2026-09-30','1. One + 2. Two']],
+  'Older than the cutoff, or with a missing or impossible date; the cutoff day itself is not due; one row per reference, listing every lesson that cites it');
+ const section=report([{url:'https://ok.test/a',state:'ok'}],links,{date:'2027-10-01',stale:due});
+ assert.ok(section.includes('## References due for review')&&section.includes('more than 12 months ago, before 2026-10-01'));
+ assert.ok(section.indexOf('### Alpha')<section.indexOf('### Beta'),'Grouped by course');
+ assert.ok(section.includes('| [Ref a](https://b.test/a) | 2026-09-30 | 1. One<br>2. Two |'));
+ assert.ok(section.includes('| [Ref y](https://a.test/y) | Missing or invalid date | 1. First |'));
+ const none=report([],links,{stale:staleReferences(dated.slice(0,1),{today:'2026-11-05',months:12})});
+ assert.ok(none.includes('None: every lesson reference was reviewed on or after 2025-11-05.')&&!none.includes('###'),'Says when nothing is due');
+ assert.ok(!report([],links).includes('References due for review'),'The section appears only when review ages are passed');
+ console.log('PASS: external link check: '+real.size+' links collected; broken, redirected, retried, rate-limited, HEAD fallback, DOI, trailing slash and allow-listed links; per-host spacing, review age and the Markdown report.');
 })().catch(e=>{console.error(e);process.exitCode=1;});

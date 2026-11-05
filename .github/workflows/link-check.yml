@@ -24,20 +24,20 @@ jobs:
         with:
           node-version: "24"
       - name: Check course sources and lesson references
-        run: node scripts/check-links.cjs --out link-report.md --json link-results.json
+        run: node scripts/check-links.cjs --out link-report.md --json link-results.json --stale-json stale-references.json
       - name: Add the report to the job summary
         run: cat link-report.md >> "$GITHUB_STEP_SUMMARY"
-      - name: Comment on the link report issue when links need attention
+      - name: Comment on the link report issue when links or references need attention
         env:
           GH_TOKEN: ${{ github.token }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          problems=$(node -e "console.log(require('./link-results.json').filter(r=>r.state==='broken'||r.state==='redirected').length)")
-          if [ "$problems" = "0" ]; then echo "No broken or redirected links."; exit 0; fi
+          problems=$(node -e "console.log(require('./link-results.json').filter(r=>r.state==='broken'||r.state==='redirected').length+require('./stale-references.json').length)")
+          if [ "$problems" = "0" ]; then echo "No broken or redirected links, and no references due for review."; exit 0; fi
           title="External link report"
           issue=$(gh issue list --state open --search "\"$title\" in:title" --json number,title --jq "map(select(.title == \"$title\"))[0].number // empty")
           if [ -z "$issue" ]; then
-            issue=$(gh issue create --title "$title" --body "The weekly link check comments here when course sources or lesson references are broken or redirected. Close this issue once they are fixed; the next report opens a new one." | grep -o '[0-9]*$')
+            issue=$(gh issue create --title "$title" --body "The weekly link check comments here when course sources or lesson references are broken or redirected, or when a lesson reference is due for review. Close this issue once they are fixed; the next report opens a new one." | grep -o '[0-9]*$')
           fi
           { head -c 60000 link-report.md; printf '\n\n[Full run](%s)\n' "$RUN_URL"; } > comment.md
           gh issue comment "$issue" --body-file comment.md

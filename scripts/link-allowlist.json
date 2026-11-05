@@ -1,4 +1,5 @@
 {
+  "reviewedMaxAgeMonths": 12,
   "hosts": {
     "escholarship.org": "Answers automated requests with HTTP 403. Check by hand.",
     "idp.springer.com": "Springer sends automated requests through a session redirect. Check the article by hand.",
