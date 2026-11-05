@@ -47176,7 +47176,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "Two release_app replicas each use their own scratch SQLite file. A note is posted to the first. What does the second's /notes return?",
+            "options": [
+              "No notes",
+              "The new note",
+              "An error, because the database is locked"
+            ],
+            "correct": 0,
+            "explanation": "Replicas do not share local files. Reconciling the replica count does not make per-Pod storage a shared data service."
+          }
+        ]
       },
       {
         "id": "control-plane",
@@ -47306,7 +47318,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "kubectl apply of a Deployment succeeds, but no node has capacity for its Pods. What state are the Pods in?",
+            "options": [
+              "Pending",
+              "Running",
+              "Failed"
+            ],
+            "correct": 0,
+            "explanation": "The API server accepted the desired state, but the scheduler could not assign the Pods to a node. Inspect status and events."
+          }
+        ]
       },
       {
         "id": "local-context",
@@ -47355,7 +47379,19 @@ const LEARNING_PATHS = [
             "scope": "Dedicated local kind cluster; no cluster created by course author verification. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "readiness_drill.py finds that the kind-notebook-lab context points at a non-loopback API server. What does it do?",
+            "options": [
+              "Exits: Refusing: named kind context must use a loopback API",
+              "Continues, because the context name matches",
+              "Switches to a loopback context"
+            ],
+            "correct": 0,
+            "explanation": "A context name is only a label. The drill checks where it actually points before mutating anything."
+          }
+        ]
       },
       {
         "id": "objects-labels",
@@ -47489,7 +47525,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The Pod template's label is changed to app: release-demo-v2, and the Service selector is unchanged. Does the Service still select the Pods?",
+            "options": [
+              "No: the selector no longer matches the Pod labels",
+              "Yes: the Deployment name still matches",
+              "Yes: the Service follows its Deployment"
+            ],
+            "correct": 0,
+            "explanation": "A Service finds Pods only through its label selector. Names and ownership do not take part."
+          }
+        ]
       },
       {
         "id": "pods",
@@ -47618,7 +47666,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "release-demo has a read-only root filesystem. Where does it keep its SQLite file?",
+            "options": [
+              "Under /tmp, on an emptyDir volume",
+              "On the image's root filesystem",
+              "On the PersistentVolumeClaim"
+            ],
+            "correct": 0,
+            "explanation": "RELEASE_DB points at /tmp, which is mounted from an emptyDir scratch volume. Its data lasts as long as the Pod."
+          }
+        ]
       },
       {
         "id": "deployments",
@@ -48057,7 +48117,19 @@ const LEARNING_PATHS = [
               "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "How many old ReplicaSets does the release-demo Deployment keep for rollback?",
+            "options": [
+              "3",
+              "1",
+              "All of them"
+            ],
+            "correct": 0,
+            "explanation": "revisionHistoryLimit is 3. Older ReplicaSets are cleaned up and can no longer be rolled back to."
+          }
+        ]
       },
       {
         "id": "services-dns",
@@ -48534,7 +48606,19 @@ const LEARNING_PATHS = [
               "url": "https://kubernetes.io/docs/concepts/services-networking/service/"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The version-check Job reaches the release-demo Service by its short name. Why does that name resolve?",
+            "options": [
+              "The Job runs in the same namespace as the Service",
+              "The Job has a hosts file entry",
+              "Short names resolve across every namespace"
+            ],
+            "correct": 0,
+            "explanation": "Cluster DNS resolves a bare Service name within the client's own namespace. Another namespace needs the qualified name."
+          }
+        ]
       },
       {
         "id": "configmaps",
@@ -48663,7 +48747,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "release_app.py is started with RELEASE_VERSION=v2 in its environment. What does /version return?",
+            "options": [
+              "{\"release\": \"v2\"}",
+              "{\"release\": \"v1\"}",
+              "An error, because v2 is not deployed"
+            ],
+            "correct": 0,
+            "explanation": "The process reads the value once at startup. envFrom supplies it that way, which is why a later ConfigMap change needs a restart."
+          }
+        ]
       },
       {
         "id": "secrets",
@@ -48712,7 +48808,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "extraQuiz": [
+          {
+            "question": "A user may not get Secrets, but may create Pods in the namespace. Can they read a Secret's value?",
+            "options": [
+              "Possibly: a Pod they create can mount it",
+              "No: get permission is required",
+              "Only if the Secret is base64 encoded"
+            ],
+            "correct": 0,
+            "explanation": "Creating a Pod that mounts a Secret is indirect access. Review who can create workloads in the namespace."
+          }
+        ]
       },
       {
         "id": "probes",
@@ -48860,7 +48968,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The release_app ready gate file exists. What do /live and /ready return?",
+            "options": [
+              "/live 200 and /ready 503",
+              "/live 503 and /ready 503",
+              "/live 200 and /ready 200"
+            ],
+            "correct": 0,
+            "explanation": "Readiness reports a temporary inability to serve, which removes the Pod from endpoints. Liveness stays healthy, so the container is not restarted."
+          }
+        ]
       },
       {
         "id": "resources",
@@ -48909,7 +49029,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "extraQuiz": [
+          {
+            "question": "What CPU do the two release-demo replicas request in total?",
+            "options": [
+              "200m, a fifth of a CPU",
+              "1000m, from the limits",
+              "100m"
+            ],
+            "correct": 0,
+            "explanation": "Each replica requests 100m. The scheduler plans with requests; the 500m limit caps use."
+          }
+        ]
       },
       {
         "id": "rolling-updates",
@@ -49323,7 +49455,19 @@ const LEARNING_PATHS = [
               "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "release-demo has 2 replicas, maxSurge 1 and maxUnavailable 0. During a rollout, what are the most Pods and the fewest available?",
+            "options": [
+              "At most 3 Pods, never fewer than 2 available",
+              "At most 4 Pods, at least 1 available",
+              "Exactly 2 Pods throughout"
+            ],
+            "correct": 0,
+            "explanation": "One extra Pod may be surged, and none of the desired two may be unavailable, so a new Pod must be ready before an old one goes."
+          }
+        ]
       },
       {
         "id": "scheduling",
@@ -49372,7 +49516,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "extraQuiz": [
+          {
+            "question": "Why does the course omit hard multi-zone spread rules from the baseline?",
+            "options": [
+              "A single-node kind cluster cannot meaningfully satisfy them",
+              "Kubernetes does not support zone spreading",
+              "Spread rules disable autoscaling"
+            ],
+            "correct": 0,
+            "explanation": "Add a placement constraint only when it has an operational purpose the environment can meet."
+          }
+        ]
       },
       {
         "id": "network-policy",
@@ -49421,7 +49577,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "extraQuiz": [
+          {
+            "question": "Which of the two policy-client Pods does the app-ingress rule allow?",
+            "options": [
+              "allowed-client only",
+              "Both",
+              "denied-client only"
+            ],
+            "correct": 0,
+            "explanation": "The ingress rule selects app: notebook-client. Enforcement still depends on a network plugin that implements NetworkPolicy."
+          }
+        ]
       },
       {
         "id": "rbac",
@@ -49550,7 +49718,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The viewer ServiceAccount is bound to the pod-viewer Role. Can it delete Pods, or read Secrets?",
+            "options": [
+              "Neither",
+              "Delete Pods only",
+              "Both"
+            ],
+            "correct": 0,
+            "explanation": "The Role grants get, list and watch on pods and pods/log, nothing else. RBAC has no implicit extra verbs."
+          }
+        ]
       },
       {
         "id": "pod-security",
@@ -49599,7 +49779,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "extraQuiz": [
+          {
+            "question": "Which Pod Security level does namespace.json enforce?",
+            "options": [
+              "restricted, pinned to v1.34",
+              "baseline",
+              "privileged"
+            ],
+            "correct": 0,
+            "explanation": "Pinning the version keeps the enforced rules stable across cluster upgrades until the label is changed deliberately."
+          }
+        ]
       },
       {
         "id": "persistent-storage",
@@ -49728,7 +49920,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The storage-demo Pod is deleted, but its claim lab-data is kept. What can happen to the file it wrote?",
+            "options": [
+              "It can survive for the next Pod that mounts the claim",
+              "It is always deleted with the Pod",
+              "It moves to the node's emptyDir"
+            ],
+            "correct": 0,
+            "explanation": "Deleting a Pod need not delete its claim or data. Deleting the claim triggers the provider's reclaim behaviour."
+          }
+        ]
       },
       {
         "id": "jobs",
@@ -49777,7 +49981,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "version-check has backoffLimit 1 and restartPolicy Never. How many Pods can it create before the Job fails, ignoring the deadline?",
+            "options": [
+              "2",
+              "1",
+              "Unlimited"
+            ],
+            "correct": 0,
+            "explanation": "The first attempt plus one retry. The 60-second activeDeadlineSeconds can end it sooner."
+          }
+        ]
       },
       {
         "id": "autoscaling",
@@ -49826,7 +50042,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "The HPA targets 60% average CPU utilization. With a 100m request per Pod, what average CPU per Pod is the target?",
+            "options": [
+              "60m",
+              "300m, 60% of the limit",
+              "600m"
+            ],
+            "correct": 0,
+            "explanation": "Utilization is measured against requests, not limits, which is why CPU-percentage autoscaling needs requests set."
+          }
+        ]
       },
       {
         "id": "disruptions",
@@ -49875,7 +50103,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "The release-demo PDB has minAvailable 1, and both replicas are ready. How many Pods can a voluntary disruption evict at once?",
+            "options": [
+              "1",
+              "2",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "One Pod must stay available. A PDB limits voluntary evictions such as drains, not node crashes."
+          }
+        ]
       },
       {
         "id": "helm",
@@ -49924,7 +50164,19 @@ const LEARNING_PATHS = [
             "scope": "Current Helm chart principles; learner-generated chart, no packaged or installed release supplied. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "A chart renders a Deployment whose selector does not match its Pod labels. Does installing it with Helm fix that?",
+            "options": [
+              "No: a chart does not make invalid objects correct",
+              "Yes: Helm repairs selectors",
+              "Yes, if the values file is valid"
+            ],
+            "correct": 0,
+            "explanation": "Render first and compare the output with the known contract. Packaging does not change what the objects mean."
+          }
+        ]
       },
       {
         "id": "gitops",
@@ -50065,7 +50317,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Someone fixes a GitOps-managed Deployment with kubectl edit. What can happen next?",
+            "options": [
+              "The controller overwrites it on reconciliation",
+              "Git is updated to match",
+              "The controller stops managing it"
+            ],
+            "correct": 0,
+            "explanation": "The source of truth is the reviewed desired state. A durable change goes there."
+          }
+        ]
       },
       {
         "id": "troubleshooting",
@@ -50123,7 +50387,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "release_app's database file has been removed. What do /live and /ready return?",
+            "options": [
+              "/live 200 and /ready 503",
+              "/live 503 and /ready 503",
+              "/live 200 and /ready 200"
+            ],
+            "correct": 0,
+            "explanation": "The process runs, so the Pod looks Running, but readiness fails its database check and the Pod gets no Service traffic."
+          }
+        ]
       },
       {
         "id": "backup-production",
@@ -50264,7 +50540,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "release_app.backup() is given a target file that already exists. What happens?",
+            "options": [
+              "ValueError: Backup destination must be new",
+              "The target is overwritten",
+              "The backup is appended"
+            ],
+            "correct": 0,
+            "explanation": "Refusing to overwrite protects an earlier backup. A restore test then shows whether the new one is usable."
+          }
+        ]
       }
     ],
     "stages": [
@@ -50294,7 +50582,39 @@ const LEARNING_PATHS = [
             "A failed boundary is diagnosed from actual status/events."
           ],
           "solution": "Use standard Python checks without a cluster first. The Deployment selector and Service selector match app=release-demo, and targetPort http matches the named 8080 container port. Bootstrap persists the namespace before server dry-run. Optional live checks wait for readiness and inspect endpoints; scratch notes remain per Pod."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "release_app receives POST /notes with the title '  Plan  '. What comes back?",
+            "options": [
+              "201 with the title 'Plan'",
+              "201 with the title '  Plan  '",
+              "400 invalid_title_or_body"
+            ],
+            "correct": 0,
+            "explanation": "The title is stripped and then validated, so surrounding spaces are neither stored nor counted."
+          },
+          {
+            "question": "release_app receives POST /notes with a 101-character title. What comes back?",
+            "options": [
+              "400 invalid_title_or_body",
+              "201 with the first 100 characters",
+              "500"
+            ],
+            "correct": 0,
+            "explanation": "Titles are limited to 100 characters, and a longer one is rejected rather than truncated."
+          },
+          {
+            "question": "A fresh release_app answers one 503 from /ready and one 404. What does /metrics then report?",
+            "options": [
+              "2 requests, 1 error",
+              "2 requests, 2 errors",
+              "3 requests, 1 error"
+            ],
+            "correct": 0,
+            "explanation": "Errors count 5xx responses only. The metrics request takes its snapshot before its own response is counted."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -50323,7 +50643,39 @@ const LEARNING_PATHS = [
             "No production identity/cluster is reused."
           ],
           "solution": "With 2 replicas, maxSurge 1 and maxUnavailable 0, expect spare capacity for a third candidate. ready 503 / live 200 should remove readiness without this condition triggering liveness restart. RBAC grants read/list/watch Pods/logs only; verify denies separately. Default kind does not prove NetworkPolicy enforcement; mark that check reviewed-only unless the plugin/client evidence exists."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "The readiness probe runs every 5 seconds with failureThreshold 3. About how long after /ready starts failing is the Pod marked unready?",
+            "options": [
+              "About 15 seconds",
+              "About 5 seconds",
+              "About 30 seconds"
+            ],
+            "correct": 0,
+            "explanation": "Three consecutive failures at 5-second intervals. The threshold trades reaction time against flapping."
+          },
+          {
+            "question": "The startup probe runs every 5 seconds with failureThreshold 12. How long may the app take to start before it is restarted?",
+            "options": [
+              "About 60 seconds",
+              "About 15 seconds",
+              "Unlimited"
+            ],
+            "correct": 0,
+            "explanation": "Liveness checks wait until startup succeeds, so a slow start is not mistaken for a hung process."
+          },
+          {
+            "question": "A Role is changed to include secrets in its resources. Which check in check_manifests.py fails?",
+            "options": [
+              "test_optional_boundaries",
+              "test_selectors_ports_and_security",
+              "None of them"
+            ],
+            "correct": 0,
+            "explanation": "The boundary check rejects secrets and wildcard verbs in the lab Role, so a widened permission fails offline before any apply."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -50353,7 +50705,39 @@ const LEARNING_PATHS = [
             "Business-data restoration is separate from control-plane restoration."
           ],
           "solution": "Use the optional Job to read Service /version with deadline 60 and backoff 1. A bound PVC and RWO access do not certify disaster recovery or exclusive transaction ownership. Render Helm before any install; durable GitOps rollback changes desired source state. Separate etcd state and application store recovery with known-record verification; the dedicated kind lab is selected mechanics practice, not production readiness."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "One note is saved, then release_app.backup() copies the database to a new file. What does the backup contain?",
+            "options": [
+              "The note",
+              "An empty notes table",
+              "Nothing: the source was opened read-only"
+            ],
+            "correct": 0,
+            "explanation": "The source is read through a read-only connection and copied with SQLite's backup API, so the data arrives without risking the source."
+          },
+          {
+            "question": "How long is the HPA's scale-down stabilization window?",
+            "options": [
+              "120 seconds",
+              "60 seconds",
+              "None: it scales down at once"
+            ],
+            "correct": 0,
+            "explanation": "The HPA uses the highest recommendation from the last 120 seconds, which avoids removing Pods on a brief dip."
+          },
+          {
+            "question": "readiness_drill.py finds that namespace notebook-lab lacks the training-owner=notebook label. What does it do?",
+            "options": [
+              "Exits: Refusing: namespace must have training-owner=notebook",
+              "Adds the label and continues",
+              "Continues, because the namespace name matches"
+            ],
+            "correct": 0,
+            "explanation": "The drill only mutates a namespace marked as the lab's own, so a same-named namespace elsewhere is left alone."
+          }
+        ]
       }
     ],
     "downloads": [
