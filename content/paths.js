@@ -7911,6 +7911,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Threat-model concepts and abuse-case design; the synthetic exercise is not a production assessment."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Alice (red tenant) asks read_document for Bob's document b and for an ID that does not exist. What does she get?",
+            "options": [
+              "The same PermissionError, document unavailable, for both",
+              "PermissionError for b and KeyError for the missing ID",
+              "PermissionError for b and None for the missing ID"
+            ],
+            "correct": 0,
+            "explanation": "The boundary deliberately makes missing and denied indistinguishable, so a guessed ID does not reveal which documents exist."
+          }
         ]
       },
       {
@@ -7962,6 +7974,18 @@ const LEARNING_PATHS = [
             "section": "V6: authentication architecture",
             "reviewed": "2026-09-27",
             "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Principal('bob', 'red', 'reader') asks to act on Alice's red-tenant document a. What does authorized() allow?",
+            "options": [
+              "Read, but not update",
+              "Read and update",
+              "Neither, because Bob is not the owner"
+            ],
+            "correct": 0,
+            "explanation": "The reader role grants read within the same tenant. Update still requires ownership."
           }
         ]
       },
@@ -8021,6 +8045,18 @@ const LEARNING_PATHS = [
             "section": "Authentication responses and reauthentication",
             "reviewed": "2026-09-27",
             "scope": "Current OWASP guidance reviewed 2026-09-27; production mechanisms remain provider-specific."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Sessions.login is given a plain string instead of a Principal. What happens?",
+            "options": [
+              "It issues a session and identity() returns the string",
+              "It raises TypeError",
+              "It raises PermissionError"
+            ],
+            "correct": 0,
+            "explanation": "Sessions only maps an opaque ID to whatever the trusted adapter supplied. It proves nothing about identity itself, which is why the HTTP seam checks for a Principal."
           }
         ]
       },
@@ -8836,7 +8872,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Alice owns red-tenant document a. What does authorized(Principal('alice', 'red'), a, 'delete') return?",
+            "options": [
+              "False: delete is not an allowed action",
+              "True: owners may do anything",
+              "True: the tenant matches"
+            ],
+            "correct": 0,
+            "explanation": "Actions are allowlisted to read and update. An unknown action is denied before ownership is considered."
+          }
+        ]
       },
       {
         "id": "input-contracts",
@@ -8886,6 +8934,18 @@ const LEARNING_PATHS = [
             "section": "V2: input validation and business logic",
             "reviewed": "2026-09-27",
             "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does parse_update({'title': 'Plan\\nB'}) do?",
+            "options": [
+              "Raises ValueError: title must contain 1..80 printable characters",
+              "Returns {'title': 'Plan B'}",
+              "Returns {'title': 'Plan\\nB'}"
+            ],
+            "correct": 0,
+            "explanation": "A newline is not printable, so the title fails validation instead of being silently rewritten."
           }
         ]
       },
@@ -9047,7 +9107,19 @@ const LEARNING_PATHS = [
               "explanation": "Logout must invalidate authority rather than only clear a display flag; shared storage remains an extension."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Session S1 is passed as previous to Sessions.login, which returns S2. What does identity(S1, 10) do?",
+            "options": [
+              "Raises PermissionError: session unavailable",
+              "Returns the principal, because S1 has not expired",
+              "Returns the principal for S2"
+            ],
+            "correct": 0,
+            "explanation": "Rotation removes the previous session ID, so a fixated or stolen old ID stops working at login."
+          }
+        ]
       },
       {
         "id": "cookies-transport",
@@ -9114,6 +9186,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Current browser-reference guidance reviewed 2026-09-27; Path controls sending scope but is not a security boundary. Verify supported browser behavior."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A session cookie is named with the __Host- prefix. What do browsers require of it?",
+            "options": [
+              "Secure, Path=/ and no Domain attribute",
+              "HttpOnly and SameSite=Strict",
+              "A Domain attribute matching the site"
+            ],
+            "correct": 0,
+            "explanation": "The prefix is a browser rule tying the cookie to one secure host. HttpOnly and SameSite are separate attributes with separate effects."
+          }
         ]
       },
       {
@@ -9172,6 +9256,18 @@ const LEARNING_PATHS = [
             "section": "Password hashing algorithms and work factors",
             "reviewed": "2026-09-27",
             "scope": "Current mechanism guidance reviewed 2026-09-27; no production hashing implementation supplied."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How should an application store user passwords?",
+            "options": [
+              "With a password-hashing mechanism that uses salts and a work factor",
+              "Encrypted, so support staff can recover them",
+              "As a fast SHA-256 hash"
+            ],
+            "correct": 0,
+            "explanation": "Stored passwords should be slow to guess at scale and not recoverable. Use an established library rather than custom hashing."
           }
         ]
       },
@@ -9366,7 +9462,19 @@ const LEARNING_PATHS = [
               "explanation": "The local HTTP extension checks denied status and unchanged SQLite rows; browser behavior remains separate evidence."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A PATCH to the lab's HTTP seam carries a valid sid cookie but no X-CSRF-Token header. What status comes back?",
+            "options": [
+              "403",
+              "200",
+              "400"
+            ],
+            "correct": 0,
+            "explanation": "The cookie identifies a session, but the mutation also needs the session's CSRF token, so the request is denied before the body is read."
+          }
+        ]
       },
       {
         "id": "xss-context",
@@ -9424,6 +9532,18 @@ const LEARNING_PATHS = [
             "section": "Output encoding by context and safe sinks",
             "reviewed": "2026-09-27",
             "scope": "HTML text-only fixture; no browser certification or rich-HTML sanitizer."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does title_html('<b>Hi</b>') return?",
+            "options": [
+              "<h1>&lt;b&gt;Hi&lt;/b&gt;</h1>",
+              "<h1><b>Hi</b></h1>",
+              "<h1>Hi</h1>"
+            ],
+            "correct": 0,
+            "explanation": "The text-node encoder turns markup characters into entities. The title is shown as text, not parsed as HTML or stripped."
           }
         ]
       },
@@ -9483,6 +9603,18 @@ const LEARNING_PATHS = [
             "section": "How to use placeholders to bind values",
             "reviewed": "2026-09-27",
             "scope": "Python 3.11+ SQLite in-memory fixture; syntax of another database driver may differ."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "find_title receives the title x' OR '1'='1 against the two-row synthetic database. How many rows come back?",
+            "options": [
+              "0",
+              "2",
+              "1"
+            ],
+            "correct": 0,
+            "explanation": "The value is bound as a parameter, so it is compared as one literal title. No row has that title."
           }
         ]
       },
@@ -9672,7 +9804,19 @@ const LEARNING_PATHS = [
             5,
             6
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "An API receives a valid access token whose scope allows reading documents. May the caller read every document?",
+            "options": [
+              "No: scope does not replace the API's ownership policy",
+              "Yes: the scope grants read access to all documents",
+              "Yes, if the token has not expired"
+            ],
+            "correct": 0,
+            "explanation": "The API validates the token, then still applies object authorization. Scope says what kind of access was delegated, not which records."
+          }
+        ]
       },
       {
         "id": "oidc-login",
@@ -9836,7 +9980,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "After an OpenID Connect login, what should key the local account?",
+            "options": [
+              "The subject together with its issuer",
+              "The email claim",
+              "The display name"
+            ],
+            "correct": 0,
+            "explanation": "A stable identity is the subject in the issuer's context. Email can change or be reassigned, so it is not universally a permanent key."
+          }
+        ]
       },
       {
         "id": "pkce-state",
@@ -10018,7 +10174,19 @@ const LEARNING_PATHS = [
               "explanation": "Negative evidence belongs to the actual library/provider integration; local policy tests do not prove PKCE."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Pending.begin('A', 'original', 0), then begin('A', 'replacement', 1). What does consume('A', 2) return?",
+            "options": [
+              "'original': the second begin raised ValueError",
+              "'replacement': the newer flow wins",
+              "Nothing: both flows were discarded"
+            ],
+            "correct": 0,
+            "explanation": "A duplicate state is refused, so it cannot overwrite the pending flow it collides with."
+          }
+        ]
       },
       {
         "id": "token-validation",
@@ -10189,7 +10357,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A token's signature verifies, but its audience is a different API. Should the resource server accept it?",
+            "options": [
+              "No: signature success alone is not enough",
+              "Yes: a valid signature proves it is trustworthy",
+              "Yes, if the issuer is trusted"
+            ],
+            "correct": 0,
+            "explanation": "The validator must also check issuer, audience, lifetime and token purpose. A correctly signed token for another recipient must fail."
+          }
+        ]
       },
       {
         "id": "secrets",
@@ -10341,7 +10521,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A credential moves out of source code into an environment variable. Can it still leak?",
+            "options": [
+              "Yes, through process diagnostics or error reporting",
+              "No: environment variables are never logged",
+              "No, once it is removed from Git history"
+            ],
+            "correct": 0,
+            "explanation": "Moving a secret changes where it lives, not whether it can be exposed. Redaction must be tested against the fields actually emitted."
+          }
+        ]
       },
       {
         "id": "logging",
@@ -10392,6 +10584,18 @@ const LEARNING_PATHS = [
             "section": "V16: security logging and error handling",
             "reviewed": "2026-09-27",
             "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does safe_audit('document.delete', 'u-17', 'allowed') do?",
+            "options": [
+              "Raises ValueError: unknown event",
+              "Records the event",
+              "Records the event with outcome denied"
+            ],
+            "correct": 0,
+            "explanation": "The audit helper accepts only an allowlist of event names, so an unexpected event is refused rather than written."
           }
         ]
       },
@@ -10445,6 +10649,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A README says the app uses version 2.3 of a library. Does that show which version is deployed?",
+            "options": [
+              "No: check the shipped lockfile or artifact",
+              "Yes: the README is the source of truth",
+              "Yes, if a scanner reports no findings"
+            ],
+            "correct": 0,
+            "explanation": "Map advisories to what actually ships. Documentation can drift from the artifact."
+          }
         ]
       },
       {
@@ -10496,6 +10712,18 @@ const LEARNING_PATHS = [
             "section": "V2: business logic and anti-automation",
             "reviewed": "2026-09-27",
             "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "FixedWindowLimiter(3, 60) sees one key at now 0, 10, 20, 59 and 60. Which requests are allowed?",
+            "options": [
+              "The first three and the one at 60",
+              "The first three only",
+              "All five"
+            ],
+            "correct": 0,
+            "explanation": "The fourth request in the first 60-second window is refused. At 60 a new window starts and the count resets."
           }
         ]
       },
@@ -10563,6 +10791,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "ASVS 5.0.0 selected controls, not a formal certification assessment."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "For Principal('alice', 'red'), which of documents a, b and c does read_document return?",
+            "options": [
+              "a only",
+              "a and c",
+              "a, b and c"
+            ],
+            "correct": 0,
+            "explanation": "Alice owns a and c, but c is in the blue tenant. b belongs to Bob. Only a passes both checks."
+          }
         ]
       },
       {
@@ -10615,6 +10855,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A cross-owner read defect is fixed in one endpoint. What else does recovery need?",
+            "options": [
+              "Test every alternate endpoint that reaches the same records",
+              "Nothing, once the fix is deployed",
+              "Restart the service to clear caches"
+            ],
+            "correct": 0,
+            "explanation": "Establish the scope, fix server authorization and verify negative cases on every path to the data, not just the one reported."
+          }
         ]
       }
     ],
@@ -10646,7 +10898,39 @@ const LEARNING_PATHS = [
             "The report does not call synthetic principals real authentication."
           ],
           "solution": "Use Principal only as trusted fixture context. The policy requires a matching tenant and either ownership or read-only reader permission; unknown actions deny. read_document returns a copy and the same outward unavailable error for denied/missing. parse_update accepts only title. Run AuthorizationTests, record the matrix and extend a copy with a new explicitly tested action."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A session is created with Sessions.login at now=0. What does identity() do at 299 and at 300?",
+            "options": [
+              "Returns the principal at 299; raises PermissionError at 300",
+              "Returns the principal at both",
+              "Raises PermissionError at both"
+            ],
+            "correct": 0,
+            "explanation": "The session expires at login time plus 300, and the check is now >= expiry, so 300 is already expired."
+          },
+          {
+            "question": "After logout(sid), what does csrf(sid, correct_token, 1) do?",
+            "options": [
+              "Raises PermissionError: session unavailable",
+              "Passes, because the token matches",
+              "Raises PermissionError: csrf verification failed"
+            ],
+            "correct": 0,
+            "explanation": "The CSRF check first looks up the session. Logout removed the server record, so the token no longer matters."
+          },
+          {
+            "question": "validated_title receives 80 letters with two spaces on each side. What does it return?",
+            "options": [
+              "The 80 letters, with the spaces stripped",
+              "ValueError, because the input is 84 characters",
+              "The input unchanged"
+            ],
+            "correct": 0,
+            "explanation": "The title is stripped before its length is checked, so surrounding spaces do not count toward the 80-character limit."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -10676,7 +10960,39 @@ const LEARNING_PATHS = [
             "Local methods are not presented as browser or cryptographic integration."
           ],
           "solution": "Use the bounded title parser, HTML text-node encoder and SQLite placeholder binding; do not reuse HTML escaping for other sinks. Control time explicitly for session rotation/expiry/logout. Session tokens are random and CSRF checks fail safely for malformed supplied text. Run the two suites and record expected versus observed results. test_security_http.py checks the loopback route and persisted rows. Browser cookie behavior and real-provider authentication remain separate extensions."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "Alice sends a PATCH with a valid session and CSRF token for Bob's document b. What does the HTTP seam return?",
+            "options": [
+              "404 unavailable, and the title is unchanged",
+              "403 denied",
+              "200 with the new title"
+            ],
+            "correct": 0,
+            "explanation": "Authentication and CSRF pass, so the server checks authorization on the row. A denied update is reported like a missing document."
+          },
+          {
+            "question": "A PATCH has a valid session and CSRF token but Content-Type text/plain. What comes back?",
+            "options": [
+              "400 invalid_body",
+              "200",
+              "403 denied"
+            ],
+            "correct": 0,
+            "explanation": "The seam accepts only a small application/json body. The request is rejected before parsing."
+          },
+          {
+            "question": "Pending.begin('A', ...) and begin('B', ...) run, then consume('B'), consume('A') and consume('A') again. What happens?",
+            "options": [
+              "B's verifier, then A's, then ValueError",
+              "B's verifier, then ValueError for A",
+              "A's verifier twice"
+            ],
+            "correct": 0,
+            "explanation": "Flows are stored by state, so tabs can finish out of order. Each is consumed once, and a replay fails."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -10708,7 +11024,39 @@ const LEARNING_PATHS = [
             "The report rejects blanket ASVS certification and covers practical recovery."
           ],
           "solution": "Run the ten local unittest methods, including loopback HTTP denial and persisted-state checks. Use safe_audit and the limiter as narrowly scoped local examples, and complete verification-matrix.md with exact commands/outcomes. The IdP worksheet requires explicit learner opt-in to a training tenant and a maintained OIDC/token library; execute its matrix only after configuring that environment. Record sanitized provider/library versions and denial outcomes, not token text. Add an incident response and rotation plan targeting the actual compromised mechanism."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A FixedWindowLimiter(3, 60) refuses alice's fourth request at now=5. Is bob's first request at now=5 allowed?",
+            "options": [
+              "Yes: each key has its own count",
+              "No: the limiter is full",
+              "Only after the window ends"
+            ],
+            "correct": 0,
+            "explanation": "Counts are kept per key. That also means changing the key evades it, and one process's counts are not a global limit."
+          },
+          {
+            "question": "safe_audit is called with an 81-character subject. What happens?",
+            "options": [
+              "Raises ValueError: invalid audit subject",
+              "The subject is cut to 80 characters",
+              "The event is recorded"
+            ],
+            "correct": 0,
+            "explanation": "Audit fields are bounded and validated, so oversized or unexpected values are refused rather than logged."
+          },
+          {
+            "question": "Alice (red tenant) PATCHes document c, which she owns in the blue tenant. What does the HTTP seam return?",
+            "options": [
+              "404 unavailable, and the title is unchanged",
+              "200, because she is the owner",
+              "403 denied"
+            ],
+            "correct": 0,
+            "explanation": "Tenant comes before ownership. Owning a record in another tenant does not grant access from this one."
+          }
+        ]
       }
     ],
     "resources": {
