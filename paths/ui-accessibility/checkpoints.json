@@ -1,0 +1,84 @@
+{
+  "lessons": {
+    "user-goals": [
+      {"question": "A team writes that learners prefer card layouts, without having watched anyone. How should that statement be labelled?", "options": ["As a hypothesis to test with people", "As research evidence", "As a design requirement"], "correct": 0, "explanation": "Invented preferences are not research. Label assumptions, then watch someone attempt the task."}
+    ],
+    "information-architecture": [
+      {"question": "A course is navigated through a graphical map only. What should sit alongside it?", "options": ["An ordered list of the same destinations", "A larger map", "A tooltip on each node"], "correct": 0, "explanation": "A visual map can hide the sequence from keyboard and screen-reader users. An ordered list preserves it."}
+    ],
+    "hierarchy-layout": [
+      {"question": "Three equally loud buttons compete at the end of a form. What should change?", "options": ["Make the action that advances the task the dominant one", "Make all three larger", "Hide two of them"], "correct": 0, "explanation": "Equal emphasis makes people infer importance. Document which action is primary and style the others as secondary."}
+    ],
+    "semantic-html": [
+      {"question": "How does demo.html give the lesson title input its accessible name?", "options": ["A label element whose for matches the input's id", "A placeholder", "An aria-label on the form"], "correct": 0, "explanation": "A native label is associated by id, so the name is exposed and clicking the label focuses the field."}
+    ],
+    "keyboard-focus": [
+      {"question": "Why does demo.html give main the attribute tabindex=\"-1\"?", "options": ["So the skip link can move focus there without adding it to the Tab order", "To put main first in the Tab order", "To stop main receiving focus"], "correct": 0, "explanation": "A negative tabindex allows programmatic focus only. The page has no positive tabindex values to reorder focus."}
+    ],
+    "contrast-colour": [
+      {"question": "What does contrast.cjs report for #777777 text on white?", "options": ["About 4.48:1, failing AA for ordinary text but passing for large text", "About 4.5:1, passing AA for ordinary text", "About 3:1, failing both"], "correct": 0, "explanation": "4.48 is below the 4.5:1 ordinary-text threshold, and no rounding up is allowed. It clears the 3:1 large-text threshold."}
+    ],
+    "type-content": [
+      {"question": "Text spacing is increased, and a card with a fixed height holds a long title. What is likely to happen?", "options": ["The text is clipped or hidden", "The card grows to fit", "The title shrinks to fit"], "correct": 0, "explanation": "Fixed heights fail when text wraps or spacing increases. Let containers grow with their content."}
+    ],
+    "responsive-reflow": [
+      {"question": "How does the demo's main grid avoid horizontal scrolling on a 320px-wide screen?", "options": ["Each column is at least min(100%, 20rem), so a narrow screen gets one full-width column", "It hides sections below 320px", "It scales the whole page down"], "correct": 0, "explanation": "auto-fit with a minimum of min(100%, 20rem) lets columns wrap to one, based on the content's needs rather than a device list."}
+    ],
+    "forms-validation": [
+      {"question": "demo.js receives a submit with an empty title. What happens?", "options": ["aria-invalid is set, an error message appears and focus returns to the input", "The form submits an empty lesson", "Only the input border turns red"], "correct": 0, "explanation": "The error is announced through the role=alert message, marked on the field and given focus, so recovery does not depend on colour."}
+    ],
+    "states-feedback": [
+      {"question": "demo.js adds the lesson Contrast to an empty plan. What does the status region say?", "options": ["Added Contrast. 1 lesson in this in-memory plan.", "Saved.", "Nothing: the list itself changed"], "correct": 0, "explanation": "The polite status region announces the result and the new count, without moving focus away from the form."}
+    ],
+    "dialog-pattern": [
+      {"question": "The preview dialog is opened from its button and then closed. Where does demo.js put focus?", "options": ["Back on the Preview study plan button", "On the page body", "On the first form field"], "correct": 0, "explanation": "Focus moves to the dialog heading on open and returns to the trigger on close, so keyboard users keep their place."}
+    ],
+    "images-diagrams": [
+      {"question": "A diagram's alternative reads 'Three blue boxes with arrows'. What is wrong with it?", "options": ["It lists shapes instead of explaining the mechanism", "It is too short to be valid", "Diagrams should have empty alt text"], "correct": 0, "explanation": "Explain what the nodes are and what each arrow means: data, dependency or time."}
+    ],
+    "tables-charts": [
+      {"question": "A chart's values are shown only on hover. What should also be provided when values matter?", "options": ["A table or summary with the values and units", "A brighter colour palette", "A larger tooltip"], "correct": 0, "explanation": "Precise values must stay discoverable without hover or colour. A table supports the decision directly."}
+    ],
+    "motion-media": [
+      {"question": "What does demo.css do to new list items when the user prefers reduced motion?", "options": ["Turns their appear animation off", "Slows the animation down", "Hides the new items"], "correct": 0, "explanation": "The items still appear and the status still updates. Only the decorative motion is removed."}
+    ],
+    "design-tokens": [
+      {"question": "Which token name says why a colour exists rather than how it looks?", "options": ["colour-danger", "red-500", "colour-3"], "correct": 0, "explanation": "A semantic name survives a palette change and makes combinations, such as text on a danger background, checkable."}
+    ],
+    "accessible-data-entry": [
+      {"question": "The demo's buttons are at least 44px high. Does WCAG 2.2 AA require 44px?", "options": ["No: AA's minimum is generally 24 by 24 CSS pixels; 44px is a design choice", "Yes: 44px is the AA minimum", "Only on touch screens"], "correct": 0, "explanation": "Target Size (Minimum) uses 24px or specified spacing, with exceptions. A larger target is a comfortable preference, not the requirement."}
+    ],
+    "internationalisation": [
+      {"question": "After two lessons are added, what does demo.js put in the status region?", "options": ["Added B. 2 lessons in this in-memory plan.", "Added B. 2 lesson in this in-memory plan.", "2 lessons added."], "correct": 0, "explanation": "The plural is built by appending s when the count is not 1. That English rule would need locale plural rules before translation."}
+    ],
+    "accessible-auth": [
+      {"question": "A sign-in form blocks pasting into its password field. What does that do?", "options": ["Gets in the way of password managers and people who cannot transcribe", "Makes the password stronger", "Stops phishing"], "correct": 0, "explanation": "Allow password managers and paste where appropriate. Forcing people to memorise or retype adds load without security benefit."}
+    ],
+    "manual-evaluation": [
+      {"question": "node semantics.test.cjs passes. What does its own output say it established?", "options": ["Static semantic guardrails only; manual and assistive-technology checks are still required", "WCAG 2.2 AA conformance", "That the page works with screen readers"], "correct": 0, "explanation": "The check inspects selected HTML rules. A page can pass and still have a keyboard trap or confusing labels."}
+    ],
+    "usability-testing": [
+      {"question": "Two of three participants found the download quickly. What can you claim?", "options": ["What those sessions showed, with the sample's limits stated", "That 67% of users can find it", "That the design is intuitive"], "correct": 0, "explanation": "A few sessions reveal friction but do not support population-level statistics."}
+    ],
+    "inclusive-release": [
+      {"question": "The demo's checks all pass. What do they show about a production React application?", "options": ["Nothing directly: they are evidence about the demo at that time", "That it is accessible", "That it conforms to WCAG"], "correct": 0, "explanation": "Release notes should state what was executed, what was reviewed and what remains untested for the product being released."}
+    ]
+  },
+  "stages": {
+    "foundation": [
+      {"question": "What does contrast('000000', 'ffffff') return?", "options": ["21", "1", "4.5"], "correct": 0, "explanation": "Black on white is the largest possible ratio. Identical colours give 1."},
+      {"question": "The demo header puts white text on #17392f. Does that pass AA for ordinary text?", "options": ["Yes: it is about 12.6:1", "No: it is about 3:1", "Only for large text"], "correct": 0, "explanation": "The ratio is well above 4.5:1, so the header text passes at any size."},
+      {"question": "What does contrast('bad', 'ffffff') do?", "options": ["Throws: Use six hexadecimal digits without #", "Returns 1", "Returns NaN"], "correct": 0, "explanation": "Invalid input is rejected rather than producing a number that could be mistaken for a measurement."}
+    ],
+    "intermediate": [
+      {"question": "demo.js receives a title of three spaces. What happens?", "options": ["It is treated as empty: the error appears and nothing is added", "A blank lesson is added", "The spaces are added as a lesson"], "correct": 0, "explanation": "The title is trimmed before the check, so whitespace cannot satisfy the requirement."},
+      {"question": "After an empty-title error, a valid title is submitted. What happens to the error state?", "options": ["aria-invalid is removed and the error text is cleared", "The error stays until reload", "Only the error text is cleared"], "correct": 0, "explanation": "Errors are cleared when the state changes, so the field is no longer announced as invalid."},
+      {"question": "Two lessons are in the plan, and the preview is opened. What does its summary say?", "options": ["2 lessons ready to study. Reloading clears this in-memory lab.", "Your plan is empty. Close this preview and add a lesson.", "2 lessons."], "correct": 0, "explanation": "The summary is set when the dialog opens, so it reflects the current plan and states that records are in memory."}
+    ],
+    "advanced": [
+      {"question": "demo.js receives the title <b>x</b>. What does the new list item contain?", "options": ["The literal text <b>x</b>", "A bold x", "Nothing: the title is rejected"], "correct": 0, "explanation": "demo.js sets textContent and never uses innerHTML, so input becomes text, not markup."},
+      {"question": "The demo's error text is #9d2020 on white. What is its contrast?", "options": ["About 7.9:1, passing AA for ordinary text", "About 4.2:1, failing AA", "About 3:1"], "correct": 0, "explanation": "The error colour passes comfortably, and the message is also text, so it does not rely on colour alone."},
+      {"question": "The focus outline is #b15e00 on the page background #f3f6f2. Which threshold does it meet?", "options": ["3:1 for non-text contrast, but not 4.5:1", "4.5:1", "Neither"], "correct": 0, "explanation": "At about 4.3:1 it clears the 3:1 non-text threshold for a focus indicator, though it would not pass as ordinary text."}
+    ]
+  }
+}

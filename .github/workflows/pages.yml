@@ -92,6 +92,8 @@ jobs:
         run: python tests/cloud_infrastructure_checkpoint_facts.py
       - name: Check Delivery & Operations checkpoint answers against the course labs
         run: python tests/delivery_operations_checkpoint_facts.py
+      - name: Check UI Design & Accessibility checkpoint answers against the course labs
+        run: python tests/ui_accessibility_checkpoint_facts.py
       - name: Check concept explorer figures against the course labs
         run: python tests/explorer_lab_facts.py
 
