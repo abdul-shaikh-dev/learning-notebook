@@ -15376,7 +15376,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Static hosting owns web asset delivery while the learner owns content and browser behavior. A VM adds guest OS patching and service operations. Managed databases reduce selected engine operations but retain application access, backup configuration and restore verification responsibilities. Assign an owner to leaks, identity and recovery instead of assuming a service model solves them.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A notes API moves to a managed compute service. Who decides which users may read each note?",
+            "options": [
+              "The application owner",
+              "The cloud provider",
+              "Nobody: managed compute enforces it"
+            ],
+            "correct": 0,
+            "explanation": "Managed compute changes the operating work, not application authorization, data protection or backups."
+          }
+        ]
       },
       {
         "id": "azure-scope",
@@ -15431,7 +15443,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "The preflight records tenant and subscription IDs, chosen region, isolated resource-group name, owner, purpose and expiry. Verify both identity and billing scope before real actions; the fixture's fake subscription has no cloud target. Do not record tokens. A familiar name or current CLI default is insufficient scope evidence.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The optional template is planned without a subscription_id. Which subscription does the configuration fall back to?",
+            "options": [
+              "None: the variable has no default and must be supplied",
+              "The Azure CLI's current default",
+              "The first subscription the account can see"
+            ],
+            "correct": 0,
+            "explanation": "Requiring an explicit subscription ID stops a familiar resource-group name in the wrong subscription from being targeted by accident."
+          }
+        ]
       },
       {
         "id": "requirements",
@@ -15493,7 +15517,19 @@ const LEARNING_PATHS = [
             "Name a changed requirement that would reverse the decision."
           ],
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The ADR exercise chose managed application compute for 20 learners. Which new requirement is a stated reason to reconsider?",
+            "options": [
+              "A custom operating-system component",
+              "Ten more learners",
+              "A second lesson topic"
+            ],
+            "correct": 0,
+            "explanation": "Managed compute fits because no custom OS packages are needed. A requirement that breaks that assumption reopens the decision."
+          }
+        ]
       },
       {
         "id": "networking",
@@ -15650,7 +15686,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Can an application reach the template's storage account over the network as supplied?",
+            "options": [
+              "No: public access is disabled and no private endpoint exists",
+              "Yes, over its public endpoint",
+              "Yes, through the resource group's network"
+            ],
+            "correct": 0,
+            "explanation": "public_network_access_enabled is false and the template defines no private endpoint, so it is deliberately not a usable backend."
+          }
+        ]
       },
       {
         "id": "identity",
@@ -15705,7 +15753,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "The deployment identity can manage the isolated resource-group resources while the runtime identity gets only required data actions. Review broader inherited assignments because adding a narrow role does not remove wider rights. Test actual allowed/denied access in a separately chosen environment; the local matrix is only design evidence.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does infra_lab.validate do with a resource whose role is '*'?",
+            "options": [
+              "Raises ValueError: overbroad training role",
+              "Accepts it, because tags are present",
+              "Narrows it to Reader"
+            ],
+            "correct": 0,
+            "explanation": "The training policy refuses wildcard and Owner roles. Separate narrow identities are expected instead."
+          }
+        ]
       },
       {
         "id": "iac-model",
@@ -15762,7 +15822,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "The configuration expresses desired inventory while state associates addresses and observed resources may drift. The teaching plan creates absent IDs, updates changed tags and replaces changed identity/name. Its output is a local model, not Terraform provider output. A reviewed plan still requires executed operations and observation before describing a deployed result.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "infra_lab.plan compares the topology with a copy whose store has a different owner tag. What action does it give the store?",
+            "options": [
+              "update",
+              "replace",
+              "no-op"
+            ],
+            "correct": 0,
+            "explanation": "Metadata changed but the store's kind and name did not, so the model updates it in place."
+          }
+        ]
       },
       {
         "id": "provider-init",
@@ -15817,7 +15889,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Copy only the Azure template into a separate folder, initialize without a backend and validate using the selected provider. Record core and provider versions and preserve the generated lock selection. A compatible range can select different versions; initialization requires network/mirror and schema validation does not deploy or prove account availability.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The template constrains AzureRM to ~> 4.0. Which file records the exact provider version selected?",
+            "options": [
+              "The dependency lock file generated by terraform init",
+              "main.tf.json",
+              "The state file"
+            ],
+            "correct": 0,
+            "explanation": "A constraint allows a range of compatible 4.x releases. The lock file records the selection and its checksums."
+          }
+        ]
       },
       {
         "id": "variables",
@@ -15873,7 +15957,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "A hyphenated storage name fails the full template's lower-case alphanumeric 3-24 character validation. Explicit typed inputs are public configuration contracts. A sensitive flag masks output but secrets may remain in state, saved plans and logs; use an appropriate runtime identity/secret mechanism and protect those artifacts.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which storage_name passes the template's validation: notebook-store, NotebookStore1 or notebookstore1?",
+            "options": [
+              "notebookstore1 only",
+              "All three",
+              "NotebookStore1 and notebookstore1"
+            ],
+            "correct": 0,
+            "explanation": "The rule allows 3 to 24 lower-case letters or digits. A hyphen or a capital fails before any API call."
+          }
+        ]
       },
       {
         "id": "dependencies",
@@ -16008,7 +16104,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "How does the template's storage account depend on its resource group?",
+            "options": [
+              "Through references to the group's name and location, with no depends_on",
+              "Through an explicit depends_on",
+              "It does not depend on it"
+            ],
+            "correct": 0,
+            "explanation": "References in expressions create the dependency, so no artificial ordering is needed."
+          }
+        ]
       },
       {
         "id": "state",
@@ -16165,7 +16273,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A Terraform state snapshot from yesterday is restored. What does that bring back?",
+            "options": [
+              "The mapping from addresses to remote resources",
+              "Yesterday's application rows and blobs",
+              "Deleted cloud resources"
+            ],
+            "correct": 0,
+            "explanation": "State is coordination data. Application data needs its own backups."
+          }
+        ]
       },
       {
         "id": "plan-review",
@@ -16904,7 +17024,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "simulate_apply gets a desired inventory that omits the store, without allow_destroy. What happens?",
+            "options": [
+              "Raises ValueError: destructive model operation requires explicit allow_destroy",
+              "The store is destroyed",
+              "The store is kept and the plan ignored"
+            ],
+            "correct": 0,
+            "explanation": "The model refuses destructive actions unless they are opted into separately from the plan."
+          }
+        ]
       },
       {
         "id": "lifecycle",
@@ -16952,7 +17084,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "For storage rename, create a permitted new account, copy synthetic data with integrity checks, switch clients under an explicit criterion and retain rollback until the deadline. create_before_destroy does not copy data or bypass unique-name/quota constraints. Removing a block removes its prevent_destroy configuration; deletion still needs review.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "infra_lab.plan compares the topology with a copy where the store's name changed. What action does it give the store?",
+            "options": [
+              "replace",
+              "update",
+              "no-op"
+            ],
+            "correct": 0,
+            "explanation": "A name is part of the store's teaching identity, so changing it means a new resource. Its data does not move by itself."
+          }
+        ]
       },
       {
         "id": "modules",
@@ -17007,7 +17151,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "A small storage module can accept approved name, region and tags and return its resource ID while documenting connectivity prerequisites. Development and production need distinct credentials, state permissions and lifecycle ownership. Reusing module source is compatible with isolation; workspace names alone cannot enforce that access boundary.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Production gets its own Terraform workspace. Does that isolate production's credentials?",
+            "options": [
+              "No: workspaces separate state, not credentials or access",
+              "Yes: each workspace has its own identity",
+              "Yes, if the workspace is named prod"
+            ],
+            "correct": 0,
+            "explanation": "Distinct environments need separate state, access and lifecycle policies. A workspace name provides only the first."
+          }
+        ]
       },
       {
         "id": "drift-import",
@@ -17071,7 +17227,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Stop before apply. Confirm the remote identity and intended owner, reconcile the name/configuration to the existing object when that is the goal, and review a fresh plan. If replacement is intentional, establish a separate tested migration and recovery path. Import associates identity; it neither copies data nor guarantees a harmless next plan.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Configuration says public_access=false, but an operator switched the live account to true. What does a normal plan propose?",
+            "options": [
+              "Setting it back to false",
+              "Keeping it true",
+              "Nothing, until state is refreshed by hand"
+            ],
+            "correct": 0,
+            "explanation": "Refresh reads the live value, and the plan proposes the configured one. The security owner decides whether to revert or codify."
+          }
+        ]
       },
       {
         "id": "policy",
@@ -17134,7 +17302,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Changing public networking, omitting required tags or using Owner/wildcard roles must fail the selected local policy tests. An inherited Azure role or real network configuration remains outside this fixture model. Name actual provider-enforced controls and test allowed/denied behavior separately before claiming real enforcement.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does infra_lab.validate do with a storage resource that has public_network true?",
+            "options": [
+              "Raises ValueError: public storage forbidden by training policy",
+              "Accepts it with a warning",
+              "Sets public_network to false"
+            ],
+            "correct": 0,
+            "explanation": "The static check rejects the topology. It still says nothing about what a real tenant enforces."
+          }
+        ]
       },
       {
         "id": "secrets",
@@ -17189,7 +17369,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Separate developer login, trusted CI federation and compatible hosted runtime identity. Document issuance, permitted use, expiry and revocation; test both positive access and denied revoked identity in the real environment. A localhost mock token does not exercise Azure identity enforcement, and no credential is supplied by this kit.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Can clients use the template's storage account through shared access keys?",
+            "options": [
+              "No: shared_access_key_enabled is false",
+              "Yes, through the account's output",
+              "Yes: keys are always enabled"
+            ],
+            "correct": 0,
+            "explanation": "Disabling shared keys pushes access towards scoped identities, and the template outputs no keys."
+          }
+        ]
       },
       {
         "id": "cost-control",
@@ -17245,7 +17437,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "The invented teaching estimate is 20 compute units plus 4 storage units, total 24. Real review includes current regional compute, storage, transactions, egress, monitoring and idle costs. A budget needs an alert owner and response plan; it does not cap spending. Set expiry and verify teardown inventory instead of relying on tags alone.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does infra_lab.estimate(2, 10, 0.5, 8) return?",
+            "options": [
+              "24",
+              "20",
+              "4"
+            ],
+            "correct": 0,
+            "explanation": "2 units per hour for 10 hours plus 0.5 units per GB-month for 8 GB. These are invented teaching rates, not Azure prices."
+          }
+        ]
       },
       {
         "id": "deployment-pipeline",
@@ -17400,7 +17604,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A pull request runs validation checks. Should those checks receive deployment credentials?",
+            "options": [
+              "No: pull-request code may be untrusted",
+              "Yes, so the plan can be accurate",
+              "Yes, if the job is short"
+            ],
+            "correct": 0,
+            "explanation": "Run offline checks without cloud identity. A trusted release job obtains scoped credentials later."
+          }
+        ]
       },
       {
         "id": "infra-tests",
@@ -17456,7 +17672,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "JSON parsing establishes syntax; local Python tests establish this inventory model's rules; initialized Terraform validate checks language/provider schema. A real plan/deployment and allowed/denied endpoint tests require a chosen environment. Terraform test can provision by default unless explicitly configured for planned/mocked behavior with compatible versions.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "simulate_apply applies the topology, then plan() compares the result with the topology again. What does it report?",
+            "options": [
+              "no-op for both resources",
+              "update for both resources",
+              "create for both resources"
+            ],
+            "correct": 0,
+            "explanation": "A second plan after a successful model apply should find nothing to change. The model makes no network call."
+          }
+        ]
       },
       {
         "id": "resilience",
@@ -17511,7 +17739,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Lost state with surviving resources needs protected state recovery or careful adoption of their identities. Deleted storage needs application-data backups and verified restore, not just new resource definitions. Compromised identity needs revocation, rotated access and investigation before traffic resumes. Each runbook names owners and observed validation.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "An export storage account is lost, and Terraform recreates it from code. What happens to its files?",
+            "options": [
+              "They are not restored: data needs its own backup",
+              "They are restored from state",
+              "They are restored from the configuration"
+            ],
+            "correct": 0,
+            "explanation": "Reconstruction recreates infrastructure identity. Restoring data is a separate, rehearsed step."
+          }
+        ]
       },
       {
         "id": "cleanup",
@@ -17566,7 +17806,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Check exact subscription and disposable resource ownership, preserve required synthetic evidence/data, review the destroy plan and deliberately delete only owned learning resources. Verify state, portal inventory, retained/soft-deleted objects and external monitoring/backups afterward. An operation exit cannot establish that every cost source or retained copy disappeared.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "simulate_apply runs with allow_destroy=True and crash=True. What happens to the source inventory?",
+            "options": [
+              "RuntimeError, and the source inventory is unchanged",
+              "It is destroyed",
+              "It matches the desired inventory"
+            ],
+            "correct": 0,
+            "explanation": "A failed apply must not be read as completed. Check what actually remains afterwards."
+          }
+        ]
       },
       {
         "id": "launch-review",
@@ -17628,7 +17880,19 @@ const LEARNING_PATHS = [
           ],
           "solution": "Present an ADR and identity/network graph, protected state design, plan classification, data recovery, cost categories and verified-cleanup proposal. Record local executed tests, optional provider validation and unexecuted live claims separately. Three go/no-go risks can be denied-access evidence, restore integrity and private-connectivity checks, each with a concrete next experiment.",
           "solutionFormat": "prose"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which belongs in a launch review's evidence portfolio?",
+            "options": [
+              "The tests and checks that ran, their results, and the questions they cannot answer",
+              "The finished reading list",
+              "A provider-schema validation pass alone"
+            ],
+            "correct": 0,
+            "explanation": "Readiness claims should be tied to evidence and name the remaining live experiments."
+          }
+        ]
       }
     ],
     "stages": [
@@ -17657,7 +17921,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Retain static hosting until authenticated writes are needed. Map client/API/storage identities and routes, and choose an isolated learning scope with owner and expiry. Estimate categories, then consult current regional pricing before real spend.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does infra_lab.validate do with a resource missing its expires tag?",
+            "options": [
+              "Raises ValueError: owner/purpose/expires tags required",
+              "Accepts it with no expiry",
+              "Adds a default expiry"
+            ],
+            "correct": 0,
+            "explanation": "Every resource needs an owner, a purpose and an expiry, so teardown has someone and a date attached."
+          },
+          {
+            "question": "What does infra_lab.validate do with two resources that share the id store?",
+            "options": [
+              "Raises ValueError: duplicate identity",
+              "Keeps the second",
+              "Keeps the first"
+            ],
+            "correct": 0,
+            "explanation": "Each identity must map to one resource, or plans cannot tell which one changed."
+          },
+          {
+            "question": "Which outputs does the template declare?",
+            "options": [
+              "Only the resource group ID",
+              "The storage account ID and its keys",
+              "None"
+            ],
+            "correct": 0,
+            "explanation": "Outputs expose selected results. Exposing keys would copy a secret into outputs and state."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -17684,7 +17980,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Use the teaching planner to prove its explicit policy and operation contract. The optional provider-backed template needs Terraform initialization, an actual locked AzureRM selection and validate; it does not provide private application connectivity or perform a deployment.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does infra_lab.plan([], topology) give for the two topology resources?",
+            "options": [
+              "create for group and store",
+              "no-op for both",
+              "replace for both"
+            ],
+            "correct": 0,
+            "explanation": "Nothing exists in the current inventory, so every desired resource is a create."
+          },
+          {
+            "question": "A storage resource omits public_network entirely. What does infra_lab.validate do?",
+            "options": [
+              "Raises ValueError: public storage forbidden by training policy",
+              "Accepts it, because public access was not requested",
+              "Treats it as private"
+            ],
+            "correct": 0,
+            "explanation": "The rule requires public_network to be exactly false. A missing value is not treated as safe."
+          },
+          {
+            "question": "What does infra_lab.estimate(2, -1, 0.5, 8) do?",
+            "options": [
+              "Raises ValueError: finite nonnegative numeric inputs required",
+              "Returns 2",
+              "Returns 4"
+            ],
+            "correct": 0,
+            "explanation": "Negative hours would quietly reduce the estimate, so the input is refused."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -17711,7 +18039,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Review the exact resource graph and identity scopes, protected state and credential boundaries; rehearse data recovery in an independently chosen environment. Confirm budget alerts are not a cap. Scope-check and review every deletion, then verify retained objects and cost sources.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does infra_lab.estimate(2, 730, 0.5, 8) return for a month of uptime?",
+            "options": [
+              "1464",
+              "24",
+              "730"
+            ],
+            "correct": 0,
+            "explanation": "2 × 730 hours plus 0.5 × 8 GB. Idle uptime dominates the teaching estimate."
+          },
+          {
+            "question": "simulate_apply gets a desired inventory where the store's name changed, without allow_destroy. What happens?",
+            "options": [
+              "Raises ValueError: destructive model operation requires explicit allow_destroy",
+              "The store is renamed in place",
+              "The store is updated"
+            ],
+            "correct": 0,
+            "explanation": "A rename plans a replacement, and replacements count as destructive. Data in the old store would need its own migration."
+          },
+          {
+            "question": "What does infra_lab.validate do with a resource whose role is Owner?",
+            "options": [
+              "Raises ValueError: overbroad training role",
+              "Accepts it for the deployment identity",
+              "Narrows it to Contributor"
+            ],
+            "correct": 0,
+            "explanation": "Owner is refused like a wildcard. Deployment and runtime identities need narrower scopes."
+          }
+        ]
       }
     ],
     "downloads": [
@@ -27734,7 +28094,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "distinct_artifact_drill saves a note under v1, then reads notes under v1, v2 and v1 again. How many of those reads succeed?",
+            "options": [
+              "All 3, and the note survives the rollback",
+              "2: the v2 read fails",
+              "1: only the first v1 read"
+            ],
+            "correct": 0,
+            "explanation": "The drill tests the user contract across the whole release path: the same data is readable on the candidate and after rolling back."
+          }
+        ]
       },
       {
         "id": "environments",
@@ -27783,7 +28155,19 @@ const LEARNING_PATHS = [
             "scope": "GitHub Actions current security guidance; example workflow is opt-in and contains no deployment credentials. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "A container listens on 0.0.0.0, and its host port is published on 127.0.0.1. Who can reach the service from another machine?",
+            "options": [
+              "Nobody: the host binding is loopback only",
+              "Anyone on the network",
+              "Only machines in the same subnet"
+            ],
+            "correct": 0,
+            "explanation": "The container must listen on all its interfaces for port forwarding to work. The host binding is a separate boundary."
+          }
+        ]
       },
       {
         "id": "source-release",
@@ -27832,7 +28216,19 @@ const LEARNING_PATHS = [
             "scope": "Current Actions artifact lifecycle; local byte hashing is separately tested. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "Two byte-identical copies of release_app.py sit in different folders. Do their release_tools.digest values match?",
+            "options": [
+              "Yes: the digest depends only on the bytes",
+              "No: the path is part of the digest",
+              "Only if the files have the same timestamp"
+            ],
+            "correct": 0,
+            "explanation": "A SHA-256 checksum identifies content. It says nothing about who built it or whether it was tested."
+          }
+        ]
       },
       {
         "id": "reproducible-builds",
@@ -27881,7 +28277,19 @@ const LEARNING_PATHS = [
             "scope": "npm 11; applies to the existing React kit, not the package-free Python lab. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "The Dockerfile uses the python:3.13-slim tag. Does that tag always name the same image?",
+            "options": [
+              "No: tags can move; a digest pins one image",
+              "Yes: tags are immutable",
+              "Yes, within the same minor version"
+            ],
+            "correct": 0,
+            "explanation": "Record the resolved digest with test results. A tag is a readable pointer that can be updated."
+          }
+        ]
       },
       {
         "id": "test-gates",
@@ -27936,7 +28344,19 @@ const LEARNING_PATHS = [
             "scope": "Python 3.11+ learning-only HTTP service; official docs exclude production use. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "test_release_app.py fails. Why can the Dockerfile still not produce a runtime image?",
+            "options": [
+              "The test stage runs the tests, and the runtime stage copies from it",
+              "Docker skips images whose repository has failing tests",
+              "The HEALTHCHECK fails the build"
+            ],
+            "correct": 0,
+            "explanation": "The runtime stage depends on the test stage, so a failing RUN stops the build before anything is copied."
+          }
+        ]
       },
       {
         "id": "containers",
@@ -27985,7 +28405,19 @@ const LEARNING_PATHS = [
             "scope": "Linux containers/BuildKit; local Python 3.13 image lab, not a production hardening certification. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "Which user does the Dockerfile's runtime image run as?",
+            "options": [
+              "UID 10001, not root",
+              "root",
+              "The user who ran docker build"
+            ],
+            "correct": 0,
+            "explanation": "The USER instruction drops root before CMD. The process can then write only where that user has access."
+          }
+        ]
       },
       {
         "id": "docker-build",
@@ -28034,7 +28466,19 @@ const LEARNING_PATHS = [
             "scope": "BuildKit multi-stage mechanism; supplied Dockerfile reviewed, daemon exercise optional. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "Which files does the Dockerfile's runtime stage copy from the test stage?",
+            "options": [
+              "Only release_app.py",
+              "release_app.py and the tests",
+              "The whole source folder"
+            ],
+            "correct": 0,
+            "explanation": "Copying only the runtime file keeps tests and build leftovers out of the shipped image."
+          }
+        ]
       },
       {
         "id": "runtime-configuration",
@@ -28083,7 +28527,19 @@ const LEARNING_PATHS = [
             "scope": "Dockerfile stable instructions; runtime and build behavior reviewed, daemon execution remains optional. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "release_app.py is started with no BIND_HOST set. Which address does it listen on?",
+            "options": [
+              "127.0.0.1",
+              "0.0.0.0",
+              "The host's network address"
+            ],
+            "correct": 0,
+            "explanation": "The default is loopback. The image sets BIND_HOST=0.0.0.0 explicitly, because port forwarding needs it inside the container."
+          }
+        ]
       },
       {
         "id": "secrets",
@@ -28132,7 +28588,19 @@ const LEARNING_PATHS = [
             "scope": "GitHub Actions current security guidance; example workflow is opt-in and contains no deployment credentials. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "extraQuiz": [
+          {
+            "question": "A build passes a token through ARG and ENV. Where might it remain?",
+            "options": [
+              "In the image's metadata or layers",
+              "Nowhere, once the build finishes",
+              "Only in the build log"
+            ],
+            "correct": 0,
+            "explanation": "Inject secrets at runtime, or use a build secret mount when one is truly needed during the build."
+          }
+        ]
       },
       {
         "id": "web-topology",
@@ -28286,7 +28754,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which value may appear in the React build's configuration?",
+            "options": [
+              "The API's public URL",
+              "The SQL connection password",
+              "The API's signing key"
+            ],
+            "correct": 0,
+            "explanation": "Browser build-time configuration is public. The database identity lives in server-side runtime configuration."
+          }
+        ]
       },
       {
         "id": "schema-evolution",
@@ -28853,7 +29333,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "During the expand step, label has been added but not backfilled. What does new_reader return for an existing row?",
+            "options": [
+              "Its title, through COALESCE",
+              "NULL",
+              "An error, because label is empty"
+            ],
+            "correct": 0,
+            "explanation": "The new reader falls back to the old column, so old and new versions can run together before the backfill."
+          }
+        ]
       },
       {
         "id": "ci-pipeline",
@@ -28994,7 +29486,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which permission does ci-example.yaml give the workflow token?",
+            "options": [
+              "contents: read only",
+              "contents: write",
+              "All repository permissions"
+            ],
+            "correct": 0,
+            "explanation": "Checks need to read the code, not change it. Checkout also sets persist-credentials: false."
+          }
+        ]
       },
       {
         "id": "artifact-promotion",
@@ -29132,7 +29636,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does ci-example.yaml upload as its build artifact?",
+            "options": [
+              "release_app.py with its SHA-256 file",
+              "The whole repository",
+              "A Docker image"
+            ],
+            "correct": 0,
+            "explanation": "The checked source and its digest travel together, so a later step can confirm it promotes the same bytes."
+          }
+        ]
       },
       {
         "id": "health-contracts",
@@ -29253,7 +29769,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "In distinct_artifact_drill, what does the v2 candidate's /ready return while its hold file exists?",
+            "options": [
+              "503",
+              "200",
+              "404"
+            ],
+            "correct": 0,
+            "explanation": "The candidate runs but declares itself not ready, so it can be held out of traffic until the gate is removed."
+          }
+        ]
       },
       {
         "id": "deployment-strategies",
@@ -29302,7 +29830,19 @@ const LEARNING_PATHS = [
             "scope": "General deployment isolation strategy; local two-port comparison is a teaching simulation. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "extraQuiz": [
+          {
+            "question": "The lab has no reverse proxy or orchestrator. How does it model a traffic switch?",
+            "options": [
+              "By changing which local port the client calls",
+              "By editing DNS",
+              "By restarting the old version"
+            ],
+            "correct": 0,
+            "explanation": "A manual port switch shows the decision without claiming high availability or automated canary analysis."
+          }
+        ]
       },
       {
         "id": "rollback",
@@ -29432,7 +29972,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "After the contract step drops the title column, what happens when old_reader runs?",
+            "options": [
+              "sqlite3.OperationalError: no such column",
+              "It returns the labels",
+              "It returns empty titles"
+            ],
+            "correct": 0,
+            "explanation": "Once the old column is gone, rolling back to a binary that reads it fails. Contraction ends the safe rollback window."
+          }
+        ]
       },
       {
         "id": "structured-logs",
@@ -29481,7 +30033,19 @@ const LEARNING_PATHS = [
             "scope": "OpenTelemetry signal concepts; bundled stdout JSON is not an OTLP exporter. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "release_app receives GET /admin?debug=1. Which route does its log line record?",
+            "options": [
+              "unknown",
+              "/admin?debug=1",
+              "/admin"
+            ],
+            "correct": 0,
+            "explanation": "Only known routes are logged by name. Anything else becomes one bounded value, so raw paths and queries never enter the logs."
+          }
+        ]
       },
       {
         "id": "metrics",
@@ -29530,7 +30094,19 @@ const LEARNING_PATHS = [
             "scope": "Service monitoring principles; numeric examples are local teaching scenarios. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "A fresh release_app gets two /live probes and no user requests. What request total does /metrics then report?",
+            "options": [
+              "2",
+              "0",
+              "3"
+            ],
+            "correct": 0,
+            "explanation": "The totals count probes too, so they are not a user-request SLI. The /metrics call itself is counted after its snapshot."
+          }
+        ]
       },
       {
         "id": "slos",
@@ -29579,7 +30155,19 @@ const LEARNING_PATHS = [
             "scope": "Request-based SLO scenario; no observed production reliability claim. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "What does release_tools.budget(10000, 12, 0.999) report?",
+            "options": [
+              "10 allowed, so remaining is -2 and the burn rate is 1.2",
+              "12 allowed, so remaining is 0",
+              "10 allowed, so remaining is 2"
+            ],
+            "correct": 0,
+            "explanation": "0.1% of 10,000 is 10 allowed bad requests. Twelve overspends the budget by two."
+          }
+        ]
       },
       {
         "id": "load-testing",
@@ -29628,7 +30216,19 @@ const LEARNING_PATHS = [
             "scope": "General overload behavior; local helper is bounded sequential timing, not a production load generator. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "What does release_tools.local_load('http://example.com/', 10) do?",
+            "options": [
+              "Raises ValueError before sending any request",
+              "Sends 10 requests",
+              "Sends 1 request, then stops"
+            ],
+            "correct": 0,
+            "explanation": "The load helper refuses anything but a loopback HTTP URL, so it cannot be pointed at a system you do not own."
+          }
+        ]
       },
       {
         "id": "backups",
@@ -29677,7 +30277,19 @@ const LEARNING_PATHS = [
             "scope": "Python sqlite3 Connection.backup; synthetic local SQLite data only. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "What does python release_tools.py backup print after copying a database?",
+            "options": [
+              "Backup complete; perform a separate restore check.",
+              "Backup verified.",
+              "Nothing"
+            ],
+            "correct": 0,
+            "explanation": "A copy is not proof of recovery. The tool says so and leaves the restore check as its own step."
+          }
+        ]
       },
       {
         "id": "restore-drill",
@@ -29827,7 +30439,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A backup is taken after one note is saved. What do PRAGMA integrity_check and a notes query report on the copy?",
+            "options": [
+              "ok, and the note is present",
+              "ok, but the table is empty",
+              "An error, because the copy is locked"
+            ],
+            "correct": 0,
+            "explanation": "A restore check opens the copy, checks its integrity and confirms the expected data, not just that a file exists."
+          }
+        ]
       },
       {
         "id": "incident-response",
@@ -29968,7 +30592,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A release went out an hour before an incident started. Is the release the cause?",
+            "options": [
+              "Not necessarily: compare the symptoms with recent changes first",
+              "Yes: the newest deploy is always the cause",
+              "No: releases cannot cause incidents"
+            ],
+            "correct": 0,
+            "explanation": "Recent changes are candidates, not conclusions. A rollback helps only if the failure mechanism supports it."
+          }
+        ]
       },
       {
         "id": "release-review",
@@ -30017,7 +30653,19 @@ const LEARNING_PATHS = [
             "scope": "Release reproducibility and process principles; course uses a bounded local stand-in. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "Besides the local tests that passed, what belongs in the release record?",
+            "options": [
+              "Which Docker, staging and production checks remain untested",
+              "A statement that all risks are solved",
+              "The review date as a safety certificate"
+            ],
+            "correct": 0,
+            "explanation": "Separate local evidence from the boundaries it does not cover, so another operator can see what is still open."
+          }
+        ]
       }
     ],
     "stages": [
@@ -30047,7 +30695,39 @@ const LEARNING_PATHS = [
             "The learning-only HTTP server scope is explicit."
           ],
           "solution": "Use a fresh extracted folder, Python 3.11+ and temporary test fixtures. The packet maps existing-note readability to tested restart persistence and backup values. Record the file digest and v1 label separately; /ready 503 with /live 200 is a recoverable routing condition, not process failure. Docker build/run stays reviewed-only unless actually executed."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does release_tools.digest return for an empty file?",
+            "options": [
+              "The SHA-256 of zero bytes, beginning e3b0c442",
+              "An empty string",
+              "ValueError"
+            ],
+            "correct": 0,
+            "explanation": "Every input, including no bytes, has a fixed SHA-256 digest. The value is well known, which makes it a useful sanity check."
+          },
+          {
+            "question": "Which endpoint does the Dockerfile's HEALTHCHECK call?",
+            "options": [
+              "/ready",
+              "/live",
+              "/version"
+            ],
+            "correct": 0,
+            "explanation": "The image's health reflects readiness, including the database check, rather than only whether the process runs."
+          },
+          {
+            "question": "Which base image do both Dockerfile stages use?",
+            "options": [
+              "python:3.13-slim",
+              "python:3.13",
+              "alpine"
+            ],
+            "correct": 0,
+            "explanation": "Both stages use the same tag, so the tests run on the same runtime that ships."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -30076,7 +30756,39 @@ const LEARNING_PATHS = [
             "No build or runtime credential is embedded in public assets."
           ],
           "solution": "Build the local Dockerfile only with an opted-in daemon, implement a small backward-compatible v2 change in a separate copy and retain v1 identity. The full-stack packet follows browser→proxy→API→private SQL with a separate migration identity; it requires learner-built adapters/store/auth and actual staging checks. Promote the checked artifact, not a fresh untested rebuild."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "After the first backfill, an old writer inserts a row with only a title. How many rows then have a NULL label?",
+            "options": [
+              "1",
+              "0",
+              "All of them"
+            ],
+            "correct": 0,
+            "explanation": "Old writers keep running during a rolling change, so a second backfill is needed before contraction."
+          },
+          {
+            "question": "A new writer dual-writes title and label. Do old_reader and new_reader then return the same rows?",
+            "options": [
+              "Yes",
+              "No: new_reader sees an extra row",
+              "No: old_reader fails"
+            ],
+            "correct": 0,
+            "explanation": "Dual writes keep both columns in step while old readers remain."
+          },
+          {
+            "question": "distinct_artifact_drill builds v1 and v2 from release_app.py with one edited line. Do their SHA-256 digests match?",
+            "options": [
+              "No",
+              "Yes",
+              "Only the first 8 characters"
+            ],
+            "correct": 0,
+            "explanation": "Any byte change gives a different digest, which is how the drill shows it deployed a distinct candidate."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -30105,7 +30817,39 @@ const LEARNING_PATHS = [
             "Incident decisions preserve scope and avoid secret disclosure."
           ],
           "solution": "At10,000 eligible requests and 99.9%,10 bad are allowed;12 leaves -2. The helper timing model is sequential closed-loop and cannot certify capacity. A snapshot before B restores A only. Record the same-code label simulation separately from differing-image rollout and the unexecuted full-stack/provider boundaries. Use the workbook to tie mechanism, check, result and next experiment together."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does release_tools.percentile([5, 1, 9, 3], 0.5) return?",
+            "options": [
+              "3",
+              "4",
+              "5"
+            ],
+            "correct": 0,
+            "explanation": "Nearest rank on the sorted samples 1, 3, 5, 9 picks the second value. It never interpolates."
+          },
+          {
+            "question": "What does release_tools.budget(1000, 0, 0.99) report?",
+            "options": [
+              "10 allowed, 10 remaining, burn rate 0",
+              "0 allowed",
+              "ValueError"
+            ],
+            "correct": 0,
+            "explanation": "No bad requests leaves the whole 1% budget unspent."
+          },
+          {
+            "question": "local_load sends 5 requests to a running release_app's /live on 127.0.0.1. How many errors does it report?",
+            "options": [
+              "0",
+              "5",
+              "1"
+            ],
+            "correct": 0,
+            "explanation": "The sequential client records each request's latency and counts failures. A healthy loopback endpoint gives none."
+          }
+        ]
       }
     ],
     "downloads": [
@@ -35325,7 +36069,39 @@ const LEARNING_PATHS = [
             "Explain each remaining boundary and identify the exact task files."
           ],
           "solution": "Start the supplied API in memory mode and the Vite frontend. Observe POST 201, PUT 200/version 2, rejected malformed inputs and retained drafts. Add your own filtering behavior and independent tests."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "decodeTask receives a task with minutes set to 1440. What happens?",
+            "options": [
+              "It is accepted: 1440 is the upper bound",
+              "It throws Invalid task response",
+              "It returns minutes capped at 1439"
+            ],
+            "correct": 0,
+            "explanation": "The decoder accepts whole minutes from 0 to 1440, matching the API and the database constraint."
+          },
+          {
+            "question": "request() gets a 500 response. Which message does it throw?",
+            "options": [
+              "Request failed (500). Your draft is still here.",
+              "Another edit won. Reload the list and compare before trying again.",
+              "Expected JSON response"
+            ],
+            "correct": 0,
+            "explanation": "The message names the status and reassures the user that the draft is kept, because App.tsx clears the form only after success."
+          },
+          {
+            "question": "What does acceptance.check('http://example.com/') do?",
+            "options": [
+              "Raises ValueError: Use an owned loopback HTTP API",
+              "Sends the checks to example.com",
+              "Prints PASS"
+            ],
+            "correct": 0,
+            "explanation": "The script creates synthetic tasks, so it refuses any address other than a loopback HTTP API you own, before sending a request."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -35352,7 +36128,39 @@ const LEARNING_PATHS = [
             "Explain each remaining boundary and identify the exact task files."
           ],
           "solution": "Run schema.sql in an owned database; configure PlannerConnection and verify sql-server mode. Exercise two competing expected-version writes, read back version 2 and prove restart persistence. Implement idempotency as a separate atomic transaction with new tests."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "decodeTask receives a task whose title is 121 characters long. What happens?",
+            "options": [
+              "Throws: Invalid task response",
+              "Returns the title cut to 120 characters",
+              "Returns it unchanged"
+            ],
+            "correct": 0,
+            "explanation": "The decoder rejects values outside the contract instead of repairing them, so the UI never shows data the API could not have stored."
+          },
+          {
+            "question": "What does decodeTask(null) throw?",
+            "options": [
+              "Invalid task",
+              "Invalid task response",
+              "Nothing: it returns null"
+            ],
+            "correct": 0,
+            "explanation": "A value that is not an object is rejected before any field is read."
+          },
+          {
+            "question": "request('/abc', {method: 'PUT'}) calls fetch. Which URL and content type does fetch receive?",
+            "options": [
+              "/api/tasks/abc with Content-Type application/json",
+              "/abc with no headers",
+              "http://127.0.0.1:5087/abc with Content-Type text/plain"
+            ],
+            "correct": 0,
+            "explanation": "The helper prefixes the relative API path and sets the JSON content type, so every call goes through the same proxied route."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -35379,7 +36187,39 @@ const LEARNING_PATHS = [
             "Explain each remaining boundary and identify the exact task files."
           ],
           "solution": "Run decoder and real HTTP checks, record manual keyboard/browser results and optional SQL restore evidence. Add verified identity/owner predicates before public exposure; package a reproducible release and state unexecuted provider/deployment checks."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does acceptance.check('http://127.0.0.1:5087/api') do?",
+            "options": [
+              "Raises ValueError: Use an owned loopback HTTP API",
+              "Runs the checks under /api",
+              "Prints PASS"
+            ],
+            "correct": 0,
+            "explanation": "The host is loopback, but the base URL has a path. The check accepts only the root of a loopback HTTP origin, so it cannot be aimed at part of a different application on the same host."
+          },
+          {
+            "question": "request() gets a 200 response whose content type is text/html. What does it throw?",
+            "options": [
+              "Expected JSON response",
+              "Request failed (200). Your draft is still here.",
+              "Nothing: it returns the text"
+            ],
+            "correct": 0,
+            "explanation": "A success status is not enough; the helper checks the media type before parsing, so an HTML error page is not mistaken for data."
+          },
+          {
+            "question": "decodeTask receives the title ' SQL ', with spaces on both sides. What title does it return?",
+            "options": [
+              "' SQL ', unchanged",
+              "'SQL', trimmed",
+              "It throws Invalid task response"
+            ],
+            "correct": 0,
+            "explanation": "The decoder requires a non-blank title but does not change it. Trimming is the API's job when it stores a new title."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -35429,6 +36269,18 @@ const LEARNING_PATHS = [
             "scope": "ASP.NET Core 10; reference targets net10.0, local compatibility checks may use an installed SDK override.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which values does the foundation milestone ask you to check when validating a new session?",
+            "options": [
+              "Minutes of 0, 1440, -1 and 1441, a blank title and boolean minutes",
+              "Only a typical value such as 25 minutes",
+              "Any value the form allows"
+            ],
+            "correct": 0,
+            "explanation": "Both boundaries, the values just outside them and the wrong types make the requirement testable. A typical value alone shows only the easy case."
+          }
         ]
       },
       {
@@ -35476,6 +36328,18 @@ const LEARNING_PATHS = [
             "section": "Reproducible builds and release process",
             "scope": "Operational guidance; supplied local exercises do not prove a cloud release.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Planner.csproj is built without a TargetFramework property. Which framework does it target?",
+            "options": [
+              "net10.0",
+              "The newest SDK installed",
+              "net8.0"
+            ],
+            "correct": 0,
+            "explanation": "The project sets net10.0 only when no TargetFramework is supplied, so a different framework must be passed explicitly rather than picked up by accident."
           }
         ]
       },
@@ -35641,7 +36505,19 @@ const LEARNING_PATHS = [
               "explanation": "The client checks the HTTP status and task fields before updating the screen."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "During npm run dev, where does the browser send a request to /api/tasks?",
+            "options": [
+              "To Vite on 127.0.0.1:5173, which proxies it to the API on 127.0.0.1:5087",
+              "Directly to SQL Server",
+              "To the API on port 5087, as a cross-origin request"
+            ],
+            "correct": 0,
+            "explanation": "planner-api.ts uses a relative path, and the Vite proxy forwards /api, so in development the call is same-origin from the browser's point of view."
+          }
+        ]
       },
       {
         "id": "contract",
@@ -35688,6 +36564,18 @@ const LEARNING_PATHS = [
             "section": "Route handlers, parameter binding and responses",
             "scope": "ASP.NET Core 10; reference targets net10.0, local compatibility checks may use an installed SDK override.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A POST to /api/tasks includes an extra field, owner. What does the API return?",
+            "options": [
+              "400, because unmapped JSON members are rejected",
+              "201, ignoring the extra field",
+              "201, storing the owner"
+            ],
+            "correct": 0,
+            "explanation": "The JSON options disallow unmapped members, so a request cannot smuggle fields the contract does not define. acceptance.py checks this case."
           }
         ]
       },
@@ -35737,6 +36625,18 @@ const LEARNING_PATHS = [
             "scope": "ADO.NET SQL Server adapter; pinned package version is recorded in Planner.csproj.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An INSERT run directly in SQL sets Minutes to 1441. What stops it?",
+            "options": [
+              "The CHECK constraint on Minutes in schema.sql",
+              "Nothing: only the API validates minutes",
+              "The nvarchar(120) limit"
+            ],
+            "correct": 0,
+            "explanation": "The table repeats the 0 to 1440 rule, so a write that bypasses the API still cannot store an invalid value."
+          }
         ]
       },
       {
@@ -35784,6 +36684,18 @@ const LEARNING_PATHS = [
             "section": "Labels and instructions",
             "scope": "Reference form uses native labels and controls; manual keyboard/screen-reader tests still matter.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "App.tsx has just mounted and the initial list has not arrived. What state are the form controls in?",
+            "options": [
+              "Disabled, because busy starts as true",
+              "Enabled, so the user can type at once",
+              "Hidden until the list loads"
+            ],
+            "correct": 0,
+            "explanation": "No mutation can start before the authoritative list arrives. The UI test checks that Add session is disabled during the first load."
           }
         ]
       },
@@ -35840,6 +36752,18 @@ const LEARNING_PATHS = [
             "scope": "Reference acceptance.py uses real loopback HTTP; TestServer is an optional alternative.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The API is started with no PlannerConnection set. What does /health report as its storage?",
+            "options": [
+              "memory",
+              "sql-server",
+              "none"
+            ],
+            "correct": 0,
+            "explanation": "Without a connection string the API uses its in-memory store, and /health says so, which is why a restart loses tasks in stage one."
+          }
         ]
       },
       {
@@ -35887,6 +36811,18 @@ const LEARNING_PATHS = [
             "section": "State structure, controlled inputs and reducers",
             "scope": "React 19 reference UI; state ownership principles apply independently of the build tool.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "decodeTask receives a valid task with an extra field, owner. What does it return?",
+            "options": [
+              "A new object with only the five known fields",
+              "The input object unchanged, owner included",
+              "An error, because of the extra field"
+            ],
+            "correct": 0,
+            "explanation": "The decoder copies the fields it checked into a fresh object, so unexpected data from the network does not flow into the application's state."
           }
         ]
       },
@@ -35936,6 +36872,18 @@ const LEARNING_PATHS = [
             "scope": "Cleanup prevents obsolete observations being published; cancellation cannot guarantee a server mutation was undone.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "App.tsx unmounts while its initial load is still in flight. What does the effect cleanup do?",
+            "options": [
+              "Aborts the request, and a late error is not shown",
+              "Waits for the response, then updates the list",
+              "Nothing: the fetch finishes normally"
+            ],
+            "correct": 0,
+            "explanation": "The cleanup aborts the controller, and the handlers check signal.aborted before setting status or busy, so an obsolete request cannot update the screen."
+          }
         ]
       },
       {
@@ -35984,6 +36932,18 @@ const LEARNING_PATHS = [
             "scope": "ADO.NET SQL Server adapter; pinned package version is recorded in Planner.csproj.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "schema.sql is run a second time in the same database. What happens?",
+            "options": [
+              "Nothing changes: the table is created only if it does not exist",
+              "The table is dropped and recreated",
+              "It fails with a duplicate table error"
+            ],
+            "correct": 0,
+            "explanation": "The OBJECT_ID check makes the script safe to repeat. It never creates or drops a database; you choose the dedicated database yourself."
+          }
         ]
       },
       {
@@ -36031,6 +36991,18 @@ const LEARNING_PATHS = [
             "section": "Provider namespace and compatibility",
             "scope": "ADO.NET SQL Server adapter; pinned package version is recorded in Planner.csproj.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How does SqlPlanner send a task's title to SQL Server?",
+            "options": [
+              "As an NVarChar(120) parameter, never as part of the command text",
+              "Concatenated into the UPDATE statement",
+              "As an escaped string literal"
+            ],
+            "correct": 0,
+            "explanation": "Every value is bound through cmd.Parameters, and none of the SQL command strings is built from input, so SQL-looking text stays data."
           }
         ]
       },
@@ -36686,7 +37658,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "SqlPlanner's versioned UPDATE changes no row. How does it choose between 404 and 409?",
+            "options": [
+              "It counts rows with that ID: none means 404, otherwise 409",
+              "It always returns 409",
+              "It retries the UPDATE without the version"
+            ],
+            "correct": 0,
+            "explanation": "A missing row and a stale version both update nothing, so a second query tells them apart. It never falls back to an unconditional write."
+          }
+        ]
       },
       {
         "id": "transactions",
@@ -36733,6 +37717,18 @@ const LEARNING_PATHS = [
             "section": "Provider namespace and compatibility",
             "scope": "ADO.NET SQL Server adapter; pinned package version is recorded in Planner.csproj.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The API starts writing an outbox row alongside each new task. What must hold?",
+            "options": [
+              "Both rows commit together, or neither does",
+              "The task commits first, then the outbox row in its own call",
+              "Only the outbox row needs a transaction"
+            ],
+            "correct": 0,
+            "explanation": "Two independent successful calls do not make an atomic operation. One transaction around both writes keeps the task and its event in step."
           }
         ]
       },
@@ -36913,7 +37909,19 @@ const LEARNING_PATHS = [
               "explanation": "Return the same task, with no duplicate creation."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Does the reference API's POST /api/tasks support an idempotency key?",
+            "options": [
+              "No: the workbook asks you to add idempotent create as an extension",
+              "Yes, through an Idempotency-Key header",
+              "Yes, because task IDs are GUIDs"
+            ],
+            "correct": 0,
+            "explanation": "The baseline does not implement it. A server-generated GUID cannot deduplicate a retry, because each POST gets a new one."
+          }
+        ]
       },
       {
         "id": "identity",
@@ -37040,7 +38048,19 @@ const LEARNING_PATHS = [
               "explanation": "Only authorized data leaves the API."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which callers does the reference API accept?",
+            "options": [
+              "Any caller on a loopback address; others get 403",
+              "Only signed-in users",
+              "Only callers that send an OwnerId"
+            ],
+            "correct": 0,
+            "explanation": "The lab has no login, so its only boundary is the loopback check. Serving other users needs verified identity and ownership checks first."
+          }
+        ]
       },
       {
         "id": "browser-boundaries",
@@ -37087,6 +38107,18 @@ const LEARNING_PATHS = [
             "section": "Same-origin policy and middleware",
             "scope": "Vite proxy baseline is browser same-origin; allowed direct origins are narrow and do not authenticate callers.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does the API's CORS policy allow?",
+            "options": [
+              "The origin http://127.0.0.1:5173, with GET, POST and PUT",
+              "Any origin with any method",
+              "Any origin, but only GET"
+            ],
+            "correct": 0,
+            "explanation": "The policy names one origin and three methods. It limits what browsers may read; it does not authenticate the caller."
           }
         ]
       },
@@ -37136,6 +38168,18 @@ const LEARNING_PATHS = [
             "scope": "Reference acceptance.py uses real loopback HTTP; TestServer is an optional alternative.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does npm test run?",
+            "options": [
+              "The decoder test under Node, then the UI tests with Vitest in jsdom",
+              "Only the Vitest UI tests",
+              "acceptance.py against the API"
+            ],
+            "correct": 0,
+            "explanation": "Each test observes a different boundary: planner-api.test.ts checks decoding and errors, planner-ui.test.tsx checks request states. The HTTP checks are separate."
+          }
         ]
       },
       {
@@ -37183,6 +38227,18 @@ const LEARNING_PATHS = [
             "section": "Logs, metrics and traces",
             "scope": "Baseline logs metadata; distributed tracing and exporters are assessed extensions.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which fields does the API's request log line record?",
+            "options": [
+              "Method, path, status, elapsed milliseconds and trace identifier",
+              "The full request and response bodies",
+              "The caller's title draft"
+            ],
+            "correct": 0,
+            "explanation": "The log keeps bounded metadata useful for diagnosis and never writes request bodies, which may contain private drafts."
           }
         ]
       },
@@ -37338,7 +38394,19 @@ const LEARNING_PATHS = [
               "explanation": "Check user outcomes and use a reviewed rollback/recovery plan."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A Vite import.meta.env value changes after the frontend was built. What is needed for it to take effect?",
+            "options": [
+              "A rebuild, unless a separate runtime-configuration mechanism exists",
+              "Nothing: the browser reads it at load time",
+              "Restarting the API"
+            ],
+            "correct": 0,
+            "explanation": "Vite normally replaces those values during the build. Values in frontend configuration are public, so secrets never belong there."
+          }
+        ]
       },
       {
         "id": "recovery",
@@ -37392,6 +38460,18 @@ const LEARNING_PATHS = [
             "section": "Backup, restore and recovery",
             "scope": "Owned dedicated learning database only; recovery must be demonstrated by a restore drill.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Where does the advanced milestone say to restore a backup during practice?",
+            "options": [
+              "Into a new database, then verify task counts and versions",
+              "Over the live database",
+              "Nowhere: the backup file is enough"
+            ],
+            "correct": 0,
+            "explanation": "Restoring into a fresh database leaves the original untouched and shows that the backup recovers usable records."
           }
         ]
       }
@@ -47176,7 +48256,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "Two release_app replicas each use their own scratch SQLite file. A note is posted to the first. What does the second's /notes return?",
+            "options": [
+              "No notes",
+              "The new note",
+              "An error, because the database is locked"
+            ],
+            "correct": 0,
+            "explanation": "Replicas do not share local files. Reconciling the replica count does not make per-Pod storage a shared data service."
+          }
+        ]
       },
       {
         "id": "control-plane",
@@ -47306,7 +48398,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "kubectl apply of a Deployment succeeds, but no node has capacity for its Pods. What state are the Pods in?",
+            "options": [
+              "Pending",
+              "Running",
+              "Failed"
+            ],
+            "correct": 0,
+            "explanation": "The API server accepted the desired state, but the scheduler could not assign the Pods to a node. Inspect status and events."
+          }
+        ]
       },
       {
         "id": "local-context",
@@ -47355,7 +48459,19 @@ const LEARNING_PATHS = [
             "scope": "Dedicated local kind cluster; no cluster created by course author verification. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "foundation"
+        "stage": "foundation",
+        "extraQuiz": [
+          {
+            "question": "readiness_drill.py finds that the kind-notebook-lab context points at a non-loopback API server. What does it do?",
+            "options": [
+              "Exits: Refusing: named kind context must use a loopback API",
+              "Continues, because the context name matches",
+              "Switches to a loopback context"
+            ],
+            "correct": 0,
+            "explanation": "A context name is only a label. The drill checks where it actually points before mutating anything."
+          }
+        ]
       },
       {
         "id": "objects-labels",
@@ -47489,7 +48605,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The Pod template's label is changed to app: release-demo-v2, and the Service selector is unchanged. Does the Service still select the Pods?",
+            "options": [
+              "No: the selector no longer matches the Pod labels",
+              "Yes: the Deployment name still matches",
+              "Yes: the Service follows its Deployment"
+            ],
+            "correct": 0,
+            "explanation": "A Service finds Pods only through its label selector. Names and ownership do not take part."
+          }
+        ]
       },
       {
         "id": "pods",
@@ -47618,7 +48746,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "release-demo has a read-only root filesystem. Where does it keep its SQLite file?",
+            "options": [
+              "Under /tmp, on an emptyDir volume",
+              "On the image's root filesystem",
+              "On the PersistentVolumeClaim"
+            ],
+            "correct": 0,
+            "explanation": "RELEASE_DB points at /tmp, which is mounted from an emptyDir scratch volume. Its data lasts as long as the Pod."
+          }
+        ]
       },
       {
         "id": "deployments",
@@ -48057,7 +49197,19 @@ const LEARNING_PATHS = [
               "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "How many old ReplicaSets does the release-demo Deployment keep for rollback?",
+            "options": [
+              "3",
+              "1",
+              "All of them"
+            ],
+            "correct": 0,
+            "explanation": "revisionHistoryLimit is 3. Older ReplicaSets are cleaned up and can no longer be rolled back to."
+          }
+        ]
       },
       {
         "id": "services-dns",
@@ -48534,7 +49686,19 @@ const LEARNING_PATHS = [
               "url": "https://kubernetes.io/docs/concepts/services-networking/service/"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The version-check Job reaches the release-demo Service by its short name. Why does that name resolve?",
+            "options": [
+              "The Job runs in the same namespace as the Service",
+              "The Job has a hosts file entry",
+              "Short names resolve across every namespace"
+            ],
+            "correct": 0,
+            "explanation": "Cluster DNS resolves a bare Service name within the client's own namespace. Another namespace needs the qualified name."
+          }
+        ]
       },
       {
         "id": "configmaps",
@@ -48663,7 +49827,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "release_app.py is started with RELEASE_VERSION=v2 in its environment. What does /version return?",
+            "options": [
+              "{\"release\": \"v2\"}",
+              "{\"release\": \"v1\"}",
+              "An error, because v2 is not deployed"
+            ],
+            "correct": 0,
+            "explanation": "The process reads the value once at startup. envFrom supplies it that way, which is why a later ConfigMap change needs a restart."
+          }
+        ]
       },
       {
         "id": "secrets",
@@ -48712,7 +49888,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "extraQuiz": [
+          {
+            "question": "A user may not get Secrets, but may create Pods in the namespace. Can they read a Secret's value?",
+            "options": [
+              "Possibly: a Pod they create can mount it",
+              "No: get permission is required",
+              "Only if the Secret is base64 encoded"
+            ],
+            "correct": 0,
+            "explanation": "Creating a Pod that mounts a Secret is indirect access. Review who can create workloads in the namespace."
+          }
+        ]
       },
       {
         "id": "probes",
@@ -48860,7 +50048,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The release_app ready gate file exists. What do /live and /ready return?",
+            "options": [
+              "/live 200 and /ready 503",
+              "/live 503 and /ready 503",
+              "/live 200 and /ready 200"
+            ],
+            "correct": 0,
+            "explanation": "Readiness reports a temporary inability to serve, which removes the Pod from endpoints. Liveness stays healthy, so the container is not restarted."
+          }
+        ]
       },
       {
         "id": "resources",
@@ -48909,7 +50109,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "extraQuiz": [
+          {
+            "question": "What CPU do the two release-demo replicas request in total?",
+            "options": [
+              "200m, a fifth of a CPU",
+              "1000m, from the limits",
+              "100m"
+            ],
+            "correct": 0,
+            "explanation": "Each replica requests 100m. The scheduler plans with requests; the 500m limit caps use."
+          }
+        ]
       },
       {
         "id": "rolling-updates",
@@ -49323,7 +50535,19 @@ const LEARNING_PATHS = [
               "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "release-demo has 2 replicas, maxSurge 1 and maxUnavailable 0. During a rollout, what are the most Pods and the fewest available?",
+            "options": [
+              "At most 3 Pods, never fewer than 2 available",
+              "At most 4 Pods, at least 1 available",
+              "Exactly 2 Pods throughout"
+            ],
+            "correct": 0,
+            "explanation": "One extra Pod may be surged, and none of the desired two may be unavailable, so a new Pod must be ready before an old one goes."
+          }
+        ]
       },
       {
         "id": "scheduling",
@@ -49372,7 +50596,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "extraQuiz": [
+          {
+            "question": "Why does the course omit hard multi-zone spread rules from the baseline?",
+            "options": [
+              "A single-node kind cluster cannot meaningfully satisfy them",
+              "Kubernetes does not support zone spreading",
+              "Spread rules disable autoscaling"
+            ],
+            "correct": 0,
+            "explanation": "Add a placement constraint only when it has an operational purpose the environment can meet."
+          }
+        ]
       },
       {
         "id": "network-policy",
@@ -49421,7 +50657,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "extraQuiz": [
+          {
+            "question": "Which of the two policy-client Pods does the app-ingress rule allow?",
+            "options": [
+              "allowed-client only",
+              "Both",
+              "denied-client only"
+            ],
+            "correct": 0,
+            "explanation": "The ingress rule selects app: notebook-client. Enforcement still depends on a network plugin that implements NetworkPolicy."
+          }
+        ]
       },
       {
         "id": "rbac",
@@ -49550,7 +50798,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The viewer ServiceAccount is bound to the pod-viewer Role. Can it delete Pods, or read Secrets?",
+            "options": [
+              "Neither",
+              "Delete Pods only",
+              "Both"
+            ],
+            "correct": 0,
+            "explanation": "The Role grants get, list and watch on pods and pods/log, nothing else. RBAC has no implicit extra verbs."
+          }
+        ]
       },
       {
         "id": "pod-security",
@@ -49599,7 +50859,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "intermediate"
+        "stage": "intermediate",
+        "extraQuiz": [
+          {
+            "question": "Which Pod Security level does namespace.json enforce?",
+            "options": [
+              "restricted, pinned to v1.34",
+              "baseline",
+              "privileged"
+            ],
+            "correct": 0,
+            "explanation": "Pinning the version keeps the enforced rules stable across cluster upgrades until the label is changed deliberately."
+          }
+        ]
       },
       {
         "id": "persistent-storage",
@@ -49728,7 +51000,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The storage-demo Pod is deleted, but its claim lab-data is kept. What can happen to the file it wrote?",
+            "options": [
+              "It can survive for the next Pod that mounts the claim",
+              "It is always deleted with the Pod",
+              "It moves to the node's emptyDir"
+            ],
+            "correct": 0,
+            "explanation": "Deleting a Pod need not delete its claim or data. Deleting the claim triggers the provider's reclaim behaviour."
+          }
+        ]
       },
       {
         "id": "jobs",
@@ -49777,7 +51061,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "version-check has backoffLimit 1 and restartPolicy Never. How many Pods can it create before the Job fails, ignoring the deadline?",
+            "options": [
+              "2",
+              "1",
+              "Unlimited"
+            ],
+            "correct": 0,
+            "explanation": "The first attempt plus one retry. The 60-second activeDeadlineSeconds can end it sooner."
+          }
+        ]
       },
       {
         "id": "autoscaling",
@@ -49826,7 +51122,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "The HPA targets 60% average CPU utilization. With a 100m request per Pod, what average CPU per Pod is the target?",
+            "options": [
+              "60m",
+              "300m, 60% of the limit",
+              "600m"
+            ],
+            "correct": 0,
+            "explanation": "Utilization is measured against requests, not limits, which is why CPU-percentage autoscaling needs requests set."
+          }
+        ]
       },
       {
         "id": "disruptions",
@@ -49875,7 +51183,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "The release-demo PDB has minAvailable 1, and both replicas are ready. How many Pods can a voluntary disruption evict at once?",
+            "options": [
+              "1",
+              "2",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "One Pod must stay available. A PDB limits voluntary evictions such as drains, not node crashes."
+          }
+        ]
       },
       {
         "id": "helm",
@@ -49924,7 +51244,19 @@ const LEARNING_PATHS = [
             "scope": "Current Helm chart principles; learner-generated chart, no packaged or installed release supplied. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "A chart renders a Deployment whose selector does not match its Pod labels. Does installing it with Helm fix that?",
+            "options": [
+              "No: a chart does not make invalid objects correct",
+              "Yes: Helm repairs selectors",
+              "Yes, if the values file is valid"
+            ],
+            "correct": 0,
+            "explanation": "Render first and compare the output with the known contract. Packaging does not change what the objects mean."
+          }
+        ]
       },
       {
         "id": "gitops",
@@ -50065,7 +51397,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Someone fixes a GitOps-managed Deployment with kubectl edit. What can happen next?",
+            "options": [
+              "The controller overwrites it on reconciliation",
+              "Git is updated to match",
+              "The controller stops managing it"
+            ],
+            "correct": 0,
+            "explanation": "The source of truth is the reviewed desired state. A durable change goes there."
+          }
+        ]
       },
       {
         "id": "troubleshooting",
@@ -50123,7 +51467,19 @@ const LEARNING_PATHS = [
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
           }
         ],
-        "stage": "advanced"
+        "stage": "advanced",
+        "extraQuiz": [
+          {
+            "question": "release_app's database file has been removed. What do /live and /ready return?",
+            "options": [
+              "/live 200 and /ready 503",
+              "/live 503 and /ready 503",
+              "/live 200 and /ready 200"
+            ],
+            "correct": 0,
+            "explanation": "The process runs, so the Pod looks Running, but readiness fails its database check and the Pod gets no Service traffic."
+          }
+        ]
       },
       {
         "id": "backup-production",
@@ -50264,7 +51620,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "release_app.backup() is given a target file that already exists. What happens?",
+            "options": [
+              "ValueError: Backup destination must be new",
+              "The target is overwritten",
+              "The backup is appended"
+            ],
+            "correct": 0,
+            "explanation": "Refusing to overwrite protects an earlier backup. A restore test then shows whether the new one is usable."
+          }
+        ]
       }
     ],
     "stages": [
@@ -50294,7 +51662,39 @@ const LEARNING_PATHS = [
             "A failed boundary is diagnosed from actual status/events."
           ],
           "solution": "Use standard Python checks without a cluster first. The Deployment selector and Service selector match app=release-demo, and targetPort http matches the named 8080 container port. Bootstrap persists the namespace before server dry-run. Optional live checks wait for readiness and inspect endpoints; scratch notes remain per Pod."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "release_app receives POST /notes with the title '  Plan  '. What comes back?",
+            "options": [
+              "201 with the title 'Plan'",
+              "201 with the title '  Plan  '",
+              "400 invalid_title_or_body"
+            ],
+            "correct": 0,
+            "explanation": "The title is stripped and then validated, so surrounding spaces are neither stored nor counted."
+          },
+          {
+            "question": "release_app receives POST /notes with a 101-character title. What comes back?",
+            "options": [
+              "400 invalid_title_or_body",
+              "201 with the first 100 characters",
+              "500"
+            ],
+            "correct": 0,
+            "explanation": "Titles are limited to 100 characters, and a longer one is rejected rather than truncated."
+          },
+          {
+            "question": "A fresh release_app answers one 503 from /ready and one 404. What does /metrics then report?",
+            "options": [
+              "2 requests, 1 error",
+              "2 requests, 2 errors",
+              "3 requests, 1 error"
+            ],
+            "correct": 0,
+            "explanation": "Errors count 5xx responses only. The metrics request takes its snapshot before its own response is counted."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -50323,7 +51723,39 @@ const LEARNING_PATHS = [
             "No production identity/cluster is reused."
           ],
           "solution": "With 2 replicas, maxSurge 1 and maxUnavailable 0, expect spare capacity for a third candidate. ready 503 / live 200 should remove readiness without this condition triggering liveness restart. RBAC grants read/list/watch Pods/logs only; verify denies separately. Default kind does not prove NetworkPolicy enforcement; mark that check reviewed-only unless the plugin/client evidence exists."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "The readiness probe runs every 5 seconds with failureThreshold 3. About how long after /ready starts failing is the Pod marked unready?",
+            "options": [
+              "About 15 seconds",
+              "About 5 seconds",
+              "About 30 seconds"
+            ],
+            "correct": 0,
+            "explanation": "Three consecutive failures at 5-second intervals. The threshold trades reaction time against flapping."
+          },
+          {
+            "question": "The startup probe runs every 5 seconds with failureThreshold 12. How long may the app take to start before it is restarted?",
+            "options": [
+              "About 60 seconds",
+              "About 15 seconds",
+              "Unlimited"
+            ],
+            "correct": 0,
+            "explanation": "Liveness checks wait until startup succeeds, so a slow start is not mistaken for a hung process."
+          },
+          {
+            "question": "A Role is changed to include secrets in its resources. Which check in check_manifests.py fails?",
+            "options": [
+              "test_optional_boundaries",
+              "test_selectors_ports_and_security",
+              "None of them"
+            ],
+            "correct": 0,
+            "explanation": "The boundary check rejects secrets and wildcard verbs in the lab Role, so a widened permission fails offline before any apply."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -50353,7 +51785,39 @@ const LEARNING_PATHS = [
             "Business-data restoration is separate from control-plane restoration."
           ],
           "solution": "Use the optional Job to read Service /version with deadline 60 and backoff 1. A bound PVC and RWO access do not certify disaster recovery or exclusive transaction ownership. Render Helm before any install; durable GitOps rollback changes desired source state. Separate etcd state and application store recovery with known-record verification; the dedicated kind lab is selected mechanics practice, not production readiness."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "One note is saved, then release_app.backup() copies the database to a new file. What does the backup contain?",
+            "options": [
+              "The note",
+              "An empty notes table",
+              "Nothing: the source was opened read-only"
+            ],
+            "correct": 0,
+            "explanation": "The source is read through a read-only connection and copied with SQLite's backup API, so the data arrives without risking the source."
+          },
+          {
+            "question": "How long is the HPA's scale-down stabilization window?",
+            "options": [
+              "120 seconds",
+              "60 seconds",
+              "None: it scales down at once"
+            ],
+            "correct": 0,
+            "explanation": "The HPA uses the highest recommendation from the last 120 seconds, which avoids removing Pods on a brief dip."
+          },
+          {
+            "question": "readiness_drill.py finds that namespace notebook-lab lacks the training-owner=notebook label. What does it do?",
+            "options": [
+              "Exits: Refusing: namespace must have training-owner=notebook",
+              "Adds the label and continues",
+              "Continues, because the namespace name matches"
+            ],
+            "correct": 0,
+            "explanation": "The drill only mutates a namespace marked as the lab's own, so a same-named namespace elsewhere is left alone."
+          }
+        ]
       }
     ],
     "downloads": [
@@ -76361,7 +77825,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Trace the truthiness branch, preserve the default keys and all-status selection, and request a count of 1 for a zero-minute ticket. Use the examples in CONTRACT.md; state strict validation as a new explicit policy.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does legacy_report print for the supplied tickets.csv?",
+            "options": [
+              "{\"count\": 3, \"total_minutes\": 20}",
+              "{\"count\": 4, \"total_minutes\": 20}",
+              "{\"count\": 3, \"total_minutes\": 17}"
+            ],
+            "correct": 0,
+            "explanation": "Ticket A has zero minutes and is dropped, so the count is one short while the total still looks right."
+          },
+          {
+            "question": "legacy_report reads a row whose minutes is abc. What happens?",
+            "options": [
+              "Raises ValueError: invalid literal for int() with base 10: 'abc'",
+              "It skips the row",
+              "It counts the row as 0"
+            ],
+            "correct": 0,
+            "explanation": "The starter has no validation of its own, so the error comes from int() with no row number."
+          },
+          {
+            "question": "legacy_report reads the row A,archived,4. What happens?",
+            "options": [
+              "It counts the row: the starter never reads status",
+              "It rejects the row",
+              "It skips the row"
+            ],
+            "correct": 0,
+            "explanation": "Status is ignored entirely, which is why the filter is new behaviour rather than a fix."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -76390,7 +77886,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Parse complete validated Ticket records, filter only after parsing and count selected records directly. Compare the default fixture (4,20) and open selection (2,12). Use subprocess tests for the public command, not just summary unit tests.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "read_tickets receives minutes 00000. What happens?",
+            "options": [
+              "Raises ValueError: row 2: minutes must be 0..1440 using at most four ASCII digits",
+              "It is accepted as 0",
+              "It is accepted as the text 00000"
+            ],
+            "correct": 0,
+            "explanation": "Five digits exceed the length limit even though the value is zero."
+          },
+          {
+            "question": "read_tickets receives the id ' A', with a leading space. What happens?",
+            "options": [
+              "Raises ValueError: row 2: id must be nonblank, unique and unpadded",
+              "The space is trimmed and A is accepted",
+              "It is accepted as written"
+            ],
+            "correct": 0,
+            "explanation": "Padded IDs are rejected rather than trimmed, so ' A' and 'A' cannot be mistaken for the same ticket."
+          },
+          {
+            "question": "read_tickets receives A,open,1 followed by A,closed,2. Which row does the error name?",
+            "options": [
+              "row 3",
+              "row 2",
+              "No error: the later row wins"
+            ],
+            "correct": 0,
+            "explanation": "Rows are numbered by file line, with the header as line 1, so the duplicate on the third line is reported."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -76419,7 +77947,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Create the temporary file beside the destination, close it and call os.replace only after validation and serialization. Clean up on failure. Keep an explicit backup if successful replacement must be reversible. Plan archived status as a separate changed-case exercise.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "report.py is given --output in a directory that does not exist. What happens?",
+            "options": [
+              "Exit 2, with no temporary file left behind",
+              "The directory is created",
+              "Exit 0, with the JSON printed instead"
+            ],
+            "correct": 0,
+            "explanation": "The temporary file cannot be created beside the destination, so the command fails cleanly instead of writing somewhere else."
+          },
+          {
+            "question": "read_tickets reads a file with blank lines around the row A,open,2. What does summarize return?",
+            "options": [
+              "{'count': 1, 'total_minutes': 2}",
+              "An error about the blank lines",
+              "{'count': 3, 'total_minutes': 2}"
+            ],
+            "correct": 0,
+            "explanation": "Python's CSV reader ignores completely blank lines, and the contract follows it."
+          },
+          {
+            "question": "write_report succeeds with the text {}. What does the destination file then contain?",
+            "options": [
+              "{} followed by a newline",
+              "{} with no newline",
+              "{} followed by a Windows line ending"
+            ],
+            "correct": 0,
+            "explanation": "The file is opened with newline set to a single line feed, so the output is the same on every platform."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -76470,6 +78030,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "General engineering context. This small software exercise uses a short decision record, not NASA project compliance."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does report.py print for the supplied tickets.csv, with no --status?",
+            "options": [
+              "{\"count\": 4, \"total_minutes\": 20}",
+              "{\"count\": 3, \"total_minutes\": 20}",
+              "{\"count\": 4, \"total_minutes\": 17}"
+            ],
+            "correct": 0,
+            "explanation": "Every valid record counts, including the zero-minute ticket A. The figure is recorded effort, not remaining work."
+          }
         ]
       },
       {
@@ -76518,6 +78090,18 @@ const LEARNING_PATHS = [
             "section": "Given, When and Then example structure",
             "reviewed": "2026-10-02",
             "scope": "Author explanation of behavior examples. The ticket-report requirements here are original fictional policies."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A valid file has only open tickets. What does report.py return with --status closed?",
+            "options": [
+              "{\"count\": 0, \"total_minutes\": 0}",
+              "An error: no matching rows",
+              "Empty output"
+            ],
+            "correct": 0,
+            "explanation": "The contract makes a valid selection with no matches an explicit example: both values are zero and the command succeeds."
           }
         ]
       },
@@ -76568,6 +78152,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "General engineering context. This small software exercise uses a short decision record, not NASA project compliance."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The changed-requirements list mentions an archived status. What does the current reference do with a row whose status is archived?",
+            "options": [
+              "Raises ValueError: row 2: unknown status",
+              "Counts it with the open tickets",
+              "Skips the row"
+            ],
+            "correct": 0,
+            "explanation": "Archived is a deferred idea, not part of the agreed change. The reference rejects it until someone writes its expectations first."
+          }
         ]
       },
       {
@@ -76617,6 +78213,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does legacy_report.summarize_file return for a one-row file containing A,open,0?",
+            "options": [
+              "{'count': 0, 'total_minutes': 0}",
+              "{'count': 1, 'total_minutes': 0}",
+              "An error"
+            ],
+            "correct": 0,
+            "explanation": "One header line and one row are the smallest input that shows the defect, which makes it the input to save with the exact command."
+          }
         ]
       },
       {
@@ -76665,6 +78273,18 @@ const LEARNING_PATHS = [
             "section": "Functionality, complexity, tests and documentation",
             "reviewed": "2026-10-02",
             "scope": "Review guidance, not a mandatory review process or guarantee of correctness."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "legacy_report reads the rows A,open,0 and B,open,7. Which count does it report?",
+            "options": [
+              "1, although there are 2 tickets",
+              "2",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "The zero-minute row is dropped at the truthiness branch, so only B is counted. The total of 7 is still right, which hides the bug."
           }
         ]
       },
@@ -77223,7 +78843,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does legacy_report do with a row whose minutes is -1?",
+            "options": [
+              "Counts it, giving total_minutes -1",
+              "Rejects the file",
+              "Skips the row"
+            ],
+            "correct": 0,
+            "explanation": "-1 is truthy, so it is kept. Recording that observation does not make it correct: the contract rejects negative minutes."
+          }
+        ]
       },
       {
         "id": "first-project",
@@ -77271,6 +78903,18 @@ const LEARNING_PATHS = [
             "section": "Given, When and Then example structure",
             "reviewed": "2026-10-02",
             "scope": "Author explanation of behavior examples. The ticket-report requirements here are original fictional policies."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "legacy_report reads a row whose minutes is ' 5', with a leading space. What happens?",
+            "options": [
+              "It is counted as 5, because int() ignores surrounding spaces",
+              "It is rejected",
+              "It is counted as 0"
+            ],
+            "correct": 0,
+            "explanation": "The starter accepts padding without saying so. Rejecting it in the repair is a new policy, and the change brief should state it explicitly."
           }
         ]
       },
@@ -77321,6 +78965,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How many tests does python -m unittest test_report run against the reference, and how many fail?",
+            "options": [
+              "13 tests, none failing",
+              "12 tests, 1 failing",
+              "13 tests, 1 failing"
+            ],
+            "correct": 0,
+            "explanation": "The suite includes a regression test that runs the legacy starter and the reference on the same zero-minute input and expects different results."
+          }
         ]
       },
       {
@@ -77369,6 +79025,18 @@ const LEARNING_PATHS = [
             "section": "DictReader; reading CSV with newline=\"\"",
             "reviewed": "2026-10-02",
             "scope": "Standard-library CSV parsing. Field validation is a separate policy implemented by the lab."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "report.py runs with --status open, and a closed row on line 3 has minutes -1. What happens?",
+            "options": [
+              "Exit 2 with a diagnostic naming row 3, although that row is not selected",
+              "It reports the open rows and ignores the bad row",
+              "Exit 0 with a warning"
+            ],
+            "correct": 0,
+            "explanation": "Every row is validated before the filter runs, so a bad excluded row still fails the command instead of producing a misleading report."
           }
         ]
       },
@@ -77419,6 +79087,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Review guidance, not a mandatory review process or guarantee of correctness."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "summarize(tickets, 'missing') is called directly, without the command line. What happens?",
+            "options": [
+              "Raises ValueError: unknown status",
+              "Returns count 0",
+              "Returns every ticket"
+            ],
+            "correct": 0,
+            "explanation": "The function that owns the filter also checks its input, so a caller that bypasses argparse's choices still cannot ask for an unknown status."
+          }
         ]
       },
       {
@@ -77467,6 +79147,18 @@ const LEARNING_PATHS = [
             "section": "Basic example; assert methods; command-line interface",
             "reviewed": "2026-10-02",
             "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "read_tickets receives minutes 0001. What happens?",
+            "options": [
+              "It is accepted as 1: leading zeroes are allowed within four digits",
+              "It is rejected for its leading zeroes",
+              "It is read as the text 0001"
+            ],
+            "correct": 0,
+            "explanation": "The length limit, not the leading zero, is the boundary: 0001 has four digits and passes, while 00000 has five and is rejected."
           }
         ]
       },
@@ -77517,6 +79209,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "The lab uses stable Python 3.11+ APIs. Invalid arguments use argparse error handling."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "report.py succeeds on a valid file with no options. What are its exit code and stderr?",
+            "options": [
+              "Exit 0 and empty stderr",
+              "Exit 0 and a summary line on stderr",
+              "Exit 1 and empty stderr"
+            ],
+            "correct": 0,
+            "explanation": "Callers may rely on a clean stderr and exit 0, so the repair keeps that default contract unchanged."
+          }
         ]
       },
       {
@@ -77566,6 +79270,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Review guidance, not a mandatory review process or guarantee of correctness."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A reviewer asks what happens with the row A,open,1,extra. What does read_tickets raise?",
+            "options": [
+              "ValueError: row 2: wrong field count",
+              "Nothing: the extra field is ignored",
+              "ValueError: unknown status"
+            ],
+            "correct": 0,
+            "explanation": "A concrete input and the observed result make the review point checkable, and the diagnostic names the row."
+          }
         ]
       },
       {
@@ -77614,6 +79330,18 @@ const LEARNING_PATHS = [
             "section": "Basic example; assert methods; command-line interface",
             "reviewed": "2026-10-02",
             "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does report.py return for tickets.csv with --status cancelled?",
+            "options": [
+              "{\"count\": 1, \"total_minutes\": 3}",
+              "{\"count\": 0, \"total_minutes\": 0}",
+              "{\"count\": 4, \"total_minutes\": 20}"
+            ],
+            "correct": 0,
+            "explanation": "Each status has a known fixture result in CONTRACT.md, so every filter value can be checked, not only the one that was asked for."
           }
         ]
       },
@@ -77759,7 +79487,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "write_report's replace step fails with OSError. What is left in the destination directory?",
+            "options": [
+              "The old report bytes, and no .report-*.tmp file",
+              "A half-written report",
+              "The old report and a leftover temporary file"
+            ],
+            "correct": 0,
+            "explanation": "The temporary file is removed in a finally block, and the destination is touched only by the replace call that failed."
+          }
+        ]
       },
       {
         "id": "change-history",
@@ -77807,6 +79547,18 @@ const LEARNING_PATHS = [
             "section": "Basic bisect commands; bisect run",
             "reviewed": "2026-10-02",
             "scope": "Use a disposable local repository for the optional history exercise. A failing commit still needs diagnosis."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "During a bisect, a chosen revision fails to build for a reason unrelated to the zero-minute check. How should it be treated?",
+            "options": [
+              "Not as evidence that the regression is present",
+              "As a bad revision",
+              "As a good revision"
+            ],
+            "correct": 0,
+            "explanation": "Classify each revision with the same reproduction. A build failure says nothing about the behaviour being traced."
           }
         ]
       },
@@ -77856,6 +79608,18 @@ const LEARNING_PATHS = [
             "section": "Items 1, 6, 7 and 8",
             "reviewed": "2026-10-02",
             "scope": "Applies when a project declares a public API and adopts Semantic Versioning. The lab does not publish a package."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which keys does report.py's default JSON contain?",
+            "options": [
+              "Exactly count and total_minutes",
+              "count, total_minutes and status",
+              "count only"
+            ],
+            "correct": 0,
+            "explanation": "A caller may reject extra keys, so adding one can be a breaking change even if the existing values stay the same."
           }
         ]
       },
@@ -77908,6 +79672,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Review guidance applied to a fictional dependency-change example. Consult the actual dependency release notes before a real update."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which third-party packages does report.py import?",
+            "options": [
+              "None: it uses only the standard library",
+              "pandas",
+              "click"
+            ],
+            "correct": 0,
+            "explanation": "With no third-party imports, a dependency update cannot change its behaviour, though a Python version change still can."
+          }
         ]
       },
       {
@@ -77956,6 +79732,18 @@ const LEARNING_PATHS = [
             "section": "Basic example; assert methods; command-line interface",
             "reviewed": "2026-10-02",
             "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "report.py runs with --output report.json and succeeds. What does it print to stdout?",
+            "options": [
+              "Nothing: the JSON goes to the file",
+              "The JSON, and it also writes the file",
+              "The output path"
+            ],
+            "correct": 0,
+            "explanation": "The contract keeps stdout empty when exporting, so a check should read the written file rather than the terminal."
           }
         ]
       },
@@ -78006,6 +79794,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Same-filesystem replacement in the local lab. Atomic name replacement alone is not power-loss durability or concurrency control."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "report.py is given the same path for input and --output. What happens?",
+            "options": [
+              "Exit 2, and the input file is unchanged",
+              "The input is replaced by the report",
+              "Exit 0 with no file written"
+            ],
+            "correct": 0,
+            "explanation": "Replacing the input would destroy the only copy of the data, so the command refuses before reading or writing."
+          }
         ]
       },
       {
@@ -78054,6 +79854,18 @@ const LEARNING_PATHS = [
             "section": "Functionality, complexity, tests and documentation",
             "reviewed": "2026-10-02",
             "scope": "Review guidance, not a mandatory review process or guarantee of correctness."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "One changed requirement calls a zero-byte input an empty valid dataset. What does the reference do with a zero-byte file?",
+            "options": [
+              "Raises ValueError, because the required header is missing",
+              "Returns count 0",
+              "Returns count 0 with a warning"
+            ],
+            "correct": 0,
+            "explanation": "CONTRACT.md says an empty file is invalid, so the requirement conflicts with it. Decide which one wins, then add the smallest test that tells them apart."
           }
         ]
       }
@@ -98578,7 +100390,39 @@ const LEARNING_PATHS = [
             "Labels explain actions."
           ],
           "solution": "Start from the task, sketch hierarchy, implement native controls, calculate actual colour pairs and record a keyboard journey. Use contrast.cjs as arithmetic evidence and preserve a separate manual record."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does contrast('000000', 'ffffff') return?",
+            "options": [
+              "21",
+              "1",
+              "4.5"
+            ],
+            "correct": 0,
+            "explanation": "Black on white is the largest possible ratio. Identical colours give 1."
+          },
+          {
+            "question": "The demo header puts white text on #17392f. Does that pass AA for ordinary text?",
+            "options": [
+              "Yes: it is about 12.6:1",
+              "No: it is about 3:1",
+              "Only for large text"
+            ],
+            "correct": 0,
+            "explanation": "The ratio is well above 4.5:1, so the header text passes at any size."
+          },
+          {
+            "question": "What does contrast('bad', 'ffffff') do?",
+            "options": [
+              "Throws: Use six hexadecimal digits without #",
+              "Returns 1",
+              "Returns NaN"
+            ],
+            "correct": 0,
+            "explanation": "Invalid input is rejected rather than producing a number that could be mistaken for a measurement."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -98607,7 +100451,39 @@ const LEARNING_PATHS = [
             "Motion has a meaningful still alternative."
           ],
           "solution": "Use the native form/dialog demo as a reference, then add one useful state such as filtering. Run semantic guardrails, complete the manual checklist and document the actual browser. Do not infer screen-reader results from source checks."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "demo.js receives a title of three spaces. What happens?",
+            "options": [
+              "It is treated as empty: the error appears and nothing is added",
+              "A blank lesson is added",
+              "The spaces are added as a lesson"
+            ],
+            "correct": 0,
+            "explanation": "The title is trimmed before the check, so whitespace cannot satisfy the requirement."
+          },
+          {
+            "question": "After an empty-title error, a valid title is submitted. What happens to the error state?",
+            "options": [
+              "aria-invalid is removed and the error text is cleared",
+              "The error stays until reload",
+              "Only the error text is cleared"
+            ],
+            "correct": 0,
+            "explanation": "Errors are cleared when the state changes, so the field is no longer announced as invalid."
+          },
+          {
+            "question": "Two lessons are in the plan, and the preview is opened. What does its summary say?",
+            "options": [
+              "2 lessons ready to study. Reloading clears this in-memory lab.",
+              "Your plan is empty. Close this preview and add a lesson.",
+              "2 lessons."
+            ],
+            "correct": 0,
+            "explanation": "The summary is set when the dialog opens, so it reflects the current plan and states that records are in memory."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -98637,7 +100513,39 @@ const LEARNING_PATHS = [
             "Release claims match the evaluation performed."
           ],
           "solution": "Use semantic components with stable IDs, preserve focus during reorder, and record realistic task outcomes. Combine arithmetic/static guardrails with human browser and assistive-technology evidence. Publish scoped results and maintenance triggers rather than a generic accessibility score."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "demo.js receives the title <b>x</b>. What does the new list item contain?",
+            "options": [
+              "The literal text <b>x</b>",
+              "A bold x",
+              "Nothing: the title is rejected"
+            ],
+            "correct": 0,
+            "explanation": "demo.js sets textContent and never uses innerHTML, so input becomes text, not markup."
+          },
+          {
+            "question": "The demo's error text is #9d2020 on white. What is its contrast?",
+            "options": [
+              "About 7.9:1, passing AA for ordinary text",
+              "About 4.2:1, failing AA",
+              "About 3:1"
+            ],
+            "correct": 0,
+            "explanation": "The error colour passes comfortably, and the message is also text, so it does not rely on colour alone."
+          },
+          {
+            "question": "The focus outline is #b15e00 on the page background #f3f6f2. Which threshold does it meet?",
+            "options": [
+              "3:1 for non-text contrast, but not 4.5:1",
+              "4.5:1",
+              "Neither"
+            ],
+            "correct": 0,
+            "explanation": "At about 4.3:1 it clears the 3:1 non-text threshold for a focus indicator, though it would not pass as ordinary text."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -98689,6 +100597,18 @@ const LEARNING_PATHS = [
             "section": "Clear navigation, feedback and different viewport sizes",
             "reviewed": "2026-09-30",
             "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A team writes that learners prefer card layouts, without having watched anyone. How should that statement be labelled?",
+            "options": [
+              "As a hypothesis to test with people",
+              "As research evidence",
+              "As a design requirement"
+            ],
+            "correct": 0,
+            "explanation": "Invented preferences are not research. Label assumptions, then watch someone attempt the task."
           }
         ]
       },
@@ -98830,7 +100750,19 @@ const LEARNING_PATHS = [
               "explanation": "Download the exact files needed for that task."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A course is navigated through a graphical map only. What should sit alongside it?",
+            "options": [
+              "An ordered list of the same destinations",
+              "A larger map",
+              "A tooltip on each node"
+            ],
+            "correct": 0,
+            "explanation": "A visual map can hide the sequence from keyboard and screen-reader users. An ordered list preserves it."
+          }
+        ]
       },
       {
         "id": "hierarchy-layout",
@@ -98880,6 +100812,18 @@ const LEARNING_PATHS = [
             "section": "Use headings and spacing to group related content",
             "reviewed": "2026-09-30",
             "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Three equally loud buttons compete at the end of a form. What should change?",
+            "options": [
+              "Make the action that advances the task the dominant one",
+              "Make all three larger",
+              "Hide two of them"
+            ],
+            "correct": 0,
+            "explanation": "Equal emphasis makes people infer importance. Document which action is primary and style the others as secondary."
           }
         ]
       },
@@ -98931,6 +100875,18 @@ const LEARNING_PATHS = [
             "section": "1.3.1 Info and Relationships; 4.1.2 Name, Role, Value",
             "reviewed": "2026-09-30",
             "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How does demo.html give the lesson title input its accessible name?",
+            "options": [
+              "A label element whose for matches the input's id",
+              "A placeholder",
+              "An aria-label on the form"
+            ],
+            "correct": 0,
+            "explanation": "A native label is associated by id, so the name is exposed and clicking the label focuses the field."
           }
         ]
       },
@@ -98991,6 +100947,18 @@ const LEARNING_PATHS = [
             "section": "2.1.1 Keyboard; 2.4.3 Focus Order; 2.4.7 Focus Visible; 2.4.11 Focus Not Obscured",
             "reviewed": "2026-09-30",
             "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Why does demo.html give main the attribute tabindex=\"-1\"?",
+            "options": [
+              "So the skip link can move focus there without adding it to the Tab order",
+              "To put main first in the Tab order",
+              "To stop main receiving focus"
+            ],
+            "correct": 0,
+            "explanation": "A negative tabindex allows programmatic focus only. The page has no positive tabindex values to reorder focus."
           }
         ]
       },
@@ -99323,7 +101291,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does contrast.cjs report for #777777 text on white?",
+            "options": [
+              "About 4.48:1, failing AA for ordinary text but passing for large text",
+              "About 4.5:1, passing AA for ordinary text",
+              "About 3:1, failing both"
+            ],
+            "correct": 0,
+            "explanation": "4.48 is below the 4.5:1 ordinary-text threshold, and no rounding up is allowed. It clears the 3:1 large-text threshold."
+          }
+        ]
       },
       {
         "id": "type-content",
@@ -99373,6 +101353,18 @@ const LEARNING_PATHS = [
             "section": "1.4.4 Resize Text; 1.4.12 Text Spacing; 2.4.4 Link Purpose; 3.3.3 Error Suggestion",
             "reviewed": "2026-09-30",
             "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Text spacing is increased, and a card with a fixed height holds a long title. What is likely to happen?",
+            "options": [
+              "The text is clipped or hidden",
+              "The card grows to fit",
+              "The title shrinks to fit"
+            ],
+            "correct": 0,
+            "explanation": "Fixed heights fail when text wraps or spacing increases. Let containers grow with their content."
           }
         ]
       },
@@ -99431,6 +101423,18 @@ const LEARNING_PATHS = [
             "section": "320 CSS pixel width and intrinsic two-dimensional content exceptions",
             "reviewed": "2026-09-30",
             "scope": "WCAG 2.2 criterion-specific primary guidance checked. Exceptions apply; a local demonstration is not a complete conformance audit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How does the demo's main grid avoid horizontal scrolling on a 320px-wide screen?",
+            "options": [
+              "Each column is at least min(100%, 20rem), so a narrow screen gets one full-width column",
+              "It hides sections below 320px",
+              "It scales the whole page down"
+            ],
+            "correct": 0,
+            "explanation": "auto-fit with a minimum of min(100%, 20rem) lets columns wrap to one, based on the content's needs rather than a device list."
           }
         ]
       },
@@ -99595,7 +101599,19 @@ const LEARNING_PATHS = [
               "explanation": "Report the actual in-memory change through a status region."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "demo.js receives a submit with an empty title. What happens?",
+            "options": [
+              "aria-invalid is set, an error message appears and focus returns to the input",
+              "The form submits an empty lesson",
+              "Only the input border turns red"
+            ],
+            "correct": 0,
+            "explanation": "The error is announced through the role=alert message, marked on the field and given focus, so recovery does not depend on colour."
+          }
+        ]
       },
       {
         "id": "states-feedback",
@@ -99645,6 +101661,18 @@ const LEARNING_PATHS = [
             "section": "4.1.3 Status Messages; 3.3.1 Error Identification",
             "reviewed": "2026-09-30",
             "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "demo.js adds the lesson Contrast to an empty plan. What does the status region say?",
+            "options": [
+              "Added Contrast. 1 lesson in this in-memory plan.",
+              "Saved.",
+              "Nothing: the list itself changed"
+            ],
+            "correct": 0,
+            "explanation": "The polite status region announces the result and the new count, without moving focus away from the form."
           }
         ]
       },
@@ -99809,7 +101837,19 @@ const LEARNING_PATHS = [
               "explanation": "Restore the surviving opener or a logical replacement."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The preview dialog is opened from its button and then closed. Where does demo.js put focus?",
+            "options": [
+              "Back on the Preview study plan button",
+              "On the page body",
+              "On the first form field"
+            ],
+            "correct": 0,
+            "explanation": "Focus moves to the dialog heading on open and returns to the trigger on close, so keyboard users keep their place."
+          }
+        ]
       },
       {
         "id": "images-diagrams",
@@ -99859,6 +101899,18 @@ const LEARNING_PATHS = [
             "section": "Decorative, Functional and Complex Images",
             "reviewed": "2026-09-30",
             "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A diagram's alternative reads 'Three blue boxes with arrows'. What is wrong with it?",
+            "options": [
+              "It lists shapes instead of explaining the mechanism",
+              "It is too short to be valid",
+              "Diagrams should have empty alt text"
+            ],
+            "correct": 0,
+            "explanation": "Explain what the nodes are and what each arrow means: data, dependency or time."
           }
         ]
       },
@@ -99911,6 +101963,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A chart's values are shown only on hover. What should also be provided when values matter?",
+            "options": [
+              "A table or summary with the values and units",
+              "A brighter colour palette",
+              "A larger tooltip"
+            ],
+            "correct": 0,
+            "explanation": "Precise values must stay discoverable without hover or colour. A table supports the decision directly."
+          }
         ]
       },
       {
@@ -99962,6 +102026,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does demo.css do to new list items when the user prefers reduced motion?",
+            "options": [
+              "Turns their appear animation off",
+              "Slows the animation down",
+              "Hides the new items"
+            ],
+            "correct": 0,
+            "explanation": "The items still appear and the status still updates. Only the decorative motion is removed."
+          }
         ]
       },
       {
@@ -100012,6 +102088,18 @@ const LEARNING_PATHS = [
             "section": "Associated labels, feedback, grouping and contrast",
             "reviewed": "2026-09-30",
             "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which token name says why a colour exists rather than how it looks?",
+            "options": [
+              "colour-danger",
+              "red-500",
+              "colour-3"
+            ],
+            "correct": 0,
+            "explanation": "A semantic name survives a palette change and makes combinations, such as text on a danger background, checkable."
           }
         ]
       },
@@ -100079,6 +102167,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "WCAG 2.2 criterion-specific primary guidance checked. Exceptions apply; a local demonstration is not a complete conformance audit."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The demo's buttons are at least 44px high. Does WCAG 2.2 AA require 44px?",
+            "options": [
+              "No: AA's minimum is generally 24 by 24 CSS pixels; 44px is a design choice",
+              "Yes: 44px is the AA minimum",
+              "Only on touch screens"
+            ],
+            "correct": 0,
+            "explanation": "Target Size (Minimum) uses 24px or specified spacing, with exceptions. A larger target is a comfortable preference, not the requirement."
+          }
         ]
       },
       {
@@ -100129,6 +102229,18 @@ const LEARNING_PATHS = [
             "section": "3.1.1 Language of Page; 3.1.2 Language of Parts",
             "reviewed": "2026-09-30",
             "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "After two lessons are added, what does demo.js put in the status region?",
+            "options": [
+              "Added B. 2 lessons in this in-memory plan.",
+              "Added B. 2 lesson in this in-memory plan.",
+              "2 lessons added."
+            ],
+            "correct": 0,
+            "explanation": "The plural is built by appending s when the count is not 1. That English rule would need locale plural rules before translation."
           }
         ]
       },
@@ -100187,6 +102299,18 @@ const LEARNING_PATHS = [
             "section": "Cognitive function tests, alternatives and assistance",
             "reviewed": "2026-09-30",
             "scope": "WCAG 2.2 criterion-specific primary guidance checked. Exceptions apply; a local demonstration is not a complete conformance audit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A sign-in form blocks pasting into its password field. What does that do?",
+            "options": [
+              "Gets in the way of password managers and people who cannot transcribe",
+              "Makes the password stronger",
+              "Stops phishing"
+            ],
+            "correct": 0,
+            "explanation": "Allow password managers and paste where appropriate. Forcing people to memorise or retype adds load without security benefit."
           }
         ]
       },
@@ -100320,7 +102444,19 @@ const LEARNING_PATHS = [
               "explanation": "Combine results, user impact, untested limits and retest evidence."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "node semantics.test.cjs passes. What does its own output say it established?",
+            "options": [
+              "Static semantic guardrails only; manual and assistive-technology checks are still required",
+              "WCAG 2.2 AA conformance",
+              "That the page works with screen readers"
+            ],
+            "correct": 0,
+            "explanation": "The check inspects selected HTML rules. A page can pass and still have a keyboard trap or confusing labels."
+          }
+        ]
       },
       {
         "id": "usability-testing",
@@ -100370,6 +102506,18 @@ const LEARNING_PATHS = [
             "section": "Involving users in evaluation; evaluation approaches",
             "reviewed": "2026-09-30",
             "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Two of three participants found the download quickly. What can you claim?",
+            "options": [
+              "What those sessions showed, with the sample's limits stated",
+              "That 67% of users can find it",
+              "That the design is intuitive"
+            ],
+            "correct": 0,
+            "explanation": "A few sessions reveal friction but do not support population-level statistics."
           }
         ]
       },
@@ -100421,6 +102569,18 @@ const LEARNING_PATHS = [
             "section": "Conformance evaluation; monitoring accessibility",
             "reviewed": "2026-09-30",
             "scope": "Primary documentation checked on this date. WCAG 2.2 and current HTML/browser practice; this lesson is educational guidance, not a complete conformance audit."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The demo's checks all pass. What do they show about a production React application?",
+            "options": [
+              "Nothing directly: they are evidence about the demo at that time",
+              "That it is accessible",
+              "That it conforms to WCAG"
+            ],
+            "correct": 0,
+            "explanation": "Release notes should state what was executed, what was reviewed and what remains untested for the product being released."
           }
         ]
       }

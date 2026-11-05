@@ -59,6 +59,9 @@ jobs:
         python: ["3.11", "3.14"]
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
@@ -86,6 +89,18 @@ jobs:
         run: python tests/observability_checkpoint_facts.py
       - name: Check System Design checkpoint answers against the course labs
         run: python tests/system_design_checkpoint_facts.py
+      - name: Check Kubernetes checkpoint answers against the course labs
+        run: python tests/kubernetes_checkpoint_facts.py
+      - name: Check Cloud & Infrastructure as Code checkpoint answers against the course labs
+        run: python tests/cloud_infrastructure_checkpoint_facts.py
+      - name: Check Delivery & Operations checkpoint answers against the course labs
+        run: python tests/delivery_operations_checkpoint_facts.py
+      - name: Check UI Design & Accessibility checkpoint answers against the course labs
+        run: python tests/ui_accessibility_checkpoint_facts.py
+      - name: Check Full-Stack Project Journey checkpoint answers against the course labs
+        run: python tests/full_stack_journey_checkpoint_facts.py
+      - name: Check Requirements & software maintenance checkpoint answers against the course labs
+        run: python tests/requirements_maintenance_checkpoint_facts.py
       - name: Check concept explorer figures against the course labs
         run: python tests/explorer_lab_facts.py
 

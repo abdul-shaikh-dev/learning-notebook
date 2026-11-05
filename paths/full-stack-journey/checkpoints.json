@@ -1,0 +1,81 @@
+{
+  "lessons": {
+    "scope": [
+      {"question": "Which values does the foundation milestone ask you to check when validating a new session?", "options": ["Minutes of 0, 1440, -1 and 1441, a blank title and boolean minutes", "Only a typical value such as 25 minutes", "Any value the form allows"], "correct": 0, "explanation": "Both boundaries, the values just outside them and the wrong types make the requirement testable. A typical value alone shows only the easy case."}
+    ],
+    "workspace": [
+      {"question": "Planner.csproj is built without a TargetFramework property. Which framework does it target?", "options": ["net10.0", "The newest SDK installed", "net8.0"], "correct": 0, "explanation": "The project sets net10.0 only when no TargetFramework is supplied, so a different framework must be passed explicitly rather than picked up by accident."}
+    ],
+    "architecture": [
+      {"question": "During npm run dev, where does the browser send a request to /api/tasks?", "options": ["To Vite on 127.0.0.1:5173, which proxies it to the API on 127.0.0.1:5087", "Directly to SQL Server", "To the API on port 5087, as a cross-origin request"], "correct": 0, "explanation": "planner-api.ts uses a relative path, and the Vite proxy forwards /api, so in development the call is same-origin from the browser's point of view."}
+    ],
+    "contract": [
+      {"question": "A POST to /api/tasks includes an extra field, owner. What does the API return?", "options": ["400, because unmapped JSON members are rejected", "201, ignoring the extra field", "201, storing the owner"], "correct": 0, "explanation": "The JSON options disallow unmapped members, so a request cannot smuggle fields the contract does not define. acceptance.py checks this case."}
+    ],
+    "data-model": [
+      {"question": "An INSERT run directly in SQL sets Minutes to 1441. What stops it?", "options": ["The CHECK constraint on Minutes in schema.sql", "Nothing: only the API validates minutes", "The nvarchar(120) limit"], "correct": 0, "explanation": "The table repeats the 0 to 1440 rule, so a write that bypasses the API still cannot store an invalid value."}
+    ],
+    "ui-state": [
+      {"question": "App.tsx has just mounted and the initial list has not arrived. What state are the form controls in?", "options": ["Disabled, because busy starts as true", "Enabled, so the user can type at once", "Hidden until the list loads"], "correct": 0, "explanation": "No mutation can start before the authoritative list arrives. The UI test checks that Add session is disabled during the first load."}
+    ],
+    "first-slice": [
+      {"question": "The API is started with no PlannerConnection set. What does /health report as its storage?", "options": ["memory", "sql-server", "none"], "correct": 0, "explanation": "Without a connection string the API uses its in-memory store, and /health says so, which is why a restart loses tasks in stage one."}
+    ],
+    "response-validation": [
+      {"question": "decodeTask receives a valid task with an extra field, owner. What does it return?", "options": ["A new object with only the five known fields", "The input object unchanged, owner included", "An error, because of the extra field"], "correct": 0, "explanation": "The decoder copies the fields it checked into a fresh object, so unexpected data from the network does not flow into the application's state."}
+    ],
+    "effects": [
+      {"question": "App.tsx unmounts while its initial load is still in flight. What does the effect cleanup do?", "options": ["Aborts the request, and a late error is not shown", "Waits for the response, then updates the list", "Nothing: the fetch finishes normally"], "correct": 0, "explanation": "The cleanup aborts the controller, and the handlers check signal.aborted before setting status or busy, so an obsolete request cannot update the screen."}
+    ],
+    "sql-setup": [
+      {"question": "schema.sql is run a second time in the same database. What happens?", "options": ["Nothing changes: the table is created only if it does not exist", "The table is dropped and recreated", "It fails with a duplicate table error"], "correct": 0, "explanation": "The OBJECT_ID check makes the script safe to repeat. It never creates or drops a database; you choose the dedicated database yourself."}
+    ],
+    "parameters": [
+      {"question": "How does SqlPlanner send a task's title to SQL Server?", "options": ["As an NVarChar(120) parameter, never as part of the command text", "Concatenated into the UPDATE statement", "As an escaped string literal"], "correct": 0, "explanation": "Every value is bound through cmd.Parameters, and none of the SQL command strings is built from input, so SQL-looking text stays data."}
+    ],
+    "conflicts": [
+      {"question": "SqlPlanner's versioned UPDATE changes no row. How does it choose between 404 and 409?", "options": ["It counts rows with that ID: none means 404, otherwise 409", "It always returns 409", "It retries the UPDATE without the version"], "correct": 0, "explanation": "A missing row and a stale version both update nothing, so a second query tells them apart. It never falls back to an unconditional write."}
+    ],
+    "transactions": [
+      {"question": "The API starts writing an outbox row alongside each new task. What must hold?", "options": ["Both rows commit together, or neither does", "The task commits first, then the outbox row in its own call", "Only the outbox row needs a transaction"], "correct": 0, "explanation": "Two independent successful calls do not make an atomic operation. One transaction around both writes keeps the task and its event in step."}
+    ],
+    "retries": [
+      {"question": "Does the reference API's POST /api/tasks support an idempotency key?", "options": ["No: the workbook asks you to add idempotent create as an extension", "Yes, through an Idempotency-Key header", "Yes, because task IDs are GUIDs"], "correct": 0, "explanation": "The baseline does not implement it. A server-generated GUID cannot deduplicate a retry, because each POST gets a new one."}
+    ],
+    "identity": [
+      {"question": "Which callers does the reference API accept?", "options": ["Any caller on a loopback address; others get 403", "Only signed-in users", "Only callers that send an OwnerId"], "correct": 0, "explanation": "The lab has no login, so its only boundary is the loopback check. Serving other users needs verified identity and ownership checks first."}
+    ],
+    "browser-boundaries": [
+      {"question": "What does the API's CORS policy allow?", "options": ["The origin http://127.0.0.1:5173, with GET, POST and PUT", "Any origin with any method", "Any origin, but only GET"], "correct": 0, "explanation": "The policy names one origin and three methods. It limits what browsers may read; it does not authenticate the caller."}
+    ],
+    "tests": [
+      {"question": "What does npm test run?", "options": ["The decoder test under Node, then the UI tests with Vitest in jsdom", "Only the Vitest UI tests", "acceptance.py against the API"], "correct": 0, "explanation": "Each test observes a different boundary: planner-api.test.ts checks decoding and errors, planner-ui.test.tsx checks request states. The HTTP checks are separate."}
+    ],
+    "observability": [
+      {"question": "Which fields does the API's request log line record?", "options": ["Method, path, status, elapsed milliseconds and trace identifier", "The full request and response bodies", "The caller's title draft"], "correct": 0, "explanation": "The log keeps bounded metadata useful for diagnosis and never writes request bodies, which may contain private drafts."}
+    ],
+    "delivery": [
+      {"question": "A Vite import.meta.env value changes after the frontend was built. What is needed for it to take effect?", "options": ["A rebuild, unless a separate runtime-configuration mechanism exists", "Nothing: the browser reads it at load time", "Restarting the API"], "correct": 0, "explanation": "Vite normally replaces those values during the build. Values in frontend configuration are public, so secrets never belong there."}
+    ],
+    "recovery": [
+      {"question": "Where does the advanced milestone say to restore a backup during practice?", "options": ["Into a new database, then verify task counts and versions", "Over the live database", "Nowhere: the backup file is enough"], "correct": 0, "explanation": "Restoring into a fresh database leaves the original untouched and shows that the backup recovers usable records."}
+    ]
+  },
+  "stages": {
+    "foundation": [
+      {"question": "decodeTask receives a task with minutes set to 1440. What happens?", "options": ["It is accepted: 1440 is the upper bound", "It throws Invalid task response", "It returns minutes capped at 1439"], "correct": 0, "explanation": "The decoder accepts whole minutes from 0 to 1440, matching the API and the database constraint."},
+      {"question": "request() gets a 500 response. Which message does it throw?", "options": ["Request failed (500). Your draft is still here.", "Another edit won. Reload the list and compare before trying again.", "Expected JSON response"], "correct": 0, "explanation": "The message names the status and reassures the user that the draft is kept, because App.tsx clears the form only after success."},
+      {"question": "What does acceptance.check('http://example.com/') do?", "options": ["Raises ValueError: Use an owned loopback HTTP API", "Sends the checks to example.com", "Prints PASS"], "correct": 0, "explanation": "The script creates synthetic tasks, so it refuses any address other than a loopback HTTP API you own, before sending a request."}
+    ],
+    "intermediate": [
+      {"question": "decodeTask receives a task whose title is 121 characters long. What happens?", "options": ["Throws: Invalid task response", "Returns the title cut to 120 characters", "Returns it unchanged"], "correct": 0, "explanation": "The decoder rejects values outside the contract instead of repairing them, so the UI never shows data the API could not have stored."},
+      {"question": "What does decodeTask(null) throw?", "options": ["Invalid task", "Invalid task response", "Nothing: it returns null"], "correct": 0, "explanation": "A value that is not an object is rejected before any field is read."},
+      {"question": "request('/abc', {method: 'PUT'}) calls fetch. Which URL and content type does fetch receive?", "options": ["/api/tasks/abc with Content-Type application/json", "/abc with no headers", "http://127.0.0.1:5087/abc with Content-Type text/plain"], "correct": 0, "explanation": "The helper prefixes the relative API path and sets the JSON content type, so every call goes through the same proxied route."}
+    ],
+    "advanced": [
+      {"question": "What does acceptance.check('http://127.0.0.1:5087/api') do?", "options": ["Raises ValueError: Use an owned loopback HTTP API", "Runs the checks under /api", "Prints PASS"], "correct": 0, "explanation": "The host is loopback, but the base URL has a path. The check accepts only the root of a loopback HTTP origin, so it cannot be aimed at part of a different application on the same host."},
+      {"question": "request() gets a 200 response whose content type is text/html. What does it throw?", "options": ["Expected JSON response", "Request failed (200). Your draft is still here.", "Nothing: it returns the text"], "correct": 0, "explanation": "A success status is not enough; the helper checks the media type before parsing, so an HTML error page is not mistaken for data."},
+      {"question": "decodeTask receives the title ' SQL ', with spaces on both sides. What title does it return?", "options": ["' SQL ', unchanged", "'SQL', trimmed", "It throws Invalid task response"], "correct": 0, "explanation": "The decoder requires a non-blank title but does not change it. Trimming is the API's job when it stores a new title."}
+    ]
+  }
+}
