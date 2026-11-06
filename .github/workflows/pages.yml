@@ -163,6 +163,8 @@ jobs:
         run: python tests/data_analysis_examples.py
       - name: Check Data analysis with Python checkpoint answers against the course labs
         run: python tests/data_analysis_checkpoint_facts.py
+      - name: Check Machine learning foundations checkpoint answers against the course labs
+        run: python tests/machine_learning_checkpoint_facts.py
 
   sql-server:
     runs-on: ubuntu-latest

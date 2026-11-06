@@ -57000,6 +57000,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. fictional ticket examples illustrate fitting and predicting: estimator basics."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In metrics_lab.make_tickets, what decides a row's breached label?",
+            "options": [
+              "Whether resolution_hours is above 24",
+              "The number of customer messages",
+              "A random draw stored separately from the hours"
+            ],
+            "correct": 0,
+            "explanation": "The label is computed from the outcome duration, so the target matches the question: does the ticket end up taking more than a day?"
+          }
         ]
       },
       {
@@ -57055,6 +57067,18 @@ const LEARNING_PATHS = [
             "section": "Inconsistent preprocessing; data leakage; controlling randomness",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Data leakage and feature availability. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which fields does ml_lab pass to the model as inputs?",
+            "options": [
+              "channel, priority, team and customer_messages",
+              "All of those plus resolution_hours",
+              "ticket_id and created_date"
+            ],
+            "correct": 0,
+            "explanation": "FEATURES lists only values known at intake. The duration and the label are outcomes, and IDs carry no general signal."
           }
         ]
       },
@@ -57118,6 +57142,18 @@ const LEARNING_PATHS = [
             "section": "Mean and median prediction strategies",
             "scope": "Constant regression baselines. The exercise calculates its own absolute error.",
             "reviewed": "2026-10-02"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "run(final=True) also scores a most-frequent baseline on the test rows. What does it get?",
+            "options": [
+              "Accuracy about 64.6%, recall 0",
+              "Accuracy about 35.4%, recall 1",
+              "Accuracy 50%, recall 0.5"
+            ],
+            "correct": 0,
+            "explanation": "Predicting no breach for everyone is right for the majority and misses every breach, which is why accuracy alone is not the measure."
           }
         ]
       },
@@ -57278,7 +57314,19 @@ const LEARNING_PATHS = [
               "explanation": "Final labels contribute only to metrics. If those metrics prompt another model change, use new held-out data for the next final assessment."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "time_split receives the 240 generated tickets. What does it return?",
+            "options": [
+              "144 training, 48 validation and 48 test rows, in date order",
+              "A random 60/20/20 split",
+              "192 training and 48 test rows"
+            ],
+            "correct": 0,
+            "explanation": "The partitions are consecutive date ranges, so validation and test always come after the rows the model learns from."
+          }
+        ]
       },
       {
         "id": "classification-metrics",
@@ -57333,6 +57381,18 @@ const LEARNING_PATHS = [
             "section": "Classification metrics; regression metrics; dummy estimators",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Confusion counts, precision and recall. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does confusion([1, 0, 1, 0], [1, 1, 0, 0]) report?",
+            "options": [
+              "One of each outcome, so precision and recall are both 0.5",
+              "Two true positives, so recall is 1",
+              "Accuracy 0.75"
+            ],
+            "correct": 0,
+            "explanation": "There is one true positive, one false positive, one false negative and one true negative, so every ratio is one in two."
           }
         ]
       },
@@ -57390,6 +57450,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. MAE, MSE, RMSE and R-squared. Fictional examples do not establish real-service performance."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does mae([4, 10], [6, 6]) return?",
+            "options": [
+              "3.0",
+              "2.0",
+              "4.0"
+            ],
+            "correct": 0,
+            "explanation": "The absolute errors are 2 and 4, and their mean is 3, in the same unit as the target."
+          }
         ]
       },
       {
@@ -57445,6 +57517,18 @@ const LEARNING_PATHS = [
             "section": "Computing cross-validated metrics; grouped data; time series split",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Stratification and its limits. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How many of make_tickets' 240 rows are breaches?",
+            "options": [
+              "95, about 39.6%",
+              "120, exactly half",
+              "24, 10%"
+            ],
+            "correct": 0,
+            "explanation": "Count the classes before choosing a metric: a model that never predicts a breach would still be right about 60% of the time."
           }
         ]
       },
@@ -57502,6 +57586,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Ordinary least squares. Fictional examples do not establish real-service performance."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "mae receives a prediction of NaN. What happens?",
+            "options": [
+              "Raises ValueError: Require finite numbers",
+              "Returns NaN",
+              "Skips that pair"
+            ],
+            "correct": 0,
+            "explanation": "A non-finite value would make the average meaningless, so the metric refuses it instead of reporting a misleading error."
+          }
         ]
       },
       {
@@ -57557,6 +57653,18 @@ const LEARNING_PATHS = [
             "section": "Ordinary least squares; ridge regression; logistic regression",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Binary logistic regression and thresholds. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does classify([0.5, 0.49], 0.5) return?",
+            "options": [
+              "[1, 0]",
+              "[0, 0]",
+              "[1, 1]"
+            ],
+            "correct": 0,
+            "explanation": "The rule is probability >= threshold, so a score exactly at the threshold becomes a positive."
           }
         ]
       },
@@ -57621,6 +57729,18 @@ const LEARNING_PATHS = [
             "scope": "Integer encoding can impose an artificial order or spacing. One-hot encoding and training-only preprocessing are checked with the pinned practice version.",
             "reviewed": "2026-10-02"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The fitted pipeline receives channel phone, which training never saw. What happens?",
+            "options": [
+              "Its channel columns are all zero, and a prediction is still made",
+              "It raises an error for the unknown category",
+              "It is treated as email"
+            ],
+            "correct": 0,
+            "explanation": "OneHotEncoder is set to ignore unknown categories, so an unseen channel contributes nothing rather than being mapped to a known one."
+          }
         ]
       },
       {
@@ -57677,6 +57797,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Pipeline fitting within cross-validation. Fictional examples do not establish real-service performance."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "During cross_val_score, where are the imputer's median and the scaler's statistics learned?",
+            "options": [
+              "On each fold's training rows, because they are steps in the pipeline",
+              "Once, on all 240 rows",
+              "On the validation partition"
+            ],
+            "correct": 0,
+            "explanation": "cross_val_score refits the whole pipeline per fold, so no preprocessing statistic comes from the rows being scored."
+          }
         ]
       },
       {
@@ -57732,6 +57864,18 @@ const LEARNING_PATHS = [
             "section": "Computing cross-validated metrics; grouped data; time series split",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. TimeSeriesSplit and development evaluation. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How many cross-validation recall scores does run() report, and from which rows?",
+            "options": [
+              "3, from TimeSeriesSplit folds of the 144 training rows",
+              "5, from random folds of all 240 rows",
+              "1, from the validation partition"
+            ],
+            "correct": 0,
+            "explanation": "TimeSeriesSplit keeps each fold's evaluation rows after its training rows, inside the training partition only."
           }
         ]
       },
@@ -57796,6 +57940,18 @@ const LEARNING_PATHS = [
             "scope": "Smaller C means stronger regularisation in LogisticRegression; scikit-learn 1.9.1 was used for local checks.",
             "reviewed": "2026-10-02"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "pipeline(C=0.01) is fitted on the training rows. How do its coefficients compare with C=1?",
+            "options": [
+              "Much smaller in total size, because regularization is stronger",
+              "Larger, because C scales them up",
+              "The same: C changes only the threshold"
+            ],
+            "correct": 0,
+            "explanation": "C is the inverse of the penalty strength, so a small C shrinks the coefficients towards zero."
+          }
         ]
       },
       {
@@ -57859,6 +58015,18 @@ const LEARNING_PATHS = [
             "scope": "Training-size and validation-score interpretation. The local count example is hypothetical.",
             "reviewed": "2026-10-02"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A learning curve compares models trained on 50% and 100% of the training rows. What must be refitted for each size?",
+            "options": [
+              "The preprocessing and the estimator, on that subset",
+              "Only the estimator",
+              "Nothing: reuse the full-data pipeline"
+            ],
+            "correct": 0,
+            "explanation": "Reusing preprocessing fitted on more rows would leak information into the smaller experiment."
+          }
         ]
       },
       {
@@ -57914,6 +58082,18 @@ const LEARNING_PATHS = [
             "section": "Inconsistent preprocessing; data leakage; controlling randomness",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Target leakage and split contamination. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A logistic regression is given resolution_hours alone and scored on validation. What accuracy does it reach?",
+            "options": [
+              "100%, because the feature reconstructs the label",
+              "About 56%, like the real model",
+              "About 50%"
+            ],
+            "correct": 0,
+            "explanation": "A perfect score from an outcome field is a warning: the label is a threshold on that value, which is unknown at intake."
           }
         ]
       },
@@ -57971,6 +58151,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Grouped and chronological splitting. Fictional examples do not establish real-service performance."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "run(final=True) counts customers who appear in both training and test. How many are there?",
+            "options": [
+              "48: every test customer also appears in training",
+              "0, because the split is by time",
+              "12"
+            ],
+            "correct": 0,
+            "explanation": "A time split does not separate customers. The report says so, because a score on familiar customers may not carry over to new ones."
+          }
         ]
       },
       {
@@ -58026,6 +58218,18 @@ const LEARNING_PATHS = [
             "section": "Classification metrics; regression metrics; dummy estimators",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Classification metrics and subgroup denominators. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How many validation mistakes does run() list, and what does each carry?",
+            "options": [
+              "21, each with its ticket ID and actual and predicted labels",
+              "21 counts with no IDs",
+              "48, one per validation row"
+            ],
+            "correct": 0,
+            "explanation": "The 12 false positives and 9 false negatives are kept with their IDs, so each can be traced to the original case."
           }
         ]
       },
@@ -58780,7 +58984,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which threshold does run() choose on validation, and at what cost?",
+            "options": [
+              "0.3, at cost 48 with 4 per missed breach and 1 per false alarm",
+              "0.5, at cost 21",
+              "0.7, at cost 48"
+            ],
+            "correct": 0,
+            "explanation": "The cost weights are declared before choosing, and only validation rows are used, so the test set stays untouched."
+          }
+        ]
       },
       {
         "id": "reproduce-an-experiment",
@@ -58835,6 +59051,18 @@ const LEARNING_PATHS = [
             "section": "Inconsistent preprocessing; data leakage; controlling randomness",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Randomness and reproducibility. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "fingerprint is computed for make_tickets() twice and for make_tickets(seed=24). What happens?",
+            "options": [
+              "The two default runs match and seed 24 differs",
+              "All three match",
+              "All three differ"
+            ],
+            "correct": 0,
+            "explanation": "The seed controls the generator's random draws, and the hash records exactly which data an experiment used."
           }
         ]
       },
@@ -58899,6 +59127,18 @@ const LEARNING_PATHS = [
             "scope": "Monitoring input changes and measuring model quality separately. The local exercise does not establish production performance.",
             "reviewed": "2026-10-02"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What breach rates do the training, validation and test partitions have?",
+            "options": [
+              "37.5%, 50% and about 35.4%",
+              "39.6% in all three",
+              "50%, 37.5% and about 35.4%"
+            ],
+            "correct": 0,
+            "explanation": "The class mix differs between periods even in a single generated dataset, so a metric from one period needs care when compared with another."
+          }
         ]
       },
       {
@@ -58956,6 +59196,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. fictional ticket examples illustrate fitting and predicting: estimator basics."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "On the test rows, what cost do the model and the baseline reach?",
+            "options": [
+              "34 for the model and 68 for the baseline",
+              "68 for the model and 34 for the baseline",
+              "34 for both"
+            ],
+            "correct": 0,
+            "explanation": "The model halves the declared cost on this fictional fixture. That supports the evaluation method, not a claim about real support performance."
+          }
         ]
       }
     ],
@@ -58987,7 +59239,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "A majority prediction can have high accuracy and zero breach recall. For [1,0,1,0] versus [1,1,0,0], all four counts are 1. MAE for [4,10] versus [6,6] is 3. Reject mismatched row counts rather than silently truncating with zip.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does confusion([1, 2], [1, 0]) do?",
+            "options": [
+              "Raises ValueError: Binary labels must be 0 or 1",
+              "Counts 2 as a positive",
+              "Returns accuracy 0.5"
+            ],
+            "correct": 0,
+            "explanation": "A label outside 0 and 1 means the input is not the binary problem the metric describes."
+          },
+          {
+            "question": "What does confusion([], []) do?",
+            "options": [
+              "Raises ValueError: Require equal nonempty sequences",
+              "Returns all counts as 0",
+              "Returns accuracy 1"
+            ],
+            "correct": 0,
+            "explanation": "With no rows there is no denominator, so the metric refuses instead of inventing a value."
+          },
+          {
+            "question": "What does make_tickets(n=5) do?",
+            "options": [
+              "Raises ValueError: Require at least ten fictional rows",
+              "Returns 5 rows",
+              "Returns 10 rows"
+            ],
+            "correct": 0,
+            "explanation": "The splitter needs enough rows to give every partition something, so the generator refuses a tiny dataset."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -59019,7 +59303,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Use ColumnTransformer for numeric imputation/scaling and one-hot category encoding, followed by LogisticRegression. Pass the whole Pipeline to cross_val_score with TimeSeriesSplit. Compare candidates using development results, then freeze one procedure; do not select C by repeatedly checking the final test.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does classify([0.2], 1.5) do?",
+            "options": [
+              "Raises ValueError: Threshold must be in [0,1]",
+              "Returns [0]",
+              "Returns [1]"
+            ],
+            "correct": 0,
+            "explanation": "A threshold outside the probability range cannot be a real decision rule."
+          },
+          {
+            "question": "What does classify([1.2], 0.5) do?",
+            "options": [
+              "Raises ValueError: Probabilities must be in [0,1]",
+              "Returns [1]",
+              "Clips the value to 1"
+            ],
+            "correct": 0,
+            "explanation": "A score above 1 is not a probability, so the function rejects it rather than classifying it."
+          },
+          {
+            "question": "choose_threshold([0], [0.1]) finds every candidate costs 0. Which does it return?",
+            "options": [
+              "0.7: ties go to the higher threshold",
+              "0.3",
+              "0.5"
+            ],
+            "correct": 0,
+            "explanation": "The tie-break is declared in advance, so the choice does not depend on how the candidates happen to be ordered."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -59054,7 +59370,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "The reference uses 144 training, 48 validation and 48 test rows. It selects among thresholds 0.3, 0.5 and 0.7 on validation cost only, with a higher-threshold tie break. The group example holds whole customer IDs out but does not claim chronological separation. Report actual run values and any failure cases; never replace them with an expected flattering score.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "time_split receives rows whose dates are not in increasing order. What happens?",
+            "options": [
+              "Raises ValueError: Dates must strictly increase for this teaching splitter",
+              "It sorts them first",
+              "It splits them as given"
+            ],
+            "correct": 0,
+            "explanation": "The splitter refuses rather than sorting silently, because unsorted data may mean the wrong file or a wrong date column."
+          },
+          {
+            "question": "group_split holds out customer C000. How many test rows result, and how many customers do they share with training?",
+            "options": [
+              "4 rows, sharing no customers",
+              "60 rows, sharing none",
+              "4 rows, sharing one customer"
+            ],
+            "correct": 0,
+            "explanation": "Every row for a held-out customer goes to test, so the model is scored on customers it has never seen."
+          },
+          {
+            "question": "What test precision does the model reach for the email and chat slices?",
+            "options": [
+              "About 47.4% for email and 33.3% for chat",
+              "About 41.9% for both",
+              "About 33.3% for email and 47.4% for chat"
+            ],
+            "correct": 0,
+            "explanation": "The overall figure hides a difference between channels. With 24 rows per slice, the gap is a question to investigate, not a conclusion."
+          }
+        ]
       }
     ],
     "downloads": [
