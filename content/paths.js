@@ -18389,6 +18389,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What overall breach rate does analysis.run report for support_tickets.csv?",
+            "options": [
+              "10 of 24 tickets, about 41.7%",
+              "10 of 12 tickets, about 83.3%",
+              "About 26.4%, the mean resolution hours divided by 100"
+            ],
+            "correct": 0,
+            "explanation": "One row is one completed ticket, so the denominator is all 24 tickets and the numerator is the 10 marked as breached."
+          }
         ]
       },
       {
@@ -18438,6 +18450,18 @@ const LEARNING_PATHS = [
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "pd.read_csv loads support_tickets.csv. What are its shape and its number of distinct ticket IDs?",
+            "options": [
+              "24 rows by 8 columns, with 24 distinct IDs",
+              "24 rows by 8 columns, with 12 distinct IDs",
+              "25 rows by 8 columns, with 24 distinct IDs"
+            ],
+            "correct": 0,
+            "explanation": "The header is not a row, and matching the row count with the distinct ID count shows one row per ticket throughout the file."
           }
         ]
       },
@@ -18489,6 +18513,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "API guidance for the pinned practice libraries; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does (df.resolution_hours.to_numpy() > 24).sum() give for the dataset?",
+            "options": [
+              "10, the same as the breached column's sum",
+              "12, because 24 counts as a breach",
+              "0.4167, the share of breaches"
+            ],
+            "correct": 0,
+            "explanation": "A boolean array sums as a count of True values. The strict rule leaves the two 24-hour tickets out, which is why it agrees with the flag."
+          }
         ]
       },
       {
@@ -18538,6 +18574,18 @@ const LEARNING_PATHS = [
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "One created_date is changed to 2026-13-01. What does validate do?",
+            "options": [
+              "Raises ValueError, because the date does not match %Y-%m-%d",
+              "Stores the value as missing",
+              "Rolls it over to January 2027"
+            ],
+            "correct": 0,
+            "explanation": "The date is parsed with an explicit format and errors set to raise, so an impossible month stops the report instead of becoming NaT."
           }
         ]
       },
@@ -18589,6 +18637,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Among high-priority tickets in the dataset, what share breached?",
+            "options": [
+              "2 of 6, about 33.3%",
+              "2 of 24, about 8.3%",
+              "10 of 24, about 41.7%"
+            ],
+            "correct": 0,
+            "explanation": "A rate for a subset uses that subset's own count as the denominator: six high-priority tickets, two of them breached."
+          }
         ]
       },
       {
@@ -18638,6 +18698,18 @@ const LEARNING_PATHS = [
             "section": "Detecting missing values and calculations",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A copy of T001 with a different duration is appended to the data. What does validate do?",
+            "options": [
+              "Raises ValueError: Ticket IDs must be nonblank and unique",
+              "Keeps the later row",
+              "Averages the two durations"
+            ],
+            "correct": 0,
+            "explanation": "The reference has no documented rule for choosing between conflicting records, so it rejects the duplicate instead of picking one silently."
           }
         ]
       },
@@ -18689,6 +18761,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "high = df[df.priority == 'high']. What does high.iloc[1].ticket_id return?",
+            "options": [
+              "T005",
+              "T002",
+              "A KeyError"
+            ],
+            "correct": 0,
+            "explanation": "iloc counts positions in the filtered table, whose second row is T005. Its index label is still 4, from the original table."
+          }
         ]
       },
       {
@@ -18738,6 +18822,18 @@ const LEARNING_PATHS = [
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "T004 has resolution_hours 24. Its breached flag is changed to 1. What does validate do?",
+            "options": [
+              "Raises ValueError: Breach flag disagrees with strict 24-hour rule",
+              "Accepts it, because 24 hours is a breach",
+              "Corrects the flag to 0"
+            ],
+            "correct": 0,
+            "explanation": "The flag is checked against resolution_hours > 24, so a stored value that disagrees with the rule is rejected rather than repaired."
           }
         ]
       },
@@ -19250,7 +19346,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What breach rates does summarize report for billing and technical?",
+            "options": [
+              "Billing about 33.3%, technical 50%",
+              "Billing 40%, technical 60%, sharing the 10 breaches",
+              "Billing about 16.7%, technical 25%, out of all 24"
+            ],
+            "correct": 0,
+            "explanation": "Each team's rate uses its own 12 tickets: 4 breaches for billing and 6 for technical."
+          }
+        ]
       },
       {
         "id": "joins-and-cardinality",
@@ -19379,7 +19487,19 @@ const LEARNING_PATHS = [
               "explanation": "Cardinality validation rejects the duplicate team key. Row counts alone cannot tell which owner is correct."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "teams.csv gains a second billing row. What does attach_owners do?",
+            "options": [
+              "Raises MergeError: the lookup is not many-to-one",
+              "Doubles every billing ticket",
+              "Keeps the first owner"
+            ],
+            "correct": 0,
+            "explanation": "validate='many_to_one' checks the lookup's keys before joining, so a duplicate cannot multiply ticket rows."
+          }
+        ]
       },
       {
         "id": "distributions-and-outliers",
@@ -19429,6 +19549,18 @@ const LEARNING_PATHS = [
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What are the mean and median of resolution_hours in the dataset?",
+            "options": [
+              "Mean about 26.4 hours, median 22 hours",
+              "Mean 22 hours, median about 26.4 hours",
+              "Both 24 hours"
+            ],
+            "correct": 0,
+            "explanation": "A few long tickets, up to 96 hours, pull the mean above the median. Report both and the tail rather than one average."
           }
         ]
       },
@@ -19480,6 +19612,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Tickets are counted per week ending on Sunday. How many fall in the week ending 2026-01-04?",
+            "options": [
+              "4, because the data starts on Thursday 1 January",
+              "7",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "The first week is partial: the data begins mid-week. Say so instead of comparing it with full weeks."
+          }
         ]
       },
       {
@@ -19530,6 +19674,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "API guidance for the pinned practice libraries; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does run() draw in counts.png?",
+            "options": [
+              "One bar per team, showing ticket counts on a labelled axis",
+              "A histogram of resolution hours",
+              "A line of tickets per day"
+            ],
+            "correct": 0,
+            "explanation": "The chart answers the team comparison. Each bar is labelled with its count, and the distribution belongs in a separate histogram."
+          }
         ]
       },
       {
@@ -19579,6 +19735,18 @@ const LEARNING_PATHS = [
             "section": "Pivot and pivot tables",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "pd.crosstab(df.team, df.channel) counts the dataset. What does billing's row show?",
+            "options": [
+              "Chat 4, email 8",
+              "Chat 8, email 4",
+              "Chat 6, email 6"
+            ],
+            "correct": 0,
+            "explanation": "Each team and channel pair is one cell, and the row adds up to billing's 12 tickets."
           }
         ]
       },
@@ -19637,6 +19805,18 @@ const LEARNING_PATHS = [
             "scope": "Study-design context for why a grouped descriptive comparison does not by itself establish causation.",
             "reviewed": "2026-10-02"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "pd.crosstab(df.team, df.priority) is run on the dataset. How are the high-priority tickets spread?",
+            "options": [
+              "All 6 are billing tickets, so team and priority are entangled",
+              "3 billing and 3 technical",
+              "None are billing"
+            ],
+            "correct": 0,
+            "explanation": "A team comparison here is also a priority comparison. The sample cannot separate the two, and neither difference shows a cause."
+          }
         ]
       },
       {
@@ -19686,6 +19866,18 @@ const LEARNING_PATHS = [
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "One resolution_hours value is changed to -3. What does validate do?",
+            "options": [
+              "Raises ValueError: Negative duration",
+              "Accepts it, because it is finite",
+              "Treats it as zero"
+            ],
+            "correct": 0,
+            "explanation": "Being a finite number is not enough. The nonnegative rule is checked before the breach flag."
           }
         ]
       },
@@ -19737,6 +19929,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "One customer_messages value is changed to 1.5. What does validate do?",
+            "options": [
+              "Raises ValueError: Message counts must be nonnegative whole numbers",
+              "Rounds it to 2",
+              "Accepts it, because it is numeric"
+            ],
+            "correct": 0,
+            "explanation": "Counts must be whole numbers. Testing the validation function alone makes the failure quick to check, without writing a report."
+          }
         ]
       },
       {
@@ -19786,6 +19990,18 @@ const LEARNING_PATHS = [
             "section": "Use chunking",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; chunk means must be weighted by their observation counts."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The CSV is read in chunks of 10 rows, and each chunk's sum and count are combined. What mean resolution time results?",
+            "options": [
+              "About 26.4 hours, the same as the whole file",
+              "The mean of the three chunk means",
+              "It cannot be computed from chunks"
+            ],
+            "correct": 0,
+            "explanation": "Sums and counts combine exactly. Averaging chunk means would weight the final 4-row chunk as heavily as the 10-row ones."
           }
         ]
       },
@@ -19844,6 +20060,18 @@ const LEARNING_PATHS = [
             "scope": "Hash API behaviour. Collision resistance is practical evidence, not proof that distinct inputs can never share a digest.",
             "reviewed": "2026-10-02"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which provenance does report.json record?",
+            "options": [
+              "The source file's SHA-256 and the Python, NumPy, pandas and Matplotlib versions",
+              "Only the run date",
+              "The username that ran it"
+            ],
+            "correct": 0,
+            "explanation": "The hash identifies the exact input bytes, and the versions identify the libraries, so a different result can be traced to code or parameters."
+          }
         ]
       },
       {
@@ -19893,6 +20121,18 @@ const LEARNING_PATHS = [
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does threshold_rates report for strict thresholds of 12, 24 and 48 hours?",
+            "options": [
+              "About 66.7%, 41.7% and 12.5%",
+              "About 41.7% at every threshold",
+              "About 12.5%, 41.7% and 66.7%"
+            ],
+            "correct": 0,
+            "explanation": "The same 24 tickets give very different rates as the threshold moves, which is why a conclusion should state its threshold."
           }
         ]
       },
@@ -19944,6 +20184,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A model predicts delay when a ticket arrives. Which two dataset columns must it not use as predictors?",
+            "options": [
+              "resolution_hours and breached",
+              "channel and priority",
+              "team and created_date"
+            ],
+            "correct": 0,
+            "explanation": "Both are outcomes known only after the ticket is resolved. Using them would leak the answer into the model."
+          }
         ]
       }
     ],
@@ -19972,7 +20224,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "The supplied clean file has 24 unique tickets and no missing required values. Keep its raw bytes unchanged. Reject the conflicting duplicate; do not choose a duration silently.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "The breached column is dropped before validate runs. What happens?",
+            "options": [
+              "Raises ValueError: Missing required columns",
+              "The flag is recomputed from resolution_hours",
+              "The report is written without breach rates"
+            ],
+            "correct": 0,
+            "explanation": "The required columns are checked first, so a partial export fails before any calculation."
+          },
+          {
+            "question": "One channel value is changed to phone. What does validate do?",
+            "options": [
+              "Raises ValueError: Unknown channel",
+              "Accepts it as a new channel",
+              "Treats it as email"
+            ],
+            "correct": 0,
+            "explanation": "Each category column has an allowed set, so a new value needs a deliberate decision rather than a silent new group."
+          },
+          {
+            "question": "validate receives the dataset's columns with no rows. What happens?",
+            "options": [
+              "Raises ValueError: Required values must be present in a nonempty table",
+              "Returns an empty table",
+              "Reports a breach rate of 0"
+            ],
+            "correct": 0,
+            "explanation": "An empty export would otherwise produce rates with no denominator, so it is rejected."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -19998,7 +20282,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Use validate=\"many_to_one\" plus merge indicator checks. Each team has 12 tickets. Keep the all-ticket denominator at 24. Report the actual calculated breach counts; the chart labels ticket counts, not hours.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "teams.csv loses its technical row. What does attach_owners do?",
+            "options": [
+              "Raises ValueError: Unmatched team",
+              "Leaves the technical owners blank",
+              "Drops the technical tickets"
+            ],
+            "correct": 0,
+            "explanation": "The merge indicator shows rows that found no owner, and the function refuses to continue rather than lose them."
+          },
+          {
+            "question": "How many rows does attach_owners return for the supplied files?",
+            "options": [
+              "24, the same as the input",
+              "48",
+              "2"
+            ],
+            "correct": 0,
+            "explanation": "Each ticket matches exactly one team row, so the join adds an owner column without changing the grain."
+          },
+          {
+            "question": "What mean resolution hours does summarize report for billing and technical?",
+            "options": [
+              "About 18.2 for billing and 34.7 for technical",
+              "About 26.4 for both",
+              "About 34.7 for billing and 18.2 for technical"
+            ],
+            "correct": 0,
+            "explanation": "Technical has the four longest tickets, so its mean is much higher even though both teams have 12 tickets."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -20027,7 +20343,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Run the independent tests before generating output. Include the 24-row count, table, source hash and limitation in report.json. Treat alternate thresholds as sensitivity checks; exclude outcome fields from intake prediction.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "One resolution_hours value is changed to inf in the CSV. What does validate do?",
+            "options": [
+              "Raises ValueError: Nonfinite resolution_hours",
+              "Accepts it as a very long ticket",
+              "Treats it as missing"
+            ],
+            "correct": 0,
+            "explanation": "pandas reads inf as a float, so the finiteness check, not type conversion, is what rejects it."
+          },
+          {
+            "question": "run() is called twice on the same files, writing to two folders. Are the two report.json files identical?",
+            "options": [
+              "Yes, byte for byte",
+              "No: each contains its run time",
+              "No: the keys are in a different order"
+            ],
+            "correct": 0,
+            "explanation": "The report holds only values computed from the input and library versions, and it is written with sorted keys."
+          },
+          {
+            "question": "A blank line is appended to a copy of the CSV, and run() reads that copy. What changes in report.json?",
+            "options": [
+              "Only source_sha256: it still reports 24 rows",
+              "Nothing at all",
+              "rows becomes 25"
+            ],
+            "correct": 0,
+            "explanation": "pandas skips blank lines, but the hash covers every byte, so the provenance shows the input file changed."
+          }
+        ]
       }
     ],
     "downloads": [
