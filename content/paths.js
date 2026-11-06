@@ -45447,6 +45447,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How does App.tsx make the completed count available to screen-reader users when it changes?",
+            "options": [
+              "The count is in a paragraph with aria-live set to polite",
+              "It shows an alert dialog",
+              "It changes the page title"
+            ],
+            "correct": 0,
+            "explanation": "A polite live region is announced after the current speech, without moving focus away from the checkbox the user just changed."
+          }
         ]
       },
       {
@@ -45519,6 +45531,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does Number(' 25 ') return?",
+            "options": [
+              "25",
+              "NaN",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "Number ignores surrounding whitespace. That is convenient, but it is also why blank text, which becomes 0, must be rejected first."
+          }
         ]
       },
       {
@@ -45577,6 +45601,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "javascript-steps.js builds toggled with map and a spread copy. What is lessons[0].done afterwards?",
+            "options": [
+              "false: the original record is unchanged",
+              "true",
+              "undefined"
+            ],
+            "correct": 0,
+            "explanation": "The spread creates a new object for the changed row, so the original array and its records stay as they were."
+          }
         ]
       },
       {
@@ -45634,6 +45670,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "transition(rows, {type: 'complete', id: 'a'}) is called. What happens to rows?",
+            "options": [
+              "Nothing: a new array is returned and rows is unchanged",
+              "rows is updated in place",
+              "rows becomes empty"
+            ],
+            "correct": 0,
+            "explanation": "The function depends only on its inputs and returns a new value, which makes it easy to test and safe to call repeatedly."
+          }
         ]
       },
       {
@@ -45689,6 +45737,18 @@ const LEARNING_PATHS = [
             "section": "Chaining",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "makeHttpLoader's fetcher returns a 404 response. What does the loader do?",
+            "options": [
+              "Throws Error: HTTP 404",
+              "Returns the 404 body as a lesson",
+              "Returns undefined"
+            ],
+            "correct": 0,
+            "explanation": "fetch resolves for HTTP errors, so the loader checks response.ok itself before reading the body."
           }
         ]
       },
@@ -45753,6 +45813,18 @@ const LEARNING_PATHS = [
             "section": "Union types",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "parseSession receives a valid session with an extra field, source. What does it return?",
+            "options": [
+              "ok false, with the error exact fields required",
+              "ok true, ignoring source",
+              "ok true, keeping source"
+            ],
+            "correct": 0,
+            "explanation": "The runtime check compares the exact field names. A TypeScript type alone would never see the extra field."
           }
         ]
       },
@@ -46095,7 +46167,19 @@ const LEARNING_PATHS = [
               "url": "https://react.dev/learn/passing-props-to-a-component"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which key does App.tsx give each lesson in its list?",
+            "options": [
+              "row.id, the stable record ID",
+              "The array index",
+              "row.title"
+            ],
+            "correct": 0,
+            "explanation": "A stable ID keeps React's link between each record and its rendered item when the list is filtered or reordered."
+          }
+        ]
       },
       {
         "id": "state",
@@ -46603,7 +46687,19 @@ const LEARNING_PATHS = [
               "url": "https://react.dev/learn/queueing-a-series-of-state-updates"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "reducer(state, {type: 'toggle', id: 'missing'}) is called. What does it return?",
+            "options": [
+              "A new array with the same records",
+              "The same array object",
+              "An empty array"
+            ],
+            "correct": 0,
+            "explanation": "map always returns a new array, even when no row matches. The records inside are the same objects, so nothing visible changes."
+          }
+        ]
       },
       {
         "id": "forms",
@@ -46761,7 +46857,19 @@ const LEARNING_PATHS = [
               "explanation": "Visible results are calculated rather than independently stored and synchronized."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "reducer receives an add action with the title ' x '. What does it return?",
+            "options": [
+              "The same state, because the trimmed title is shorter than 2 characters",
+              "A new lesson titled x",
+              "A new lesson titled ' x '"
+            ],
+            "correct": 0,
+            "explanation": "The reducer enforces the title rule itself, so the form's own check is a convenience for the user rather than the only guard."
+          }
+        ]
       },
       {
         "id": "effects",
@@ -47121,7 +47229,19 @@ const LEARNING_PATHS = [
               "url": "https://react.dev/learn/synchronizing-with-effects"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does makeHttpLoader pass to fetch besides the URL?",
+            "options": [
+              "The caller's AbortSignal",
+              "A timeout in milliseconds",
+              "Nothing"
+            ],
+            "correct": 0,
+            "explanation": "Passing the signal lets the effect's cleanup cancel a request that is no longer wanted."
+          }
+        ]
       },
       {
         "id": "capstone",
@@ -47169,6 +47289,18 @@ const LEARNING_PATHS = [
             "section": "Extracting state logic into a reducer",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A list of lessons is passed through encodeSaved and then decodeSaved. What comes back?",
+            "options": [
+              "The same lessons",
+              "The lessons without their done flags",
+              "An error, because the version is missing"
+            ],
+            "correct": 0,
+            "explanation": "The encoder writes version 1 with the lessons, and the decoder checks each record, so a round trip preserves valid data."
           }
         ]
       },
@@ -47302,7 +47434,19 @@ const LEARNING_PATHS = [
               "explanation": "After the current synchronous work completes, the promise callback logs B."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "makeHttpLoader('/api/') creates a loader, which then loads the id 'a b'. Which URL is fetched?",
+            "options": [
+              "/api/lessons/a%20b",
+              "/api//lessons/a b",
+              "/lessons/a%20b"
+            ],
+            "correct": 0,
+            "explanation": "The returned function keeps the base URL in its closure, with the trailing slash removed, and encodes the ID."
+          }
+        ]
       },
       {
         "id": "type-design",
@@ -47355,6 +47499,18 @@ const LEARNING_PATHS = [
             "section": "Discriminated unions",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "transition is called from plain JavaScript with the action {type: 'rename'}. What does it return?",
+            "options": [
+              "The action object itself",
+              "The rows unchanged",
+              "An error"
+            ],
+            "correct": 0,
+            "explanation": "The never check works only at compile time. At run time the default branch returns whatever reached it, which is why untrusted input needs validation first."
           }
         ]
       },
@@ -47500,7 +47656,19 @@ const LEARNING_PATHS = [
               "explanation": "Create a new array and changed objects. Test invariants and the deliberately selected unknown-ID behavior."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "reducer receives an add action whose id is already in the state. What does it return?",
+            "options": [
+              "The same state: IDs must be unique",
+              "The state with a second record for that ID",
+              "The state with the old record replaced"
+            ],
+            "correct": 0,
+            "explanation": "The reducer protects its own invariant, so no caller can create two records with one ID."
+          }
+        ]
       },
       {
         "id": "context-hooks",
@@ -47553,6 +47721,18 @@ const LEARNING_PATHS = [
             "section": "Custom Hooks share stateful logic, not state itself",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "AdvancedApp receives a title that is too short. Where does it put focus?",
+            "options": [
+              "Back on the title input, through titleRef",
+              "On the error message",
+              "Nowhere: focus stays on the button"
+            ],
+            "correct": 0,
+            "explanation": "useRef gives the component a handle on its own input, so it can return focus there without querying the document."
           }
         ]
       },
@@ -47607,6 +47787,18 @@ const LEARNING_PATHS = [
             "section": "Resetting state with a key",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which ID does AdvancedApp give a new lesson?",
+            "options": [
+              "One from crypto.randomUUID(), created when the lesson is added",
+              "Its position in the list",
+              "Its title"
+            ],
+            "correct": 0,
+            "explanation": "An ID created once and stored with the record keeps the item's identity stable when titles change or rows are removed."
           }
         ]
       },
@@ -47990,7 +48182,19 @@ const LEARNING_PATHS = [
               "url": "https://react.dev/learn/synchronizing-with-effects"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "makeHttpLoader asks for lesson types and receives a body whose id is state. What happens?",
+            "options": [
+              "It throws Invalid lesson response",
+              "It returns the state lesson",
+              "It returns the types lesson with the state title"
+            ],
+            "correct": 0,
+            "explanation": "Checking that the response is for the requested ID catches a mismatched or stale answer at the boundary."
+          }
+        ]
       },
       {
         "id": "routing",
@@ -48045,6 +48249,18 @@ const LEARNING_PATHS = [
             "section": "When popstate is sent",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "RemoteLesson opens with no lesson parameter in the URL. Which lesson does it load?",
+            "options": [
+              "types",
+              "state",
+              "None: it shows an error"
+            ],
+            "correct": 0,
+            "explanation": "selected() falls back to types, so a plain link still opens a valid screen while ?lesson=state can be shared."
           }
         ]
       },
@@ -48101,6 +48317,18 @@ const LEARNING_PATHS = [
             "section": "Setup",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does node --experimental-strip-types tracker-core.test.ts print when it passes?",
+            "options": [
+              "All tracker domain tests passed.",
+              "PASS: 5 component tests",
+              "Nothing"
+            ],
+            "correct": 0,
+            "explanation": "The domain tests run without React or a browser, so reducer and backup rules can be checked in milliseconds."
           }
         ]
       },
@@ -48163,6 +48391,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Primary guidance checked for framework escape hatches and untrusted HTML/URL boundaries; not a full application security audit."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "decodeSaved receives a backup with 1001 lessons. What happens?",
+            "options": [
+              "It throws Too many lessons",
+              "It keeps the first 1000",
+              "It accepts all 1001"
+            ],
+            "correct": 0,
+            "explanation": "An imported file is untrusted input. Bounding its size protects the page from oversized or malicious backups."
+          }
         ]
       },
       {
@@ -48222,6 +48462,18 @@ const LEARNING_PATHS = [
             "section": "Should you add memo everywhere?",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does node performance-runner.js report for records and matches?",
+            "options": [
+              "10000 records and 1000 matches, with a time that varies by machine",
+              "1000 records and 100 matches",
+              "Only a time in milliseconds"
+            ],
+            "correct": 0,
+            "explanation": "Reporting the workload beside the timing makes measurements comparable. One in ten generated titles contains focus."
           }
         ]
       },
@@ -48383,7 +48635,19 @@ const LEARNING_PATHS = [
               "explanation": "Record what was tested and prepare observation and rollback evidence."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does saveLocal write, and under which key?",
+            "options": [
+              "A version 2 backup under learning-tracker-v2",
+              "A version 1 backup under learning-tracker",
+              "Only the lesson titles"
+            ],
+            "correct": 0,
+            "explanation": "The stored format has its own version, and migrateSaved still reads version 1, so a release can change the format without losing saved work."
+          }
+        ]
       }
     ],
     "stages": [
@@ -48412,7 +48676,39 @@ const LEARNING_PATHS = [
             "Explain where runtime validation ends and static typing begins."
           ],
           "solution": "Parse into unknown. Check the envelope version and array. Validate each record and use a Set for duplicate IDs. Construct new typed records. Derive counts with filter/reduce. See decodeSaved and tracker-core.test.ts for a reference implementation; attempt your own before opening it."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does Number('12px') return?",
+            "options": [
+              "NaN",
+              "12",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "Number needs the whole string to be numeric, unlike parseInt, so a unit suffix makes the result NaN."
+          },
+          {
+            "question": "parseSession receives {id: ' a ', minutes: 0, done: false}. What does it return?",
+            "options": [
+              "ok true, with the id trimmed to a",
+              "ok false, because minutes is 0",
+              "ok false, because the id has spaces"
+            ],
+            "correct": 0,
+            "explanation": "Zero is a valid duration, and the id is trimmed after the check that it is not blank."
+          },
+          {
+            "question": "parseSession receives an empty array. What does it return?",
+            "options": [
+              "ok false, with the error object required",
+              "ok false, with the error exact fields required",
+              "ok true"
+            ],
+            "correct": 0,
+            "explanation": "Arrays are objects in JavaScript, so the parser rejects them explicitly before reading fields."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -48441,7 +48737,39 @@ const LEARNING_PATHS = [
             "Explain the ownership of each state value."
           ],
           "solution": "Separate tracker-core.ts from AdvancedApp.tsx. Generate IDs in event handlers, validate domain transitions in the reducer, derive filtered rows during rendering and use a labeled form. The downloadable workshop implements these interactions in memory; storage and API synchronization are separate extensions."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "The state already holds 1000 lessons, and reducer receives a valid add. What does it return?",
+            "options": [
+              "The same state: 1000 is the maximum",
+              "1001 lessons",
+              "An error"
+            ],
+            "correct": 0,
+            "explanation": "MAX_LESSONS bounds the state the reducer can create, matching the limit the backup decoder accepts."
+          },
+          {
+            "question": "decodeSaved receives a version 1 backup with two records that share an id. What happens?",
+            "options": [
+              "It throws Invalid lesson record",
+              "It keeps both",
+              "It keeps the second"
+            ],
+            "correct": 0,
+            "explanation": "The decoder tracks the IDs it has seen, so a backup cannot break the uniqueness rule the reducer enforces."
+          },
+          {
+            "question": "A version 2 backup is passed to decodeSaved and to migrateSaved. What happens?",
+            "options": [
+              "decodeSaved throws, and migrateSaved accepts it",
+              "Both accept it",
+              "Both throw"
+            ],
+            "correct": 0,
+            "explanation": "decodeSaved reads only version 1. migrateSaved recognises version 2 and converts it before decoding."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -48472,7 +48800,39 @@ const LEARNING_PATHS = [
             "Rollback/migration behavior is specified."
           ],
           "solution": "Start from the tested domain core. Add storage and API adapters around it, not inside the reducer. Use request cleanup and stale-result guards or a suitable framework data layer. Test adapter failures deterministically. The supplied app is a reference starting point, not a claim that these advanced extensions are already implemented."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "loadLocal is called on storage with nothing saved under its key. What does it return?",
+            "options": [
+              "null",
+              "An empty array",
+              "It throws"
+            ],
+            "correct": 0,
+            "explanation": "Nothing saved is different from an empty saved list, so the caller can decide whether to show starter lessons."
+          },
+          {
+            "question": "migrateSaved receives a backup with version 3. What happens?",
+            "options": [
+              "It throws Unsupported saved format",
+              "It treats it as version 2",
+              "It returns an empty list"
+            ],
+            "correct": 0,
+            "explanation": "An unknown future version is refused rather than guessed at, so data from a newer release is not misread."
+          },
+          {
+            "question": "filterRows(makeRows(), '  FOCUS ') is called. How many rows does it return?",
+            "options": [
+              "1000",
+              "0",
+              "10000"
+            ],
+            "correct": 0,
+            "explanation": "The query is trimmed and lower-cased before matching, so spacing and case do not change the result."
+          }
+        ]
       }
     ],
     "resources": {
