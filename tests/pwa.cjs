@@ -17,25 +17,26 @@ function worker(version='one',storage=new Storage(),courseVersion,tweak){
  vm.runInContext(template.replace('__PWA_CONFIG__',JSON.stringify(settings)),context);
  async function event(type,extras={}){let pending;listeners[type]({...extras,waitUntil:p=>pending=p});if(pending)await pending;}
  async function message(type,id,source=base+'index.html'){const replies=[];await event('message',{data:{type,id},source:{url:source},ports:[{postMessage:r=>replies.push(r)}]});return replies;}
- async function fetch(file,mode='cors',method='GET'){let promise;listeners.fetch({request:{url:new URL(file,base).href,mode,method},respondWith:p=>promise=p});return promise?await promise:null;}
+ async function fetch(file,mode='cors',method='GET'){let promise;const later=[];listeners.fetch({request:{url:new URL(file,base).href,mode,method},respondWith:p=>promise=p,waitUntil:p=>later.push(p)});const response=promise?await promise:null;await Promise.all(later);return response;}
  return {storage,state,event,message,fetch,status:async()=>{const replies=await message('STATUS');return replies.at(-1).data;}};
 }
 // Build uses explicit published inventory, with no dependence on repository content.
 {
  const path=require('node:path'),root=path.resolve('pwa-fixture');
  const ready=[{id:'python',title:'Python',status:'ready',publicFiles:['practice.zip']},{id:'financial-foundations',title:'Finance',status:'ready',publicFiles:['runtime.js']},{id:'future',status:'planned',publicFiles:[]}];
- const files=['index.html','offline.html','manifest.webmanifest','content/catalog.js','content/search.js','assets/app.js','content/courses/python.js','paths/python/practice.zip','content/courses/financial-foundations.js','paths/financial-foundations/runtime.js','course.html','handbook.html','practice/sample-positions.csv','practice/answers.md'];
+ const files=['index.html','offline.html','manifest.webmanifest','content/catalog.js','content/search.js','assets/app.js','paths/python-problem-solving/runtime/pyodide.js','content/courses/python.js','paths/python/practice.zip','content/courses/financial-foundations.js','paths/financial-foundations/runtime.js','course.html','handbook.html','practice/sample-positions.csv','practice/answers.md'];
  const data=new Map(files.map(f=>[path.join(root,f),Buffer.from(f)]));data.set(path.join(root,'scripts/sw-template.js'),Buffer.from(template));
  const writes=new Map(),fakeFs={readFileSync:(f,enc)=>{const b=data.get(f);if(!b)throw Error('Missing fixture '+f);return enc?b.toString():b;},writeFileSync:(f,s)=>writes.set(f,s)};
  const mod={exports:{}};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../scripts/pwa-build.cjs'),'utf8'),{module:mod,require:id=>id==='node:fs'?fakeFs:id==='./manifest.cjs'?{readPaths:()=>ready}:require(id)});
  const first=mod.exports.configFor(root,files),again=mod.exports.configFor(root,[...files].reverse());assert.equal(first.version,again.version);assert.equal(first.courses.length,2);assert.ok(first.shell.includes('assets/app.js'));assert.ok(!first.shell.includes('paths/python/practice.zip'));assert.ok(first.courses.find(c=>c.id==='financial-foundations').files.includes('handbook.html'));assert.throws(()=>mod.exports.configFor(root,files.filter(f=>f!=='paths/python/practice.zip')),/not published/);
+ assert.equal(JSON.stringify(first.runtime.files),JSON.stringify(['paths/python-problem-solving/runtime/pyodide.js']),'The browser Python runtime is listed for keeping');assert.ok(!first.shell.includes('paths/python-problem-solving/runtime/pyodide.js'));
  {const withRuntime=[...ready,{id:'python-problem-solving',title:'Problems',status:'ready',publicFiles:['runtime/pyodide.js','practice/cases.json']},{id:'design-patterns',title:'Patterns',status:'ready',runExamples:true,publicFiles:['collaboration.py']}],extra=['content/courses/python-problem-solving.js','paths/python-problem-solving/runtime/pyodide.js','paths/python-problem-solving/practice/cases.json','content/courses/design-patterns.js','paths/design-patterns/collaboration.py'];
   for(const x of extra)data.set(path.join(root,x),Buffer.from(x));
   const shared={exports:{}};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../scripts/pwa-build.cjs'),'utf8'),{module:shared,require:id=>id==='node:fs'?fakeFs:id==='./manifest.cjs'?{readPaths:()=>withRuntime}:require(id)});
   const c=shared.exports.configFor(root,[...files,...extra]).courses,python=c.find(x=>x.id==='python').files;
   assert.ok(python.includes('paths/python-problem-solving/runtime/pyodide.js')&&!python.includes('paths/python-problem-solving/practice/cases.json'),'Python course saves the runtime only');
   const patterns=c.find(x=>x.id==='design-patterns').files;assert.ok(patterns.includes('paths/python-problem-solving/runtime/pyodide.js')&&patterns.includes('paths/design-patterns/collaboration.py')&&!patterns.includes('paths/python-problem-solving/practice/cases.json'),'A course that runs its examples saves the runtime and its practice modules');}
- mod.exports.buildPwa(root,'output',files);assert.ok(!writes.get(path.join('output','sw.js')).includes('__PWA_CONFIG__'));data.set(path.join(root,'assets/app.js'),Buffer.from('changed-ui'));const ui=mod.exports.configFor(root,files);assert.notEqual(ui.version,first.version);assert.equal(ui.courses[0].version,first.courses[0].version);data.set(path.join(root,'paths/python/practice.zip'),Buffer.from('changed-course'));const changed=mod.exports.configFor(root,files);assert.notEqual(changed.courses[0].version,first.courses[0].version);
+ mod.exports.buildPwa(root,'output',files);assert.ok(!writes.get(path.join('output','sw.js')).includes('__PWA_CONFIG__'));data.set(path.join(root,'assets/app.js'),Buffer.from('changed-ui'));const ui=mod.exports.configFor(root,files);assert.notEqual(ui.version,first.version);assert.equal(ui.runtime.version,first.runtime.version,'A publication that leaves the runtime alone keeps its cache name');assert.equal(ui.courses[0].version,first.courses[0].version);data.set(path.join(root,'paths/python/practice.zip'),Buffer.from('changed-course'));const changed=mod.exports.configFor(root,files);assert.notEqual(changed.courses[0].version,first.courses[0].version);
 }
 (async()=>{
  // Successful installation is byte-verified, and partial or corrupt shells roll back.
@@ -69,10 +70,25 @@ function worker(version='one',storage=new Storage(),courseVersion,tweak){
   assert.equal((await shared.message('SAVE_COURSE','react')).at(-1).ok,true);shared.state.offline=true;
   assert.equal(await (await shared.fetch('paths/shared/runtime.js')).text(),'runtime','The second owner serves the shared file');
   delete bodies['paths/shared/runtime.js'];}
+ // The Python runtime is kept after its first verified download: later runs and later publications serve it
+ // without the network, a changed runtime replaces it, and corrupt bytes are never kept.
+ {const file='paths/python-problem-solving/runtime/pyodide.asm.wasm',url=base+file;bodies[file]='wasm-bytes';
+  const withRuntime=(v,rv)=>s=>{s.runtime={version:rv,files:[file]};};
+  const first=worker('pub-one',new Storage(),undefined,withRuntime('pub-one','rt-one'));await first.event('install');await first.event('activate');
+  assert.equal(await (await first.fetch(file)).text(),'wasm-bytes');assert.ok((await first.storage.keys()).includes(prefix+'runtime:rt-one'));
+  const before=first.state.requests.length;assert.equal(await (await first.fetch(file)).text(),'wasm-bytes');assert.equal(first.state.requests.length,before,'The second run does not use the network');
+  const next=worker('pub-two',first.storage,undefined,withRuntime('pub-two','rt-one'));await next.event('install');await next.event('activate');next.state.offline=true;
+  assert.equal(await (await next.fetch(file)).text(),'wasm-bytes','A new publication keeps the runtime it did not change');
+  const changed=worker('pub-three',first.storage,undefined,withRuntime('pub-three','rt-two'));await changed.event('install');await changed.event('activate');
+  assert.ok(!(await changed.storage.keys()).includes(prefix+'runtime:rt-one'),'A changed runtime drops the old copy');
+  changed.state.bad=file;assert.equal(await (await changed.fetch(file)).text(),'corrupt');assert.equal(await (await changed.storage.open(prefix+'runtime:rt-two')).match(url),undefined,'Bytes that fail the hash are not kept');
+  changed.state.bad=null;await changed.fetch(file);changed.state.offline=true;assert.equal(await (await changed.fetch(file)).text(),'wasm-bytes');
+  const other=worker('pub-one',new Storage());await other.fetch('paths/python/practice.zip');assert.deepEqual((await other.storage.keys()).filter(k=>k.includes(':runtime:')),[],'Other files are not kept this way');
+  delete bodies[file];}
  // Learners see the worker's own sentences; a browser exception becomes one plain sentence.
  {const bad=worker();bad.state.bad='paths/python/practice.zip';const failed=(await bad.message('SAVE_COURSE','python')).at(-1);assert.equal(failed.ok,false);assert.match(failed.error,/changed during download/);
   const raw=worker();raw.state.offline=true;const lost=(await raw.message('SAVE_COURSE','python')).at(-1);assert.equal(lost.ok,false);assert.equal(lost.error,'Offline storage could not complete this request.');assert.ok(!/network unavailable/.test(lost.error));}
- console.log('PWA worker: integrity, rollback, atomic downloads, scope isolation, updates, offline routing and files shared between courses verified.');
+ console.log('PWA worker: integrity, rollback, atomic downloads, scope isolation, updates, offline routing and files shared between courses, and the kept Python runtime verified.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
 
 // A first install is not an update; only a distinct waiting worker behind an active one is.
