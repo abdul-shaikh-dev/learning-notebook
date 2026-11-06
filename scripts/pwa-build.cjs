@@ -11,8 +11,11 @@ function configFor(root,files){
   const version=crypto.createHash('sha256').update(JSON.stringify(own.map(f=>[f,inventory[f].hash]))).digest('hex').slice(0,16);
   return {id:p.id,title:p.title,version,files:own,bytes:own.reduce((n,f)=>n+inventory[f].bytes,0)};
  });
+ // The browser Python runtime is kept once fetched, under a name that changes only when its own files do.
+ const runtimeFiles=Object.keys(inventory).filter(f=>f.startsWith('paths/python-problem-solving/runtime/'));
+ const runtime={version:crypto.createHash('sha256').update(JSON.stringify(runtimeFiles.map(f=>[f,inventory[f].hash]))).digest('hex').slice(0,16),files:runtimeFiles};
  const version=crypto.createHash('sha256').update(JSON.stringify(inventory)).update(fs.readFileSync(path.join(root,'scripts/sw-template.js'))).digest('hex').slice(0,16);
- return {version,files:inventory,shell,courses};
+ return {version,files:inventory,shell,courses,runtime};
 }
 function buildPwa(root,out,files){const config=configFor(root,files);const source=fs.readFileSync(path.join(root,'scripts/sw-template.js'),'utf8').replace('__PWA_CONFIG__',JSON.stringify(config));fs.writeFileSync(path.join(out,'sw.js'),source);return config;}
 module.exports={configFor,buildPwa};

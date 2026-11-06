@@ -4,6 +4,9 @@ const BASE=new URL('./',self.location.href);
 const say=text=>Object.assign(Error(text),{friendly:true});
 const PREFIX='learning-notebook:'+encodeURIComponent(BASE.pathname)+':';
 const SHELL=PREFIX+'shell:'+CONFIG.version,REGISTRY=PREFIX+'downloads';
+// The Python runtime (about 12 MB) is kept after its first verified download, so later runs and publications do not fetch it again.
+const RUNTIME=CONFIG.runtime?.files?.length?PREFIX+'runtime:'+CONFIG.runtime.version:null;
+const runtimeFile=file=>!!RUNTIME&&CONFIG.runtime.files.includes(file);
 const locks=new Map();
 const absolute=file=>new URL(file,BASE).href;
 const registryKey=id=>absolute('__offline-course/'+id);
@@ -51,8 +54,8 @@ async function save(id,progress){
 async function remove(id){if(!course(id))throw say('Unknown learning path.');return serial(id,async()=>{const saved=await record(id);await (await caches.open(REGISTRY)).delete(registryKey(id));if(saved?.cache)await caches.delete(saved.cache);});}
 self.addEventListener('install',event=>event.waitUntil((async()=>{try{await fill(SHELL,CONFIG.shell);}catch(error){await caches.delete(SHELL);throw error;}})()));
 self.addEventListener('activate',event=>event.waitUntil((async()=>{
- // Delete only this notebook's obsolete shell caches. Course selections survive updates.
- for(const key of await caches.keys())if(key.startsWith(PREFIX+'shell:')&&key!==SHELL)await caches.delete(key);
+ // Delete only this notebook's obsolete shell and runtime caches. Course selections survive updates.
+ for(const key of await caches.keys())if(key.startsWith(PREFIX+'shell:')&&key!==SHELL||key.startsWith(PREFIX+'runtime:')&&key!==RUNTIME)await caches.delete(key);
  // Incomplete downloads are removed by their save transaction, not by activation.
  // An older worker may still be finishing a download in another tab.
  await self.clients.claim();
@@ -70,8 +73,14 @@ self.addEventListener('message',event=>{
   port.postMessage({ok:true,data:await status()});
  }catch(error){port.postMessage({ok:false,error:error?.friendly?error.message:'Offline storage could not complete this request.'});}})());
 });
+// Only a complete, byte-verified copy is kept; any failure leaves the cache as it was.
+async function keep(file,response){try{
+ const bytes=await response.arrayBuffer();if(await digest(bytes)!==CONFIG.files[file].hash)return;
+ await (await caches.open(RUNTIME)).put(absolute(file),new Response(bytes,{status:200,headers:{'Content-Type':response.headers.get('Content-Type')||'application/octet-stream'}}));
+}catch{}}
 async function cached(file){
  const url=absolute(file),shell=await (await caches.open(SHELL)).match(url);if(shell)return shell;
+ if(runtimeFile(file)&&(await caches.keys()).includes(RUNTIME)){const kept=await (await caches.open(RUNTIME)).match(url);if(kept)return kept;}
  // A file can belong to several courses (the Python runtime); any saved owner can serve it.
  for(const owner of CONFIG.courses.filter(c=>c.files.includes(file))){
   const r=await record(owner.id);if(r?.version!==(owner.version||CONFIG.version))continue;
@@ -84,7 +93,11 @@ self.addEventListener('fetch',event=>{
  if(!CONFIG.files[file]&&event.request.mode!=='navigate')return;
  event.respondWith((async()=>{
   const hit=await cached(file);if(hit)return hit;
-  try{return await fetch(event.request);}catch{
+  try{
+   const response=await fetch(event.request);
+   if(runtimeFile(file)&&response.ok&&response.type!=='opaque')event.waitUntil(keep(file,response.clone()));
+   return response;
+  }catch{
    if(event.request.mode==='navigate')return await cached('offline.html')||new Response('Open the notebook online once to prepare offline access.',{status:503});
    return new Response('This file is not saved offline. Open Offline & install to download its course.',{status:503,headers:{'Content-Type':'text/plain'}});
   }
