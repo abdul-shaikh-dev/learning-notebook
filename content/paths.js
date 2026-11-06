@@ -55463,7 +55463,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "TB"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does run_python('print(42)') return?",
+            "options": [
+              "Status 0, stdout 42 with a newline, and empty stderr",
+              "The integer 42",
+              "Status 42"
+            ],
+            "correct": 0,
+            "explanation": "The child is a separate process. The parent sees only what the operating system reports back: an exit status and two streams."
+          }
+        ]
       },
       {
         "id": "paths-and-working-directory",
@@ -55517,6 +55529,18 @@ const LEARNING_PATHS = [
             "section": "Start of resolution",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The parent changes its working directory, then calls run_python with code that prints os.getcwd(). What does the child print?",
+            "options": [
+              "The parent's new working directory",
+              "The folder that contains diagnostic_lab.py",
+              "The user's home directory"
+            ],
+            "correct": 0,
+            "explanation": "run_python sets no cwd, so the child inherits the parent's working directory, and relative paths resolve from there."
           }
         ]
       },
@@ -55572,6 +55596,18 @@ const LEARNING_PATHS = [
             "section": "Pathname lookup",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How does diagnostic_lab.classify label a FileNotFoundError?",
+            "options": [
+              "configuration",
+              "access",
+              "application validation"
+            ],
+            "correct": 0,
+            "explanation": "A missing file usually means a wrong path or working directory, so the evidence to check first is the configuration."
           }
         ]
       },
@@ -55634,6 +55670,18 @@ const LEARNING_PATHS = [
             "section": "subprocess argument sequences",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "run_python passes the argument *.csv to a child that prints sys.argv[1:]. What does it print?",
+            "options": [
+              "['*.csv']: no shell expands the pattern",
+              "The CSV files in the working directory",
+              "An empty list"
+            ],
+            "correct": 0,
+            "explanation": "The argument list goes straight to the child process, so glob characters stay literal text."
           }
         ]
       },
@@ -55755,7 +55803,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A child prints a warning to stderr and exits normally. What does run_python report?",
+            "options": [
+              "Status 0, with the warning in stderr",
+              "A nonzero status, because stderr is not empty",
+              "The warning in stdout"
+            ],
+            "correct": 0,
+            "explanation": "The streams and the exit status are separate. Text on stderr is a diagnostic, not by itself a failure."
+          }
+        ]
       },
       {
         "id": "permissions-and-identities",
@@ -56181,7 +56241,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "How does classify label a PermissionError?",
+            "options": [
+              "access",
+              "configuration",
+              "lifecycle"
+            ],
+            "correct": 0,
+            "explanation": "The path was found, but the identity running the program may not use it, so check owners, modes and parent directories."
+          }
+        ]
       },
       {
         "id": "processes-and-exit-status",
@@ -56235,6 +56307,18 @@ const LEARNING_PATHS = [
             "section": "subprocess returncode",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A child runs raise SystemExit('bad input'). What does run_python report?",
+            "options": [
+              "Status 1, with bad input on stderr",
+              "Status 0, with bad input on stdout",
+              "Status 2, with no output"
+            ],
+            "correct": 0,
+            "explanation": "Python prints a string exit message to stderr and exits with status 1, so automation can detect the failure."
           }
         ]
       },
@@ -56297,6 +56381,18 @@ const LEARNING_PATHS = [
             "section": "subprocess env",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The parent sets NOTEBOOK_LAB=on in os.environ, then runs a child that prints that variable. What does it print?",
+            "options": [
+              "on: the child inherits the environment at start",
+              "Nothing: children start with an empty environment",
+              "unset"
+            ],
+            "correct": 0,
+            "explanation": "A child receives a copy of the parent's environment when it starts. Later changes in either process do not reach the other."
           }
         ]
       },
@@ -56438,7 +56534,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "TB"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "run_python runs time.sleep(5) with timeout 0.2. What happens, and how does classify label it?",
+            "options": [
+              "TimeoutExpired is raised, labelled lifecycle",
+              "It returns status 0 after five seconds",
+              "ValueError is raised, labelled application validation"
+            ],
+            "correct": 0,
+            "explanation": "The bounded wait turns a hung child into an explicit error instead of a stuck parent."
+          }
+        ]
       },
       {
         "id": "signals-and-shutdown",
@@ -56492,6 +56600,18 @@ const LEARNING_PATHS = [
             "section": "Signal dispositions",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which signal gives a worker the chance to run its cleanup code?",
+            "options": [
+              "SIGTERM, which requests shutdown",
+              "SIGKILL",
+              "Neither: signals always stop a process at once"
+            ],
+            "correct": 0,
+            "explanation": "SIGTERM can be handled, so a worker can finish or record its current job. SIGKILL ends the process without cleanup."
           }
         ]
       },
@@ -56555,6 +56675,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In which unit does ps usually show VSZ and RSS?",
+            "options": [
+              "KiB, though your ps manual should confirm it",
+              "Bytes",
+              "Pages"
+            ],
+            "correct": 0,
+            "explanation": "Comparing memory figures needs the same unit and metric, so check the manual before reading a number as a size."
+          }
         ]
       },
       {
@@ -56609,6 +56741,18 @@ const LEARNING_PATHS = [
             "section": "Process resources shared by threads",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Two separate processes update one counter file. Does a threading lock inside one of them protect the update?",
+            "options": [
+              "No: separate processes need coordination they can both access",
+              "Yes: a lock protects the file for every process",
+              "Yes, if both use the same lock name"
+            ],
+            "correct": 0,
+            "explanation": "A lock object lives in one process's memory. Another process cannot see it, so it needs something shared, such as a file lock or a database."
           }
         ]
       },
@@ -56681,6 +56825,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Primary API documentation for the optional mechanism lab. Runtime prerequisites and execution evidence are separate in mechanism-lab.md."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "On Linux, linux_fd_drill.py opens descriptors in a child until open fails, then closes them. How do the counts before and after cleanup compare?",
+            "options": [
+              "They are equal, and opening one more then succeeds",
+              "After cleanup is higher, because closed descriptors stay reserved",
+              "After cleanup is zero"
+            ],
+            "correct": 0,
+            "explanation": "Closing every handle in a finally block returns the descriptors, which is how the drill shows a leak is avoidable."
+          }
         ]
       },
       {
@@ -56742,6 +56898,18 @@ const LEARNING_PATHS = [
             "section": "Synchronized I/O",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A program writes a file and closes it. Is the data then guaranteed to be on the storage device?",
+            "options": [
+              "No: buffers and kernel caches reach storage at different times",
+              "Yes: closing a file writes it to disk",
+              "Yes, if the file is small"
+            ],
+            "correct": 0,
+            "explanation": "Durability needs explicit steps such as fsync and depends on the filesystem and device. A successful close is not proof."
           }
         ]
       },
@@ -56805,6 +56973,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A notebook server listens on 127.0.0.1. Can a phone on the same Wi-Fi reach it?",
+            "options": [
+              "No: loopback is reachable only from that computer",
+              "Yes, on the same port",
+              "Yes, if the firewall is off"
+            ],
+            "correct": 0,
+            "explanation": "A loopback listener accepts connections only from the same machine. Another device needs a reachable host address and network policy."
+          }
         ]
       },
       {
@@ -56866,6 +57046,18 @@ const LEARNING_PATHS = [
             "section": "Process inspection",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does a systemd unit typically describe?",
+            "options": [
+              "The executable, identity, working directory, dependencies and restart policy",
+              "Only the command to run",
+              "The application's health checks and their results"
+            ],
+            "correct": 0,
+            "explanation": "The unit tells the supervisor how to run the process. Whether the application is ready to accept work needs its own check."
           }
         ]
       },
@@ -56929,6 +57121,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How does classify label a RuntimeError?",
+            "options": [
+              "unclassified; inspect evidence",
+              "application validation",
+              "configuration"
+            ],
+            "correct": 0,
+            "explanation": "An error outside the known categories is not forced into one, so the investigation starts from the evidence rather than a guess."
+          }
         ]
       },
       {
@@ -56990,6 +57194,18 @@ const LEARNING_PATHS = [
             "section": "Bounded child process timeout",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does backlog(8, 10, 60, initial=120) return?",
+            "options": [
+              "0: the queue drains and never goes negative",
+              "-120",
+              "240"
+            ],
+            "correct": 0,
+            "explanation": "Service exceeds arrivals by 2 per second, which clears 120 jobs in 60 seconds. A queue cannot hold fewer than zero."
           }
         ]
       },
@@ -57148,7 +57364,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "TB"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which resources can namespaces give a process its own view of?",
+            "options": [
+              "Process IDs, mounts and networking, among others",
+              "CPU time and memory budgets",
+              "Only the hostname"
+            ],
+            "correct": 0,
+            "explanation": "Namespaces change what a process sees. cgroups account for and limit what it uses."
+          }
+        ]
       },
       {
         "id": "security-and-packages",
@@ -57202,6 +57430,18 @@ const LEARNING_PATHS = [
             "section": "Permission checks",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "run_python receives a 5000-character source string. What happens?",
+            "options": [
+              "Raises ValueError: source must be a bounded trusted string",
+              "It runs the code in a sandbox",
+              "It runs the first 4096 characters"
+            ],
+            "correct": 0,
+            "explanation": "The bounds limit the teaching helper, but it is not a sandbox: it must only ever run trusted snippets."
           }
         ]
       },
@@ -57267,6 +57507,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How does classify label a ValueError?",
+            "options": [
+              "application validation",
+              "configuration",
+              "access"
+            ],
+            "correct": 0,
+            "explanation": "The program ran and read its input, but rejected a value, so the input data and its schema are the next things to inspect."
+          }
         ]
       },
       {
@@ -57322,6 +57574,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How many tests does python -m unittest test_os_labs run, and does it include the descriptor drill?",
+            "options": [
+              "8 portable tests; the Linux descriptor drill is separate",
+              "9 tests, including the descriptor drill",
+              "8 tests, including the descriptor drill"
+            ],
+            "correct": 0,
+            "explanation": "The suite runs on any platform. Linux-only behaviour needs linux_fd_drill.py run on Linux before it counts as evidence."
+          }
         ]
       }
     ],
@@ -57351,7 +57615,39 @@ const LEARNING_PATHS = [
             "Explains PowerShell/Bash and file-path differences."
           ],
           "solution": "python diagnostic_lab.py\n# path -> configuration; permission -> access\n# timeout -> lifecycle; bad-row -> application validation\n# Follow linux-observation.md only in an existing Linux session.\n# Keep exact sanitized commands/output in your own evidence.md."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does backlog(True, 10, 1) do?",
+            "options": [
+              "Raises ValueError: finite nonnegative numeric inputs required",
+              "Treats True as 1 and returns 0",
+              "Returns True"
+            ],
+            "correct": 0,
+            "explanation": "bool is a subclass of int in Python, so the model checks the exact type to stop a flag being read as a rate."
+          },
+          {
+            "question": "What does run_python('pass', timeout=11) do?",
+            "options": [
+              "Raises ValueError: timeout must be positive and at most 10 seconds",
+              "Runs with an 11-second limit",
+              "Runs with no limit"
+            ],
+            "correct": 0,
+            "explanation": "The helper caps how long a teaching child may run, so a mistake cannot leave a process waiting for minutes."
+          },
+          {
+            "question": "run_python is given 11 arguments. What happens?",
+            "options": [
+              "Raises ValueError: arguments exceed teaching bounds",
+              "Only the first 10 are passed",
+              "All 11 are passed"
+            ],
+            "correct": 0,
+            "explanation": "Inputs outside the helper's bounds are refused, not trimmed, so the caller knows exactly what ran."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -57379,7 +57675,39 @@ const LEARNING_PATHS = [
             "Does not label trusted execution as an untrusted-code sandbox."
           ],
           "solution": "\"\"\"Portable OS reasoning lab. No host changes, arbitrary commands or real load.\"\"\"\nfrom dataclasses import dataclass\nimport subprocess\nimport sys\n\n@dataclass(frozen=True)\nclass Result:\n    status: int\n    stdout: str\n    stderr: str\n\ndef run_python(source, arguments=(), timeout=2):\n    \"\"\"Trusted teaching snippets only, direct Python child, bounded example output.\n\n    This is NOT a sandbox: never pass untrusted source. The test snippets emit\n    bounded output; arbitrary source could emit unbounded output or descendants.\n    \"\"\"\n    if not isinstance(source, str) or len(source) > 4096:\n        raise ValueError('source must be a bounded trusted string')\n    if not 0 < timeout <= 10:\n        raise ValueError('timeout must be positive and at most 10 seconds')\n    if len(arguments) > 10 or any(not isinstance(a, str) or len(a) > 256 for a in arguments):\n        raise ValueError('arguments exceed teaching bounds')\n    value = subprocess.run([sys.executable, '-c', source, *arguments],\n                           capture_output=True, text=True, timeout=timeout)\n    return Result(value.returncode, value.stdout, value.stderr)\n\ndef classify(error):\n    if isinstance(error, FileNotFoundError): return 'configuration'\n    if isinstance(error, PermissionError): return 'access'\n    if isinstance(error, subprocess.TimeoutExpired): return 'lifecycle'\n    if isinstance(error, ValueError): return 'application validation'\n    return 'unclassified; inspect evidence'\n\ndef backlog(arrival_per_second, service_per_second, duration_seconds, initial=0):\n    values = (arrival_per_second, service_per_second, duration_seconds, initial)\n    if any(type(v) not in (int, float) or v < 0 for v in values):\n        raise ValueError('finite nonnegative numeric inputs required')\n    import math\n    if not all(math.isfinite(v) for v in values):\n        raise ValueError('finite nonnegative numeric inputs required')\n    return max(0, initial + (arrival_per_second - service_per_second) * duration_seconds)\n\ndef demo():\n    examples = [('path', FileNotFoundError()), ('permission', PermissionError()),\n                ('timeout', subprocess.TimeoutExpired('trusted-child', 0.1)),\n                ('bad-row', ValueError())]\n    for label, error in examples: print(f'{label} -> {classify(error)}')\n    result = run_python('print(42)')\n    print(f'child status={result.status} output={result.stdout.strip()}')\n    print(f'modeled backlog={backlog(14, 10, 30)}')\n\nif __name__ == '__main__': demo()\n"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What is the last line python diagnostic_lab.py prints?",
+            "options": [
+              "modeled backlog=120",
+              "child status=0 output=42",
+              "bad-row -> application validation"
+            ],
+            "correct": 0,
+            "explanation": "The demo classifies four errors, runs one child and ends with the backlog model for 14 arrivals and 10 services a second over 30 seconds."
+          },
+          {
+            "question": "A child runs sys.exit(3) and prints nothing. What does run_python report?",
+            "options": [
+              "Status 3, with empty stdout and stderr",
+              "Status 0",
+              "Status 1, with an error on stderr"
+            ],
+            "correct": 0,
+            "explanation": "The exit code passes through unchanged. A nonzero status with no message is still a failure, and a poor diagnostic."
+          },
+          {
+            "question": "What does backlog(10, 10, 60, initial=5) return?",
+            "options": [
+              "5: arrivals match service, so the queue stays as it was",
+              "0",
+              "600"
+            ],
+            "correct": 0,
+            "explanation": "When arrival and service rates are equal, the model neither grows nor drains the existing backlog."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -57408,7 +57736,39 @@ const LEARNING_PATHS = [
             "Report redacts secrets and names its untested platform/production boundaries."
           ],
           "solution": "from diagnostic_lab import backlog, classify\nprint(backlog(14, 10, 30))  # 120 modeled queued jobs\nprint(backlog(8, 10, 60, 120))  # 0 after drain\nprint(classify(FileNotFoundError()))  # configuration\n# Add an independent failure/recovery case and sanitized evidence note."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "On Linux, which error makes linux_fd_drill.py stop opening descriptors?",
+            "options": [
+              "EMFILE: too many open files for the process",
+              "ENOSPC: no space left on device",
+              "EACCES: permission denied"
+            ],
+            "correct": 0,
+            "explanation": "The child lowers its own descriptor limit, so it reaches the per-process limit quickly without affecting the parent or the host."
+          },
+          {
+            "question": "What does backlog(float('inf'), 10, 1) do?",
+            "options": [
+              "Raises ValueError: finite nonnegative numeric inputs required",
+              "Returns infinity",
+              "Returns 0"
+            ],
+            "correct": 0,
+            "explanation": "An infinite rate would make every answer meaningless, so the model refuses it."
+          },
+          {
+            "question": "How does classify label a subprocess.CalledProcessError?",
+            "options": [
+              "unclassified; inspect evidence",
+              "lifecycle",
+              "application validation"
+            ],
+            "correct": 0,
+            "explanation": "A failed child can fail for many reasons, so the label sends you to its status and streams instead of guessing a cause."
+          }
+        ]
       }
     ],
     "downloads": [
