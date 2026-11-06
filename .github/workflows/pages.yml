@@ -129,6 +129,8 @@ jobs:
           dotnet-version: "10.0.x"
       - name: Build C# downloads and run HTTP acceptance checks
         run: python scripts/verify-dotnet.py
+      - name: Check C# & .NET checkpoint answers against the course labs
+        run: python tests/dotnet_checkpoint_facts.py
 
   fullstack:
     runs-on: ubuntu-latest

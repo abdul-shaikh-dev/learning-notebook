@@ -11512,6 +11512,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does the Foundation project print when run?",
+            "options": [
+              "2: Practice and 3: Review, then PASS: 4 foundation assertions.",
+              "1: Read, 2: Practice and 3: Review",
+              "Only PASS: 4 foundation assertions."
+            ],
+            "correct": 0,
+            "explanation": "Task 1 is completed before the loop, and the loop lists only open tasks in ID order before the checks run."
+          }
         ]
       },
       {
@@ -11572,6 +11584,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "new LearningTask(1, null!) is called. What happens?",
+            "options": [
+              "It throws ArgumentException, as a blank title does",
+              "It stores a null title",
+              "It throws NullReferenceException"
+            ],
+            "correct": 0,
+            "explanation": "The null-forgiving operator only silences the compiler. string.IsNullOrWhiteSpace treats null like whitespace, so the constructor rejects it."
+          }
         ]
       },
       {
@@ -11624,6 +11648,18 @@ const LEARNING_PATHS = [
             "section": "The foreach statement",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "GET /tasks/99 is sent to a fresh task API. What does it return?",
+            "options": [
+              "404 with the problem title Task not found",
+              "200 with an empty body",
+              "500, because the key is missing"
+            ],
+            "correct": 0,
+            "explanation": "The store looks the ID up in a dictionary with GetValueOrDefault, so a missing key becomes null and the endpoint maps it to 404."
           }
         ]
       },
@@ -11685,6 +11721,18 @@ const LEARNING_PATHS = [
             "section": "Method signatures",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "new LearningTask(0, \"Read\") is called. What happens?",
+            "options": [
+              "It throws ArgumentOutOfRangeException",
+              "It creates task 0",
+              "It throws ArgumentException for the title"
+            ],
+            "correct": 0,
+            "explanation": "The constructor checks the ID first. A method that refuses invalid input keeps every LearningTask valid after construction."
           }
         ]
       },
@@ -12045,7 +12093,19 @@ const LEARNING_PATHS = [
               "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/classes"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "new Session(7, 0) == new Session(7, 0) is evaluated. What is the result?",
+            "options": [
+              "True: records compare by value",
+              "False: they are different objects",
+              "It does not compile"
+            ],
+            "correct": 0,
+            "explanation": "A record generates value equality, which is why the boundary check can compare a decoded session with an expected one."
+          }
+        ]
       },
       {
         "id": "exceptions",
@@ -12097,6 +12157,18 @@ const LEARNING_PATHS = [
             "section": "Overview",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "SessionClient.Get receives a 500 response. What does it throw?",
+            "options": [
+              "HttpRequestException with status code 500",
+              "FormatException",
+              "Nothing: it returns null"
+            ],
+            "correct": 0,
+            "explanation": "EnsureSuccessStatusCode turns a server error into an exception that carries the status. Only 404 is mapped to a missing result."
           }
         ]
       },
@@ -12247,7 +12319,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A TaskStore holds tasks 1 to 5. Which IDs does Page(2, 2) return?",
+            "options": [
+              "3 and 4",
+              "1 and 2",
+              "2 and 3"
+            ],
+            "correct": 0,
+            "explanation": "Where keeps IDs above the cursor, OrderBy sorts them and Take limits the page, so the cursor itself is excluded."
+          }
+        ]
       },
       {
         "id": "async",
@@ -12648,7 +12732,19 @@ const LEARNING_PATHS = [
               "url": "https://learn.microsoft.com/en-us/dotnet/standard/threading/cancellation-in-managed-threads"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The caller's token is cancelled while the scripted handler is still waiting. What does SessionClient.Get throw?",
+            "options": [
+              "TaskCanceledException, with no TimeoutException inside",
+              "TimeoutException",
+              "Nothing: it returns null"
+            ],
+            "correct": 0,
+            "explanation": "The handler awaits with the token, so cancelling it ends the wait. A caller's cancellation, unlike a timeout, has no inner TimeoutException."
+          }
+        ]
       },
       {
         "id": "contracts-generics",
@@ -12709,6 +12805,18 @@ const LEARNING_PATHS = [
             "section": "Generic types and methods",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "store.Page(0, 3) returns an array, and the caller replaces its first element. What does store.Find(1) then return?",
+            "options": [
+              "The original task, unchanged",
+              "The replaced task",
+              "null"
+            ],
+            "correct": 0,
+            "explanation": "Page returns a new array of immutable records, so a caller can change only its own copy, never the store's state."
           }
         ]
       },
@@ -12772,6 +12880,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A TaskStore registered as a singleton is resolved from a service provider, and the provider is disposed. What happens to its Meter?",
+            "options": [
+              "It is disposed: a MeterListener sees its measurements complete",
+              "Nothing: singletons are never disposed",
+              "It throws ObjectDisposedException at once"
+            ],
+            "correct": 0,
+            "explanation": "The container that created the singleton owns it, so disposing the provider calls TaskStore.Dispose, which disposes the meter."
+          }
         ]
       },
       {
@@ -12833,6 +12953,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A completion is sent with a stale expectedVersion. What does the API's switch over the result return?",
+            "options": [
+              "409 with the title Task changed; reload before retrying",
+              "400 with a validation error",
+              "200 with the current task"
+            ],
+            "correct": 0,
+            "explanation": "The switch maps each CompletionStatus to one response, so a conflict cannot fall through to the success case."
+          }
         ]
       },
       {
@@ -12885,6 +13017,18 @@ const LEARNING_PATHS = [
             "section": "Create the test project",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does dotnet run --project BoundaryChecks.csproj print when every check passes?",
+            "options": [
+              "PASS: HTTP adapter success, missing, malformed, failure and cancellation contracts.",
+              "PASS: 11 HTTP acceptance assertions.",
+              "Build succeeded."
+            ],
+            "correct": 0,
+            "explanation": "The output names what was checked: the HttpClient adapter with a scripted handler, not server routing or storage."
           }
         ]
       },
@@ -13414,7 +13558,19 @@ const LEARNING_PATHS = [
               "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-10.0"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Two POST /tasks requests are sent to a fresh API. Which IDs do they get?",
+            "options": [
+              "1, then 2, because one TaskStore serves every request",
+              "1 both times",
+              "Two random IDs"
+            ],
+            "correct": 0,
+            "explanation": "TaskStore is registered with AddSingleton, so its counter is shared across requests until the process stops."
+          }
+        ]
       },
       {
         "id": "api-contracts",
@@ -13482,6 +13638,18 @@ const LEARNING_PATHS = [
             "section": "TypedResults vs Results",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "POST /tasks is sent with a 121-character title. What does the API return?",
+            "options": [
+              "400 with a validation error for title",
+              "201, with the title cut to 120 characters",
+              "413, because the body is too large"
+            ],
+            "correct": 0,
+            "explanation": "The title is checked after trimming, and a ValidationProblem names the field so a client can show the error where it belongs."
           }
         ]
       },
@@ -13553,6 +13721,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "GET /tasks/abc is sent to the API. What does it return?",
+            "options": [
+              "404, because the route requires an integer ID",
+              "400 with a validation error",
+              "500"
+            ],
+            "correct": 0,
+            "explanation": "The {id:int} constraint stops the route matching at all, which only a test through the real routing can show."
+          }
         ]
       },
       {
@@ -13620,6 +13800,18 @@ const LEARNING_PATHS = [
             "section": "Passing parameters",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How does persistence-api.cs look up a task for GET /tasks/{id}?",
+            "options": [
+              "By ID and the caller's NameIdentifier claim together",
+              "By ID only, then it checks the owner",
+              "By title"
+            ],
+            "correct": 0,
+            "explanation": "Putting the owner in the query means another user's task is simply not found, so it returns 404 rather than revealing the row exists."
           }
         ]
       },
@@ -13793,7 +13985,19 @@ const LEARNING_PATHS = [
               "explanation": "The duplicate unique-key audit failure triggers rollback. A new context sees no new task and only the original audit event."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "persistence-checks.cs inserts a task and then a duplicate audit key in one transaction. What does it expect?",
+            "options": [
+              "DbUpdateException, after which the task insert is rolled back",
+              "Both rows to be saved",
+              "Only the audit row to fail, keeping the task"
+            ],
+            "correct": 0,
+            "explanation": "The audit key has a unique index. Rolling back the transaction removes the task row too, which a fresh context then confirms."
+          }
+        ]
       },
       {
         "id": "capstone",
@@ -13855,6 +14059,18 @@ const LEARNING_PATHS = [
             "section": "Create API endpoints",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "POST /tasks is sent with a body larger than 16 KB. What does the API return?",
+            "options": [
+              "413 Payload Too Large",
+              "400 with a title error",
+              "201"
+            ],
+            "correct": 0,
+            "explanation": "Kestrel's MaxRequestBodySize is set to 16 KB, so an oversized body is refused before the endpoint reads it."
           }
         ]
       },
@@ -14015,7 +14231,19 @@ const LEARNING_PATHS = [
               "explanation": "The deterministic example cancels the budget and reports Budget cancelled. Keep dependency failures separate."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "An HttpClient has a 100 ms Timeout, and the handler never answers. What does SessionClient.Get throw?",
+            "options": [
+              "TaskCanceledException, with a TimeoutException inside",
+              "TimeoutException directly",
+              "Nothing: it waits forever"
+            ],
+            "correct": 0,
+            "explanation": "The timeout cancels the request through its token. The inner TimeoutException tells a timeout apart from a caller's cancellation."
+          }
+        ]
       },
       {
         "id": "concurrency",
@@ -14077,6 +14305,18 @@ const LEARNING_PATHS = [
             "section": "Application-managed concurrency tokens",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "50 tasks call TaskStore.Add at the same time. How many distinct IDs result?",
+            "options": [
+              "50, numbered 1 to 50",
+              "Fewer than 50, because some collide",
+              "1"
+            ],
+            "correct": 0,
+            "explanation": "Add takes a lock around the counter and the dictionary, so concurrent callers cannot read the same next ID."
           }
         ]
       },
@@ -14456,7 +14696,19 @@ const LEARNING_PATHS = [
               "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authorization/resource-based?view=aspnetcore-10.0"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "In persistence-checks.cs, a signed-in user without the tasks permission calls GET /tasks/1. What does the test expect?",
+            "options": [
+              "403 Forbidden",
+              "401 Unauthorized",
+              "404 Not Found"
+            ],
+            "correct": 0,
+            "explanation": "401 means no identity; 403 means an identity that the policy does not allow. The fake principal exists only in the test host."
+          }
+        ]
       },
       {
         "id": "observability",
@@ -14517,6 +14769,18 @@ const LEARNING_PATHS = [
             "section": "ASP.NET Core metrics",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A MeterListener watches the completion counter while one completion succeeds, one conflicts and one targets a missing task. Which tags are recorded?",
+            "options": [
+              "outcome as success, conflict and missing",
+              "The task ID for each attempt",
+              "No tags"
+            ],
+            "correct": 0,
+            "explanation": "The single outcome tag has three possible values, which keeps the metric low-cardinality. The task ID goes to the log line instead."
           }
         ]
       },
@@ -14705,7 +14969,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does GET /health return?",
+            "options": [
+              "200 with status ok and storage memory",
+              "200 only after a database check",
+              "503 until the first task exists"
+            ],
+            "correct": 0,
+            "explanation": "The endpoint reports that the process answers and that storage is in memory. It is not a readiness check for a database."
+          }
+        ]
       },
       {
         "id": "performance",
@@ -14867,7 +15143,19 @@ const LEARNING_PATHS = [
               "explanation": "ToListAsync materializes the page with the caller token."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What is the largest page size GET /tasks accepts?",
+            "options": [
+              "100: limit=101 returns 400",
+              "20, the default",
+              "There is no limit"
+            ],
+            "correct": 0,
+            "explanation": "Bounding the page keeps each request's work predictable. The default of 20 applies only when no limit is given."
+          }
+        ]
       }
     ],
     "stages": [
@@ -14898,7 +15186,39 @@ const LEARNING_PATHS = [
             "Trace the state changes and explain where input validation runs."
           ],
           "solution": "Reference: practice/foundation.cs; run it using practice/README.md. It prints two open tasks and passes four assertions. Extend it with Find(id) returning a nullable LearningTask, assert a missing lookup, and keep immutable identity/title with controlled Complete behavior. An independent async exercise must demonstrate token cancellation; the notebook reference does not contain a background worker."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "SessionClient.Get(7) receives minutes 1440, then in another call minutes 1441. What happens?",
+            "options": [
+              "1440 is accepted, and 1441 throws FormatException",
+              "Both are accepted",
+              "Both throw FormatException"
+            ],
+            "correct": 0,
+            "explanation": "The client checks the value's range as well as its type, so an impossible duration never becomes a Session."
+          },
+          {
+            "question": "SessionClient.Get(7) receives a valid session with an extra property. What happens?",
+            "options": [
+              "It returns the session; extra properties are allowed",
+              "It throws FormatException",
+              "It returns null"
+            ],
+            "correct": 0,
+            "explanation": "The teaching protocol checks the fields it needs and tolerates additions, so a server can add fields without breaking this client."
+          },
+          {
+            "question": "SessionClient.Get(7) receives a body that is not JSON. What does it throw?",
+            "options": [
+              "JsonException",
+              "FormatException",
+              "HttpRequestException"
+            ],
+            "correct": 0,
+            "explanation": "Syntactically invalid JSON fails in JsonDocument.Parse. FormatException is kept for valid JSON with the wrong shape or values."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -14930,7 +15250,39 @@ const LEARNING_PATHS = [
             "Review and test the generated migration operations. Save them with recovery instructions."
           ],
           "solution": "Runnable baseline: practice/task-api.cs and practice/acceptance.cs, with commands in practice/README.md. The baseline demonstrates validation, snapshots, paging and a process-local version check. Persistent solution: replace TaskStore with an interface-backed scoped EF implementation; keep the same DTOs/statuses, configure an application-managed concurrency token, use migrations instead of EnsureCreated, and commit task/audit changes in one transaction. The ef-evolution lesson supplies token and transaction fragments. Add fresh-context rollback and restart tests. Persistence is an practice extension, not a claim made by the memory baseline."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "An HttpClient has BaseAddress https://example.invalid/api, with no trailing slash. Which path does SessionClient.Get(7) request?",
+            "options": [
+              "/sessions/7",
+              "/api/sessions/7",
+              "/api/7"
+            ],
+            "correct": 0,
+            "explanation": "A relative URI replaces the last path segment unless the base ends with a slash, so the api segment is dropped."
+          },
+          {
+            "question": "POST /tasks is sent with an empty JSON object. What does the API return?",
+            "options": [
+              "400 with a validation error for title",
+              "201 with an empty title",
+              "500"
+            ],
+            "correct": 0,
+            "explanation": "Title is nullable in the request record, so a missing value reaches the same check as a blank one."
+          },
+          {
+            "question": "A task is completed, then completed again with its new version 2. What does the second request return?",
+            "options": [
+              "200, with the task still at version 2",
+              "409",
+              "200, with version 3"
+            ],
+            "correct": 0,
+            "explanation": "Completing a task that is already done returns it unchanged, so a repeated request with the current version is harmless."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -14964,7 +15316,39 @@ const LEARNING_PATHS = [
             "State what remains unverified and what would need to change for multiple replicas."
           ],
           "solution": "Reference architecture: authenticated /tasks route group -> DTO validation -> scoped task service -> EF Core context with owner filtering and concurrency token. Mutations commit task/audit/outbox state atomically; caller token reaches database work; distributed invariants remain in the database. Tests use an isolated relational fixture and test-only fake identities, followed by real-token staging checks. Shared Meter/ActivitySource and structured logs feed a configured collector. Deployment runs reviewed migrations, gates traffic on readiness, retains the prior compatible build and proves backup recovery. Use lessons auth-boundaries through performance as implementation/verification guides. This is a reviewable solution blueprint; the download is intentionally only the runnable local baseline, not a finished secure production service."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A completion is sent with expectedVersion 0. What does the API return?",
+            "options": [
+              "400 with a validation error for expectedVersion",
+              "409",
+              "404"
+            ],
+            "correct": 0,
+            "explanation": "A version below 1 cannot be valid, so it is rejected as bad input before the store compares versions."
+          },
+          {
+            "question": "GET /tasks/99 returns 404. Which content type does the response have?",
+            "options": [
+              "application/problem+json",
+              "text/plain",
+              "application/json"
+            ],
+            "correct": 0,
+            "explanation": "Results.Problem writes a standard problem-details body, so clients can handle every error in one format."
+          },
+          {
+            "question": "GET /tasks?after=-1 is sent. What does the API return?",
+            "options": [
+              "400 with a validation error for after",
+              "200 with every task",
+              "200 with no tasks"
+            ],
+            "correct": 0,
+            "explanation": "A negative cursor is refused instead of being treated as zero, so a client bug is visible."
+          }
+        ]
       }
     ],
     "downloads": [
