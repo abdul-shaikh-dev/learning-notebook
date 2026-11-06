@@ -11512,6 +11512,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does the Foundation project print when run?",
+            "options": [
+              "2: Practice and 3: Review, then PASS: 4 foundation assertions.",
+              "1: Read, 2: Practice and 3: Review",
+              "Only PASS: 4 foundation assertions."
+            ],
+            "correct": 0,
+            "explanation": "Task 1 is completed before the loop, and the loop lists only open tasks in ID order before the checks run."
+          }
         ]
       },
       {
@@ -11572,6 +11584,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "new LearningTask(1, null!) is called. What happens?",
+            "options": [
+              "It throws ArgumentException, as a blank title does",
+              "It stores a null title",
+              "It throws NullReferenceException"
+            ],
+            "correct": 0,
+            "explanation": "The null-forgiving operator only silences the compiler. string.IsNullOrWhiteSpace treats null like whitespace, so the constructor rejects it."
+          }
         ]
       },
       {
@@ -11624,6 +11648,18 @@ const LEARNING_PATHS = [
             "section": "The foreach statement",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "GET /tasks/99 is sent to a fresh task API. What does it return?",
+            "options": [
+              "404 with the problem title Task not found",
+              "200 with an empty body",
+              "500, because the key is missing"
+            ],
+            "correct": 0,
+            "explanation": "The store looks the ID up in a dictionary with GetValueOrDefault, so a missing key becomes null and the endpoint maps it to 404."
           }
         ]
       },
@@ -11685,6 +11721,18 @@ const LEARNING_PATHS = [
             "section": "Method signatures",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "new LearningTask(0, \"Read\") is called. What happens?",
+            "options": [
+              "It throws ArgumentOutOfRangeException",
+              "It creates task 0",
+              "It throws ArgumentException for the title"
+            ],
+            "correct": 0,
+            "explanation": "The constructor checks the ID first. A method that refuses invalid input keeps every LearningTask valid after construction."
           }
         ]
       },
@@ -12045,7 +12093,19 @@ const LEARNING_PATHS = [
               "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/classes"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "new Session(7, 0) == new Session(7, 0) is evaluated. What is the result?",
+            "options": [
+              "True: records compare by value",
+              "False: they are different objects",
+              "It does not compile"
+            ],
+            "correct": 0,
+            "explanation": "A record generates value equality, which is why the boundary check can compare a decoded session with an expected one."
+          }
+        ]
       },
       {
         "id": "exceptions",
@@ -12097,6 +12157,18 @@ const LEARNING_PATHS = [
             "section": "Overview",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "SessionClient.Get receives a 500 response. What does it throw?",
+            "options": [
+              "HttpRequestException with status code 500",
+              "FormatException",
+              "Nothing: it returns null"
+            ],
+            "correct": 0,
+            "explanation": "EnsureSuccessStatusCode turns a server error into an exception that carries the status. Only 404 is mapped to a missing result."
           }
         ]
       },
@@ -12247,7 +12319,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A TaskStore holds tasks 1 to 5. Which IDs does Page(2, 2) return?",
+            "options": [
+              "3 and 4",
+              "1 and 2",
+              "2 and 3"
+            ],
+            "correct": 0,
+            "explanation": "Where keeps IDs above the cursor, OrderBy sorts them and Take limits the page, so the cursor itself is excluded."
+          }
+        ]
       },
       {
         "id": "async",
@@ -12648,7 +12732,19 @@ const LEARNING_PATHS = [
               "url": "https://learn.microsoft.com/en-us/dotnet/standard/threading/cancellation-in-managed-threads"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The caller's token is cancelled while the scripted handler is still waiting. What does SessionClient.Get throw?",
+            "options": [
+              "TaskCanceledException, with no TimeoutException inside",
+              "TimeoutException",
+              "Nothing: it returns null"
+            ],
+            "correct": 0,
+            "explanation": "The handler awaits with the token, so cancelling it ends the wait. A caller's cancellation, unlike a timeout, has no inner TimeoutException."
+          }
+        ]
       },
       {
         "id": "contracts-generics",
@@ -12709,6 +12805,18 @@ const LEARNING_PATHS = [
             "section": "Generic types and methods",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "store.Page(0, 3) returns an array, and the caller replaces its first element. What does store.Find(1) then return?",
+            "options": [
+              "The original task, unchanged",
+              "The replaced task",
+              "null"
+            ],
+            "correct": 0,
+            "explanation": "Page returns a new array of immutable records, so a caller can change only its own copy, never the store's state."
           }
         ]
       },
@@ -12772,6 +12880,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A TaskStore registered as a singleton is resolved from a service provider, and the provider is disposed. What happens to its Meter?",
+            "options": [
+              "It is disposed: a MeterListener sees its measurements complete",
+              "Nothing: singletons are never disposed",
+              "It throws ObjectDisposedException at once"
+            ],
+            "correct": 0,
+            "explanation": "The container that created the singleton owns it, so disposing the provider calls TaskStore.Dispose, which disposes the meter."
+          }
         ]
       },
       {
@@ -12833,6 +12953,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A completion is sent with a stale expectedVersion. What does the API's switch over the result return?",
+            "options": [
+              "409 with the title Task changed; reload before retrying",
+              "400 with a validation error",
+              "200 with the current task"
+            ],
+            "correct": 0,
+            "explanation": "The switch maps each CompletionStatus to one response, so a conflict cannot fall through to the success case."
+          }
         ]
       },
       {
@@ -12885,6 +13017,18 @@ const LEARNING_PATHS = [
             "section": "Create the test project",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does dotnet run --project BoundaryChecks.csproj print when every check passes?",
+            "options": [
+              "PASS: HTTP adapter success, missing, malformed, failure and cancellation contracts.",
+              "PASS: 11 HTTP acceptance assertions.",
+              "Build succeeded."
+            ],
+            "correct": 0,
+            "explanation": "The output names what was checked: the HttpClient adapter with a scripted handler, not server routing or storage."
           }
         ]
       },
@@ -13414,7 +13558,19 @@ const LEARNING_PATHS = [
               "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-10.0"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Two POST /tasks requests are sent to a fresh API. Which IDs do they get?",
+            "options": [
+              "1, then 2, because one TaskStore serves every request",
+              "1 both times",
+              "Two random IDs"
+            ],
+            "correct": 0,
+            "explanation": "TaskStore is registered with AddSingleton, so its counter is shared across requests until the process stops."
+          }
+        ]
       },
       {
         "id": "api-contracts",
@@ -13482,6 +13638,18 @@ const LEARNING_PATHS = [
             "section": "TypedResults vs Results",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "POST /tasks is sent with a 121-character title. What does the API return?",
+            "options": [
+              "400 with a validation error for title",
+              "201, with the title cut to 120 characters",
+              "413, because the body is too large"
+            ],
+            "correct": 0,
+            "explanation": "The title is checked after trimming, and a ValidationProblem names the field so a client can show the error where it belongs."
           }
         ]
       },
@@ -13553,6 +13721,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "GET /tasks/abc is sent to the API. What does it return?",
+            "options": [
+              "404, because the route requires an integer ID",
+              "400 with a validation error",
+              "500"
+            ],
+            "correct": 0,
+            "explanation": "The {id:int} constraint stops the route matching at all, which only a test through the real routing can show."
+          }
         ]
       },
       {
@@ -13620,6 +13800,18 @@ const LEARNING_PATHS = [
             "section": "Passing parameters",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How does persistence-api.cs look up a task for GET /tasks/{id}?",
+            "options": [
+              "By ID and the caller's NameIdentifier claim together",
+              "By ID only, then it checks the owner",
+              "By title"
+            ],
+            "correct": 0,
+            "explanation": "Putting the owner in the query means another user's task is simply not found, so it returns 404 rather than revealing the row exists."
           }
         ]
       },
@@ -13793,7 +13985,19 @@ const LEARNING_PATHS = [
               "explanation": "The duplicate unique-key audit failure triggers rollback. A new context sees no new task and only the original audit event."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "persistence-checks.cs inserts a task and then a duplicate audit key in one transaction. What does it expect?",
+            "options": [
+              "DbUpdateException, after which the task insert is rolled back",
+              "Both rows to be saved",
+              "Only the audit row to fail, keeping the task"
+            ],
+            "correct": 0,
+            "explanation": "The audit key has a unique index. Rolling back the transaction removes the task row too, which a fresh context then confirms."
+          }
+        ]
       },
       {
         "id": "capstone",
@@ -13855,6 +14059,18 @@ const LEARNING_PATHS = [
             "section": "Create API endpoints",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "POST /tasks is sent with a body larger than 16 KB. What does the API return?",
+            "options": [
+              "413 Payload Too Large",
+              "400 with a title error",
+              "201"
+            ],
+            "correct": 0,
+            "explanation": "Kestrel's MaxRequestBodySize is set to 16 KB, so an oversized body is refused before the endpoint reads it."
           }
         ]
       },
@@ -14015,7 +14231,19 @@ const LEARNING_PATHS = [
               "explanation": "The deterministic example cancels the budget and reports Budget cancelled. Keep dependency failures separate."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "An HttpClient has a 100 ms Timeout, and the handler never answers. What does SessionClient.Get throw?",
+            "options": [
+              "TaskCanceledException, with a TimeoutException inside",
+              "TimeoutException directly",
+              "Nothing: it waits forever"
+            ],
+            "correct": 0,
+            "explanation": "The timeout cancels the request through its token. The inner TimeoutException tells a timeout apart from a caller's cancellation."
+          }
+        ]
       },
       {
         "id": "concurrency",
@@ -14077,6 +14305,18 @@ const LEARNING_PATHS = [
             "section": "Application-managed concurrency tokens",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "50 tasks call TaskStore.Add at the same time. How many distinct IDs result?",
+            "options": [
+              "50, numbered 1 to 50",
+              "Fewer than 50, because some collide",
+              "1"
+            ],
+            "correct": 0,
+            "explanation": "Add takes a lock around the counter and the dictionary, so concurrent callers cannot read the same next ID."
           }
         ]
       },
@@ -14456,7 +14696,19 @@ const LEARNING_PATHS = [
               "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authorization/resource-based?view=aspnetcore-10.0"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "In persistence-checks.cs, a signed-in user without the tasks permission calls GET /tasks/1. What does the test expect?",
+            "options": [
+              "403 Forbidden",
+              "401 Unauthorized",
+              "404 Not Found"
+            ],
+            "correct": 0,
+            "explanation": "401 means no identity; 403 means an identity that the policy does not allow. The fake principal exists only in the test host."
+          }
+        ]
       },
       {
         "id": "observability",
@@ -14517,6 +14769,18 @@ const LEARNING_PATHS = [
             "section": "ASP.NET Core metrics",
             "reviewed": "2026-09-27",
             "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A MeterListener watches the completion counter while one completion succeeds, one conflicts and one targets a missing task. Which tags are recorded?",
+            "options": [
+              "outcome as success, conflict and missing",
+              "The task ID for each attempt",
+              "No tags"
+            ],
+            "correct": 0,
+            "explanation": "The single outcome tag has three possible values, which keeps the metric low-cardinality. The task ID goes to the log line instead."
           }
         ]
       },
@@ -14705,7 +14969,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does GET /health return?",
+            "options": [
+              "200 with status ok and storage memory",
+              "200 only after a database check",
+              "503 until the first task exists"
+            ],
+            "correct": 0,
+            "explanation": "The endpoint reports that the process answers and that storage is in memory. It is not a readiness check for a database."
+          }
+        ]
       },
       {
         "id": "performance",
@@ -14867,7 +15143,19 @@ const LEARNING_PATHS = [
               "explanation": "ToListAsync materializes the page with the caller token."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What is the largest page size GET /tasks accepts?",
+            "options": [
+              "100: limit=101 returns 400",
+              "20, the default",
+              "There is no limit"
+            ],
+            "correct": 0,
+            "explanation": "Bounding the page keeps each request's work predictable. The default of 20 applies only when no limit is given."
+          }
+        ]
       }
     ],
     "stages": [
@@ -14898,7 +15186,39 @@ const LEARNING_PATHS = [
             "Trace the state changes and explain where input validation runs."
           ],
           "solution": "Reference: practice/foundation.cs; run it using practice/README.md. It prints two open tasks and passes four assertions. Extend it with Find(id) returning a nullable LearningTask, assert a missing lookup, and keep immutable identity/title with controlled Complete behavior. An independent async exercise must demonstrate token cancellation; the notebook reference does not contain a background worker."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "SessionClient.Get(7) receives minutes 1440, then in another call minutes 1441. What happens?",
+            "options": [
+              "1440 is accepted, and 1441 throws FormatException",
+              "Both are accepted",
+              "Both throw FormatException"
+            ],
+            "correct": 0,
+            "explanation": "The client checks the value's range as well as its type, so an impossible duration never becomes a Session."
+          },
+          {
+            "question": "SessionClient.Get(7) receives a valid session with an extra property. What happens?",
+            "options": [
+              "It returns the session; extra properties are allowed",
+              "It throws FormatException",
+              "It returns null"
+            ],
+            "correct": 0,
+            "explanation": "The teaching protocol checks the fields it needs and tolerates additions, so a server can add fields without breaking this client."
+          },
+          {
+            "question": "SessionClient.Get(7) receives a body that is not JSON. What does it throw?",
+            "options": [
+              "JsonException",
+              "FormatException",
+              "HttpRequestException"
+            ],
+            "correct": 0,
+            "explanation": "Syntactically invalid JSON fails in JsonDocument.Parse. FormatException is kept for valid JSON with the wrong shape or values."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -14930,7 +15250,39 @@ const LEARNING_PATHS = [
             "Review and test the generated migration operations. Save them with recovery instructions."
           ],
           "solution": "Runnable baseline: practice/task-api.cs and practice/acceptance.cs, with commands in practice/README.md. The baseline demonstrates validation, snapshots, paging and a process-local version check. Persistent solution: replace TaskStore with an interface-backed scoped EF implementation; keep the same DTOs/statuses, configure an application-managed concurrency token, use migrations instead of EnsureCreated, and commit task/audit changes in one transaction. The ef-evolution lesson supplies token and transaction fragments. Add fresh-context rollback and restart tests. Persistence is an practice extension, not a claim made by the memory baseline."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "An HttpClient has BaseAddress https://example.invalid/api, with no trailing slash. Which path does SessionClient.Get(7) request?",
+            "options": [
+              "/sessions/7",
+              "/api/sessions/7",
+              "/api/7"
+            ],
+            "correct": 0,
+            "explanation": "A relative URI replaces the last path segment unless the base ends with a slash, so the api segment is dropped."
+          },
+          {
+            "question": "POST /tasks is sent with an empty JSON object. What does the API return?",
+            "options": [
+              "400 with a validation error for title",
+              "201 with an empty title",
+              "500"
+            ],
+            "correct": 0,
+            "explanation": "Title is nullable in the request record, so a missing value reaches the same check as a blank one."
+          },
+          {
+            "question": "A task is completed, then completed again with its new version 2. What does the second request return?",
+            "options": [
+              "200, with the task still at version 2",
+              "409",
+              "200, with version 3"
+            ],
+            "correct": 0,
+            "explanation": "Completing a task that is already done returns it unchanged, so a repeated request with the current version is harmless."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -14964,7 +15316,39 @@ const LEARNING_PATHS = [
             "State what remains unverified and what would need to change for multiple replicas."
           ],
           "solution": "Reference architecture: authenticated /tasks route group -> DTO validation -> scoped task service -> EF Core context with owner filtering and concurrency token. Mutations commit task/audit/outbox state atomically; caller token reaches database work; distributed invariants remain in the database. Tests use an isolated relational fixture and test-only fake identities, followed by real-token staging checks. Shared Meter/ActivitySource and structured logs feed a configured collector. Deployment runs reviewed migrations, gates traffic on readiness, retains the prior compatible build and proves backup recovery. Use lessons auth-boundaries through performance as implementation/verification guides. This is a reviewable solution blueprint; the download is intentionally only the runnable local baseline, not a finished secure production service."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A completion is sent with expectedVersion 0. What does the API return?",
+            "options": [
+              "400 with a validation error for expectedVersion",
+              "409",
+              "404"
+            ],
+            "correct": 0,
+            "explanation": "A version below 1 cannot be valid, so it is rejected as bad input before the store compares versions."
+          },
+          {
+            "question": "GET /tasks/99 returns 404. Which content type does the response have?",
+            "options": [
+              "application/problem+json",
+              "text/plain",
+              "application/json"
+            ],
+            "correct": 0,
+            "explanation": "Results.Problem writes a standard problem-details body, so clients can handle every error in one format."
+          },
+          {
+            "question": "GET /tasks?after=-1 is sent. What does the API return?",
+            "options": [
+              "400 with a validation error for after",
+              "200 with every task",
+              "200 with no tasks"
+            ],
+            "correct": 0,
+            "explanation": "A negative cursor is refused instead of being treated as zero, so a client bug is visible."
+          }
+        ]
       }
     ],
     "downloads": [
@@ -18389,6 +18773,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What overall breach rate does analysis.run report for support_tickets.csv?",
+            "options": [
+              "10 of 24 tickets, about 41.7%",
+              "10 of 12 tickets, about 83.3%",
+              "About 26.4%, the mean resolution hours divided by 100"
+            ],
+            "correct": 0,
+            "explanation": "One row is one completed ticket, so the denominator is all 24 tickets and the numerator is the 10 marked as breached."
+          }
         ]
       },
       {
@@ -18438,6 +18834,18 @@ const LEARNING_PATHS = [
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "pd.read_csv loads support_tickets.csv. What are its shape and its number of distinct ticket IDs?",
+            "options": [
+              "24 rows by 8 columns, with 24 distinct IDs",
+              "24 rows by 8 columns, with 12 distinct IDs",
+              "25 rows by 8 columns, with 24 distinct IDs"
+            ],
+            "correct": 0,
+            "explanation": "The header is not a row, and matching the row count with the distinct ID count shows one row per ticket throughout the file."
           }
         ]
       },
@@ -18489,6 +18897,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "API guidance for the pinned practice libraries; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does (df.resolution_hours.to_numpy() > 24).sum() give for the dataset?",
+            "options": [
+              "10, the same as the breached column's sum",
+              "12, because 24 counts as a breach",
+              "0.4167, the share of breaches"
+            ],
+            "correct": 0,
+            "explanation": "A boolean array sums as a count of True values. The strict rule leaves the two 24-hour tickets out, which is why it agrees with the flag."
+          }
         ]
       },
       {
@@ -18538,6 +18958,18 @@ const LEARNING_PATHS = [
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "One created_date is changed to 2026-13-01. What does validate do?",
+            "options": [
+              "Raises ValueError, because the date does not match %Y-%m-%d",
+              "Stores the value as missing",
+              "Rolls it over to January 2027"
+            ],
+            "correct": 0,
+            "explanation": "The date is parsed with an explicit format and errors set to raise, so an impossible month stops the report instead of becoming NaT."
           }
         ]
       },
@@ -18589,6 +19021,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Among high-priority tickets in the dataset, what share breached?",
+            "options": [
+              "2 of 6, about 33.3%",
+              "2 of 24, about 8.3%",
+              "10 of 24, about 41.7%"
+            ],
+            "correct": 0,
+            "explanation": "A rate for a subset uses that subset's own count as the denominator: six high-priority tickets, two of them breached."
+          }
         ]
       },
       {
@@ -18638,6 +19082,18 @@ const LEARNING_PATHS = [
             "section": "Detecting missing values and calculations",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A copy of T001 with a different duration is appended to the data. What does validate do?",
+            "options": [
+              "Raises ValueError: Ticket IDs must be nonblank and unique",
+              "Keeps the later row",
+              "Averages the two durations"
+            ],
+            "correct": 0,
+            "explanation": "The reference has no documented rule for choosing between conflicting records, so it rejects the duplicate instead of picking one silently."
           }
         ]
       },
@@ -18689,6 +19145,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "high = df[df.priority == 'high']. What does high.iloc[1].ticket_id return?",
+            "options": [
+              "T005",
+              "T002",
+              "A KeyError"
+            ],
+            "correct": 0,
+            "explanation": "iloc counts positions in the filtered table, whose second row is T005. Its index label is still 4, from the original table."
+          }
         ]
       },
       {
@@ -18738,6 +19206,18 @@ const LEARNING_PATHS = [
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "T004 has resolution_hours 24. Its breached flag is changed to 1. What does validate do?",
+            "options": [
+              "Raises ValueError: Breach flag disagrees with strict 24-hour rule",
+              "Accepts it, because 24 hours is a breach",
+              "Corrects the flag to 0"
+            ],
+            "correct": 0,
+            "explanation": "The flag is checked against resolution_hours > 24, so a stored value that disagrees with the rule is rejected rather than repaired."
           }
         ]
       },
@@ -19250,7 +19730,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What breach rates does summarize report for billing and technical?",
+            "options": [
+              "Billing about 33.3%, technical 50%",
+              "Billing 40%, technical 60%, sharing the 10 breaches",
+              "Billing about 16.7%, technical 25%, out of all 24"
+            ],
+            "correct": 0,
+            "explanation": "Each team's rate uses its own 12 tickets: 4 breaches for billing and 6 for technical."
+          }
+        ]
       },
       {
         "id": "joins-and-cardinality",
@@ -19379,7 +19871,19 @@ const LEARNING_PATHS = [
               "explanation": "Cardinality validation rejects the duplicate team key. Row counts alone cannot tell which owner is correct."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "teams.csv gains a second billing row. What does attach_owners do?",
+            "options": [
+              "Raises MergeError: the lookup is not many-to-one",
+              "Doubles every billing ticket",
+              "Keeps the first owner"
+            ],
+            "correct": 0,
+            "explanation": "validate='many_to_one' checks the lookup's keys before joining, so a duplicate cannot multiply ticket rows."
+          }
+        ]
       },
       {
         "id": "distributions-and-outliers",
@@ -19429,6 +19933,18 @@ const LEARNING_PATHS = [
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What are the mean and median of resolution_hours in the dataset?",
+            "options": [
+              "Mean about 26.4 hours, median 22 hours",
+              "Mean 22 hours, median about 26.4 hours",
+              "Both 24 hours"
+            ],
+            "correct": 0,
+            "explanation": "A few long tickets, up to 96 hours, pull the mean above the median. Report both and the tail rather than one average."
           }
         ]
       },
@@ -19480,6 +19996,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Tickets are counted per week ending on Sunday. How many fall in the week ending 2026-01-04?",
+            "options": [
+              "4, because the data starts on Thursday 1 January",
+              "7",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "The first week is partial: the data begins mid-week. Say so instead of comparing it with full weeks."
+          }
         ]
       },
       {
@@ -19530,6 +20058,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "API guidance for the pinned practice libraries; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does run() draw in counts.png?",
+            "options": [
+              "One bar per team, showing ticket counts on a labelled axis",
+              "A histogram of resolution hours",
+              "A line of tickets per day"
+            ],
+            "correct": 0,
+            "explanation": "The chart answers the team comparison. Each bar is labelled with its count, and the distribution belongs in a separate histogram."
+          }
         ]
       },
       {
@@ -19579,6 +20119,18 @@ const LEARNING_PATHS = [
             "section": "Pivot and pivot tables",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "pd.crosstab(df.team, df.channel) counts the dataset. What does billing's row show?",
+            "options": [
+              "Chat 4, email 8",
+              "Chat 8, email 4",
+              "Chat 6, email 6"
+            ],
+            "correct": 0,
+            "explanation": "Each team and channel pair is one cell, and the row adds up to billing's 12 tickets."
           }
         ]
       },
@@ -19637,6 +20189,18 @@ const LEARNING_PATHS = [
             "scope": "Study-design context for why a grouped descriptive comparison does not by itself establish causation.",
             "reviewed": "2026-10-02"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "pd.crosstab(df.team, df.priority) is run on the dataset. How are the high-priority tickets spread?",
+            "options": [
+              "All 6 are billing tickets, so team and priority are entangled",
+              "3 billing and 3 technical",
+              "None are billing"
+            ],
+            "correct": 0,
+            "explanation": "A team comparison here is also a priority comparison. The sample cannot separate the two, and neither difference shows a cause."
+          }
         ]
       },
       {
@@ -19686,6 +20250,18 @@ const LEARNING_PATHS = [
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "One resolution_hours value is changed to -3. What does validate do?",
+            "options": [
+              "Raises ValueError: Negative duration",
+              "Accepts it, because it is finite",
+              "Treats it as zero"
+            ],
+            "correct": 0,
+            "explanation": "Being a finite number is not enough. The nonnegative rule is checked before the breach flag."
           }
         ]
       },
@@ -19737,6 +20313,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "One customer_messages value is changed to 1.5. What does validate do?",
+            "options": [
+              "Raises ValueError: Message counts must be nonnegative whole numbers",
+              "Rounds it to 2",
+              "Accepts it, because it is numeric"
+            ],
+            "correct": 0,
+            "explanation": "Counts must be whole numbers. Testing the validation function alone makes the failure quick to check, without writing a report."
+          }
         ]
       },
       {
@@ -19786,6 +20374,18 @@ const LEARNING_PATHS = [
             "section": "Use chunking",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; chunk means must be weighted by their observation counts."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The CSV is read in chunks of 10 rows, and each chunk's sum and count are combined. What mean resolution time results?",
+            "options": [
+              "About 26.4 hours, the same as the whole file",
+              "The mean of the three chunk means",
+              "It cannot be computed from chunks"
+            ],
+            "correct": 0,
+            "explanation": "Sums and counts combine exactly. Averaging chunk means would weight the final 4-row chunk as heavily as the 10-row ones."
           }
         ]
       },
@@ -19844,6 +20444,18 @@ const LEARNING_PATHS = [
             "scope": "Hash API behaviour. Collision resistance is practical evidence, not proof that distinct inputs can never share a digest.",
             "reviewed": "2026-10-02"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which provenance does report.json record?",
+            "options": [
+              "The source file's SHA-256 and the Python, NumPy, pandas and Matplotlib versions",
+              "Only the run date",
+              "The username that ran it"
+            ],
+            "correct": 0,
+            "explanation": "The hash identifies the exact input bytes, and the versions identify the libraries, so a different result can be traced to code or parameters."
+          }
         ]
       },
       {
@@ -19893,6 +20505,18 @@ const LEARNING_PATHS = [
             "section": "Selection, missing data, operations and merge",
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does threshold_rates report for strict thresholds of 12, 24 and 48 hours?",
+            "options": [
+              "About 66.7%, 41.7% and 12.5%",
+              "About 41.7% at every threshold",
+              "About 12.5%, 41.7% and 66.7%"
+            ],
+            "correct": 0,
+            "explanation": "The same 24 tickets give very different rates as the threshold moves, which is why a conclusion should state its threshold."
           }
         ]
       },
@@ -19944,6 +20568,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "pandas 3.0.6 API; examples use fictional ticket data."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A model predicts delay when a ticket arrives. Which two dataset columns must it not use as predictors?",
+            "options": [
+              "resolution_hours and breached",
+              "channel and priority",
+              "team and created_date"
+            ],
+            "correct": 0,
+            "explanation": "Both are outcomes known only after the ticket is resolved. Using them would leak the answer into the model."
+          }
         ]
       }
     ],
@@ -19972,7 +20608,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "The supplied clean file has 24 unique tickets and no missing required values. Keep its raw bytes unchanged. Reject the conflicting duplicate; do not choose a duration silently.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "The breached column is dropped before validate runs. What happens?",
+            "options": [
+              "Raises ValueError: Missing required columns",
+              "The flag is recomputed from resolution_hours",
+              "The report is written without breach rates"
+            ],
+            "correct": 0,
+            "explanation": "The required columns are checked first, so a partial export fails before any calculation."
+          },
+          {
+            "question": "One channel value is changed to phone. What does validate do?",
+            "options": [
+              "Raises ValueError: Unknown channel",
+              "Accepts it as a new channel",
+              "Treats it as email"
+            ],
+            "correct": 0,
+            "explanation": "Each category column has an allowed set, so a new value needs a deliberate decision rather than a silent new group."
+          },
+          {
+            "question": "validate receives the dataset's columns with no rows. What happens?",
+            "options": [
+              "Raises ValueError: Required values must be present in a nonempty table",
+              "Returns an empty table",
+              "Reports a breach rate of 0"
+            ],
+            "correct": 0,
+            "explanation": "An empty export would otherwise produce rates with no denominator, so it is rejected."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -19998,7 +20666,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Use validate=\"many_to_one\" plus merge indicator checks. Each team has 12 tickets. Keep the all-ticket denominator at 24. Report the actual calculated breach counts; the chart labels ticket counts, not hours.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "teams.csv loses its technical row. What does attach_owners do?",
+            "options": [
+              "Raises ValueError: Unmatched team",
+              "Leaves the technical owners blank",
+              "Drops the technical tickets"
+            ],
+            "correct": 0,
+            "explanation": "The merge indicator shows rows that found no owner, and the function refuses to continue rather than lose them."
+          },
+          {
+            "question": "How many rows does attach_owners return for the supplied files?",
+            "options": [
+              "24, the same as the input",
+              "48",
+              "2"
+            ],
+            "correct": 0,
+            "explanation": "Each ticket matches exactly one team row, so the join adds an owner column without changing the grain."
+          },
+          {
+            "question": "What mean resolution hours does summarize report for billing and technical?",
+            "options": [
+              "About 18.2 for billing and 34.7 for technical",
+              "About 26.4 for both",
+              "About 34.7 for billing and 18.2 for technical"
+            ],
+            "correct": 0,
+            "explanation": "Technical has the four longest tickets, so its mean is much higher even though both teams have 12 tickets."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -20027,7 +20727,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Run the independent tests before generating output. Include the 24-row count, table, source hash and limitation in report.json. Treat alternate thresholds as sensitivity checks; exclude outcome fields from intake prediction.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "One resolution_hours value is changed to inf in the CSV. What does validate do?",
+            "options": [
+              "Raises ValueError: Nonfinite resolution_hours",
+              "Accepts it as a very long ticket",
+              "Treats it as missing"
+            ],
+            "correct": 0,
+            "explanation": "pandas reads inf as a float, so the finiteness check, not type conversion, is what rejects it."
+          },
+          {
+            "question": "run() is called twice on the same files, writing to two folders. Are the two report.json files identical?",
+            "options": [
+              "Yes, byte for byte",
+              "No: each contains its run time",
+              "No: the keys are in a different order"
+            ],
+            "correct": 0,
+            "explanation": "The report holds only values computed from the input and library versions, and it is written with sorted keys."
+          },
+          {
+            "question": "A blank line is appended to a copy of the CSV, and run() reads that copy. What changes in report.json?",
+            "options": [
+              "Only source_sha256: it still reports 24 rows",
+              "Nothing at all",
+              "rows becomes 25"
+            ],
+            "correct": 0,
+            "explanation": "pandas skips blank lines, but the hash covers every byte, so the provenance shows the input file changed."
+          }
+        ]
       }
     ],
     "downloads": [
@@ -44715,6 +45447,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How does App.tsx make the completed count available to screen-reader users when it changes?",
+            "options": [
+              "The count is in a paragraph with aria-live set to polite",
+              "It shows an alert dialog",
+              "It changes the page title"
+            ],
+            "correct": 0,
+            "explanation": "A polite live region is announced after the current speech, without moving focus away from the checkbox the user just changed."
+          }
         ]
       },
       {
@@ -44787,6 +45531,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does Number(' 25 ') return?",
+            "options": [
+              "25",
+              "NaN",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "Number ignores surrounding whitespace. That is convenient, but it is also why blank text, which becomes 0, must be rejected first."
+          }
         ]
       },
       {
@@ -44845,6 +45601,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "javascript-steps.js builds toggled with map and a spread copy. What is lessons[0].done afterwards?",
+            "options": [
+              "false: the original record is unchanged",
+              "true",
+              "undefined"
+            ],
+            "correct": 0,
+            "explanation": "The spread creates a new object for the changed row, so the original array and its records stay as they were."
+          }
         ]
       },
       {
@@ -44902,6 +45670,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "transition(rows, {type: 'complete', id: 'a'}) is called. What happens to rows?",
+            "options": [
+              "Nothing: a new array is returned and rows is unchanged",
+              "rows is updated in place",
+              "rows becomes empty"
+            ],
+            "correct": 0,
+            "explanation": "The function depends only on its inputs and returns a new value, which makes it easy to test and safe to call repeatedly."
+          }
         ]
       },
       {
@@ -44957,6 +45737,18 @@ const LEARNING_PATHS = [
             "section": "Chaining",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "makeHttpLoader's fetcher returns a 404 response. What does the loader do?",
+            "options": [
+              "Throws Error: HTTP 404",
+              "Returns the 404 body as a lesson",
+              "Returns undefined"
+            ],
+            "correct": 0,
+            "explanation": "fetch resolves for HTTP errors, so the loader checks response.ok itself before reading the body."
           }
         ]
       },
@@ -45021,6 +45813,18 @@ const LEARNING_PATHS = [
             "section": "Union types",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "parseSession receives a valid session with an extra field, source. What does it return?",
+            "options": [
+              "ok false, with the error exact fields required",
+              "ok true, ignoring source",
+              "ok true, keeping source"
+            ],
+            "correct": 0,
+            "explanation": "The runtime check compares the exact field names. A TypeScript type alone would never see the extra field."
           }
         ]
       },
@@ -45363,7 +46167,19 @@ const LEARNING_PATHS = [
               "url": "https://react.dev/learn/passing-props-to-a-component"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which key does App.tsx give each lesson in its list?",
+            "options": [
+              "row.id, the stable record ID",
+              "The array index",
+              "row.title"
+            ],
+            "correct": 0,
+            "explanation": "A stable ID keeps React's link between each record and its rendered item when the list is filtered or reordered."
+          }
+        ]
       },
       {
         "id": "state",
@@ -45871,7 +46687,19 @@ const LEARNING_PATHS = [
               "url": "https://react.dev/learn/queueing-a-series-of-state-updates"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "reducer(state, {type: 'toggle', id: 'missing'}) is called. What does it return?",
+            "options": [
+              "A new array with the same records",
+              "The same array object",
+              "An empty array"
+            ],
+            "correct": 0,
+            "explanation": "map always returns a new array, even when no row matches. The records inside are the same objects, so nothing visible changes."
+          }
+        ]
       },
       {
         "id": "forms",
@@ -46029,7 +46857,19 @@ const LEARNING_PATHS = [
               "explanation": "Visible results are calculated rather than independently stored and synchronized."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "reducer receives an add action with the title ' x '. What does it return?",
+            "options": [
+              "The same state, because the trimmed title is shorter than 2 characters",
+              "A new lesson titled x",
+              "A new lesson titled ' x '"
+            ],
+            "correct": 0,
+            "explanation": "The reducer enforces the title rule itself, so the form's own check is a convenience for the user rather than the only guard."
+          }
+        ]
       },
       {
         "id": "effects",
@@ -46389,7 +47229,19 @@ const LEARNING_PATHS = [
               "url": "https://react.dev/learn/synchronizing-with-effects"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does makeHttpLoader pass to fetch besides the URL?",
+            "options": [
+              "The caller's AbortSignal",
+              "A timeout in milliseconds",
+              "Nothing"
+            ],
+            "correct": 0,
+            "explanation": "Passing the signal lets the effect's cleanup cancel a request that is no longer wanted."
+          }
+        ]
       },
       {
         "id": "capstone",
@@ -46437,6 +47289,18 @@ const LEARNING_PATHS = [
             "section": "Extracting state logic into a reducer",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A list of lessons is passed through encodeSaved and then decodeSaved. What comes back?",
+            "options": [
+              "The same lessons",
+              "The lessons without their done flags",
+              "An error, because the version is missing"
+            ],
+            "correct": 0,
+            "explanation": "The encoder writes version 1 with the lessons, and the decoder checks each record, so a round trip preserves valid data."
           }
         ]
       },
@@ -46570,7 +47434,19 @@ const LEARNING_PATHS = [
               "explanation": "After the current synchronous work completes, the promise callback logs B."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "makeHttpLoader('/api/') creates a loader, which then loads the id 'a b'. Which URL is fetched?",
+            "options": [
+              "/api/lessons/a%20b",
+              "/api//lessons/a b",
+              "/lessons/a%20b"
+            ],
+            "correct": 0,
+            "explanation": "The returned function keeps the base URL in its closure, with the trailing slash removed, and encodes the ID."
+          }
+        ]
       },
       {
         "id": "type-design",
@@ -46623,6 +47499,18 @@ const LEARNING_PATHS = [
             "section": "Discriminated unions",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "transition is called from plain JavaScript with the action {type: 'rename'}. What does it return?",
+            "options": [
+              "The action object itself",
+              "The rows unchanged",
+              "An error"
+            ],
+            "correct": 0,
+            "explanation": "The never check works only at compile time. At run time the default branch returns whatever reached it, which is why untrusted input needs validation first."
           }
         ]
       },
@@ -46768,7 +47656,19 @@ const LEARNING_PATHS = [
               "explanation": "Create a new array and changed objects. Test invariants and the deliberately selected unknown-ID behavior."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "reducer receives an add action whose id is already in the state. What does it return?",
+            "options": [
+              "The same state: IDs must be unique",
+              "The state with a second record for that ID",
+              "The state with the old record replaced"
+            ],
+            "correct": 0,
+            "explanation": "The reducer protects its own invariant, so no caller can create two records with one ID."
+          }
+        ]
       },
       {
         "id": "context-hooks",
@@ -46821,6 +47721,18 @@ const LEARNING_PATHS = [
             "section": "Custom Hooks share stateful logic, not state itself",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "AdvancedApp receives a title that is too short. Where does it put focus?",
+            "options": [
+              "Back on the title input, through titleRef",
+              "On the error message",
+              "Nowhere: focus stays on the button"
+            ],
+            "correct": 0,
+            "explanation": "useRef gives the component a handle on its own input, so it can return focus there without querying the document."
           }
         ]
       },
@@ -46875,6 +47787,18 @@ const LEARNING_PATHS = [
             "section": "Resetting state with a key",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which ID does AdvancedApp give a new lesson?",
+            "options": [
+              "One from crypto.randomUUID(), created when the lesson is added",
+              "Its position in the list",
+              "Its title"
+            ],
+            "correct": 0,
+            "explanation": "An ID created once and stored with the record keeps the item's identity stable when titles change or rows are removed."
           }
         ]
       },
@@ -47258,7 +48182,19 @@ const LEARNING_PATHS = [
               "url": "https://react.dev/learn/synchronizing-with-effects"
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "makeHttpLoader asks for lesson types and receives a body whose id is state. What happens?",
+            "options": [
+              "It throws Invalid lesson response",
+              "It returns the state lesson",
+              "It returns the types lesson with the state title"
+            ],
+            "correct": 0,
+            "explanation": "Checking that the response is for the requested ID catches a mismatched or stale answer at the boundary."
+          }
+        ]
       },
       {
         "id": "routing",
@@ -47313,6 +48249,18 @@ const LEARNING_PATHS = [
             "section": "When popstate is sent",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "RemoteLesson opens with no lesson parameter in the URL. Which lesson does it load?",
+            "options": [
+              "types",
+              "state",
+              "None: it shows an error"
+            ],
+            "correct": 0,
+            "explanation": "selected() falls back to types, so a plain link still opens a valid screen while ?lesson=state can be shared."
           }
         ]
       },
@@ -47369,6 +48317,18 @@ const LEARNING_PATHS = [
             "section": "Setup",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does node --experimental-strip-types tracker-core.test.ts print when it passes?",
+            "options": [
+              "All tracker domain tests passed.",
+              "PASS: 5 component tests",
+              "Nothing"
+            ],
+            "correct": 0,
+            "explanation": "The domain tests run without React or a browser, so reducer and backup rules can be checked in milliseconds."
           }
         ]
       },
@@ -47431,6 +48391,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Primary guidance checked for framework escape hatches and untrusted HTML/URL boundaries; not a full application security audit."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "decodeSaved receives a backup with 1001 lessons. What happens?",
+            "options": [
+              "It throws Too many lessons",
+              "It keeps the first 1000",
+              "It accepts all 1001"
+            ],
+            "correct": 0,
+            "explanation": "An imported file is untrusted input. Bounding its size protects the page from oversized or malicious backups."
+          }
         ]
       },
       {
@@ -47490,6 +48462,18 @@ const LEARNING_PATHS = [
             "section": "Should you add memo everywhere?",
             "reviewed": "2026-09-27",
             "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does node performance-runner.js report for records and matches?",
+            "options": [
+              "10000 records and 1000 matches, with a time that varies by machine",
+              "1000 records and 100 matches",
+              "Only a time in milliseconds"
+            ],
+            "correct": 0,
+            "explanation": "Reporting the workload beside the timing makes measurements comparable. One in ten generated titles contains focus."
           }
         ]
       },
@@ -47651,7 +48635,19 @@ const LEARNING_PATHS = [
               "explanation": "Record what was tested and prepare observation and rollback evidence."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does saveLocal write, and under which key?",
+            "options": [
+              "A version 2 backup under learning-tracker-v2",
+              "A version 1 backup under learning-tracker",
+              "Only the lesson titles"
+            ],
+            "correct": 0,
+            "explanation": "The stored format has its own version, and migrateSaved still reads version 1, so a release can change the format without losing saved work."
+          }
+        ]
       }
     ],
     "stages": [
@@ -47680,7 +48676,39 @@ const LEARNING_PATHS = [
             "Explain where runtime validation ends and static typing begins."
           ],
           "solution": "Parse into unknown. Check the envelope version and array. Validate each record and use a Set for duplicate IDs. Construct new typed records. Derive counts with filter/reduce. See decodeSaved and tracker-core.test.ts for a reference implementation; attempt your own before opening it."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does Number('12px') return?",
+            "options": [
+              "NaN",
+              "12",
+              "0"
+            ],
+            "correct": 0,
+            "explanation": "Number needs the whole string to be numeric, unlike parseInt, so a unit suffix makes the result NaN."
+          },
+          {
+            "question": "parseSession receives {id: ' a ', minutes: 0, done: false}. What does it return?",
+            "options": [
+              "ok true, with the id trimmed to a",
+              "ok false, because minutes is 0",
+              "ok false, because the id has spaces"
+            ],
+            "correct": 0,
+            "explanation": "Zero is a valid duration, and the id is trimmed after the check that it is not blank."
+          },
+          {
+            "question": "parseSession receives an empty array. What does it return?",
+            "options": [
+              "ok false, with the error object required",
+              "ok false, with the error exact fields required",
+              "ok true"
+            ],
+            "correct": 0,
+            "explanation": "Arrays are objects in JavaScript, so the parser rejects them explicitly before reading fields."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -47709,7 +48737,39 @@ const LEARNING_PATHS = [
             "Explain the ownership of each state value."
           ],
           "solution": "Separate tracker-core.ts from AdvancedApp.tsx. Generate IDs in event handlers, validate domain transitions in the reducer, derive filtered rows during rendering and use a labeled form. The downloadable workshop implements these interactions in memory; storage and API synchronization are separate extensions."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "The state already holds 1000 lessons, and reducer receives a valid add. What does it return?",
+            "options": [
+              "The same state: 1000 is the maximum",
+              "1001 lessons",
+              "An error"
+            ],
+            "correct": 0,
+            "explanation": "MAX_LESSONS bounds the state the reducer can create, matching the limit the backup decoder accepts."
+          },
+          {
+            "question": "decodeSaved receives a version 1 backup with two records that share an id. What happens?",
+            "options": [
+              "It throws Invalid lesson record",
+              "It keeps both",
+              "It keeps the second"
+            ],
+            "correct": 0,
+            "explanation": "The decoder tracks the IDs it has seen, so a backup cannot break the uniqueness rule the reducer enforces."
+          },
+          {
+            "question": "A version 2 backup is passed to decodeSaved and to migrateSaved. What happens?",
+            "options": [
+              "decodeSaved throws, and migrateSaved accepts it",
+              "Both accept it",
+              "Both throw"
+            ],
+            "correct": 0,
+            "explanation": "decodeSaved reads only version 1. migrateSaved recognises version 2 and converts it before decoding."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -47740,7 +48800,39 @@ const LEARNING_PATHS = [
             "Rollback/migration behavior is specified."
           ],
           "solution": "Start from the tested domain core. Add storage and API adapters around it, not inside the reducer. Use request cleanup and stale-result guards or a suitable framework data layer. Test adapter failures deterministically. The supplied app is a reference starting point, not a claim that these advanced extensions are already implemented."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "loadLocal is called on storage with nothing saved under its key. What does it return?",
+            "options": [
+              "null",
+              "An empty array",
+              "It throws"
+            ],
+            "correct": 0,
+            "explanation": "Nothing saved is different from an empty saved list, so the caller can decide whether to show starter lessons."
+          },
+          {
+            "question": "migrateSaved receives a backup with version 3. What happens?",
+            "options": [
+              "It throws Unsupported saved format",
+              "It treats it as version 2",
+              "It returns an empty list"
+            ],
+            "correct": 0,
+            "explanation": "An unknown future version is refused rather than guessed at, so data from a newer release is not misread."
+          },
+          {
+            "question": "filterRows(makeRows(), '  FOCUS ') is called. How many rows does it return?",
+            "options": [
+              "1000",
+              "0",
+              "10000"
+            ],
+            "correct": 0,
+            "explanation": "The query is trimmed and lower-cased before matching, so spacing and case do not change the result."
+          }
+        ]
       }
     ],
     "resources": {
@@ -54371,7 +55463,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "TB"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does run_python('print(42)') return?",
+            "options": [
+              "Status 0, stdout 42 with a newline, and empty stderr",
+              "The integer 42",
+              "Status 42"
+            ],
+            "correct": 0,
+            "explanation": "The child is a separate process. The parent sees only what the operating system reports back: an exit status and two streams."
+          }
+        ]
       },
       {
         "id": "paths-and-working-directory",
@@ -54425,6 +55529,18 @@ const LEARNING_PATHS = [
             "section": "Start of resolution",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The parent changes its working directory, then calls run_python with code that prints os.getcwd(). What does the child print?",
+            "options": [
+              "The parent's new working directory",
+              "The folder that contains diagnostic_lab.py",
+              "The user's home directory"
+            ],
+            "correct": 0,
+            "explanation": "run_python sets no cwd, so the child inherits the parent's working directory, and relative paths resolve from there."
           }
         ]
       },
@@ -54480,6 +55596,18 @@ const LEARNING_PATHS = [
             "section": "Pathname lookup",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How does diagnostic_lab.classify label a FileNotFoundError?",
+            "options": [
+              "configuration",
+              "access",
+              "application validation"
+            ],
+            "correct": 0,
+            "explanation": "A missing file usually means a wrong path or working directory, so the evidence to check first is the configuration."
           }
         ]
       },
@@ -54542,6 +55670,18 @@ const LEARNING_PATHS = [
             "section": "subprocess argument sequences",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "run_python passes the argument *.csv to a child that prints sys.argv[1:]. What does it print?",
+            "options": [
+              "['*.csv']: no shell expands the pattern",
+              "The CSV files in the working directory",
+              "An empty list"
+            ],
+            "correct": 0,
+            "explanation": "The argument list goes straight to the child process, so glob characters stay literal text."
           }
         ]
       },
@@ -54663,7 +55803,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "LR"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A child prints a warning to stderr and exits normally. What does run_python report?",
+            "options": [
+              "Status 0, with the warning in stderr",
+              "A nonzero status, because stderr is not empty",
+              "The warning in stdout"
+            ],
+            "correct": 0,
+            "explanation": "The streams and the exit status are separate. Text on stderr is a diagnostic, not by itself a failure."
+          }
+        ]
       },
       {
         "id": "permissions-and-identities",
@@ -55089,7 +56241,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "How does classify label a PermissionError?",
+            "options": [
+              "access",
+              "configuration",
+              "lifecycle"
+            ],
+            "correct": 0,
+            "explanation": "The path was found, but the identity running the program may not use it, so check owners, modes and parent directories."
+          }
+        ]
       },
       {
         "id": "processes-and-exit-status",
@@ -55143,6 +56307,18 @@ const LEARNING_PATHS = [
             "section": "subprocess returncode",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A child runs raise SystemExit('bad input'). What does run_python report?",
+            "options": [
+              "Status 1, with bad input on stderr",
+              "Status 0, with bad input on stdout",
+              "Status 2, with no output"
+            ],
+            "correct": 0,
+            "explanation": "Python prints a string exit message to stderr and exits with status 1, so automation can detect the failure."
           }
         ]
       },
@@ -55205,6 +56381,18 @@ const LEARNING_PATHS = [
             "section": "subprocess env",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The parent sets NOTEBOOK_LAB=on in os.environ, then runs a child that prints that variable. What does it print?",
+            "options": [
+              "on: the child inherits the environment at start",
+              "Nothing: children start with an empty environment",
+              "unset"
+            ],
+            "correct": 0,
+            "explanation": "A child receives a copy of the parent's environment when it starts. Later changes in either process do not reach the other."
           }
         ]
       },
@@ -55346,7 +56534,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "TB"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "run_python runs time.sleep(5) with timeout 0.2. What happens, and how does classify label it?",
+            "options": [
+              "TimeoutExpired is raised, labelled lifecycle",
+              "It returns status 0 after five seconds",
+              "ValueError is raised, labelled application validation"
+            ],
+            "correct": 0,
+            "explanation": "The bounded wait turns a hung child into an explicit error instead of a stuck parent."
+          }
+        ]
       },
       {
         "id": "signals-and-shutdown",
@@ -55400,6 +56600,18 @@ const LEARNING_PATHS = [
             "section": "Signal dispositions",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which signal gives a worker the chance to run its cleanup code?",
+            "options": [
+              "SIGTERM, which requests shutdown",
+              "SIGKILL",
+              "Neither: signals always stop a process at once"
+            ],
+            "correct": 0,
+            "explanation": "SIGTERM can be handled, so a worker can finish or record its current job. SIGKILL ends the process without cleanup."
           }
         ]
       },
@@ -55463,6 +56675,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In which unit does ps usually show VSZ and RSS?",
+            "options": [
+              "KiB, though your ps manual should confirm it",
+              "Bytes",
+              "Pages"
+            ],
+            "correct": 0,
+            "explanation": "Comparing memory figures needs the same unit and metric, so check the manual before reading a number as a size."
+          }
         ]
       },
       {
@@ -55517,6 +56741,18 @@ const LEARNING_PATHS = [
             "section": "Process resources shared by threads",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Two separate processes update one counter file. Does a threading lock inside one of them protect the update?",
+            "options": [
+              "No: separate processes need coordination they can both access",
+              "Yes: a lock protects the file for every process",
+              "Yes, if both use the same lock name"
+            ],
+            "correct": 0,
+            "explanation": "A lock object lives in one process's memory. Another process cannot see it, so it needs something shared, such as a file lock or a database."
           }
         ]
       },
@@ -55589,6 +56825,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Primary API documentation for the optional mechanism lab. Runtime prerequisites and execution evidence are separate in mechanism-lab.md."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "On Linux, linux_fd_drill.py opens descriptors in a child until open fails, then closes them. How do the counts before and after cleanup compare?",
+            "options": [
+              "They are equal, and opening one more then succeeds",
+              "After cleanup is higher, because closed descriptors stay reserved",
+              "After cleanup is zero"
+            ],
+            "correct": 0,
+            "explanation": "Closing every handle in a finally block returns the descriptors, which is how the drill shows a leak is avoidable."
+          }
         ]
       },
       {
@@ -55650,6 +56898,18 @@ const LEARNING_PATHS = [
             "section": "Synchronized I/O",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A program writes a file and closes it. Is the data then guaranteed to be on the storage device?",
+            "options": [
+              "No: buffers and kernel caches reach storage at different times",
+              "Yes: closing a file writes it to disk",
+              "Yes, if the file is small"
+            ],
+            "correct": 0,
+            "explanation": "Durability needs explicit steps such as fsync and depends on the filesystem and device. A successful close is not proof."
           }
         ]
       },
@@ -55713,6 +56973,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A notebook server listens on 127.0.0.1. Can a phone on the same Wi-Fi reach it?",
+            "options": [
+              "No: loopback is reachable only from that computer",
+              "Yes, on the same port",
+              "Yes, if the firewall is off"
+            ],
+            "correct": 0,
+            "explanation": "A loopback listener accepts connections only from the same machine. Another device needs a reachable host address and network policy."
+          }
         ]
       },
       {
@@ -55774,6 +57046,18 @@ const LEARNING_PATHS = [
             "section": "Process inspection",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does a systemd unit typically describe?",
+            "options": [
+              "The executable, identity, working directory, dependencies and restart policy",
+              "Only the command to run",
+              "The application's health checks and their results"
+            ],
+            "correct": 0,
+            "explanation": "The unit tells the supervisor how to run the process. Whether the application is ready to accept work needs its own check."
           }
         ]
       },
@@ -55837,6 +57121,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How does classify label a RuntimeError?",
+            "options": [
+              "unclassified; inspect evidence",
+              "application validation",
+              "configuration"
+            ],
+            "correct": 0,
+            "explanation": "An error outside the known categories is not forced into one, so the investigation starts from the evidence rather than a guess."
+          }
         ]
       },
       {
@@ -55898,6 +57194,18 @@ const LEARNING_PATHS = [
             "section": "Bounded child process timeout",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does backlog(8, 10, 60, initial=120) return?",
+            "options": [
+              "0: the queue drains and never goes negative",
+              "-120",
+              "240"
+            ],
+            "correct": 0,
+            "explanation": "Service exceeds arrivals by 2 per second, which clears 120 jobs in 60 seconds. A queue cannot hold fewer than zero."
           }
         ]
       },
@@ -56056,7 +57364,19 @@ const LEARNING_PATHS = [
             }
           ],
           "direction": "TB"
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which resources can namespaces give a process its own view of?",
+            "options": [
+              "Process IDs, mounts and networking, among others",
+              "CPU time and memory budgets",
+              "Only the hostname"
+            ],
+            "correct": 0,
+            "explanation": "Namespaces change what a process sees. cgroups account for and limit what it uses."
+          }
+        ]
       },
       {
         "id": "security-and-packages",
@@ -56110,6 +57430,18 @@ const LEARNING_PATHS = [
             "section": "Permission checks",
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "run_python receives a 5000-character source string. What happens?",
+            "options": [
+              "Raises ValueError: source must be a bounded trusted string",
+              "It runs the code in a sandbox",
+              "It runs the first 4096 characters"
+            ],
+            "correct": 0,
+            "explanation": "The bounds limit the teaching helper, but it is not a sandbox: it must only ever run trusted snippets."
           }
         ]
       },
@@ -56175,6 +57507,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How does classify label a ValueError?",
+            "options": [
+              "application validation",
+              "configuration",
+              "access"
+            ],
+            "correct": 0,
+            "explanation": "The program ran and read its input, but rejected a value, so the input data and its schema are the next things to inspect."
+          }
         ]
       },
       {
@@ -56230,6 +57574,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How many tests does python -m unittest test_os_labs run, and does it include the descriptor drill?",
+            "options": [
+              "8 portable tests; the Linux descriptor drill is separate",
+              "9 tests, including the descriptor drill",
+              "8 tests, including the descriptor drill"
+            ],
+            "correct": 0,
+            "explanation": "The suite runs on any platform. Linux-only behaviour needs linux_fd_drill.py run on Linux before it counts as evidence."
+          }
         ]
       }
     ],
@@ -56259,7 +57615,39 @@ const LEARNING_PATHS = [
             "Explains PowerShell/Bash and file-path differences."
           ],
           "solution": "python diagnostic_lab.py\n# path -> configuration; permission -> access\n# timeout -> lifecycle; bad-row -> application validation\n# Follow linux-observation.md only in an existing Linux session.\n# Keep exact sanitized commands/output in your own evidence.md."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does backlog(True, 10, 1) do?",
+            "options": [
+              "Raises ValueError: finite nonnegative numeric inputs required",
+              "Treats True as 1 and returns 0",
+              "Returns True"
+            ],
+            "correct": 0,
+            "explanation": "bool is a subclass of int in Python, so the model checks the exact type to stop a flag being read as a rate."
+          },
+          {
+            "question": "What does run_python('pass', timeout=11) do?",
+            "options": [
+              "Raises ValueError: timeout must be positive and at most 10 seconds",
+              "Runs with an 11-second limit",
+              "Runs with no limit"
+            ],
+            "correct": 0,
+            "explanation": "The helper caps how long a teaching child may run, so a mistake cannot leave a process waiting for minutes."
+          },
+          {
+            "question": "run_python is given 11 arguments. What happens?",
+            "options": [
+              "Raises ValueError: arguments exceed teaching bounds",
+              "Only the first 10 are passed",
+              "All 11 are passed"
+            ],
+            "correct": 0,
+            "explanation": "Inputs outside the helper's bounds are refused, not trimmed, so the caller knows exactly what ran."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -56287,7 +57675,39 @@ const LEARNING_PATHS = [
             "Does not label trusted execution as an untrusted-code sandbox."
           ],
           "solution": "\"\"\"Portable OS reasoning lab. No host changes, arbitrary commands or real load.\"\"\"\nfrom dataclasses import dataclass\nimport subprocess\nimport sys\n\n@dataclass(frozen=True)\nclass Result:\n    status: int\n    stdout: str\n    stderr: str\n\ndef run_python(source, arguments=(), timeout=2):\n    \"\"\"Trusted teaching snippets only, direct Python child, bounded example output.\n\n    This is NOT a sandbox: never pass untrusted source. The test snippets emit\n    bounded output; arbitrary source could emit unbounded output or descendants.\n    \"\"\"\n    if not isinstance(source, str) or len(source) > 4096:\n        raise ValueError('source must be a bounded trusted string')\n    if not 0 < timeout <= 10:\n        raise ValueError('timeout must be positive and at most 10 seconds')\n    if len(arguments) > 10 or any(not isinstance(a, str) or len(a) > 256 for a in arguments):\n        raise ValueError('arguments exceed teaching bounds')\n    value = subprocess.run([sys.executable, '-c', source, *arguments],\n                           capture_output=True, text=True, timeout=timeout)\n    return Result(value.returncode, value.stdout, value.stderr)\n\ndef classify(error):\n    if isinstance(error, FileNotFoundError): return 'configuration'\n    if isinstance(error, PermissionError): return 'access'\n    if isinstance(error, subprocess.TimeoutExpired): return 'lifecycle'\n    if isinstance(error, ValueError): return 'application validation'\n    return 'unclassified; inspect evidence'\n\ndef backlog(arrival_per_second, service_per_second, duration_seconds, initial=0):\n    values = (arrival_per_second, service_per_second, duration_seconds, initial)\n    if any(type(v) not in (int, float) or v < 0 for v in values):\n        raise ValueError('finite nonnegative numeric inputs required')\n    import math\n    if not all(math.isfinite(v) for v in values):\n        raise ValueError('finite nonnegative numeric inputs required')\n    return max(0, initial + (arrival_per_second - service_per_second) * duration_seconds)\n\ndef demo():\n    examples = [('path', FileNotFoundError()), ('permission', PermissionError()),\n                ('timeout', subprocess.TimeoutExpired('trusted-child', 0.1)),\n                ('bad-row', ValueError())]\n    for label, error in examples: print(f'{label} -> {classify(error)}')\n    result = run_python('print(42)')\n    print(f'child status={result.status} output={result.stdout.strip()}')\n    print(f'modeled backlog={backlog(14, 10, 30)}')\n\nif __name__ == '__main__': demo()\n"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What is the last line python diagnostic_lab.py prints?",
+            "options": [
+              "modeled backlog=120",
+              "child status=0 output=42",
+              "bad-row -> application validation"
+            ],
+            "correct": 0,
+            "explanation": "The demo classifies four errors, runs one child and ends with the backlog model for 14 arrivals and 10 services a second over 30 seconds."
+          },
+          {
+            "question": "A child runs sys.exit(3) and prints nothing. What does run_python report?",
+            "options": [
+              "Status 3, with empty stdout and stderr",
+              "Status 0",
+              "Status 1, with an error on stderr"
+            ],
+            "correct": 0,
+            "explanation": "The exit code passes through unchanged. A nonzero status with no message is still a failure, and a poor diagnostic."
+          },
+          {
+            "question": "What does backlog(10, 10, 60, initial=5) return?",
+            "options": [
+              "5: arrivals match service, so the queue stays as it was",
+              "0",
+              "600"
+            ],
+            "correct": 0,
+            "explanation": "When arrival and service rates are equal, the model neither grows nor drains the existing backlog."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -56316,7 +57736,39 @@ const LEARNING_PATHS = [
             "Report redacts secrets and names its untested platform/production boundaries."
           ],
           "solution": "from diagnostic_lab import backlog, classify\nprint(backlog(14, 10, 30))  # 120 modeled queued jobs\nprint(backlog(8, 10, 60, 120))  # 0 after drain\nprint(classify(FileNotFoundError()))  # configuration\n# Add an independent failure/recovery case and sanitized evidence note."
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "On Linux, which error makes linux_fd_drill.py stop opening descriptors?",
+            "options": [
+              "EMFILE: too many open files for the process",
+              "ENOSPC: no space left on device",
+              "EACCES: permission denied"
+            ],
+            "correct": 0,
+            "explanation": "The child lowers its own descriptor limit, so it reaches the per-process limit quickly without affecting the parent or the host."
+          },
+          {
+            "question": "What does backlog(float('inf'), 10, 1) do?",
+            "options": [
+              "Raises ValueError: finite nonnegative numeric inputs required",
+              "Returns infinity",
+              "Returns 0"
+            ],
+            "correct": 0,
+            "explanation": "An infinite rate would make every answer meaningless, so the model refuses it."
+          },
+          {
+            "question": "How does classify label a subprocess.CalledProcessError?",
+            "options": [
+              "unclassified; inspect evidence",
+              "lifecycle",
+              "application validation"
+            ],
+            "correct": 0,
+            "explanation": "A failed child can fail for many reasons, so the label sends you to its status and streams instead of guessing a cause."
+          }
+        ]
       }
     ],
     "downloads": [
@@ -56652,6 +58104,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. fictional ticket examples illustrate fitting and predicting: estimator basics."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In metrics_lab.make_tickets, what decides a row's breached label?",
+            "options": [
+              "Whether resolution_hours is above 24",
+              "The number of customer messages",
+              "A random draw stored separately from the hours"
+            ],
+            "correct": 0,
+            "explanation": "The label is computed from the outcome duration, so the target matches the question: does the ticket end up taking more than a day?"
+          }
         ]
       },
       {
@@ -56707,6 +58171,18 @@ const LEARNING_PATHS = [
             "section": "Inconsistent preprocessing; data leakage; controlling randomness",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Data leakage and feature availability. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which fields does ml_lab pass to the model as inputs?",
+            "options": [
+              "channel, priority, team and customer_messages",
+              "All of those plus resolution_hours",
+              "ticket_id and created_date"
+            ],
+            "correct": 0,
+            "explanation": "FEATURES lists only values known at intake. The duration and the label are outcomes, and IDs carry no general signal."
           }
         ]
       },
@@ -56770,6 +58246,18 @@ const LEARNING_PATHS = [
             "section": "Mean and median prediction strategies",
             "scope": "Constant regression baselines. The exercise calculates its own absolute error.",
             "reviewed": "2026-10-02"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "run(final=True) also scores a most-frequent baseline on the test rows. What does it get?",
+            "options": [
+              "Accuracy about 64.6%, recall 0",
+              "Accuracy about 35.4%, recall 1",
+              "Accuracy 50%, recall 0.5"
+            ],
+            "correct": 0,
+            "explanation": "Predicting no breach for everyone is right for the majority and misses every breach, which is why accuracy alone is not the measure."
           }
         ]
       },
@@ -56930,7 +58418,19 @@ const LEARNING_PATHS = [
               "explanation": "Final labels contribute only to metrics. If those metrics prompt another model change, use new held-out data for the next final assessment."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "time_split receives the 240 generated tickets. What does it return?",
+            "options": [
+              "144 training, 48 validation and 48 test rows, in date order",
+              "A random 60/20/20 split",
+              "192 training and 48 test rows"
+            ],
+            "correct": 0,
+            "explanation": "The partitions are consecutive date ranges, so validation and test always come after the rows the model learns from."
+          }
+        ]
       },
       {
         "id": "classification-metrics",
@@ -56985,6 +58485,18 @@ const LEARNING_PATHS = [
             "section": "Classification metrics; regression metrics; dummy estimators",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Confusion counts, precision and recall. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does confusion([1, 0, 1, 0], [1, 1, 0, 0]) report?",
+            "options": [
+              "One of each outcome, so precision and recall are both 0.5",
+              "Two true positives, so recall is 1",
+              "Accuracy 0.75"
+            ],
+            "correct": 0,
+            "explanation": "There is one true positive, one false positive, one false negative and one true negative, so every ratio is one in two."
           }
         ]
       },
@@ -57042,6 +58554,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. MAE, MSE, RMSE and R-squared. Fictional examples do not establish real-service performance."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does mae([4, 10], [6, 6]) return?",
+            "options": [
+              "3.0",
+              "2.0",
+              "4.0"
+            ],
+            "correct": 0,
+            "explanation": "The absolute errors are 2 and 4, and their mean is 3, in the same unit as the target."
+          }
         ]
       },
       {
@@ -57097,6 +58621,18 @@ const LEARNING_PATHS = [
             "section": "Computing cross-validated metrics; grouped data; time series split",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Stratification and its limits. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How many of make_tickets' 240 rows are breaches?",
+            "options": [
+              "95, about 39.6%",
+              "120, exactly half",
+              "24, 10%"
+            ],
+            "correct": 0,
+            "explanation": "Count the classes before choosing a metric: a model that never predicts a breach would still be right about 60% of the time."
           }
         ]
       },
@@ -57154,6 +58690,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Ordinary least squares. Fictional examples do not establish real-service performance."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "mae receives a prediction of NaN. What happens?",
+            "options": [
+              "Raises ValueError: Require finite numbers",
+              "Returns NaN",
+              "Skips that pair"
+            ],
+            "correct": 0,
+            "explanation": "A non-finite value would make the average meaningless, so the metric refuses it instead of reporting a misleading error."
+          }
         ]
       },
       {
@@ -57209,6 +58757,18 @@ const LEARNING_PATHS = [
             "section": "Ordinary least squares; ridge regression; logistic regression",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Binary logistic regression and thresholds. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does classify([0.5, 0.49], 0.5) return?",
+            "options": [
+              "[1, 0]",
+              "[0, 0]",
+              "[1, 1]"
+            ],
+            "correct": 0,
+            "explanation": "The rule is probability >= threshold, so a score exactly at the threshold becomes a positive."
           }
         ]
       },
@@ -57273,6 +58833,18 @@ const LEARNING_PATHS = [
             "scope": "Integer encoding can impose an artificial order or spacing. One-hot encoding and training-only preprocessing are checked with the pinned practice version.",
             "reviewed": "2026-10-02"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The fitted pipeline receives channel phone, which training never saw. What happens?",
+            "options": [
+              "Its channel columns are all zero, and a prediction is still made",
+              "It raises an error for the unknown category",
+              "It is treated as email"
+            ],
+            "correct": 0,
+            "explanation": "OneHotEncoder is set to ignore unknown categories, so an unseen channel contributes nothing rather than being mapped to a known one."
+          }
         ]
       },
       {
@@ -57329,6 +58901,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Pipeline fitting within cross-validation. Fictional examples do not establish real-service performance."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "During cross_val_score, where are the imputer's median and the scaler's statistics learned?",
+            "options": [
+              "On each fold's training rows, because they are steps in the pipeline",
+              "Once, on all 240 rows",
+              "On the validation partition"
+            ],
+            "correct": 0,
+            "explanation": "cross_val_score refits the whole pipeline per fold, so no preprocessing statistic comes from the rows being scored."
+          }
         ]
       },
       {
@@ -57384,6 +58968,18 @@ const LEARNING_PATHS = [
             "section": "Computing cross-validated metrics; grouped data; time series split",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. TimeSeriesSplit and development evaluation. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How many cross-validation recall scores does run() report, and from which rows?",
+            "options": [
+              "3, from TimeSeriesSplit folds of the 144 training rows",
+              "5, from random folds of all 240 rows",
+              "1, from the validation partition"
+            ],
+            "correct": 0,
+            "explanation": "TimeSeriesSplit keeps each fold's evaluation rows after its training rows, inside the training partition only."
           }
         ]
       },
@@ -57448,6 +59044,18 @@ const LEARNING_PATHS = [
             "scope": "Smaller C means stronger regularisation in LogisticRegression; scikit-learn 1.9.1 was used for local checks.",
             "reviewed": "2026-10-02"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "pipeline(C=0.01) is fitted on the training rows. How do its coefficients compare with C=1?",
+            "options": [
+              "Much smaller in total size, because regularization is stronger",
+              "Larger, because C scales them up",
+              "The same: C changes only the threshold"
+            ],
+            "correct": 0,
+            "explanation": "C is the inverse of the penalty strength, so a small C shrinks the coefficients towards zero."
+          }
         ]
       },
       {
@@ -57511,6 +59119,18 @@ const LEARNING_PATHS = [
             "scope": "Training-size and validation-score interpretation. The local count example is hypothetical.",
             "reviewed": "2026-10-02"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A learning curve compares models trained on 50% and 100% of the training rows. What must be refitted for each size?",
+            "options": [
+              "The preprocessing and the estimator, on that subset",
+              "Only the estimator",
+              "Nothing: reuse the full-data pipeline"
+            ],
+            "correct": 0,
+            "explanation": "Reusing preprocessing fitted on more rows would leak information into the smaller experiment."
+          }
         ]
       },
       {
@@ -57566,6 +59186,18 @@ const LEARNING_PATHS = [
             "section": "Inconsistent preprocessing; data leakage; controlling randomness",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Target leakage and split contamination. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A logistic regression is given resolution_hours alone and scored on validation. What accuracy does it reach?",
+            "options": [
+              "100%, because the feature reconstructs the label",
+              "About 56%, like the real model",
+              "About 50%"
+            ],
+            "correct": 0,
+            "explanation": "A perfect score from an outcome field is a warning: the label is a threshold on that value, which is unknown at intake."
           }
         ]
       },
@@ -57623,6 +59255,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Grouped and chronological splitting. Fictional examples do not establish real-service performance."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "run(final=True) counts customers who appear in both training and test. How many are there?",
+            "options": [
+              "48: every test customer also appears in training",
+              "0, because the split is by time",
+              "12"
+            ],
+            "correct": 0,
+            "explanation": "A time split does not separate customers. The report says so, because a score on familiar customers may not carry over to new ones."
+          }
         ]
       },
       {
@@ -57678,6 +59322,18 @@ const LEARNING_PATHS = [
             "section": "Classification metrics; regression metrics; dummy estimators",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Classification metrics and subgroup denominators. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How many validation mistakes does run() list, and what does each carry?",
+            "options": [
+              "21, each with its ticket ID and actual and predicted labels",
+              "21 counts with no IDs",
+              "48, one per validation row"
+            ],
+            "correct": 0,
+            "explanation": "The 12 false positives and 9 false negatives are kept with their IDs, so each can be traced to the original case."
           }
         ]
       },
@@ -58432,7 +60088,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which threshold does run() choose on validation, and at what cost?",
+            "options": [
+              "0.3, at cost 48 with 4 per missed breach and 1 per false alarm",
+              "0.5, at cost 21",
+              "0.7, at cost 48"
+            ],
+            "correct": 0,
+            "explanation": "The cost weights are declared before choosing, and only validation rows are used, so the test set stays untouched."
+          }
+        ]
       },
       {
         "id": "reproduce-an-experiment",
@@ -58487,6 +60155,18 @@ const LEARNING_PATHS = [
             "section": "Inconsistent preprocessing; data leakage; controlling randomness",
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. Randomness and reproducibility. Fictional examples do not establish real-service performance."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "fingerprint is computed for make_tickets() twice and for make_tickets(seed=24). What happens?",
+            "options": [
+              "The two default runs match and seed 24 differs",
+              "All three match",
+              "All three differ"
+            ],
+            "correct": 0,
+            "explanation": "The seed controls the generator's random draws, and the hash records exactly which data an experiment used."
           }
         ]
       },
@@ -58551,6 +60231,18 @@ const LEARNING_PATHS = [
             "scope": "Monitoring input changes and measuring model quality separately. The local exercise does not establish production performance.",
             "reviewed": "2026-10-02"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What breach rates do the training, validation and test partitions have?",
+            "options": [
+              "37.5%, 50% and about 35.4%",
+              "39.6% in all three",
+              "50%, 37.5% and about 35.4%"
+            ],
+            "correct": 0,
+            "explanation": "The class mix differs between periods even in a single generated dataset, so a metric from one period needs care when compared with another."
+          }
         ]
       },
       {
@@ -58608,6 +60300,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "scikit-learn 1.9.1. fictional ticket examples illustrate fitting and predicting: estimator basics."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "On the test rows, what cost do the model and the baseline reach?",
+            "options": [
+              "34 for the model and 68 for the baseline",
+              "68 for the model and 34 for the baseline",
+              "34 for both"
+            ],
+            "correct": 0,
+            "explanation": "The model halves the declared cost on this fictional fixture. That supports the evaluation method, not a claim about real support performance."
+          }
         ]
       }
     ],
@@ -58639,7 +60343,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "A majority prediction can have high accuracy and zero breach recall. For [1,0,1,0] versus [1,1,0,0], all four counts are 1. MAE for [4,10] versus [6,6] is 3. Reject mismatched row counts rather than silently truncating with zip.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does confusion([1, 2], [1, 0]) do?",
+            "options": [
+              "Raises ValueError: Binary labels must be 0 or 1",
+              "Counts 2 as a positive",
+              "Returns accuracy 0.5"
+            ],
+            "correct": 0,
+            "explanation": "A label outside 0 and 1 means the input is not the binary problem the metric describes."
+          },
+          {
+            "question": "What does confusion([], []) do?",
+            "options": [
+              "Raises ValueError: Require equal nonempty sequences",
+              "Returns all counts as 0",
+              "Returns accuracy 1"
+            ],
+            "correct": 0,
+            "explanation": "With no rows there is no denominator, so the metric refuses instead of inventing a value."
+          },
+          {
+            "question": "What does make_tickets(n=5) do?",
+            "options": [
+              "Raises ValueError: Require at least ten fictional rows",
+              "Returns 5 rows",
+              "Returns 10 rows"
+            ],
+            "correct": 0,
+            "explanation": "The splitter needs enough rows to give every partition something, so the generator refuses a tiny dataset."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -58671,7 +60407,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Use ColumnTransformer for numeric imputation/scaling and one-hot category encoding, followed by LogisticRegression. Pass the whole Pipeline to cross_val_score with TimeSeriesSplit. Compare candidates using development results, then freeze one procedure; do not select C by repeatedly checking the final test.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "What does classify([0.2], 1.5) do?",
+            "options": [
+              "Raises ValueError: Threshold must be in [0,1]",
+              "Returns [0]",
+              "Returns [1]"
+            ],
+            "correct": 0,
+            "explanation": "A threshold outside the probability range cannot be a real decision rule."
+          },
+          {
+            "question": "What does classify([1.2], 0.5) do?",
+            "options": [
+              "Raises ValueError: Probabilities must be in [0,1]",
+              "Returns [1]",
+              "Clips the value to 1"
+            ],
+            "correct": 0,
+            "explanation": "A score above 1 is not a probability, so the function rejects it rather than classifying it."
+          },
+          {
+            "question": "choose_threshold([0], [0.1]) finds every candidate costs 0. Which does it return?",
+            "options": [
+              "0.7: ties go to the higher threshold",
+              "0.3",
+              "0.5"
+            ],
+            "correct": 0,
+            "explanation": "The tie-break is declared in advance, so the choice does not depend on how the candidates happen to be ordered."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -58706,7 +60474,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "The reference uses 144 training, 48 validation and 48 test rows. It selects among thresholds 0.3, 0.5 and 0.7 on validation cost only, with a higher-threshold tie break. The group example holds whole customer IDs out but does not claim chronological separation. Report actual run values and any failure cases; never replace them with an expected flattering score.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "time_split receives rows whose dates are not in increasing order. What happens?",
+            "options": [
+              "Raises ValueError: Dates must strictly increase for this teaching splitter",
+              "It sorts them first",
+              "It splits them as given"
+            ],
+            "correct": 0,
+            "explanation": "The splitter refuses rather than sorting silently, because unsorted data may mean the wrong file or a wrong date column."
+          },
+          {
+            "question": "group_split holds out customer C000. How many test rows result, and how many customers do they share with training?",
+            "options": [
+              "4 rows, sharing no customers",
+              "60 rows, sharing none",
+              "4 rows, sharing one customer"
+            ],
+            "correct": 0,
+            "explanation": "Every row for a held-out customer goes to test, so the model is scored on customers it has never seen."
+          },
+          {
+            "question": "What test precision does the model reach for the email and chat slices?",
+            "options": [
+              "About 47.4% for email and 33.3% for chat",
+              "About 41.9% for both",
+              "About 33.3% for email and 47.4% for chat"
+            ],
+            "correct": 0,
+            "explanation": "The overall figure hides a difference between channels. With 24 rows per slice, the gap is a question to investigate, not a conclusion."
+          }
+        ]
       }
     ],
     "downloads": [

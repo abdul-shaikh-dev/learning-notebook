@@ -101,6 +101,10 @@ jobs:
         run: python tests/full_stack_journey_checkpoint_facts.py
       - name: Check Requirements & software maintenance checkpoint answers against the course labs
         run: python tests/requirements_maintenance_checkpoint_facts.py
+      - name: Check JavaScript → TypeScript → React checkpoint answers against the course labs
+        run: python tests/react_checkpoint_facts.py
+      - name: Check Linux & Operating Systems checkpoint answers against the course labs
+        run: python tests/linux_checkpoint_facts.py
       - name: Check concept explorer figures against the course labs
         run: python tests/explorer_lab_facts.py
 
@@ -129,6 +133,8 @@ jobs:
           dotnet-version: "10.0.x"
       - name: Build C# downloads and run HTTP acceptance checks
         run: python scripts/verify-dotnet.py
+      - name: Check C# & .NET checkpoint answers against the course labs
+        run: python tests/dotnet_checkpoint_facts.py
 
   fullstack:
     runs-on: ubuntu-latest
@@ -161,6 +167,10 @@ jobs:
         run: python scripts/verify-data-science.py
       - name: Check Data analysis worked examples against their stated output
         run: python tests/data_analysis_examples.py
+      - name: Check Data analysis with Python checkpoint answers against the course labs
+        run: python tests/data_analysis_checkpoint_facts.py
+      - name: Check Machine learning foundations checkpoint answers against the course labs
+        run: python tests/machine_learning_checkpoint_facts.py
 
   sql-server:
     runs-on: ubuntu-latest
