@@ -133,7 +133,7 @@ Use the tool versions and setup instructions in the relevant workshop guide. SQL
 
 ## Publish to GitHub Pages
 
-The existing public repository hosts the notebook at **https://abdul-shaikh-dev.github.io/learning-notebook/**. Pushes to `main` run validation and build checks; publication is an explicit workflow dispatch:
+The existing public repository hosts the notebook at **https://abdul-shaikh-dev.github.io/learning-notebook/**. Each push to `main`, including a merged pull request, runs the validation and build checks and publishes the site once they all pass. Pull requests run the checks without publishing. To republish `main` without a new commit, for example after a failed deployment:
 
 ```sh
 gh workflow run pages.yml -f publish=true --ref main

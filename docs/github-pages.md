@@ -12,13 +12,13 @@
 
 1. Confirm the GitHub plan supports Pages from this private repository. GitHub Pro (personal account) or an eligible organisation plan is required.
 2. Repository Settings → Pages → Build and deployment → Source: GitHub Actions.
-3. Actions → Verify and publish learning site → Run workflow on main → set publish to true.
+3. Push or merge to main. To publish without a new commit: Actions → Verify and publish learning site → Run workflow on main → set publish to true.
 4. Wait for both build and deploy to succeed. Use the deployment output URL from the run. The expected URL is not live until the deployment succeeds.
 5. Open that HTTPS URL on your phone. The PC does not need to stay running.
 
 The repository stays private. The learning site and its delivered HTML/JavaScript are public on ordinary personal-account Pages. Private Pages access control is limited to eligible enterprise organisation sites. Do not publish confidential employer material in this project.
 
-Publishing is manual; a push runs validation/build only. To publish an update, run the workflow again with publish enabled. This prevents an ordinary source push from silently publishing a new version.
+Every push to `main`, including a merged pull request, publishes automatically once every check job passes; if any check fails, nothing is published. Pull requests and other branches run the checks only. To republish `main` without a new commit, for example after a failed deployment, run the workflow with publish enabled. Until 6 November 2026 publishing was manual only, so that an ordinary push could not publish a new version; the owner changed this so that each merge goes live.
 
 ## Local project-path preview
 
@@ -38,4 +38,4 @@ On 26 September 2026, GitHub rejected Pages setup for this private repository wi
 
 ## Published site
 
-The owner authorized making the existing repository public on 26 September 2026. Pages is now configured for GitHub Actions at https://abdul-shaikh-dev.github.io/learning-notebook/. The earlier private-plan restriction no longer applies. The homepage is the learning-path catalog. Publication remains an explicit workflow run with publish=true.
+The owner authorized making the existing repository public on 26 September 2026. Pages is now configured for GitHub Actions at https://abdul-shaikh-dev.github.io/learning-notebook/. The earlier private-plan restriction no longer applies. The homepage is the learning-path catalog. Since 6 November 2026 each push to `main` publishes after its checks pass; a workflow run with publish=true republishes `main` by hand.
