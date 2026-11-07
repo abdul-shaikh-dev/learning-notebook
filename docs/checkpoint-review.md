@@ -189,13 +189,25 @@ Writing the facts corrected one draft answer: the join of orders to payments tot
 
 `tests/linux_checkpoint_facts.py` runs `diagnostic_lab.py`, its demo and `test_os_labs.py`, all of which are portable. The two descriptor answers run `linux_fd_drill.py`, which needs Linux: on any other platform the script reports them as skipped, never as passed, and names them in its summary. It fails if a result supports a different option than the one marked correct, and lists any question without a fact. The other 7 are cited from lessons 10, 11, 12, 14, 15, 16 and 19. The check runs in the `python` CI job on Ubuntu with Python 3.11 and 3.14, so all 24 run there; run it locally with `python tests/linux_checkpoint_facts.py`.
 
+### Learning How to Learn
+
+2026-11-07: one extra question per lesson and three per stage (20 lesson questions, 9 stage questions; the stages split lessons 6/9/5). The course's practice studio, `practice/lab-model.js`, is shared by all six personal effectiveness courses and models none of this course's content, so all 29 answers come from the lesson text or the printable kits. Routing answers follow the fictional leave policy in `foundation-kit.md` and the equipment-booking policy in lesson 16. Questions test the course's own advice, such as a closed-source attempt before checking, scoring route and reason together, or keeping a planned check pending until it happens, and avoid presenting the course's example schedules as research findings.
+
+`tests/learning_how_to_learn_checkpoint_facts.py` lists each answer with its source (a lesson ID, a stage or a kit file) and a phrase that supports it. Through `tests/checkpoint_citations.py` it fails if the source does not exist, if the phrase does not appear there word for word, or if a question has no citation. It runs in the `python` CI job; run it locally with `python tests/learning_how_to_learn_checkpoint_facts.py`.
+
+### Plan and Review Your Week
+
+2026-11-07: one extra question per lesson and three per stage (15 lesson questions, 9 stage questions; the stages split lessons 6/5/4). 11 of the 24 answers are computed. Three run the practice studio's `lab-model.js` under Node with the studio's own starting values: the habit planner's if-then sentence, the task board refusing a third started task because blocked work counts, and the capacity sketch's 30-minute shortfall in the disrupted 300-minute week. Eight recompute the hour budgets the lessons and kits state, for example 35 working hours, the 11 project hours, the two-hour shortfall, the five hours left midweek, the half-hour gap for the alternative venue, the 12-hour Friday log and the seven-hour next week. The other 13 are cited from the lessons and stage projects.
+
+`tests/weekly_planning_checkpoint_facts.py` reads the starting values from `lab.html` and `lab.js`, so a change to the studio's defaults shows up as a failing fact. It uses the same citation check as Learning How to Learn. It fails if a result supports a different option than the one marked correct. It runs in the `python` CI job with Node 24; run it locally with `python tests/weekly_planning_checkpoint_facts.py`.
+
 ### Plan for the remaining courses
 
 Work one course per change, in this order, so that each answer can be checked against something that runs or a cited source:
 
 1. **Courses whose answers run in another tool:** Data analysis with Python, Machine learning foundations, C# & .NET, JavaScript → TypeScript → React and Linux & Operating Systems are done. Record each check in this document, as for the Python course, because only the bundled Python runtime is part of `tests/browser-python.cjs`.
 2. **Courses checked against their cited sources:** Networking & the Web, Messaging & Event-Driven Systems, Data Engineering, AI Agents, Agent Harnesses, Application Security, Testing & Debugging, Observability & Performance, System Design, Kubernetes, Cloud & Infrastructure as Code, Delivery & Operations, UI Design & Accessibility, Full-Stack Project Journey and Requirements & software maintenance are done. Each answer should trace to a lesson source or a primary reference such as a specification or WCAG success criterion.
-3. **Personal effectiveness and development courses:** Learning How to Learn, Habits & Behaviour Change, Self-Awareness & Communication, Task & Project Management, Time, Attention & Energy and Plan and Review Your Week. Questions should test the course's own model and avoid claims stronger than its sources.
+3. **Personal effectiveness and development courses:** Learning How to Learn and Plan and Review Your Week are done. Habits & Behaviour Change, Self-Awareness & Communication, Task & Project Management and Time, Attention & Energy remain. Questions should test the course's own model and avoid claims stronger than its sources. Answers from the text are checked as citations with `tests/checkpoint_citations.py`; answers from the shared practice studio run `lab-model.js`.
 
 Python Problem Solving is left out because its lessons are challenges with tests, and Financial foundations because it has its own course page and question format.
 

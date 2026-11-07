@@ -105,6 +105,10 @@ jobs:
         run: python tests/react_checkpoint_facts.py
       - name: Check Linux & Operating Systems checkpoint answers against the course labs
         run: python tests/linux_checkpoint_facts.py
+      - name: Check Learning How to Learn checkpoint answers against the lessons and kits
+        run: python tests/learning_how_to_learn_checkpoint_facts.py
+      - name: Check Plan and Review Your Week checkpoint answers against the practice studio and lessons
+        run: python tests/weekly_planning_checkpoint_facts.py
       - name: Check concept explorer figures against the course labs
         run: python tests/explorer_lab_facts.py
 

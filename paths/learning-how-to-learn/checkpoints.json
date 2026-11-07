@@ -1,0 +1,81 @@
+{
+  "lessons": {
+    "learning-target": [
+      {"question": "Maya's baseline is one correct decision out of three sample leave requests. What should her Friday check use?", "options": ["The same three cases, to show a clean improvement", "Three different cases that test the same rules", "A count of the policy pages she has read"], "correct": 1, "explanation": "New cases show whether she can apply the rules, not whether she remembers three answers. Pages read record exposure, not a change in what she can do."}
+    ],
+    "recognition-recall": [
+      {"question": "Maya recognises the phrase line manager approval but cannot say which request needs it. How does she record this?", "options": ["Familiar, not yet retrievable", "Learned, because she recognises it", "Evidence that she lacks ability"], "correct": 0, "explanation": "Recognising a phrase with the page open is a different task from producing the answer without it. A missing detail is information about this attempt, not a judgement of ability."}
+    ],
+    "retrieval-loop": [
+      {"question": "Why open the source after a low-stakes retrieval attempt?", "options": ["To copy the answer until it feels fluent", "To raise the stakes of the next attempt", "So that an incorrect guess does not become the only record"], "correct": 2, "explanation": "Checking and correcting the attempt keeps the right answer in the record. A later attempt, not immediate copying, then gives evidence of retention."}
+    ],
+    "small-prompts": [
+      {"question": "What does the lesson suggest for practising a long procedure?", "options": ["A scenario or checklist practice", "Dozens of separate word cards", "Rereading the procedure until it feels familiar"], "correct": 0, "explanation": "Disconnected word cards can reward memorising sentences while missing how the steps fit together. A scenario or checklist asks for the procedure itself."}
+    ],
+    "spaced-returns": [
+      {"question": "Recall keeps failing after the gaps you chose. What does the lesson suggest?", "options": ["Keep the gaps and wait for it to improve", "Revisit sooner or simplify the prompt", "Restart the whole course from the first lesson"], "correct": 1, "explanation": "Gaps should be adjusted to the difficulty you observe. A gap that is too long for the current material can be shortened, or the prompt made smaller."}
+    ],
+    "check-baseline": [
+      {"question": "In the foundation project, when does a case count as correct?", "options": ["When the approval route is right, whatever the reason", "When the learner feels confident about it", "Only when both the approval route and the reason are correct"], "correct": 2, "explanation": "A right route reached for the wrong reason can fail on the next case, so the scoring rule checks the reason as well."}
+    ],
+    "explain-connections": [
+      {"question": "Why compare your own explanation with a reliable source?", "options": ["A fluent invented explanation can still be wrong", "Explanations only count when copied from the source", "Self-explanation works only for experts"], "correct": 0, "explanation": "An explanation can sound plausible and add a story the rule does not establish. Checking it against the material keeps it anchored."}
+    ],
+    "worked-to-independent": [
+      {"question": "Maya answers correctly with the policy visible but the route hidden. What does that show?", "options": ["Independent recall of the policy", "Supported application, not yet independent recall", "Transfer to a different organisation's policy"], "correct": 1, "explanation": "The visible policy is support. Independent recall needs an attempt with the policy hidden as well, and the result checked."}
+    ],
+    "mix-related-cases": [
+      {"question": "When should you start mixing related cases?", "options": ["Before any of the rules has been introduced", "Only when switching between unrelated subjects", "Once you can explain each category on its own"], "correct": 2, "explanation": "Mixing tests whether you can choose the right rule. Without the basic rules it may only produce confusion, and unrelated switching is a different thing."}
+    ],
+    "feedback-action": [
+      {"question": "A colleague tells Maya to be more careful. What does she do next?", "options": ["Asks which case and rule were wrong", "Rereads every policy page", "Takes it as proof that she is careless"], "correct": 0, "explanation": "Vague feedback gives little direction. Asking for the specific case turns it into a repair she can test on a new example."}
+    ],
+    "error-patterns": [
+      {"question": "A learner can state the urgent exception but still sends an urgent case to the coordinator. How does the lesson classify this?", "options": ["Missing knowledge", "Rule selection", "Reading accuracy"], "correct": 1, "explanation": "Knowing a rule but not applying it points to choosing the rule, so the repair is mixed urgent and planned cases with the first decision explained. The label stays a hypothesis to check."}
+    ],
+    "calibrate-confidence": [
+      {"question": "A low-confidence answer turns out to be correct. What does the lesson suggest?", "options": ["Mark it as mastered and stop reviewing it", "Reread it straight away until confidence rises", "Another delayed attempt rather than endless immediate rereading"], "correct": 2, "explanation": "A later attempt shows whether the answer is still available. Rereading at once mostly makes the page feel familiar."}
+    ],
+    "study-environment": [
+      {"question": "What is the required minimum length of a study session?", "options": ["There is no required minimum", "At least 30 minutes", "At least an hour, or it does not count"], "correct": 0, "explanation": "A session that is easy to begin and fits the day matters more than a length rule. When time shrinks, the lesson suggests a smaller target and a fallback."}
+    ],
+    "retain-useful-notes": [
+      {"question": "According to the lesson, what can be less useful than a short set of questions you revisit?", "options": ["A note that records the source and the exception", "An accurate summary that is never used", "A card with a case on one side and answer points on the other"], "correct": 1, "explanation": "Notes help when they support later practice. The other two options are what the lesson recommends putting in notes."}
+    ],
+    "plan-practice-week": [
+      {"question": "A two-week plan schedules a delayed check for next Monday. What evidence does the plan itself provide?", "options": ["Delayed evidence of retention", "Evidence of how a skipped session would have changed results", "None until the later attempt actually happens"], "correct": 2, "explanation": "A schedule shows what you intend to do. Only a completed attempt shows what you could answer."}
+    ],
+    "transfer-cases": [
+      {"question": "Under the equipment-booking policy, where does a standard two-hour booking go?", "options": ["The desk coordinator", "The facilities lead", "The line manager"], "correct": 0, "explanation": "Standard bookings up to two hours go to the desk coordinator, and two hours is at the boundary. Longer or restricted bookings go to the facilities lead; this policy has no manager route."}
+    ],
+    "evaluate-advice": [
+      {"question": "Which of these is a design choice of this course rather than a research finding?", "options": ["Retrieval practice has evidence across many studied conditions", "Spacing has evidence across many studied conditions", "The number of questions and the weekly dates used in the course"], "correct": 2, "explanation": "The lesson separates the two: retrieval and spacing have research evidence, while the specific numbers and dates are teaching examples."}
+    ],
+    "adapt-stalled-learning": [
+      {"question": "Maya misses urgent cases after a long shift but can explain them on a rested day. What does she do before concluding the rule is too hard?", "options": ["Tests the same skill in a shorter, earlier window", "Changes six techniques at once", "Doubles the number of practice questions"], "correct": 0, "explanation": "The pattern points to conditions rather than the rule, so she changes one plausible cause and checks again."}
+    ],
+    "delayed-demonstration": [
+      {"question": "In the advanced portfolio, what is more informative than an invented perfect score?", "options": ["A longer, better-decorated notebook", "A clear unsuccessful attempt with a sensible next step", "Leaving out the original baseline"], "correct": 1, "explanation": "The portfolio is assessed on its evidence, not its appearance. An honest failed attempt shows what still needs work."}
+    ],
+    "maintain-learning": [
+      {"question": "Where does a rarely used but current detail belong?", "options": ["On a daily card, forever", "On the retirement list", "In a reliable reference that you practise finding"], "correct": 2, "explanation": "Rare details are cheaper to look up than to rehearse. The retirement list is for outdated rules."}
+    ]
+  },
+  "stages": {
+    "foundation": [
+      {"question": "Baseline case B in foundation-kit.md is an urgent request for today, lasting one day. Which route and reason are correct?", "options": ["Coordinator, because it lasts one day", "Manager, because the urgent same-day override applies", "Manager, because it lasts at least two days"], "correct": 1, "explanation": "Urgent same-day requests need a manager regardless of duration, so the one-day route does not apply. A case counts only when the reason is right too."},
+      {"question": "Case F is a planned one-day request for next month. Which route applies?", "options": ["Coordinator: next month does not make it urgent today", "Manager: requests for a future month need a manager", "Manager: every planned request needs a manager"], "correct": 0, "explanation": "It is planned and lasts one day, so it goes to the coordinator. Only planned requests of two or more days, or urgent same-day requests, go to a manager."},
+      {"question": "The later check in the foundation project has not happened yet. How is it recorded?", "options": ["As passed, because it is planned", "Copied from the synthetic sample", "As pending, not as demonstrated retention"], "correct": 2, "explanation": "A planned check is not evidence until it happens. The synthetic sample is an example, never your result."}
+    ],
+    "intermediate": [
+      {"question": "In the worked plan, the learner knows the ordinary duration rule but leaves out urgency. How is the error tentatively classified?", "options": ["Missing knowledge", "Case reading", "Method selection"], "correct": 2, "explanation": "The learner has the rule but picks the wrong first decision, so the repair is to check urgency before duration."},
+      {"question": "After feedback, the learner answers a new urgent half-day case correctly at once. What does that immediate answer show?", "options": ["A repair, but not delayed retention evidence", "Delayed retention of the urgent rule", "That the earlier 4/5 prediction was accurate"], "correct": 0, "explanation": "An answer straight after feedback shows the repair worked for now. Retention needs an attempt after a gap."},
+      {"question": "In the worked plan, which time is not used as a catch-up slot?", "options": ["Monday of week two", "Wednesday care evening", "Tuesday of week one"], "correct": 1, "explanation": "The plan respects care duties: if Thursday is lost, that occasion is removed rather than squeezed into Wednesday evening."}
+    ],
+    "advanced": [
+      {"question": "Under the new equipment-booking rules, where does a restricted half-hour booking go?", "options": ["The desk coordinator, because it is short", "The line manager, because it is restricted", "The facilities lead"], "correct": 2, "explanation": "Restricted equipment always goes to the facilities lead, whatever the duration."},
+      {"question": "A standard ninety-minute booking is urgent. Where does it go?", "options": ["The desk coordinator: this policy has no urgency exception", "The facilities lead: urgency always escalates a booking", "The line manager, as in the leave policy"], "correct": 0, "explanation": "The booking policy says nothing about urgency, so the standard short route applies. Importing the leave policy's urgency rule is the transfer error the stage checks for."},
+      {"question": "What does the strong advanced sample carry forward from the leave policy?", "options": ["The urgency rule itself", "The habit of checking for exceptions", "A claim of real workplace competence"], "correct": 1, "explanation": "Transfer means reading each new policy's own rules. The habit of checking exceptions carries over; the old rule and claims of competence do not."}
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "lessons": {
+    "week-context": [
+      {"question": "Sam works 09:00–17:00 with a one-hour lunch, five days a week. How many working hours is that?", "options": ["40", "35", "30"], "correct": 1, "explanation": "Each day is eight hours at work minus a one-hour lunch, so seven working hours, and five days make 35."}
+    ],
+    "capture-week": [
+      {"question": "Sam captures redesign noticeboard alongside the event pack. Is the noticeboard a Friday obligation?", "options": ["No: it is an optional idea, not an agreed obligation", "Yes: everything captured is scheduled this week", "Yes: it shares the event pack's deadline"], "correct": 0, "explanation": "Capturing an item does not make it a commitment. The event pack has a recipient and a deadline; the noticeboard has neither."}
+    ],
+    "outcomes-next-actions": [
+      {"question": "Which event-pack action should wait until Lee sends the attendee names?", "options": ["Preparing the cover sheet", "Checking the venue details", "Formatting the final list"], "correct": 2, "explanation": "The final list depends on the names, so formatting it early risks rework. The cover sheet and venue check can go ahead while Sam waits."}
+    ],
+    "priorities-capacity": [
+      {"question": "Sam has 11 hours, with eight planned for the event pack and three reserved. A second agreed task needs two hours. What is the shortfall?", "options": ["None: it fits", "One hour", "Two hours"], "correct": 2, "explanation": "8 + 2 + 3 = 13 hours against 11. Sam has to cut scope, move a deadline or knowingly use the reserve; putting all 13 on the calendar does not create time."}
+    ],
+    "calendar-energy": [
+      {"question": "What does the lesson say about low-energy time?", "options": ["It is not automatically spare time", "It counts the same as rested time", "It is the best time for demanding drafting"], "correct": 0, "explanation": "Time on the calendar and the attention available in it are different. Demanding work goes in a window where both are available."}
+    ],
+    "baseline-plan-project": [
+      {"question": "What does Sam's Friday delivery assume?", "options": ["That nothing depends on anyone else", "That the attendee list arrives by Thursday morning", "That the noticeboard redesign is finished first"], "correct": 1, "explanation": "The plan states its dependency so that a late list triggers the fallback instead of a silent guess."}
+    ],
+    "supporting-habit": [
+      {"question": "In the practice studio's habit activity, the cue is I close the service desk, the action is update the waiting list and the fallback is note the most important waiting request. What plan does it write?", "options": ["When I close the service desk, I will update the waiting list. If that is not feasible, I will note the most important waiting request.", "I will update the waiting list every day, and catch up on missed days.", "If I close the service desk, I might update the waiting list."], "correct": 0, "explanation": "The studio joins the three parts into one if-then plan with its fallback, so a late close still has a smaller action instead of a catch-up routine."}
+    ],
+    "midweek-disruption": [
+      {"question": "Sam began with 11 project hours. By Wednesday four event hours are done, and an essential meeting removes two more. What is left to plan with?", "options": ["Eleven hours, as in the original plan", "Seven hours: four for event work and three reserve", "Five hours: four for event work and one uncommitted"], "correct": 2, "explanation": "11 − 4 − 2 = 5 hours remain, and the event pack needs 8 − 4 = 4 of them. The revision starts from what is left, not from the original total."}
+    ],
+    "communicate-tradeoffs": [
+      {"question": "The alternative venue needs a one-hour map revision and a half-hour proofread on top of four hours of original work. Sam has five hours. What is the position?", "options": ["It fits, with half an hour spare", "Half an hour short", "One and a half hours short"], "correct": 1, "explanation": "4 + 1 + 0.5 = 5.5 hours against five. Sam first checks whether the venue change removes any original work, then agrees a real choice with the decision owner."}
+    ],
+    "learning-in-week": [
+      {"question": "When does Sam's optional two-minute Friday question count as completed?", "options": ["When it is written into the plan", "Automatically, if Monday's check goes well", "Only once it actually happens"], "correct": 2, "explanation": "The record keeps planned and completed practice apart, so the plan shows what really happened."}
+    ],
+    "revised-plan-project": [
+      {"question": "In the day-level revision, why does the service owner agree to defer one routine hour?", "options": ["Monday's spare hour has passed and cannot be reused", "The event pack grew back to eight hours", "The urgent request was cancelled"], "correct": 0, "explanation": "The weekly total still balances at 11, but reserve that sat in a day that is already over cannot absorb later work. The timing gap needs its own agreed decision."}
+    ],
+    "collect-week-evidence": [
+      {"question": "Friday's log shows the pack took seven hours, the urgent task two and the service issue three. How does that compare with the 11-hour budget?", "options": ["Exactly on budget", "One hour under", "One hour over"], "correct": 2, "explanation": "7 + 2 + 3 = 12 hours. Before concluding the plan worked, Sam records where the extra hour came from and what it cost."}
+    ],
+    "review-without-blame": [
+      {"question": "Why does the review avoid a statement such as I am always disorganised?", "options": ["It is too broad to test or repair", "Reviews should leave reactions out entirely", "It is too specific to be useful"], "correct": 0, "explanation": "A review names specific outcomes, conditions and reactions so that it can lead to a repair. A global judgement points to nothing to change."}
+    ],
+    "choose-next-experiment": [
+      {"question": "Next week Sam asks for the venue confirmation two working days earlier. What will Sam observe?", "options": ["Whether editing takes less time", "Whether a usable answer arrives before the decision point", "Whether every part of the planning system improves"], "correct": 1, "explanation": "The experiment changes one thing linked to the observed delay, so the observation is about that delay. Estimation stays unchanged so the result can be read."}
+    ],
+    "next-week-portfolio": [
+      {"question": "Before subtracting carried work from next week's capacity, what should Sam confirm?", "options": ["That last week's numbers can be copied unchanged", "That it is not already in the new routine estimate", "That every unfinished item has been carried forward"], "correct": 1, "explanation": "Counting the same work in the routine estimate and again as carried work would subtract it twice and understate the capacity."}
+    ]
+  },
+  "stages": {
+    "foundation": [
+      {"question": "Sam has 35 working hours, 12 hours of fixed meetings and duties and an estimated 12 hours of routine work. How many hours remain for the event pack and reserve?", "options": ["23", "11", "35"], "correct": 1, "explanation": "35 − 12 − 12 = 11 hours. The baseline puts eight of them into the event pack and keeps three as reserve."},
+      {"question": "On the practice studio's task board, the work-in-progress limit is 2, one task is Doing and one is Blocked. What happens when you move a Ready task to Doing?", "options": ["It moves, because blocked work is not started work", "It is refused, because blocked work still counts as started", "It moves and the limit rises to 3"], "correct": 1, "explanation": "Doing and Blocked both count as started work, so the board refuses a third start. Finish or review work before starting another task."},
+      {"question": "Where does the four-hour noticeboard idea go in the baseline plan?", "options": ["Into the three reserve hours", "Into Wednesday evening", "Deferred to a later week"], "correct": 2, "explanation": "Eight event hours and three reserve hours already use all 11. Reserve is for uncertainty, and Wednesday evening is a care commitment."}
+    ],
+    "intermediate": [
+      {"question": "The revised plan has three service hours, the six-hour shorter pack and the two-hour urgent request. What does that add up to?", "options": ["11 hours, with no reserve left", "13 hours, two over budget", "8 hours, with three reserve hours"], "correct": 0, "explanation": "3 + 6 + 2 = 11. The shorter pack replaces the eight-hour one rather than adding to it, and no reserve remains for another change."},
+      {"question": "In the practice studio's disrupted week, 60 of 300 minutes are reserved, 90 are lost and the plan stays at 240 minutes. What does the capacity sketch report?", "options": ["The plan fits, using 30 minutes of the buffer", "A shortfall of 30 minutes after the disruption", "A shortfall of 90 minutes after the disruption"], "correct": 1, "explanation": "300 − 90 leaves 210 minutes, so 240 planned minutes are 30 too many. Keeping the same commitment needs a scope or timing decision."},
+      {"question": "In the scripted agreement, what happens to Sam's learning occasions?", "options": ["Both are moved into Wednesday evening", "Thursday's review is cancelled and Monday's check is kept", "Both are dropped until the event is over"], "correct": 1, "explanation": "The changed week keeps one realistic later check instead of cramming missed practice into a full evening or a care commitment."}
+    ],
+    "advanced": [
+      {"question": "Next week has 14 fixed hours, 12 routine hours and two carried routine hours. How many hours remain before reserve?", "options": ["11", "9", "7"], "correct": 2, "explanation": "35 − 14 − 12 − 2 = 7 hours, so last week's 11-hour plan cannot be copied."},
+      {"question": "With those seven hours, which selection fits the advanced project?", "options": ["The accepted four-hour task and three hours of reserve", "The four-hour task plus the four-hour noticeboard redesign", "Seven hours of tasks and no reserve, to make up for last week"], "correct": 0, "explanation": "Four planned hours plus three reserve fill the seven, and the noticeboard redesign is named as deferred."},
+      {"question": "Which part of the advanced project is optional?", "options": ["The sentence explaining one change", "The larger review worksheet and five-topic portfolio", "Naming one deferral"], "correct": 1, "explanation": "The required output is one usable plan with its reserve, a deferral and one explained change. The longer review is a way to explore further."}
+    ]
+  }
+}
