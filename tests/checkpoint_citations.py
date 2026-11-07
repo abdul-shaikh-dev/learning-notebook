@@ -5,13 +5,45 @@ is a lesson ID, 'stage:<stage ID>' or a file in the course's practice folder, an
 in that source word for word (ignoring runs of whitespace). The check fails when a source does not
 exist, when the phrase is not found there, or when a question has neither a computed fact nor a
 citation. Computed facts return the text of the option the result supports, as in the other courses.
+studio() and plan_sentence() run the practice studio's lab-model.js, shared by the six personal
+effectiveness courses, under Node.
 """
 import json
 from pathlib import Path
 import re
+import shutil
+import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+
+# Evaluates each [key, expression] pair with practice/lab-model.js as `lab` and prints one JSON object.
+HARNESS = r"""
+const lab = require(process.argv[1]);
+const out = {};
+for (const [key, expression] of JSON.parse(process.argv[2])) {
+  try { out[key] = {value: eval(expression)}; } catch (error) { out[key] = {error: error.message}; }
+}
+console.log(JSON.stringify(out));
+"""
+
+
+def studio(course_id, expressions):
+    """Runs the shared personal effectiveness practice studio model under Node."""
+    node = shutil.which('node')
+    if not node:
+        raise AssertionError('Node.js is not on PATH')
+    model = ROOT / 'paths' / course_id / 'practice' / 'lab-model.js'
+    run = subprocess.run([node, '-e', HARNESS, str(model), json.dumps(expressions)],
+                         capture_output=True, text=True, encoding='utf-8', timeout=30, check=True)
+    return json.loads(run.stdout)
+
+
+def plan_sentence(course_id, cue, action, fallback):
+    result = studio(course_id, [['plan', f'lab.plan({json.dumps(cue)}, {json.dumps(action)}, {json.dumps(fallback)})']])
+    if 'error' in result['plan']:
+        raise AssertionError(result['plan']['error'])
+    return result['plan']['value']
 
 
 def strings(value):

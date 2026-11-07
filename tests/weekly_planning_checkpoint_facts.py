@@ -10,27 +10,13 @@ Needs Node.js on PATH. Run with Python 3.11+: python tests/weekly_planning_check
 """
 from functools import cache
 import json
-from pathlib import Path
 import re
-import shutil
-import subprocess
 import sys
 
 sys.dont_write_bytecode = True
-from checkpoint_citations import ROOT, check  # noqa: E402
+from checkpoint_citations import ROOT, check, studio as run_studio  # noqa: E402
 
 PRACTICE = ROOT / 'paths' / 'weekly-planning-journey' / 'practice'
-NODE = shutil.which('node')
-
-# Evaluates each [key, expression] pair with the model as `lab` and prints one JSON object.
-HARNESS = r"""
-const lab = require(process.argv[1]);
-const out = {};
-for (const [key, expression] of JSON.parse(process.argv[2])) {
-  try { out[key] = {value: eval(expression)}; } catch (error) { out[key] = {error: error.message}; }
-}
-console.log(JSON.stringify(out));
-"""
 
 
 def studio_value(field):
@@ -49,8 +35,6 @@ def starting_tasks():
 
 @cache
 def studio():
-    if not NODE:
-        raise AssertionError('Node.js is not on PATH')
     available, buffer, planned, wip = (int(studio_value(f)) for f in ('available', 'buffer', 'planned', 'wip'))
     disrupt = re.search(r"\$\('disruption'\)\.value='(\d+)'", (PRACTICE / 'lab.js').read_text(encoding='utf-8'))
     tasks = json.loads(starting_tasks())
@@ -61,9 +45,7 @@ def studio():
         ['board', f'lab.move({json.dumps(tasks)}, {ready}, "doing", {wip})'],
         ['week', f'lab.capacity({available}, {buffer}, {planned}, {disrupt.group(1)})'],
     ]
-    run = subprocess.run([NODE, '-e', HARNESS, str(PRACTICE / 'lab-model.js'), json.dumps(expressions)],
-                         capture_output=True, text=True, encoding='utf-8', timeout=30, check=True)
-    return {'tasks': tasks, **json.loads(run.stdout)}
+    return {'tasks': tasks, **run_studio('weekly-planning-journey', expressions)}
 
 
 def pick(value, table):

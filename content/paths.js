@@ -42637,7 +42637,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Outcome: less searching before leaving. Controllable action: put keys in the reachable bowl when arriving. The three arrival opportunities produced table, coat and bowl placement; only Wednesday used the target. Carrying bags constrained Tuesday, so Mira checks whether she can put bags down safely before reaching the bowl. The useful minimum is storing the keys, not organising the whole hallway. This baseline describes three events and does not show automaticity.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "In Mira's baseline of three arrivals, how many used the target of putting her keys in the bowl?",
+            "options": [
+              "One: only Wednesday",
+              "Two of the three",
+              "All three"
+            ],
+            "correct": 0,
+            "explanation": "The keys ended up on the table, the coat and the bowl. The baseline describes three events and does not show automaticity."
+          },
+          {
+            "question": "What is Mira's useful minimum?",
+            "options": [
+              "Organising the whole hallway",
+              "Storing the keys in the bowl",
+              "Logging every item she puts down"
+            ],
+            "correct": 1,
+            "explanation": "The minimum serves the outcome, less searching before leaving, without turning into a larger obligation."
+          },
+          {
+            "question": "What constrained Mira's Tuesday arrival?",
+            "options": [
+              "The bowl was missing",
+              "A reminder came too late",
+              "She was carrying bags"
+            ],
+            "correct": 2,
+            "explanation": "So she checks whether she can put the bags down safely before reaching the bowl, rather than blaming herself."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -42665,7 +42697,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "If I arrive and can put my bags down, then I put my keys in the bowl. If immediate assistance is needed, I skip that moment and store the keys at the next available pause. The single setup change is moving the bowl; the action stays the same. Completion is three of four available opportunities, with the unavailable arrival retained separately. Two easy starts and one deliberate start are observations, not proof of automaticity. Compare retrieval usefulness before deciding to keep the setup.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "In the practice studio's habit activity, the cue is I arrive and can put my bags down, the action is put my keys in the bowl and the fallback is store the keys at the next available pause. What plan does it write?",
+            "options": [
+              "When I arrive and can put my bags down, I will put my keys in the bowl. If that is not feasible, I will store the keys at the next available pause.",
+              "I will put my keys in the bowl every day and make up for any missed arrival.",
+              "If I remember, I might put my keys in the bowl."
+            ],
+            "correct": 0,
+            "explanation": "The studio joins cue, action and fallback into one if-then plan, so an arrival needing immediate help has a defined branch."
+          },
+          {
+            "question": "Mira stores her keys at three of four available arrivals, and one more arrival had no opportunity. What completion rate does the experiment report?",
+            "options": [
+              "60% of all five arrivals",
+              "75% of available opportunities",
+              "100%, leaving out the miss"
+            ],
+            "correct": 1,
+            "explanation": "3/4 counts only arrivals where the action was possible. The unavailable arrival is recorded separately, not counted as a failure or dropped."
+          },
+          {
+            "question": "What single setup change does the intermediate experiment make?",
+            "options": [
+              "Moving the bowl, while the action stays the same",
+              "Moving the bowl and adding a new reminder",
+              "Changing the action to tidying the hallway"
+            ],
+            "correct": 0,
+            "explanation": "Changing one element at a time keeps the result easier to interpret."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -42693,7 +42757,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Keep the reachable bowl provisionally: fewer searches were observed and setup cost is small. The lighter bag load also changed, so the sample cannot isolate the bowl as the cause. On the trip, use an agreed secure place when unpacking; if no opportunity exists, resume at the next suitable pause. Review after the next five home arrivals and again after travel. Change or retire the setup if it obstructs access or stops helping retrieval; preserve the purpose rather than the streak.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "Why can't Mira's sample show that the reachable bowl caused fewer searches?",
+            "options": [
+              "Five arrivals are always too few to decide anything",
+              "Searching cannot be measured",
+              "Her bag load also became lighter"
+            ],
+            "correct": 2,
+            "explanation": "Another condition changed at the same time, so she keeps the bowl provisionally and reviews again."
+          },
+          {
+            "question": "A later week has six sessions, of which two offer a usable opportunity, and both are completed. What are the rates?",
+            "options": [
+              "2 of 2 usable opportunities, but 2 of 6 sessions",
+              "2 of 6 usable opportunities",
+              "6 of 6 sessions"
+            ],
+            "correct": 0,
+            "explanation": "100% of usable opportunities sits beside four sessions with no opportunity. Find out why before claiming the routine is reliable."
+          },
+          {
+            "question": "When should Mira change or retire the bowl setup?",
+            "options": [
+              "As soon as she misses one arrival",
+              "If it obstructs access or stops helping her find her keys",
+              "Never, to protect the streak"
+            ],
+            "correct": 1,
+            "explanation": "The decision follows the purpose rather than the streak, with a recovery branch and a review date."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -42752,6 +42848,18 @@ const LEARNING_PATHS = [
             "scope": "Expert interview, not an experimental test; used only for context design principles.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Luis calls himself careless after misplacing two receipts. What does he change?",
+            "options": [
+              "He resolves to become a more careful person",
+              "He writes an action: after paying, put the receipt in the wallet's empty pocket",
+              "He records how careless he feels each day"
+            ],
+            "correct": 1,
+            "explanation": "An action can be checked and adjusted; a label such as careless cannot tell him which step to change, and it says nothing about the whole person."
+          }
         ]
       },
       {
@@ -42809,6 +42917,18 @@ const LEARNING_PATHS = [
             "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Priya opens the agenda five minutes before joining online meetings. Why does she record file-search delays separately from connection problems?",
+            "options": [
+              "Her action cannot prevent network outages",
+              "Connection problems prove the action failed",
+              "Only the outcome matters, not the action"
+            ],
+            "correct": 0,
+            "explanation": "The plan names the part she controls. Mixing in outages would make a useful action look ineffective."
+          }
         ]
       },
       {
@@ -42865,6 +42985,18 @@ const LEARNING_PATHS = [
             "section": "Abstract: repetition, automaticity and measurement criteria",
             "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Why should a baseline include the situations in which the target could reasonably occur?",
+            "options": [
+              "So that every missed day counts as a failure",
+              "To make the log as long as possible",
+              "Otherwise a completion count hides changes in opportunity"
+            ],
+            "correct": 2,
+            "explanation": "The opportunities are the denominator. Without them, an evening spent caring for family looks the same as an available evening that was not used."
           }
         ]
       },
@@ -43008,7 +43140,19 @@ const LEARNING_PATHS = [
               "explanation": "A nearby short story is a feasible alternative to test during the same wait."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Noor's desk timer appears on Monday, Tuesday and Wednesday, but she files her notes only on Monday. What does that show?",
+            "options": [
+              "All three days had a cue, but only Monday had an uninterrupted opportunity",
+              "A second reminder at departure would fix Tuesday and Wednesday",
+              "The action became automatic on Monday"
+            ],
+            "correct": 0,
+            "explanation": "An export and a handover took the time on the other days. Another reminder cannot create missing time, so the next test moves the cue earlier."
+          }
+        ]
       },
       {
         "id": "habit-or-routine",
@@ -43064,6 +43208,18 @@ const LEARNING_PATHS = [
             "section": "Abstract: repetition, automaticity and measurement criteria",
             "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Evan has watered the balcony plants every Saturday for six weeks and still decides deliberately which plants need water. What do the six weeks establish?",
+            "options": [
+              "A fully automatic habit",
+              "That the checklist has failed",
+              "A repeated routine; completion alone does not show automatic starting"
+            ],
+            "correct": 2,
+            "explanation": "Repetition and automatic initiation are different, and careful decisions during the task are not a contradiction."
           }
         ]
       },
@@ -43122,6 +43278,18 @@ const LEARNING_PATHS = [
             "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Why keep the useful minimum and the optional extension as separate labels?",
+            "options": [
+              "So the extension can quietly become the new minimum",
+              "So the target does not drift upward unnoticed",
+              "So only the extension needs recording"
+            ],
+            "correct": 1,
+            "explanation": "If the extension becomes the requirement, a useful short session turns into a failed long one and recreates the original obstacle."
+          }
         ]
       },
       {
@@ -43178,6 +43346,18 @@ const LEARNING_PATHS = [
             "section": "Abstract and automaticity modelling results",
             "scope": "Original observational study of selected daily behaviours; estimates vary by person and behaviour, not a universal deadline.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What range of habit-formation estimates did Lally and colleagues report among their fitted cases?",
+            "options": [
+              "18 to 254 days",
+              "Exactly 21 days",
+              "Exactly 66 days"
+            ],
+            "correct": 0,
+            "explanation": "The wide range describes variation between behaviours and people. It is a study estimate, not a schedule a learner should meet."
           }
         ]
       },
@@ -43347,7 +43527,19 @@ const LEARNING_PATHS = [
               "explanation": "At the agreed opportunity, check materials again rather than adding a penalty task."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which if clause identifies an opportunity rather than a feeling?",
+            "options": [
+              "If I feel motivated",
+              "If I finish Friday's note review at my laptop",
+              "If I am in the right mood"
+            ],
+            "correct": 1,
+            "explanation": "An implementation intention links a recognisable situation to a response. A feeling is not a situation you can reliably notice."
+          }
+        ]
       },
       {
         "id": "friction",
@@ -43403,6 +43595,18 @@ const LEARNING_PATHS = [
             "section": "Interview on context and repetition",
             "scope": "Expert interview, not an experimental test; used only for context design principles.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Marta gathers her sewing supplies into one labelled box. Which of these can the box not do?",
+            "options": [
+              "Reduce the setup time",
+              "Make the next repair easier to begin",
+              "Create time for a repair on an unavailable evening"
+            ],
+            "correct": 2,
+            "explanation": "Reducing friction changes the effort between cue and action. It cannot add time that the evening does not have."
           }
         ]
       },
@@ -43461,6 +43665,18 @@ const LEARNING_PATHS = [
             "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Owen's reminder to return library books appears while he is already travelling. What does he change?",
+            "options": [
+              "He moves it to the previous evening, with the books put beside tomorrow's bag",
+              "He adds two more alarms during the journey",
+              "He deletes the reminder and relies on memory"
+            ],
+            "correct": 0,
+            "explanation": "A reminder is useful when it arrives where acting is possible and says what to do. A noticed alert without access to the books is not an opportunity."
+          }
         ]
       },
       {
@@ -43518,6 +43734,18 @@ const LEARNING_PATHS = [
             "scope": "Expert interview, not an experimental test; used only for context design principles.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Sana watches clips during short breaks because she wants amusement. Why not replace them with another work task?",
+            "options": [
+              "Work tasks are always harder to start",
+              "It might miss the original need for amusement",
+              "Breaks should be removed entirely"
+            ],
+            "correct": 1,
+            "explanation": "A replacement should meet part of the same immediate need. Sana tests one short offline comic with a visible return time."
+          }
         ]
       },
       {
@@ -43574,6 +43802,18 @@ const LEARNING_PATHS = [
             "section": "Studies 1–3 and distinction between goal and implementation intentions",
             "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "When can an explicit skip be the right branch of a coping plan?",
+            "options": [
+              "Never: every miss must be made up later",
+              "Whenever the action feels effortful",
+              "When the opportunity is absent"
+            ],
+            "correct": 2,
+            "explanation": "A skip recorded honestly keeps planning realistic, instead of turning each interruption into a catch-up task."
           }
         ]
       },
@@ -43716,7 +43956,19 @@ const LEARNING_PATHS = [
               "explanation": "Compare the review’s benefit and setup cost; one week cannot prove the cue caused improvement."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Fatima completed her desk routine on three of six days, and four of the days offered an end-of-work window. What are the two rates?",
+            "options": [
+              "75% of available opportunities and 50% of calendar days",
+              "50% of available opportunities and 75% of calendar days",
+              "75% for both"
+            ],
+            "correct": 0,
+            "explanation": "3/4 and 3/6 use different denominators and answer different questions. Neither shows automaticity or a causal benefit."
+          }
+        ]
       },
       {
         "id": "feedback-reward",
@@ -43772,6 +44024,18 @@ const LEARNING_PATHS = [
             "section": "Interview on context and repetition",
             "scope": "Expert interview, not an experimental test; used only for context design principles.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Leo's utensil tray makes breakfast setup feel easier. What does he do before deciding to keep it?",
+            "options": [
+              "He decides that the satisfaction proves it works",
+              "He samples setup time on several mornings and checks for clutter",
+              "He adds a purchase as a reward for using it"
+            ],
+            "correct": 1,
+            "explanation": "Immediate satisfaction and longer-term value can differ, so he checks the practical consequence and its cost."
           }
         ]
       },
@@ -43947,7 +44211,19 @@ const LEARNING_PATHS = [
               "explanation": "Use the normal modest action; add an alternate cue only if recurring context changes warrant it."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What did Lally's study find about a single missed opportunity?",
+            "options": [
+              "It reset the modelled process to zero",
+              "It showed that repeated misses can be ignored",
+              "It did not materially disrupt the modelled process"
+            ],
+            "correct": 2,
+            "explanation": "One miss is not a reason for a punitive catch-up, but the finding is not permission to ignore repeated patterns either."
+          }
+        ]
       },
       {
         "id": "one-change-test",
@@ -44004,6 +44280,18 @@ const LEARNING_PATHS = [
             "section": "Abstract: repetition, automaticity and measurement criteria",
             "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Noor's earlier week had three usable filing opportunities and two completions; the week after moving the cue had four and three. What are the completion rates among usable opportunities?",
+            "options": [
+              "3/5, then 4/5",
+              "2/5, then 3/5",
+              "2/3, then 3/4"
+            ],
+            "correct": 2,
+            "explanation": "The rates use usable opportunities, not desk sessions. The setting changed too, so the rise does not prove the new cue caused it."
           }
         ]
       },
@@ -44063,6 +44351,18 @@ const LEARNING_PATHS = [
             "scope": "Expert interview, not an experimental test; used only for context design principles.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Noor moves between home and a client site, where the old timer is gone. What stays fixed in her plan?",
+            "options": [
+              "Recoverable notes and the allowed storage",
+              "The old timer cue",
+              "The exact time she files notes"
+            ],
+            "correct": 0,
+            "explanation": "The purpose and the constraint carry over; the cue, action size and timing can change. Copying notes to a personal phone would break the storage rule."
+          }
         ]
       },
       {
@@ -44120,6 +44420,18 @@ const LEARNING_PATHS = [
             "scope": "Original experiments and correlational study; supports specified situation/action plans, not guaranteed success for every goal.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Nico's friend agrees to one Saturday check-in about the receipt pocket. What would extra monitoring need?",
+            "options": [
+              "Nothing: the first agreement covers it",
+              "A new agreement",
+              "Sharing the log publicly"
+            ],
+            "correct": 1,
+            "explanation": "Support stays within what both people agreed, and either of them can stop it."
+          }
         ]
       },
       {
@@ -44176,6 +44488,18 @@ const LEARNING_PATHS = [
             "section": "Abstract: repetition, automaticity and measurement criteria",
             "scope": "University-hosted author research review; distinguishes repetition from habit strength. Worksheets are educational adaptations, not validated scales.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Why might two tracking systems be worth reducing to one?",
+            "options": [
+              "Two systems always mean a lack of discipline",
+              "A longer combined streak is more valuable",
+              "They may copy the same information, adding effort and error"
+            ],
+            "correct": 2,
+            "explanation": "A routine is kept for its purpose. A short trial without the duplicate shows whether anything useful would be lost."
           }
         ]
       },
@@ -44352,7 +44676,19 @@ const LEARNING_PATHS = [
               "explanation": "Record a late-shift branch and a review date; a lighter timetable remains an alternate explanation for improvement."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Jon's log shows quicker morning setup, but his workload also became lighter. How does he report it?",
+            "options": [
+              "He credits the routine with the quicker setup",
+              "He reports the quicker setup and the changed workload together",
+              "He leaves the workload out to keep the result clear"
+            ],
+            "correct": 1,
+            "explanation": "The log cannot isolate the routine as the cause, so the review states both and keeps the decision provisional."
+          }
+        ]
       }
     ],
     "resources": {
@@ -82666,7 +83002,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Dana separates the observed two changed headings from the guess that someone dismissed the work. She feels frustrated, but that feeling does not identify a motive. Her purpose is to understand the change before deciding what to do. She asks whether ten minutes now is convenient, puts other tasks aside and plans to listen without interrupting. If the timing does not suit, she arranges another time; no explanation has yet been established.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "In the foundation case, what does Dana observe and what does she guess?",
+            "options": [
+              "She observes that two headings changed; she guesses someone dismissed her work",
+              "She observes that someone dismissed her work; she guesses two headings changed",
+              "Both are observations"
+            ],
+            "correct": 0,
+            "explanation": "The changed headings could be seen; the motive could not. Her frustration does not identify one either."
+          },
+          {
+            "question": "What is Dana's purpose before deciding what to do?",
+            "options": [
+              "To show that her version was better",
+              "To understand the change",
+              "To find out who is to blame"
+            ],
+            "correct": 1,
+            "explanation": "Naming the purpose first keeps the conversation on the change itself rather than a motive no one has established."
+          },
+          {
+            "question": "Dana asks whether ten minutes now is convenient. If the timing does not suit, what does she do?",
+            "options": [
+              "Explains her concern anyway",
+              "Drops the subject",
+              "Arranges another time"
+            ],
+            "correct": 2,
+            "explanation": "Listening needs a workable time for both people, and the conversation still has to happen."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -82694,7 +83062,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Dana asks, \"What were you trying to make easier?\" Her first summary is, \"You replaced the introduction because it was unclear?\" The partner corrects her: only the headings changed. Dana revises: \"You changed the headings to make the dates easier to find; the introduction is unchanged. Is that right?\" Feedback: \"When headings changed without a note, I rechecked the whole section.\" Request: \"Could you leave a short change note before tomorrow's review?\" The partner agrees to the note, not to freezing every edit. Either can pause the practice.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "Dana's first summary says the introduction was replaced. What does the partner's correction tell her?",
+            "options": [
+              "Only the headings changed",
+              "The whole section was rewritten",
+              "Nothing changed at all"
+            ],
+            "correct": 0,
+            "explanation": "The correction changes what she knows, so Dana revises her summary and checks it again before giving feedback."
+          },
+          {
+            "question": "Dana asks for a short change note before tomorrow's review. What does the partner agree to?",
+            "options": [
+              "Not to edit the document again",
+              "The change note, not a freeze on every edit",
+              "Nothing until the organiser decides"
+            ],
+            "correct": 1,
+            "explanation": "A clear request can be answered. The agreement covers the note Dana asked for, not more than that."
+          },
+          {
+            "question": "In the practice studio's conversation, you choose: I haven't received feedback yet. Can you review by Thursday, or should we agree another plan? What does the studio suggest next?",
+            "options": [
+              "Nothing: the opening resolves the situation",
+              "Repeat the request until they agree",
+              "Listen to the reply and confirm a feasible agreement"
+            ],
+            "correct": 2,
+            "explanation": "The opening names an observation and a request and leaves room to negotiate, but only the reply and a confirmed agreement settle the plan."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -82722,7 +83122,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Dana values a stable version; Lee wants clearer information. They compare a full rewrite and a twenty-minute factual correction against accuracy and the Friday deadline. The rewrite does not fit the thirty-minute window, so they propose the factual correction and ask the organiser to confirm scope. In the fictional outcome, the organiser agrees; Lee edits and Dana checks by 11:30. The introduction rewrite remains unresolved and is reviewed next Tuesday. Dana records that agreement and responsibility without claiming that both prefer the result or that a peer can unilaterally approve release.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "Why do Dana and Lee propose the factual correction instead of a full rewrite?",
+            "options": [
+              "Lee prefers shorter edits",
+              "A rewrite would need the organiser's approval",
+              "The rewrite does not fit the thirty-minute window"
+            ],
+            "correct": 2,
+            "explanation": "They compare the options against agreed criteria, accuracy and the Friday deadline, and the rewrite fails the time constraint."
+          },
+          {
+            "question": "What happens to the introduction rewrite?",
+            "options": [
+              "It stays unresolved and is reviewed next Tuesday",
+              "Lee does it after the deadline without telling anyone",
+              "It is dropped for good"
+            ],
+            "correct": 0,
+            "explanation": "The review records what was agreed and what remains open, with a time to return to it."
+          },
+          {
+            "question": "What does Dana's record avoid claiming?",
+            "options": [
+              "That Lee edits and Dana checks by 11:30",
+              "That the organiser agreed the scope",
+              "That both prefer the result, or that a peer can approve the release alone"
+            ],
+            "correct": 2,
+            "explanation": "The record keeps to the agreement and who is responsible. It does not invent shared preference or authority."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -82865,7 +83297,19 @@ const LEARNING_PATHS = [
               "explanation": "A neutral timing question can obtain information Ravi needs for the shared plan."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Maya sees her name missing from a draft project roster. What does she ask the organiser?",
+            "options": [
+              "Why have you excluded me?",
+              "Is this roster final, and should my assignment be included?",
+              "Nothing, because the roster proves she was left out"
+            ],
+            "correct": 1,
+            "explanation": "The observation is a name absent from a draft. Her question checks the roster's status without asserting a motive."
+          }
+        ]
       },
       {
         "id": "feeling-and-action",
@@ -82921,6 +83365,18 @@ const LEARNING_PATHS = [
             "section": "Catch, check, change; considering evidence and alternatives",
             "scope": "Public guidance adapted only for everyday reflection on fictional low-stakes situations; no diagnosis, therapy protocol or treatment promise.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Why translate a word such as ignored into a feeling and the event behind it?",
+            "options": [
+              "It can imply that someone meant to exclude you",
+              "Feelings should be left out of conversations",
+              "It proves the feeling was mistaken"
+            ],
+            "correct": 0,
+            "explanation": "Naming the emotion and the specific event keeps the experience while letting the other person address the event rather than defend against a presumed motive."
           }
         ]
       },
@@ -82979,6 +83435,18 @@ const LEARNING_PATHS = [
             "scope": "University conflict guidance for voluntary everyday conversations; power differences and formal reporting needs may limit suitability.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Nell offers fifteen minutes of proofreading and declines a two-hour setup shift before her exam. What does the offer make visible?",
+            "options": [
+              "That she values the exam more than people",
+              "That she must make the same choice every time",
+              "Its opportunity cost"
+            ],
+            "correct": 2,
+            "explanation": "A feasible choice under current constraints respects both concerns and states its limit, so the other person can decide whether it helps."
+          }
         ]
       },
       {
@@ -83035,6 +83503,18 @@ const LEARNING_PATHS = [
             "section": "Catch, check, change; considering evidence and alternatives",
             "scope": "Public guidance adapted only for everyday reflection on fictional low-stakes situations; no diagnosis, therapy protocol or treatment promise.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How should a short reflection record end?",
+            "options": [
+              "With a useful question or action",
+              "Once the feeling has gone away",
+              "With a verdict about the other person"
+            ],
+            "correct": 0,
+            "explanation": "The record is for examining an interpretation and choosing a next step. It can be complete even if the feeling has not changed."
           }
         ]
       },
@@ -83093,6 +83573,18 @@ const LEARNING_PATHS = [
             "scope": "Public guidance adapted only for everyday reflection on fictional low-stakes situations; no diagnosis, therapy protocol or treatment promise.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A study-session invitation may have been left out by accident. What does that explanation leave in place?",
+            "options": [
+              "Nothing: an accident means there is no issue",
+              "The person still missed the session",
+              "Proof that the omission was deliberate"
+            ],
+            "correct": 1,
+            "explanation": "An alternative explanation is not a reason to erase the impact. The question of intent is separate from improving how invitations are sent."
+          }
         ]
       },
       {
@@ -83149,6 +83641,18 @@ const LEARNING_PATHS = [
             "section": "Preparation, non-blaming language and follow-up",
             "scope": "University conflict guidance for voluntary everyday conversations; power differences and formal reporting needs may limit suitability.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "When does postponing a broader concern turn into avoidance?",
+            "options": [
+              "Whenever the urgent question is asked first",
+              "Never: postponing is always neutral",
+              "When the broader concern gets no real follow-up"
+            ],
+            "correct": 2,
+            "explanation": "Separating the urgent question from the broader concern helps only if the second discussion has a real time and form."
           }
         ]
       },
@@ -83207,6 +83711,18 @@ const LEARNING_PATHS = [
             "scope": "University practice guidance; techniques encourage understanding, not agreement or a guaranteed response.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Inez's neighbour wants to explain a garden problem as Inez is about to leave. What does Inez say?",
+            "options": [
+              "I have five minutes now, or fifteen after six. Which would work?",
+              "Go ahead, I have as long as you need.",
+              "This is not a good time."
+            ],
+            "correct": 0,
+            "explanation": "Stating the time she really has supports attention without promising unlimited availability, and gives the neighbour a choice."
+          }
         ]
       },
       {
@@ -83263,6 +83779,18 @@ const LEARNING_PATHS = [
             "section": "Encourage, clarify, restate, reflect, summarise and validate",
             "scope": "University practice guidance; techniques encourage understanding, not agreement or a guaranteed response.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "When is a closed question the right tool?",
+            "options": [
+              "To discover context you know nothing about",
+              "To confirm a detail such as a deadline",
+              "To ask why someone is to blame"
+            ],
+            "correct": 1,
+            "explanation": "Open questions discover context; closed checks confirm a detail once you know enough. Why questions that embed blame are neither."
           }
         ]
       },
@@ -83433,7 +83961,19 @@ const LEARNING_PATHS = [
               "explanation": "Use the checked conditions to decide who will provide the figures and when."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Dev asks what done means on the board, and Rowan replies, You want permission for everything. What is wrong with that reply?",
+            "options": [
+              "It is too short to count as a paraphrase",
+              "It invites Dev to correct it",
+              "It adds an interpretation Dev did not state"
+            ],
+            "correct": 2,
+            "explanation": "A paraphrase restates the speaker's meaning and checks it. Rowan's version adds a motive instead of asking whether done includes review."
+          }
+        ]
       },
       {
         "id": "validate-without-agreeing",
@@ -83489,6 +84029,18 @@ const LEARNING_PATHS = [
             "section": "Encourage, clarify, restate, reflect, summarise and validate",
             "scope": "University practice guidance; techniques encourage understanding, not agreement or a guaranteed response.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "When does validation become misleading?",
+            "options": [
+              "When it claims to know an emotion the person has not named",
+              "When it acknowledges the reported disruption",
+              "When it is followed by a limit"
+            ],
+            "correct": 0,
+            "explanation": "Tentative language about the reported effect acknowledges the concern without pretending certainty about feelings."
           }
         ]
       },
@@ -83547,6 +84099,18 @@ const LEARNING_PATHS = [
             "scope": "University conflict guidance for voluntary everyday conversations; power differences and formal reporting needs may limit suitability.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Your next step depends on a colleague's task. Besides when you need the task done, what should the request say?",
+            "options": [
+              "Why the colleague should care",
+              "When you need a confirmation",
+              "Nothing else"
+            ],
+            "correct": 1,
+            "explanation": "A hidden response window is a common reason requests fail. Saying when you need an answer leaves time to switch to an alternative."
+          }
         ]
       },
       {
@@ -83603,6 +84167,18 @@ const LEARNING_PATHS = [
             "section": "Preparation, non-blaming language and follow-up",
             "scope": "University conflict guidance for voluntary everyday conversations; power differences and formal reporting needs may limit suitability.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Theo needs protected study time at night. Which of these goes beyond a boundary he can keep?",
+            "options": [
+              "Silencing notifications after 9 pm",
+              "Offering to look at one question at lunch",
+              "Requiring that nobody sends him messages at night"
+            ],
+            "correct": 2,
+            "explanation": "A boundary describes what he will do. It cannot control what other people send."
           }
         ]
       },
@@ -83745,7 +84321,19 @@ const LEARNING_PATHS = [
               "explanation": "Ask whether space or format constraints require a different workable change."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Two readers asked what the slide labels meant. Why avoid saying everyone was confused?",
+            "options": [
+              "It exaggerates the evidence",
+              "Feedback should never mention effects",
+              "Two readers are too few to mention"
+            ],
+            "correct": 0,
+            "explanation": "Feedback is easier to act on when it reports the actual effect and its location. The two questions are evidence enough to raise it."
+          }
+        ]
       },
       {
         "id": "receive-feedback",
@@ -83801,6 +84389,18 @@ const LEARNING_PATHS = [
             "section": "Giving and receiving feedback tip sheet",
             "scope": "University educational handout; used for specific, respectful feedback, not a clinical intervention.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What two decisions does receiving feedback involve?",
+            "options": [
+              "Whether to agree now and how to defend yourself",
+              "Whether you understand it, and whether you will act on it",
+              "Whether the person is right and whether they like you"
+            ],
+            "correct": 1,
+            "explanation": "Clarify the meaning first, often by asking for an example, before deciding whether to act on it."
           }
         ]
       },
@@ -83950,7 +84550,19 @@ const LEARNING_PATHS = [
               "explanation": "A shared outline and short overlap slot may fit better; check consent and actual availability."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Two people's concerns have no feasible overlap. What should happen?",
+            "options": [
+              "Agree on any option to end the discussion",
+              "Let the person with the stronger position decide",
+              "Keep the disagreement visible instead of forcing a superficial agreement"
+            ],
+            "correct": 2,
+            "explanation": "Understanding concerns can widen the options but does not guarantee agreement. A recorded disagreement is more useful than a false one."
+          }
+        ]
       },
       {
         "id": "negotiate-options",
@@ -84015,6 +84627,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "First-party government ombuds practice guidance; used only for the distinction and example option comparison, not legal advice or a guaranteed outcome."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An authorised alternate reviewer may be free at nine. What has to happen before the plan counts on that slot?",
+            "options": [
+              "The alternate agrees to it",
+              "Nothing: being authorised is enough",
+              "Dev approves the draft first"
+            ],
+            "correct": 0,
+            "explanation": "An option that depends on someone who has not agreed is not yet a workable plan."
+          }
         ]
       },
       {
@@ -84073,6 +84697,18 @@ const LEARNING_PATHS = [
             "scope": "University conflict guidance for voluntary everyday conversations; power differences and formal reporting needs may limit suitability.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Rowan wrongly said in public that Dev never reviews on time. Dev does not want to talk now. What does Rowan do?",
+            "options": [
+              "Waits for Dev's forgiveness before correcting anything",
+              "Respects that and still corrects the record",
+              "Keeps messaging until Dev agrees to talk"
+            ],
+            "correct": 1,
+            "explanation": "A repair corrects the inaccurate statement for the same audience and does not depend on reassurance or forgiveness."
+          }
         ]
       },
       {
@@ -84130,6 +84766,18 @@ const LEARNING_PATHS = [
             "scope": "University conflict guidance for voluntary everyday conversations; power differences and formal reporting needs may limit suitability.",
             "reviewed": "2026-09-30"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "After a phone call, two people understand a repair's agreed cost differently. What suits this?",
+            "options": [
+              "Another call with no record",
+              "Assuming the lower figure",
+              "Confirming the scope and amount in writing"
+            ],
+            "correct": 2,
+            "explanation": "A written record suits factual confirmation. If the scope is still disputed, they can arrange an accessible discussion and record the result."
+          }
         ]
       },
       {
@@ -84186,6 +84834,18 @@ const LEARNING_PATHS = [
             "section": "Multiple perspectives and collaborative resolution",
             "scope": "University practical guidance, not experimental proof that every disagreement can be resolved collaboratively.",
             "reviewed": "2026-09-30"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A student has twice raised an inaccessible assessment format without reply. Must they make another informal request before asking the accessibility office?",
+            "options": [
+              "No: another informal request is not a prerequisite",
+              "Yes: at least three requests are needed first",
+              "Yes: support offices act only after a direct conversation fails"
+            ],
+            "correct": 0,
+            "explanation": "Power and role constraints can make informal requests insufficient. The office's actual role and the institution's process still need checking."
           }
         ]
       },
@@ -84356,7 +85016,19 @@ const LEARNING_PATHS = [
               "explanation": "Use the agreed next check to address the remaining issue and verify whether the draft arrived."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A committee agrees an event date but not who owns the equipment. How does the review record that?",
+            "options": [
+              "As agreed, since nobody objected",
+              "As undecided, with an owner to be chosen at Monday's check-in",
+              "It leaves the equipment out of the summary"
+            ],
+            "correct": 1,
+            "explanation": "A review records a partial agreement without turning an open question into an accepted promise."
+          }
+        ]
       }
     ],
     "resources": {
