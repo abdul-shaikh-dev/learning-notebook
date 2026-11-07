@@ -94415,7 +94415,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "For a 20-person beginner workshop, plan venue, exercise sheet and invitation. Confirm venue before publishing its address; drafting can run independently. Each item has an owner and checked completion state. Exclude video production from the initial scope.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "In the foundation workshop plan, which work can go ahead before the venue is confirmed?",
+            "options": [
+              "Publishing the venue address",
+              "Drafting",
+              "Nothing until the venue replies"
+            ],
+            "correct": 1,
+            "explanation": "Publishing the address genuinely depends on the venue; drafting does not, so it can run independently."
+          },
+          {
+            "question": "What is excluded from the workshop's initial scope?",
+            "options": [
+              "Video production",
+              "The exercise sheet",
+              "The invitation"
+            ],
+            "correct": 0,
+            "explanation": "The plan covers venue, exercise sheet and invitation. An explicit exclusion helps judge requests that arrive later."
+          },
+          {
+            "question": "Which three deliverables does the foundation plan break the workshop into?",
+            "options": [
+              "Agenda, slides and feedback form",
+              "Budget, venue and catering",
+              "Venue, exercise sheet and invitation"
+            ],
+            "correct": 2,
+            "explanation": "Each deliverable then gets actions, an owner and a checked completion state."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -94444,7 +94476,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Use Ready, Doing, Review and Done with WIP two across started states. One blocked review and one draft consume both slots. Follow up on the blocker before pulling another item. A video request needs revised scope or capacity; three past cycle times give only a provisional range.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "On the practice studio's task board the WIP limit is 2: one draft is Doing and one review is Blocked. Can another Ready item be pulled into Doing?",
+            "options": [
+              "Yes: blocked work does not count",
+              "Yes, if it is small",
+              "No: both started items use the limit"
+            ],
+            "correct": 2,
+            "explanation": "The board refuses the move because blocked work still counts. Follow up on the blocker before pulling more."
+          },
+          {
+            "question": "A video request arrives during the intermediate week. What does it need before being accepted?",
+            "options": [
+              "A revised scope or capacity decision",
+              "Nothing: add it to the current deadline",
+              "A new board column"
+            ],
+            "correct": 0,
+            "explanation": "New scope changes cost, schedule or quality, so it needs a recorded decision rather than silent growth."
+          },
+          {
+            "question": "Three comparable invitation cards took 2, 3 and 6 elapsed days. What provisional forecast do they support for a similar card?",
+            "options": [
+              "Exactly 3 days, the middle value",
+              "2–6 days, with three samples too few for a reliable percentile",
+              "A 95% chance of finishing within 6 days"
+            ],
+            "correct": 1,
+            "explanation": "A small sample gives a rough observed range. Check whether the same review availability applies before relying on it."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -94473,7 +94537,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "A Monday-to-Thursday card has three elapsed days of cycle time; an unfinished Tuesday card is three days old Friday. A beginner struggles to find the first exercise step despite a complete checklist, so revise and retest. Close with accepted links and a named owner for the access issue; trial scheduled reviews for recurring wait time.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "In the advanced stage, a card ran from Monday to Thursday, and another started Tuesday and is unfinished on Friday. What are their figures?",
+            "options": [
+              "Cycle time 4 days; age 4 days",
+              "Cycle time 3 days; age 3 days",
+              "Cycle time 3 days; age 4 days"
+            ],
+            "correct": 1,
+            "explanation": "Elapsed date differences give three days for both. One is a completed cycle time, the other the age of unfinished work."
+          },
+          {
+            "question": "A beginner cannot find the first exercise step even though the checklist is complete. What does the stage do?",
+            "options": [
+              "Closes the project, since verification passed",
+              "Removes the beginner's feedback",
+              "Revises the material and retests"
+            ],
+            "correct": 2,
+            "explanation": "A failed validation task is a reason to repair the material and check it again, while keeping the verification evidence."
+          },
+          {
+            "question": "How does the closure record handle the unresolved access issue?",
+            "options": [
+              "It gives the issue a named owner",
+              "It deletes the issue so the project can close",
+              "It marks the project undelivered"
+            ],
+            "correct": 0,
+            "explanation": "A project can close as delivered with a known issue, provided the remaining obligation has an owner who accepts it."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -94527,6 +94623,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A chat request, a calendar reminder and a follow-up email all refer to the same equipment booking. What goes in the inbox?",
+            "options": [
+              "Three bookings, one per message",
+              "One item linking all three, with the unresolved collection time kept as a question",
+              "One booking with a likely collection time filled in"
+            ],
+            "correct": 1,
+            "explanation": "Capture keeps enough context to recover the request without duplicating it, and an unanswered question stays a question rather than an invented answer."
+          }
         ]
       },
       {
@@ -94578,6 +94686,18 @@ const LEARNING_PATHS = [
             "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "When should a task be promoted into a small project?",
+            "options": [
+              "When it repeatedly expands into several deliverables",
+              "Whenever it takes more than a day",
+              "When it has more than one reader"
+            ],
+            "correct": 0,
+            "explanation": "A project needs several actions to reach an outcome. Promoting the task lets you clarify those actions and its completion state."
           }
         ]
       },
@@ -94631,6 +94751,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Leena sends the librarian a request to confirm room access for Saturday. What tracks the reply?",
+            "options": [
+              "The same action, left open until the answer comes",
+              "Nothing: sending finished the matter",
+              "A separate waiting item"
+            ],
+            "correct": 2,
+            "explanation": "Sending is executable now and finishes the action; receiving the answer is waiting, which needs its own follow-up."
+          }
         ]
       },
       {
@@ -94683,6 +94815,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A newly discovered essential requirement changes what done means for a task. What must happen?",
+            "options": [
+              "Keep the original criteria regardless",
+              "Record the change",
+              "Update the criteria quietly"
+            ],
+            "correct": 1,
+            "explanation": "Criteria can change for a real reason, but an unrecorded change makes someone appear to miss a target that was never stated."
+          }
         ]
       },
       {
@@ -94734,6 +94878,18 @@ const LEARNING_PATHS = [
             "section": "Stakeholder expectations and requirements; adapted to small ordinary projects",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Why record essential participation needs early in the scope?",
+            "options": [
+              "They can affect venue and material decisions",
+              "They let you exclude them later",
+              "They replace the outcome statement"
+            ],
+            "correct": 0,
+            "explanation": "An access need discovered late can make an agreed venue or handout unusable, and a scope note is no reason to ignore it."
           }
         ]
       },
@@ -94924,7 +95080,19 @@ const LEARNING_PATHS = [
               "explanation": "Retain confirmation or accepted file links as evidence. Time spent and moving a card do not establish completion."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does a decomposition tree not establish?",
+            "options": [
+              "Which work contributes to the deliverables",
+              "Whether the deliverables are covered",
+              "The order in which work must happen"
+            ],
+            "correct": 2,
+            "explanation": "The tree shows coverage. Execution order comes from a separate view of dependencies."
+          }
+        ]
       },
       {
         "id": "sequence",
@@ -95121,7 +95289,19 @@ const LEARNING_PATHS = [
               "explanation": "Compare the invitation’s promises with the reviewed exercises and the actual session duration. Resolve mismatches before delivery."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Two items each wait for the other to finish. How is the cycle resolved?",
+            "options": [
+              "Set firmer dates for both items",
+              "Agree a provisional input or split an early deliverable",
+              "Assign a second person to one of them"
+            ],
+            "correct": 1,
+            "explanation": "Circular waiting is a structure problem. Dates or extra people cannot fix it; breaking the loop with a provisional input or an early partial deliverable can."
+          }
+        ]
       },
       {
         "id": "board",
@@ -95172,6 +95352,18 @@ const LEARNING_PATHS = [
             "section": "Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A card in Review fails its check. What should happen to it?",
+            "options": [
+              "Move it to Done because the writing is finished",
+              "Send it back without comment",
+              "Return it with a named correction and owner"
+            ],
+            "correct": 2,
+            "explanation": "An explicit exit rule for Review includes what happens on failure, so the next person knows what to fix and who owns it."
           }
         ]
       },
@@ -95343,7 +95535,19 @@ const LEARNING_PATHS = [
               "explanation": "When WIP drops to one, select a clear useful item with available inputs; pulling it restores WIP to two."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "On the practice studio's task board the limit is 3. One card is Doing and two are Blocked waiting for review. You move a fourth, Ready card to Doing. What happens?",
+            "options": [
+              "It moves: blocked cards do not count",
+              "It is refused: blocked cards still count as started work",
+              "It moves, and the limit rises to 4"
+            ],
+            "correct": 1,
+            "explanation": "WIP counts every started, unfinished item, including blocked ones. The board asks you to finish or unblock work before starting more."
+          }
+        ]
       },
       {
         "id": "pull",
@@ -95394,6 +95598,18 @@ const LEARNING_PATHS = [
             "section": "Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "With a WIP limit of three, one of three started cards finishes. Which card should be pulled?",
+            "options": [
+              "The ready room-confirmation task that unblocks the notice",
+              "The unclear optional logo redesign",
+              "Both, since a slot is free"
+            ],
+            "correct": 0,
+            "explanation": "A free slot permits pulling ready work; it does not oblige you to start vague work that has no checkable result yet."
           }
         ]
       },
@@ -95447,6 +95663,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The agreed reviewer is unavailable and the card is waiting. What does the lesson suggest?",
+            "options": [
+              "Publish without review to keep the date",
+              "Leave it until the reviewer returns, without telling anyone",
+              "Use an explicit alternate or escalate the decision"
+            ],
+            "correct": 2,
+            "explanation": "A blocked card should not invite an unauthorised shortcut. The coordinator follows up through a named alternate or the person who can decide."
+          }
         ]
       },
       {
@@ -95498,6 +95726,18 @@ const LEARNING_PATHS = [
             "section": "Original 1994 experiments on completion-time predictions",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Three comparable reading guides took 1, 4 and 5 elapsed days from agreed start to acceptance. What provisional range does that give?",
+            "options": [
+              "Exactly 4 days",
+              "1–5 days",
+              "About 3.3 days, the mean"
+            ],
+            "correct": 1,
+            "explanation": "The observed range shows the variation. Three samples cannot support a reliable percentile or a single-number promise."
           }
         ]
       },
@@ -95688,7 +95928,19 @@ const LEARNING_PATHS = [
               "explanation": "Obtain the selected backup’s address and capacity before publication. Keep the card blocked and counted as WIP until the needed input is usable."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A started item becomes blocked. Where does it stay?",
+            "options": [
+              "Inside the WIP count",
+              "Out of the count until it is unblocked",
+              "In the backlog with new items"
+            ],
+            "correct": 0,
+            "explanation": "Moving blocked work out of sight does not remove its delivery risk, and it still occupies capacity."
+          }
+        ]
       },
       {
         "id": "risk",
@@ -95739,6 +95991,18 @@ const LEARNING_PATHS = [
             "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The chosen park for an outdoor reading event is confirmed closed. What is the response?",
+            "options": [
+              "Add it to the risk register",
+              "Wait to see whether it reopens",
+              "Activate or choose the replacement location now"
+            ],
+            "correct": 2,
+            "explanation": "A confirmed closure has happened, so it is an issue to act on, not a possibility to plan for."
           }
         ]
       },
@@ -95801,6 +96065,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The second workshop session replaces the first instead of adding a choice. Which proposed work disappears?",
+            "options": [
+              "The session selector and two-branch routing",
+              "Retesting the registration route",
+              "Updating the date, room and capacity"
+            ],
+            "correct": 0,
+            "explanation": "Only the work that the replaced decision made necessary goes away. The single registration route still needs retesting, and the session details still change."
+          }
         ]
       },
       {
@@ -95852,6 +96128,18 @@ const LEARNING_PATHS = [
             "section": "Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A card started on Tuesday and was completed on Saturday. Another started on Thursday and is unfinished on Sunday. Using elapsed date differences, what are the figures?",
+            "options": [
+              "Cycle time 4 days; age 3 days",
+              "Cycle time 5 days; age 4 days",
+              "Cycle time 4 days; cycle time 3 days"
+            ],
+            "correct": 0,
+            "explanation": "Only finished items have a cycle time. An unfinished item has an age, and only the finished card counts toward that week's throughput."
           }
         ]
       },
@@ -96025,7 +96313,19 @@ const LEARNING_PATHS = [
               "explanation": "When the intended task succeeds, retain the verified file and observed validation result. State the learner/task scope rather than claiming universal usability."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A joining notice contains every required field, but a new reader cannot find how to register. Which check fails?",
+            "options": [
+              "Verification, though validation passes",
+              "Validation, though verification may pass",
+              "Neither: the checklist passed"
+            ],
+            "correct": 1,
+            "explanation": "Verification asks whether specified criteria are met; validation asks whether the result serves its intended use."
+          }
+        ]
       },
       {
         "id": "retrospective",
@@ -96076,6 +96376,18 @@ const LEARNING_PATHS = [
             "section": "Goals, inspection, adaptation and Definition of Done; selected ideas do not constitute full Scrum",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Why try one workflow change at a time?",
+            "options": [
+              "Retrospectives allow only one action",
+              "Several changes are always worse than one",
+              "If several change together, it is unclear which one helped"
+            ],
+            "correct": 2,
+            "explanation": "Changing several policies at once may still help, but the evidence can no longer tell you which change to keep."
           }
         ]
       },
@@ -96128,6 +96440,18 @@ const LEARNING_PATHS = [
             "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What should a handoff between parallel branches state?",
+            "options": [
+              "The version, acceptance criteria and unresolved questions",
+              "Only the finish date",
+              "Who worked the most hours"
+            ],
+            "correct": 0,
+            "explanation": "Integration needs a shared interface. Without the version and open questions, two branches can finish independently and still not fit together."
           }
         ]
       },
@@ -96283,7 +96607,19 @@ const LEARNING_PATHS = [
               "explanation": "Store accepted links, limitations, outstanding obligations and the route for future corrections together."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "What does workshop attendance establish in a closure record?",
+            "options": [
+              "That the learning outcome was met",
+              "Participation, not the learning outcome",
+              "Nothing worth recording"
+            ],
+            "correct": 1,
+            "explanation": "Feedback or an observed exercise gives different evidence about learning. The closure record keeps the two apart."
+          }
+        ]
       },
       {
         "id": "system-review",
@@ -96334,6 +96670,18 @@ const LEARNING_PATHS = [
             "section": "Definition of Workflow and Flow Metrics; normative method rather than controlled causal evidence",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A three-person project spends 40 minutes a day maintaining five reports for nine cards. What does the lesson keep?",
+            "options": [
+              "All five reports, made shorter",
+              "A full Kanban system, since there is a board",
+              "One board with owner, finish criteria and blockers, plus a short weekly review"
+            ],
+            "correct": 2,
+            "explanation": "A report earns its place by informing a decision. The rest is maintenance cost, and a simple board is not a claim to implement Kanban."
           }
         ]
       }
@@ -100622,7 +100970,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "For 240 available minutes, reserve 90 for essentials and transitions, 90 for a checked draft, 30 for practice and 30 for uncertainty. Optional formatting moves to another day. Record actual use without treating necessary care as failure. Return cue: draft.md, paragraph two checked; next verify paragraph three against the booking email.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "The foundation plan splits 240 minutes into 90 for essentials and transitions, 90 for a checked draft and 30 for practice. How much is left for uncertainty?",
+            "options": [
+              "30 minutes",
+              "60 minutes",
+              "None"
+            ],
+            "correct": 0,
+            "explanation": "240 − 90 − 90 − 30 = 30 minutes, kept unassigned for variable work or delays."
+          },
+          {
+            "question": "Where does optional formatting go in the foundation plan?",
+            "options": [
+              "Into the uncertainty reserve",
+              "To another day",
+              "Into the evening, after the draft"
+            ],
+            "correct": 1,
+            "explanation": "The day's capacity is already committed, so optional work moves rather than squeezing the reserve or recovery."
+          },
+          {
+            "question": "Which return cue matches the foundation example?",
+            "options": [
+              "Continue editing draft.md",
+              "Paragraph two",
+              "draft.md, paragraph two checked; next verify paragraph three against the booking email"
+            ],
+            "correct": 2,
+            "explanation": "A useful cue names the file, the last checked step and the next action, so returning needs no reconstruction."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -100651,7 +101031,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Use observed drafts of 70, 90 and 110 minutes rather than a 40-minute hope. Trial optional notification batching in four similar sessions. Record checked paragraphs and errors. A lighter workload could explain the improvement. These sessions alone cannot show that batching caused it.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "Observed drafts took 70, 90 and 110 minutes. What range and middle value do they give?",
+            "options": [
+              "40–110 minutes, middle 90",
+              "70–110 minutes, middle 90",
+              "70–110 minutes, middle 70"
+            ],
+            "correct": 1,
+            "explanation": "The observed range replaces a hopeful 40-minute guess. The middle value describes this small sample, not a confidence level."
+          },
+          {
+            "question": "Fewer misses followed the notification-batching trial. What else could explain the improvement?",
+            "options": [
+              "A lighter workload",
+              "Nothing else",
+              "The colour of the calendar"
+            ],
+            "correct": 0,
+            "explanation": "A changed workload competes with the trial as an explanation, which is why the result is reported with its conditions."
+          },
+          {
+            "question": "What do the four trial sessions show about batching?",
+            "options": [
+              "That batching doubles productivity",
+              "That batching caused the improvement",
+              "On their own, not that batching caused it"
+            ],
+            "correct": 2,
+            "explanation": "A small sample under changing conditions supports a reversible local choice, not a causal claim."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -100680,7 +101092,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Keep one commitment list, a daily capacity check and a weekly review. For a 90-minute request with 30 minutes available, offer a partial result today or a full result Thursday. Record fewer misses alongside workload differences; retain useful decisions and revise unsupported claims.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "A 90-minute request arrives when 30 minutes are available. What does the advanced example offer?",
+            "options": [
+              "The whole request today, by working later",
+              "A partial result today or a full result Thursday",
+              "A refusal with no alternative"
+            ],
+            "correct": 1,
+            "explanation": "A useful boundary names real alternatives and lets the requester choose between them."
+          },
+          {
+            "question": "In the practice studio's capacity sketch, 30 minutes are available and the plan is 90 minutes, with no buffer or disruption. What does it report?",
+            "options": [
+              "A 60-minute shortfall",
+              "The plan fits",
+              "A 30-minute shortfall"
+            ],
+            "correct": 0,
+            "explanation": "90 − 30 = 60 minutes more than the available time, so the plan needs a scope or timing decision."
+          },
+          {
+            "question": "What does the advanced routine keep?",
+            "options": [
+              "Every tracking field from the trial",
+              "Only a daily mood graph",
+              "One commitment list, a daily capacity check and a weekly review"
+            ],
+            "correct": 2,
+            "explanation": "The smallest routine that informs real decisions is kept; fields that no review uses are removed."
+          }
+        ]
       }
     ],
     "lessons": [
@@ -100858,7 +101302,19 @@ const LEARNING_PATHS = [
               "explanation": "Leave 30 minutes uncommitted for variation. The plan uses 90 + 30 + 30 = 150 minutes without reducing essential commitments."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A three-hour afternoon includes a 20-minute walk, a 25-minute meal and 15 minutes of setup. How many study minutes are left?",
+            "options": [
+              "180",
+              "135",
+              "120"
+            ],
+            "correct": 2,
+            "explanation": "180 − (20 + 25 + 15) = 120. Empty calendar time is not all usable focus time."
+          }
+        ]
       },
       {
         "id": "time-log",
@@ -100909,6 +101365,18 @@ const LEARNING_PATHS = [
             "section": "Discussion and limitations; associations are not individual guarantees",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A log records 30 minutes solving problems, 15 arranging a group meeting, 10 waiting for a download and 35 checking answers. What does it show?",
+            "options": [
+              "90 minutes in total, 65 of them on the task",
+              "80 minutes in total, 65 of them on the task",
+              "90 minutes in total, all of it task work"
+            ],
+            "correct": 0,
+            "explanation": "Solving and checking make 65 minutes; coordination and the delay are recorded without judging whether they were avoidable."
           }
         ]
       },
@@ -100962,6 +101430,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A 25-minute reading session aims for a four-point summary with page references and one open question. When does the session stop?",
+            "options": [
+              "When the chapter is finished",
+              "When those items exist",
+              "When the 25 minutes run out, whatever exists"
+            ],
+            "correct": 1,
+            "explanation": "An outcome gives the session a stopping test. Reading the next chapter belongs to another session."
+          }
         ]
       },
       {
@@ -101014,6 +101494,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Two items have similar consequences if delayed. What can break the tie?",
+            "options": [
+              "Multiplying scores until one wins",
+              "Whichever arrived first",
+              "An explicit tie-break such as dependency, reversibility or effort"
+            ],
+            "correct": 2,
+            "explanation": "A stated reason can be revisited when evidence changes; invented scores only look precise."
+          }
         ]
       },
       {
@@ -101065,6 +101557,18 @@ const LEARNING_PATHS = [
             "section": "Protecting sleep opportunity; no diagnosis or treatment advice",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Only 75 minutes remain before a protected bedtime, and the planned work would take two hours. Which plan fits?",
+            "options": [
+              "45 minutes on the required calculation, 10 recording the next step and 20 for the bedtime transition",
+              "All two hours of work, with bedtime moved later",
+              "60 minutes on the calculation and 30 on optional examples"
+            ],
+            "correct": 0,
+            "explanation": "45 + 10 + 20 = 75 minutes. The optional examples move to tomorrow rather than borrowing from protected sleep."
           }
         ]
       },
@@ -101257,7 +101761,19 @@ const LEARNING_PATHS = [
               "explanation": "Leave the optional message for the agreed checking window and continue the current paragraph."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "During a 60-minute reading block, three alerts take 2 minutes each and each return to the task takes 3 minutes. What is the observed disruption?",
+            "options": [
+              "6 minutes, leaving 54 for reading",
+              "15 minutes, leaving 45 for reading",
+              "9 minutes, leaving 51 for reading"
+            ],
+            "correct": 1,
+            "explanation": "3 × (2 + 3) = 15 minutes, because the cost includes finding your place again. This is the recorded case, not a general penalty."
+          }
+        ]
       },
       {
         "id": "small-start",
@@ -101308,6 +101824,18 @@ const LEARNING_PATHS = [
             "section": "Discussion and limitations; associations are not individual guarantees",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "You plan to revise a chapter, but the file is unavailable. What is the next action?",
+            "options": [
+              "Start revising from memory",
+              "Obtaining the file",
+              "Splitting the revision into twenty cards"
+            ],
+            "correct": 1,
+            "explanation": "Preparing a first action can reveal a missing input, and getting that input then becomes the real next step."
           }
         ]
       },
@@ -101360,6 +101888,18 @@ const LEARNING_PATHS = [
             "section": "Discussion and limitations; associations are not individual guarantees",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Drafting runs long in a movable block. What can the block have instead of sliding every later appointment forward?",
+            "options": [
+              "A latest finish or a fallback outcome",
+              "Permission to move fixed classes",
+              "No end time"
+            ],
+            "correct": 0,
+            "explanation": "A latest finish or a smaller fallback such as a rough outline makes rescheduling deliberate, while fixed commitments stay put."
           }
         ]
       },
@@ -101540,7 +102080,19 @@ const LEARNING_PATHS = [
               "explanation": "Choose a feasible window and review allowance. If a 40-minute promise cannot fit the evidence, reduce scope or renegotiate rather than hiding variation."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Comparable briefings took 45, 60 and 90 active minutes, and each included 10 minutes of printing that the new digital release leaves out. What is the adjusted median?",
+            "options": [
+              "60 minutes",
+              "55 minutes",
+              "50 minutes"
+            ],
+            "correct": 2,
+            "explanation": "Removing the printing gives 35, 50 and 80 minutes, with a median of 50. Three observations give a forecast, not a guaranteed finish."
+          }
+        ]
       },
       {
         "id": "buffer",
@@ -101608,6 +102160,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "The original 1994 experiments document optimistic completion predictions. Their interventions did not establish improved absolute prediction accuracy. Using comparable recorded work and a locally chosen buffer here is a planning heuristic to evaluate, not an accuracy guarantee from that study."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Isha's window is 150 minutes, and her briefing now needs 90 + 25 minutes. In the practice studio's capacity sketch, with no buffer reserved and no disruption, what is left?",
+            "options": [
+              "35 uncommitted minutes",
+              "60 uncommitted minutes",
+              "A 25-minute shortfall"
+            ],
+            "correct": 0,
+            "explanation": "150 − 115 = 35. This effort change fits the reserve; a missing confirmation would not, however much time is left."
+          }
         ]
       },
       {
@@ -101659,6 +102223,18 @@ const LEARNING_PATHS = [
             "section": "Field study of suspension and resumption; context-specific evidence",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What should a communication agreement explain before you silence alerts?",
+            "options": [
+              "Why you are busy",
+              "What urgent means and how to use the urgent route",
+              "That you will not be reachable at all"
+            ],
+            "correct": 1,
+            "explanation": "Without that rule, silencing alerts can shift the cost onto someone who needed a reasonable response."
           }
         ]
       },
@@ -101712,6 +102288,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "The study reports field observations and design suggestions about preserving task context. The specific return-note format in this lesson is an original planning heuristic, not a tested intervention from that study."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "You return to a task and read your return cue. What else do you do before continuing?",
+            "options": [
+              "Follow the cue exactly as written",
+              "Inspect the actual file, since someone may have changed it",
+              "Write a new cue"
+            ],
+            "correct": 1,
+            "explanation": "A cue can go stale. Resume at the next valid step in the file as it is now."
+          }
         ]
       },
       {
@@ -101764,6 +102352,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A 20-minute session attempts four questions and gets all four right; a 35-minute session attempts six with three errors. Which produced more correct answers?",
+            "options": [
+              "The 35-minute session: six attempts against four",
+              "Both equally",
+              "The 20-minute session: 4 correct against 3"
+            ],
+            "correct": 2,
+            "explanation": "Six attempts with three errors leave three correct. More attempts did not produce more correct work in this small comparison."
+          }
         ]
       },
       {
@@ -101815,6 +102415,18 @@ const LEARNING_PATHS = [
             "section": "Protecting sleep opportunity; no diagnosis or treatment advice",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Your notes suggest mornings suit drafting, but the morning window belongs to essential care. What does the lesson suggest?",
+            "options": [
+              "Move the care responsibility",
+              "Test a different feasible window",
+              "Conclude that you are not a morning person"
+            ],
+            "correct": 1,
+            "explanation": "Energy notes inform scheduling within real constraints; they do not justify displacing a responsibility or declaring a fixed identity."
           }
         ]
       },
@@ -101985,7 +102597,19 @@ const LEARNING_PATHS = [
               "explanation": "Compare finished outcomes, duration and changed constraints. Use the results to revise estimates rather than copy every unfinished item forward."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A weekly list has three completed tasks, two carried tasks and three new requests, with three available windows. How many candidates are deferred or renegotiated?",
+            "options": [
+              "Two",
+              "Five",
+              "None"
+            ],
+            "correct": 0,
+            "explanation": "The completed work is archived, leaving five candidates for three windows, so two are explicitly deferred or renegotiated."
+          }
+        ]
       },
       {
         "id": "boundaries",
@@ -102046,6 +102670,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A translation needs about 50 minutes, and 35 remain after corrections. What is the position if Isha says yes?",
+            "options": [
+              "It fits",
+              "A 35-minute gap",
+              "A 15-minute gap"
+            ],
+            "correct": 2,
+            "explanation": "50 − 35 = 15 minutes short even if nothing else changes, so the reply names the conflict and real alternatives."
+          }
         ]
       },
       {
@@ -102097,6 +102733,18 @@ const LEARNING_PATHS = [
             "section": "Discussion and limitations; associations are not individual guarantees",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which statement about unclear tasks fits the lesson on overload?",
+            "options": [
+              "Clarifying them can reduce reconstruction, but cannot create hours",
+              "Clarifying them removes overload",
+              "Stricter reminders fix repeated carry-over"
+            ],
+            "correct": 0,
+            "explanation": "Clarification and too much essential work are different problems. Overload needs work removed, reduced, delayed or shared."
           }
         ]
       },
@@ -102267,7 +102915,19 @@ const LEARNING_PATHS = [
               "explanation": "Choose a provisional routine if the benefit exceeds its cost; repeat a more comparable trial if the result is ambiguous. Do not claim universal causation."
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A technique saves ten minutes but takes twenty minutes to administer. Is it a time saving on those observations?",
+            "options": [
+              "Yes, because ten minutes were saved",
+              "No, though it may have another benefit",
+              "It depends only on how it feels"
+            ],
+            "correct": 1,
+            "explanation": "A fair comparison includes maintenance effort, and the outcome should be chosen before seeing the results."
+          }
+        ]
       },
       {
         "id": "shared-time",
@@ -102318,6 +102978,18 @@ const LEARNING_PATHS = [
             "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The agreed reply window for a review is missed. What do you do?",
+            "options": [
+              "Assume silence means approval",
+              "Quietly move the deadline",
+              "Use the confirmed fallback or request a decision"
+            ],
+            "correct": 2,
+            "explanation": "A waiting input stays visible with a named person and a follow-up decision; silence is not acceptance."
           }
         ]
       },
@@ -102371,6 +103043,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does the minimum version of a routine for disrupted days include?",
+            "options": [
+              "Every field of the full planner",
+              "Capture the essential commitment, choose one next action and leave a return cue",
+              "Nothing until a normal day returns"
+            ],
+            "correct": 1,
+            "explanation": "A routine that works only under ideal conditions needs a simpler fallback that still protects essential commitments."
+          }
         ]
       },
       {
@@ -102422,6 +103106,18 @@ const LEARNING_PATHS = [
             "section": "Discussion and limitations; associations are not individual guarantees",
             "reviewed": "2026-09-30",
             "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A three-week trial produced more checked exercises, but the final week used easier questions. What follows?",
+            "options": [
+              "The new routine caused the increase",
+              "The trial showed nothing at all",
+              "The increase cannot be attributed to the routine alone"
+            ],
+            "correct": 2,
+            "explanation": "Easier questions are a competing explanation. Keep what clearly helped and compare again with tasks of similar difficulty."
           }
         ]
       }

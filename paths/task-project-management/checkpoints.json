@@ -1,0 +1,84 @@
+{
+  "lessons": {
+    "capture": [
+      {"question": "A chat request, a calendar reminder and a follow-up email all refer to the same equipment booking. What goes in the inbox?", "options": ["Three bookings, one per message", "One item linking all three, with the unresolved collection time kept as a question", "One booking with a likely collection time filled in"], "correct": 1, "explanation": "Capture keeps enough context to recover the request without duplicating it, and an unanswered question stays a question rather than an invented answer."}
+    ],
+    "task-project": [
+      {"question": "When should a task be promoted into a small project?", "options": ["When it repeatedly expands into several deliverables", "Whenever it takes more than a day", "When it has more than one reader"], "correct": 0, "explanation": "A project needs several actions to reach an outcome. Promoting the task lets you clarify those actions and its completion state."}
+    ],
+    "next-action": [
+      {"question": "Leena sends the librarian a request to confirm room access for Saturday. What tracks the reply?", "options": ["The same action, left open until the answer comes", "Nothing: sending finished the matter", "A separate waiting item"], "correct": 2, "explanation": "Sending is executable now and finishes the action; receiving the answer is waiting, which needs its own follow-up."}
+    ],
+    "done": [
+      {"question": "A newly discovered essential requirement changes what done means for a task. What must happen?", "options": ["Keep the original criteria regardless", "Record the change", "Update the criteria quietly"], "correct": 1, "explanation": "Criteria can change for a real reason, but an unrecorded change makes someone appear to miss a target that was never stated."}
+    ],
+    "scope": [
+      {"question": "Why record essential participation needs early in the scope?", "options": ["They can affect venue and material decisions", "They let you exclude them later", "They replace the outcome statement"], "correct": 0, "explanation": "An access need discovered late can make an agreed venue or handout unusable, and a scope note is no reason to ignore it."}
+    ],
+    "decompose": [
+      {"question": "What does a decomposition tree not establish?", "options": ["Which work contributes to the deliverables", "Whether the deliverables are covered", "The order in which work must happen"], "correct": 2, "explanation": "The tree shows coverage. Execution order comes from a separate view of dependencies."}
+    ],
+    "sequence": [
+      {"question": "Two items each wait for the other to finish. How is the cycle resolved?", "options": ["Set firmer dates for both items", "Agree a provisional input or split an early deliverable", "Assign a second person to one of them"], "correct": 1, "explanation": "Circular waiting is a structure problem. Dates or extra people cannot fix it; breaking the loop with a provisional input or an early partial deliverable can."}
+    ],
+    "board": [
+      {"question": "A card in Review fails its check. What should happen to it?", "options": ["Move it to Done because the writing is finished", "Send it back without comment", "Return it with a named correction and owner"], "correct": 2, "explanation": "An explicit exit rule for Review includes what happens on failure, so the next person knows what to fix and who owns it."}
+    ],
+    "wip": [
+      {"question": "On the practice studio's task board the limit is 3. One card is Doing and two are Blocked waiting for review. You move a fourth, Ready card to Doing. What happens?", "options": ["It moves: blocked cards do not count", "It is refused: blocked cards still count as started work", "It moves, and the limit rises to 4"], "correct": 1, "explanation": "WIP counts every started, unfinished item, including blocked ones. The board asks you to finish or unblock work before starting more."}
+    ],
+    "pull": [
+      {"question": "With a WIP limit of three, one of three started cards finishes. Which card should be pulled?", "options": ["The ready room-confirmation task that unblocks the notice", "The unclear optional logo redesign", "Both, since a slot is free"], "correct": 0, "explanation": "A free slot permits pulling ready work; it does not oblige you to start vague work that has no checkable result yet."}
+    ],
+    "owners": [
+      {"question": "The agreed reviewer is unavailable and the card is waiting. What does the lesson suggest?", "options": ["Publish without review to keep the date", "Leave it until the reviewer returns, without telling anyone", "Use an explicit alternate or escalate the decision"], "correct": 2, "explanation": "A blocked card should not invite an unauthorised shortcut. The coordinator follows up through a named alternate or the person who can decide."}
+    ],
+    "estimates": [
+      {"question": "Three comparable reading guides took 1, 4 and 5 elapsed days from agreed start to acceptance. What provisional range does that give?", "options": ["Exactly 4 days", "1–5 days", "About 3.3 days, the mean"], "correct": 1, "explanation": "The observed range shows the variation. Three samples cannot support a reliable percentile or a single-number promise."}
+    ],
+    "blocked": [
+      {"question": "A started item becomes blocked. Where does it stay?", "options": ["Inside the WIP count", "Out of the count until it is unblocked", "In the backlog with new items"], "correct": 0, "explanation": "Moving blocked work out of sight does not remove its delivery risk, and it still occupies capacity."}
+    ],
+    "risk": [
+      {"question": "The chosen park for an outdoor reading event is confirmed closed. What is the response?", "options": ["Add it to the risk register", "Wait to see whether it reopens", "Activate or choose the replacement location now"], "correct": 2, "explanation": "A confirmed closure has happened, so it is an issue to act on, not a possibility to plan for."}
+    ],
+    "change": [
+      {"question": "The second workshop session replaces the first instead of adding a choice. Which proposed work disappears?", "options": ["The session selector and two-branch routing", "Retesting the registration route", "Updating the date, room and capacity"], "correct": 0, "explanation": "Only the work that the replaced decision made necessary goes away. The single registration route still needs retesting, and the session details still change."}
+    ],
+    "metrics": [
+      {"question": "A card started on Tuesday and was completed on Saturday. Another started on Thursday and is unfinished on Sunday. Using elapsed date differences, what are the figures?", "options": ["Cycle time 4 days; age 3 days", "Cycle time 5 days; age 4 days", "Cycle time 4 days; cycle time 3 days"], "correct": 0, "explanation": "Only finished items have a cycle time. An unfinished item has an age, and only the finished card counts toward that week's throughput."}
+    ],
+    "review": [
+      {"question": "A joining notice contains every required field, but a new reader cannot find how to register. Which check fails?", "options": ["Verification, though validation passes", "Validation, though verification may pass", "Neither: the checklist passed"], "correct": 1, "explanation": "Verification asks whether specified criteria are met; validation asks whether the result serves its intended use."}
+    ],
+    "retrospective": [
+      {"question": "Why try one workflow change at a time?", "options": ["Retrospectives allow only one action", "Several changes are always worse than one", "If several change together, it is unclear which one helped"], "correct": 2, "explanation": "Changing several policies at once may still help, but the evidence can no longer tell you which change to keep."}
+    ],
+    "parallel": [
+      {"question": "What should a handoff between parallel branches state?", "options": ["The version, acceptance criteria and unresolved questions", "Only the finish date", "Who worked the most hours"], "correct": 0, "explanation": "Integration needs a shared interface. Without the version and open questions, two branches can finish independently and still not fit together."}
+    ],
+    "close": [
+      {"question": "What does workshop attendance establish in a closure record?", "options": ["That the learning outcome was met", "Participation, not the learning outcome", "Nothing worth recording"], "correct": 1, "explanation": "Feedback or an observed exercise gives different evidence about learning. The closure record keeps the two apart."}
+    ],
+    "system-review": [
+      {"question": "A three-person project spends 40 minutes a day maintaining five reports for nine cards. What does the lesson keep?", "options": ["All five reports, made shorter", "A full Kanban system, since there is a board", "One board with owner, finish criteria and blockers, plus a short weekly review"], "correct": 2, "explanation": "A report earns its place by informing a decision. The rest is maintenance cost, and a simple board is not a claim to implement Kanban."}
+    ]
+  },
+  "stages": {
+    "foundation": [
+      {"question": "In the foundation workshop plan, which work can go ahead before the venue is confirmed?", "options": ["Publishing the venue address", "Drafting", "Nothing until the venue replies"], "correct": 1, "explanation": "Publishing the address genuinely depends on the venue; drafting does not, so it can run independently."},
+      {"question": "What is excluded from the workshop's initial scope?", "options": ["Video production", "The exercise sheet", "The invitation"], "correct": 0, "explanation": "The plan covers venue, exercise sheet and invitation. An explicit exclusion helps judge requests that arrive later."},
+      {"question": "Which three deliverables does the foundation plan break the workshop into?", "options": ["Agenda, slides and feedback form", "Budget, venue and catering", "Venue, exercise sheet and invitation"], "correct": 2, "explanation": "Each deliverable then gets actions, an owner and a checked completion state."}
+    ],
+    "intermediate": [
+      {"question": "On the practice studio's task board the WIP limit is 2: one draft is Doing and one review is Blocked. Can another Ready item be pulled into Doing?", "options": ["Yes: blocked work does not count", "Yes, if it is small", "No: both started items use the limit"], "correct": 2, "explanation": "The board refuses the move because blocked work still counts. Follow up on the blocker before pulling more."},
+      {"question": "A video request arrives during the intermediate week. What does it need before being accepted?", "options": ["A revised scope or capacity decision", "Nothing: add it to the current deadline", "A new board column"], "correct": 0, "explanation": "New scope changes cost, schedule or quality, so it needs a recorded decision rather than silent growth."},
+      {"question": "Three comparable invitation cards took 2, 3 and 6 elapsed days. What provisional forecast do they support for a similar card?", "options": ["Exactly 3 days, the middle value", "2–6 days, with three samples too few for a reliable percentile", "A 95% chance of finishing within 6 days"], "correct": 1, "explanation": "A small sample gives a rough observed range. Check whether the same review availability applies before relying on it."}
+    ],
+    "advanced": [
+      {"question": "In the advanced stage, a card ran from Monday to Thursday, and another started Tuesday and is unfinished on Friday. What are their figures?", "options": ["Cycle time 4 days; age 4 days", "Cycle time 3 days; age 3 days", "Cycle time 3 days; age 4 days"], "correct": 1, "explanation": "Elapsed date differences give three days for both. One is a completed cycle time, the other the age of unfinished work."},
+      {"question": "A beginner cannot find the first exercise step even though the checklist is complete. What does the stage do?", "options": ["Closes the project, since verification passed", "Removes the beginner's feedback", "Revises the material and retests"], "correct": 2, "explanation": "A failed validation task is a reason to repair the material and check it again, while keeping the verification evidence."},
+      {"question": "How does the closure record handle the unresolved access issue?", "options": ["It gives the issue a named owner", "It deletes the issue so the project can close", "It marks the project undelivered"], "correct": 0, "explanation": "A project can close as delivered with a known issue, provided the remaining obligation has an owner who accepts it."}
+    ]
+  }
+}
