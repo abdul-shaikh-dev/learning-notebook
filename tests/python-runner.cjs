@@ -1,11 +1,11 @@
 // The Python course starter runner: view, worker lifecycle, drafts and fallbacks, without a real runtime.
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-function fixture(lesson,{failStorage=false}={}){
+function fixture(lesson,{failStorage=false,cacheKeys=null}={}){
  const nodes={},session=new Map(),workers=[],timers=new Map();let next=1;
  const element=id=>nodes[id]??={value:'',textContent:'',disabled:false,readOnly:false,addEventListener(t,fn){this[t]=fn;}};
  class Worker{constructor(url){this.url=String(url);workers.push(this);}postMessage(data){this.data=data;}terminate(){this.terminated=true;}}
  const sessionStorage={getItem:k=>{if(failStorage)throw Error();return session.has(k)?session.get(k):null;},setItem(k,v){if(failStorage)throw Error();session.set(k,v);},removeItem(k){if(failStorage)throw Error();session.delete(k);}};
- const context={escapeText:s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;'),localStorage:{getItem:()=>null,setItem(){}},sessionStorage,document:{getElementById:element,baseURI:'https://example.test/notebook/'},URL,Worker,setTimeout:(fn,ms)=>{const id=next++;timers.set(id,{fn,ms});return id;},clearTimeout:id=>timers.delete(id)};
+ const context={escapeText:s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;'),localStorage:{getItem:()=>null,setItem(){}},sessionStorage,document:{getElementById:element,baseURI:'https://example.test/notebook/'},URL,Worker,setTimeout:(fn,ms)=>{const id=next++;timers.set(id,{fn,ms});return id;},clearTimeout:id=>timers.delete(id)};if(cacheKeys)context.caches={keys:async()=>cacheKeys};
  vm.createContext(context);vm.runInContext(fs.readFileSync('assets/js/notebook-practice.js','utf8'),context);
  const api=vm.runInContext('NotebookPractice',context),path={id:'python',lessons:[lesson]};
  element('runner-code').value=lesson.exercise.starter;api.bind(path,lesson);
@@ -49,5 +49,27 @@ const lesson={id:'loops',exercise:{starter:'total = 0\n# <add evens>'}};
  // Ctrl+Enter runs; blocked storage still renders and runs.
  let prevented=false;e('runner-code').keydown({ctrlKey:true,key:'Enter',preventDefault(){prevented=true;}});assert(prevented&&f.workers.length===1);
  f=fixture(lesson,{failStorage:true});e=f.element;e('runner-code').input();assert(f.api.runner(f.path,lesson).includes('# &lt;add evens>'));e('runner-run').click();assert.equal(f.workers.length,1);
- console.log('PASS: Python starter runner view, run mode, locked inputs, output formatting, stop, timeouts, load failures, cleanup, tab drafts, reset, keyboard and blocked storage.');
+ // A spare worker loads Python ahead of the next run: only after Python has loaded here, never on Stop.
+ {const g=fixture(lesson),x=g.element;assert.equal(g.workers.length,0,'Opening a lesson starts no download');
+  x('runner-run').click();let w=g.workers.at(-1);w.onmessage({data:{type:'ready'}});w.onmessage({data:{type:'result',ok:true,output:'1\n',error:''}});
+  const spare=g.workers.at(-1);assert.notEqual(spare,w);assert.equal(spare.data.type,'load');assert.equal(spare.data.runtime,'https://example.test/notebook/paths/python-problem-solving/runtime/');
+  spare.onmessage({data:{type:'ready'}});
+  x('runner-code').value='print(2)';x('runner-run').click();assert.equal(g.workers.at(-1),spare,'The run takes the spare');assert.equal(spare.data.mode,'run');
+  assert.equal(x('runner-output').textContent,'Running…','A ready spare skips the loading message');
+  assert(![...g.timers.values()].some(t=>t.ms===60000)&&[...g.timers.values()].some(t=>t.ms===5000));
+  spare.onmessage({data:{type:'ready'}});assert.equal([...g.timers.values()].filter(t=>t.ms===5000).length,1,'Its own ready message does not restart the limit');
+  spare.onmessage({data:{type:'result',ok:true,output:'2\n',error:''}});assert.equal(x('runner-output').textContent,'2\n');assert(spare.terminated);
+  const third=g.workers.at(-1);assert.notEqual(third,spare);assert.equal(third.data.type,'load');
+  third.onmessage({data:{type:'error',text:'no memory'}});assert(third.terminated,'A spare that fails to load is dropped');
+  x('runner-run').click();w=g.workers.at(-1);assert.notEqual(w,third);assert.equal(x('runner-output').textContent,'Loading Python…');
+  const count=g.workers.length;x('runner-stop').click();assert.equal(g.workers.length,count,'Stop starts no spare');
+  x('runner-run').click();w=g.workers.at(-1);w.onmessage({data:{type:'ready'}});w.onmessage({data:{type:'result',ok:true,output:'',error:''}});
+  const last=g.workers.at(-1);g.api.cleanup();assert(last.terminated,'Leaving the notebook ends the spare');
+  g.api.bind(g.path,lesson);const reopened=g.workers.at(-1);assert.notEqual(reopened,last);assert.equal(reopened.data.type,'load');
+  g.api.bind({id:'sql-server',lessons:[]},{id:'reading',sections:[]});assert(reopened.terminated,'A lesson with nothing to run ends the spare');}
+ // On a later visit a spare starts as soon as the service worker already keeps the runtime.
+ {const kept=fixture(lesson,{cacheKeys:['learning-notebook:%2F:runtime:abc']});await new Promise(r=>setImmediate(r));
+  assert.equal(kept.workers.length,1);assert.equal(kept.workers[0].data.type,'load');
+  const none=fixture(lesson,{cacheKeys:['learning-notebook:%2F:shell:abc']});await new Promise(r=>setImmediate(r));assert.equal(none.workers.length,0);}
+ console.log('PASS: Python starter runner view, run mode, locked inputs, output formatting, stop, timeouts, load failures, cleanup, tab drafts, reset, keyboard, blocked storage and the spare worker.');
 })().catch(e=>{console.error(e);process.exitCode=1;});

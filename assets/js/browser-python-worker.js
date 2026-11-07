@@ -1,8 +1,11 @@
-/* One fresh worker per attempt or run. Terminating it also stops an infinite Python loop. */
+/* One fresh worker per attempt or run. Terminating it also stops an infinite Python loop.
+   A {type:'load'} message starts Python before any code arrives, so a spare worker can wait ready; each worker still runs one job. */
+let loading=null;
+const load=runtime=>loading||(loading=(async()=>{importScripts(runtime+'pyodide.js');return loadPyodide({indexURL:runtime,stdout:()=>{},stderr:()=>{}});})());
 self.onmessage=async ({data})=>{
+ if(data.type==='load'){try{await load(data.runtime);self.postMessage({type:'ready'});}catch(error){self.postMessage({type:'error',text:String(error.message||error).slice(0,1500)});}return;}
  try{
-  importScripts(data.runtime+'pyodide.js');
-  const py=await loadPyodide({indexURL:data.runtime,stdout:()=>{},stderr:()=>{}});
+  const py=await load(data.runtime);
   self.postMessage({type:'ready'});
   // Lesson starters: run as a script, keep at most 20,000 characters of output and show only the learner's frames.
   if(data.mode==='run'){
