@@ -25,23 +25,27 @@ assert.equal(C.fvh(true,false),'Level 1');assert.equal(C.fvh(false,false),'Level
 const long=C.uncertainty(100,.2,10000000,'long'),short=C.uncertainty(100,.2,10000000,'short');
 near(long.price,99.7436896869);near(short.price,100.2563103131);near(long.deduction,short.deduction);near(C.uncertainty(100,0,10000000,'long').deduction,0);
 const cap=C.capital(1000000000,3000000,10000000000);near(cap.afterPct,9.97);near(cap.changeBp,3);
-const data=vm.runInNewContext(fs.readFileSync('paths/financial-foundations/content/curriculum.js','utf8')+'\n'+fs.readFileSync('paths/financial-foundations/content/starter.js','utf8')+';({LESSONS,SOURCES,GLOSSARY,QUICK,STARTER})');
-assert.equal(data.LESSONS.length,18);checks++;
-const sourceIds=new Set(data.SOURCES.map(x=>x.id));
-for(const [i,l] of data.LESSONS.entries()){assert.equal(l.id,i+1);assert.ok(l.body.length>=4);assert.ok(l.deep&&l.data&&l.pitfall&&l.example&&l.quiz.explain);assert.ok(l.quiz.correct>=0&&l.quiz.correct<l.quiz.options.length);for(const s of l.sources)assert.ok(sourceIds.has(s));checks++;}
-for(const file of ['index.html','handbook.html','assets/css/styles.css','paths/financial-foundations/runtime/calculations.js','paths/financial-foundations/runtime/app.js','paths/financial-foundations/content/curriculum.js','practice/sample-positions.csv','practice/answers.md','README.md'])assert.ok(fs.existsSync(file),file);
+// Lessons, sources and glossary live in path.json and glossary.json, like every other course.
+const course=require('../scripts/manifest.cjs').readPaths().find(p=>p.id==='financial-foundations');
+const MAIN=course.lessons.filter(l=>!['start','foundation-explainers'].includes(l.stage)),STARTER=course.lessons.filter(l=>l.stage==='start');
+assert.equal(MAIN.length,18);checks++;
+const sourceUrls=new Set(course.sources.map(x=>x.url));
+for(const l of MAIN){const titles=l.sections.map(s=>s.title);for(const t of ['The concept','Go deeper','Data & systems','Common trap'])assert.ok(titles.includes(t),l.id+': '+t);assert.ok(l.sections[0].paragraphs.length>=4,l.id);assert.ok(l.sections.some(s=>s.example),l.id);
+ assert.ok(l.quiz.explanation&&l.quiz.correct>=0&&l.quiz.correct<l.quiz.options.length);assert.ok(l.references.length);for(const r of l.references)assert.ok(sourceUrls.has(r.url),l.id+': '+r.url);checks++;}
+for(const s of course.sources)assert.ok(s.edition&&s.checked&&s.access&&s.changeTrigger,s.title);
+for(const file of ['index.html','handbook.html','assets/css/styles.css','paths/financial-foundations/runtime/calculations.js','paths/financial-foundations/runtime/app.js','paths/financial-foundations/runtime/course-data.js','content/courses/financial-foundations.js','practice/sample-positions.csv','practice/answers.md','README.md'])assert.ok(fs.existsSync(file),file);
 for(const file of ['index.html','handbook.html']){const html=fs.readFileSync(file,'utf8');for(const m of html.matchAll(/(?:src|href)="([^"#]+)"/g)){const ref=m[1].split(/[?#]/)[0];if(/^(https?:|data:|\$)/.test(ref)||ref.includes('${'))continue;assert.ok(fs.existsSync(ref),`${file}: ${ref}`);checks++;}}
-const words=JSON.stringify(data.LESSONS).split(/\s+/).length;
-console.log(`PASS: ${checks} arithmetic/content/link checks; ${data.LESSONS.length} lessons; ${data.GLOSSARY.length} glossary terms; approximately ${words} lesson-data words.`);
+const words=JSON.stringify(MAIN).split(/\s+/).length;
+console.log(`PASS: ${checks} arithmetic/content/link checks; ${MAIN.length} main lessons; ${course.glossary.terms.length} glossary terms; approximately ${words} lesson-data words.`);
 
-assert.equal(data.STARTER.length,6);
-for(const [i,l]of data.STARTER.entries()){assert.equal(l.id,i+1);assert.ok(l.paragraphs.length>=4);assert.ok(l.quiz.options[l.quiz.correct]);assert.ok(l.quiz.explain&&l.connection);}
-for(const term of ['Trade','Position','Book','Desk','Counterparty','Settlement'])assert.ok(data.GLOSSARY.some(g=>g[0]===term));
+assert.equal(STARTER.length,6);
+for(const l of STARTER){assert.ok(l.sections[0].paragraphs.length>=4,l.id);assert.ok(l.quiz.options[l.quiz.correct]);assert.ok(l.quiz.explanation&&l.sections.some(s=>s.title==='Connect it to work'),l.id);}
+for(const term of ['Trade','Position','Book','Desk','Counterparty','Settlement'])assert.ok(course.glossary.terms.some(g=>g.term===term),term);
 console.log('PASS: 6 introductory lessons with valid checkpoints and essential beginner terms.');
 
 const app=fs.readFileSync('paths/financial-foundations/runtime/app.js','utf8');
 const validation=app.split('\n').find(line=>line.startsWith('function validateState'));
-const validate=vm.runInNewContext(validation+';validateState',{STARTER:data.STARTER});
+const validate=vm.runInNewContext(validation+';validateState',require('../assets/js/finance-legacy.js'));
 const legacy=validate({done:[1,5],answers:{1:2},last:5});
 assert.equal(JSON.stringify(legacy.starterDone),'[]');
 assert.equal(JSON.stringify(legacy.done),'[1,5]');

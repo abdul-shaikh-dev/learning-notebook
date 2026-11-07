@@ -36531,6 +36531,7 @@ const LEARNING_PATHS = [
         "title": "EU 2024/1623 · CRR3 amendments",
         "url": "https://eur-lex.europa.eu/eli/reg/2024/1623/oj/eng",
         "note": "Operational-risk capital reform removes AMA; relevant when interpreting historical cross-references in the prudent valuation RTS.",
+        "edition": "Operational-risk capital reform removes AMA; relevant when interpreting historical cross-references in the prudent valuation RTS.",
         "checked": "2026-10-02",
         "access": "Official indexed CRR3 operational-risk reform text checked; historical AMA wording is not presented as a current method",
         "changeTrigger": "New edition, amendment, reporting-date change or supervisory clarification: recheck claims, calculations and exercises together."
@@ -36539,6 +36540,7 @@ const LEARNING_PATHS = [
         "title": "EBA question 2025_7506 · Operational-risk AVA",
         "url": "https://www.eba.europa.eu/single-rule-book-qa/qna/view/publicId/2025_7506",
         "note": "Rejected question, not a substantive interpretive answer. Included to make the unresolved historical cross-reference explicit.",
+        "edition": "Rejected question, not a substantive interpretive answer. Included to make the unresolved historical cross-reference explicit.",
         "checked": "2026-10-02",
         "access": "Direct retrieval restricted; official indexed question confirms rejection on 30 October 2025, with no substantive interpretive answer",
         "changeTrigger": "New edition, amendment, reporting-date change or supervisory clarification: recheck claims, calculations and exercises together."
@@ -36547,6 +36549,7 @@ const LEARNING_PATHS = [
         "title": "IFRS 13 · Fair Value Measurement",
         "url": "https://www.ifrs.org/issued-standards/list-of-standards/ifrs-13-fair-value-measurement/",
         "note": "Accounting foundation: exit price and market-participant assumptions. The standard applies where another accounting standard requires or permits fair value.",
+        "edition": "Accounting foundation: exit price and market-participant assumptions. The standard applies where another accounting standard requires or permits fair value.",
         "checked": "2026-09-26",
         "access": "Primary text or landing page retrieved during review",
         "changeTrigger": "New edition, amendment, reporting-date change or supervisory clarification: recheck claims, calculations and exercises together."
@@ -36555,6 +36558,7 @@ const LEARNING_PATHS = [
         "title": "IFRS 13 · Detailed standard (2022 edition)",
         "url": "https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2022/issued/part-a/ifrs-13-fair-value-measurement.pdf?bypass=on",
         "note": "Read paragraphs 24–26 (transaction costs), 69–71 (bid/ask), 72–90 (hierarchy), 93 (disclosures). This dated edition is a learning reference; check the applicable reporting edition. Access check 26 September 2026: PDF redirected to sign-in. Use the official standard landing page and accessible IFRS-aligned companion.",
+        "edition": "Read paragraphs 24–26 (transaction costs), 69–71 (bid/ask), 72–90 (hierarchy), 93 (disclosures). This dated edition is a learning reference; check the applicable reporting edition. Access check 26 September 2026: PDF redirected to sign-in. Use the official standard landing page and accessible IFRS-aligned companion.",
         "checked": "2026-09-26",
         "access": "Sign-in required at last check",
         "changeTrigger": "New edition, amendment, reporting-date change or supervisory clarification: recheck claims, calculations and exercises together."
@@ -36563,6 +36567,7 @@ const LEARNING_PATHS = [
         "title": "Basel Framework · CAP50 prudent valuation guidance",
         "url": "https://www.bis.org/basel_framework/chapter/CAP/50.htm?inforce=20191215&published=20191215&tldate=20121110",
         "note": "CAP50.3 systems and controls; CAP50.6 models; CAP50.7–8 independent price verification; CAP50.9–14 valuation adjustments. International framework, implemented through local rules.",
+        "edition": "CAP50.3 systems and controls; CAP50.6 models; CAP50.7–8 independent price verification; CAP50.9–14 valuation adjustments. International framework, implemented through local rules.",
         "checked": "2026-10-02",
         "access": "Official CAP50 text retrieved; independent verification and valuation-control provisions checked",
         "changeTrigger": "New edition, amendment, reporting-date change or supervisory clarification: recheck claims, calculations and exercises together."
@@ -36571,6 +36576,7 @@ const LEARNING_PATHS = [
         "title": "EU 2016/101 · Prudent valuation RTS, consolidated 26 June 2020",
         "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A02016R0101-20200626",
         "note": "Articles 1–3 scope/frequency/data; 4–6 simplified approach; 7–17 core approach; Annex aggregation. Main EU mechanics reference for this edition.",
+        "edition": "Articles 1–3 scope/frequency/data; 4–6 simplified approach; 7–17 core approach; Annex aggregation. Main EU mechanics reference for this edition.",
         "checked": "2026-10-02",
         "access": "Direct retrieval restricted; official indexed Articles 1, 4-18 and 2020/866 Annex amendment checked for the dated teaching mechanics",
         "changeTrigger": "New edition, amendment, reporting-date change or supervisory clarification: recheck claims, calculations and exercises together."
@@ -36579,6 +36585,7 @@ const LEARNING_PATHS = [
         "title": "EU CRR · Article 34, prudent valuation and CET1",
         "url": "https://eur-lex.europa.eu/eli/reg/2013/575/2025-06-29/eng",
         "note": "Article 34 links AVAs to CET1 deductions. Article 105 covers prudent valuation. Use the legal version effective for your reporting date.",
+        "edition": "Article 34 links AVAs to CET1 deductions. Article 105 covers prudent valuation. Use the legal version effective for your reporting date.",
         "checked": "2026-10-02",
         "access": "Official indexed Article 34 and Article 105 text checked in the January 2026 consolidation; not a certification of all later amendments",
         "changeTrigger": "New edition, amendment, reporting-date change or supervisory clarification: recheck claims, calculations and exercises together."
@@ -36587,6 +36594,7 @@ const LEARNING_PATHS = [
         "title": "IFRS 9 · Initial recognition and day-one differences",
         "url": "https://www.ifrs.org/content/dam/ifrs/publications/pdf-standards/english/2021/issued/part-a/ifrs-9-financial-instruments.pdf",
         "note": "B5.1.2A addresses recognition or deferral of a day-one difference. This is a dated standard edition, not a statement of every later amendment.",
+        "edition": "B5.1.2A addresses recognition or deferral of a day-one difference. This is a dated standard edition, not a statement of every later amendment.",
         "checked": "2026-09-26",
         "access": "Primary text or landing page retrieved during review",
         "changeTrigger": "New edition, amendment, reporting-date change or supervisory clarification: recheck claims, calculations and exercises together."
@@ -36595,6 +36603,7 @@ const LEARNING_PATHS = [
         "title": "EBA Q&A 2016_2658 · AVAs and accounting value",
         "url": "https://www.eba.europa.eu/single-rule-book-qa/qna/view/publicId/2016_2658",
         "note": "Explains the distinction between AVAs and accounting value and the treatment of tax in AVA calculation.",
+        "edition": "Explains the distinction between AVAs and accounting value and the treatment of tax in AVA calculation.",
         "checked": "2026-10-02",
         "access": "Direct retrieval restricted; official indexed answer checked for accounting-value distinction and tax treatment",
         "changeTrigger": "New edition, amendment, reporting-date change or supervisory clarification: recheck claims, calculations and exercises together."
@@ -36603,6 +36612,7 @@ const LEARNING_PATHS = [
         "title": "EBA · 2024 consultation on prudent valuation amendments",
         "url": "https://eba.europa.eu/publications-and-media/press-releases/eba-consults-targeted-amendments-prudent-valuation-framework",
         "note": "A consultation is a proposal. Do not implement proposed changes merely because they appear in this document.",
+        "edition": "A consultation is a proposal. Do not implement proposed changes merely because they appear in this document.",
         "checked": "2026-10-02",
         "access": "Official indexed consultation notice checked; proposed amendments are not treated as adopted law",
         "changeTrigger": "New edition, amendment, reporting-date change or supervisory clarification: recheck claims, calculations and exercises together."
@@ -36611,6 +36621,7 @@ const LEARNING_PATHS = [
         "title": "EBA Banking Stakeholder Group · April 2025 minutes",
         "url": "https://www.eba.europa.eu/sites/default/files/2025-07/623d91e4-e4be-4cc9-83f3-8970bce768b2/EBA%20BSG%202025%20022%20rev.%201%20%28Minutes%20-%2001%20April%202025%29.pdf",
         "note": "Paragraph 29 records postponement of finalising the targeted prudent valuation amendments. Not itself a binding legal rule.",
+        "edition": "Paragraph 29 records postponement of finalising the targeted prudent valuation amendments. Not itself a binding legal rule.",
         "checked": "2026-10-02",
         "access": "Direct PDF retrieval failed; official indexed April 2025 minutes corroborate the stated postponement",
         "changeTrigger": "New edition, amendment, reporting-date change or supervisory clarification: recheck claims, calculations and exercises together."
@@ -36619,6 +36630,7 @@ const LEARNING_PATHS = [
         "title": "PRA · 2021/13 technical standards instrument",
         "url": "https://www.prarulebook.co.uk/-/media/pra/files/legal-instruments/2021/pdf/pra2021-13.pdf",
         "note": "UK prudent valuation Article 4 uses a £13bn simplified-approach threshold. Do not substitute the EU €15bn threshold in UK systems.",
+        "edition": "UK prudent valuation Article 4 uses a £13bn simplified-approach threshold. Do not substitute the EU €15bn threshold in UK systems.",
         "checked": "2026-10-02",
         "access": "Official PRA2021/13 instrument retrieved; Article 4 GBP13bn threshold and eligibility provisions checked",
         "changeTrigger": "New edition, amendment, reporting-date change or supervisory clarification: recheck claims, calculations and exercises together."
@@ -36627,6 +36639,7 @@ const LEARNING_PATHS = [
         "title": "PRA PS3/26 · Restatement of CRR requirements",
         "url": "https://www.bankofengland.co.uk/prudential-regulation/publication/2026/january/restatement-of-crr-requirements-final-policy-statement",
         "note": "Published January 2026, with relevant restatement effective 1 January 2027. Future-effective text must not be treated as current in September 2026.",
+        "edition": "Published January 2026, with relevant restatement effective 1 January 2027. Future-effective text must not be treated as current in September 2026.",
         "checked": "2026-10-02",
         "access": "Official PS3/26 retrieved; 1 January 2027 effective date checked",
         "changeTrigger": "New edition, amendment, reporting-date change or supervisory clarification: recheck claims, calculations and exercises together."
@@ -36635,6 +36648,7 @@ const LEARNING_PATHS = [
         "title": "AASB 13 · accessible IFRS-aligned text",
         "url": "https://standards.aasb.gov.au/aasb-13-dec-2022",
         "note": "December 2022 amendments in the compilation dated 31 December 2023, operative from 1 January 2024: use IFRS-aligned paragraphs only, not Australian-specific additions. Accessible companion to the IFRS standard; not a substitute for the applicable reporting edition.",
+        "edition": "December 2022 amendments in the compilation dated 31 December 2023, operative from 1 January 2024: use IFRS-aligned paragraphs only, not Australian-specific additions. Accessible companion to the IFRS standard; not a substitute for the applicable reporting edition.",
         "checked": "2026-10-02",
         "access": "Official adopted full text retrieved; paragraphs 16–26, 42–44, 69–90 checked for market, credit, spread and hierarchy claims",
         "changeTrigger": "New edition, amendment, reporting-date change or supervisory clarification: recheck claims, calculations and exercises together."
@@ -36643,6 +36657,7 @@ const LEARNING_PATHS = [
         "title": "AASB 9 · accessible IFRS-aligned day-one requirements",
         "url": "https://standards.aasb.gov.au/aasb-9-dec-2022",
         "note": "December 2022 edition: paragraphs 5.1.1–5.1.1A and B5.1.2A corroborate the dated day-one recognition lesson. Read IFRS-aligned provisions, excluding Australian-specific additions. This companion does not certify the edition applicable to a later reporting date.",
+        "edition": "December 2022 edition: paragraphs 5.1.1–5.1.1A and B5.1.2A corroborate the dated day-one recognition lesson. Read IFRS-aligned provisions, excluding Australian-specific additions. This companion does not certify the edition applicable to a later reporting date.",
         "checked": "2026-10-02",
         "access": "Official adopted full text retrieved; B5.1.2A checked for the qualifying evidence test, deferral and later recognition",
         "changeTrigger": "New edition, amendment, reporting-date change or supervisory clarification: recheck claims, calculations and exercises together."
