@@ -23,7 +23,7 @@ def pick(value, table):
 
 
 def percent(done, available):
-    return f'{Fraction(done, available) * 100:.0f}%'
+    return f'{round(Fraction(done * 100, available))}%'
 
 
 def measurement():
