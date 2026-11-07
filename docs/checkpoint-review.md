@@ -213,13 +213,25 @@ Writing the facts corrected one draft answer: the join of orders to payments tot
 
 `tests/self_awareness_checkpoint_facts.py` runs in the `python` CI job; run it locally with `python tests/self_awareness_checkpoint_facts.py`.
 
+### Task & Project Management
+
+2026-11-07: one extra question per lesson and three per stage (21 lesson questions, 9 stage questions; the stages split lessons 7/8/6). 6 of the 30 answers are computed: the two work-in-progress questions move a card on the practice studio's task board through `lab-model.js` and expect the refusal that says blocked work still counts, the cycle-time and age questions take elapsed day differences between the named weekdays, and the estimate questions take the observed range of the stated durations. The other 24 are cited from the lessons and stage projects. Questions keep the course's limits, such as three samples giving only a provisional range and a simple board not being a claim to implement Kanban.
+
+`tests/task_project_checkpoint_facts.py` runs in the `python` CI job with Node 24; run it locally with `python tests/task_project_checkpoint_facts.py`.
+
+### Time, Attention & Energy
+
+2026-11-07: one extra question per lesson and three per stage (21 lesson questions, 9 stage questions; the stages split lessons 7/7/7). 13 of the 30 answers are computed from the minutes in each question: available time, a time log, interruption cost, adjusted and observed medians and ranges, a translation gap and correct answers per session. The buffer question and the advanced request question run the practice studio's capacity sketch in `lab-model.js`. The other 17 are cited from the lessons and stage projects. Questions treat small trials as local evidence and do not claim that a technique caused an improvement.
+
+`tests/time_attention_checkpoint_facts.py` runs in the `python` CI job with Node 24; run it locally with `python tests/time_attention_checkpoint_facts.py`.
+
 ### Plan for the remaining courses
 
 Work one course per change, in this order, so that each answer can be checked against something that runs or a cited source:
 
 1. **Courses whose answers run in another tool:** Data analysis with Python, Machine learning foundations, C# & .NET, JavaScript → TypeScript → React and Linux & Operating Systems are done. Record each check in this document, as for the Python course, because only the bundled Python runtime is part of `tests/browser-python.cjs`.
 2. **Courses checked against their cited sources:** Networking & the Web, Messaging & Event-Driven Systems, Data Engineering, AI Agents, Agent Harnesses, Application Security, Testing & Debugging, Observability & Performance, System Design, Kubernetes, Cloud & Infrastructure as Code, Delivery & Operations, UI Design & Accessibility, Full-Stack Project Journey and Requirements & software maintenance are done. Each answer should trace to a lesson source or a primary reference such as a specification or WCAG success criterion.
-3. **Personal effectiveness and development courses:** Learning How to Learn, Plan and Review Your Week, Habits & Behaviour Change and Self-Awareness & Communication are done. Task & Project Management and Time, Attention & Energy remain. Questions should test the course's own model and avoid claims stronger than its sources. Answers from the text are checked as citations with `tests/checkpoint_citations.py`; answers from the shared practice studio run `lab-model.js` through the same helper.
+3. **Personal effectiveness and development courses:** Learning How to Learn, Plan and Review Your Week, Habits & Behaviour Change, Self-Awareness & Communication, Task & Project Management and Time, Attention & Energy are done. Questions should test the course's own model and avoid claims stronger than its sources. Answers from the text are checked as citations with `tests/checkpoint_citations.py`; answers from the shared practice studio run `lab-model.js` through the same helper.
 
 Python Problem Solving is left out because its lessons are challenges with tests, and Financial foundations because it has its own course page and question format.
 

@@ -113,6 +113,10 @@ jobs:
         run: python tests/habits_checkpoint_facts.py
       - name: Check Self-Awareness & Communication checkpoint answers against the lessons and practice studio
         run: python tests/self_awareness_checkpoint_facts.py
+      - name: Check Task & Project Management checkpoint answers against the lessons and practice studio
+        run: python tests/task_project_checkpoint_facts.py
+      - name: Check Time, Attention & Energy checkpoint answers against the lessons and practice studio
+        run: python tests/time_attention_checkpoint_facts.py
       - name: Check concept explorer figures against the course labs
         run: python tests/explorer_lab_facts.py
 
