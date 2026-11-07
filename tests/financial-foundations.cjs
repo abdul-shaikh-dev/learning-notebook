@@ -45,16 +45,12 @@ console.log('PASS: 6 introductory lessons with valid checkpoints and essential b
 
 const app=fs.readFileSync('paths/financial-foundations/runtime/app.js','utf8');
 const validation=app.split('\n').find(line=>line.startsWith('function validateState'));
-const validate=vm.runInNewContext(validation+';validateState',require('../assets/js/finance-legacy.js'));
-const legacy=validate({done:[1,5],answers:{1:2},last:5});
-assert.equal(JSON.stringify(legacy.starterDone),'[]');
-assert.equal(JSON.stringify(legacy.done),'[1,5]');
-assert.equal(legacy.last,5);
-assert.equal(JSON.stringify(validate({done:[],answers:{},starterDone:[1,1,6,7,-1]}).starterDone),'[1,6]');
-console.log('PASS: legacy progress compatibility and introduction completion validation.');
-
+const validate=vm.runInNewContext(validation+';validateState');
+// The studio keeps only practice status; fields the old reader saved are dropped.
 const restored=validate({done:[1],answers:{1:0},starterDone:[2],study:{foundations:{practised:true,checked:true},revision:{practised:false,checked:true},unknown:{practised:true}}});
-assert.equal(restored.study.foundations.checked,true);assert.equal(restored.study.revision.checked,false);assert.ok(!restored.study.unknown);
+assert.deepEqual(Object.keys(restored),['study']);assert.equal(restored.study.foundations.checked,true);assert.equal(restored.study.revision.checked,false);assert.ok(!restored.study.unknown);
+for(const bad of [null,[],'x'])assert.throws(()=>validate(bad));
+console.log('PASS: studio progress keeps only valid practice status.');
 
 // Exercise the actual lab renderer with its real field contract, including sd=0.
 const labs=vm.runInNewContext(fs.readFileSync('paths/financial-foundations/content/activities.js','utf8')+';LABS');

@@ -30,7 +30,7 @@ e=env({
  [answers('python')]:json({[l1.id]:{correct:false,streak:0,at:NOW-DAY},[l2.id]:{correct:true,streak:1,at:NOW},[l3.id]:{correct:true,streak:4,at:NOW-30*DAY},[l3.id+'/2']:{correct:true,streak:2,at:NOW-4*DAY}}),
  [key('sql-server')]:json(sql.lessons.map(l=>l.id)),
  'learning-notebook:challenges:python-problem-solving:v1':json({[pps.lessons[0].id]:{code:'x',status:'solved'},[pps.lessons[1].id]:{code:'y',status:'attempted'},[pps.lessons[2].id]:{code:'',status:'not-started'}}),
- [key('financial-foundations')]:json([fin0.lessons[0].id,fin0.lessons[1].id,fin0.lessons[1].id,fin0.lessons[14].id,'not-a-lesson']),'valuation-lab-v1':json({done:[],starterDone:[],study:{foundations:{checked:true},revision:{checked:false}}}),
+ [key('financial-foundations')]:json([fin0.lessons[0].id,fin0.lessons[1].id,fin0.lessons[1].id,fin0.lessons[14].id,'not-a-lesson']),'valuation-lab-v1':json({study:{foundations:{checked:true},revision:{checked:false}}}),
  [key('react')]:'{not json','learning-notebook:last-lesson:v1':json({path:'sql-server',lesson:sql.lessons[0].id})});
 s=e.P.summary(NOW);
 const byId=Object.fromEntries(s.started.map(c=>[c.p.id,c]));

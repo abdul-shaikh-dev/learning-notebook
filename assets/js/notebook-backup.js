@@ -75,19 +75,9 @@ const NotebookBackup = (() => {
     }
     return result;
   }
-  function finance(value, legacy = false) {
-    fields(value, ['done','answers','last','starterDone','study', ...(legacy ? ['version'] : [])], 'Financial progress');
-    if (legacy && own(value,'version') && value.version !== 1) fail('Unsupported financial backup version.');
-    const done = ids(value.done, Array.from({length:18},(_,i)=>i+1), 'Financial lessons');
-    const starterDone = ids(value.starterDone ?? [], [1,2,3,4,5,6], 'Financial introductions');
-    object(value.answers, 'Financial answers');
-    const answers = {};
-    for (const [id, answer] of Object.entries(value.answers)) {
-      if (!/^([1-9]|1[0-8])$/.test(id) || !Number.isInteger(answer) || answer < 0 || answer > 2) fail('Financial answers contain an invalid question or choice.');
-      answers[id] = answer;
-    }
-    const last = value.last ?? 1;
-    if (!Number.isInteger(last) || last < 1 || last > 18) fail('Financial last lesson is invalid.');
+  // The practice studio's own progress: practised/checked flags by module. Reading marks are course progress.
+  function finance(value) {
+    object(value, 'Financial progress');
     object(value.study ?? {}, 'Financial study progress');
     const study = {};
     for (const [id, flags] of Object.entries(value.study ?? {})) {
@@ -96,7 +86,7 @@ const NotebookBackup = (() => {
       if (typeof flags.practised !== 'boolean' || typeof flags.checked !== 'boolean' || (flags.checked && !flags.practised)) fail('Financial study flags are inconsistent.');
       study[id] = {practised:flags.practised, checked:flags.checked};
     }
-    return {done,answers,last,starterDone,study};
+    return {study};
   }
   function lastLesson(value) {
     if (value === null) return null;
@@ -129,13 +119,10 @@ const NotebookBackup = (() => {
     let data;
     try { data = JSON.parse(raw); } catch { fail('This is not a valid JSON progress file.'); }
     object(data, 'Backup');
-    if (!own(data,'app') && own(data,'done') && own(data,'answers')) {
-      return {progress:{paths:{},financial:finance(data,true),lastLesson:null},legacy:true};
-    }
     fields(data, ['app','version','createdAt','progress'], 'Backup');
     if (data.app !== APP || data.version !== VERSION) fail('This is not a supported Learning Notebook backup.');
     if (own(data,'createdAt') && (typeof data.createdAt !== 'string' || data.createdAt.length > 100 || !Number.isFinite(Date.parse(data.createdAt)))) fail('The backup date is invalid.');
-    return {progress:progress(data.progress),legacy:false};
+    return {progress:progress(data.progress)};
   }
   function storage() {
     try { if (typeof localStorage === 'undefined' || !localStorage) throw Error(); return localStorage; }
@@ -205,8 +192,7 @@ const NotebookBackup = (() => {
         const old = a.study[id], incoming = b.study[id];
         if (old || incoming) study[id] = {practised:!!(old?.practised || incoming?.practised),checked:!!(old?.checked || incoming?.checked)};
       }
-      result.financial = {done:union(a.done,b.done),starterDone:union(a.starterDone,b.starterDone),
-        answers:{...b.answers,...a.answers},last:a.last,study};
+      result.financial = {study};
     }
     return result;
   }
@@ -258,13 +244,9 @@ const NotebookBackup = (() => {
       drafts:Object.keys(value.paths[path.id]?.challenges || {}).length,
       attempted:Object.values(value.paths[path.id]?.challenges || {}).filter(a=>a.status==='attempted').length,
       solved:Object.values(value.paths[path.id]?.challenges || {}).filter(a=>a.status==='solved').length}));
-    // Financial foundations reads like any course. Reading marks still in an older finance backup
-    // and the practice studio's self-checks count towards its row.
+    // The practice studio's self-checks count towards the Financial foundations row.
     const finance = all.find(row => row.id === 'financial-foundations');
-    if (finance) {
-      finance.read += (value.financial?.done.length || 0)+(value.financial?.starterDone.length || 0);
-      finance.checks += Object.values(value.financial?.study || {}).filter(s=>s.checked).length;
-    }
+    if (finance) finance.checks += Object.values(value.financial?.study || {}).filter(s=>s.checked).length;
     return all;
   }
   const count = row => `${row.read} read · ${row.checks} self-checked` + (row.answers ? ` · ${row.answers} checkpoints answered` : '') + (row.exercises ? ` · ${row.exercises} exercises attempted` : '') + (row.drafts ? ` · ${row.drafts} code drafts · ${row.attempted} attempted · ${row.solved} solved` : '');
@@ -273,12 +255,8 @@ const NotebookBackup = (() => {
     const list = items => '<ul class="backup-counts">'+items.map(row=>'<li><strong>'+esc(row.title)+'</strong><span>'+esc(count(row))+' · '+row.total+' lessons</span></li>').join('')+'</ul>';
     return '<p>'+all.reduce((n,row)=>n+row.read,0)+' lessons read. Saved progress across '+active.length+' '+(active.length===1?'path':'paths')+'.</p>'+(active.length?list(active):'<p>No saved progress yet. Mark a lesson read or start a challenge to record your progress.</p>')+'<details><summary>All learning paths</summary>'+list(all)+'</details>';
   }
-  function previewHtml(value, legacy) {
+  function previewHtml(value) {
     const before = rows(value.before), incoming = rows(value.incoming), after = rows(value.after);
-    let conflicts = 0;
-    for (const [id,choice] of Object.entries(value.incoming.financial?.answers || {})) {
-      if (own(value.before.financial?.answers || {},id) && value.before.financial.answers[id] !== choice) conflicts++;
-    }
     let challengeConflicts = 0;
     for (const [id, entry] of Object.entries(value.incoming.paths)) {
       for (const [lesson, attempt] of Object.entries(entry.challenges || {})) {
@@ -286,12 +264,11 @@ const NotebookBackup = (() => {
         if (local && (local.code !== attempt.code || local.status !== attempt.status)) challengeConflicts++;
       }
     }
-    return '<h2>Review the merge</h2>'+(legacy?'<p>This is an older Financial foundations backup. Other courses will stay as they are.</p>':'')+
+    return '<h2>Review the merge</h2>'+
       '<div class="backup-table-wrap" tabindex="0" role="region" aria-label="Progress comparison; scroll horizontally on small screens"><table><thead><tr><th scope="col">Path</th><th scope="col">Saved here</th><th scope="col">From file</th><th scope="col">After merge</th></tr></thead><tbody>'+
       after.map((row,i)=>'<tr><th scope="row">'+esc(row.title)+'</th><td>'+esc(count(before[i]))+'</td><td>'+esc(count(incoming[i]))+'</td><td>'+esc(count(row))+'</td></tr>').join('')+'</tbody></table></div>'+
-      '<p>Financial quiz answers after merge: '+Object.keys(value.after.financial?.answers || {}).length+'. Conflicting answers kept from this browser: '+conflicts+'.</p>'+
       '<p>Conflicting challenge drafts kept from this browser: '+challengeConflicts+'.</p>'+
-      '<p>Read lessons and self-checks are combined. Missing challenge drafts are imported. Existing local code, challenge status, quiz answers and last-opened locations win conflicts. For review checkpoints and exercise answers, the more recent one is kept. Nothing is marked unread or reset.</p>';
+      '<p>Read lessons and self-checks are combined. Missing challenge drafts are imported. Existing local code, challenge status and last-opened locations win conflicts. For review checkpoints and exercise answers, the more recent one is kept. Nothing is marked unread or reset.</p>';
   }
   function view() {
     let saved, failed = false;
@@ -304,10 +281,10 @@ const NotebookBackup = (() => {
       '<p>Progress belongs to this browser and site address. Move it between your phone and computer by downloading a backup, transferring the file yourself, then previewing and importing it here.</p>'+
       '<details class="backup-contents"'+(failed?' open':'')+'><summary>What a backup holds</summary><div id="nb-local">'+saved+'</div></details>'+
       '<div class="backup-actions"><button type="button" class="primary" id="nb-export">Download notebook backup</button></div>'+
-      '<h2>Restore from a file</h2><p>Import combines completed readings and self-checks with your current progress. Missing challenge drafts are added. Local code, challenge status and quiz answers win conflicts. Nothing is reset.</p>'+
+      '<h2>Restore from a file</h2><p>Import combines completed readings and self-checks with your current progress. Missing challenge drafts are added. Local code and challenge status win conflicts. Nothing is reset.</p>'+
       '<label for="nb-file">Choose a Learning Notebook JSON backup (up to 1 MB)</label><input id="nb-file" type="file" accept=".json,application/json">'+
       '<div id="nb-preview" aria-live="polite"></div><div class="backup-actions"><button type="button" class="primary" id="nb-apply" disabled>Merge reviewed progress</button></div>'+
-      '<p id="nb-status" role="status" aria-live="polite"></p><p class="muted">Backups contain completion choices, checkpoint answers for review, exercise answers and ratings, financial quiz answers, and code and status saved in the challenge editor. They do not include course content or downloaded practice files. An older finance-only backup can also be merged. Journey/lab slider positions are temporary and are not stored as progress.</p></section>';
+      '<p id="nb-status" role="status" aria-live="polite"></p><p class="muted">Backups contain completion choices, checkpoint answers for review, exercise answers and ratings, and code and status saved in the challenge editor. They do not include course content or downloaded practice files. Journey/lab slider positions are temporary and are not stored as progress.</p></section>';
   }
   function bind(main) {
     const get = id => main.querySelector('#'+id), status = get('nb-status'), input = get('nb-file'), button = get('nb-apply');
@@ -329,8 +306,8 @@ const NotebookBackup = (() => {
         const imported = parse(await file.text());
         if (token !== request) return;
         const proposed = plan(imported.progress);
-        candidate = {plan:proposed,legacy:imported.legacy};
-        get('nb-preview').innerHTML = previewHtml(proposed,imported.legacy); button.disabled = false;
+        candidate = {plan:proposed};
+        get('nb-preview').innerHTML = previewHtml(proposed); button.disabled = false;
         status.textContent = 'Preview ready. No progress has been changed. Review the merge, then choose Merge reviewed progress.';
       } catch (error) { if (token === request) status.textContent = error.message || 'This backup could not be read.'; }
     });
@@ -339,7 +316,7 @@ const NotebookBackup = (() => {
       try {
         if (!unchanged(candidate.plan.raw)) {
           candidate.plan = plan(candidate.plan.incoming);
-          get('nb-preview').innerHTML = previewHtml(candidate.plan,candidate.legacy);
+          get('nb-preview').innerHTML = previewHtml(candidate.plan);
           status.textContent = 'Progress changed since the preview. The preview is updated; review it and choose Merge again.';
           return;
         }

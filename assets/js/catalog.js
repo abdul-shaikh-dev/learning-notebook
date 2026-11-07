@@ -67,7 +67,7 @@ function lessonRoute(p,l){return '#topic/'+p.id+'/'+l.id;}
 function renderCatalog(){const [route,id,lessonId]=location.hash.slice(1).split('?')[0].split('/');
 if(typeof NotebookLoader!=='undefined'&&NotebookLoader.prepare(route,id,renderCatalog))return;
 // Preserve existing bookmarks and the original course's progress storage.
-if(['start','learn','lesson','foundations','reference','sources'].includes(route)&&typeof FINANCE_LEGACY!=='undefined'){location.replace(FINANCE_LEGACY.route(route,id));return;}
+
 if(['labs','case'].includes(route)){location.replace('course.html'+location.hash);return;}
 const main=document.getElementById('main');const p=LEARNING_PATHS.find(x=>x.id===id&&x.status==='ready'&&(route==='resources'||!x.href));const lessons=p&&Array.isArray(p.lessons)?p.lessons:[];const l=lessons.find(x=>x.id===lessonId);
 let body;
