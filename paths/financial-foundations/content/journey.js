@@ -11,7 +11,7 @@ const TRADE_JOURNEY = [
     "data": "TradeId → InstrumentId → BookId → LegalEntityId",
     "question": "Would a duplicate booking affect only cash?",
     "answer": "No. A duplicate can overstate both the position and expected cash. Reconcile trade IDs and confirmations.",
-    "lesson": 17
+    "lesson": "data-lineage-controls-and-debugging"
   },
   {
     "id": "position",
@@ -25,7 +25,7 @@ const TRADE_JOURNEY = [
     "data": "Trade events + as-of time → position snapshot",
     "question": "Is the $100,000 payment a $100,000 loss?",
     "answer": "No. Cash was exchanged for an asset. At purchase, the holding value and cash paid offset in this economic calculation.",
-    "lesson": 1
+    "lesson": "from-a-trade-to-a-value"
   },
   {
     "id": "market-data",
@@ -39,7 +39,7 @@ const TRADE_JOURNEY = [
     "data": "InstrumentId + price time + currency + source + basis",
     "question": "Does independent always mean correct and usable?",
     "answer": "No. Independence supports challenge, but freshness, relevance and comparability also matter.",
-    "lesson": 3
+    "lesson": "market-data-and-the-model-underneath"
   },
   {
     "id": "valuation",
@@ -53,7 +53,7 @@ const TRADE_JOURNEY = [
     "data": "Position snapshot + price snapshot + method version → valuation run",
     "question": "Is $104,000 the profit?",
     "answer": "No. It is the holding value. Compared with yesterday's $100,000 close, the provisional movement is +$4,000.",
-    "lesson": 2
+    "lesson": "what-fair-value-is-trying-to-measure"
   },
   {
     "id": "challenge",
@@ -67,7 +67,7 @@ const TRADE_JOURNEY = [
     "data": "ValuationRunId → exception → evidence → reviewer decision",
     "question": "Should every difference be booked automatically?",
     "answer": "No. Check evidence, basis, policy and approval. Investigation tolerances do not establish fair value on their own.",
-    "lesson": 4
+    "lesson": "ipv-an-independent-challenge"
   },
   {
     "id": "adjustment",
@@ -81,7 +81,7 @@ const TRADE_JOURNEY = [
     "data": "ExceptionId → ApprovalId → correction → ledger reconciliation",
     "question": "After resetting the price to $103.50, deduct another $500 for this discrepancy?",
     "answer": "No. That would count the correction twice. Track what is already included in the final value.",
-    "lesson": 6
+    "lesson": "reserves-and-the-accounting-value-bridge"
   },
   {
     "id": "pnl",
@@ -95,7 +95,7 @@ const TRADE_JOURNEY = [
     "data": "Prior approved close + current close + period flows → P&L explanation",
     "question": "Is the −$500 correction the whole day's P&L?",
     "answer": "No. It reduces the +$4,000 desk movement to +$3,500. It is one component of the bridge.",
-    "lesson": 16
+    "lesson": "day-one-pnl-and-valuation-movements"
   },
   {
     "id": "reporting",
@@ -109,7 +109,7 @@ const TRADE_JOURNEY = [
     "data": "Report row → valuation run → position / prices → trade + approval trail",
     "question": "Is a report complete just because its total adds up?",
     "answer": "No. Arithmetic reconciliation is necessary; completeness, evidence, approval and visible exceptions also matter.",
-    "lesson": 18
+    "lesson": "put-it-all-together-at-month-end"
   }
 ];
 

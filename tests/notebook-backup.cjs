@@ -28,7 +28,7 @@ function make(initial={}) {
   return {context,data,writes,downloads,api:vm.runInContext('NotebookBackup',context),
     failWrite(number){writesUntilFailure=number;},failAlways(){persistentFailure=true;}};
 }
-const finance = fields=>({done:[],starterDone:[],answers:{},last:1,study:{},...fields});
+const finance = fields=>({study:{},...fields});
 const progress = fields=>({paths:{},financial:null,lastLesson:null,...fields});
 const envelope = value=>JSON.stringify({app:'learning-notebook',version:1,createdAt:'2026-09-26T00:00:00.000Z',progress:value});
 const incoming = env=>env.api.parse(envelope(progress({paths:{python:{read:['second'],assessed:['advanced']}}}))).progress;
@@ -44,39 +44,31 @@ const tests=[];
 const test=(name,run)=>tests.push({name,run});
 test('exports every allowlisted progress category without unrelated storage',()=>{
   const env=make({[pk('python')]:JSON.stringify(['first']),[sk('python')]:JSON.stringify(['foundation']),
-    [fk]:JSON.stringify(finance({done:[1],starterDone:[2],answers:{1:0},study:{foundations:{practised:true,checked:true}}})),
+    [fk]:JSON.stringify(finance({study:{foundations:{practised:true,checked:true}}})),
     [last]:JSON.stringify({path:'python',lesson:'first'}),'unrelated-secret':'do not export'});
   const exported=JSON.parse(env.api.create());
   assert.equal(exported.app,'learning-notebook');
   assert.deepEqual(exported.progress.paths.python,{read:['first'],assessed:['foundation']});
-  assert.equal(exported.progress.financial.answers['1'],0);
+  assert.deepEqual(exported.progress.financial,{study:{foundations:{practised:true,checked:true}}});
   assert.equal(exported.progress.financial.study.foundations.checked,true);
   assert.equal(exported.progress.lastLesson.lesson,'first');
   assert(!JSON.stringify(exported).includes('unrelated-secret'));
   assert.equal(env.writes.length,0);
 });
-test('merge unions completions and preserves local answer and resume conflicts',()=>{
+test('merge unions completions and self-checks and preserves the local resume point',()=>{
   const env=make({[pk('python')]:JSON.stringify(['first']),[sk('python')]:JSON.stringify(['foundation']),
     [last]:JSON.stringify({path:'python',lesson:'first'}),
-    [fk]:JSON.stringify(finance({done:[1],answers:{1:0},last:2,study:{foundations:{practised:true,checked:false}}}))});
+    [fk]:JSON.stringify(finance({study:{foundations:{practised:true,checked:false}}}))});
   const imported=progress({paths:{python:{read:['second'],assessed:['advanced']}},
     lastLesson:{path:'sql-server',lesson:'joins'},
-    financial:finance({done:[2],starterDone:[1],answers:{1:2,2:1},last:8,study:{foundations:{practised:true,checked:true}}})});
+    financial:finance({study:{foundations:{practised:true,checked:true},revision:{practised:true,checked:false}}})});
   const preview=env.api.plan(imported);assert.equal(env.writes.length,0);
   env.api.apply(preview);
   assert.deepEqual(JSON.parse(env.data.get(pk('python'))),['first','second']);
   assert.deepEqual(JSON.parse(env.data.get(sk('python'))),['foundation','advanced']);
   const result=JSON.parse(env.data.get(fk));
-  assert.deepEqual(result.done,[1,2]);assert.deepEqual(result.answers,{'1':0,'2':1});
-  assert.equal(result.last,2);assert.equal(result.study.foundations.checked,true);
+  assert.deepEqual(result,{study:{foundations:{practised:true,checked:true},revision:{practised:true,checked:false}}});
   assert.deepEqual(JSON.parse(env.data.get(last)),{path:'python',lesson:'first'});
-});
-test('legacy finance import affects only finance',()=>{
-  const env=make({[pk('python')]:JSON.stringify(['first'])});
-  const parsed=env.api.parse(JSON.stringify({done:[3],answers:{3:1},version:1}));
-  assert.equal(parsed.legacy,true);env.api.apply(env.api.plan(parsed.progress));
-  assert.deepEqual(env.writes,[fk]);assert.deepEqual(JSON.parse(env.data.get(fk)).done,[3]);
-  assert.deepEqual(JSON.parse(env.data.get(pk('python'))),['first']);
 });
 test('rejects unsupported envelope keys versions identities and arbitrary storage keys',()=>{
   const env=make();
@@ -84,18 +76,16 @@ test('rejects unsupported envelope keys versions identities and arbitrary storag
     {app:'learning-notebook',version:2,progress:progress()},
     {app:'learning-notebook',version:1,progress:progress(),storage:{secret:'attack'}},
     {app:'learning-notebook',version:1,progress:progress({paths:{evil:{read:[],assessed:[]}}})},
-    {done:[],answers:{},version:1,localStorage:{secret:'attack'}}];
+    {done:[],answers:{},version:1},{done:[],answers:{},version:1,localStorage:{secret:'attack'}}];
   for(const value of invalid)assert.throws(()=>env.api.parse(JSON.stringify(value)));
   assert.equal(env.writes.length,0);
 });
-test('validates lesson stage resume finance answers and study invariants',()=>{
+test('validates lesson stage resume and finance study invariants',()=>{
   const env=make();
   const invalid=[progress({paths:{python:{read:['missing'],assessed:[]}}}),
     progress({paths:{python:{read:[],assessed:['missing']}}}),
     progress({lastLesson:{path:'python',lesson:'missing'}}),
-    progress({financial:finance({done:[19]})}),progress({financial:finance({starterDone:[7]})}),
-    progress({financial:finance({answers:{1:3}})}),progress({financial:finance({answers:{__proto__:0,'19':1}})}),
-    progress({financial:finance({last:0})}),
+    progress({financial:[]}),progress({financial:finance({study:{unknown:{practised:true,checked:true}}})}),
     progress({financial:finance({study:{foundations:{practised:false,checked:true}}})})];
   for(const value of invalid)assert.throws(()=>env.api.parse(envelope(value)));
   assert.equal(env.writes.length,0);

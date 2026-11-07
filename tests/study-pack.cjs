@@ -8,7 +8,7 @@ const MAIN=FINANCE_COURSE.lessons.filter(l=>!['start','foundation-explainers'].i
 const data=vm.runInNewContext(source+';({EXERCISES,LABS,LAB_GUIDES,CASE_STEPS,PRACTICE_ROWS})');
 assert.equal(FINANCE_COURSE.lessons.filter(l=>l.stage==='foundation-explainers').length,8);assert.equal(MAIN.length,18);assert.equal(data.EXERCISES.modules.length,6);assert.equal(data.EXERCISES.revision.length,6);
 const expected={'integrated-numeric':765.2,'foundations-numeric':2000000*97.4/100+12000,'control-numeric':-4000000*(101.05-101.2)/100,'hierarchy-numeric':12+3-2+.8-.2+1.5-.6,'prudence-numeric':Math.max(0,998-.5*996-.5*990),'working-numeric':-5000+8000,'revision-price-units':6000000*(99.65-99.8)/100,'revision-bridge':2500000-12000-7000+9000};
-for(const m of data.EXERCISES.modules){assert.equal(m.tasks.length,4);assert.equal(new Set(m.tasks.map(t=>t.type)).size,4);for(const id of m.lessonIds)assert.ok(MAIN[id-1],m.id+': lesson '+id);}
+for(const m of data.EXERCISES.modules){assert.equal(m.tasks.length,4);assert.equal(new Set(m.tasks.map(t=>t.type)).size,4);for(const id of m.lessonIds)assert.ok(MAIN.some(l=>l.id===id),m.id+': lesson '+id);}
 for(const t of data.EXERCISES.modules.flatMap(m=>m.tasks).concat(data.EXERCISES.revision)){assert.ok(t.prompt&&t.answer&&t.reasoning&&t.rubric.length>=2);if(t.numericAnswer!==undefined)assert.ok(Math.abs(t.numericAnswer-expected[t.id])<0.001,t.id);}
 const evidence=MAIN.flatMap(l=>l.sections).filter(s=>s.evidence);assert.equal(evidence.length,7);for(const s of evidence)for(const c of s.evidence)assert.ok(c.url.startsWith('https://')&&c.paragraph&&c.checked&&c.status,s.title);
 assert.equal(MAIN[15].quiz.correct,1);assert.ok(MAIN[15].sections[0].paragraphs.some(p=>p.includes('bank pays 100')));
@@ -26,7 +26,7 @@ assert.equal((pack.match(/class="concept-diagram finance-concept-diagram"/g)||[]
 for(const g of data.LAB_GUIDES)assert.ok(pack.includes(g.id==='pv'?'Discounting':data.LABS[g.id].name));
 for(const r of data.PRACTICE_ROWS)assert.ok(pack.includes(r.TradeId));
 assert.ok(pack.indexOf('id="answers"')>pack.indexOf('id="practice"'));
-const events={};const ctx={document:{addEventListener:(type,fn)=>events[type]=fn,getElementById:node},state:{done:[1],study:{}},esc:s=>String(s),save(){},render(){}};
+const events={};const ctx={document:{addEventListener:(type,fn)=>events[type]=fn,getElementById:node},state:{study:{}},readLessons:()=>[MAIN[0].id],esc:s=>String(s),save(){},render(){}};
 vm.runInNewContext(source+'\n'+fs.readFileSync(root+'runtime/study.js','utf8'),ctx);
 let html=vm.runInNewContext("practiceView('foundations')",ctx);assert.ok(html.includes('data-check-exercise'));
 node('number-foundations-foundations-numeric').value='1960000';events.click({target:{closest:()=>({dataset:{checkExercise:'foundations|foundations-numeric'}})}});assert.ok(node('number-feedback-foundations-foundations-numeric').textContent.startsWith('The number matches'));

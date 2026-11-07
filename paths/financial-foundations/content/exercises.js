@@ -3,7 +3,7 @@ const EXERCISES = {
     {
       "id": "foundations",
       "title": "Foundations",
-      "lessonIds": [1, 2, 3],
+      "lessonIds": ["from-a-trade-to-a-value","what-fair-value-is-trying-to-measure","market-data-and-the-model-underneath"],
       "tasks": [
         {
           "id": "foundations-numeric",
@@ -44,7 +44,7 @@ const EXERCISES = {
     {
       "id": "valuation-control",
       "title": "Valuation control",
-      "lessonIds": [4, 5, 6, 7],
+      "lessonIds": ["ipv-an-independent-challenge","sources-tolerances-and-exceptions","reserves-and-the-accounting-value-bridge","bid-offer-liquidity-and-model-uncertainty"],
       "tasks": [
         {
           "id": "control-numeric",
@@ -85,7 +85,7 @@ const EXERCISES = {
     {
       "id": "fair-value-hierarchy",
       "title": "Fair value hierarchy",
-      "lessonIds": [8, 9, 10],
+      "lessonIds": ["level-1-level-2-level-3","observability-and-significance-in-practice","fvh-classification-and-reporting-exercises"],
       "tasks": [
         {
           "id": "hierarchy-numeric",
@@ -126,7 +126,7 @@ const EXERCISES = {
     {
       "id": "prudent-valuation",
       "title": "Prudent valuation",
-      "lessonIds": [11, 12, 13, 14, 15],
+      "lessonIds": ["pruval-avas-and-capital","market-price-uncertainty","close-out-cost-and-concentration","model-risk-and-the-other-ava-categories","approaches-aggregation-and-cet1"],
       "tasks": [
         {
           "id": "prudence-numeric",
@@ -167,7 +167,7 @@ const EXERCISES = {
     {
       "id": "working-knowledge",
       "title": "Working knowledge",
-      "lessonIds": [16, 17, 18],
+      "lessonIds": ["day-one-pnl-and-valuation-movements","data-lineage-controls-and-debugging","put-it-all-together-at-month-end"],
       "tasks": [
         {
           "id": "working-numeric",
@@ -266,13 +266,7 @@ const EXERCISES = {
 EXERCISES.modules.push({
   "id": "integrated-investigations",
   "title": "Integrated P&L and curve investigations",
-  "lessonIds": [
-    1,
-    3,
-    6,
-    16,
-    17
-  ],
+  "lessonIds": ["from-a-trade-to-a-value","market-data-and-the-model-underneath","reserves-and-the-accounting-value-bridge","day-one-pnl-and-valuation-movements","data-lineage-controls-and-debugging"],
   "tasks": [
     {
       "id": "integrated-numeric",

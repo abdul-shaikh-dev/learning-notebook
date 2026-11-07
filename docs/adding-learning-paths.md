@@ -12,11 +12,11 @@ A course needing its own simulations can set `href` to its HTML entry point and 
 
 Financial foundations reads on the shared course page like any standard path. Its root `course.html` is the
 practice studio (calculators and lab worksheets, the month-end case, the trade journey, visual stories and module
-practice), and `handbook.html` prints the complete study pack. Old reader links (`course.html#lesson/3`, `#start/2`,
-`#foundations/<id>`, `#reference`, `#sources`, `#learn`) redirect to the shared lessons through
-`assets/js/finance-legacy.js`.
+practice), and `handbook.html` prints the complete study pack. Studio content refers to lessons by their
+shared ids (module `lessonIds`, visual-story `lessons`, journey `lesson`) and links to
+`index.html#topic/financial-foundations/<id>`.
 
-Use a unique local-storage key and documented backup schema. Generic reader keys are `learning-notebook:path:<id>:v1`. The financial practice studio keeps `valuation-lab-v1` for its `study` object (practised/checked flags by module) and quiz answers; this is an internal compatibility key, not website branding. Reading progress uses the generic key. Reading marks in the old `done` (main lessons 1–18) and `starterDone` (introductions 1–6) arrays, including those restored from an old backup, move once to the generic key and the arrays are emptied, so a lesson later marked unread stays unread. Old backup files remain accepted.
+Use a unique local-storage key and documented backup schema. Generic reader keys are `learning-notebook:path:<id>:v1`. The financial practice studio keeps only its `study` object (practised/checked flags by module) under `valuation-lab-v1`; this is an internal key, not website branding. Reading progress uses the generic key.
 
 ## Content ownership
 
