@@ -7,6 +7,7 @@ function searchEntries(){
  for(const p of readPaths().filter(p=>p.status==='ready')){
   add(p,'Course',p.title,p.href||'#path/'+p.id,[p.description,p.prerequisites,p.outcomes],p.description);
   if(Array.isArray(p.lessons))for(const l of p.lessons)add(p,'Lesson',l.title,'#topic/'+p.id+'/'+l.id,[l.takeaway,l.sections,l.exercise?.prompt,l.diagram?.summary,l.visual],l.takeaway);
+  for(const t of p.glossary?.terms||[])add(p,'Glossary',t.term,'#glossary/'+p.id,[t.term,t.definition],t.definition);
   for(const t of p.resources?.tasks||[])add(p,'Task',t.title,'#resources/'+p.id+'/'+t.id,[t.goal,t.steps,t.notes],t.goal);
   for(const f of p.resources?.files||[]){const source=path.resolve(root,f.href);if(!source.startsWith(root+path.sep))throw Error('Unsafe search source');add(p,'File',path.basename(f.href),f.href,[f.description,fs.readFileSync(source,'utf8')],f.description);}
   if(p.id==='financial-foundations'){
@@ -26,7 +27,7 @@ function searchTokens(){const source=fs.readFileSync(path.join(root,'assets/js/n
 function excerpt(text,size=160){if(text.length<=size)return text;const cut=text.slice(0,size),space=cut.lastIndexOf(' ');return (space>size/2?cut.slice(0,space):cut)+'…';}
 // Each word appears once with the entries that contain it, as base-36 gaps between entry numbers.
 function searchIndex(entries=searchEntries()){
- const tokens=searchTokens(),kinds={Course:'C',Lesson:'L',Task:'T',File:'F'},courses={},byWord=new Map();
+ const tokens=searchTokens(),kinds={Course:'C',Lesson:'L',Task:'T',File:'F',Glossary:'G'},courses={},byWord=new Map();
  entries.forEach((e,id)=>{courses[e.path]=e.course;for(const word of tokens(e.title+' '+e.text,true)){if(!byWord.has(word))byWord.set(word,[]);byWord.get(word).push(id);}});
  const words=[...byWord.keys()].sort();
  return {courses,entries:entries.map(e=>[e.path,kinds[e.kind],e.title,e.href,excerpt(e.summary||e.text)]),words:words.join(' '),postings:words.map(w=>{let at=0;return byWord.get(w).map(id=>{const gap=id-at;at=id;return gap.toString(36);}).join(',');})};

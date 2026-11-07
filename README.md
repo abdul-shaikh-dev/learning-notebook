@@ -90,7 +90,7 @@ Follow the [authoring guide](docs/adding-learning-paths.md) to add lessons, prer
 | `index.html`, `assets/` | Shared library, reader, navigation and visual components |
 | `paths/<id>/path.json` | Canonical course metadata, lessons and public-file inventory |
 | `paths/<id>/resources.json`, `paths/<id>/practice/` | Course task kits, commands and downloadable workshop files |
-| `paths/<id>/diagrams.json`, `paths/<id>/visuals.json` | Authored diagrams and concept explorers, where present |
+| `paths/<id>/diagrams.json`, `paths/<id>/visuals.json`, `paths/<id>/glossary.json` | Authored diagrams, concept explorers and glossaries, where present |
 | `paths/financial-foundations/content/`, `paths/financial-foundations/runtime/` | Financial course content and its dedicated reader |
 | `course.html`, `handbook.html` | Stable entry points for the financial course and study pack |
 | `practice/personal-effectiveness-studio/` | Shared browser planning and reflection studio |
