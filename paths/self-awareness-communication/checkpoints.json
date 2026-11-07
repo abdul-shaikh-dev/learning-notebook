@@ -1,0 +1,81 @@
+{
+  "lessons": {
+    "observation-interpretation": [
+      {"question": "Maya sees her name missing from a draft project roster. What does she ask the organiser?", "options": ["Why have you excluded me?", "Is this roster final, and should my assignment be included?", "Nothing, because the roster proves she was left out"], "correct": 1, "explanation": "The observation is a name absent from a draft. Her question checks the roster's status without asserting a motive."}
+    ],
+    "feeling-and-action": [
+      {"question": "Why translate a word such as ignored into a feeling and the event behind it?", "options": ["It can imply that someone meant to exclude you", "Feelings should be left out of conversations", "It proves the feeling was mistaken"], "correct": 0, "explanation": "Naming the emotion and the specific event keeps the experience while letting the other person address the event rather than defend against a presumed motive."}
+    ],
+    "values-and-priorities": [
+      {"question": "Nell offers fifteen minutes of proofreading and declines a two-hour setup shift before her exam. What does the offer make visible?", "options": ["That she values the exam more than people", "That she must make the same choice every time", "Its opportunity cost"], "correct": 2, "explanation": "A feasible choice under current constraints respects both concerns and states its limit, so the other person can decide whether it helps."}
+    ],
+    "reflection-record": [
+      {"question": "How should a short reflection record end?", "options": ["With a useful question or action", "Once the feeling has gone away", "With a verdict about the other person"], "correct": 0, "explanation": "The record is for examining an interpretation and choosing a next step. It can be complete even if the feeling has not changed."}
+    ],
+    "perspective-check": [
+      {"question": "A study-session invitation may have been left out by accident. What does that explanation leave in place?", "options": ["Nothing: an accident means there is no issue", "The person still missed the session", "Proof that the omission was deliberate"], "correct": 1, "explanation": "An alternative explanation is not a reason to erase the impact. The question of intent is separate from improving how invitations are sent."}
+    ],
+    "pause-and-purpose": [
+      {"question": "When does postponing a broader concern turn into avoidance?", "options": ["Whenever the urgent question is asked first", "Never: postponing is always neutral", "When the broader concern gets no real follow-up"], "correct": 2, "explanation": "Separating the urgent question from the broader concern helps only if the second discussion has a real time and form."}
+    ],
+    "listen-with-attention": [
+      {"question": "Inez's neighbour wants to explain a garden problem as Inez is about to leave. What does Inez say?", "options": ["I have five minutes now, or fifteen after six. Which would work?", "Go ahead, I have as long as you need.", "This is not a good time."], "correct": 0, "explanation": "Stating the time she really has supports attention without promising unlimited availability, and gives the neighbour a choice."}
+    ],
+    "open-questions": [
+      {"question": "When is a closed question the right tool?", "options": ["To discover context you know nothing about", "To confirm a detail such as a deadline", "To ask why someone is to blame"], "correct": 1, "explanation": "Open questions discover context; closed checks confirm a detail once you know enough. Why questions that embed blame are neither."}
+    ],
+    "paraphrase": [
+      {"question": "Dev asks what done means on the board, and Rowan replies, You want permission for everything. What is wrong with that reply?", "options": ["It is too short to count as a paraphrase", "It invites Dev to correct it", "It adds an interpretation Dev did not state"], "correct": 2, "explanation": "A paraphrase restates the speaker's meaning and checks it. Rowan's version adds a motive instead of asking whether done includes review."}
+    ],
+    "validate-without-agreeing": [
+      {"question": "When does validation become misleading?", "options": ["When it claims to know an emotion the person has not named", "When it acknowledges the reported disruption", "When it is followed by a limit"], "correct": 0, "explanation": "Tentative language about the reported effect acknowledges the concern without pretending certainty about feelings."}
+    ],
+    "clear-request": [
+      {"question": "Your next step depends on a colleague's task. Besides when you need the task done, what should the request say?", "options": ["Why the colleague should care", "When you need a confirmation", "Nothing else"], "correct": 1, "explanation": "A hidden response window is a common reason requests fail. Saying when you need an answer leaves time to switch to an alternative."}
+    ],
+    "boundaries": [
+      {"question": "Theo needs protected study time at night. Which of these goes beyond a boundary he can keep?", "options": ["Silencing notifications after 9 pm", "Offering to look at one question at lunch", "Requiring that nobody sends him messages at night"], "correct": 2, "explanation": "A boundary describes what he will do. It cannot control what other people send."}
+    ],
+    "give-feedback": [
+      {"question": "Two readers asked what the slide labels meant. Why avoid saying everyone was confused?", "options": ["It exaggerates the evidence", "Feedback should never mention effects", "Two readers are too few to mention"], "correct": 0, "explanation": "Feedback is easier to act on when it reports the actual effect and its location. The two questions are evidence enough to raise it."}
+    ],
+    "receive-feedback": [
+      {"question": "What two decisions does receiving feedback involve?", "options": ["Whether to agree now and how to defend yourself", "Whether you understand it, and whether you will act on it", "Whether the person is right and whether they like you"], "correct": 1, "explanation": "Clarify the meaning first, often by asking for an example, before deciding whether to act on it."}
+    ],
+    "conflict-map": [
+      {"question": "Two people's concerns have no feasible overlap. What should happen?", "options": ["Agree on any option to end the discussion", "Let the person with the stronger position decide", "Keep the disagreement visible instead of forcing a superficial agreement"], "correct": 2, "explanation": "Understanding concerns can widen the options but does not guarantee agreement. A recorded disagreement is more useful than a false one."}
+    ],
+    "negotiate-options": [
+      {"question": "An authorised alternate reviewer may be free at nine. What has to happen before the plan counts on that slot?", "options": ["The alternate agrees to it", "Nothing: being authorised is enough", "Dev approves the draft first"], "correct": 0, "explanation": "An option that depends on someone who has not agreed is not yet a workable plan."}
+    ],
+    "repair": [
+      {"question": "Rowan wrongly said in public that Dev never reviews on time. Dev does not want to talk now. What does Rowan do?", "options": ["Waits for Dev's forgiveness before correcting anything", "Respects that and still corrects the record", "Keeps messaging until Dev agrees to talk"], "correct": 1, "explanation": "A repair corrects the inaccurate statement for the same audience and does not depend on reassurance or forgiveness."}
+    ],
+    "written-channel": [
+      {"question": "After a phone call, two people understand a repair's agreed cost differently. What suits this?", "options": ["Another call with no record", "Assuming the lower figure", "Confirming the scope and amount in writing"], "correct": 2, "explanation": "A written record suits factual confirmation. If the scope is still disputed, they can arrange an accessible discussion and record the result."}
+    ],
+    "power-and-help": [
+      {"question": "A student has twice raised an inaccessible assessment format without reply. Must they make another informal request before asking the accessibility office?", "options": ["No: another informal request is not a prerequisite", "Yes: at least three requests are needed first", "Yes: support offices act only after a direct conversation fails"], "correct": 0, "explanation": "Power and role constraints can make informal requests insufficient. The office's actual role and the institution's process still need checking."}
+    ],
+    "conversation-review": [
+      {"question": "A committee agrees an event date but not who owns the equipment. How does the review record that?", "options": ["As agreed, since nobody objected", "As undecided, with an owner to be chosen at Monday's check-in", "It leaves the equipment out of the summary"], "correct": 1, "explanation": "A review records a partial agreement without turning an open question into an accepted promise."}
+    ]
+  },
+  "stages": {
+    "foundation": [
+      {"question": "In the foundation case, what does Dana observe and what does she guess?", "options": ["She observes that two headings changed; she guesses someone dismissed her work", "She observes that someone dismissed her work; she guesses two headings changed", "Both are observations"], "correct": 0, "explanation": "The changed headings could be seen; the motive could not. Her frustration does not identify one either."},
+      {"question": "What is Dana's purpose before deciding what to do?", "options": ["To show that her version was better", "To understand the change", "To find out who is to blame"], "correct": 1, "explanation": "Naming the purpose first keeps the conversation on the change itself rather than a motive no one has established."},
+      {"question": "Dana asks whether ten minutes now is convenient. If the timing does not suit, what does she do?", "options": ["Explains her concern anyway", "Drops the subject", "Arranges another time"], "correct": 2, "explanation": "Listening needs a workable time for both people, and the conversation still has to happen."}
+    ],
+    "intermediate": [
+      {"question": "Dana's first summary says the introduction was replaced. What does the partner's correction tell her?", "options": ["Only the headings changed", "The whole section was rewritten", "Nothing changed at all"], "correct": 0, "explanation": "The correction changes what she knows, so Dana revises her summary and checks it again before giving feedback."},
+      {"question": "Dana asks for a short change note before tomorrow's review. What does the partner agree to?", "options": ["Not to edit the document again", "The change note, not a freeze on every edit", "Nothing until the organiser decides"], "correct": 1, "explanation": "A clear request can be answered. The agreement covers the note Dana asked for, not more than that."},
+      {"question": "In the practice studio's conversation, you choose: I haven't received feedback yet. Can you review by Thursday, or should we agree another plan? What does the studio suggest next?", "options": ["Nothing: the opening resolves the situation", "Repeat the request until they agree", "Listen to the reply and confirm a feasible agreement"], "correct": 2, "explanation": "The opening names an observation and a request and leaves room to negotiate, but only the reply and a confirmed agreement settle the plan."}
+    ],
+    "advanced": [
+      {"question": "Why do Dana and Lee propose the factual correction instead of a full rewrite?", "options": ["Lee prefers shorter edits", "A rewrite would need the organiser's approval", "The rewrite does not fit the thirty-minute window"], "correct": 2, "explanation": "They compare the options against agreed criteria, accuracy and the Friday deadline, and the rewrite fails the time constraint."},
+      {"question": "What happens to the introduction rewrite?", "options": ["It stays unresolved and is reviewed next Tuesday", "Lee does it after the deadline without telling anyone", "It is dropped for good"], "correct": 0, "explanation": "The review records what was agreed and what remains open, with a time to return to it."},
+      {"question": "What does Dana's record avoid claiming?", "options": ["That Lee edits and Dana checks by 11:30", "That the organiser agreed the scope", "That both prefer the result, or that a peer can approve the release alone"], "correct": 2, "explanation": "The record keeps to the agreement and who is responsible. It does not invent shared preference or authority."}
+    ]
+  }
+}

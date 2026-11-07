@@ -1,0 +1,81 @@
+{
+  "lessons": {
+    "behaviour-not-identity": [
+      {"question": "Luis calls himself careless after misplacing two receipts. What does he change?", "options": ["He resolves to become a more careful person", "He writes an action: after paying, put the receipt in the wallet's empty pocket", "He records how careless he feels each day"], "correct": 1, "explanation": "An action can be checked and adjusted; a label such as careless cannot tell him which step to change, and it says nothing about the whole person."}
+    ],
+    "goals-and-actions": [
+      {"question": "Priya opens the agenda five minutes before joining online meetings. Why does she record file-search delays separately from connection problems?", "options": ["Her action cannot prevent network outages", "Connection problems prove the action failed", "Only the outcome matters, not the action"], "correct": 0, "explanation": "The plan names the part she controls. Mixing in outages would make a useful action look ineffective."}
+    ],
+    "baseline-observation": [
+      {"question": "Why should a baseline include the situations in which the target could reasonably occur?", "options": ["So that every missed day counts as a failure", "To make the log as long as possible", "Otherwise a completion count hides changes in opportunity"], "correct": 2, "explanation": "The opportunities are the denominator. Without them, an evening spent caring for family looks the same as an available evening that was not used."}
+    ],
+    "cue-map": [
+      {"question": "Noor's desk timer appears on Monday, Tuesday and Wednesday, but she files her notes only on Monday. What does that show?", "options": ["All three days had a cue, but only Monday had an uninterrupted opportunity", "A second reminder at departure would fix Tuesday and Wednesday", "The action became automatic on Monday"], "correct": 0, "explanation": "An export and a handover took the time on the other days. Another reminder cannot create missing time, so the next test moves the cue earlier."}
+    ],
+    "habit-or-routine": [
+      {"question": "Evan has watered the balcony plants every Saturday for six weeks and still decides deliberately which plants need water. What do the six weeks establish?", "options": ["A fully automatic habit", "That the checklist has failed", "A repeated routine; completion alone does not show automatic starting"], "correct": 2, "explanation": "Repetition and automatic initiation are different, and careful decisions during the task are not a contradiction."}
+    ],
+    "small-start": [
+      {"question": "Why keep the useful minimum and the optional extension as separate labels?", "options": ["So the extension can quietly become the new minimum", "So the target does not drift upward unnoticed", "So only the extension needs recording"], "correct": 1, "explanation": "If the extension becomes the requirement, a useful short session turns into a failed long one and recreates the original obstacle."}
+    ],
+    "time-variation": [
+      {"question": "What range of habit-formation estimates did Lally and colleagues report among their fitted cases?", "options": ["18 to 254 days", "Exactly 21 days", "Exactly 66 days"], "correct": 0, "explanation": "The wide range describes variation between behaviours and people. It is a study estimate, not a schedule a learner should meet."}
+    ],
+    "if-then": [
+      {"question": "Which if clause identifies an opportunity rather than a feeling?", "options": ["If I feel motivated", "If I finish Friday's note review at my laptop", "If I am in the right mood"], "correct": 1, "explanation": "An implementation intention links a recognisable situation to a response. A feeling is not a situation you can reliably notice."}
+    ],
+    "friction": [
+      {"question": "Marta gathers her sewing supplies into one labelled box. Which of these can the box not do?", "options": ["Reduce the setup time", "Make the next repair easier to begin", "Create time for a repair on an unavailable evening"], "correct": 2, "explanation": "Reducing friction changes the effort between cue and action. It cannot add time that the evening does not have."}
+    ],
+    "prompt-design": [
+      {"question": "Owen's reminder to return library books appears while he is already travelling. What does he change?", "options": ["He moves it to the previous evening, with the books put beside tomorrow's bag", "He adds two more alarms during the journey", "He deletes the reminder and relies on memory"], "correct": 0, "explanation": "A reminder is useful when it arrives where acting is possible and says what to do. A noticed alert without access to the books is not an opportunity."}
+    ],
+    "replacement": [
+      {"question": "Sana watches clips during short breaks because she wants amusement. Why not replace them with another work task?", "options": ["Work tasks are always harder to start", "It might miss the original need for amusement", "Breaks should be removed entirely"], "correct": 1, "explanation": "A replacement should meet part of the same immediate need. Sana tests one short offline comic with a visible return time."}
+    ],
+    "obstacle-plan": [
+      {"question": "When can an explicit skip be the right branch of a coping plan?", "options": ["Never: every miss must be made up later", "Whenever the action feels effortful", "When the opportunity is absent"], "correct": 2, "explanation": "A skip recorded honestly keeps planning realistic, instead of turning each interruption into a catch-up task."}
+    ],
+    "measurement": [
+      {"question": "Fatima completed her desk routine on three of six days, and four of the days offered an end-of-work window. What are the two rates?", "options": ["75% of available opportunities and 50% of calendar days", "50% of available opportunities and 75% of calendar days", "75% for both"], "correct": 0, "explanation": "3/4 and 3/6 use different denominators and answer different questions. Neither shows automaticity or a causal benefit."}
+    ],
+    "feedback-reward": [
+      {"question": "Leo's utensil tray makes breakfast setup feel easier. What does he do before deciding to keep it?", "options": ["He decides that the satisfaction proves it works", "He samples setup time on several mornings and checks for clutter", "He adds a purchase as a reward for using it"], "correct": 1, "explanation": "Immediate satisfaction and longer-term value can differ, so he checks the practical consequence and its cost."}
+    ],
+    "missed-opportunity": [
+      {"question": "What did Lally's study find about a single missed opportunity?", "options": ["It reset the modelled process to zero", "It showed that repeated misses can be ignored", "It did not materially disrupt the modelled process"], "correct": 2, "explanation": "One miss is not a reason for a punitive catch-up, but the finding is not permission to ignore repeated patterns either."}
+    ],
+    "one-change-test": [
+      {"question": "Noor's earlier week had three usable filing opportunities and two completions; the week after moving the cue had four and three. What are the completion rates among usable opportunities?", "options": ["3/5, then 4/5", "2/5, then 3/5", "2/3, then 3/4"], "correct": 2, "explanation": "The rates use usable opportunities, not desk sessions. The setting changed too, so the rise does not prove the new cue caused it."}
+    ],
+    "changed-context": [
+      {"question": "Noor moves between home and a client site, where the old timer is gone. What stays fixed in her plan?", "options": ["Recoverable notes and the allowed storage", "The old timer cue", "The exact time she files notes"], "correct": 0, "explanation": "The purpose and the constraint carry over; the cue, action size and timing can change. Copying notes to a personal phone would break the storage rule."}
+    ],
+    "support-consent": [
+      {"question": "Nico's friend agrees to one Saturday check-in about the receipt pocket. What would extra monitoring need?", "options": ["Nothing: the first agreement covers it", "A new agreement", "Sharing the log publicly"], "correct": 1, "explanation": "Support stays within what both people agreed, and either of them can stop it."}
+    ],
+    "maintain-or-retire": [
+      {"question": "Why might two tracking systems be worth reducing to one?", "options": ["Two systems always mean a lack of discipline", "A longer combined streak is more valuable", "They may copy the same information, adding effort and error"], "correct": 2, "explanation": "A routine is kept for its purpose. A short trial without the duplicate shows whether anything useful would be lost."}
+    ],
+    "evidence-review": [
+      {"question": "Jon's log shows quicker morning setup, but his workload also became lighter. How does he report it?", "options": ["He credits the routine with the quicker setup", "He reports the quicker setup and the changed workload together", "He leaves the workload out to keep the result clear"], "correct": 1, "explanation": "The log cannot isolate the routine as the cause, so the review states both and keeps the decision provisional."}
+    ]
+  },
+  "stages": {
+    "foundation": [
+      {"question": "In Mira's baseline of three arrivals, how many used the target of putting her keys in the bowl?", "options": ["One: only Wednesday", "Two of the three", "All three"], "correct": 0, "explanation": "The keys ended up on the table, the coat and the bowl. The baseline describes three events and does not show automaticity."},
+      {"question": "What is Mira's useful minimum?", "options": ["Organising the whole hallway", "Storing the keys in the bowl", "Logging every item she puts down"], "correct": 1, "explanation": "The minimum serves the outcome, less searching before leaving, without turning into a larger obligation."},
+      {"question": "What constrained Mira's Tuesday arrival?", "options": ["The bowl was missing", "A reminder came too late", "She was carrying bags"], "correct": 2, "explanation": "So she checks whether she can put the bags down safely before reaching the bowl, rather than blaming herself."}
+    ],
+    "intermediate": [
+      {"question": "In the practice studio's habit activity, the cue is I arrive and can put my bags down, the action is put my keys in the bowl and the fallback is store the keys at the next available pause. What plan does it write?", "options": ["When I arrive and can put my bags down, I will put my keys in the bowl. If that is not feasible, I will store the keys at the next available pause.", "I will put my keys in the bowl every day and make up for any missed arrival.", "If I remember, I might put my keys in the bowl."], "correct": 0, "explanation": "The studio joins cue, action and fallback into one if-then plan, so an arrival needing immediate help has a defined branch."},
+      {"question": "Mira stores her keys at three of four available arrivals, and one more arrival had no opportunity. What completion rate does the experiment report?", "options": ["60% of all five arrivals", "75% of available opportunities", "100%, leaving out the miss"], "correct": 1, "explanation": "3/4 counts only arrivals where the action was possible. The unavailable arrival is recorded separately, not counted as a failure or dropped."},
+      {"question": "What single setup change does the intermediate experiment make?", "options": ["Moving the bowl, while the action stays the same", "Moving the bowl and adding a new reminder", "Changing the action to tidying the hallway"], "correct": 0, "explanation": "Changing one element at a time keeps the result easier to interpret."}
+    ],
+    "advanced": [
+      {"question": "Why can't Mira's sample show that the reachable bowl caused fewer searches?", "options": ["Five arrivals are always too few to decide anything", "Searching cannot be measured", "Her bag load also became lighter"], "correct": 2, "explanation": "Another condition changed at the same time, so she keeps the bowl provisionally and reviews again."},
+      {"question": "A later week has six sessions, of which two offer a usable opportunity, and both are completed. What are the rates?", "options": ["2 of 2 usable opportunities, but 2 of 6 sessions", "2 of 6 usable opportunities", "6 of 6 sessions"], "correct": 0, "explanation": "100% of usable opportunities sits beside four sessions with no opportunity. Find out why before claiming the routine is reliable."},
+      {"question": "When should Mira change or retire the bowl setup?", "options": ["As soon as she misses one arrival", "If it obstructs access or stops helping her find her keys", "Never, to protect the streak"], "correct": 1, "explanation": "The decision follows the purpose rather than the streak, with a recovery branch and a review date."}
+    ]
+  }
+}

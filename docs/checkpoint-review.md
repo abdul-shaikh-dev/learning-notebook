@@ -201,13 +201,25 @@ Writing the facts corrected one draft answer: the join of orders to payments tot
 
 `tests/weekly_planning_checkpoint_facts.py` reads the starting values from `lab.html` and `lab.js`, so a change to the studio's defaults shows up as a failing fact. It uses the same citation check as Learning How to Learn. It fails if a result supports a different option than the one marked correct. It runs in the `python` CI job with Node 24; run it locally with `python tests/weekly_planning_checkpoint_facts.py`.
 
+### Habits & Behaviour Change
+
+2026-11-07: one extra question per lesson and three per stage (20 lesson questions, 9 stage questions; the stages split lessons 7/7/6). 5 of the 29 answers are computed: the completion rates in lessons 13 and 16 and in the stage projects (3/4 against 3/6, 2/3 then 3/4, 3 of 4 available arrivals, and 2 of 2 usable opportunities against 2 of 6 sessions), and the stage 2 if-then plan, which runs the practice studio's habit planner in `lab-model.js` under Node. The other 24 are cited from the lessons and stage projects. Questions keep to the course's limits: the Lally range is a study estimate rather than a schedule, a personal before-and-after log does not show cause, and repeated completion does not show automaticity.
+
+`tests/habits_checkpoint_facts.py` runs in the `python` CI job with Node 24; run it locally with `python tests/habits_checkpoint_facts.py`.
+
+### Self-Awareness & Communication
+
+2026-11-07: one extra question per lesson and three per stage (20 lesson questions, 9 stage questions; the stages split lessons 7/7/6). The course teaches judgement in conversations, so all 29 answers are cited: 28 from the lessons and stage projects, and one from the feedback the practice studio's conversation activity shows for the asking opening in `practice/lab.js`. Questions avoid treating any one wording as guaranteed to work and keep the course's limits, such as a boundary covering only your own actions and support routes depending on each institution's process.
+
+`tests/self_awareness_checkpoint_facts.py` runs in the `python` CI job; run it locally with `python tests/self_awareness_checkpoint_facts.py`.
+
 ### Plan for the remaining courses
 
 Work one course per change, in this order, so that each answer can be checked against something that runs or a cited source:
 
 1. **Courses whose answers run in another tool:** Data analysis with Python, Machine learning foundations, C# & .NET, JavaScript → TypeScript → React and Linux & Operating Systems are done. Record each check in this document, as for the Python course, because only the bundled Python runtime is part of `tests/browser-python.cjs`.
 2. **Courses checked against their cited sources:** Networking & the Web, Messaging & Event-Driven Systems, Data Engineering, AI Agents, Agent Harnesses, Application Security, Testing & Debugging, Observability & Performance, System Design, Kubernetes, Cloud & Infrastructure as Code, Delivery & Operations, UI Design & Accessibility, Full-Stack Project Journey and Requirements & software maintenance are done. Each answer should trace to a lesson source or a primary reference such as a specification or WCAG success criterion.
-3. **Personal effectiveness and development courses:** Learning How to Learn and Plan and Review Your Week are done. Habits & Behaviour Change, Self-Awareness & Communication, Task & Project Management and Time, Attention & Energy remain. Questions should test the course's own model and avoid claims stronger than its sources. Answers from the text are checked as citations with `tests/checkpoint_citations.py`; answers from the shared practice studio run `lab-model.js`.
+3. **Personal effectiveness and development courses:** Learning How to Learn, Plan and Review Your Week, Habits & Behaviour Change and Self-Awareness & Communication are done. Task & Project Management and Time, Attention & Energy remain. Questions should test the course's own model and avoid claims stronger than its sources. Answers from the text are checked as citations with `tests/checkpoint_citations.py`; answers from the shared practice studio run `lab-model.js` through the same helper.
 
 Python Problem Solving is left out because its lessons are challenges with tests, and Financial foundations because it has its own course page and question format.
 

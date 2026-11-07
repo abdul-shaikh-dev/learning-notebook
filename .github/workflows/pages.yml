@@ -109,6 +109,10 @@ jobs:
         run: python tests/learning_how_to_learn_checkpoint_facts.py
       - name: Check Plan and Review Your Week checkpoint answers against the practice studio and lessons
         run: python tests/weekly_planning_checkpoint_facts.py
+      - name: Check Habits & Behaviour Change checkpoint answers against the practice studio and lessons
+        run: python tests/habits_checkpoint_facts.py
+      - name: Check Self-Awareness & Communication checkpoint answers against the lessons and practice studio
+        run: python tests/self_awareness_checkpoint_facts.py
       - name: Check concept explorer figures against the course labs
         run: python tests/explorer_lab_facts.py
 
