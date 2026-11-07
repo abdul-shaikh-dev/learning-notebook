@@ -10,6 +10,6 @@ Vendor provenance: official npm `@mermaid-js/tiny@12.0.0`, `dist/mermaid.tiny.js
 
 Validation: `node tests/mermaid-diagrams.cjs`, `node verify.cjs`, and `node scripts/build-pages.cjs`. Inspect the affected rendered diagrams when changing the renderer or dependency, including lesson-step highlights, mobile layout, and study packs.
 
-Finance uses nine additional static maps in content/diagrams.js with the same source/SVG renderer and complete text alternatives. See [the full audit](visual-flow-audit-2026-09-30.md) for coverage and retained-text decisions. Explicit diagram.textExampleSections indices move only authored conceptual flow examples into disclosures; do not mark mixed executable specimens.
+Finance uses nine additional static maps in paths/financial-foundations/diagrams.json with the same source/SVG renderer and complete text alternatives. See [the full audit](visual-flow-audit-2026-09-30.md) for coverage and retained-text decisions. Explicit diagram.textExampleSections indices move only authored conceptual flow examples into disclosures; do not mark mixed executable specimens.
 
 Author metadata: type='sequence' uses an explicit sequenceOrder containing each edge index once in teaching order. direction='LR' selects a horizontal flow; omitted direction remains TB. Nodes may use shape='decision', 'database' or 'terminal'. Use notation that matches the concept; do not turn unordered dependencies into chronological messages.

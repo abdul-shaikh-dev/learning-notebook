@@ -3,7 +3,8 @@ const root=path.resolve(__dirname,'..');
 const read=file=>fs.readFileSync(path.join(root,file),'utf8');
 const app=read('paths/financial-foundations/runtime/app.js');
 const study=read('paths/financial-foundations/runtime/study.js');
-const fixtures={...vm.runInNewContext(read('paths/financial-foundations/content/curriculum.js')+'\n'+read('paths/financial-foundations/content/starter.js')+'\n'+read('paths/financial-foundations/content/exercises.js')+';({LESSONS,STARTER,EXERCISES})'),...require('../assets/js/finance-legacy.js')};
+let FINANCE_COURSE;vm.runInNewContext(read('content/courses/financial-foundations.js'),{NotebookLoader:{register:p=>{FINANCE_COURSE=p;}}});
+const fixtures={FINANCE_COURSE,...vm.runInNewContext(read('paths/financial-foundations/content/exercises.js')+';({EXERCISES})'),...require('../assets/js/finance-legacy.js')};
 const key='valuation-lab-v1',readKey='learning-notebook:path:financial-foundations:v1',{FINANCE_LEGACY}=fixtures;
 function harness(initial,read){
   const disk=new Map([...(initial?[[key,JSON.stringify(initial)]]:[]),...(read?[[readKey,JSON.stringify(read)]]:[])]),events={},nodes=new Map(),replaced=[];let fail=false,focused=null;

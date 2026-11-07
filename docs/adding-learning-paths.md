@@ -22,11 +22,12 @@ Use a unique local-storage key and documented backup schema. Generic reader keys
 
 Keep a path's lessons, quizzes, sources, labs and practice material inside its own directory. Share design/reader utilities only when they are truly subject-independent. Preserve historical review documents; publish a new response/verification record rather than rewriting them.
 
-The finance lessons are generated: `node scripts/sync-finance-lessons.cjs` builds `path.json` lessons and stages,
-`glossary.json` and `diagrams.json` from `paths/financial-foundations/content/*.js`, which the practice studio and
-the handbook also read. Edit the content files, then rerun it; `--check` (run by the tests) fails when the generated
-files are stale. Main lessons follow the six introductions and eight foundation explainers, so "lesson 3" in the
-content text becomes lesson 17 on the shared page. `tests/finance-parity.cjs` checks that every original feature
+Edit the finance lessons, sources, glossary and diagrams in `path.json`, `glossary.json` and `diagrams.json`, as
+for any other course. The practice studio and the handbook read them from the generated course data
+(`content/courses/financial-foundations.js`) through `runtime/course-data.js`, so they need no copy. The files in
+`paths/financial-foundations/content/` hold only studio material: labs and worksheets, the month-end case, module
+practice, the practice population and the trade journey. Exercises and studio links still number the main lessons
+1–18 (lesson 15 to 32 on the shared page). `tests/finance-parity.cjs` checks that every feature of the original reader
 still has a home.
 
 The finance printable pack and interactive app consume the same content files. Edit canonical CSV/answer key under the finance practice directory, then run `node scripts/sync-finance.cjs` to regenerate the embedded printable data and old download aliases. Current sample CSV is unquoted; the synchronizer fails clearly if quoted fields are introduced, requiring a real CSV parser.
