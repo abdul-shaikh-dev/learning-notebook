@@ -4,7 +4,7 @@ const BASE=new URL('./',self.location.href);
 const say=text=>Object.assign(Error(text),{friendly:true});
 const PREFIX='learning-notebook:'+encodeURIComponent(BASE.pathname)+':';
 const SHELL=PREFIX+'shell:'+CONFIG.version,REGISTRY=PREFIX+'downloads';
-// The Python runtime (about 12 MB) is kept after its first verified download, so later runs and publications do not fetch it again.
+// The Python runtime (about 14 MB) is kept after its first verified download, so later runs and publications do not fetch it again.
 const RUNTIME=CONFIG.runtime?.files?.length?PREFIX+'runtime:'+CONFIG.runtime.version:null;
 const runtimeFile=file=>!!RUNTIME&&CONFIG.runtime.files.includes(file);
 const locks=new Map();

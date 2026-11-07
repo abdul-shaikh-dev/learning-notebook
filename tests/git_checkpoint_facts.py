@@ -2,7 +2,7 @@
 
 Each fact builds a fresh repository with the course's own Sandbox, runs real Git and returns the text of
 the option its result supports. The script fails if that differs from the authored correct option.
-Run with Python 3.11+ and Git 2.28+: python tests/git_checkpoint_facts.py
+Run with Python 3.14+ and Git 2.28+: python tests/git_checkpoint_facts.py
 """
 import json
 from pathlib import Path

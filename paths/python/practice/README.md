@@ -1,5 +1,5 @@
 # Python staged practice
-Use Python 3.11 or newer. Download all four .py files into one folder. There are no external dependencies.
+Use Python 3.14 or newer. Download all four .py files into one folder. There are no external dependencies.
 
 Run `python foundation_project.py`, `python intermediate_project.py --demo`, `python advanced_project.py --demo --workers 2`, then `python -m unittest -v test_projects.py`.
 

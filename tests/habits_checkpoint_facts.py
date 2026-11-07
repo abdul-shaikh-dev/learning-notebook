@@ -5,7 +5,7 @@ each question states. The stage 2 plan sentence runs the practice studio's habit
 (practice/lab-model.js's plan) under Node. The other answers come from the lesson and project text and
 are checked as citations; see tests/checkpoint_citations.py. Each fact returns the text of the option
 the result supports.
-Needs Node.js on PATH. Run with Python 3.11+: python tests/habits_checkpoint_facts.py
+Needs Node.js on PATH. Run with Python 3.14+: python tests/habits_checkpoint_facts.py
 """
 from fractions import Fraction
 import sys

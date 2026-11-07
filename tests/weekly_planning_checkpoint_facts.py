@@ -6,7 +6,7 @@ week with a 20% buffer and the Disrupt button's 90 lost minutes, and the startin
 hour budgets in the lessons and kits are recomputed here from the figures each question states. The
 other answers come from the lesson and kit text and are checked as citations; see
 tests/checkpoint_citations.py. Each fact returns the text of the option the result supports.
-Needs Node.js on PATH. Run with Python 3.11+: python tests/weekly_planning_checkpoint_facts.py
+Needs Node.js on PATH. Run with Python 3.14+: python tests/weekly_planning_checkpoint_facts.py
 """
 from functools import cache
 import json

@@ -1,6 +1,6 @@
 # Exercise: prove that the installed package works
 
-Use Python 3.11 or newer. `python_package_starter.py` generates a complete package with a src layout, a setuptools 82.0.1 build backend, a console entry point and a packaged text resource. Use a new empty destination:
+Use Python 3.14 or newer. `python_package_starter.py` generates a complete package with a src layout, a setuptools 82.0.1 build backend, a console entry point and a packaged text resource. Use a new empty destination:
 
 ```text
 python python_package_starter.py <empty-project-directory>

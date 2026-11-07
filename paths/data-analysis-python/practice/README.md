@@ -4,7 +4,7 @@ These are fictional completed support tickets, one row per ticket. Start with pr
 
 ## Run
 
-Use Python 3.11 or newer for the dataset checks. The pinned analysis libraries require Python 3.12 or newer; the full suite was checked with Python 3.14. No account, GPU or network service is needed to run the analysis. Installing dependencies requires package access once. Reading the lessons and running the dataset checks do not require third-party packages.
+Use Python 3.14 or newer for the dataset checks. The pinned analysis libraries require Python 3.14 or newer; the full suite was checked with Python 3.14. No account, GPU or network service is needed to run the analysis. Installing dependencies requires package access once. Reading the lessons and running the dataset checks do not require third-party packages.
 
 From this extracted folder:
 

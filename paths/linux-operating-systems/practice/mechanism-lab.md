@@ -2,7 +2,7 @@
 
 Read the worked lesson, then use this optional lab to try the mechanism yourself.
 
-Requirements: Python 3.11+ inside an existing Linux/WSL distribution with /proc mounted; no sudo.
+Requirements: Python 3.14+ inside an existing Linux/WSL distribution with /proc mounted; no sudo.
 
 From the extracted practice folder:
 

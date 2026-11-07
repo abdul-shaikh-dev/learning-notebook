@@ -89,7 +89,7 @@
         }
       ],
       "notes": [
-        "Python 3.10 or newer and basic functions, lists and dictionaries.",
+        "Python 3.14 or newer and basic functions, lists and dictionaries.",
         "The original algorithm references include executable checks; the added tree/DFS module has an independent unittest suite. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
@@ -141,7 +141,7 @@
         }
       ],
       "notes": [
-        "Python 3.10 or newer and basic functions, lists and dictionaries.",
+        "Python 3.14 or newer and basic functions, lists and dictionaries.",
         "The original algorithm references include executable checks; the added tree/DFS module has an independent unittest suite. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
@@ -190,7 +190,7 @@
         }
       ],
       "notes": [
-        "Python 3.10 or newer and basic functions, lists and dictionaries.",
+        "Python 3.14 or newer and basic functions, lists and dictionaries.",
         "The original algorithm references include executable checks; the added tree/DFS module has an independent unittest suite. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]

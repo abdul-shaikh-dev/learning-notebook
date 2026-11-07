@@ -7,7 +7,7 @@
   "level": "Foundations → intermediate design reasoning → local experiments",
   "prerequisites": [
     "Comfort with a small application, basic HTTP and database concepts is helpful; the foundation lessons explain the vocabulary.",
-    "No cloud account or paid service is required. Optional calculator exercises need Python 3.10+ and basic terminal use."
+    "No cloud account or paid service is required. Optional calculator exercises need Python 3.14+ and basic terminal use."
   ],
   "outcomes": [
     "Translate user needs into invariants, SLIs and scoped architecture decisions.",

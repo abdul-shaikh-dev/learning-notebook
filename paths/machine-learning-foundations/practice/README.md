@@ -8,7 +8,7 @@ make their rows or evaluation results interchangeable.
 
 ## Run without installing packages
 
-Use Python 3.11 or newer, open a terminal in the extracted folder and run:
+Use Python 3.14 or newer, open a terminal in the extracted folder and run:
 
 ```text
 python metrics_lab.py

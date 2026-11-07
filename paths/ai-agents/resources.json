@@ -118,7 +118,7 @@
         }
       ],
       "notes": [
-        "Python 3.11 or newer; no model credentials or external services.",
+        "Python 3.14 or newer; no model credentials or external services.",
         "The decision source is scripted and offline. evaluation_cases.json is a specification starter; it does not run a semantic judge or measure model accuracy.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
@@ -160,7 +160,7 @@
         }
       ],
       "notes": [
-        "Python 3.11 or newer; no model credentials or external services.",
+        "Python 3.14 or newer; no model credentials or external services.",
         "The decision source is scripted and offline. evaluation_cases.json is a specification starter; it does not run a semantic judge or measure model accuracy.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]

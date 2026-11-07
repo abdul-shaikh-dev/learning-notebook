@@ -1,6 +1,6 @@
 # Testing & Debugging practice
 
-Python 3.11+, standard library only. Keep all files together.
+Python 3.14+, standard library only. Keep all files together.
 
 ```text
 python testing_foundation.py

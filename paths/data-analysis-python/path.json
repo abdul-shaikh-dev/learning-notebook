@@ -17,8 +17,8 @@
   ],
   "setup": [
     "Download the practice kit and read README.md.",
-    "Run the standard-library dataset checks with Python 3.11 or newer.",
-    "For executable analysis, use Python 3.12+ and install requirements.txt in a virtual environment. The tested interpreter is Python 3.14."
+    "Run the standard-library dataset checks with Python 3.14 or newer.",
+    "For executable analysis, use Python 3.14+ and install requirements.txt in a virtual environment. The tested interpreter is Python 3.14."
   ],
   "nextSteps": [
     "Study machine learning foundations after validating the reporting pipeline."
@@ -996,10 +996,10 @@
         },
         {
           "title": "Python hashlib",
-          "url": "https://docs.python.org/3.11/library/hashlib.html",
+          "url": "https://docs.python.org/3.14/library/hashlib.html",
           "section": "Hash objects and hexdigest",
           "scope": "Hash API behaviour. Collision resistance is practical evidence, not proof that distinct inputs can never share a digest.",
-          "reviewed": "2026-10-02"
+          "reviewed": "2026-11-07"
         }
       ]
     },

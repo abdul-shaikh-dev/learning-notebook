@@ -1,4 +1,4 @@
-"""Python 3.11+: deterministic TaskGroup failure and cancellation, no timing races."""
+"""Python 3.14+: deterministic TaskGroup failure and cancellation, no timing races."""
 import asyncio
 
 async def failing_group(events):

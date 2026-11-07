@@ -7,7 +7,7 @@
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Basic HTTP, Python and terminal use for the local note-service track. React, C#/.NET and SQL Server are needed only for the optional full-stack integration runbook.",
-    "Python 3.11+ and basic terminal use for the independent local lab; Docker is optional, no cloud account required."
+    "Python 3.14+ and basic terminal use for the independent local lab; Docker is optional, no cloud account required."
   ],
   "outcomes": [
     "Name source/artifact/config/schema identities and user release invariants.",
@@ -269,7 +269,7 @@
         {
           "title": "Pinning a verified image digest",
           "paragraphs": [
-            "The downloadable Dockerfile deliberately uses the readable `python:3.13-slim` tag. Tags can change. As an assessed extension, resolve its current digest, replace both `FROM` references with that digest and record an upgrade process; do not invent or paste an unverified digest from a tutorial."
+            "The downloadable Dockerfile deliberately uses the readable `python:3.14-slim` tag. Tags can change. As an assessed extension, resolve its current digest, replace both `FROM` references with that digest and record an upgrade process; do not invent or paste an unverified digest from a tutorial."
           ],
           "example": "React: npm ci; npm test; npm run build\n.NET: dotnet restore; dotnet test -c Release; dotnet publish -c Release\nPython: python --version; python -m unittest -v"
         }
@@ -354,7 +354,7 @@
           "url": "https://docs.python.org/3/library/http.server.html",
           "section": "Security considerations",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ learning-only HTTP service; official docs exclude production use. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Python 3.14+ learning-only HTTP service; official docs exclude production use. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
         }
       ],
       "stage": "foundation"
@@ -403,7 +403,7 @@
           "url": "https://docs.docker.com/build/concepts/overview/",
           "section": "Images and containers",
           "reviewed": "2026-09-27",
-          "scope": "Linux containers/BuildKit; local Python 3.13 image lab, not a production hardening certification. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Linux containers/BuildKit; local Python 3.14 image lab, not a production hardening certification. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
         }
       ],
       "stage": "foundation"
@@ -424,7 +424,7 @@
           "paragraphs": [
             "The `.dockerignore` file permits only the Dockerfile and two named Python sources. The numeric runtime user can write `/tmp`; it cannot write arbitrary `/app` files. Verify the final image user and filesystem with `docker inspect`, rather than assuming a small image is hardened or vulnerability-free."
           ],
-          "example": "FROM python:3.13-slim AS test\nCOPY release_app.py test_release_app.py ./\nRUN python -m unittest -v test_release_app.py\n# Runtime copies only release_app.py from the test stage."
+          "example": "FROM python:3.14-slim AS test\nCOPY release_app.py test_release_app.py ./\nRUN python -m unittest -v test_release_app.py\n# Runtime copies only release_app.py from the test stage."
         }
       ],
       "exercise": {
@@ -1343,7 +1343,7 @@
           "Labels and digests are distinguished.",
           "The learning-only HTTP server scope is explicit."
         ],
-        "solution": "Use a fresh extracted folder, Python 3.11+ and temporary test fixtures. The packet maps existing-note readability to tested restart persistence and backup values. Record the file digest and v1 label separately; /ready 503 with /live 200 is a recoverable routing condition, not process failure. Docker build/run stays reviewed-only unless actually executed."
+        "solution": "Use a fresh extracted folder, Python 3.14+ and temporary test fixtures. The packet maps existing-note readability to tested restart persistence and backup values. Record the file digest and v1 label separately; /ready 503 with /live 200 is a recoverable routing condition, not process failure. Docker build/run stays reviewed-only unless actually executed."
       }
     },
     {

@@ -1,6 +1,6 @@
 # Data Engineering practice
 
-Python 3.11+ with its sqlite3 module; standard library only. Extract the ZIP;
+Python 3.14+ with its sqlite3 module; standard library only. Extract the ZIP;
 all files are flat in data-engineering-practice. From that folder run:
 
 ```
@@ -67,4 +67,4 @@ on a failed first transaction but no business rows/marker are committed.
 
 ## Reference scope and verification limits
 
-The local CSV and SQLite exercises require Python 3.11 or later. SQL Server 17 documentation and Airflow concepts support optional extensions. Their connectors were not executed locally.
+The local CSV and SQLite exercises require Python 3.14 or later. SQL Server 17 documentation and Airflow concepts support optional extensions. Their connectors were not executed locally.

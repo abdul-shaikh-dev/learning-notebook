@@ -7,7 +7,7 @@ This is a deterministic runtime-policy workshop with a scripted model and two in
 
 ## Run it
 
-Place `harness_workshop.py` and `test_harness_workshop.py` in the same folder with Python 3.10 or later installed:
+Place `harness_workshop.py` and `test_harness_workshop.py` in the same folder with Python 3.14 or later installed:
 
 ```text
 python harness_workshop.py

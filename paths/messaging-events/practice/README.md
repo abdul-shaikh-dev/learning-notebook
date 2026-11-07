@@ -1,6 +1,6 @@
 # Messaging practice: local evidence first
 
-Extract all flat files together. Requires Python 3.11+ and its bundled sqlite3; no pip packages, accounts, broker, network or real emails/payments. Commands from the extracted folder:
+Extract all flat files together. Requires Python 3.14+ and its bundled sqlite3; no pip packages, accounts, broker, network or real emails/payments. Commands from the extracted folder:
 
 ```text
 python --version
@@ -28,4 +28,4 @@ Demo/test temporary databases are automatically removed. A learner-created persi
 
 See [mechanism-lab.md](mechanism-lab.md) for `broker_ack_drill.py`: PASS reports broker redelivery, one inbox row, balance=7 and a drained queue. No process-crash durability claim.
 
-Requirements: Python 3.11+, optional Pika, and the isolated loopback RabbitMQ recipe below.
+Requirements: Python 3.14+, optional Pika, and the isolated loopback RabbitMQ recipe below.

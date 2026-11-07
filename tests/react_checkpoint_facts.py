@@ -7,7 +7,7 @@ tracker-core.test.ts and performance-runner.js run as shipped. The React compone
 AdvancedApp.tsx and RemoteLesson.tsx) are read as data; the react CI job renders them in its component
 tests. Each fact returns the text of the option the result supports, and the script fails if that
 differs from the authored correct option. No network is used: the HTTP loader gets a stubbed fetch.
-Needs Node.js 22.18+ on PATH. Run with Python 3.11+: python tests/react_checkpoint_facts.py
+Needs Node.js 22.18+ on PATH. Run with Python 3.14+: python tests/react_checkpoint_facts.py
 """
 from functools import cache
 import json

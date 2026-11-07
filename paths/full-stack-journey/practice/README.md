@@ -5,7 +5,7 @@ contract tests and milestone workbook. START-HERE.txt links each stage.
 
 ## Tools and first run
 
-Use .NET 10 SDK, Node 24/npm, Python 3.11+, and optionally SQL Server plus sqlcmd/SSMS.
+Use .NET 10 SDK, Node 24/npm, Python 3.14+, and optionally SQL Server plus sqlcmd/SSMS.
 The API has no login. It serves fictional study records for one user at a loopback address, which is reachable only on your computer.
 The notebook on GitHub Pages is the learning material; Pages cannot host this API.
 

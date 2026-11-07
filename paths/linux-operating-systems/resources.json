@@ -77,7 +77,7 @@
         }
       ],
       "notes": [
-        "Python 3.11+ standard library only.",
+        "Python 3.14+ standard library only.",
         "These tests cover the local reference. Add checks for your changes and target environment."
       ]
     },
@@ -127,7 +127,7 @@
         }
       ],
       "notes": [
-        "Python 3.11+ standard library only.",
+        "Python 3.14+ standard library only.",
         "These tests cover the local reference. Add checks for your changes and target environment.",
         "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
@@ -179,7 +179,7 @@
         }
       ],
       "notes": [
-        "Python 3.11+ standard library only.",
+        "Python 3.14+ standard library only.",
         "These tests cover the local reference. Add checks for your changes and target environment.",
         "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]

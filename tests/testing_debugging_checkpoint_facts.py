@@ -4,7 +4,7 @@ Each fact runs the course's offline labs in paths/testing-debugging/practice (th
 the version store, the diagnosis lab, the cursor candidate and reference, and the branch-coverage
 subject) and returns the text of the option its result supports. The script fails if that differs from
 the authored correct option. Files are written only to temporary folders; no network is used.
-Run with Python 3.11+: python tests/testing_debugging_checkpoint_facts.py
+Run with Python 3.14+: python tests/testing_debugging_checkpoint_facts.py
 """
 import ast
 import asyncio

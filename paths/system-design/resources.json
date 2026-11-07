@@ -95,7 +95,7 @@
         }
       ],
       "notes": [
-        "Python 3.10 or newer to run the calculator; a text editor for the workbook and ADR.",
+        "Python 3.14 or newer to run the calculator; a text editor for the workbook and ADR.",
         "The calculator checks arithmetic under stated assumptions. The workbook and ADR are paper assessments; no live load, availability, security or recovery test is supplied.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
@@ -146,7 +146,7 @@
         }
       ],
       "notes": [
-        "Python 3.10 or newer to run the calculator; a text editor for the workbook and ADR.",
+        "Python 3.14 or newer to run the calculator; a text editor for the workbook and ADR.",
         "The calculator checks arithmetic under stated assumptions. The workbook and ADR are paper assessments; no live load, availability, security or recovery test is supplied.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
@@ -194,7 +194,7 @@
         }
       ],
       "notes": [
-        "Python 3.10 or newer to run the calculator; a text editor for the workbook and ADR.",
+        "Python 3.14 or newer to run the calculator; a text editor for the workbook and ADR.",
         "The calculator checks arithmetic under stated assumptions. The workbook and ADR are paper assessments; no live load, availability, security or recovery test is supplied.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]

@@ -3,7 +3,7 @@
 Each fact runs the course's labs (paths/data-engineering/practice: pipeline_lab.py for the CSV import and
 replay, revision_lab.py for revised events) or the standard library they rely on, and returns the text of
 the option its result supports. The script fails if that differs from the authored correct option.
-Every database and file is temporary. Run with Python 3.11+: python tests/data_engineering_checkpoint_facts.py
+Every database and file is temporary. Run with Python 3.14+: python tests/data_engineering_checkpoint_facts.py
 """
 from contextlib import closing
 from datetime import datetime, timedelta, timezone

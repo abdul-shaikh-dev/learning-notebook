@@ -4,7 +4,7 @@ Each fact runs the course's offline labs (paths/system-design/practice/booking_l
 file in a temporary folder, and the arithmetic in capacity_calculator.py) and returns the text of the
 option its result supports. The script fails if that differs from the authored correct option. No
 network or external effects are used.
-Run with Python 3.11+: python tests/system_design_checkpoint_facts.py
+Run with Python 3.14+: python tests/system_design_checkpoint_facts.py
 """
 from contextlib import closing, contextmanager
 import json

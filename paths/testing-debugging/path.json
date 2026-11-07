@@ -7,7 +7,7 @@
   "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "Basic Python functions, lists and exceptions; vocabulary is introduced before deeper diagnosis.",
-    "Python 3.11+ and a terminal for runnable labs; no third-party package, account or external service required."
+    "Python 3.14+ and a terminal for runnable labs; no third-party package, account or external service required."
   ],
   "outcomes": [
     "Build a pure parser and independently demonstrate allowed values, type boundaries and malformed records.",
@@ -193,7 +193,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Basic example; assert methods",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -249,7 +249,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Basic example",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -298,7 +298,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Distinguishing test iterations using subtests",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -347,7 +347,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "assertRaises; assertRaisesRegex",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -396,7 +396,7 @@
           "url": "https://docs.python.org/3/library/tempfile.html",
           "section": "TemporaryDirectory; context-managed cleanup",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -445,7 +445,7 @@
           "url": "https://docs.python.org/3/library/traceback.html",
           "section": "TracebackException; exception chaining output",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -509,7 +509,7 @@
           "url": "https://docs.python.org/3/library/pdb.html",
           "section": "Debugger commands; run",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -571,7 +571,7 @@
           "url": "https://docs.python.org/3/library/pdb.html",
           "section": "break; p; next; step; continue",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -620,7 +620,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Organizing test code; test fixtures",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -669,7 +669,7 @@
           "url": "https://docs.python.org/3/library/unittest.mock.html",
           "section": "Mock.side_effect; assert_not_called; where to patch",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -718,7 +718,7 @@
           "url": "https://docs.python.org/3/library/unittest.mock.html",
           "section": "Autospeccing; specification of doubles",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -767,7 +767,7 @@
           "url": "https://docs.python.org/3/library/tempfile.html",
           "section": "NamedTemporaryFile; temporary-file lifecycle",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -823,7 +823,7 @@
           "url": "https://hypothesis.readthedocs.io/en/latest/quickstart.html",
           "section": "An example; falsifying and shrinking",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -879,7 +879,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "TestCase; assert methods",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -934,7 +934,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "assertEqual; test discovery",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -955,7 +955,7 @@
           "paragraphs": [
             "Do not overwrite a historical captured incident merely to make a new test pass. Add a new fixture or document a migration. Avoid copying credentials or raw production records into regression folders. Time and external state should be injected or controlled when they are not the subject of the test."
           ],
-          "example": "Fixture: IDs a,b; durations 7,2\nSeed: 27\nExpected sum: 9\nEnvironment: Python 3.11+; local filesystem"
+          "example": "Fixture: IDs a,b; durations 7,2\nSeed: 27\nExpected sum: 9\nEnvironment: Python 3.14+; local filesystem"
         }
       ],
       "exercise": {
@@ -983,7 +983,7 @@
           "url": "https://docs.python.org/3/library/tempfile.html",
           "section": "TemporaryDirectory; cleanup",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -1039,7 +1039,7 @@
           "url": "https://docs.python.org/3/library/threading.html",
           "section": "Barrier; Lock objects",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -1088,7 +1088,7 @@
           "url": "https://docs.python.org/3/library/threading.html",
           "section": "Event objects; Thread.join",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -1143,7 +1143,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "IsolatedAsyncioTestCase; asyncSetUp and asyncTearDown",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -1192,7 +1192,7 @@
           "url": "https://docs.python.org/3/library/logging.html",
           "section": "LogRecord attributes; logging levels",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -1247,7 +1247,7 @@
           "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
           "section": "Latency; traffic; saturation",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -1296,7 +1296,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Command-Line Interface; Test Discovery",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -1345,7 +1345,7 @@
           "url": "https://docs.python.org/3/library/pdb.html",
           "section": "Debugger commands; post-mortem debugging",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     },
@@ -1394,7 +1394,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Command-Line Interface; test suites",
           "reviewed": "2026-09-27",
-          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
         }
       ]
     }

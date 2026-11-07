@@ -7,7 +7,7 @@
   "level": "Foundations → intermediate batch pipelines → selected extensions",
   "prerequisites": [
     "Comfort creating files and opening a terminal.",
-    "Python 3.11+ for the portable practice kit; no external packages.",
+    "Python 3.14+ for the portable practice kit; no external packages.",
     "Basic Python functions and SQL SELECT are helpful; introductory lessons explain the data vocabulary."
   ],
   "outcomes": [
@@ -123,7 +123,7 @@
           "url": "https://docs.python.org/3/library/csv.html",
           "section": "DictReader field mapping",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -178,14 +178,14 @@
           "url": "https://learn.microsoft.com/en-us/azure/architecture/data-guide/relational-data/etl",
           "section": "Extract, transform and load; ELT",
           "reviewed": "2026-09-30",
-          "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+          "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.14+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
         },
         {
           "title": "Tutorial and transactions",
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Tutorial and transactions",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -247,7 +247,7 @@
           "url": "https://docs.python.org/3/library/csv.html",
           "section": "Reader objects and newline handling",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -302,7 +302,7 @@
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "SQLite and Python types",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -357,7 +357,7 @@
           "url": "https://docs.python.org/3/library/csv.html",
           "section": "Error handling",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -412,7 +412,7 @@
           "url": "https://docs.python.org/3/library/datetime.html",
           "section": "Aware and naive objects",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -467,14 +467,14 @@
           "url": "https://docs.python.org/3/library/decimal.html",
           "section": "Decimal arithmetic and exact representation",
           "reviewed": "2026-09-30",
-          "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+          "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.14+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
         },
         {
           "title": "Python integer binding",
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Python integer binding",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -537,7 +537,7 @@
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Connection context manager",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -599,7 +599,7 @@
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Transaction control",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -662,14 +662,14 @@
           "url": "https://learn.microsoft.com/en-us/azure/data-factory/tutorial-incremental-copy-overview",
           "section": "Delta data loading and watermark",
           "reviewed": "2026-09-30",
-          "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+          "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.14+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
         },
         {
           "title": "Commit and rollback",
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Commit and rollback",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -724,7 +724,7 @@
           "url": "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server?view=sql-server-ver17",
           "section": "SQL Server CDC overview",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -779,14 +779,14 @@
           "url": "https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-dimension-tables",
           "section": "Dimension keys and relationships",
           "reviewed": "2026-09-30",
-          "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+          "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.14+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
         },
         {
           "title": "SQL Server CREATE TABLE constraints",
           "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
           "section": "SQL Server CREATE TABLE constraints",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -849,14 +849,14 @@
           "url": "https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-dimension-tables",
           "section": "Slowly changing dimension types",
           "reviewed": "2026-09-30",
-          "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+          "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.14+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
         },
         {
           "title": "SQL Server table constraints",
           "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
           "section": "SQL Server table constraints",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -911,7 +911,7 @@
           "url": "https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html",
           "section": "Airflow DAG concepts",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -973,7 +973,7 @@
           "url": "https://docs.python.org/3/library/datetime.html",
           "section": "Time comparisons",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         },
         {
           "title": "Beam watermarks and late data",
@@ -1035,7 +1035,7 @@
           "url": "https://docs.python.org/3/library/csv.html",
           "section": "File reading contract",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         },
         {
           "title": "Apache Parquet overview",
@@ -1097,7 +1097,7 @@
           "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
           "section": "SQL Server CREATE TABLE column definitions",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -1152,7 +1152,7 @@
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Query result iteration",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -1207,14 +1207,14 @@
           "url": "https://learn.microsoft.com/en-us/azure/architecture/security/security-get-started",
           "section": "Security design and identity",
           "reviewed": "2026-09-30",
-          "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+          "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.14+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
         },
         {
           "title": "SQL Server CDC capture and cleanup roles",
           "url": "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server?view=sql-server-ver17",
           "section": "SQL Server CDC capture and cleanup roles",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -1269,7 +1269,7 @@
           "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
           "section": "SQL Server CREATE TABLE types and constraints",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         },
         {
           "title": "SQL Server datetime2",
@@ -1331,7 +1331,7 @@
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Transaction commit and rollback",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     },
@@ -1386,7 +1386,7 @@
           "url": "https://docs.python.org/3/library/sqlite3.html",
           "section": "Transactions and parameter binding",
           "reviewed": "2026-09-30",
-          "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+          "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
         }
       ]
     }
@@ -1447,7 +1447,7 @@
           "Stored IDs, count and exact sum are reconciled after failure.",
           "Explains exact-byte fingerprint and single-process trusted-database assumptions."
         ],
-        "solution": "\"\"\"Bounded single-process SQLite ETL reference. Python 3.11+, no packages.\n\nFour-field CSV, nonnegative integer cents, UTC Z timestamps, exact-byte batch\nfingerprints. Transaction coordinates orders and run marker. Not a live SQL\nServer adapter, orchestrator, streaming engine or power-loss certification.\n\"\"\"\nimport argparse\nimport csv\nfrom datetime import datetime, timezone\nimport hashlib\nimport io\nfrom pathlib import Path\nimport re\nimport sqlite3\nfrom tempfile import TemporaryDirectory\n\nFIELDS=['order_id','customer_id','occurred_at','amount_cents']\nMAX_BYTES=262144\nMAX_ROWS=1000\nSCHEMA=\"\"\"\nCREATE TABLE IF NOT EXISTS runs (\n    batch_id TEXT PRIMARY KEY, fingerprint TEXT NOT NULL, row_count INTEGER NOT NULL);\nCREATE TABLE IF NOT EXISTS orders (\n    order_id TEXT PRIMARY KEY, customer_id TEXT NOT NULL,\n    occurred_at TEXT NOT NULL, amount_cents INTEGER NOT NULL CHECK(amount_cents >= 0));\n\"\"\"\n\ndef identifier(value):\n    if not isinstance(value,str) or not re.fullmatch(r'[A-Za-z0-9_-]{1,64}',value):\n        raise ValueError('identifier contract')\n    return value\n\ndef read_batch(source):\n    with Path(source).open('rb') as stream: raw=stream.read(MAX_BYTES+1)\n    if len(raw)>MAX_BYTES: raise ValueError('batch exceeds byte limit')\n    text=raw.decode('utf-8')\n    reader=csv.DictReader(io.StringIO(text,newline=''),strict=True)\n    if reader.fieldnames != FIELDS: raise ValueError('exact ordered headers required')\n    records=[]\n    seen=set()\n    for number,row in enumerate(reader,start=1):\n        if number>MAX_ROWS: raise ValueError('batch exceeds row limit')\n        if set(row)!=set(FIELDS) or any(v is None for v in row.values()):\n            raise ValueError('row field count')\n        order=identifier(row['order_id']); customer=identifier(row['customer_id'])\n        if order in seen: raise ValueError('duplicate order in source')\n        seen.add(order)\n        value=row['amount_cents']\n        if not re.fullmatch(r'[0-9]{1,12}',value): raise ValueError('amount contract')\n        amount=int(value)\n        instant=row['occurred_at']\n        if not re.fullmatch(r'\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z',instant):\n            raise ValueError('UTC seconds timestamp required')\n        parsed=datetime.fromisoformat(instant.replace('Z','+00:00'))\n        if parsed.utcoffset()!=timezone.utc.utcoffset(parsed): raise ValueError('UTC required')\n        records.append((order,customer,instant,amount))\n    return records,hashlib.sha256(raw).hexdigest()\n\ndef import_csv(source,database,batch_id):\n    batch_id=identifier(batch_id)\n    if Path(source).resolve()==Path(database).resolve():\n        raise ValueError('source and target must be different paths')\n    records,fingerprint=read_batch(source)\n    connection=sqlite3.connect(database,timeout=2)\n    try:\n        # Schema initialization is separate; this single-process lab assumes a\n        # trusted compatible database. Data/marker transaction is explicit.\n        connection.executescript(SCHEMA)\n        with connection:\n            connection.execute('BEGIN IMMEDIATE')\n            existing=connection.execute('SELECT fingerprint FROM runs WHERE batch_id=?',(batch_id,)).fetchone()\n            if existing:\n                if existing[0]!=fingerprint: raise ValueError('batch identity conflicts with payload')\n                return 'replay'\n            connection.executemany('INSERT INTO orders VALUES (?,?,?,?)',records)\n            connection.execute('INSERT INTO runs VALUES (?,?,?)',(batch_id,fingerprint,len(records)))\n        return 'committed'\n    finally: connection.close()\n\ndef reconcile(database):\n    connection=sqlite3.connect(database)\n    try:\n        count,total=connection.execute('SELECT COUNT(*),COALESCE(SUM(amount_cents),0) FROM orders').fetchone()\n        ids=[r[0] for r in connection.execute('SELECT order_id FROM orders ORDER BY order_id')]\n        days=list(connection.execute('SELECT substr(occurred_at,1,10),SUM(amount_cents) FROM orders GROUP BY substr(occurred_at,1,10) ORDER BY 1'))\n        return {'orders':count,'total_cents':total,'ids':ids,'utc_days':days}\n    finally: connection.close()\n\ndef demo():\n    source=Path(__file__).with_name('sample_orders.csv')\n    with TemporaryDirectory() as folder:\n        database=Path(folder)/'practice.db'\n        print(import_csv(source,database,'sept-01'))\n        print(import_csv(source,database,'sept-01'))\n        result=reconcile(database)\n        print(f'orders={result[\"orders\"]} total_cents={result[\"total_cents\"]}')\n\ndef main():\n    parser=argparse.ArgumentParser(description=__doc__)\n    parser.add_argument('--demo',action='store_true')\n    parser.add_argument('source',nargs='?',type=Path)\n    parser.add_argument('database',nargs='?',type=Path)\n    parser.add_argument('batch_id',nargs='?')\n    args=parser.parse_args()\n    if args.demo and any((args.source,args.database,args.batch_id)): parser.error('choose demo or three arguments')\n    if not args.demo and not all((args.source,args.database,args.batch_id)): parser.error('provide source database batch_id')\n    try:\n        if args.demo: demo()\n        else:\n            print(import_csv(args.source,args.database,args.batch_id))\n            print(reconcile(args.database))\n        return 0\n    except (OSError,ValueError,csv.Error,sqlite3.Error) as error:\n        import sys\n        # Deliberately omit source rows and driver detail from shared output.\n        print(f'import failed: {type(error).__name__}; inspect the contract and local evidence',file=sys.stderr)\n        return 1\n\nif __name__=='__main__': raise SystemExit(main())\n"
+        "solution": "\"\"\"Bounded single-process SQLite ETL reference. Python 3.14+, no packages.\n\nFour-field CSV, nonnegative integer cents, UTC Z timestamps, exact-byte batch\nfingerprints. Transaction coordinates orders and run marker. Not a live SQL\nServer adapter, orchestrator, streaming engine or power-loss certification.\n\"\"\"\nimport argparse\nimport csv\nfrom datetime import datetime, timezone\nimport hashlib\nimport io\nfrom pathlib import Path\nimport re\nimport sqlite3\nfrom tempfile import TemporaryDirectory\n\nFIELDS=['order_id','customer_id','occurred_at','amount_cents']\nMAX_BYTES=262144\nMAX_ROWS=1000\nSCHEMA=\"\"\"\nCREATE TABLE IF NOT EXISTS runs (\n    batch_id TEXT PRIMARY KEY, fingerprint TEXT NOT NULL, row_count INTEGER NOT NULL);\nCREATE TABLE IF NOT EXISTS orders (\n    order_id TEXT PRIMARY KEY, customer_id TEXT NOT NULL,\n    occurred_at TEXT NOT NULL, amount_cents INTEGER NOT NULL CHECK(amount_cents >= 0));\n\"\"\"\n\ndef identifier(value):\n    if not isinstance(value,str) or not re.fullmatch(r'[A-Za-z0-9_-]{1,64}',value):\n        raise ValueError('identifier contract')\n    return value\n\ndef read_batch(source):\n    with Path(source).open('rb') as stream: raw=stream.read(MAX_BYTES+1)\n    if len(raw)>MAX_BYTES: raise ValueError('batch exceeds byte limit')\n    text=raw.decode('utf-8')\n    reader=csv.DictReader(io.StringIO(text,newline=''),strict=True)\n    if reader.fieldnames != FIELDS: raise ValueError('exact ordered headers required')\n    records=[]\n    seen=set()\n    for number,row in enumerate(reader,start=1):\n        if number>MAX_ROWS: raise ValueError('batch exceeds row limit')\n        if set(row)!=set(FIELDS) or any(v is None for v in row.values()):\n            raise ValueError('row field count')\n        order=identifier(row['order_id']); customer=identifier(row['customer_id'])\n        if order in seen: raise ValueError('duplicate order in source')\n        seen.add(order)\n        value=row['amount_cents']\n        if not re.fullmatch(r'[0-9]{1,12}',value): raise ValueError('amount contract')\n        amount=int(value)\n        instant=row['occurred_at']\n        if not re.fullmatch(r'\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z',instant):\n            raise ValueError('UTC seconds timestamp required')\n        parsed=datetime.fromisoformat(instant.replace('Z','+00:00'))\n        if parsed.utcoffset()!=timezone.utc.utcoffset(parsed): raise ValueError('UTC required')\n        records.append((order,customer,instant,amount))\n    return records,hashlib.sha256(raw).hexdigest()\n\ndef import_csv(source,database,batch_id):\n    batch_id=identifier(batch_id)\n    if Path(source).resolve()==Path(database).resolve():\n        raise ValueError('source and target must be different paths')\n    records,fingerprint=read_batch(source)\n    connection=sqlite3.connect(database,timeout=2)\n    try:\n        # Schema initialization is separate; this single-process lab assumes a\n        # trusted compatible database. Data/marker transaction is explicit.\n        connection.executescript(SCHEMA)\n        with connection:\n            connection.execute('BEGIN IMMEDIATE')\n            existing=connection.execute('SELECT fingerprint FROM runs WHERE batch_id=?',(batch_id,)).fetchone()\n            if existing:\n                if existing[0]!=fingerprint: raise ValueError('batch identity conflicts with payload')\n                return 'replay'\n            connection.executemany('INSERT INTO orders VALUES (?,?,?,?)',records)\n            connection.execute('INSERT INTO runs VALUES (?,?,?)',(batch_id,fingerprint,len(records)))\n        return 'committed'\n    finally: connection.close()\n\ndef reconcile(database):\n    connection=sqlite3.connect(database)\n    try:\n        count,total=connection.execute('SELECT COUNT(*),COALESCE(SUM(amount_cents),0) FROM orders').fetchone()\n        ids=[r[0] for r in connection.execute('SELECT order_id FROM orders ORDER BY order_id')]\n        days=list(connection.execute('SELECT substr(occurred_at,1,10),SUM(amount_cents) FROM orders GROUP BY substr(occurred_at,1,10) ORDER BY 1'))\n        return {'orders':count,'total_cents':total,'ids':ids,'utc_days':days}\n    finally: connection.close()\n\ndef demo():\n    source=Path(__file__).with_name('sample_orders.csv')\n    with TemporaryDirectory() as folder:\n        database=Path(folder)/'practice.db'\n        print(import_csv(source,database,'sept-01'))\n        print(import_csv(source,database,'sept-01'))\n        result=reconcile(database)\n        print(f'orders={result[\"orders\"]} total_cents={result[\"total_cents\"]}')\n\ndef main():\n    parser=argparse.ArgumentParser(description=__doc__)\n    parser.add_argument('--demo',action='store_true')\n    parser.add_argument('source',nargs='?',type=Path)\n    parser.add_argument('database',nargs='?',type=Path)\n    parser.add_argument('batch_id',nargs='?')\n    args=parser.parse_args()\n    if args.demo and any((args.source,args.database,args.batch_id)): parser.error('choose demo or three arguments')\n    if not args.demo and not all((args.source,args.database,args.batch_id)): parser.error('provide source database batch_id')\n    try:\n        if args.demo: demo()\n        else:\n            print(import_csv(args.source,args.database,args.batch_id))\n            print(reconcile(args.database))\n        return 0\n    except (OSError,ValueError,csv.Error,sqlite3.Error) as error:\n        import sys\n        # Deliberately omit source rows and driver detail from shared output.\n        print(f'import failed: {type(error).__name__}; inspect the contract and local evidence',file=sys.stderr)\n        return 1\n\nif __name__=='__main__': raise SystemExit(main())\n"
       }
     },
     {

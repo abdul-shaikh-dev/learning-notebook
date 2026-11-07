@@ -1,4 +1,4 @@
-"""Competing methods for the same inputs; Python 3.11+, standard library."""
+"""Competing methods for the same inputs; Python 3.14+, standard library."""
 def min_coins(coins, target):
     if type(target) is not int or target < 0 or any(type(c) is not int or c <= 0 for c in coins):
         raise ValueError('nonnegative target, positive integer coins required')

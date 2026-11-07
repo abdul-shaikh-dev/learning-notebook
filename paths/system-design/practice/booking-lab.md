@@ -1,6 +1,6 @@
 # Optional runnable booking failure lab
 
-Python 3.10+ and SQLite from the Python standard library are sufficient. From this directory run `python -m unittest -v test_booking_lab.py`. Each test creates a disposable database. No server or external notification is involved.
+Python 3.14+ and SQLite from the Python standard library are sufficient. From this directory run `python -m unittest -v test_booking_lab.py`. Each test creates a disposable database. No server or external notification is involved.
 
 Before running, predict four outcomes for a one-seat workshop: two simultaneous distinct callers; a lost response followed by the same key; a forced failure after decrement; and a relay crash after a notification is published but before the outbox row is marked sent. Then run the tests and inspect `booking_lab.py` against the workbook timelines.
 

@@ -3,12 +3,12 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
 (async()=>{
  const runtime=path.resolve('paths/python-problem-solving/runtime')+path.sep;
  for(const [file,meta] of Object.entries(JSON.parse(fs.readFileSync(runtime+'provenance.json','utf8')))){assert.equal(require('node:crypto').createHash('sha256').update(fs.readFileSync(runtime+file)).digest('hex'),meta.sha256,'Runtime integrity: '+file);}
- const {loadPyodide}=require(runtime+'pyodide.js');
+ const {loadPyodide}=await import(require('node:url').pathToFileURL(runtime+'pyodide.mjs').href);
  const py=await loadPyodide({indexURL:runtime,stdout:()=>{},stderr:()=>{}});
  const source=fs.readFileSync('assets/js/browser-python-worker.js','utf8');
  const problems=JSON.parse(fs.readFileSync('paths/python-problem-solving/practice/cases.json','utf8'));
  const original=JSON.parse(fs.readFileSync('paths/python-problem-solving/challenges.json','utf8'));
- async function run(code,problem){const messages=[],self={postMessage:data=>messages.push(data)};const context={self,importScripts:()=>{},loadPyodide:async()=>py,JSON,String};vm.runInNewContext(source,context);await self.onmessage({data:{runtime,code,problem}});return messages.at(-1);}
+ async function run(code,problem){const messages=[],self={postMessage:data=>messages.push(data),importRuntime:async()=>({loadPyodide:async()=>py})};const context={self,JSON,String};vm.runInNewContext(source,context);await self.onmessage({data:{runtime,code,problem}});return messages.at(-1);}
  for(const c of original){const result=await run(c.solution,problems[c.id]);assert.equal(result.ok,true,c.id+': '+result.text);}
  const problem=problems['sum-approved'];
  for(const [code,match] of [
@@ -21,7 +21,7 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
   ['raise SystemExit()',/SystemExit/]
  ]){const result=await run(code,problem);assert.equal(result.ok,false);assert.match(result.text,match);}
  // Lesson starters run as scripts: every runnable Python course solution must finish cleanly in the browser runtime.
- const runCode=async code=>{const messages=[],self={postMessage:data=>messages.push(data)};vm.runInNewContext(source,{self,importScripts:()=>{},loadPyodide:async()=>py,JSON,String});await self.onmessage({data:{mode:'run',runtime,code}});return messages.at(-1);};
+ const runCode=async code=>{const messages=[],self={postMessage:data=>messages.push(data),importRuntime:async()=>({loadPyodide:async()=>py})};vm.runInNewContext(source,{self,JSON,String});await self.onmessage({data:{mode:'run',runtime,code}});return messages.at(-1);};
  const course=require(path.resolve('scripts/manifest.cjs')).readPaths().find(p=>p.id==='python').lessons;
  const runnable=course.filter(l=>!l.exercise.runLocally&&l.exercise.solutionFormat!=='prose');
  assert.equal(runnable.length,21,'Two lessons are marked to run locally');
@@ -29,7 +29,7 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
  // Checkpoint answers that depend on code behaviour are recomputed here and must equal the marked option.
  const manifest=require(path.resolve('scripts/manifest.cjs')).readPaths();
  py.runPython(fs.readFileSync('tests/checkpoint_facts.py','utf8'));
- const facts=py.globals.get('FACTS').toJs();
+ const facts=py.globals.get('FACTS').toJs({dict_converter:Array.from});
  for(const [name,code] of facts){
   const [course,...rest]=name.split('/'),key=rest.join('/'),p=manifest.find(x=>x.id===course);
   const q=key.startsWith('stage/')?p?.stages.find(s=>s.id===rest[1])?.stageCheck?.[rest[2]-1]:p?.lessons.find(l=>l.id===rest[0])?.extraQuiz?.[rest[1]-2];
@@ -37,10 +37,10 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
   const scope=py.globals.get('dict')();py.runPython(code,{globals:scope});
   assert.equal(scope.get('answer'),q.options[q.correct],name+': the marked answer matches the code');scope.destroy();
  }
- assert.equal(facts.size,72,'Code-based checkpoint answers checked');
+ assert.equal(facts.length,72,'Code-based checkpoint answers checked');
  // Lesson examples in runExamples courses run unchanged, with the practice modules they name, and show a result.
  // An "# Expected output:" block at the end of an example must match what it prints.
- const runExample=async(code,files)=>{const messages=[],self={postMessage:data=>messages.push(data)};vm.runInNewContext(source,{self,importScripts:()=>{},loadPyodide:async()=>py,JSON,String});await self.onmessage({data:{mode:'run',runtime,code,files}});return messages.at(-1);};
+ const runExample=async(code,files)=>{const messages=[],self={postMessage:data=>messages.push(data),importRuntime:async()=>({loadPyodide:async()=>py})};vm.runInNewContext(source,{self,JSON,String});await self.onmessage({data:{mode:'run',runtime,code,files}});return messages.at(-1);};
  const examples={};let stated=0,local=0;
  for(const p of require(path.resolve('scripts/manifest.cjs')).readPaths().filter(p=>p.runExamples)){
   const all=p.lessons.flatMap(l=>l.sections.map((s,i)=>({l,s,i}))).filter(({s})=>s.example&&!s.exampleFormat),enabled=all.filter(({s})=>!s.exampleRunLocally);

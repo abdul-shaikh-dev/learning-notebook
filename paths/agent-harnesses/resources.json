@@ -112,7 +112,7 @@
         }
       ],
       "notes": [
-        "Python 3.10 or newer; standard library only.",
+        "Python 3.14 or newer; standard library only.",
         "The demo includes a trusted approval followed by an in-memory fake write. The foundation assessment asks you to build the read-only subset. The baseline has no real model, external tool execution, authenticated approval service or durable store.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
@@ -155,7 +155,7 @@
         }
       ],
       "notes": [
-        "Python 3.10 or newer; standard library only.",
+        "Python 3.14 or newer; standard library only.",
         "The demo includes a trusted approval followed by an in-memory fake write. The foundation assessment asks you to build the read-only subset. The baseline has no real model, external tool execution, authenticated approval service or durable store.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
@@ -212,7 +212,7 @@
         }
       ],
       "notes": [
-        "Python 3.10 or newer; standard library only.",
+        "Python 3.14 or newer; standard library only.",
         "The demo includes a trusted approval followed by an in-memory fake write. The foundation assessment asks you to build the read-only subset. The baseline has no real model, external tool execution, authenticated approval service or durable store.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]

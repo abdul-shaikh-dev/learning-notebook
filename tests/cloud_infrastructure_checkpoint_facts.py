@@ -4,7 +4,7 @@ No cloud account or Terraform binary is used. Each fact runs the course's offlin
 (paths/cloud-infrastructure/practice/infra_lab.py) on topology.json, or reads the optional Azure template
 main.tf.json as data, and returns the text of the option the result supports. The script fails if that
 differs from the authored correct option.
-Run with Python 3.11+: python tests/cloud_infrastructure_checkpoint_facts.py
+Run with Python 3.14+: python tests/cloud_infrastructure_checkpoint_facts.py
 """
 import copy
 import json

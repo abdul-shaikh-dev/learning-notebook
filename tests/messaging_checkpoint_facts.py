@@ -3,7 +3,7 @@
 Each fact runs the course's SQLite outbox/inbox lab (paths/messaging-events/practice/event_lab.py) or the
 course's arithmetic and returns the text of the option its result supports. The script fails if that
 differs from the authored correct option. No broker or network is used.
-Run with Python 3.11+: python tests/messaging_checkpoint_facts.py
+Run with Python 3.14+: python tests/messaging_checkpoint_facts.py
 """
 from contextlib import closing
 import json

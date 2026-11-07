@@ -9,7 +9,7 @@ state, grounding, failure handling and evaluation. It does not call a model.
 ## Run the workshop
 
 Download `workshop.py` and `test_workshop.py` into the same folder. Use Python
-3.11+ and only the standard library:
+3.14+ and only the standard library:
 
 ```text
 python workshop.py

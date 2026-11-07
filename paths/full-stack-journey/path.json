@@ -7,7 +7,7 @@
   "level": "Intermediate full-stack project → deployment extensions",
   "prerequisites": [
     "Complete or consult the React, C# & .NET and SQL Server paths; this journey connects those skills rather than teaching each language from zero.",
-    "Install .NET 10 SDK, Node 24/npm and Python 3.11+; SQL Server/SSMS is required for the persistence milestone."
+    "Install .NET 10 SDK, Node 24/npm and Python 3.14+; SQL Server/SSMS is required for the persistence milestone."
   ],
   "setup": [
     "Open the complete task bundle beside any lesson; extract into a new directory and keep all files together.",
@@ -221,7 +221,7 @@
         {
           "title": "Local runtimes and commands",
           "paragraphs": [
-            "Use .NET 10, Node 24/npm and Python 3.11+. Run the API on 127.0.0.1:5087 and Vite on 127.0.0.1:5173 in separate terminals. The loopback address 127.0.0.1 points to your own computer. `npm ci` installs the pinned graph; `npm run build` checks types and bundles the UI. Record versions and commands so another attempt can reproduce the result."
+            "Use .NET 10, Node 24/npm and Python 3.14+. Run the API on 127.0.0.1:5087 and Vite on 127.0.0.1:5173 in separate terminals. The loopback address 127.0.0.1 points to your own computer. `npm ci` installs the pinned graph; `npm run build` checks types and bundles the UI. Record versions and commands so another attempt can reproduce the result."
           ]
         }
       ],

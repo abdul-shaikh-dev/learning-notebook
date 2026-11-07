@@ -4,7 +4,7 @@ Each fact runs the course's lab in paths/machine-learning-foundations/practice: 
 generator and splitters, and ml_lab.py's pipeline and run, in development and final mode. Each returns the
 text of the option the result supports, and the script fails if that differs from the authored correct
 option. Needs the course's pinned packages (practice/requirements.txt), as in the data-science CI job.
-Run with Python 3.11+: python tests/machine_learning_checkpoint_facts.py
+Run with Python 3.14+: python tests/machine_learning_checkpoint_facts.py
 """
 from functools import cache
 import json

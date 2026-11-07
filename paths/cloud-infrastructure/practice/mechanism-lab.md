@@ -2,7 +2,7 @@
 
 Read the worked lesson, then use this optional lab to try the mechanism yourself.
 
-Requirements: Python 3.11+ and an existing Terraform 1.4+ CLI.
+Requirements: Python 3.14+ and an existing Terraform 1.4+ CLI.
 
 From the extracted practice folder:
 

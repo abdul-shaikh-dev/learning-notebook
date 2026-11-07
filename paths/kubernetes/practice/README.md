@@ -1,6 +1,6 @@
 # Kubernetes local lab
 
-Prerequisites: complete container/build/runtime boundaries in Delivery & Operations (`delivery-operations`), and use the existing React (`react`), .NET (`dotnet`) and SQL Server (`sql-server`) paths for their application/data concerns. This independent Python/SQLite demo is not that full stack. Use Python 3.11+ for offline checks; no packages/cluster/cloud account are required for them.
+Prerequisites: complete container/build/runtime boundaries in Delivery & Operations (`delivery-operations`), and use the existing React (`react`), .NET (`dotnet`) and SQL Server (`sql-server`) paths for their application/data concerns. This independent Python/SQLite demo is not that full stack. Use Python 3.14+ for offline checks; no packages/cluster/cloud account are required for them.
 
 ```powershell
 python -m unittest -v test_release_app.py check_manifests.py
@@ -62,7 +62,7 @@ Record API/client/node-image versions, applied/rendered object identities, rollo
 
 See [mechanism-lab.md](mechanism-lab.md) for `readiness_drill.py`: PASS reports same Pod UID, endpoint unready and unchanged restart count; RESTORED reports Ready again. No cluster is created by this script.
 
-Requirements: Python 3.11+, kubectl, and the existing disposable kind-notebook-lab from README.md with two Ready release-demo Pods.
+Requirements: Python 3.14+, kubectl, and the existing disposable kind-notebook-lab from README.md with two Ready release-demo Pods.
 
 
 ## Reference scope and verification limits

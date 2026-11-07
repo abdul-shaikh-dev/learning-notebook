@@ -2,7 +2,7 @@
 
 Study entirely offline with the workbook and ADR template. No cloud account, credentials or paid service is needed.
 
-For executable calculations, place capacity_calculator.py and test_capacity_calculator.py in one folder with Python 3.10+ installed:
+For executable calculations, place capacity_calculator.py and test_capacity_calculator.py in one folder with Python 3.14+ installed:
 
 ```text
 python capacity_calculator.py

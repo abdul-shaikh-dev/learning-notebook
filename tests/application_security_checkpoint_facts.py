@@ -4,7 +4,7 @@ Each fact runs the course's offline labs (paths/application-security/security_la
 seam in security_http.py and the login bookkeeping in login_flow_lab.py) and returns the text of the
 option its result supports. The script fails if that differs from the authored correct option. The HTTP
 seam listens on 127.0.0.1 only and uses synthetic sessions; no credentials or outside network are used.
-Run with Python 3.11+: python tests/application_security_checkpoint_facts.py
+Run with Python 3.14+: python tests/application_security_checkpoint_facts.py
 """
 from contextlib import closing, contextmanager
 import http.client

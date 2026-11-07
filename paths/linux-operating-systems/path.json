@@ -7,7 +7,7 @@
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Comfort creating files and opening a terminal.",
-    "Python functions, lists, exceptions and context managers for the optional portable kit; Python 3.11+ with no external packages. You can read the operating-system lessons without running it.",
+    "Python functions, lists, exceptions and context managers for the optional portable kit; Python 3.14+ with no external packages. You can read the operating-system lessons without running it.",
     "Optional Linux observations require an existing disposable Linux/WSL environment."
   ],
   "outcomes": [
@@ -145,7 +145,7 @@
           "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
           "section": "Overview",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -200,7 +200,7 @@
           "url": "https://man7.org/linux/man-pages/man7/path_resolution.7.html",
           "section": "Start of resolution",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -255,7 +255,7 @@
           "url": "https://man7.org/linux/man-pages/man7/path_resolution.7.html",
           "section": "Pathname lookup",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -310,14 +310,14 @@
           "url": "https://man7.org/linux/man-pages/man1/bash.1.html",
           "section": "QUOTING and EXPANSION",
           "reviewed": "2026-09-30",
-          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
         },
         {
           "title": "subprocess argument sequences",
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "subprocess argument sequences",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -372,14 +372,14 @@
           "url": "https://man7.org/linux/man-pages/man1/bash.1.html",
           "section": "Pipelines and REDIRECTION",
           "reviewed": "2026-09-30",
-          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
         },
         {
           "title": "File descriptors",
           "url": "https://man7.org/linux/man-pages/man2/open.2.html",
           "section": "File descriptors",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -442,7 +442,7 @@
           "url": "https://man7.org/linux/man-pages/man7/credentials.7.html",
           "section": "Process credentials",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         },
         {
           "title": "GNU chmod numeric modes",
@@ -504,7 +504,7 @@
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "subprocess returncode",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -559,14 +559,14 @@
           "url": "https://man7.org/linux/man-pages/man1/bash.1.html",
           "section": "ENVIRONMENT and COMMAND EXECUTION",
           "reviewed": "2026-09-30",
-          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
         },
         {
           "title": "subprocess env",
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "subprocess env",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -627,7 +627,7 @@
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "subprocess timeouts",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -682,7 +682,7 @@
           "url": "https://man7.org/linux/man-pages/man7/signal.7.html",
           "section": "Signal dispositions",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -737,14 +737,14 @@
           "url": "https://man7.org/linux/man-pages/man1/ps.1.html",
           "section": "STANDARD FORMAT SPECIFIERS: rss and vsz",
           "reviewed": "2026-09-30",
-          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
         },
         {
           "title": "Shared process resources",
           "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html",
           "section": "Shared process resources",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -799,7 +799,7 @@
           "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html",
           "section": "Process resources shared by threads",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -863,7 +863,7 @@
           "url": "https://man7.org/linux/man-pages/man2/open.2.html",
           "section": "Open file descriptions",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         },
         {
           "title": "Python Unix resource limits",
@@ -925,14 +925,14 @@
           "url": "https://docs.python.org/3/library/os.html",
           "section": "os.fsync and os.replace",
           "reviewed": "2026-09-30",
-          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
         },
         {
           "title": "Synchronized I/O",
           "url": "https://man7.org/linux/man-pages/man2/open.2.html",
           "section": "Synchronized I/O",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -987,14 +987,14 @@
           "url": "https://man7.org/linux/man-pages/man8/ss.8.html",
           "section": "OPTIONS: --listening, --tcp, --numeric",
           "reviewed": "2026-09-30",
-          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
         },
         {
           "title": "Network namespaces",
           "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
           "section": "Network namespaces",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -1049,14 +1049,14 @@
           "url": "https://www.man7.org/linux/man-pages/man1/systemctl.1.html",
           "section": "Unit Commands and --user",
           "reviewed": "2026-09-30",
-          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
         },
         {
           "title": "Process inspection",
           "url": "https://man7.org/linux/man-pages/man5/proc.5.html",
           "section": "Process inspection",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -1111,14 +1111,14 @@
           "url": "https://docs.python.org/3/library/time.html",
           "section": "time.monotonic",
           "reviewed": "2026-09-30",
-          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
         },
         {
           "title": "subprocess diagnostics",
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "subprocess diagnostics",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -1173,14 +1173,14 @@
           "url": "https://docs.kernel.org/admin-guide/cgroup-v2.html",
           "section": "Controllers: CPU and memory",
           "reviewed": "2026-09-30",
-          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
         },
         {
           "title": "Bounded child process timeout",
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "Bounded child process timeout",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -1235,14 +1235,14 @@
           "url": "https://docs.kernel.org/admin-guide/cgroup-v2.html",
           "section": "What is cgroup?",
           "reviewed": "2026-09-30",
-          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
         },
         {
           "title": "Namespace types",
           "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
           "section": "Namespace types",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -1297,7 +1297,7 @@
           "url": "https://man7.org/linux/man-pages/man7/credentials.7.html",
           "section": "Permission checks",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -1361,7 +1361,7 @@
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "subprocess exceptions",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     },
@@ -1416,7 +1416,7 @@
           "url": "https://docs.python.org/3/library/subprocess.html",
           "section": "subprocess testing boundary",
           "reviewed": "2026-09-30",
-          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+          "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
         }
       ]
     }

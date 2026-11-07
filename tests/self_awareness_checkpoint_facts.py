@@ -4,7 +4,7 @@ The course teaches judgement in conversations, so its answers come from the less
 projects and, for the studio's conversation activity, the feedback that practice/lab.js shows for each
 opening. Each entry names its source and a phrase that must appear there word for word; see
 tests/checkpoint_citations.py.
-Run with Python 3.11+: python tests/self_awareness_checkpoint_facts.py
+Run with Python 3.14+: python tests/self_awareness_checkpoint_facts.py
 """
 import sys
 

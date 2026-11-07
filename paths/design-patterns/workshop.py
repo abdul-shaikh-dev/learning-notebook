@@ -1,4 +1,4 @@
-"""Educational sequential, in-memory pattern workshop. Python 3.11+."""
+"""Educational sequential, in-memory pattern workshop. Python 3.14+."""
 from contextlib import contextmanager
 from dataclasses import dataclass, replace
 import json

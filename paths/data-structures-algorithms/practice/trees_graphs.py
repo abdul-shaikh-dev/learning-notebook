@@ -1,4 +1,4 @@
-"""Unbalanced integer-key BST and iterative directed DFS. Python 3.10+."""
+"""Unbalanced integer-key BST and iterative directed DFS. Python 3.14+."""
 from dataclasses import dataclass
 
 @dataclass

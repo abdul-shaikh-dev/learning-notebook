@@ -7,7 +7,7 @@
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Read basic HTTP request/response examples and edit a file. The lessons introduce telemetry vocabulary.",
-    "Optional measurements require Python 3.11+ functions, lists and dictionaries, plus terminal use. No collector, cloud account or UI project is needed."
+    "Optional measurements require Python 3.14+ functions, lists and dictionaries, plus terminal use. No collector, cloud account or UI project is needed."
   ],
   "outcomes": [
     "Choose signals that answer concrete operational questions.",
@@ -17,7 +17,7 @@
     "Write evidence-based runbooks and distinguish local verification from production operation."
   ],
   "setup": [
-    "Python 3.10+ standard library is sufficient; no packages or external services are required.",
+    "Python 3.14+ standard library is sufficient; no packages or external services are required.",
     "Extract the flat observability-performance-practice bundle and run python telemetry.test.py, python integration.test.py and python benchmark.py.",
     "For interactive measurements start python service.py, then run python load.py --profile healthy, slow or fail in another terminal. Stop with Ctrl+C.",
     "The lab uses fixed loopback port 8891, four closed-loop workers and 20 requests. Do not run integration.test.py while an interactive server occupies that port."

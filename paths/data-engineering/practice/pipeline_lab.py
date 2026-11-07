@@ -1,4 +1,4 @@
-"""Bounded single-process SQLite ETL reference. Python 3.11+, no packages.
+"""Bounded single-process SQLite ETL reference. Python 3.14+, no packages.
 
 Four-field CSV, nonnegative integer cents, UTC Z timestamps, exact-byte batch
 fingerprints. Transaction coordinates orders and run marker. Not a live SQL

@@ -1,4 +1,4 @@
-"""Sequential, in-memory behavioral pattern contrasts. Python 3.11+."""
+"""Sequential, in-memory behavioral pattern contrasts. Python 3.14+."""
 def handle_request(request, handlers):
     """Chain of Responsibility: first non-None result handles the request.
 

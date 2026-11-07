@@ -1,6 +1,6 @@
 # Optional browser, TLS and forwarded-header drill
 
-Use only your own loopback server and synthetic data. Requires Python 3.11+, a browser with developer tools and, for TLS, OpenSSL on PATH. This track is separate from the offline regression suite.
+Use only your own loopback server and synthetic data. Requires Python 3.14+, a browser with developer tools and, for TLS, OpenSSL on PATH. This track is separate from the offline regression suite.
 
 From the extracted kit run `python browser_drill.py` and open `http://127.0.0.1:8766/`. If either port is occupied, run `python browser_drill.py --api-port 8865 --page-port 8866` and use the printed page URL. Click **Try denied**, **Try allowed** and **Try wrong origin**. The status text displays whether the page could read the response. In browser developer tools, compare the HTTP responses and headers in Network with what the page reports. The equivalent optional console calls are:
 

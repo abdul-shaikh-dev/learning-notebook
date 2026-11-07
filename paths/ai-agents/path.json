@@ -8,7 +8,7 @@
   "prerequisites": [
     "No prior AI knowledge required; begin with the vocabulary lessons.",
     "Basic Python functions, dictionaries, exceptions and tests help with the optional executable workshop.",
-    "Python 3.11+ for local practice; no API key, paid account or network call is required."
+    "Python 3.14+ for local practice; no API key, paid account or network call is required."
   ],
   "outcomes": [
     "Distinguish a model, agent loop, workflow and harness.",

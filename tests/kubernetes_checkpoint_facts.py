@@ -5,7 +5,7 @@ release_app.py, in process or as a subprocess on an ephemeral 127.0.0.1 port), r
 against a fake kubectl that only returns canned JSON, runs the offline manifest checks in
 check_manifests.py, or reads the shipped manifests as data. It returns the text of the option the
 result supports, and the script fails if that differs from the authored correct option.
-Run with Python 3.11+: python tests/kubernetes_checkpoint_facts.py
+Run with Python 3.14+: python tests/kubernetes_checkpoint_facts.py
 """
 import copy
 from contextlib import closing, contextmanager, redirect_stdout

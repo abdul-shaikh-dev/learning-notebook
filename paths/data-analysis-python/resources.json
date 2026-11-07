@@ -89,7 +89,7 @@
       ],
       "prerequisites": [],
       "notes": [
-        "Dataset checks use Python 3.11+. Executable analysis uses Python 3.12+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
+        "Dataset checks use Python 3.14+. Executable analysis uses Python 3.14+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
         "The input is fictional and cannot support real service or causal claims."
       ]
     },
@@ -131,7 +131,7 @@
       ],
       "prerequisites": [],
       "notes": [
-        "Dataset checks use Python 3.11+. Executable analysis uses Python 3.12+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
+        "Dataset checks use Python 3.14+. Executable analysis uses Python 3.14+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
         "The input is fictional and cannot support real service or causal claims."
       ]
     },
@@ -173,7 +173,7 @@
       ],
       "prerequisites": [],
       "notes": [
-        "Dataset checks use Python 3.11+. Executable analysis uses Python 3.12+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
+        "Dataset checks use Python 3.14+. Executable analysis uses Python 3.14+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
         "The input is fictional and cannot support real service or causal claims."
       ]
     }

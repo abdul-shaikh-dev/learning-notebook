@@ -150,7 +150,7 @@
         }
       ],
       "notes": [
-        "Python 3.11 or newer; standard library only.",
+        "Python 3.14 or newer; standard library only.",
         "The combined test module imports all three project files, so keep all three beside it. The advanced demo is a bounded local pipeline, not a network service.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
@@ -191,7 +191,7 @@
         }
       ],
       "notes": [
-        "Python 3.11 or newer; standard library only.",
+        "Python 3.14 or newer; standard library only.",
         "The combined test module imports all three project files, so keep all three beside it. The advanced demo is a bounded local pipeline, not a network service.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
@@ -237,7 +237,7 @@
         }
       ],
       "notes": [
-        "Python 3.11 or newer; standard library only.",
+        "Python 3.14 or newer; standard library only.",
         "The combined test module imports all three project files, so keep all three beside it. The advanced demo is a bounded local pipeline, not a network service.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]

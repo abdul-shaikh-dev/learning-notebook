@@ -36,7 +36,7 @@ const tick=()=>new Promise(resolve=>setImmediate(resolve));
  // Run: the shown example, unchanged, in a fresh run-mode worker; the button becomes Stop.
  e('example-run-3').click();await tick();let w=f.workers.at(-1);
  assert.equal(w.data.mode,'run');assert.equal(w.data.code,'print("<hi>")');assert.equal(w.data.files.length,0);assert.equal(w.data.runtime,'https://example.test/notebook/paths/python-problem-solving/runtime/');
- assert.equal(e('example-run-3').textContent,'Stop');assert(!e('example-output-3').hidden);assert.match(e('example-output-3').textContent,/12 MB/);
+ assert.equal(e('example-run-3').textContent,'Stop');assert(!e('example-output-3').hidden);assert.match(e('example-output-3').textContent,/14 MB/);
  w.onmessage({data:{type:'ready'}});assert.equal(e('example-output-3').textContent,'Running…');
  w.onmessage({data:{type:'result',ok:true,output:'<hi>\n',truncated:false,error:''}});
  assert.equal(e('example-output-3').textContent,'<hi>\n');assert(w.terminated);assert.equal(e('example-run-3').textContent,'Run');
