@@ -41234,6 +41234,1013 @@ const LEARNING_PATHS = [
           ]
         }
       ]
+    },
+    "practice": {
+      "labs": {
+        "bond": {
+          "name": "Bond value",
+          "title": "Turn a quote into a position value",
+          "intro": "Change price or face amount and watch the value move. A negative face amount represents a short position. Accrued interest is entered as a signed currency amount.",
+          "fields": [
+            [
+              "face",
+              "Signed face amount ($)",
+              10000000,
+              -1000000000,
+              1000000000,
+              100000
+            ],
+            [
+              "price",
+              "Clean price (per 100)",
+              98.5,
+              0,
+              200,
+              0.01
+            ],
+            [
+              "accrued",
+              "Signed accrued interest ($)",
+              40000,
+              -10000000,
+              10000000,
+              1000
+            ]
+          ]
+        },
+        "pv": {
+          "name": "Discounting",
+          "title": "Why future money has a different value today",
+          "intro": "This example uses a single positive future cash flow, annual compounding and a flat rate. This isolates discounting; it is not a complete bond or swap pricer.",
+          "fields": [
+            [
+              "cash",
+              "Future cash flow ($)",
+              1000000,
+              0,
+              1000000000,
+              1000
+            ],
+            [
+              "rate",
+              "Annual discount rate (%)",
+              5,
+              -20,
+              100,
+              0.1
+            ],
+            [
+              "years",
+              "Years until payment",
+              5,
+              0,
+              50,
+              0.25
+            ]
+          ]
+        },
+        "ipv": {
+          "name": "IPV comparison",
+          "title": "Separate a difference from a control conclusion",
+          "intro": "Compare clean prices on the same date and basis. The learning rule flags an absolute difference strictly greater than the amount tolerance after rounding both to cents. Source quality is assessed separately.",
+          "fields": [
+            [
+              "face",
+              "Signed face amount ($)",
+              20000000,
+              -1000000000,
+              1000000000,
+              100000
+            ],
+            [
+              "fo",
+              "Front-office clean price",
+              99.8,
+              0,
+              200,
+              0.01
+            ],
+            [
+              "ind",
+              "Independent clean price",
+              99.65,
+              0,
+              200,
+              0.01
+            ],
+            [
+              "tolerance",
+              "Investigation tolerance ($)",
+              25000,
+              0,
+              10000000,
+              1000
+            ]
+          ]
+        },
+        "bridge": {
+          "name": "Value bridge",
+          "title": "See what is already captured",
+          "intro": "This teaching model uses a long asset. Enter every deduction as a positive amount. The incremental result is before any applicable regulatory aggregation; unrelated booked deductions cannot offset this uncertainty.",
+          "fields": [
+            [
+              "raw",
+              "Raw asset value ($)",
+              10200000,
+              0,
+              1000000000,
+              10000
+            ],
+            [
+              "booked",
+              "Total accounting deductions ($)",
+              200000,
+              0,
+              100000000,
+              1000
+            ],
+            [
+              "gross",
+              "Gross requirement for this uncertainty ($)",
+              500000,
+              0,
+              100000000,
+              1000
+            ],
+            [
+              "eligible",
+              "Same-source booked amount within total ($)",
+              200000,
+              0,
+              100000000,
+              1000
+            ]
+          ]
+        },
+        "fvh": {
+          "name": "Hierarchy classification",
+          "title": "Classify the evidence, not the product label",
+          "intro": "This conceptual decision aid assumes the evidence has been assessed. A qualifying Level 1 price means identical instrument, active market, accessible price and no disqualifying adjustment. The decision aid cannot make the significance judgement for you.",
+          "fields": []
+        },
+        "uncertainty": {
+          "name": "Uncertainty",
+          "title": "Which side of the range is prudent?",
+          "intro": "An invented normal price distribution illustrates a one-sided 90% probability. This is not an estimate from market observations and does not implement a regulatory AVA method.",
+          "fields": [
+            [
+              "mean",
+              "Assumed central price (per 100)",
+              100,
+              20,
+              180,
+              0.1
+            ],
+            [
+              "sd",
+              "Assumed standard deviation (price points)",
+              0.2,
+              0,
+              10,
+              0.05
+            ],
+            [
+              "face",
+              "Absolute face amount ($)",
+              10000000,
+              0,
+              1000000000,
+              100000
+            ]
+          ]
+        },
+        "capital": {
+          "name": "Capital effect",
+          "title": "From a final deduction to the capital ratio",
+          "intro": "Enter an already-determined final AVA. This lab holds RWA and every other capital adjustment fixed; it does not calculate the AVA itself.",
+          "fields": [
+            [
+              "cet1",
+              "CET1 before this AVA ($)",
+              1000000000,
+              0,
+              100000000000,
+              1000000
+            ],
+            [
+              "ava",
+              "Final AVA deduction ($)",
+              3000000,
+              0,
+              10000000000,
+              100000
+            ],
+            [
+              "rwa",
+              "Risk-weighted assets ($)",
+              10000000000,
+              1,
+              1000000000000,
+              1000000
+            ]
+          ]
+        }
+      },
+      "labGuides": [
+        {
+          "id": "bond",
+          "prompt": "Use signed face $10m, clean price 98.50 per 100 and signed accrued interest $40k. Calculate clean and dirty value. Double both face amount and accrued interest for an otherwise identical doubled position, then reverse both signs for a short. Explain the response to a +1 price-point move.",
+          "answer": "Clean $9.85m; dirty $9.89m. Doubled: clean $19.70m, dirty $19.78m. Original short: clean −$9.85m, dirty −$9.89m. A +1 price-point move changes clean value by signed face/100: +$100k for the original long and −$100k for its short. Accrued interest is a separate signed position amount; the lab does not automatically scale it."
+        },
+        {
+          "id": "pv",
+          "prompt": "Discount a single $1m cash flow due in 5 years at 5% annually. Repeat at 0% and 10%, then extend maturity to 10 years at 5%. Explain the direction. This flat-rate example omits credit and other valuation components.",
+          "answer": "At 5% for 5 years: $783,526.17. At 0%: $1m. At 10%: $620,921.32. At 5% for 10 years: $613,913.25. Higher positive rates or longer time reduce present value. At negative rates the direction with time can reverse."
+        },
+        {
+          "id": "ipv",
+          "prompt": "Face +$20m, FO 99.80, independent 99.65, amount tolerance $25k. Compute the signed difference and amount breach. Switch source from current/comparable to stale and then missing; finally reverse the face sign.",
+          "answer": "FO $19.96m; independent $19.93m; difference −$30k. Absolute difference exceeds $25k. Stale evidence remains unverified despite computable arithmetic. Missing evidence means no difference can be determined, not zero. A −$20m face produces +$30k. The result is diagnostic, not automatic booking authority. The lab rounds the difference and tolerance to cents before its strictly-greater comparison."
+        },
+        {
+          "id": "bridge",
+          "prompt": "Long-asset model: raw $10.2m, booked deductions $200k, gross requirement $500k, eligible same-source booked amount $200k. Calculate accounting FV and the pre-aggregation increment. Reduce only the eligible amount to zero. Do not interpret the output as final regulatory AVA.",
+          "answer": "Accounting FV = $10m; increment = max(0, $500k − $200k) = $300k; illustrative bridge value = $9.7m. With the eligible amount at zero, the increment is $500k and the bridge value is $9.5m. Accounting FV stays $10m. An unrelated booked deduction cannot offset this uncertainty. Eligible amount cannot exceed total booked deductions."
+        },
+        {
+          "id": "fvh",
+          "prompt": "Classify each measurement conditionally: A uses a qualifying unadjusted identical active-market quote accessible at the measurement date. B has no such quote but all significant inputs are observable. C is like B but a significant correlation input is unobservable. State a change in evidence that could change each answer.",
+          "answer": "A Level 1; B Level 2; C Level 3. An exchange listing alone does not establish Level 1 for A. Loss of observable support for a significant B input can lead to Level 3; credible new support can change C. Neither a hierarchy transfer nor a sophisticated model automatically determines a reserve. This decision aid assumes the evidence and significance assessment have already been performed."
+        },
+        {
+          "id": "uncertainty",
+          "prompt": "Assume a normal price distribution with mean 100 and standard deviation 0.20, face $10m. Calculate adverse long and short points using approximately 1.28155 (the calculator retains more precision). Double standard deviation. Explain why these are not automatically regulatory AVAs.",
+          "answer": "Long point ≈ 99.7437; short point ≈ 100.2563. Original adverse currency distance ≈ $25,631.03. At standard deviation 0.40 the distance doubles to ≈ $51,262.06. The assumed probability mass is 90% above the long point and 90% below the short point. Real calibration, accounting offsets and regulatory aggregation are absent."
+        },
+        {
+          "id": "capital",
+          "prompt": "Use CET1 $1,000m, final AVA $3m, RWA $10,000m. Calculate the new ratio and basis-point reduction. Double only RWA. Keep all other adjustments fixed. This uses a supplied final AVA rather than deriving it.",
+          "answer": "CET1 after = $997m. Ratio 10.00% → 9.97%, a 3bp reduction. At RWA $20,000m the ratio is 5.00% → 4.985%, a 1.5bp reduction (a two-decimal display rounds 4.985% to 4.99%). AVA changes regulatory capital, not an extra cash payment or automatic accounting journal."
+        }
+      ],
+      "caseSteps": [
+        {
+          "title": "1 · Position & evidence",
+          "body": "You own $20m face of a corporate bond. FO clean mid is 99.80. An independent current, comparable clean mid is 99.65. Accrued interest is $40k. The scenario supplies an investigation tolerance of $25k.",
+          "question": "What is the signed clean IPV difference? Does it breach the learning tolerance?",
+          "answer": "Independent clean value = $19.93m. FO clean value = $19.96m. Difference = −$30k, so its $30k magnitude exceeds $25k. This is an investigation trigger, not automatic approval to book.",
+          "data": "TradeId BOND-001 · SourceQuality current · PriceBasis clean_mid · Currency USD"
+        },
+        {
+          "title": "2 · Investigation",
+          "body": "The controller confirms identical instrument, timestamp, clean-price basis and settlement assumptions. The selected independent source is accepted. An authorised decision corrects the central FO mark to 99.65.",
+          "question": "Why is the source-quality review necessary if the difference is easy to calculate?",
+          "answer": "Arithmetic cannot establish which mark is supportable. The source review and approved conclusion supply the authority and evidence for the correction. In this case the correction is −$30k; it is not an automatic future rule.",
+          "data": "CorrectionApproved true · SelectedPrice 99.65 · CorrectedCleanValue 19,930,000"
+        },
+        {
+          "title": "3 · Accounting bridge",
+          "body": "An additional, non-overlapping $10k accounting bid-offer deduction is approved against the corrected clean mid value. Accrued interest stays $40k in this scenario.",
+          "question": "What are accounting clean and dirty fair values?",
+          "answer": "Clean: $19.93m − $0.01m = $19.92m. Dirty: $19.92m + $0.04m = $19.96m. The final dirty value happens to equal the original FO clean value; that coincidence does not make the two concepts interchangeable.",
+          "data": "BidOfferDeduction 10,000 · AccountingCleanFV 19,920,000 · AccountingDirtyFV 19,960,000"
+        },
+        {
+          "title": "4 · Hierarchy",
+          "body": "There is no qualifying unadjusted active-market quote for the identical bond. The valuation uses observable comparable prices and spreads; all inputs significant to the measurement are assumed observable.",
+          "question": "What level follows from these supplied facts? Would a model automatically make it Level 3?",
+          "answer": "Level 2. The use of a model does not itself mean Level 3. If a significant input instead became unobservable, the classification would need reassessment.",
+          "data": "QualifyingL1Quote false · SignificantUnobservableInput false · FVLevel 2"
+        },
+        {
+          "title": "5 · Prudential uncertainty",
+          "body": "The case supplies a gross prudent close-out requirement of $16k. Its eligible same-source accounting deduction is $10k. It also supplies residual MPU of $8k, with no eligible booked offset. The central-price correction is not assumed to offset that residual uncertainty.",
+          "question": "What diagnostic incremental amounts can you calculate, and what remains unresolved?",
+          "answer": "Close-out: max(0, $16k − $10k) = $6k. MPU: $8k. Diagnostic pre-aggregation sum: $14k. You still need the applicable scope, category methodology, aggregation and any other relevant categories to obtain a final regulatory AVA.",
+          "data": "PreAggCOC 6,000 · PreAggMPU 8,000 · DiagnosticSum 14,000 · FinalRegulatoryAVA NOT_CALCULATED"
+        },
+        {
+          "title": "6 · Explain the movement",
+          "body": "Next month, the face amount doubles while the price gap and per-unit spreads are unchanged. Separately, imagine the price feed is absent or a new significant input becomes unobservable.",
+          "question": "Which changes affect currency impacts, evidence status and hierarchy?",
+          "answer": "Doubling face doubles linear price-related currency impacts when other assumptions stay fixed. A missing feed makes the independent comparison unverified, not zero. A significant unobservable input can lead to Level 3. None of these changes alone gives a final AVA without the applicable methodology.",
+          "data": "Control checklist: completeness · units · source quality · signs · overlap · scope · approval · reconciliation"
+        }
+      ],
+      "exercises": {
+        "modules": [
+          {
+            "id": "foundations",
+            "title": "Foundations",
+            "lessonIds": [
+              "from-a-trade-to-a-value",
+              "what-fair-value-is-trying-to-measure",
+              "market-data-and-the-model-underneath"
+            ],
+            "tasks": [
+              {
+                "id": "foundations-numeric",
+                "type": "numeric",
+                "prompt": "A bank owns a long bond with USD 2,000,000 face amount. Its clean price is 97.40 per 100 of face and signed accrued interest is USD 12,000. Calculate the dirty market value in USD. Assume no FX conversion or other adjustments.",
+                "numericAnswer": 1960000,
+                "tolerance": 0.01,
+                "answer": "USD 1,960,000.",
+                "reasoning": "Clean value = 2,000,000 × 97.40 / 100 = 1,948,000. Dirty value adds accrued interest: 1,948,000 + 12,000 = 1,960,000. Multiplying by 97.40 without dividing by 100 confuses the quote convention; reporting face amount ignores the market price.",
+                "rubric": [
+                  "Identify the quote as per 100 of face.",
+                  "Calculate USD 1,948,000 clean value.",
+                  "Add accrued interest once and label USD 1,960,000 as dirty value."
+                ]
+              },
+              {
+                "id": "foundations-explain",
+                "type": "explain",
+                "prompt": "Explain to a new developer why TradeId, InstrumentId and BookId should not be interchangeable. Use this example: trade T1 buys 100 shares of instrument X and trade T2 buys another 50 shares of X, both allocated to book B. No shares are sold.",
+                "answer": "T1 and T2 identify two trade events; X identifies the shared instrument; B identifies the book holding them. The resulting position in X in book B is 150 shares. A position aggregation must preserve links to both trades.",
+                "reasoning": "Using InstrumentId as a unique trade key would overwrite or collapse one purchase. Treating the two trades as different instruments would prevent the intended position aggregation. A book contains positions and is not itself a tradable instrument.",
+                "rubric": [
+                  "Distinguish an event, an instrument and an allocation/book.",
+                  "Derive the 150-share position.",
+                  "Describe one concrete duplicate-key or aggregation failure."
+                ]
+              },
+              {
+                "id": "foundations-diagnose",
+                "type": "diagnose",
+                "prompt": "A dashboard reports a swap with USD 10m notional as a USD 10m asset. The supplied contract exchanges interest payments only; principal is not exchanged. A separate approved valuation output at the same date is positive USD 80,000 to the bank. Identify the error and propose two clearer dashboard fields.",
+                "answer": "The dashboard has substituted the contractual reference amount for market value. Show Notional: USD 10m and Signed market value to bank: +USD 80,000, with the valuation date and currency.",
+                "reasoning": "Notional scales interest payments; it is not automatically an asset balance. The positive USD 80,000 supplied valuation is the asset amount in this example. Relabelling notional as exposure without defining exposure would preserve the ambiguity.",
+                "rubric": [
+                  "Identify the notional/value substitution.",
+                  "Keep the two amounts in separately named fields.",
+                  "State the bank perspective, currency and valuation date requirement."
+                ]
+              },
+              {
+                "id": "foundations-scenario",
+                "type": "scenario",
+                "prompt": "A bond held by the bank has two independent prices today: 99.10 for a small executable trade and 99.40 as a non-binding mid indication. Your position is much larger than the quoted trade. No principal-market assessment, size analysis or price-convention reconciliation is supplied. Which price would you investigate first, and what evidence could change your choice? You are not being asked to set final fair value.",
+                "answer": "Starting with the executable price is defensible because it is transaction evidence, but starting by reconciling the mid against other relevant observations is also defensible. Check accessible relevant market, timestamps, clean/dirty convention, instrument identity, normal transaction conditions and size relevance before concluding.",
+                "reasoning": "Executability strengthens evidence but does not make every small trade representative of the whole measurement. A mid indication can inform a measurement but is not automatically an achievable exit price. Picking the higher price solely to improve profit is not an evidence-based choice.",
+                "rubric": [
+                  "Make a provisional choice with a reason tied to evidence.",
+                  "Name at least three missing comparability checks.",
+                  "Describe evidence that could reverse the provisional choice and avoid asserting a final value."
+                ]
+              }
+            ]
+          },
+          {
+            "id": "valuation-control",
+            "title": "Valuation control",
+            "lessonIds": [
+              "ipv-an-independent-challenge",
+              "sources-tolerances-and-exceptions",
+              "reserves-and-the-accounting-value-bridge",
+              "bid-offer-liquidity-and-model-uncertainty"
+            ],
+            "tasks": [
+              {
+                "id": "control-numeric",
+                "type": "numeric",
+                "prompt": "A short bond position has signed face amount minus USD 4,000,000. FO clean price is 101.20 and the independent clean price is 101.05, both per 100. Calculate signed IPV difference = independent value minus FO value, in USD. Hold accrued interest fixed and ignore FX.",
+                "numericAnswer": 6000,
+                "tolerance": 0.01,
+                "answer": "+USD 6,000.",
+                "reasoning": "−4,000,000 × (101.05 − 101.20) / 100 = +6,000. Independent value is −4,042,000 versus FO value −4,048,000. A lower price makes the signed short value less negative. Applying the long-position sign gives the wrong result; a diagnostic difference alone does not authorise a journal.",
+                "rubric": [
+                  "Use the signed face amount.",
+                  "Apply the per-100 convention and independent-minus-FO order.",
+                  "Explain why the short position produces a positive difference."
+                ]
+              },
+              {
+                "id": "control-explain",
+                "type": "explain",
+                "prompt": "A synthetic long asset has an opening accounting deduction of USD 18,000 and a closing deduction of USD 25,000. Explain the closing deduction balance, deduction movement and signed value effect of that movement. Hold the raw value and all other items fixed.",
+                "answer": "Closing deduction balance is USD 25,000. Deduction movement is +USD 7,000, while the incremental signed value effect is −USD 7,000. The closing balance is not the current period expense by itself.",
+                "reasoning": "The movement is 25,000 − 18,000. Under the stated long-asset deduction convention, a larger deduction lowers value. Booking the full USD 25,000 again as the movement would count the existing opening balance twice.",
+                "rubric": [
+                  "Separate balance from movement.",
+                  "Calculate the USD 7,000 increase.",
+                  "Explain the negative value effect under the supplied convention."
+                ]
+              },
+              {
+                "id": "control-diagnose",
+                "type": "diagnose",
+                "prompt": "An IPV report starts with 100 positions. Twenty have no independent source and disappear in an inner join. Of the remaining 80, eight exceed tolerance. The report says: 'Coverage 100%; exceptions 10%; all other positions verified.' Diagnose the report and give the supported metrics.",
+                "answer": "Source coverage is 80/100 = 80%; 20/100 = 20% lack a source. Eight of 80 sourced positions exceed tolerance, a 10% sourced-population exception rate, or 8% of the full population. The other 72 sourced positions are within tolerance, not automatically fully verified.",
+                "reasoning": "The inner join has hidden missing evidence and changed the denominator. A zero or absent difference is not evidence of agreement. Being within tolerance also does not establish independence, freshness or correct conventions.",
+                "rubric": [
+                  "Restore the original 100-position denominator.",
+                  "Report missing-source status separately from numerical exceptions.",
+                  "Label both exception-rate denominators and avoid equating within-tolerance with verified."
+                ]
+              },
+              {
+                "id": "control-scenario",
+                "type": "scenario",
+                "prompt": "Your synthetic policy requires investigation when the absolute IPV difference is greater than USD 10,000, and also requires a separate evidence-quality assessment. A position differs by USD 7,000 from a quote last refreshed 15 days ago. The policy provides no universal maximum age. Can you close the case as a numerical pass? Explain what would justify accepting the evidence or keeping it unresolved.",
+                "answer": "The amount test does not breach, but the evidence-quality case cannot be closed from those facts alone. Acceptance could be defensible if documented market activity, relevant newer corroboration and an appropriate age assessment support the quote. Otherwise retain an unresolved evidence status and escalate for investigation.",
+                "reasoning": "A difference under tolerance answers only the supplied amount test. Fifteen days is not automatically acceptable or unacceptable without market and policy context. Inventing a universal age cutoff or treating the stale number as zero avoids rather than resolves the evidence issue.",
+                "rubric": [
+                  "Distinguish the numerical result from evidence status.",
+                  "State what corroborating facts would support acceptance.",
+                  "Describe the unresolved outcome without inventing a production age limit."
+                ]
+              }
+            ]
+          },
+          {
+            "id": "fair-value-hierarchy",
+            "title": "Fair value hierarchy",
+            "lessonIds": [
+              "level-1-level-2-level-3",
+              "observability-and-significance-in-practice",
+              "fvh-classification-and-reporting-exercises"
+            ],
+            "tasks": [
+              {
+                "id": "hierarchy-numeric",
+                "type": "numeric",
+                "prompt": "A synthetic Level 3 asset roll-forward is stated entirely in USD millions: opening balance 12; purchases +3; settlements −2; gains recognised in profit or loss +0.8; losses recognised in other comprehensive income −0.2; transfers into Level 3 +1.5; transfers out −0.6. There are no other movements. Calculate the closing Level 3 balance, in USD millions.",
+                "numericAnswer": 14.5,
+                "tolerance": 0.000001,
+                "answer": "USD 14.5 million.",
+                "reasoning": "12 + 3 − 2 + 0.8 − 0.2 + 1.5 − 0.6 = 14.5. Transfers affect the classification population and are not themselves gains or losses. Omitting them breaks the reconciliation even when the total assets of the bank are unchanged.",
+                "rubric": [
+                  "Use every supplied movement with its sign.",
+                  "Keep the answer in USD millions.",
+                  "Separate classification transfers from gains and losses."
+                ]
+              },
+              {
+                "id": "hierarchy-explain",
+                "type": "explain",
+                "prompt": "Explain why a model-valued vanilla swap is not automatically Level 3. Assume there is no qualifying Level 1 price, all significant inputs are supported by relevant observable market data, and an unobservable minor input is assessed as insignificant to the entire measurement.",
+                "answer": "Under the supplied facts the measurement is Level 2. A model describes the calculation method; the hierarchy describes the evidence supporting the measurement. The insignificant unobservable input does not by itself make the entire measurement Level 3.",
+                "reasoning": "Model use and input unobservability are different concepts. Counting unobservable fields or declaring every model Level 3 ignores significance. If a significant input later becomes unobservable, the classification would need reassessment.",
+                "rubric": [
+                  "Conclude Level 2 under the stated assumptions.",
+                  "Separate method from observability.",
+                  "Explain the role of significance and a fact that would trigger reassessment."
+                ]
+              },
+              {
+                "id": "hierarchy-diagnose",
+                "type": "diagnose",
+                "prompt": "A classifier assigns Level 2 whenever more than half of a model's inputs are observable. A product has nine observable inputs and one unobservable correlation input. The assessment explicitly concludes that this correlation is significant to the entire measurement. There is no qualifying Level 1 price. Diagnose the rule and state the classification under these facts.",
+                "answer": "The count-based classifier is wrong; the measurement is Level 3 because a significant input is unobservable. Store the input-level evidence and significance assessment supporting the measurement-level decision.",
+                "reasoning": "Nine observable inputs do not outvote one significant unobservable input. The hierarchy considers the lowest-level input significant to the entire measurement, not a majority vote or the most convenient system flag.",
+                "rubric": [
+                  "Identify the incorrect majority-vote rule.",
+                  "Classify Level 3 using the supplied significance conclusion.",
+                  "Retain evidence and significance rationale rather than only a final level flag."
+                ]
+              },
+              {
+                "id": "hierarchy-scenario",
+                "type": "scenario",
+                "prompt": "A valuation uses an unobservable liquidity parameter. A developer asks whether to tag the entire measurement Level 3. No assessment of the parameter's significance is available; other significant inputs are observable and there is no qualifying Level 1 quote. Describe two possible conclusions and the evidence needed to choose.",
+                "answer": "If the parameter is significant to the entire measurement, Level 3 follows; if it is not significant and all other significant inputs are observable, Level 2 can follow. Obtain a documented significance assessment, including relevant sensitivity and qualitative considerations, before assigning the final level.",
+                "reasoning": "Neither 'one unobservable field always means Level 3' nor 'small current adjustment always means Level 2' is a sufficient assessment. Sensitivity can help, but a single small point estimate does not settle every significance question.",
+                "rubric": [
+                  "State both conditional outcomes.",
+                  "Request a documented significance assessment rather than inventing a universal threshold.",
+                  "Explain why the current missing assessment prevents a definitive tag."
+                ]
+              }
+            ]
+          },
+          {
+            "id": "prudent-valuation",
+            "title": "Prudent valuation",
+            "lessonIds": [
+              "pruval-avas-and-capital",
+              "market-price-uncertainty",
+              "close-out-cost-and-concentration",
+              "model-risk-and-the-other-ava-categories",
+              "approaches-aggregation-and-cet1"
+            ],
+            "tasks": [
+              {
+                "id": "prudence-numeric",
+                "type": "numeric",
+                "prompt": "A completed and approved regulatory calculation supplies a final AVA deduction of EUR 4m. CET1 before this deduction is EUR 800m and RWA is EUR 8,000m. Hold all other items fixed. Calculate the fall in the CET1 ratio in basis points (enter a positive number for the fall). One basis point is 0.01 percentage point.",
+                "numericAnswer": 5,
+                "tolerance": 0.000001,
+                "answer": "5 basis points: the ratio falls from 10.00% to 9.95%.",
+                "reasoning": "After-deduction CET1 is 796m, so 796/8,000 × 100 = 9.95%. The difference is 0.05 percentage point, equal to 5 bp. Calling it a 5% ratio decline confuses basis points with percent; the final AVA is supplied, not calculated by this exercise.",
+                "rubric": [
+                  "Deduct EUR 4m from capital, not from RWA.",
+                  "Calculate both ratios.",
+                  "Convert 0.05 percentage point to 5 bp and identify that the final AVA was an input."
+                ]
+              },
+              {
+                "id": "prudence-explain",
+                "type": "explain",
+                "prompt": "In the supplied long-asset teaching case, gross prudent close-out requirement is USD 16,000 and an eligible same-source accounting deduction of USD 10,000 is already included in the fair-value baseline. A separate gross MPU requirement is USD 8,000 with no eligible same-source offset. Explain the incremental amounts and what the sum does and does not represent. No regulatory aggregation result is provided.",
+                "answer": "Incremental close-out assessment is max(0, 16,000 − 10,000) = USD 6,000. Incremental MPU assessment is USD 8,000. Their USD 14,000 sum is a diagnostic pre-aggregation amount, not a final regulatory AVA or automatic accounting journal.",
+                "reasoning": "The eligible deduction prevents double counting the same source of uncertainty. It is not a general credit against unrelated uncertainty. Adding the two diagnostic components does not establish required scope, category treatment or aggregation.",
+                "rubric": [
+                  "Calculate USD 6,000 and USD 8,000 separately.",
+                  "Explain same-source eligibility and baseline inclusion.",
+                  "Label USD 14,000 as pre-aggregation and explicitly withhold a final AVA conclusion."
+                ]
+              },
+              {
+                "id": "prudence-diagnose",
+                "type": "diagnose",
+                "prompt": "A developer implements: 'For every trade, take 0.1% of derivative notional, then halve the result for diversification and post it as an accounting reserve.' Identify at least three independent conceptual errors. This exercise does not provide eligibility, a legal regime or an approved aggregation method.",
+                "answer": "The simplified approach cannot be assumed applicable without eligibility and regime; its defined fair-value base is not derivative notional. A blanket 50% reduction is not a universal aggregation rule. A prudential AVA is not automatically an accounting reserve journal. Trade-by-trade calculation may also use the wrong prescribed scope.",
+                "reasoning": "A familiar percentage does not supply its legal base or conditions. A method-specific aggregation coefficient cannot be applied to all components. Accounting measurement and prudential capital treatment must remain distinguishable even when linked through eligible offsets.",
+                "rubric": [
+                  "Identify the wrong base and absent eligibility/regime.",
+                  "Reject universal halving without an applicable method.",
+                  "Separate prudential deduction from accounting journal and note calculation scope."
+                ]
+              },
+              {
+                "id": "prudence-scenario",
+                "type": "scenario",
+                "prompt": "Two teams propose a USD 9,000 model-risk amount and a USD 6,000 market-price-uncertainty amount for the same exposure. Their notes both mention an illiquid correlation input, but neither explains which uncertainty is covered. Should the system add, offset or remove either amount? State conditional possibilities and the evidence needed; no final AVA can be calculated from these facts.",
+                "answer": "Do not choose an arithmetic treatment yet. If the amounts cover genuinely distinct uncertainty sources, both may contribute under the applicable method. If they overlap, the allocation and method need correction to avoid duplication. Obtain the exposure definition, uncertainty decomposition, baselines, methodology and relevant offset/aggregation rules.",
+                "reasoning": "Shared wording is not proof that two risks are identical, while two different labels are not proof that they are independent. Arbitrary netting or automatic summation can both misstate the result. Any missing-data or calculation fallback must follow the applicable rule and governed assessment, not a made-up zero.",
+                "rubric": [
+                  "Present conditional distinct-source and overlap outcomes.",
+                  "Request evidence defining what each amount measures.",
+                  "Avoid a fabricated final total or unapproved offset."
+                ]
+              }
+            ]
+          },
+          {
+            "id": "working-knowledge",
+            "title": "Working knowledge",
+            "lessonIds": [
+              "day-one-pnl-and-valuation-movements",
+              "data-lineage-controls-and-debugging",
+              "put-it-all-together-at-month-end"
+            ],
+            "tasks": [
+              {
+                "id": "working-numeric",
+                "type": "numeric",
+                "prompt": "For a bank's long asset, opening dirty value is USD 1,010,000, closing dirty value is USD 1,005,000, and coupon cash received during the period is USD 8,000. There are no trades, FX effects, expenses or other cash flows. Calculate the simplified economic return in USD; do not infer its accounting presentation.",
+                "numericAnswer": 3000,
+                "tolerance": 0.01,
+                "answer": "+USD 3,000.",
+                "reasoning": "1,005,000 − 1,010,000 + 8,000 = 3,000. The USD 5,000 fall in value is only one part of return; ignoring the coupon produces a false loss conclusion. The exercise supplies economic cash-flow arithmetic, not all facts needed for financial-statement classification.",
+                "rubric": [
+                  "Calculate the negative USD 5,000 value movement.",
+                  "Include positive USD 8,000 coupon cash once.",
+                  "Distinguish economic return from an unsupported accounting-presentation claim."
+                ]
+              },
+              {
+                "id": "working-explain",
+                "type": "explain",
+                "prompt": "At inception the bank pays USD 100 to buy an asset with a model fair value of USD 103. In a separate transaction it receives USD 100 when issuing a liability whose model fair value is USD 103. Explain the apparent day-one result from the bank's perspective for each. Observable-evidence facts needed for the accounting recognition test are not supplied.",
+                "answer": "Buying the asset produces an apparent USD 3 gain: asset value 103 less cash paid 100. Issuing the liability produces an apparent USD 3 loss: cash received 100 less liability value 103. These differences do not alone establish immediate accounting recognition; the relevant evidence test must be applied.",
+                "reasoning": "The same pair of numbers has opposite implications for an asset purchase and a liability issuance. A customer's payment is not proof of a bank gain. Nor does a model number or a hierarchy label alone settle day-one recognition or deferral.",
+                "rubric": [
+                  "Identify the asset gain and liability loss with bank perspective.",
+                  "State which cash flow and balance-sheet item belong to the bank.",
+                  "Separate apparent arithmetic from recognition and request supporting evidence."
+                ]
+              },
+              {
+                "id": "working-diagnose",
+                "type": "diagnose",
+                "prompt": "Yesterday's signed-off run used position snapshot P1, quote snapshot Q1 and method M1. A rerun today reads the latest live positions and quotes, then appends a second journal for the same business event. The developer says it reproduces yesterday because the report date is unchanged. Identify the reproducibility and posting failures and propose controls.",
+                "answer": "The rerun does not reproduce yesterday's inputs, and appending the same logical journal breaks idempotency. Pin P1, Q1 and M1 plus relevant overrides/approvals and timestamps; record a run identifier and stable business posting key. A corrected run should have an explicit revision/reversal process rather than silently duplicating postings.",
+                "reasoning": "A report date is not an input snapshot. Even numerically identical output can create a business error if posted twice. Deleting all prior output indiscriminately would remove the audit trail rather than establish controlled revision.",
+                "rubric": [
+                  "Identify both changing inputs and duplicate business effects.",
+                  "Specify snapshot, method and approval lineage.",
+                  "Propose a stable posting key and traceable correction process."
+                ]
+              },
+              {
+                "id": "working-scenario",
+                "type": "scenario",
+                "prompt": "A model values a newly acquired bank asset above the cash paid. Case A has a qualifying quoted price supporting the difference, or a valuation using only observable market data. Case B relies on an unsupported unobservable assumption. Explain how the recognition investigation differs. You have no approved later release schedule or subsequent events.",
+                "answer": "Case A provides the type of evidence relevant to immediate recognition under the day-one test, subject to verifying it actually meets the applicable criteria. Case B requires the prescribed deferral treatment rather than recognition based solely on the model. Do not invent a later release schedule; record the original difference and assess relevant subsequent changes under the applicable requirements.",
+                "reasoning": "A positive apparent gain is not its own evidence. Conversely, a model is not automatically disqualified when it uses only observable data under the relevant criterion. Straight-line release because it is easy to code is not a supplied accounting basis.",
+                "rubric": [
+                  "Distinguish qualifying observable evidence from the unsupported assumption.",
+                  "Separate the initial decision from later recognition events.",
+                  "Avoid treating Level 3 status or an invented time schedule as the complete recognition rule."
+                ]
+              }
+            ]
+          },
+          {
+            "id": "integrated-investigations",
+            "title": "Integrated P&L and curve investigations",
+            "lessonIds": [
+              "from-a-trade-to-a-value",
+              "market-data-and-the-model-underneath",
+              "reserves-and-the-accounting-value-bridge",
+              "day-one-pnl-and-valuation-movements",
+              "data-lineage-controls-and-debugging"
+            ],
+            "tasks": [
+              {
+                "id": "integrated-numeric",
+                "type": "numeric",
+                "prompt": "Synthetic settled EUR position: opening 100 shares at 100, deduction 20, EURUSD 1.10. Buy 20 at 102; sell 30 at 105; receive dividend 50. All cash translates at 1.12. Close 90 shares at 104, deduction 35, EURUSD 1.12. Calculate the period USD economic result, including the signed cash flows. Use no other costs or events.",
+                "numericAnswer": 765.2,
+                "tolerance": 0.01,
+                "answer": "USD +765.20.",
+                "reasoning": "Opening:(10,000−20)×1.10=10,978. Closing:(9,360−35)×1.12=10,444. Cash:(−2,040+3,150+50)×1.12=1,299.20. Closing−opening+cash=765.20. This synthetic economic calculation does not determine financial-statement classification.",
+                "rubric": [
+                  "Reconcile quantity to 90 and cash to 1,160 EUR.",
+                  "Use opening and closing FX at their own dates.",
+                  "Include the deduction movement and cash once."
+                ]
+              },
+              {
+                "id": "integrated-explain",
+                "type": "explain",
+                "prompt": "Fixed cash flows are EUR 50 in one year and EUR 1,050 in two years. FO discount factors are 0.95/0.90, independent factors 0.94/0.88. Derive the signed independent-minus-FO difference by payment. What evidence is still needed before correcting a mark?",
+                "answer": "FO 992.50; independent 971.00; difference−21.50 EUR, split−0.50 and−21.00 by payment.",
+                "reasoning": "Hold the contract fixed while changing inputs. Check date, currency, collateral basis, cash-flow conventions and source suitability before an approved conclusion. The independently supplied factors are not automatically the right ones.",
+                "rubric": [
+                  "Derive both values from payments rather than supplied final marks.",
+                  "Reconcile tenor contributions.",
+                  "Separate arithmetic from evidence approval."
+                ]
+              },
+              {
+                "id": "integrated-diagnose",
+                "type": "diagnose",
+                "prompt": "A P&L report translates both opening and closing carrying amounts at today's rate and says there is no FX effect. Opening carrying amount is EUR 9,980, opening rate 1.10, closing rate 1.12. Diagnose the omitted component under the workbook's close-rate attribution convention.",
+                "answer": "It omits USD 199.60 of opening-value FX movement: 9,980×(1.12−1.10).",
+                "reasoning": "A comparison at constant FX can be a useful separately labeled analysis. It is not the full reporting-currency movement when the opening measurement used 1.10. Preserve the actual-rate total and reconcile explanatory components.",
+                "rubric": [
+                  "Identify the distinct dates/rates.",
+                  "Calculate 199.60.",
+                  "Distinguish a constant-FX view from actual-rate total."
+                ]
+              },
+              {
+                "id": "integrated-scenario",
+                "type": "scenario",
+                "prompt": "A two-for-one split turns 90 shares at EUR 104 into 180 at EUR 52. Another report shows 70 settled shares because a 20-share purchase has not settled. Are these losses or contradictory positions?",
+                "answer": "The split preserves 9,360 EUR value and total cost under the supplied assumptions. The 70-share figure may be a settled-position view; 90 can be the trade-date quantity. Reconcile the unsettled obligation and timing before concluding.",
+                "reasoning": "Events can change quantities or reporting views without creating a market loss. Treat the all-settled cash-flow workbook and unsettled example as different scenarios. Do not combine one scenario's quantity with another's cash.",
+                "rubric": [
+                  "Demonstrate unchanged split value.",
+                  "Identify trade-date versus settled basis.",
+                  "Request settlement and cash/obligation records before reconciling."
+                ]
+              }
+            ]
+          }
+        ],
+        "revision": [
+          {
+            "id": "revision-price-units",
+            "type": "numeric",
+            "prompt": "Return to this after a break, without opening the worked examples. A long bond has USD 6m face amount. FO clean price is 99.80 and the independent clean price is 99.65 per 100. Accrued interest is identical in both valuations. Calculate independent-minus-FO IPV difference in USD.",
+            "numericAnswer": -9000,
+            "tolerance": 0.01,
+            "answer": "−USD 9,000.",
+            "reasoning": "6,000,000 × (99.65 − 99.80) / 100 = −9,000. The 0.15 price-point difference is 0.15% of face. Identical accrued interest cancels; adding it again distorts the comparison. The difference remains a diagnostic until investigated.",
+            "rubric": [
+              "Preserve the long-position sign and comparison order.",
+              "Use the per-100 scaling.",
+              "Explain why equal accrued interest cancels and why this is not posting authority."
+            ]
+          },
+          {
+            "id": "revision-separate-outputs",
+            "type": "explain",
+            "prompt": "A record shows IPV difference −USD 9,000, accounting dirty value USD 5,975,000, hierarchy Level 2 and a supplied final AVA USD 2,000. Explain in one sentence per field what question it answers. No additional accounting deduction or aggregation should be inferred.",
+            "answer": "IPV difference compares independent and FO values. Accounting dirty value is the recognised value including accrued interest under the stated convention. Level 2 describes the significant-input evidence supporting the measurement. The supplied final AVA is a prudential capital deduction result under its applicable method.",
+            "reasoning": "The four fields measure different things. The IPV difference is not automatically the accounting adjustment; Level 2 does not mean no uncertainty; the AVA is not automatically another accounting deduction from the supplied dirty value.",
+            "rubric": [
+              "Give four distinct explanations.",
+              "Identify dirty value's accrued-interest convention.",
+              "Avoid equating hierarchy, comparison, accounting measurement and capital deduction."
+            ]
+          },
+          {
+            "id": "revision-join-error",
+            "type": "diagnose",
+            "prompt": "One position row has a USD 5m value. A quote table contains three observations for that instrument. A join produces three position rows, and a dashboard now reports USD 15m. The developer proposes dividing every dashboard total by three. Diagnose the issue and outline a correction that preserves the evidence.",
+            "answer": "A one-to-many join duplicated the position measure. Keep a separate relation for multiple evidence observations, or select the intended as-of quote using a documented rule before joining into a one-row-per-position valuation view. Reconcile position keys and totals before and after the join.",
+            "reasoning": "Dividing by three only happens to reverse this example and fails when quote counts vary. Deleting quotes indiscriminately loses useful evidence. The correction must respect the intended data grain and quote-selection logic.",
+            "rubric": [
+              "Identify the mismatch between position grain and evidence grain.",
+              "Reject a blanket divide-by-three fix.",
+              "Preserve evidence and reconcile one-position value of USD 5m."
+            ]
+          },
+          {
+            "id": "revision-evidence-change",
+            "type": "scenario",
+            "prompt": "A Level 2 measurement now uses a proxy because the original input source stopped publishing. The proxy produces almost the same value. You have no current assessment of the proxy's observability, relevance or significance. Can the level and evidence status remain unchanged? Describe the possible outcomes and investigation.",
+            "answer": "An unchanged value does not justify unchanged classification or evidence status. Level 2 may remain supportable if relevant observable evidence supports all significant inputs. Level 3 may be required if a significant input is unobservable. Investigate proxy mapping, current corroboration, significance and approval; retain unresolved status until the assessment supports a decision.",
+            "reasoning": "Numerical closeness is not evidence equivalence. A proxy is neither automatically invalid nor automatically observable. The price comparison, hierarchy assessment and governance of a source change are related but distinct controls.",
+            "rubric": [
+              "Reject unchanged price as sufficient evidence.",
+              "Describe conditional Level 2 and Level 3 outcomes.",
+              "Specify proxy relevance, observability, significance and governance checks."
+            ]
+          },
+          {
+            "id": "revision-bridge",
+            "type": "numeric",
+            "prompt": "A long asset's raw clean value is USD 2,500,000. An approved correction reduces it by USD 12,000, and a separate approved accounting deduction reduces it by USD 7,000. Signed accrued interest is +USD 9,000. Calculate accounting dirty value in USD. A separately supplied prudential amount is not an accounting journal and must not be subtracted here.",
+            "numericAnswer": 2490000,
+            "tolerance": 0.01,
+            "answer": "USD 2,490,000.",
+            "reasoning": "2,500,000 − 12,000 − 7,000 + 9,000 = 2,490,000. Corrected clean value is 2,488,000; accounting clean value is 2,481,000. Adding accrued interest once produces dirty value. Subtracting a prudential amount again would mix accounting and regulatory outputs.",
+            "rubric": [
+              "Apply the correction and separate deduction once each.",
+              "Add signed accrued interest once.",
+              "Keep the separately supplied prudential output outside this accounting bridge."
+            ]
+          },
+          {
+            "id": "revision-day-one-perspective",
+            "type": "diagnose",
+            "prompt": "A note says: 'The bank receives USD 100 from issuing a liability with model fair value USD 103; therefore the bank earns USD 3 immediately.' Identify the two separate conclusions that need correction.",
+            "answer": "First, the bank's apparent arithmetic result is a USD 3 loss: proceeds 100 less liability value 103. Second, immediate recognition of the day-one difference cannot be concluded without the relevant evidence and accounting criteria.",
+            "reasoning": "The counterparty's apparent favourable difference cannot be imported as the bank's gain. Fixing that sign does not resolve the separate recognition test. A statement of model fair value supplies neither qualifying observable evidence nor a justified later release rule.",
+            "rubric": [
+              "Identify liability issuance and bank perspective.",
+              "Correct the apparent result to a USD 3 loss.",
+              "Separate sign correction from recognition/deferral and identify missing evidence."
+            ]
+          }
+        ]
+      },
+      "journey": [
+        {
+          "id": "booking",
+          "label": "Book the trade",
+          "owner": "Trading + operations",
+          "title": "Capture the agreement",
+          "body": "The bank buys 1,000 Company A shares at $100 each in its Customer book. Booking records an agreement; it does not establish settlement or today's value.",
+          "input": "Confirmed buy: 1,000 shares at $100",
+          "output": "Trade T-1042 · Company A · USD · Customer book",
+          "control": "Match instrument, direction, quantity, price, currency and settlement details to the confirmation.",
+          "data": "TradeId → InstrumentId → BookId → LegalEntityId",
+          "question": "Would a duplicate booking affect only cash?",
+          "answer": "No. A duplicate can overstate both the position and expected cash. Reconcile trade IDs and confirmations.",
+          "lesson": "data-lineage-controls-and-debugging"
+        },
+        {
+          "id": "position",
+          "label": "Build the position",
+          "owner": "Position service + operations",
+          "title": "Turn events into a holding",
+          "body": "Assume the trade settled yesterday, with no other trades. A trade is an event; a position is a holding at a point in time.",
+          "input": "One settled purchase; no sales or opening shares",
+          "output": "+1,000 shares · cumulative net cash −$100,000",
+          "control": "Reconcile quantities, settlement status and cash. Unsettled receivables/payables and corporate actions are outside this example.",
+          "data": "Trade events + as-of time → position snapshot",
+          "question": "Is the $100,000 payment a $100,000 loss?",
+          "answer": "No. Cash was exchanged for an asset. At purchase, the holding value and cash paid offset in this economic calculation.",
+          "lesson": "from-a-trade-to-a-value"
+        },
+        {
+          "id": "market-data",
+          "label": "Select prices",
+          "owner": "Market data team + valuation users",
+          "title": "Attach meaning to each price",
+          "body": "At today's close the desk uses $104 per share. An independent quote is $103.50. Check instrument, currency, timestamp and quotation basis before comparison.",
+          "input": "Desk mark $104.00 · independent quote $103.50",
+          "output": "Two price records with source, time and quality evidence",
+          "control": "Use the evidence switch below. Assume comparable close-time evidence in the usable case. A stale quote is not suitable merely because its provider is independent.",
+          "data": "InstrumentId + price time + currency + source + basis",
+          "question": "Does independent always mean correct and usable?",
+          "answer": "No. Independence supports challenge, but freshness, relevance and comparability also matter.",
+          "lesson": "market-data-and-the-model-underneath"
+        },
+        {
+          "id": "valuation",
+          "label": "Calculate value",
+          "owner": "Valuation engine + desk",
+          "title": "Apply a price to the holding",
+          "body": "For this simple cash equity, multiply shares by price. The resulting holding value is not its profit. The approved prior-day value was $100,000.",
+          "input": "1,000 shares × desk mark $104",
+          "output": "Desk value $104,000 · candidate independent value $103,500",
+          "control": "Check units and sign. Price per share differs from bond price as a percentage of face value. Correct arithmetic cannot repair unsuitable inputs.",
+          "data": "Position snapshot + price snapshot + method version → valuation run",
+          "question": "Is $104,000 the profit?",
+          "answer": "No. It is the holding value. Compared with yesterday's $100,000 close, the provisional movement is +$4,000.",
+          "lesson": "what-fair-value-is-trying-to-measure"
+        },
+        {
+          "id": "challenge",
+          "label": "Challenge the mark",
+          "owner": "Independent price verification / valuation control",
+          "title": "Investigate the $500 difference",
+          "body": "The candidate independent value is $500 below the desk value: 1,000 × ($103.50 − $104). This is an investigation signal, not an automatic journal.",
+          "input": "Candidate value − desk value = −$500",
+          "output": "Evidence-backed resolution, or an open exception",
+          "control": "With usable evidence, assume review confirms $103.50 as the appropriate mark and approval is obtained. With stale evidence, request current comparable evidence and keep the exception open.",
+          "data": "ValuationRunId → exception → evidence → reviewer decision",
+          "question": "Should every difference be booked automatically?",
+          "answer": "No. Check evidence, basis, policy and approval. Investigation tolerances do not establish fair value on their own.",
+          "lesson": "ipv-an-independent-challenge"
+        },
+        {
+          "id": "adjustment",
+          "label": "Resolve & adjust",
+          "owner": "Valuation control + finance approver",
+          "title": "Book one correction, once",
+          "body": "In the approved branch, a $500 downward correction changes $104,000 to $103,500. It could be implemented as a corrected mark or an adjustment, reconciled to prevent duplication.",
+          "input": "Review decision and approval",
+          "output": "Approved branch: −$500 correction · unresolved branch: no approved correction",
+          "control": "Do not correct the mark and also deduct another $500 reserve for the same discrepancy. Other uncertainty reserves need their own rationale. Regulatory AVAs are separate and are not calculated here.",
+          "data": "ExceptionId → ApprovalId → correction → ledger reconciliation",
+          "question": "After resetting the price to $103.50, deduct another $500 for this discrepancy?",
+          "answer": "No. That would count the correction twice. Track what is already included in the final value.",
+          "lesson": "reserves-and-the-accounting-value-bridge"
+        },
+        {
+          "id": "pnl",
+          "label": "Explain P&L",
+          "owner": "Product control / finance",
+          "title": "Separate value from movement",
+          "body": "Assume valuation changes are recognised through P&L. No trades or cash flows occur today. The approved result is $103,500 closing value − $100,000 opening value = +$3,500. All is unrealised because no shares were sold.",
+          "input": "Opening $100,000 · desk movement +$4,000 · correction −$500",
+          "output": "Approved P&L +$3,500 · unresolved desk estimate +$4,000 is provisional",
+          "control": "The purchase was yesterday. Do not subtract yesterday's cash payment again from today's value movement. Since-inception economic P&L equals holding value plus cumulative net cash here.",
+          "data": "Prior approved close + current close + period flows → P&L explanation",
+          "question": "Is the −$500 correction the whole day's P&L?",
+          "answer": "No. It reduces the +$4,000 desk movement to +$3,500. It is one component of the bridge.",
+          "lesson": "day-one-pnl-and-valuation-movements"
+        },
+        {
+          "id": "reporting",
+          "label": "Report & trace",
+          "owner": "Finance reporting + control owners",
+          "title": "Keep the number and evidence together",
+          "body": "Report the holding, valuation, P&L and control status together. Trace the number through approval, prices and the original trade.",
+          "input": "Position + values + movements + exception status",
+          "output": "Traceable report row, with approval or an open exception",
+          "control": "Never present the unresolved desk estimate as an approved close. This teaching workflow is not a complete ledger or regulatory return. Team ownership varies by firm.",
+          "data": "Report row → valuation run → position / prices → trade + approval trail",
+          "question": "Is a report complete just because its total adds up?",
+          "answer": "No. Arithmetic reconciliation is necessary; completeness, evidence, approval and visible exceptions also matter.",
+          "lesson": "put-it-all-together-at-month-end"
+        }
+      ],
+      "visualStories": [
+        {
+          "id": "positions",
+          "title": "A trade becomes a position",
+          "subtitle": "Follow the shares, cash and P&L.",
+          "lessons": [
+            "from-a-trade-to-a-value",
+            "sources-tolerances-and-exceptions",
+            "day-one-pnl-and-valuation-movements",
+            "data-lineage-controls-and-debugging"
+          ]
+        },
+        {
+          "id": "adjustments",
+          "title": "One value, two different adjustments",
+          "subtitle": "Separate the accounts from the prudential overlay.",
+          "lessons": [
+            "reserves-and-the-accounting-value-bridge",
+            "bid-offer-liquidity-and-model-uncertainty",
+            "pruval-avas-and-capital",
+            "approaches-aggregation-and-cet1"
+          ]
+        },
+        {
+          "id": "books",
+          "title": "Where does the position belong?",
+          "subtitle": "Explore an entity, desk and two books.",
+          "lessons": [
+            "from-a-trade-to-a-value",
+            "data-lineage-controls-and-debugging",
+            "put-it-all-together-at-month-end"
+          ]
+        }
+      ],
+      "population": {
+        "rows": [
+          {
+            "TradeId": "BOND-001",
+            "Product": "CorporateBond",
+            "Currency": "USD",
+            "SignedFaceOrNotional": "20000000",
+            "FOCleanPrice": "99.80",
+            "IndependentCleanPrice": "99.65",
+            "FOValue": "",
+            "IndependentValue": "",
+            "SignedAccruedInterest": "40000",
+            "PriceBasis": "clean_mid",
+            "SourceQuality": "current",
+            "SourceAgeDays": "0",
+            "LearningTolerance": "25000",
+            "IllustrativeFVLevel": "2",
+            "SignificantUnobservableInput": "false",
+            "Notes": "Month-end case: approved price correction and separate 10000 bid-offer deduction"
+          },
+          {
+            "TradeId": "BOND-002",
+            "Product": "CorporateBond",
+            "Currency": "USD",
+            "SignedFaceOrNotional": "5000000",
+            "FOCleanPrice": "98.00",
+            "IndependentCleanPrice": "97.50",
+            "FOValue": "",
+            "IndependentValue": "",
+            "SignedAccruedInterest": "12000",
+            "PriceBasis": "clean_mid",
+            "SourceQuality": "stale",
+            "SourceAgeDays": "42",
+            "LearningTolerance": "25000",
+            "IllustrativeFVLevel": "2",
+            "SignificantUnobservableInput": "false",
+            "Notes": "Numerical difference possible but evidence is unverified"
+          },
+          {
+            "TradeId": "BOND-003",
+            "Product": "CorporateBond",
+            "Currency": "USD",
+            "SignedFaceOrNotional": "-10000000",
+            "FOCleanPrice": "101.00",
+            "IndependentCleanPrice": "100.80",
+            "FOValue": "",
+            "IndependentValue": "",
+            "SignedAccruedInterest": "-20000",
+            "PriceBasis": "clean_mid",
+            "SourceQuality": "current",
+            "SourceAgeDays": "0",
+            "LearningTolerance": "15000",
+            "IllustrativeFVLevel": "2",
+            "SignificantUnobservableInput": "false",
+            "Notes": "Short: lower independent price creates positive signed difference"
+          },
+          {
+            "TradeId": "BOND-004",
+            "Product": "CorporateBond",
+            "Currency": "USD",
+            "SignedFaceOrNotional": "3000000",
+            "FOCleanPrice": "95.00",
+            "IndependentCleanPrice": "",
+            "FOValue": "",
+            "IndependentValue": "",
+            "SignedAccruedInterest": "6000",
+            "PriceBasis": "clean_mid",
+            "SourceQuality": "missing",
+            "SourceAgeDays": "",
+            "LearningTolerance": "10000",
+            "IllustrativeFVLevel": "",
+            "SignificantUnobservableInput": "",
+            "Notes": "Missing evidence and incomplete hierarchy assessment; do not replace with zero"
+          },
+          {
+            "TradeId": "SWAP-001",
+            "Product": "InterestRateSwap",
+            "Currency": "USD",
+            "SignedFaceOrNotional": "100000000",
+            "FOCleanPrice": "",
+            "IndependentCleanPrice": "",
+            "FOValue": "450000",
+            "IndependentValue": "426000",
+            "SignedAccruedInterest": "0",
+            "PriceBasis": "supplied_value",
+            "SourceQuality": "current",
+            "SourceAgeDays": "0",
+            "LearningTolerance": "20000",
+            "IllustrativeFVLevel": "2",
+            "SignificantUnobservableInput": "false",
+            "Notes": "Use supplied independent minus FO value; not notional times price"
+          },
+          {
+            "TradeId": "OPTION-001",
+            "Product": "StructuredOption",
+            "Currency": "USD",
+            "SignedFaceOrNotional": "50000000",
+            "FOCleanPrice": "",
+            "IndependentCleanPrice": "",
+            "FOValue": "2000000",
+            "IndependentValue": "1970000",
+            "SignedAccruedInterest": "0",
+            "PriceBasis": "supplied_value",
+            "SourceQuality": "approved_model_estimate",
+            "SourceAgeDays": "0",
+            "LearningTolerance": "25000",
+            "IllustrativeFVLevel": "3",
+            "SignificantUnobservableInput": "true",
+            "Notes": "Supplied model comparison; assess model evidence independently"
+          }
+        ],
+        "key": "# Practice population: answer key\n\nAll positions, thresholds and approvals are synthetic. USD throughout. Compare clean prices on an aligned basis. Signed difference = independent value − FO value. The learning threshold is breached only when absolute difference is strictly greater than the threshold. This is a triage rule, not booking authority.\n\n| Trade | FO clean/supplied value | Independent clean/supplied value | Signed difference | Amount trigger | Evidence conclusion |\n|---|---:|---:|---:|---|---|\n| BOND-001 | 19,960,000 | 19,930,000 | −30,000 | Yes | Current source; investigate and use scenario's approved correction |\n| BOND-002 | 4,900,000 | 4,875,000 | −25,000 | No: exactly at threshold | Unverified: stale, regardless of amount |\n| BOND-003 | −10,100,000 | −10,080,000 | +20,000 | Yes | Current source; positive signed difference for short |\n| BOND-004 | 2,850,000 | Missing | Missing | Cannot determine | Missing evidence; retain position and route gap |\n| SWAP-001 | 450,000 | 426,000 | −24,000 | Yes | Supplied input-repriced values; inspect aligned curves and configuration |\n| OPTION-001 | 2,000,000 | 1,970,000 | −30,000 | Yes | Supplied model estimate; not proof of observable evidence or automatic booking |\n\n## Case bridge for BOND-001\n\n1. FO clean value = 20m × 99.80 / 100 = 19.96m.\n2. Independent clean value = 20m × 99.65 / 100 = 19.93m.\n3. Supplied approved correction = −30k.\n4. Separate approved bid-offer deduction = 10k. Accounting clean FV = 19.92m.\n5. Fixed accrued interest = 40k. Accounting dirty FV = 19.96m.\n6. Scenario evidence supports Level 2: no qualifying Level 1 quote; all significant inputs observable.\n7. Supplied gross close-out requirement 16k less eligible same-source booked 10k gives 6k before aggregation.\n8. Supplied residual MPU requirement 8k with zero eligible same-source offset gives 8k before aggregation.\n9. Diagnostic pre-aggregation sum = 14k. Final regulatory AVA is NOT calculated by this exercise.\n\nThe price correction aligns the central mark; it is not assumed to address the separately supplied residual MPU uncertainty. An accounting adjustment can only offset an AVA assessment when it addresses the same uncertainty at the appropriate level.\n\n## Investigations to practise\n\n- Leave BOND-004 in the population with missing fields. Compare how a left join and an inner join against prices affect coverage.\n- Duplicate a source row and check whether a naive join doubles face amount and value.\n- Change one quote from clean to dirty and observe the false discrepancy if conventions are not aligned.\n- Keep source quality and amount-trigger status in separate columns.\n- Avoid netting favourable and adverse differences before investigation; totals can hide offsetting exceptions.\n- Compare the option's Level 3 classification with its numerical difference. A smaller difference would not automatically change the level.\n\n## Data dictionary\n\n- `SignedFaceOrNotional`: bond signed face amount; derivative notional is context, not market value.\n- `FOCleanPrice`, `IndependentCleanPrice`: per-100 bond clean mid quotes. Empty means missing or not applicable, never zero by default.\n- `FOValue`, `IndependentValue`: directly supplied derivative values for comparison.\n- `SignedAccruedInterest`: position-level currency amount; unchanged in these exercises.\n- `SourceQuality`: separate evidence assessment; a fresh model estimate is not automatically observable market evidence.\n- `LearningTolerance`: synthetic amount threshold; not a regulatory rule.\n- `IllustrativeFVLevel`: supplied classification except BOND-004, where evidence is intentionally insufficient.\n- `SignificantUnobservableInput`: supplied teaching judgement, not an automatically calculated production significance test.\n"
+      }
     }
   },
   {

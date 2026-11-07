@@ -12,9 +12,12 @@ A course needing its own simulations can set `href` to its HTML entry point and 
 
 Financial foundations reads on the shared course page like any standard path. Its root `course.html` is the
 practice studio (calculators and lab worksheets, the month-end case, the trade journey, visual stories and module
-practice), and `handbook.html` prints the complete study pack. Studio content refers to lessons by their
-shared ids (module `lessonIds`, visual-story `lessons`, journey `lesson`) and links to
-`index.html#topic/financial-foundations/<id>`.
+practice), and `handbook.html` prints the complete study pack. The studio content lives in
+`paths/financial-foundations/practice.json` (`labs`, `labGuides`, `caseSteps`, `exercises`, `journey`,
+`visualStories`, `population`) and is built into the course data with the lessons, so both pages load one file.
+`scripts/manifest.cjs` checks that every lesson it names (module `lessonIds`, visual-story `lessons`, journey
+`lesson`) exists, and reads `population.csv` and `population.key` into the practice rows and answer key. Studio
+pages link to lessons at `index.html#topic/financial-foundations/<id>`.
 
 Use a unique local-storage key and documented backup schema. Generic reader keys are `learning-notebook:path:<id>:v1`. The financial practice studio keeps only its `study` object (practised/checked flags by module) under `valuation-lab-v1`; this is an internal key, not website branding. Reading progress uses the generic key.
 
@@ -30,7 +33,7 @@ practice, the practice population and the trade journey. Exercises and studio li
 1–18 (lesson 15 to 32 on the shared page). `tests/finance-parity.cjs` checks that every feature of the original reader
 still has a home.
 
-The finance printable pack and interactive app consume the same content files. Edit canonical CSV/answer key under the finance practice directory, then run `node scripts/sync-finance.cjs` to regenerate the embedded printable data and old download aliases. Current sample CSV is unquoted; the synchronizer fails clearly if quoted fields are introduced, requiring a real CSV parser.
+The finance printable pack and interactive app read the same practice population, built from the canonical CSV and answer key under the finance practice directory. After editing them, run `node scripts/sync-catalog.cjs` to rebuild the course data and `node scripts/sync-finance.cjs` to refresh the old download aliases in the site root. The sample CSV is unquoted; the build fails clearly if quoted fields are introduced, requiring a real CSV parser.
 
 ## Source review
 

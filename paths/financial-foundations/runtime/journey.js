@@ -1,3 +1,4 @@
+function journeyNumbers(usable=true){const quantity=1000,opening=100000,desk=104000,candidate=103500,correction=usable?-500:0,closing=desk+correction;return {quantity,opening,desk,candidate,correction,closing,pnl:closing-opening,cash:-100000,approved:usable};}
 
 let journeyUsable=true;
 function journeyView(id='booking'){
