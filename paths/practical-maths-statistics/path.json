@@ -10,7 +10,7 @@
     "Python functions, lists, loops and basic arithmetic. No calculus required."
   ],
   "setup": [
-    "Install Python 3.11 or newer.",
+    "Install Python 3.14 or newer.",
     "Extract the practice bundle and keep its Python files together.",
     "Run each stage reference only after attempting its project."
   ],
@@ -1290,7 +1290,7 @@
           "Invalid cases raise ValueError.",
           "The explanation names the denominator and units."
         ],
-        "solution": "\"\"\"Unit-aware calculations. Python 3.11+, standard library only.\"\"\"\nimport math\n\ndef finite(value):\n    if type(value) not in (int, float) or not math.isfinite(value):\n        raise ValueError(\"finite number required\")\n    return value\n\ndef rate(count, seconds):\n    count, seconds = finite(count), finite(seconds)\n    if count < 0 or seconds <= 0:\n        raise ValueError(\"nonnegative count and positive seconds required\")\n    return count / seconds\n\ndef relative_change(old, new):\n    old, new = finite(old), finite(new)\n    if old <= 0 or new < 0:\n        raise ValueError(\"positive base and nonnegative new count required\")\n    return (new - old) / old\n\ndef combined_rate(counts, durations):\n    if not counts or len(counts) != len(durations):\n        raise ValueError(\"nonempty matching observations required\")\n    for count, seconds in zip(counts, durations):\n        rate(count, seconds)\n    return rate(sum(counts), sum(durations))\n\nif __name__ == \"__main__\":\n    print(combined_rate([100,100], [10,30]))\n    print(relative_change(50,40))\n"
+        "solution": "\"\"\"Unit-aware calculations. Python 3.14+, standard library only.\"\"\"\nimport math\n\ndef finite(value):\n    if type(value) not in (int, float) or not math.isfinite(value):\n        raise ValueError(\"finite number required\")\n    return value\n\ndef rate(count, seconds):\n    count, seconds = finite(count), finite(seconds)\n    if count < 0 or seconds <= 0:\n        raise ValueError(\"nonnegative count and positive seconds required\")\n    return count / seconds\n\ndef relative_change(old, new):\n    old, new = finite(old), finite(new)\n    if old <= 0 or new < 0:\n        raise ValueError(\"positive base and nonnegative new count required\")\n    return (new - old) / old\n\ndef combined_rate(counts, durations):\n    if not counts or len(counts) != len(durations):\n        raise ValueError(\"nonempty matching observations required\")\n    for count, seconds in zip(counts, durations):\n        rate(count, seconds)\n    return rate(sum(counts), sum(durations))\n\nif __name__ == \"__main__\":\n    print(combined_rate([100,100], [10,30]))\n    print(relative_change(50,40))\n"
       }
     },
     {

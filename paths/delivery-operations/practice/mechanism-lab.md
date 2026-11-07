@@ -2,7 +2,7 @@
 
 Read the worked lesson, then use this optional lab to try the mechanism yourself.
 
-Requirements: Python 3.11+ with SQLite 3.35+; standard library only.
+Requirements: Python 3.14+ with SQLite 3.35+; standard library only.
 
 From the extracted practice folder:
 

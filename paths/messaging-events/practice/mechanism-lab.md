@@ -2,7 +2,7 @@
 
 Read the worked lesson, then use this optional lab to try the mechanism yourself.
 
-Requirements: Python 3.11+, optional Pika, and the isolated loopback RabbitMQ recipe below.
+Requirements: Python 3.14+, optional Pika, and the isolated loopback RabbitMQ recipe below.
 
 From the extracted practice folder:
 

@@ -1,6 +1,6 @@
 # Git and team workflows: offline practice
 
-Requirements: Python 3.11+ and Git 2.28+ on PATH. Tested locally using Python 3.14 and Git 2.55.0.windows.5; CI should also run Python 3.11 on Linux. Extract all files into one folder; run commands there.
+Requirements: Python 3.14+ and Git 2.28+ on PATH. Tested locally using Python 3.14 and Git 2.55.0.windows.5; CI also runs Python 3.15 on Linux. Extract all files into one folder; run commands there.
 
 ```
 python -B sandbox.py --stage all --workspace-parent .

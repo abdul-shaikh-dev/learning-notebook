@@ -7,7 +7,7 @@
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Basic Python functions, lists and exceptions; vocabulary is introduced before deeper diagnosis.",
-    "Python 3.11+ and a terminal for runnable labs; no third-party package, account or external service required."
+    "Python 3.14+ and a terminal for runnable labs; no third-party package, account or external service required."
   ],
   "outcomes": [
     "Implement URL-origin comparisons and offline DNS expiry, then explain where an HTTP response fits in the request journey.",
@@ -206,7 +206,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
           "section": "Sections 3.1–3.5: resources, representations, connections",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -255,7 +255,7 @@
           "url": "https://docs.python.org/3/library/socket.html",
           "section": "socket.bind; getsockname; create_connection",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -304,7 +304,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc1035.html",
           "section": "Sections 3.2.1–3.2.2: resource record format and types",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -354,7 +354,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc1035.html",
           "section": "Section 3.2.1: TTL field",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -412,7 +412,7 @@
           "url": "https://docs.python.org/3/library/socket.html",
           "section": "socket.recv; socket.sendall",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -461,7 +461,7 @@
           "url": "https://docs.python.org/3/library/urllib.parse.html",
           "section": "urlsplit; URL parsing security",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -516,7 +516,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
           "section": "Sections 8.3 and 8.4: media type and content encoding",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         },
         {
           "title": "IETF RFC 8259: JSON",
@@ -572,7 +572,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
           "section": "Sections 6 and 9.3.2: message abstraction and HEAD",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -621,7 +621,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
           "section": "Section 15: status codes",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -670,7 +670,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
           "section": "Sections 9.2.1–9.2.2: safe and idempotent methods",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -719,7 +719,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc8446.html",
           "section": "Sections 4.4 and 7: authentication and cryptographic computation",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -768,7 +768,7 @@
           "url": "https://docs.python.org/3/library/ssl.html",
           "section": "create_default_context; security considerations",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -817,7 +817,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc6265.html",
           "section": "Sections 4.1.2.5–4.1.2.6: Secure and HttpOnly",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -866,7 +866,7 @@
           "url": "https://fetch.spec.whatwg.org/#http-cors-protocol",
           "section": "HTTP CORS protocol; CORS-preflight fetch",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -915,7 +915,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc9111.html",
           "section": "Sections 3 and 5.2.2: storing responses and response directives",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -964,7 +964,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
           "section": "Sections 8.8.3, 13.1.2 and 15.4.5: ETag, If-None-Match, 304",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -1013,7 +1013,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
           "section": "Sections 10.2.2 and 15.4.8: Location and 307",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -1062,7 +1062,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
           "section": "Sections 3.7 and 7.6: intermediaries and message forwarding",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -1120,7 +1120,7 @@
           "url": "https://docs.python.org/3/library/socket.html",
           "section": "Timeout notes; socket.settimeout",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -1169,7 +1169,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
           "section": "Section 9.2.2: retrying idempotent requests",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -1218,7 +1218,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
           "section": "Section 8.3: Content-Type; representation metadata",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -1267,7 +1267,7 @@
           "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
           "section": "White-box versus black-box monitoring; symptoms and causes",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -1316,7 +1316,7 @@
           "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
           "section": "Sections 2.5 and 3.5: conformance and messages",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     },
@@ -1365,7 +1365,7 @@
           "url": "https://docs.python.org/3/library/http.server.html",
           "section": "Security considerations; ThreadingHTTPServer",
           "reviewed": "2026-09-27",
-          "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+          "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
         }
       ]
     }

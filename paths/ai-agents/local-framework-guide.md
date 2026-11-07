@@ -6,7 +6,7 @@ change the code, run the case, and explain a surprising result aloud if useful.
 
 ## 1. Make the graph work without a model
 
-Use Python 3.11+ in a fresh environment. These are the versions used for the
+Use Python 3.14+ in a fresh environment. These are the versions used for the
 local verification; they are a reproducibility snapshot, not a claim that later
 releases are identical:
 

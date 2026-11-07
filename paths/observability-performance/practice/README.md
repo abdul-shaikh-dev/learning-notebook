@@ -1,6 +1,6 @@
 # Observability & Performance practice
 
-Requirements: Python 3.11+ standard library, two terminals for interactive load runs. Extract all files into the same folder. No packages, credentials or paid services are needed.
+Requirements: Python 3.14+ standard library, two terminals for interactive load runs. Extract all files into the same folder. No packages, credentials or paid services are needed.
 
 ```
 python telemetry.test.py
@@ -32,7 +32,7 @@ References are linked per lesson; OpenTelemetry, Prometheus, Google SRE, Python 
 
 See [mechanism-lab.md](mechanism-lab.md) for `trace_investigation.py`: Two measured JSON timelines, one success and one error, followed by PASS for timeline bounds and error evidence. Timings vary.
 
-Requirements: Python 3.11+ standard library.
+Requirements: Python 3.14+ standard library.
 
 
 ## Reference scope and verification limits

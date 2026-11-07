@@ -7,7 +7,7 @@
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Basic HTTP, Python and terminal use for the local note-service track. React, C#/.NET and SQL Server are needed only for the optional full-stack integration runbook.",
-    "Python 3.11+ and basic terminal use for the independent local lab; Docker is optional, no cloud account required."
+    "Python 3.14+ and basic terminal use for the independent local lab; Docker is optional, no cloud account required."
   ],
   "outcomes": [
     "Name source/artifact/config/schema identities and user release invariants.",
@@ -354,7 +354,7 @@
           "url": "https://docs.python.org/3/library/http.server.html",
           "section": "Security considerations",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ learning-only HTTP service; official docs exclude production use. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+          "scope": "Python 3.14+ learning-only HTTP service; official docs exclude production use. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
         }
       ],
       "stage": "foundation"
@@ -1343,7 +1343,7 @@
           "Labels and digests are distinguished.",
           "The learning-only HTTP server scope is explicit."
         ],
-        "solution": "Use a fresh extracted folder, Python 3.11+ and temporary test fixtures. The packet maps existing-note readability to tested restart persistence and backup values. Record the file digest and v1 label separately; /ready 503 with /live 200 is a recoverable routing condition, not process failure. Docker build/run stays reviewed-only unless actually executed."
+        "solution": "Use a fresh extracted folder, Python 3.14+ and temporary test fixtures. The packet maps existing-note readability to tested restart persistence and backup values. Record the file digest and v1 label separately; /ready 503 with /live 200 is a recoverable routing condition, not process failure. Docker build/run stays reviewed-only unless actually executed."
       }
     },
     {

@@ -71,7 +71,7 @@
       ],
       "prerequisites": [],
       "notes": [
-        "Python 3.11+ and standard library only.",
+        "Python 3.14+ and standard library only.",
         "Optional external tools are separately documented and not included in the local verification claim."
       ]
     },
@@ -115,7 +115,7 @@
       ],
       "prerequisites": [],
       "notes": [
-        "Python 3.11+ and standard library only.",
+        "Python 3.14+ and standard library only.",
         "Optional external tools are separately documented and not included in the local verification claim.",
         "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
       ]
@@ -152,7 +152,7 @@
       ],
       "prerequisites": [],
       "notes": [
-        "Python 3.11+ and standard library only.",
+        "Python 3.14+ and standard library only.",
         "Optional external tools are separately documented and not included in the local verification claim."
       ]
     }

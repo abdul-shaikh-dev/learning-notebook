@@ -3,7 +3,7 @@
 Each fact runs the course's own labs (the offline models, the loopback HTTP server and the loopback TCP
 framing exchange) or the standard library they rely on, and returns the text of the option its result
 supports. The script fails if that differs from the authored correct option. Nothing leaves 127.0.0.1.
-Run with Python 3.11+: python tests/network_checkpoint_facts.py
+Run with Python 3.14+: python tests/network_checkpoint_facts.py
 """
 import http.cookies
 import ipaddress

@@ -1,6 +1,6 @@
 # Two practical finance investigations
 
-All data is synthetic. Work the arithmetic in a spreadsheet or on paper before running the reference. The CSVs and Python files are together at the root of the finance practice ZIP. Python 3.11+ is optional; no packages, market feeds or account access are needed.
+All data is synthetic. Work the arithmetic in a spreadsheet or on paper before running the reference. The CSVs and Python files are together at the root of the finance practice ZIP. Python 3.14+ is optional; no packages, market feeds or account access are needed.
 
 Run `python finance_workbook.py` for calculations and `python -m unittest -v test_finance_workbook.py` for five checks. The code uses decimal arithmetic. It is a small fixture, not an arbitrary-file parser or production reporting engine.
 

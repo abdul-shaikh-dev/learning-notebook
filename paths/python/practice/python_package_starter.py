@@ -10,7 +10,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "notebook-studylog-demo"
 version = "0.1.0"
-requires-python = ">=3.11"
+requires-python = ">=3.14"
 dependencies = []
 
 [project.scripts]

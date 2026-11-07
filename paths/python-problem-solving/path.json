@@ -7,7 +7,7 @@
   "level": "Guided foundations → common patterns → mixed practical problems",
   "prerequisites": [
     "Comfort with basic Python values, loops and functions. Revisit the Python path whenever a construct is unfamiliar.",
-    "Python 3.11 or newer and an editor; no prior algorithm interview experience required."
+    "Python 3.14 or newer and an editor; no prior algorithm interview experience required."
   ],
   "outcomes": [
     "Translate a problem statement into a precise function contract.",
@@ -114,7 +114,7 @@
       "id": "sum-approved",
       "title": "1. Total approved minutes",
       "stage": "foundation",
-      "takeaway": "starter · Python 3.11+ · Test your solution locally",
+      "takeaway": "starter · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -133,7 +133,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Durations and `minimum` are integers from 0 to 10,000."
           ]
         }
@@ -171,7 +171,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Numeric types: integer comparisons and addition",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -179,7 +179,7 @@
       "id": "clamp-readings",
       "title": "2. Keep readings within limits",
       "stage": "foundation",
-      "takeaway": "starter · Python 3.11+ · Test your solution locally",
+      "takeaway": "starter · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -198,7 +198,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "`-10_000 <= low <= high <= 10_000`. Readings are integers in that same numeric range."
           ]
         }
@@ -236,7 +236,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Numeric comparisons; mutable sequence append",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -244,7 +244,7 @@
       "id": "first-long-label",
       "title": "3. Find the first label that fits",
       "stage": "foundation",
-      "takeaway": "starter · Python 3.11+ · Test your solution locally",
+      "takeaway": "starter · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -263,7 +263,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Labels contain ASCII characters only. `minimum` is from 0 to 1,001."
           ]
         }
@@ -301,7 +301,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Common sequence operations: len and indexing",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -309,7 +309,7 @@
       "id": "longest-active-run",
       "title": "4. Measure an active streak",
       "stage": "foundation",
-      "takeaway": "starter · Python 3.11+ · Test your solution locally",
+      "takeaway": "starter · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -328,7 +328,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Each flag is exactly the integer 0 or 1."
           ]
         }
@@ -366,7 +366,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Numeric types: integer comparisons and addition",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -374,7 +374,7 @@
       "id": "clean-label",
       "title": "5. Normalize a display label",
       "stage": "foundation",
-      "takeaway": "starter · Python 3.11+ · Test your solution locally",
+      "takeaway": "starter · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -393,7 +393,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "`text` contains only ASCII letters A-Z, a-z and literal spaces."
           ]
         }
@@ -431,7 +431,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "String methods: lower, split with an explicit separator, and join",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -439,7 +439,7 @@
       "id": "reading-changes",
       "title": "6. Report changes between readings",
       "stage": "foundation",
-      "takeaway": "starter · Python 3.11+ · Test your solution locally",
+      "takeaway": "starter · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -458,7 +458,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Readings are integers from -10,000 to 10,000."
           ]
         }
@@ -496,7 +496,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Common sequence operations: indexing; integer subtraction",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -504,7 +504,7 @@
       "id": "keep-first-labels",
       "title": "7. Keep the first occurrence",
       "stage": "foundation",
-      "takeaway": "starter · Python 3.11+ · Test your solution locally",
+      "takeaway": "starter · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -523,7 +523,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Labels contain ASCII characters only."
           ]
         }
@@ -561,7 +561,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Set types: membership and add; mutable sequence append",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -569,7 +569,7 @@
       "id": "stock-totals",
       "title": "8. Combine delivery quantities",
       "stage": "foundation",
-      "takeaway": "starter · Python 3.11+ · Test your solution locally",
+      "takeaway": "starter · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -588,7 +588,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Each row has exactly two entries: a nonempty ASCII item name and an integer quantity from -1,000 to 1,000."
           ]
         }
@@ -626,7 +626,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Mapping types: dict.get and assignment",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -634,7 +634,7 @@
       "id": "column-totals",
       "title": "9. Total uneven rows",
       "stage": "foundation",
-      "takeaway": "starter · Python 3.11+ · Test your solution locally",
+      "takeaway": "starter · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -653,7 +653,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "At most 1,000 rows and at most 10,000 integers in total. Values are from -1,000 to 1,000."
           ]
         }
@@ -691,7 +691,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Mutable sequence operations: indexing, append and assignment",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -699,7 +699,7 @@
       "id": "group-by-initial",
       "title": "10. Group names by initial",
       "stage": "foundation",
-      "takeaway": "starter · Python 3.11+ · Test your solution locally",
+      "takeaway": "starter · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -718,7 +718,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Names contain ASCII letters only, or are empty."
           ]
         }
@@ -756,7 +756,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "String indexing; mapping membership and assignment; list append",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -764,7 +764,7 @@
       "id": "most-requested",
       "title": "11. Choose the most requested label",
       "stage": "intermediate",
-      "takeaway": "developing · Python 3.11+ · Test your solution locally",
+      "takeaway": "developing · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -783,7 +783,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "ASCII labels; exact case-sensitive matching."
           ]
         }
@@ -821,7 +821,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Mapping types: dict.get, indexing and assignment",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -829,7 +829,7 @@
       "id": "can-fill-pair",
       "title": "12. Pack exactly two entries",
       "stage": "intermediate",
-      "takeaway": "developing · Python 3.11+ · Test your solution locally",
+      "takeaway": "developing · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -848,7 +848,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Sizes and `target` are integers from -10,000 to 10,000. Input is already sorted."
           ]
         }
@@ -886,7 +886,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence indexing and numeric comparisons",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -894,7 +894,7 @@
       "id": "shared-readings",
       "title": "13. Match repeated readings",
       "stage": "intermediate",
-      "takeaway": "developing · Python 3.11+ · Test your solution locally",
+      "takeaway": "developing · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -913,7 +913,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Both lists are nondecreasing integer lists with values from -10,000 to 10,000."
           ]
         }
@@ -951,7 +951,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence indexing and mutable sequence append",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -959,7 +959,7 @@
       "id": "busiest-block",
       "title": "14. Find the busiest fixed block",
       "stage": "intermediate",
-      "takeaway": "developing · Python 3.11+ · Test your solution locally",
+      "takeaway": "developing · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -978,7 +978,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "`width` is an integer from 1 to 1,001. Counts are integers from 0 to 10,000."
           ]
         }
@@ -1016,7 +1016,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence indexing and integer arithmetic",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -1024,7 +1024,7 @@
       "id": "affordable-stretch",
       "title": "15. Fit consecutive costs into a budget",
       "stage": "intermediate",
-      "takeaway": "developing · Python 3.11+ · Test your solution locally",
+      "takeaway": "developing · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -1043,7 +1043,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Costs and `budget` are nonnegative integers from 0 to 10,000. Negative costs are outside the contract."
           ]
         }
@@ -1081,7 +1081,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence indexing and integer arithmetic",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -1089,7 +1089,7 @@
       "id": "range-totals",
       "title": "16. Answer several range totals",
       "stage": "intermediate",
-      "takeaway": "developing · Python 3.11+ · Test your solution locally",
+      "takeaway": "developing · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -1108,7 +1108,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Values are integers from -10,000 to 10,000. Every query has `0 <= start <= stop <= len(values)`. At most 1,000 queries."
           ]
         }
@@ -1146,7 +1146,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "List indexing including negative indices; mutable sequence append",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -1154,7 +1154,7 @@
       "id": "balance-marker",
       "title": "17. Place a balanced marker",
       "stage": "intermediate",
-      "takeaway": "developing · Python 3.11+ · Test your solution locally",
+      "takeaway": "developing · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -1173,7 +1173,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Integer values from -10,000 to 10,000; negative values are allowed."
           ]
         }
@@ -1211,7 +1211,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Numeric types: integer addition, subtraction and equality",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -1219,7 +1219,7 @@
       "id": "first-suitable",
       "title": "18. Find the first suitable capacity",
       "stage": "intermediate",
-      "takeaway": "developing · Python 3.11+ · Test your solution locally",
+      "takeaway": "developing · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -1238,7 +1238,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Capacities and `required` are integers from 0 to 10,000."
           ]
         }
@@ -1276,7 +1276,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence indexing; numeric comparisons and floor division",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         },
         {
           "title": "Python documentation: bisect",
@@ -1291,7 +1291,7 @@
       "id": "balanced-groups",
       "title": "19. Check nested groups",
       "stage": "intermediate",
-      "takeaway": "developing · Python 3.11+ · Test your solution locally",
+      "takeaway": "developing · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -1310,7 +1310,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Only ASCII letters, spaces and the characters `()[]{}` appear."
           ]
         }
@@ -1348,7 +1348,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "List append and pop; string and dictionary membership",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -1356,7 +1356,7 @@
       "id": "undo-notes",
       "title": "20. Apply note edits with undo",
       "stage": "intermediate",
-      "takeaway": "developing · Python 3.11+ · Test your solution locally",
+      "takeaway": "developing · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -1375,7 +1375,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "All commands follow this grammar and use ASCII characters only. Notes may contain additional colons or the word `undo`."
           ]
         }
@@ -1413,7 +1413,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "String slicing; list append and pop",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -1421,7 +1421,7 @@
       "id": "read-settings",
       "title": "21. Read small settings lines",
       "stage": "advanced",
-      "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+      "takeaway": "stretch · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -1440,7 +1440,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "All lines use printable ASCII characters. Invalid lines are expected and must be skipped."
           ]
         }
@@ -1478,7 +1478,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "String methods: strip with explicit characters, startswith and partition; mapping assignment",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -1486,7 +1486,7 @@
       "id": "latest-samples",
       "title": "22. Keep the latest device sample",
       "stage": "advanced",
-      "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+      "takeaway": "stretch · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -1505,7 +1505,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Device is a nonempty ASCII string. Timestamp is an integer from 0 to 1,000,000. Reading is an integer from -10,000 to 10,000. Every row has exactly three entries."
           ]
         }
@@ -1543,7 +1543,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Dictionary membership and assignment; list indexing",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -1551,7 +1551,7 @@
       "id": "maintenance-coverage",
       "title": "23. Combine maintenance coverage",
       "stage": "advanced",
-      "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+      "takeaway": "stretch · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -1570,7 +1570,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Every row has two integer endpoints with `0 <= start < end <= 1_000_000`. Input may be unsorted or repeated."
           ]
         }
@@ -1608,7 +1608,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence comparisons and mutable sequence assignment",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -1616,7 +1616,7 @@
       "id": "first-open-slot",
       "title": "24. Find time for a short appointment",
       "stage": "advanced",
-      "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+      "takeaway": "stretch · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -1635,7 +1635,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "`0 <= day_end <= 1_000_000` and `1 <= duration <= 1_000_000`. Every `busy` row satisfies `0 <= start < end <= day_end`."
           ]
         }
@@ -1673,7 +1673,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence comparisons and numeric comparisons",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -1681,7 +1681,7 @@
       "id": "peak-requests",
       "title": "25. Measure a request burst",
       "stage": "advanced",
-      "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+      "takeaway": "stretch · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -1700,7 +1700,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Timestamps are nondecreasing integers from 0 to 1,000,000. `width` is from 1 to 1,000,000."
           ]
         }
@@ -1738,7 +1738,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence indexing and integer arithmetic",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -1746,7 +1746,7 @@
       "id": "parse-price",
       "title": "26. Convert a price into cents",
       "stage": "advanced",
-      "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+      "takeaway": "stretch · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -1765,7 +1765,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Input is any ASCII string of at most 100 characters. Invalid strings are part of the task."
           ]
         }
@@ -1803,7 +1803,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "String split and membership; integer conversion",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -1811,7 +1811,7 @@
       "id": "compare-releases",
       "title": "27. Compare numeric release labels",
       "stage": "advanced",
-      "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+      "takeaway": "stretch · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -1830,7 +1830,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Each label has 1 to 20 nonempty components. Each component has 1 to 6 ASCII digits. No signs, suffixes or spaces."
           ]
         }
@@ -1868,7 +1868,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "String split; integer conversion and numeric comparisons",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -1876,7 +1876,7 @@
       "id": "ready-order",
       "title": "28. Plan a small preparation list",
       "stage": "advanced",
-      "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+      "takeaway": "stretch · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -1895,7 +1895,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "`tasks` contains at most 100 names, with no duplicates. Each name is a nonempty lowercase ASCII word. Every requirement names two existing tasks. At most 1,000 requirement rows."
           ]
         }
@@ -1933,7 +1933,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Set types: subset comparison and add; mapping indexing",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -1941,7 +1941,7 @@
       "id": "fulfill-orders",
       "title": "29. Process complete stock requests",
       "stage": "advanced",
-      "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+      "takeaway": "stretch · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -1960,7 +1960,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "ASCII item names. Stock quantities are integers from 0 to 10,000. Order quantities are integers from 1 to 10,000. Each order row has exactly two entries."
           ]
         }
@@ -1998,7 +1998,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Dictionary copy, get and assignment",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     },
@@ -2006,7 +2006,7 @@
       "id": "book-most-sessions",
       "title": "30. Fit the most optional sessions",
       "stage": "advanced",
-      "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+      "takeaway": "stretch · Python 3.14+ · Test your solution locally",
       "sections": [
         {
           "title": "The problem",
@@ -2025,7 +2025,7 @@
         {
           "title": "Constraints and edge cases",
           "paragraphs": [
-            "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+            "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
             "Each row contains integer times with `0 <= start < end <= 1_000_000`. Input may be unsorted."
           ]
         }
@@ -2063,7 +2063,7 @@
           "url": "https://docs.python.org/3/builtins/stdtypes.html",
           "section": "Sequence indexing; numeric comparisons",
           "reviewed": "2026-10-02",
-          "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
         }
       ]
     }

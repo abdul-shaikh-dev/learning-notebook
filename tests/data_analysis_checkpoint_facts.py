@@ -5,7 +5,7 @@ attach_owners, summarize, threshold_rates and run, on support_tickets.csv and te
 copies of them made in memory or in a temporary directory. Each returns the text of the option the result
 supports, and the script fails if that differs from the authored correct option.
 Needs the course's pinned packages (practice/requirements.txt), as in the data-science CI job.
-Run with Python 3.11+: python tests/data_analysis_checkpoint_facts.py
+Run with Python 3.14+: python tests/data_analysis_checkpoint_facts.py
 """
 import json
 from pathlib import Path

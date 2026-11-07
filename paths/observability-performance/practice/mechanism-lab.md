@@ -2,7 +2,7 @@
 
 Read the worked lesson, then use this optional lab to try the mechanism yourself.
 
-Requirements: Python 3.11+ standard library.
+Requirements: Python 3.14+ standard library.
 
 From the extracted practice folder:
 

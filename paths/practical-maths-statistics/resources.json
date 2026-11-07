@@ -71,7 +71,7 @@
         }
       ],
       "notes": [
-        "Python 3.11 or newer; standard library only.",
+        "Python 3.14 or newer; standard library only.",
         "Run from the extracted folder with all Python files together.",
         "The synthetic examples check arithmetic and input contracts, not real-world causal effects."
       ]
@@ -114,7 +114,7 @@
         }
       ],
       "notes": [
-        "Python 3.11 or newer; standard library only.",
+        "Python 3.14 or newer; standard library only.",
         "Run from the extracted folder with all Python files together.",
         "The synthetic examples check arithmetic and input contracts, not real-world causal effects."
       ]
@@ -157,7 +157,7 @@
         }
       ],
       "notes": [
-        "Python 3.11 or newer; standard library only.",
+        "Python 3.14 or newer; standard library only.",
         "Run from the extracted folder with all Python files together.",
         "The synthetic examples check arithmetic and input contracts, not real-world causal effects."
       ]

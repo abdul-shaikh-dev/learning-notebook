@@ -1,4 +1,4 @@
-"""Real loopback TCP, newline framing and bounded failure cases. Python 3.11+."""
+"""Real loopback TCP, newline framing and bounded failure cases. Python 3.14+."""
 import socket
 from concurrent.futures import ThreadPoolExecutor
 

@@ -1,4 +1,4 @@
-"""Unit-aware calculations. Python 3.11+, standard library only."""
+"""Unit-aware calculations. Python 3.14+, standard library only."""
 import math
 
 def finite(value):

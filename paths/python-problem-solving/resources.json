@@ -88,7 +88,7 @@
         }
       ],
       "notes": [
-        "Python 3.11 or newer. Standard library only; no accounts, packages or network requests.",
+        "Python 3.14 or newer. Standard library only; no accounts, packages or network requests.",
         "The runner executes code with your normal local permissions. Its timeout is an accidental-hang safeguard, not a security sandbox.",
         "Commands test the original challenge only. Variation prompts are ungraded follow-ups; add your own tests for changed requirements."
       ]
@@ -136,7 +136,7 @@
         }
       ],
       "notes": [
-        "Python 3.11 or newer. Standard library only; no accounts, packages or network requests.",
+        "Python 3.14 or newer. Standard library only; no accounts, packages or network requests.",
         "The runner executes code with your normal local permissions. Its timeout is an accidental-hang safeguard, not a security sandbox.",
         "Commands test the original challenge only. Variation prompts are ungraded follow-ups; add your own tests for changed requirements."
       ]
@@ -184,7 +184,7 @@
         }
       ],
       "notes": [
-        "Python 3.11 or newer. Standard library only; no accounts, packages or network requests.",
+        "Python 3.14 or newer. Standard library only; no accounts, packages or network requests.",
         "The runner executes code with your normal local permissions. Its timeout is an accidental-hang safeguard, not a security sandbox.",
         "Commands test the original challenge only. Variation prompts are ungraded follow-ups; add your own tests for changed requirements."
       ]

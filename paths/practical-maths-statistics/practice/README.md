@@ -1,6 +1,6 @@
 # Practical maths and statistics practice
 
-Use Python 3.11 or newer. No packages, network connection or GPU are required.
+Use Python 3.14 or newer. No packages, network connection or GPU are required.
 Keep all four Python files together. Commands below run from the extracted folder.
 These are small reference calculations, not a statistical inference library.
 

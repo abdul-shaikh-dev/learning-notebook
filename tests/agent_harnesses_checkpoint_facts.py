@@ -4,7 +4,7 @@ Each fact runs the course's offline harness (paths/agent-harnesses/practice/harn
 SQLite checkpoint store (durable_state.py) or the persisted-run exercise (persisted_run_lab.py), and
 returns the text of the option its result supports. The script fails if that differs from the authored
 correct option. No model, network or credentials are used; SQLite files live in a temporary folder.
-Run with Python 3.11+: python tests/agent_harnesses_checkpoint_facts.py
+Run with Python 3.14+: python tests/agent_harnesses_checkpoint_facts.py
 """
 import json
 from pathlib import Path

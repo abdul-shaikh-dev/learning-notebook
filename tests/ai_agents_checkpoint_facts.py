@@ -4,7 +4,7 @@ Each fact runs the course's offline workshop (paths/ai-agents/workshop.py), its 
 builders (provider_eval.py, provider_scaffold.py) or the model-free search in local_framework_lab.py, and
 returns the text of the option its result supports. The script fails if that differs from the authored
 correct option. No model, network or credentials are used.
-Run with Python 3.11+: python tests/ai_agents_checkpoint_facts.py
+Run with Python 3.14+: python tests/ai_agents_checkpoint_facts.py
 """
 import json
 from pathlib import Path

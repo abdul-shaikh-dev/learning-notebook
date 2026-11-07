@@ -17,7 +17,7 @@
   ],
   "setup": [
     "Download and extract the complete practice bundle.",
-    "The metric and partition lab needs Python 3.11+ and no packages.",
+    "The metric and partition lab needs Python 3.14+ and no packages.",
     "For the model lab use Python 3.14, a virtual environment and requirements.txt. No GPU, cloud service or API key is needed."
   ],
   "nextSteps": [

@@ -123,7 +123,7 @@
         }
       ],
       "notes": [
-        "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
+        "Python 3.14 or newer; familiarity with functions, collections, exceptions and classes.",
         "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
         "Use the supplied code as a reference. Test your own project and report its results separately.",
         "Attempt only validation and two formatters at this stage. The shared workshop also contains later examples; defer batch-refactor.md and versioned commit behavior until unit-of-work and refactoring."
@@ -173,7 +173,7 @@
         }
       ],
       "notes": [
-        "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
+        "Python 3.14 or newer; familiarity with functions, collections, exceptions and classes.",
         "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]
@@ -237,7 +237,7 @@
         }
       ],
       "notes": [
-        "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
+        "Python 3.14 or newer; familiarity with functions, collections, exceptions and classes.",
         "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
         "Use the supplied code as a reference. Test your own project and report its results separately."
       ]

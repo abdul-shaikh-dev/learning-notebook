@@ -1,6 +1,6 @@
 # Linux & Operating Systems practice
 
-Python 3.11+ standard library only. Extract the ZIP: all files are flat inside
+Python 3.14+ standard library only. Extract the ZIP: all files are flat inside
 linux-operating-systems-practice. Use `python`, `py`, or `python3` consistently
 for your installation. Run from that folder:
 
@@ -47,9 +47,9 @@ kernel resource limits and crash durability remain independent integration work.
 
 See [mechanism-lab.md](mechanism-lab.md) for `linux_fd_drill.py`: JSON shows EMFILE reached, before=after_cleanup and reopen=ok; PASS confirms child-only limits. Windows direct execution reports SKIP.
 
-Requirements: Python 3.11+ inside an existing Linux/WSL distribution with /proc mounted; no sudo.
+Requirements: Python 3.14+ inside an existing Linux/WSL distribution with /proc mounted; no sudo.
 
 
 ## Reference scope and verification limits
 
-The Linux man-pages explain the operating-system mechanisms. Distribution-specific commands are optional Linux exercises. Portable examples require Python 3.11 or later and do not emulate the Linux kernel.
+The Linux man-pages explain the operating-system mechanisms. Distribution-specific commands are optional Linux exercises. Portable examples require Python 3.14 or later and do not emulate the Linux kernel.

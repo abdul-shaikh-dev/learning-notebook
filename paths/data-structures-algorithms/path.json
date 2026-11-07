@@ -132,7 +132,7 @@
           "url": "https://algs4.cs.princeton.edu/14analysis/",
           "section": "Analysis of Algorithms",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -181,7 +181,7 @@
           "url": "https://algs4.cs.princeton.edu/13stacks/",
           "section": "Resizing arrays and linked lists",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -231,7 +231,7 @@
           "url": "https://algs4.cs.princeton.edu/34hash/",
           "section": "Hash tables",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -280,7 +280,7 @@
           "url": "https://algs4.cs.princeton.edu/13stacks/",
           "section": "Stacks and queues",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -361,7 +361,7 @@
           "url": "https://algs4.cs.princeton.edu/11model/",
           "section": "Binary search",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -419,7 +419,7 @@
           "url": "https://algs4.cs.princeton.edu/21elementary/",
           "section": "Sorting stability and comparison model",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -475,7 +475,7 @@
           "url": "https://algs4.cs.princeton.edu/32bst/",
           "section": "Recursive tree search and inorder traversal",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -542,7 +542,7 @@
           "url": "https://algs4.cs.princeton.edu/32bst/",
           "section": "Order-based methods and deletion",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -598,7 +598,7 @@
           "url": "https://algs4.cs.princeton.edu/41graph/",
           "section": "Breadth-first search",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -647,7 +647,7 @@
           "url": "https://algs4.cs.princeton.edu/24pq/",
           "section": "Binary heaps",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -703,7 +703,7 @@
           "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/pages/lecture-notes/",
           "section": "Dynamic programming lectures 19–22",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -757,7 +757,7 @@
           "url": "https://algs4.cs.princeton.edu/13stacks/",
           "section": "Linked lists",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -811,7 +811,7 @@
           "url": "https://algs4.cs.princeton.edu/22mergesort/",
           "section": "Top-down mergesort",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -865,7 +865,7 @@
           "url": "https://introcs.cs.princeton.edu/java/42sort/",
           "section": "Binary search and ordered data",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -926,7 +926,7 @@
           "url": "https://docs.python.org/3.11/library/stdtypes.html#mapping-types-dict",
           "section": "Dictionary operations supporting maintained state",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -991,7 +991,7 @@
           "url": "https://algs4.cs.princeton.edu/42digraph/",
           "section": "Directed cycles and topological sort",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -1051,7 +1051,7 @@
           "url": "https://algs4.cs.princeton.edu/44sp/",
           "section": "Dijkstra algorithm and nonnegative weights",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -1113,7 +1113,7 @@
           "url": "https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/ff2a7015ff913fc01f0381d8f5126a9a_MIT6_046JS15_lec01.pdf",
           "section": "Lecture 1, pages 2-4: interval scheduling and the exchange proof",
           "reviewed": "2026-10-02",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -1167,7 +1167,7 @@
           "url": "https://introcs.cs.princeton.edu/java/23recursion/",
           "section": "Recursive backtracking",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -1228,7 +1228,7 @@
           "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/pages/lecture-notes/",
           "section": "Dynamic programming and knapsack",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     },
@@ -1291,7 +1291,7 @@
           "url": "https://docs.python.org/3.11/library/unittest.html",
           "section": "Test cases and assertions",
           "reviewed": "2026-09-27",
-          "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
     }

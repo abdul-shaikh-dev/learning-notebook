@@ -6,7 +6,7 @@ answers run linux_fd_drill.py, which works only on Linux; on any other platform 
 skipped, not passed, and the summary says so. CI runs this script on Linux, so all of them run there.
 Each fact returns the text of the option the result supports, and the script fails if that differs from
 the authored correct option.
-Run with Python 3.11+: python tests/linux_checkpoint_facts.py
+Run with Python 3.14+: python tests/linux_checkpoint_facts.py
 """
 from functools import cache
 import json

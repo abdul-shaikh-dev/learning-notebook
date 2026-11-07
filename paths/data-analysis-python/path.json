@@ -17,8 +17,8 @@
   ],
   "setup": [
     "Download the practice kit and read README.md.",
-    "Run the standard-library dataset checks with Python 3.11 or newer.",
-    "For executable analysis, use Python 3.12+ and install requirements.txt in a virtual environment. The tested interpreter is Python 3.14."
+    "Run the standard-library dataset checks with Python 3.14 or newer.",
+    "For executable analysis, use Python 3.14+ and install requirements.txt in a virtual environment. The tested interpreter is Python 3.14."
   ],
   "nextSteps": [
     "Study machine learning foundations after validating the reporting pipeline."

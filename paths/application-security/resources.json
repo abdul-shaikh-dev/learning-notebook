@@ -123,7 +123,7 @@
         }
       ],
       "notes": [
-        "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
+        "Python 3.14+ standard library. SQLite must be available in the Python runtime.",
         "Build the extension in a copy. Report which integration checks you ran and which remain untested."
       ]
     },
@@ -182,7 +182,7 @@
         }
       ],
       "notes": [
-        "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
+        "Python 3.14+ standard library. SQLite must be available in the Python runtime.",
         "Build the extension in a copy. Report which integration checks you ran and which remain untested."
       ]
     },
@@ -237,7 +237,7 @@
         }
       ],
       "notes": [
-        "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
+        "Python 3.14+ standard library. SQLite must be available in the Python runtime.",
         "Build the extension in a copy. Report which integration checks you ran and which remain untested."
       ]
     }

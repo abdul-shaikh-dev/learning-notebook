@@ -7,7 +7,7 @@
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Basic Python and SQL transactions for the local exercises.",
-    "Python 3.11+ for the offline lab. No cloud account, payment method or broker is required."
+    "Python 3.14+ for the offline lab. No cloud account, payment method or broker is required."
   ],
   "outcomes": [
     "Choose queues, subscriptions and logs from delivery requirements.",

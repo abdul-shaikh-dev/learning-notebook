@@ -1,6 +1,6 @@
 # Networking & the Web practice
 
-Python 3.11+, standard library only. Keep all files together.
+Python 3.14+, standard library only. Keep all files together.
 
 ```text
 python network_foundation.py
@@ -31,9 +31,9 @@ Local verification on 2026-09-27: Python 3.14; 12 regression tests passed. Refer
 
 See [mechanism-lab.md](mechanism-lab.md) for `tcp_framing.py`: PASS covers valid split/coalesced UTF-8 frames, empty EOF, truncated EOF and the 64-byte frame limit.
 
-Requirements: Python 3.11+ standard library; permission to bind an ephemeral loopback TCP port.
+Requirements: Python 3.14+ standard library; permission to bind an ephemeral loopback TCP port.
 
 
 ## Reference scope and verification limits
 
-Sources explain the named mechanisms; scenarios and lab rules are original teaching examples. Python labs require version 3.11 or later. Local test results are recorded separately from internet, browser and deployment observations.
+Sources explain the named mechanisms; scenarios and lab rules are original teaching examples. Python labs require version 3.14 or later. Local test results are recorded separately from internet, browser and deployment observations.

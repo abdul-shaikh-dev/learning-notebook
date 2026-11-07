@@ -5,7 +5,7 @@ expand/backfill/contract steps in schema_coexistence.py, the v1 -> v2 -> v1 dril
 distinct_artifact_drill.py and release_app.py on an ephemeral 127.0.0.1 port), or reads the Dockerfile
 and ci-example.yaml as text, and returns the text of the option the result supports. The script fails if
 that differs from the authored correct option. No Docker, network or deployment is used.
-Run with Python 3.11+: python tests/delivery_operations_checkpoint_facts.py
+Run with Python 3.14+: python tests/delivery_operations_checkpoint_facts.py
 """
 from contextlib import closing, contextmanager, redirect_stdout
 from functools import cache

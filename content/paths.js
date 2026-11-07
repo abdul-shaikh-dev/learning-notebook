@@ -22,7 +22,7 @@ const LEARNING_PATHS = [
     ],
     "setup": [
       "Read the task contract and trust-boundary lessons before running code.",
-      "Download harness_workshop.py and test_harness_workshop.py into one folder with Python 3.10+ installed.",
+      "Download harness_workshop.py and test_harness_workshop.py into one folder with Python 3.14+ installed.",
       "Run python harness_workshop.py, then python -m unittest -v test_harness_workshop.py. The scripts use only the standard library.",
       "All model actions are scripted and all business tools are in-memory fakes. The runtime does not make network calls, execute shell commands or read/write application files.",
       "The runbook and ADR are design exercises, not production deployment instructions."
@@ -3762,7 +3762,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.10 or newer; standard library only.",
+            "Python 3.14 or newer; standard library only.",
             "The demo includes a trusted approval followed by an in-memory fake write. The foundation assessment asks you to build the read-only subset. The baseline has no real model, external tool execution, authenticated approval service or durable store.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -3805,7 +3805,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.10 or newer; standard library only.",
+            "Python 3.14 or newer; standard library only.",
             "The demo includes a trusted approval followed by an in-memory fake write. The foundation assessment asks you to build the read-only subset. The baseline has no real model, external tool execution, authenticated approval service or durable store.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -3862,7 +3862,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.10 or newer; standard library only.",
+            "Python 3.14 or newer; standard library only.",
             "The demo includes a trusted approval followed by an in-memory fake write. The foundation assessment asks you to build the read-only subset. The baseline has no real model, external tool execution, authenticated approval service or durable store.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -3909,7 +3909,7 @@ const LEARNING_PATHS = [
     "prerequisites": [
       "No prior AI knowledge required; begin with the vocabulary lessons.",
       "Basic Python functions, dictionaries, exceptions and tests help with the optional executable workshop.",
-      "Python 3.11+ for local practice; no API key, paid account or network call is required."
+      "Python 3.14+ for local practice; no API key, paid account or network call is required."
     ],
     "outcomes": [
       "Distinguish a model, agent loop, workflow and harness.",
@@ -7578,7 +7578,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11 or newer; no model credentials or external services.",
+            "Python 3.14 or newer; no model credentials or external services.",
             "The decision source is scripted and offline. evaluation_cases.json is a specification starter; it does not run a semantic judge or measure model accuracy.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -7620,7 +7620,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11 or newer; no model credentials or external services.",
+            "Python 3.14 or newer; no model credentials or external services.",
             "The decision source is scripted and offline. evaluation_cases.json is a specification starter; it does not run a semantic judge or measure model accuracy.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -7728,7 +7728,7 @@ const LEARNING_PATHS = [
     "setup": [
       "Extract the practice bundle and keep all files together at its flat folder root.",
       "Read README.md and the three stage kits before executing commands.",
-      "Use Python 3.11+ with SQLite; run python -B -m unittest -v test_security_lab.py test_security_http.py. The HTTP test uses only a loopback fixture server; no live credentials or identity provider are needed."
+      "Use Python 3.14+ with SQLite; run python -B -m unittest -v test_security_lab.py test_security_http.py. The HTTP test uses only a loopback fixture server; no live credentials or identity provider are needed."
     ],
     "outcomes": [
       "Trace assets, trust boundaries and abuse cases.",
@@ -7902,7 +7902,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x24-V15-Secure-Coding-and-Architecture.md",
             "section": "V15: threat modeling and architecture",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OWASP Threat Modeling Cheat Sheet",
@@ -7973,7 +7973,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x15-V6-Authentication.md",
             "section": "V6: authentication architecture",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           }
         ],
         "extraQuiz": [
@@ -8037,7 +8037,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x15-V6-Authentication.md",
             "section": "V6: general authentication security",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OWASP Authentication Cheat Sheet",
@@ -8115,7 +8115,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x17-V8-Authorization.md",
             "section": "V8: authorization design and operation",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OWASP Authorization Cheat Sheet",
@@ -8933,7 +8933,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x11-V2-Validation-and-Business-Logic.md",
             "section": "V2: input validation and business logic",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           }
         ],
         "extraQuiz": [
@@ -8996,7 +8996,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x16-V7-Session-Management.md",
             "section": "V7: session lifecycle and termination",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           }
         ],
         "diagram": {
@@ -9170,7 +9170,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x12-V3-Web-Frontend-Security.md",
             "section": "V3: browser security controls",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "RFC 6265 HTTP State Management Mechanism",
@@ -9248,7 +9248,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x15-V6-Authentication.md",
             "section": "V6: password and multifactor authentication",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OWASP Password Storage Cheat Sheet",
@@ -9319,7 +9319,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x12-V3-Web-Frontend-Security.md",
             "section": "V3: cross-site request forgery",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OWASP CSRF Prevention Cheat Sheet",
@@ -9524,7 +9524,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x10-V1-Encoding-and-Sanitization.md",
             "section": "V1: output encoding and sanitization",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OWASP XSS Prevention Cheat Sheet",
@@ -9595,14 +9595,14 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x10-V1-Encoding-and-Sanitization.md",
             "section": "V1: injection prevention",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "Python sqlite3 documentation",
             "url": "https://docs.python.org/3.11/library/sqlite3.html",
             "section": "How to use placeholders to bind values",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ SQLite in-memory fixture; syntax of another database driver may differ."
+            "scope": "Python 3.14+ SQLite in-memory fixture; syntax of another database driver may differ."
           }
         ],
         "extraQuiz": [
@@ -9666,7 +9666,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x19-V10-OAuth-and-OIDC.md",
             "section": "V10: OAuth client and resource server security",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "RFC 9700 OAuth Security BCP",
@@ -9866,7 +9866,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x19-V10-OAuth-and-OIDC.md",
             "section": "V10: OpenID Connect",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OpenID Connect Core 1.0 errata set 2",
@@ -10050,7 +10050,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x19-V10-OAuth-and-OIDC.md",
             "section": "V10: authorization flow defenses",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "RFC 7636 PKCE",
@@ -10236,7 +10236,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x18-V9-Self-contained-Tokens.md",
             "section": "V9: token integrity and validation",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "RFC 8725 JWT Best Current Practices",
@@ -10419,7 +10419,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x22-V13-Configuration.md",
             "section": "V13: secrets management",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OWASP Secrets Management Cheat Sheet",
@@ -10583,7 +10583,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md",
             "section": "V16: security logging and error handling",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           }
         ],
         "extraQuiz": [
@@ -10647,7 +10647,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x24-V15-Secure-Coding-and-Architecture.md",
             "section": "V15: secure dependencies and development",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           }
         ],
         "extraQuiz": [
@@ -10711,7 +10711,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x11-V2-Validation-and-Business-Logic.md",
             "section": "V2: business logic and anti-automation",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           }
         ],
         "extraQuiz": [
@@ -10782,7 +10782,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x04-Assessment_and_Certification.md",
             "section": "Assessment and certification scope",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           },
           {
             "title": "OWASP ASVS project",
@@ -10853,7 +10853,7 @@ const LEARNING_PATHS = [
             "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md",
             "section": "V16: incident evidence and safe error handling",
             "reviewed": "2026-09-27",
-            "scope": "Selected ASVS 5.0.0 controls with Python 3.11+ exercises. The practice guide explains implementation and certification limits."
+            "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
           }
         ],
         "extraQuiz": [
@@ -11184,7 +11184,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
+            "Python 3.14+ standard library. SQLite must be available in the Python runtime.",
             "Build the extension in a copy. Report which integration checks you ran and which remain untested."
           ]
         },
@@ -11243,7 +11243,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
+            "Python 3.14+ standard library. SQLite must be available in the Python runtime.",
             "Build the extension in a copy. Report which integration checks you ran and which remain untested."
           ]
         },
@@ -11298,7 +11298,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ standard library. SQLite must be available in the Python runtime.",
+            "Python 3.14+ standard library. SQLite must be available in the Python runtime.",
             "Build the extension in a copy. Report which integration checks you ran and which remain untested."
           ]
         }
@@ -15634,7 +15634,7 @@ const LEARNING_PATHS = [
     "level": "Foundations → intermediate practice with optional systems labs",
     "prerequisites": [
       "Basic application, network and terminal concepts; earlier delivery, security and system-design paths are helpful.",
-      "Python 3.11+ for the offline lab. No cloud account, payment method or broker is required."
+      "Python 3.14+ for the offline lab. No cloud account, payment method or broker is required."
     ],
     "outcomes": [
       "Map Azure scope, identity and network responsibilities.",
@@ -18556,7 +18556,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ and standard library only.",
+            "Python 3.14+ and standard library only.",
             "Optional external tools are separately documented and not included in the local verification claim."
           ]
         },
@@ -18607,7 +18607,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ and standard library only.",
+            "Python 3.14+ and standard library only.",
             "Optional external tools are separately documented and not included in the local verification claim.",
             "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
           ]
@@ -18651,7 +18651,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ and standard library only.",
+            "Python 3.14+ and standard library only.",
             "Optional external tools are separately documented and not included in the local verification claim."
           ]
         }
@@ -18704,8 +18704,8 @@ const LEARNING_PATHS = [
     ],
     "setup": [
       "Download the practice kit and read README.md.",
-      "Run the standard-library dataset checks with Python 3.11 or newer.",
-      "For executable analysis, use Python 3.12+ and install requirements.txt in a virtual environment. The tested interpreter is Python 3.14."
+      "Run the standard-library dataset checks with Python 3.14 or newer.",
+      "For executable analysis, use Python 3.14+ and install requirements.txt in a virtual environment. The tested interpreter is Python 3.14."
     ],
     "nextSteps": [
       "Study machine learning foundations after validating the reporting pipeline."
@@ -20887,7 +20887,7 @@ const LEARNING_PATHS = [
           ],
           "prerequisites": [],
           "notes": [
-            "Dataset checks use Python 3.11+. Executable analysis uses Python 3.12+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
+            "Dataset checks use Python 3.14+. Executable analysis uses Python 3.14+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
             "The input is fictional and cannot support real service or causal claims."
           ]
         },
@@ -20929,7 +20929,7 @@ const LEARNING_PATHS = [
           ],
           "prerequisites": [],
           "notes": [
-            "Dataset checks use Python 3.11+. Executable analysis uses Python 3.12+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
+            "Dataset checks use Python 3.14+. Executable analysis uses Python 3.14+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
             "The input is fictional and cannot support real service or causal claims."
           ]
         },
@@ -20971,7 +20971,7 @@ const LEARNING_PATHS = [
           ],
           "prerequisites": [],
           "notes": [
-            "Dataset checks use Python 3.11+. Executable analysis uses Python 3.12+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
+            "Dataset checks use Python 3.14+. Executable analysis uses Python 3.14+ and the pinned NumPy, pandas and Matplotlib dependencies. Tested with Python 3.14.",
             "The input is fictional and cannot support real service or causal claims."
           ]
         }
@@ -21013,7 +21013,7 @@ const LEARNING_PATHS = [
     "level": "Foundations → intermediate batch pipelines → selected extensions",
     "prerequisites": [
       "Comfort creating files and opening a terminal.",
-      "Python 3.11+ for the portable practice kit; no external packages.",
+      "Python 3.14+ for the portable practice kit; no external packages.",
       "Basic Python functions and SQL SELECT are helpful; introductory lessons explain the data vocabulary."
     ],
     "outcomes": [
@@ -21129,7 +21129,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/csv.html",
             "section": "DictReader field mapping",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "extraQuiz": [
@@ -21196,14 +21196,14 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/azure/architecture/data-guide/relational-data/etl",
             "section": "Extract, transform and load; ELT",
             "reviewed": "2026-09-30",
-            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.14+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
           },
           {
             "title": "Tutorial and transactions",
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Tutorial and transactions",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "diagram": {
@@ -21377,7 +21377,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/csv.html",
             "section": "Reader objects and newline handling",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "extraQuiz": [
@@ -21444,7 +21444,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "SQLite and Python types",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "extraQuiz": [
@@ -21511,7 +21511,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/csv.html",
             "section": "Error handling",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "extraQuiz": [
@@ -21578,7 +21578,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/datetime.html",
             "section": "Aware and naive objects",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "extraQuiz": [
@@ -21645,14 +21645,14 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/decimal.html",
             "section": "Decimal arithmetic and exact representation",
             "reviewed": "2026-09-30",
-            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.14+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
           },
           {
             "title": "Python integer binding",
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Python integer binding",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "extraQuiz": [
@@ -21727,7 +21727,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Connection context manager",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "extraQuiz": [
@@ -21801,7 +21801,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Transaction control",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "diagram": {
@@ -22423,14 +22423,14 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/azure/data-factory/tutorial-incremental-copy-overview",
             "section": "Delta data loading and watermark",
             "reviewed": "2026-09-30",
-            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.14+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
           },
           {
             "title": "Commit and rollback",
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Commit and rollback",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "extraQuiz": [
@@ -22497,7 +22497,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server?view=sql-server-ver17",
             "section": "SQL Server CDC overview",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "extraQuiz": [
@@ -22564,14 +22564,14 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-dimension-tables",
             "section": "Dimension keys and relationships",
             "reviewed": "2026-09-30",
-            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.14+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
           },
           {
             "title": "SQL Server CREATE TABLE constraints",
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
             "section": "SQL Server CREATE TABLE constraints",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "diagram": {
@@ -22725,14 +22725,14 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-dimension-tables",
             "section": "Slowly changing dimension types",
             "reviewed": "2026-09-30",
-            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.14+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
           },
           {
             "title": "SQL Server table constraints",
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
             "section": "SQL Server table constraints",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "extraQuiz": [
@@ -22799,7 +22799,7 @@ const LEARNING_PATHS = [
             "url": "https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html",
             "section": "Airflow DAG concepts",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "diagram": {
@@ -22973,7 +22973,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/datetime.html",
             "section": "Time comparisons",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           },
           {
             "title": "Beam watermarks and late data",
@@ -23047,7 +23047,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/csv.html",
             "section": "File reading contract",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           },
           {
             "title": "Apache Parquet overview",
@@ -23121,7 +23121,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
             "section": "SQL Server CREATE TABLE column definitions",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "extraQuiz": [
@@ -23188,7 +23188,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Query result iteration",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "extraQuiz": [
@@ -23255,14 +23255,14 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/azure/architecture/security/security-get-started",
             "section": "Security design and identity",
             "reviewed": "2026-09-30",
-            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.11+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
+            "scope": "Concept source inspected on the review date. Fictional worked cases and Python 3.14+ SQLite reference are original teaching examples; cloud services and integrations were not executed."
           },
           {
             "title": "SQL Server CDC capture and cleanup roles",
             "url": "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server?view=sql-server-ver17",
             "section": "SQL Server CDC capture and cleanup roles",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "extraQuiz": [
@@ -23329,7 +23329,7 @@ const LEARNING_PATHS = [
             "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-table-transact-sql?view=sql-server-ver17",
             "section": "SQL Server CREATE TABLE types and constraints",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           },
           {
             "title": "SQL Server datetime2",
@@ -23403,7 +23403,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Transaction commit and rollback",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "extraQuiz": [
@@ -23470,7 +23470,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/sqlite3.html",
             "section": "Transactions and parameter binding",
             "reviewed": "2026-09-30",
-            "scope": "Python 3.11+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+            "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
           }
         ],
         "extraQuiz": [
@@ -23575,7 +23575,7 @@ const LEARNING_PATHS = [
             "Stored IDs, count and exact sum are reconciled after failure.",
             "Explains exact-byte fingerprint and single-process trusted-database assumptions."
           ],
-          "solution": "\"\"\"Bounded single-process SQLite ETL reference. Python 3.11+, no packages.\n\nFour-field CSV, nonnegative integer cents, UTC Z timestamps, exact-byte batch\nfingerprints. Transaction coordinates orders and run marker. Not a live SQL\nServer adapter, orchestrator, streaming engine or power-loss certification.\n\"\"\"\nimport argparse\nimport csv\nfrom datetime import datetime, timezone\nimport hashlib\nimport io\nfrom pathlib import Path\nimport re\nimport sqlite3\nfrom tempfile import TemporaryDirectory\n\nFIELDS=['order_id','customer_id','occurred_at','amount_cents']\nMAX_BYTES=262144\nMAX_ROWS=1000\nSCHEMA=\"\"\"\nCREATE TABLE IF NOT EXISTS runs (\n    batch_id TEXT PRIMARY KEY, fingerprint TEXT NOT NULL, row_count INTEGER NOT NULL);\nCREATE TABLE IF NOT EXISTS orders (\n    order_id TEXT PRIMARY KEY, customer_id TEXT NOT NULL,\n    occurred_at TEXT NOT NULL, amount_cents INTEGER NOT NULL CHECK(amount_cents >= 0));\n\"\"\"\n\ndef identifier(value):\n    if not isinstance(value,str) or not re.fullmatch(r'[A-Za-z0-9_-]{1,64}',value):\n        raise ValueError('identifier contract')\n    return value\n\ndef read_batch(source):\n    with Path(source).open('rb') as stream: raw=stream.read(MAX_BYTES+1)\n    if len(raw)>MAX_BYTES: raise ValueError('batch exceeds byte limit')\n    text=raw.decode('utf-8')\n    reader=csv.DictReader(io.StringIO(text,newline=''),strict=True)\n    if reader.fieldnames != FIELDS: raise ValueError('exact ordered headers required')\n    records=[]\n    seen=set()\n    for number,row in enumerate(reader,start=1):\n        if number>MAX_ROWS: raise ValueError('batch exceeds row limit')\n        if set(row)!=set(FIELDS) or any(v is None for v in row.values()):\n            raise ValueError('row field count')\n        order=identifier(row['order_id']); customer=identifier(row['customer_id'])\n        if order in seen: raise ValueError('duplicate order in source')\n        seen.add(order)\n        value=row['amount_cents']\n        if not re.fullmatch(r'[0-9]{1,12}',value): raise ValueError('amount contract')\n        amount=int(value)\n        instant=row['occurred_at']\n        if not re.fullmatch(r'\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z',instant):\n            raise ValueError('UTC seconds timestamp required')\n        parsed=datetime.fromisoformat(instant.replace('Z','+00:00'))\n        if parsed.utcoffset()!=timezone.utc.utcoffset(parsed): raise ValueError('UTC required')\n        records.append((order,customer,instant,amount))\n    return records,hashlib.sha256(raw).hexdigest()\n\ndef import_csv(source,database,batch_id):\n    batch_id=identifier(batch_id)\n    if Path(source).resolve()==Path(database).resolve():\n        raise ValueError('source and target must be different paths')\n    records,fingerprint=read_batch(source)\n    connection=sqlite3.connect(database,timeout=2)\n    try:\n        # Schema initialization is separate; this single-process lab assumes a\n        # trusted compatible database. Data/marker transaction is explicit.\n        connection.executescript(SCHEMA)\n        with connection:\n            connection.execute('BEGIN IMMEDIATE')\n            existing=connection.execute('SELECT fingerprint FROM runs WHERE batch_id=?',(batch_id,)).fetchone()\n            if existing:\n                if existing[0]!=fingerprint: raise ValueError('batch identity conflicts with payload')\n                return 'replay'\n            connection.executemany('INSERT INTO orders VALUES (?,?,?,?)',records)\n            connection.execute('INSERT INTO runs VALUES (?,?,?)',(batch_id,fingerprint,len(records)))\n        return 'committed'\n    finally: connection.close()\n\ndef reconcile(database):\n    connection=sqlite3.connect(database)\n    try:\n        count,total=connection.execute('SELECT COUNT(*),COALESCE(SUM(amount_cents),0) FROM orders').fetchone()\n        ids=[r[0] for r in connection.execute('SELECT order_id FROM orders ORDER BY order_id')]\n        days=list(connection.execute('SELECT substr(occurred_at,1,10),SUM(amount_cents) FROM orders GROUP BY substr(occurred_at,1,10) ORDER BY 1'))\n        return {'orders':count,'total_cents':total,'ids':ids,'utc_days':days}\n    finally: connection.close()\n\ndef demo():\n    source=Path(__file__).with_name('sample_orders.csv')\n    with TemporaryDirectory() as folder:\n        database=Path(folder)/'practice.db'\n        print(import_csv(source,database,'sept-01'))\n        print(import_csv(source,database,'sept-01'))\n        result=reconcile(database)\n        print(f'orders={result[\"orders\"]} total_cents={result[\"total_cents\"]}')\n\ndef main():\n    parser=argparse.ArgumentParser(description=__doc__)\n    parser.add_argument('--demo',action='store_true')\n    parser.add_argument('source',nargs='?',type=Path)\n    parser.add_argument('database',nargs='?',type=Path)\n    parser.add_argument('batch_id',nargs='?')\n    args=parser.parse_args()\n    if args.demo and any((args.source,args.database,args.batch_id)): parser.error('choose demo or three arguments')\n    if not args.demo and not all((args.source,args.database,args.batch_id)): parser.error('provide source database batch_id')\n    try:\n        if args.demo: demo()\n        else:\n            print(import_csv(args.source,args.database,args.batch_id))\n            print(reconcile(args.database))\n        return 0\n    except (OSError,ValueError,csv.Error,sqlite3.Error) as error:\n        import sys\n        # Deliberately omit source rows and driver detail from shared output.\n        print(f'import failed: {type(error).__name__}; inspect the contract and local evidence',file=sys.stderr)\n        return 1\n\nif __name__=='__main__': raise SystemExit(main())\n"
+          "solution": "\"\"\"Bounded single-process SQLite ETL reference. Python 3.14+, no packages.\n\nFour-field CSV, nonnegative integer cents, UTC Z timestamps, exact-byte batch\nfingerprints. Transaction coordinates orders and run marker. Not a live SQL\nServer adapter, orchestrator, streaming engine or power-loss certification.\n\"\"\"\nimport argparse\nimport csv\nfrom datetime import datetime, timezone\nimport hashlib\nimport io\nfrom pathlib import Path\nimport re\nimport sqlite3\nfrom tempfile import TemporaryDirectory\n\nFIELDS=['order_id','customer_id','occurred_at','amount_cents']\nMAX_BYTES=262144\nMAX_ROWS=1000\nSCHEMA=\"\"\"\nCREATE TABLE IF NOT EXISTS runs (\n    batch_id TEXT PRIMARY KEY, fingerprint TEXT NOT NULL, row_count INTEGER NOT NULL);\nCREATE TABLE IF NOT EXISTS orders (\n    order_id TEXT PRIMARY KEY, customer_id TEXT NOT NULL,\n    occurred_at TEXT NOT NULL, amount_cents INTEGER NOT NULL CHECK(amount_cents >= 0));\n\"\"\"\n\ndef identifier(value):\n    if not isinstance(value,str) or not re.fullmatch(r'[A-Za-z0-9_-]{1,64}',value):\n        raise ValueError('identifier contract')\n    return value\n\ndef read_batch(source):\n    with Path(source).open('rb') as stream: raw=stream.read(MAX_BYTES+1)\n    if len(raw)>MAX_BYTES: raise ValueError('batch exceeds byte limit')\n    text=raw.decode('utf-8')\n    reader=csv.DictReader(io.StringIO(text,newline=''),strict=True)\n    if reader.fieldnames != FIELDS: raise ValueError('exact ordered headers required')\n    records=[]\n    seen=set()\n    for number,row in enumerate(reader,start=1):\n        if number>MAX_ROWS: raise ValueError('batch exceeds row limit')\n        if set(row)!=set(FIELDS) or any(v is None for v in row.values()):\n            raise ValueError('row field count')\n        order=identifier(row['order_id']); customer=identifier(row['customer_id'])\n        if order in seen: raise ValueError('duplicate order in source')\n        seen.add(order)\n        value=row['amount_cents']\n        if not re.fullmatch(r'[0-9]{1,12}',value): raise ValueError('amount contract')\n        amount=int(value)\n        instant=row['occurred_at']\n        if not re.fullmatch(r'\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z',instant):\n            raise ValueError('UTC seconds timestamp required')\n        parsed=datetime.fromisoformat(instant.replace('Z','+00:00'))\n        if parsed.utcoffset()!=timezone.utc.utcoffset(parsed): raise ValueError('UTC required')\n        records.append((order,customer,instant,amount))\n    return records,hashlib.sha256(raw).hexdigest()\n\ndef import_csv(source,database,batch_id):\n    batch_id=identifier(batch_id)\n    if Path(source).resolve()==Path(database).resolve():\n        raise ValueError('source and target must be different paths')\n    records,fingerprint=read_batch(source)\n    connection=sqlite3.connect(database,timeout=2)\n    try:\n        # Schema initialization is separate; this single-process lab assumes a\n        # trusted compatible database. Data/marker transaction is explicit.\n        connection.executescript(SCHEMA)\n        with connection:\n            connection.execute('BEGIN IMMEDIATE')\n            existing=connection.execute('SELECT fingerprint FROM runs WHERE batch_id=?',(batch_id,)).fetchone()\n            if existing:\n                if existing[0]!=fingerprint: raise ValueError('batch identity conflicts with payload')\n                return 'replay'\n            connection.executemany('INSERT INTO orders VALUES (?,?,?,?)',records)\n            connection.execute('INSERT INTO runs VALUES (?,?,?)',(batch_id,fingerprint,len(records)))\n        return 'committed'\n    finally: connection.close()\n\ndef reconcile(database):\n    connection=sqlite3.connect(database)\n    try:\n        count,total=connection.execute('SELECT COUNT(*),COALESCE(SUM(amount_cents),0) FROM orders').fetchone()\n        ids=[r[0] for r in connection.execute('SELECT order_id FROM orders ORDER BY order_id')]\n        days=list(connection.execute('SELECT substr(occurred_at,1,10),SUM(amount_cents) FROM orders GROUP BY substr(occurred_at,1,10) ORDER BY 1'))\n        return {'orders':count,'total_cents':total,'ids':ids,'utc_days':days}\n    finally: connection.close()\n\ndef demo():\n    source=Path(__file__).with_name('sample_orders.csv')\n    with TemporaryDirectory() as folder:\n        database=Path(folder)/'practice.db'\n        print(import_csv(source,database,'sept-01'))\n        print(import_csv(source,database,'sept-01'))\n        result=reconcile(database)\n        print(f'orders={result[\"orders\"]} total_cents={result[\"total_cents\"]}')\n\ndef main():\n    parser=argparse.ArgumentParser(description=__doc__)\n    parser.add_argument('--demo',action='store_true')\n    parser.add_argument('source',nargs='?',type=Path)\n    parser.add_argument('database',nargs='?',type=Path)\n    parser.add_argument('batch_id',nargs='?')\n    args=parser.parse_args()\n    if args.demo and any((args.source,args.database,args.batch_id)): parser.error('choose demo or three arguments')\n    if not args.demo and not all((args.source,args.database,args.batch_id)): parser.error('provide source database batch_id')\n    try:\n        if args.demo: demo()\n        else:\n            print(import_csv(args.source,args.database,args.batch_id))\n            print(reconcile(args.database))\n        return 0\n    except (OSError,ValueError,csv.Error,sqlite3.Error) as error:\n        import sys\n        # Deliberately omit source rows and driver detail from shared output.\n        print(f'import failed: {type(error).__name__}; inspect the contract and local evidence',file=sys.stderr)\n        return 1\n\nif __name__=='__main__': raise SystemExit(main())\n"
         },
         "stageCheck": [
           {
@@ -23770,7 +23770,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ standard library only.",
+            "Python 3.14+ standard library only.",
             "These tests cover the local reference. Add checks for your changes and target environment."
           ]
         },
@@ -23813,7 +23813,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ standard library only.",
+            "Python 3.14+ standard library only.",
             "These tests cover the local reference. Add checks for your changes and target environment."
           ]
         },
@@ -23865,7 +23865,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ standard library only.",
+            "Python 3.14+ standard library only.",
             "These tests cover the local reference. Add checks for your changes and target environment."
           ]
         }
@@ -24022,7 +24022,7 @@ const LEARNING_PATHS = [
             "url": "https://algs4.cs.princeton.edu/14analysis/",
             "section": "Analysis of Algorithms",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "extraQuiz": [
@@ -24083,7 +24083,7 @@ const LEARNING_PATHS = [
             "url": "https://algs4.cs.princeton.edu/13stacks/",
             "section": "Resizing arrays and linked lists",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "extraQuiz": [
@@ -24145,7 +24145,7 @@ const LEARNING_PATHS = [
             "url": "https://algs4.cs.princeton.edu/34hash/",
             "section": "Hash tables",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "extraQuiz": [
@@ -24206,7 +24206,7 @@ const LEARNING_PATHS = [
             "url": "https://algs4.cs.princeton.edu/13stacks/",
             "section": "Stacks and queues",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "visual": {
@@ -24532,7 +24532,7 @@ const LEARNING_PATHS = [
             "url": "https://algs4.cs.princeton.edu/11model/",
             "section": "Binary search",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "diagram": {
@@ -24711,7 +24711,7 @@ const LEARNING_PATHS = [
             "url": "https://algs4.cs.princeton.edu/21elementary/",
             "section": "Sorting stability and comparison model",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "visual": {
@@ -25160,7 +25160,7 @@ const LEARNING_PATHS = [
             "url": "https://algs4.cs.princeton.edu/32bst/",
             "section": "Recursive tree search and inorder traversal",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "visual": {
@@ -25613,7 +25613,7 @@ const LEARNING_PATHS = [
             "url": "https://algs4.cs.princeton.edu/32bst/",
             "section": "Order-based methods and deletion",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "visual": {
@@ -26046,7 +26046,7 @@ const LEARNING_PATHS = [
             "url": "https://algs4.cs.princeton.edu/41graph/",
             "section": "Breadth-first search",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "visual": {
@@ -26483,7 +26483,7 @@ const LEARNING_PATHS = [
             "url": "https://algs4.cs.princeton.edu/24pq/",
             "section": "Binary heaps",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "extraQuiz": [
@@ -26551,7 +26551,7 @@ const LEARNING_PATHS = [
             "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/pages/lecture-notes/",
             "section": "Dynamic programming lectures 19–22",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "extraQuiz": [
@@ -26617,7 +26617,7 @@ const LEARNING_PATHS = [
             "url": "https://algs4.cs.princeton.edu/13stacks/",
             "section": "Linked lists",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "visual": {
@@ -26961,7 +26961,7 @@ const LEARNING_PATHS = [
             "url": "https://algs4.cs.princeton.edu/22mergesort/",
             "section": "Top-down mergesort",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "extraQuiz": [
@@ -27027,7 +27027,7 @@ const LEARNING_PATHS = [
             "url": "https://introcs.cs.princeton.edu/java/42sort/",
             "section": "Binary search and ordered data",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "diagram": {
@@ -27209,7 +27209,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3.11/library/stdtypes.html#mapping-types-dict",
             "section": "Dictionary operations supporting maintained state",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "extraQuiz": [
@@ -27286,7 +27286,7 @@ const LEARNING_PATHS = [
             "url": "https://algs4.cs.princeton.edu/42digraph/",
             "section": "Directed cycles and topological sort",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "diagram": {
@@ -27478,7 +27478,7 @@ const LEARNING_PATHS = [
             "url": "https://algs4.cs.princeton.edu/44sp/",
             "section": "Dijkstra algorithm and nonnegative weights",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "diagram": {
@@ -27649,7 +27649,7 @@ const LEARNING_PATHS = [
             "url": "https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/ff2a7015ff913fc01f0381d8f5126a9a_MIT6_046JS15_lec01.pdf",
             "section": "Lecture 1, pages 2-4: interval scheduling and the exchange proof",
             "reviewed": "2026-10-02",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "extraQuiz": [
@@ -27715,7 +27715,7 @@ const LEARNING_PATHS = [
             "url": "https://introcs.cs.princeton.edu/java/23recursion/",
             "section": "Recursive backtracking",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "diagram": {
@@ -27890,7 +27890,7 @@ const LEARNING_PATHS = [
             "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/pages/lecture-notes/",
             "section": "Dynamic programming and knapsack",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "diagram": {
@@ -28055,7 +28055,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3.11/library/unittest.html",
             "section": "Test cases and assertions",
             "reviewed": "2026-09-27",
-            "scope": "Stable algorithm concepts; Python 3.10+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+            "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
         "diagram": {
@@ -28430,7 +28430,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.10 or newer and basic functions, lists and dictionaries.",
+            "Python 3.14 or newer and basic functions, lists and dictionaries.",
             "The original algorithm references include executable checks; the added tree/DFS module has an independent unittest suite. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -28482,7 +28482,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.10 or newer and basic functions, lists and dictionaries.",
+            "Python 3.14 or newer and basic functions, lists and dictionaries.",
             "The original algorithm references include executable checks; the added tree/DFS module has an independent unittest suite. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -28531,7 +28531,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.10 or newer and basic functions, lists and dictionaries.",
+            "Python 3.14 or newer and basic functions, lists and dictionaries.",
             "The original algorithm references include executable checks; the added tree/DFS module has an independent unittest suite. They are algorithm examples, not complete implementations of every stage project. Add independent small-input oracles for your own solution.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -28574,7 +28574,7 @@ const LEARNING_PATHS = [
     "level": "Foundations → intermediate practice with optional systems labs",
     "prerequisites": [
       "Basic HTTP, Python and terminal use for the local note-service track. React, C#/.NET and SQL Server are needed only for the optional full-stack integration runbook.",
-      "Python 3.11+ and basic terminal use for the independent local lab; Docker is optional, no cloud account required."
+      "Python 3.14+ and basic terminal use for the independent local lab; Docker is optional, no cloud account required."
     ],
     "outcomes": [
       "Name source/artifact/config/schema identities and user release invariants.",
@@ -29073,7 +29073,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/http.server.html",
             "section": "Security considerations",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ learning-only HTTP service; official docs exclude production use. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Python 3.14+ learning-only HTTP service; official docs exclude production use. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
         "stage": "foundation",
@@ -31426,7 +31426,7 @@ const LEARNING_PATHS = [
             "Labels and digests are distinguished.",
             "The learning-only HTTP server scope is explicit."
           ],
-          "solution": "Use a fresh extracted folder, Python 3.11+ and temporary test fixtures. The packet maps existing-note readability to tested restart persistence and backup values. Record the file digest and v1 label separately; /ready 503 with /live 200 is a recoverable routing condition, not process failure. Docker build/run stays reviewed-only unless actually executed."
+          "solution": "Use a fresh extracted folder, Python 3.14+ and temporary test fixtures. The packet maps existing-note readability to tested restart persistence and backup values. Record the file digest and v1 label separately; /ready 503 with /live 200 is a recoverable routing condition, not process failure. Docker build/run stays reviewed-only unless actually executed."
         },
         "stageCheck": [
           {
@@ -31937,7 +31937,7 @@ const LEARNING_PATHS = [
     "runExamples": true,
     "prerequisites": [
       "Basic programming: functions, collections, exceptions and simple classes. Python learners should reach classes-and-dataclasses; the beginner foundation stage alone does not cover classes.",
-      "Examples use Python 3.11+ and only the standard library; ideas transfer to C#, TypeScript and other languages."
+      "Examples use Python 3.14+ and only the standard library; ideas transfer to C#, TypeScript and other languages."
     ],
     "outcomes": [
       "Identify a real variation point before choosing a pattern.",
@@ -31948,7 +31948,7 @@ const LEARNING_PATHS = [
       "Refactor incrementally and document alternatives, costs and evidence."
     ],
     "setup": [
-      "Use Python 3.11+ and save each lesson example in its own file; examples are independent.",
+      "Use Python 3.14+ and save each lesson example in its own file; examples are independent.",
       "Download workshop.py and test_workshop.py into the same empty folder. Run python -m unittest -v test_workshop.py.",
       "Run python workshop.py for a deterministic demonstration. No packages, credentials or live services are required.",
       "Lesson code is deliberately small; read the stated contracts and limits before adapting it to production."
@@ -32251,7 +32251,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "Introduction and catalog organization",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           },
           {
             "title": "Gamma, Helm and Johnson: Design Patterns 15 Years Later",
@@ -32325,7 +32325,7 @@ const LEARNING_PATHS = [
             "url": "https://www.cs.cmu.edu/~wing/publications/LiskovWing94.pdf",
             "section": "Sections 1–2: subtype requirement and motivation",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 behavioral-subtyping paper; Python 3.11+ examples illustrate contracts without claiming formal proof."
+            "scope": "Original 1994 behavioral-subtyping paper; Python 3.14+ examples illustrate contracts without claiming formal proof."
           }
         ],
         "extraQuiz": [
@@ -32402,7 +32402,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "Class versus object inheritance",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           }
         ],
         "diagram": {
@@ -32563,7 +32563,7 @@ const LEARNING_PATHS = [
             "url": "https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html",
             "section": "S, O, L, I and D discussions",
             "reviewed": "2026-09-27",
-            "scope": "Original author discussion (2020); principles are design review questions in this Python 3.11+ course."
+            "scope": "Original author discussion (2020); principles are design review questions in this Python 3.14+ course."
           }
         ],
         "extraQuiz": [
@@ -32666,7 +32666,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "Strategy",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           }
         ],
         "visual": {
@@ -33005,7 +33005,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "Factory Method and Abstract Factory",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           },
           {
             "title": "GoF: Abstract Factory, publisher excerpt",
@@ -33189,7 +33189,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "Builder",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           }
         ],
         "diagram": {
@@ -33334,7 +33334,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "Adapter",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           },
           {
             "title": "GoF: Adapter, publisher excerpt",
@@ -33673,7 +33673,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "Facade",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           }
         ],
         "diagram": {
@@ -33847,7 +33847,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "Decorator",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           }
         ],
         "visual": {
@@ -34173,7 +34173,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "Composite",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           }
         ],
         "diagram": {
@@ -34344,7 +34344,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "Proxy",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           }
         ],
         "diagram": {
@@ -34539,7 +34539,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "Observer",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           }
         ],
         "visual": {
@@ -34868,7 +34868,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "Chain Of Responsibility",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           },
           {
             "title": "GoF: Chain of Responsibility, publisher excerpt",
@@ -35040,7 +35040,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "Command",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           }
         ],
         "extraQuiz": [
@@ -35108,7 +35108,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "State",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           }
         ],
         "diagram": {
@@ -35264,7 +35264,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "Mediator",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           }
         ],
         "diagram": {
@@ -35422,7 +35422,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "Template Method",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           }
         ],
         "extraQuiz": [
@@ -35490,7 +35490,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3.11/reference/datamodel.html#object.__iter__",
             "section": "Iterator protocol",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ iterator semantics."
+            "scope": "Python 3.14+ iterator semantics."
           },
           {
             "title": "GoF: Iterator",
@@ -35565,7 +35565,7 @@ const LEARNING_PATHS = [
             "url": "https://martinfowler.com/articles/injection.html",
             "section": "Dependency Injection",
             "reviewed": "2026-09-27",
-            "scope": "Original architectural pattern description; Python 3.11+ in-memory teaching adaptations. No durability/concurrency claim."
+            "scope": "Original architectural pattern description; Python 3.14+ in-memory teaching adaptations. No durability/concurrency claim."
           }
         ],
         "diagram": {
@@ -35711,7 +35711,7 @@ const LEARNING_PATHS = [
             "url": "https://martinfowler.com/eaaCatalog/repository.html",
             "section": "Repository",
             "reviewed": "2026-09-27",
-            "scope": "Original architectural pattern description; Python 3.11+ in-memory teaching adaptations. No durability/concurrency claim."
+            "scope": "Original architectural pattern description; Python 3.14+ in-memory teaching adaptations. No durability/concurrency claim."
           }
         ],
         "extraQuiz": [
@@ -35822,7 +35822,7 @@ const LEARNING_PATHS = [
             "url": "https://martinfowler.com/eaaCatalog/unitOfWork.html",
             "section": "Unit Of Work",
             "reviewed": "2026-09-27",
-            "scope": "Original architectural pattern description; Python 3.11+ in-memory teaching adaptations. No durability/concurrency claim."
+            "scope": "Original architectural pattern description; Python 3.14+ in-memory teaching adaptations. No durability/concurrency claim."
           }
         ],
         "diagram": {
@@ -35988,7 +35988,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "How to use a design pattern",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           },
           {
             "title": "Martin Fowler: Definition of refactoring",
@@ -36168,7 +36168,7 @@ const LEARNING_PATHS = [
             "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
             "section": "How to select a design pattern",
             "reviewed": "2026-09-27",
-            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+            "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
           },
           {
             "title": "Gamma, Helm and Johnson: Design Patterns 15 Years Later",
@@ -36347,7 +36347,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
+            "Python 3.14 or newer; familiarity with functions, collections, exceptions and classes.",
             "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
             "Use the supplied code as a reference. Test your own project and report its results separately.",
             "Attempt only validation and two formatters at this stage. The shared workshop also contains later examples; defer batch-refactor.md and versioned commit behavior until unit-of-work and refactoring."
@@ -36397,7 +36397,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
+            "Python 3.14 or newer; familiarity with functions, collections, exceptions and classes.",
             "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -36461,7 +36461,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11 or newer; familiarity with functions, collections, exceptions and classes.",
+            "Python 3.14 or newer; familiarity with functions, collections, exceptions and classes.",
             "One reference combines examples from all stages. The repository/unit-of-work example is local and in memory; database transactions, notification delivery and concurrency are design extensions.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -36630,7 +36630,7 @@ const LEARNING_PATHS = [
           ],
           "commands": [
             {
-              "label": "Optional · Python 3.11+ · kit folder",
+              "label": "Optional · Python 3.14+ · kit folder",
               "command": "python finance_workbook.py\npython -m unittest -v test_finance_workbook.py",
               "expected": "USD period result 765.20; curve difference EUR -21.50; five tests pass."
             }
@@ -36687,7 +36687,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Paper/spreadsheet is sufficient; optional Python needs 3.11+.",
+            "Paper/spreadsheet is sufficient; optional Python needs 3.14+.",
             "Synthetic supplied factors, projections and accruals; no market calibration or production pricer.",
             "The daily-P&L and FX workbook is a later, separate investigation. It is not a prerequisite for this same-time swap comparison."
           ]
@@ -36708,7 +36708,7 @@ const LEARNING_PATHS = [
     "level": "Intermediate full-stack project → deployment extensions",
     "prerequisites": [
       "Complete or consult the React, C# & .NET and SQL Server paths; this journey connects those skills rather than teaching each language from zero.",
-      "Install .NET 10 SDK, Node 24/npm and Python 3.11+; SQL Server/SSMS is required for the persistence milestone."
+      "Install .NET 10 SDK, Node 24/npm and Python 3.14+; SQL Server/SSMS is required for the persistence milestone."
     ],
     "setup": [
       "Open the complete task bundle beside any lesson; extract into a new directory and keep all files together.",
@@ -37030,7 +37030,7 @@ const LEARNING_PATHS = [
           {
             "title": "Local runtimes and commands",
             "paragraphs": [
-              "Use .NET 10, Node 24/npm and Python 3.11+. Run the API on 127.0.0.1:5087 and Vite on 127.0.0.1:5173 in separate terminals. The loopback address 127.0.0.1 points to your own computer. `npm ci` installs the pinned graph; `npm run build` checks types and bundles the UI. Record versions and commands so another attempt can reproduce the result."
+              "Use .NET 10, Node 24/npm and Python 3.14+. Run the API on 127.0.0.1:5087 and Vite on 127.0.0.1:5173 in separate terminals. The loopback address 127.0.0.1 points to your own computer. `npm ci` installs the pinned graph; `npm run build` checks types and bundles the UI. Record versions and commands so another attempt can reproduce the result."
             ]
           }
         ],
@@ -39586,12 +39586,12 @@ const LEARNING_PATHS = [
     "description": "Learn Git state, team review, history integration and recovery in 20 lessons. Three executable projects create local workspaces you can inspect after each run.",
     "level": "Foundations → intermediate → selected advanced topics",
     "prerequisites": [
-      "Basic terminal use and editing text files. Python 3.11+ is needed for the offline fixtures."
+      "Basic terminal use and editing text files. Python 3.14+ is needed for the offline fixtures."
     ],
     "setup": [
       "Extract the practice bundle and keep all files together at its flat folder root.",
       "Read README.md and the three stage kits before executing commands.",
-      "Install Git 2.28+ and Python 3.11+; run python -B -m unittest -v test_sandbox.py. The fixture uses only its own disposable repositories."
+      "Install Git 2.28+ and Python 3.14+; run python -B -m unittest -v test_sandbox.py. The fixture uses only its own disposable repositories."
     ],
     "outcomes": [
       "Explain working tree/index/commit and inspect intended changes.",
@@ -42303,7 +42303,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
+            "Python 3.14+ standard library. Git 2.28+ on PATH is also required.",
             "Build the extension in a copy. Report which integration checks you ran and which remain untested.",
             "Learner commands retain a fresh owned child and evidence.json; inspect reported repository paths and command/output transcript. Omit --workspace-parent for the temporary automated verifier. No existing directory is adopted or deleted."
           ]
@@ -42356,7 +42356,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
+            "Python 3.14+ standard library. Git 2.28+ on PATH is also required.",
             "Build the extension in a copy. Report which integration checks you ran and which remain untested.",
             "Learner commands retain a fresh owned child and evidence.json; inspect reported repository paths and command/output transcript. Omit --workspace-parent for the temporary automated verifier. No existing directory is adopted or deleted."
           ]
@@ -42415,7 +42415,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ standard library. Git 2.28+ on PATH is also required.",
+            "Python 3.14+ standard library. Git 2.28+ on PATH is also required.",
             "Build the extension in a copy. Report which integration checks you ran and which remain untested.",
             "Learner commands retain a fresh owned child and evidence.json; inspect reported repository paths and command/output transcript. Omit --workspace-parent for the temporary automated verifier. No existing directory is adopted or deleted."
           ]
@@ -49520,7 +49520,7 @@ const LEARNING_PATHS = [
     "level": "Foundations → intermediate practice with optional systems labs",
     "prerequisites": [
       "Complete Delivery & Operations (delivery-operations) containers/build/runtime exercises first; React (react), .NET (dotnet) and SQL Server (sql-server) retain their own application/data responsibilities.",
-      "Python 3.11+ for offline checks. A dedicated local kind cluster is opt-in and requires compatible Docker/Linux containers, kind and kubectl; no cloud account required."
+      "Python 3.14+ for offline checks. A dedicated local kind cluster is opt-in and requires compatible Docker/Linux containers, kind and kubectl; no cloud account required."
     ],
     "outcomes": [
       "Trace declarative objects through controllers, scheduling, kubelet and ready endpoints.",
@@ -55921,7 +55921,7 @@ const LEARNING_PATHS = [
     "level": "Foundations → intermediate practice with optional systems labs",
     "prerequisites": [
       "Comfort creating files and opening a terminal.",
-      "Python functions, lists, exceptions and context managers for the optional portable kit; Python 3.11+ with no external packages. You can read the operating-system lessons without running it.",
+      "Python functions, lists, exceptions and context managers for the optional portable kit; Python 3.14+ with no external packages. You can read the operating-system lessons without running it.",
       "Optional Linux observations require an existing disposable Linux/WSL environment."
     ],
     "outcomes": [
@@ -56059,7 +56059,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
             "section": "Overview",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "diagram": {
@@ -56200,7 +56200,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/path_resolution.7.html",
             "section": "Start of resolution",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -56267,7 +56267,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/path_resolution.7.html",
             "section": "Pathname lookup",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -56334,14 +56334,14 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man1/bash.1.html",
             "section": "QUOTING and EXPANSION",
             "reviewed": "2026-09-30",
-            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
           },
           {
             "title": "subprocess argument sequences",
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "subprocess argument sequences",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -56408,14 +56408,14 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man1/bash.1.html",
             "section": "Pipelines and REDIRECTION",
             "reviewed": "2026-09-30",
-            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
           },
           {
             "title": "File descriptors",
             "url": "https://man7.org/linux/man-pages/man2/open.2.html",
             "section": "File descriptors",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "diagram": {
@@ -56548,7 +56548,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/credentials.7.html",
             "section": "Process credentials",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           },
           {
             "title": "GNU chmod numeric modes",
@@ -56978,7 +56978,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "subprocess returncode",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -57045,14 +57045,14 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man1/bash.1.html",
             "section": "ENVIRONMENT and COMMAND EXECUTION",
             "reviewed": "2026-09-30",
-            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
           },
           {
             "title": "subprocess env",
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "subprocess env",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -57125,7 +57125,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "subprocess timeouts",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "diagram": {
@@ -57271,7 +57271,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/signal.7.html",
             "section": "Signal dispositions",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -57338,14 +57338,14 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man1/ps.1.html",
             "section": "STANDARD FORMAT SPECIFIERS: rss and vsz",
             "reviewed": "2026-09-30",
-            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
           },
           {
             "title": "Shared process resources",
             "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html",
             "section": "Shared process resources",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -57412,7 +57412,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html",
             "section": "Process resources shared by threads",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -57488,7 +57488,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man2/open.2.html",
             "section": "Open file descriptions",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           },
           {
             "title": "Python Unix resource limits",
@@ -57562,14 +57562,14 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/os.html",
             "section": "os.fsync and os.replace",
             "reviewed": "2026-09-30",
-            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
           },
           {
             "title": "Synchronized I/O",
             "url": "https://man7.org/linux/man-pages/man2/open.2.html",
             "section": "Synchronized I/O",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -57636,14 +57636,14 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man8/ss.8.html",
             "section": "OPTIONS: --listening, --tcp, --numeric",
             "reviewed": "2026-09-30",
-            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
           },
           {
             "title": "Network namespaces",
             "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
             "section": "Network namespaces",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -57710,14 +57710,14 @@ const LEARNING_PATHS = [
             "url": "https://www.man7.org/linux/man-pages/man1/systemctl.1.html",
             "section": "Unit Commands and --user",
             "reviewed": "2026-09-30",
-            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
           },
           {
             "title": "Process inspection",
             "url": "https://man7.org/linux/man-pages/man5/proc.5.html",
             "section": "Process inspection",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -57784,14 +57784,14 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/time.html",
             "section": "time.monotonic",
             "reviewed": "2026-09-30",
-            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
           },
           {
             "title": "subprocess diagnostics",
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "subprocess diagnostics",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -57858,14 +57858,14 @@ const LEARNING_PATHS = [
             "url": "https://docs.kernel.org/admin-guide/cgroup-v2.html",
             "section": "Controllers: CPU and memory",
             "reviewed": "2026-09-30",
-            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
           },
           {
             "title": "Bounded child process timeout",
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "Bounded child process timeout",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -57932,14 +57932,14 @@ const LEARNING_PATHS = [
             "url": "https://docs.kernel.org/admin-guide/cgroup-v2.html",
             "section": "What is cgroup?",
             "reviewed": "2026-09-30",
-            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.11+."
+            "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
           },
           {
             "title": "Namespace types",
             "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
             "section": "Namespace types",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "diagram": {
@@ -58101,7 +58101,7 @@ const LEARNING_PATHS = [
             "url": "https://man7.org/linux/man-pages/man7/credentials.7.html",
             "section": "Permission checks",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -58177,7 +58177,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "subprocess exceptions",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -58244,7 +58244,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/subprocess.html",
             "section": "subprocess testing boundary",
             "reviewed": "2026-09-30",
-            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.11+ exercises do not emulate the kernel."
+            "scope": "Linux mechanisms and optional distribution-specific commands. Portable Python 3.14+ exercises do not emulate the kernel."
           }
         ],
         "extraQuiz": [
@@ -58528,7 +58528,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ standard library only.",
+            "Python 3.14+ standard library only.",
             "These tests cover the local reference. Add checks for your changes and target environment."
           ]
         },
@@ -58578,7 +58578,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ standard library only.",
+            "Python 3.14+ standard library only.",
             "These tests cover the local reference. Add checks for your changes and target environment.",
             "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
           ]
@@ -58630,7 +58630,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ standard library only.",
+            "Python 3.14+ standard library only.",
             "These tests cover the local reference. Add checks for your changes and target environment.",
             "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
           ]
@@ -58684,7 +58684,7 @@ const LEARNING_PATHS = [
     ],
     "setup": [
       "Download and extract the complete practice bundle.",
-      "The metric and partition lab needs Python 3.11+ and no packages.",
+      "The metric and partition lab needs Python 3.14+ and no packages.",
       "For the model lab use Python 3.14, a virtual environment and requirements.txt. No GPU, cloud service or API key is needed."
     ],
     "nextSteps": [
@@ -61224,7 +61224,7 @@ const LEARNING_PATHS = [
           "id": "requirements-txt",
           "href": "paths/machine-learning-foundations/practice/requirements.txt",
           "role": "reference",
-          "description": "Pinned Python 3.11/3.12 dependencies"
+          "description": "Pinned Python 3.14 dependencies"
         }
       ],
       "tasks": [
@@ -61385,7 +61385,7 @@ const LEARNING_PATHS = [
     "level": "Foundations → intermediate practice with optional systems labs",
     "prerequisites": [
       "Basic Python and SQL transactions for the local exercises.",
-      "Python 3.11+ for the offline lab. No cloud account, payment method or broker is required."
+      "Python 3.14+ for the offline lab. No cloud account, payment method or broker is required."
     ],
     "outcomes": [
       "Choose queues, subscriptions and logs from delivery requirements.",
@@ -64111,7 +64111,7 @@ const LEARNING_PATHS = [
           ],
           "prerequisites": [],
           "notes": [
-            "Python 3.11+ and standard library only.",
+            "Python 3.14+ and standard library only.",
             "Optional external tools are separately documented and not included in the local verification claim."
           ]
         },
@@ -64155,7 +64155,7 @@ const LEARNING_PATHS = [
           ],
           "prerequisites": [],
           "notes": [
-            "Python 3.11+ and standard library only.",
+            "Python 3.14+ and standard library only.",
             "Optional external tools are separately documented and not included in the local verification claim.",
             "The optional mechanism lab has separate prerequisites and verification limits; see mechanism-lab.md."
           ]
@@ -64192,7 +64192,7 @@ const LEARNING_PATHS = [
           ],
           "prerequisites": [],
           "notes": [
-            "Python 3.11+ and standard library only.",
+            "Python 3.14+ and standard library only.",
             "Optional external tools are separately documented and not included in the local verification claim."
           ]
         }
@@ -64235,7 +64235,7 @@ const LEARNING_PATHS = [
     "level": "Foundations → intermediate practice with optional systems labs",
     "prerequisites": [
       "Basic Python functions, lists and exceptions; vocabulary is introduced before deeper diagnosis.",
-      "Python 3.11+ and a terminal for runnable labs; no third-party package, account or external service required."
+      "Python 3.14+ and a terminal for runnable labs; no third-party package, account or external service required."
     ],
     "outcomes": [
       "Implement URL-origin comparisons and offline DNS expiry, then explain where an HTTP response fits in the request journey.",
@@ -64530,7 +64530,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 3.1–3.5: resources, representations, connections",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -64693,7 +64693,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/socket.html",
             "section": "socket.bind; getsockname; create_connection",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "extraQuiz": [
@@ -64754,7 +64754,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc1035.html",
             "section": "Sections 3.2.1–3.2.2: resource record format and types",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "extraQuiz": [
@@ -64816,7 +64816,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc1035.html",
             "section": "Section 3.2.1: TTL field",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -65349,7 +65349,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/socket.html",
             "section": "socket.recv; socket.sendall",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "extraQuiz": [
@@ -65410,7 +65410,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/urllib.parse.html",
             "section": "urlsplit; URL parsing security",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "extraQuiz": [
@@ -65477,7 +65477,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 8.3 and 8.4: media type and content encoding",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           },
           {
             "title": "IETF RFC 8259: JSON",
@@ -65545,7 +65545,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 6 and 9.3.2: message abstraction and HEAD",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "extraQuiz": [
@@ -65606,7 +65606,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Section 15: status codes",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "extraQuiz": [
@@ -65667,7 +65667,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 9.2.1–9.2.2: safe and idempotent methods",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "extraQuiz": [
@@ -65728,7 +65728,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc8446.html",
             "section": "Sections 4.4 and 7: authentication and cryptographic computation",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "extraQuiz": [
@@ -65789,7 +65789,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/ssl.html",
             "section": "create_default_context; security considerations",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "extraQuiz": [
@@ -65850,7 +65850,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc6265.html",
             "section": "Sections 4.1.2.5–4.1.2.6: Secure and HttpOnly",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -65991,7 +65991,7 @@ const LEARNING_PATHS = [
             "url": "https://fetch.spec.whatwg.org/#http-cors-protocol",
             "section": "HTTP CORS protocol; CORS-preflight fetch",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -66132,7 +66132,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9111.html",
             "section": "Sections 3 and 5.2.2: storing responses and response directives",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "extraQuiz": [
@@ -66193,7 +66193,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 8.8.3, 13.1.2 and 15.4.5: ETag, If-None-Match, 304",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -66358,7 +66358,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 10.2.2 and 15.4.8: Location and 307",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -66499,7 +66499,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 3.7 and 7.6: intermediaries and message forwarding",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -66649,7 +66649,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/socket.html",
             "section": "Timeout notes; socket.settimeout",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -66802,7 +66802,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Section 9.2.2: retrying idempotent requests",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -66972,7 +66972,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Section 8.3: Content-Type; representation metadata",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "diagram": {
@@ -67125,7 +67125,7 @@ const LEARNING_PATHS = [
             "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
             "section": "White-box versus black-box monitoring; symptoms and causes",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "extraQuiz": [
@@ -67186,7 +67186,7 @@ const LEARNING_PATHS = [
             "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
             "section": "Sections 2.5 and 3.5: conformance and messages",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "extraQuiz": [
@@ -67247,7 +67247,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/http.server.html",
             "section": "Security considerations; ThreadingHTTPServer",
             "reviewed": "2026-09-27",
-            "scope": "Network and HTTP concepts with Python 3.11+ examples. The practice guide separates local tests from browser and live-network checks."
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
           }
         ],
         "extraQuiz": [
@@ -67537,7 +67537,7 @@ const LEARNING_PATHS = [
     "level": "Foundations → intermediate practice with optional systems labs",
     "prerequisites": [
       "Read basic HTTP request/response examples and edit a file. The lessons introduce telemetry vocabulary.",
-      "Optional measurements require Python 3.11+ functions, lists and dictionaries, plus terminal use. No collector, cloud account or UI project is needed."
+      "Optional measurements require Python 3.14+ functions, lists and dictionaries, plus terminal use. No collector, cloud account or UI project is needed."
     ],
     "outcomes": [
       "Choose signals that answer concrete operational questions.",
@@ -67547,7 +67547,7 @@ const LEARNING_PATHS = [
       "Write evidence-based runbooks and distinguish local verification from production operation."
     ],
     "setup": [
-      "Python 3.10+ standard library is sufficient; no packages or external services are required.",
+      "Python 3.14+ standard library is sufficient; no packages or external services are required.",
       "Extract the flat observability-performance-practice bundle and run python telemetry.test.py, python integration.test.py and python benchmark.py.",
       "For interactive measurements start python service.py, then run python load.py --profile healthy, slow or fail in another terminal. Stop with Ctrl+C.",
       "The lab uses fixed loopback port 8891, four closed-loop workers and 20 requests. Do not run integration.test.py while an interactive server occupies that port."
@@ -72278,7 +72278,7 @@ const LEARNING_PATHS = [
       "Python functions, lists, loops and basic arithmetic. No calculus required."
     ],
     "setup": [
-      "Install Python 3.11 or newer.",
+      "Install Python 3.14 or newer.",
       "Extract the practice bundle and keep its Python files together.",
       "Run each stage reference only after attempting its project."
     ],
@@ -74278,7 +74278,7 @@ const LEARNING_PATHS = [
             "Invalid cases raise ValueError.",
             "The explanation names the denominator and units."
           ],
-          "solution": "\"\"\"Unit-aware calculations. Python 3.11+, standard library only.\"\"\"\nimport math\n\ndef finite(value):\n    if type(value) not in (int, float) or not math.isfinite(value):\n        raise ValueError(\"finite number required\")\n    return value\n\ndef rate(count, seconds):\n    count, seconds = finite(count), finite(seconds)\n    if count < 0 or seconds <= 0:\n        raise ValueError(\"nonnegative count and positive seconds required\")\n    return count / seconds\n\ndef relative_change(old, new):\n    old, new = finite(old), finite(new)\n    if old <= 0 or new < 0:\n        raise ValueError(\"positive base and nonnegative new count required\")\n    return (new - old) / old\n\ndef combined_rate(counts, durations):\n    if not counts or len(counts) != len(durations):\n        raise ValueError(\"nonempty matching observations required\")\n    for count, seconds in zip(counts, durations):\n        rate(count, seconds)\n    return rate(sum(counts), sum(durations))\n\nif __name__ == \"__main__\":\n    print(combined_rate([100,100], [10,30]))\n    print(relative_change(50,40))\n"
+          "solution": "\"\"\"Unit-aware calculations. Python 3.14+, standard library only.\"\"\"\nimport math\n\ndef finite(value):\n    if type(value) not in (int, float) or not math.isfinite(value):\n        raise ValueError(\"finite number required\")\n    return value\n\ndef rate(count, seconds):\n    count, seconds = finite(count), finite(seconds)\n    if count < 0 or seconds <= 0:\n        raise ValueError(\"nonnegative count and positive seconds required\")\n    return count / seconds\n\ndef relative_change(old, new):\n    old, new = finite(old), finite(new)\n    if old <= 0 or new < 0:\n        raise ValueError(\"positive base and nonnegative new count required\")\n    return (new - old) / old\n\ndef combined_rate(counts, durations):\n    if not counts or len(counts) != len(durations):\n        raise ValueError(\"nonempty matching observations required\")\n    for count, seconds in zip(counts, durations):\n        rate(count, seconds)\n    return rate(sum(counts), sum(durations))\n\nif __name__ == \"__main__\":\n    print(combined_rate([100,100], [10,30]))\n    print(relative_change(50,40))\n"
         },
         "stageCheck": [
           {
@@ -74501,7 +74501,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11 or newer; standard library only.",
+            "Python 3.14 or newer; standard library only.",
             "Run from the extracted folder with all Python files together.",
             "The synthetic examples check arithmetic and input contracts, not real-world causal effects."
           ]
@@ -74544,7 +74544,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11 or newer; standard library only.",
+            "Python 3.14 or newer; standard library only.",
             "Run from the extracted folder with all Python files together.",
             "The synthetic examples check arithmetic and input contracts, not real-world causal effects."
           ]
@@ -74587,7 +74587,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11 or newer; standard library only.",
+            "Python 3.14 or newer; standard library only.",
             "Run from the extracted folder with all Python files together.",
             "The synthetic examples check arithmetic and input contracts, not real-world causal effects."
           ]
@@ -74650,7 +74650,7 @@ const LEARNING_PATHS = [
       "Create an empty practice folder. Save each example as a .py file and run it from that folder.",
       "Examples show expected output as comments; the exercise starter and solution are separate snippets. Predict the result, attempt the exercise, then compare the solution.",
       "In lesson 10 create an optional project virtual environment; no third-party packages or live API credentials are required.",
-      "Intermediate and advanced practice require Python 3.11+. Download the three project scripts and test_projects.py into one folder, then run python -m unittest -v test_projects.py there. No external packages are required."
+      "Intermediate and advanced practice require Python 3.14+. Download the three project scripts and test_projects.py into one folder, then run python -m unittest -v test_projects.py there. No external packages are required."
     ],
     "nextSteps": [
       "Rebuild each stage project from its brief before comparing the reference; explain its failure tests.",
@@ -74780,7 +74780,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/tutorial/interpreter.html",
             "section": "Using the Python interpreter",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "extraQuiz": [
@@ -74849,7 +74849,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/tutorial/introduction.html",
             "section": "Numbers and strings",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "diagram": {
@@ -75017,7 +75017,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/tutorial/introduction.html",
             "section": "Strings",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "extraQuiz": [
@@ -75086,7 +75086,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/tutorial/controlflow.html",
             "section": "if statements",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "diagram": {
@@ -75259,7 +75259,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/tutorial/datastructures.html",
             "section": "Lists, sets and dictionaries",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "extraQuiz": [
@@ -75343,7 +75343,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/tutorial/controlflow.html",
             "section": "for and range",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "extraQuiz": [
@@ -75428,7 +75428,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/tutorial/controlflow.html",
             "section": "Defining functions",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "diagram": {
@@ -75603,7 +75603,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/tutorial/errors.html",
             "section": "Exceptions and handling",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "extraQuiz": [
@@ -75679,7 +75679,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/json.html",
             "section": "Basic usage and encoders/decoders",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "diagram": {
@@ -75849,7 +75849,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/tutorial/venv.html",
             "section": "Creating virtual environments",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "extraQuiz": [
@@ -75927,7 +75927,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Test cases and assertions",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "extraQuiz": [
@@ -76006,7 +76006,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/pathlib.html",
             "section": "Reading and writing files",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "extraQuiz": [
@@ -76075,7 +76075,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/dataclasses.html",
             "section": "Dataclass parameters and frozen instances",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "extraQuiz": [
@@ -76144,7 +76144,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/typing.html",
             "section": "Protocols",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "extraQuiz": [
@@ -76213,7 +76213,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/tutorial/classes.html",
             "section": "Iterators and generators",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "diagram": {
@@ -76745,7 +76745,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/contextlib.html",
             "section": "contextmanager and closing",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "diagram": {
@@ -76918,7 +76918,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/argparse.html",
             "section": "ArgumentParser",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           },
           {
             "title": "PyPA packaging tutorial",
@@ -77100,7 +77100,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/howto/logging.html",
             "section": "Logging HOWTO",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "extraQuiz": [
@@ -77154,17 +77154,17 @@ const LEARNING_PATHS = [
           {
             "title": "Fail and cancel a task group",
             "paragraphs": [
-              "Run `practice/async_failure_lab.py` and `python -m unittest test_async_failure_lab.py` from practice with Python 3.11+. An `Event` ensures the sibling is waiting before the failing child raises. Observe an `ExceptionGroup` containing `ValueError`, sibling cancellation and `finally` cleanup before the group exits. The second test cancels the parent and asserts `CancelledError` propagates after child cleanup. Do not swallow cancellation; no forceful thread termination is demonstrated."
+              "Run `practice/async_failure_lab.py` and `python -m unittest test_async_failure_lab.py` from practice with Python 3.14+. An `Event` ensures the sibling is waiting before the failing child raises. Observe an `ExceptionGroup` containing `ValueError`, sibling cancellation and `finally` cleanup before the group exits. The second test cancels the parent and asserts `CancelledError` propagates after child cleanup. Do not swallow cancellation; no forceful thread termination is demonstrated."
             ]
           }
         ],
         "exercise": {
-          "prompt": "Collect two simulated I/O values with asyncio.TaskGroup, retaining task handles so output remains ordered. Run as a script with Python 3.11+.",
+          "prompt": "Collect two simulated I/O values with asyncio.TaskGroup, retaining task handles so output remains ordered. Run as a script with Python 3.14+.",
           "starter": "import asyncio\n\nasync def read_minutes(value):\n    await asyncio.sleep(0)  # Yield to another task without using a service.\n    return value\n\nasync def collect():\n    async with asyncio.TaskGroup() as group:\n        tasks = []\n        # TODO: for each value in [10, 20], create a task and save its handle.\n        # group.create_task(read_minutes(value)) returns that handle.\n    # TODO: after the group exits, return each task.result() in list order.\n    raise NotImplementedError\n\nvalues = asyncio.run(collect())\nassert values == [10, 20]\nassert sum(values) == 30\nprint(\"async checks passed\")",
           "runLocally": "asyncio.run needs a browser feature the in-browser Python does not have, so copy this into a file and run it locally.",
           "solution": "import asyncio\nasync def read_minutes(value):\n    await asyncio.sleep(0)\n    return value\nasync def collect():\n    async with asyncio.TaskGroup() as group:\n        tasks = [group.create_task(read_minutes(v)) for v in [10, 20]]\n    return [task.result() for task in tasks]\nvalues = asyncio.run(collect())\nassert values == [10, 20] and sum(values) == 30\nprint(\"async checks passed\")",
           "checks": [
-            "Run this as a .py script with Python 3.11+. The result must be [10, 20] with total 30, regardless of completion order.",
+            "Run this as a .py script with Python 3.14+. The result must be [10, 20] with total 30, regardless of completion order.",
             "This checks successful collection only. The optional async_failure_lab.py and its tests cover child failure and cancellation."
           ]
         },
@@ -77184,7 +77184,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/asyncio-task.html#task-groups",
             "section": "Task cancellation and task groups",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "extraQuiz": [
@@ -77252,7 +77252,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/profile.html",
             "section": "Profiling and statistics",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "extraQuiz": [
@@ -77320,7 +77320,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/json.html",
             "section": "Warning: untrusted JSON resource consumption",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "extraQuiz": [
@@ -77388,7 +77388,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/os.html#os.replace",
             "section": "os.replace",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "diagram": {
@@ -77566,7 +77566,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/concurrent.futures.html",
             "section": "Executor.map and shutdown",
             "reviewed": "2026-09-27",
-            "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
           }
         ],
         "diagram": {
@@ -78054,7 +78054,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11 or newer; standard library only.",
+            "Python 3.14 or newer; standard library only.",
             "The combined test module imports all three project files, so keep all three beside it. The advanced demo is a bounded local pipeline, not a network service.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -78095,7 +78095,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11 or newer; standard library only.",
+            "Python 3.14 or newer; standard library only.",
             "The combined test module imports all three project files, so keep all three beside it. The advanced demo is a bounded local pipeline, not a network service.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -78141,7 +78141,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11 or newer; standard library only.",
+            "Python 3.14 or newer; standard library only.",
             "The combined test module imports all three project files, so keep all three beside it. The advanced demo is a bounded local pipeline, not a network service.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -78186,7 +78186,7 @@ const LEARNING_PATHS = [
     "level": "Guided foundations → common patterns → mixed practical problems",
     "prerequisites": [
       "Comfort with basic Python values, loops and functions. Revisit the Python path whenever a construct is unfamiliar.",
-      "Python 3.11 or newer and an editor; no prior algorithm interview experience required."
+      "Python 3.14 or newer and an editor; no prior algorithm interview experience required."
     ],
     "outcomes": [
       "Translate a problem statement into a precise function contract.",
@@ -78293,7 +78293,7 @@ const LEARNING_PATHS = [
         "id": "sum-approved",
         "title": "1. Total approved minutes",
         "stage": "foundation",
-        "takeaway": "starter · Python 3.11+ · Test your solution locally",
+        "takeaway": "starter · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -78312,7 +78312,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Durations and `minimum` are integers from 0 to 10,000."
             ]
           }
@@ -78350,7 +78350,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Numeric types: integer comparisons and addition",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -78358,7 +78358,7 @@ const LEARNING_PATHS = [
         "id": "clamp-readings",
         "title": "2. Keep readings within limits",
         "stage": "foundation",
-        "takeaway": "starter · Python 3.11+ · Test your solution locally",
+        "takeaway": "starter · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -78377,7 +78377,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "`-10_000 <= low <= high <= 10_000`. Readings are integers in that same numeric range."
             ]
           }
@@ -78415,7 +78415,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Numeric comparisons; mutable sequence append",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -78423,7 +78423,7 @@ const LEARNING_PATHS = [
         "id": "first-long-label",
         "title": "3. Find the first label that fits",
         "stage": "foundation",
-        "takeaway": "starter · Python 3.11+ · Test your solution locally",
+        "takeaway": "starter · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -78442,7 +78442,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Labels contain ASCII characters only. `minimum` is from 0 to 1,001."
             ]
           }
@@ -78480,7 +78480,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Common sequence operations: len and indexing",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -78488,7 +78488,7 @@ const LEARNING_PATHS = [
         "id": "longest-active-run",
         "title": "4. Measure an active streak",
         "stage": "foundation",
-        "takeaway": "starter · Python 3.11+ · Test your solution locally",
+        "takeaway": "starter · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -78507,7 +78507,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Each flag is exactly the integer 0 or 1."
             ]
           }
@@ -78545,7 +78545,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Numeric types: integer comparisons and addition",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -78553,7 +78553,7 @@ const LEARNING_PATHS = [
         "id": "clean-label",
         "title": "5. Normalize a display label",
         "stage": "foundation",
-        "takeaway": "starter · Python 3.11+ · Test your solution locally",
+        "takeaway": "starter · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -78572,7 +78572,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "`text` contains only ASCII letters A-Z, a-z and literal spaces."
             ]
           }
@@ -78610,7 +78610,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "String methods: lower, split with an explicit separator, and join",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -78618,7 +78618,7 @@ const LEARNING_PATHS = [
         "id": "reading-changes",
         "title": "6. Report changes between readings",
         "stage": "foundation",
-        "takeaway": "starter · Python 3.11+ · Test your solution locally",
+        "takeaway": "starter · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -78637,7 +78637,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Readings are integers from -10,000 to 10,000."
             ]
           }
@@ -78675,7 +78675,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Common sequence operations: indexing; integer subtraction",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -78683,7 +78683,7 @@ const LEARNING_PATHS = [
         "id": "keep-first-labels",
         "title": "7. Keep the first occurrence",
         "stage": "foundation",
-        "takeaway": "starter · Python 3.11+ · Test your solution locally",
+        "takeaway": "starter · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -78702,7 +78702,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Labels contain ASCII characters only."
             ]
           }
@@ -78740,7 +78740,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Set types: membership and add; mutable sequence append",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -78748,7 +78748,7 @@ const LEARNING_PATHS = [
         "id": "stock-totals",
         "title": "8. Combine delivery quantities",
         "stage": "foundation",
-        "takeaway": "starter · Python 3.11+ · Test your solution locally",
+        "takeaway": "starter · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -78767,7 +78767,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Each row has exactly two entries: a nonempty ASCII item name and an integer quantity from -1,000 to 1,000."
             ]
           }
@@ -78805,7 +78805,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Mapping types: dict.get and assignment",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -78813,7 +78813,7 @@ const LEARNING_PATHS = [
         "id": "column-totals",
         "title": "9. Total uneven rows",
         "stage": "foundation",
-        "takeaway": "starter · Python 3.11+ · Test your solution locally",
+        "takeaway": "starter · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -78832,7 +78832,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "At most 1,000 rows and at most 10,000 integers in total. Values are from -1,000 to 1,000."
             ]
           }
@@ -78870,7 +78870,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Mutable sequence operations: indexing, append and assignment",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -78878,7 +78878,7 @@ const LEARNING_PATHS = [
         "id": "group-by-initial",
         "title": "10. Group names by initial",
         "stage": "foundation",
-        "takeaway": "starter · Python 3.11+ · Test your solution locally",
+        "takeaway": "starter · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -78897,7 +78897,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Names contain ASCII letters only, or are empty."
             ]
           }
@@ -78935,7 +78935,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "String indexing; mapping membership and assignment; list append",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -78943,7 +78943,7 @@ const LEARNING_PATHS = [
         "id": "most-requested",
         "title": "11. Choose the most requested label",
         "stage": "intermediate",
-        "takeaway": "developing · Python 3.11+ · Test your solution locally",
+        "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -78962,7 +78962,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "ASCII labels; exact case-sensitive matching."
             ]
           }
@@ -79000,7 +79000,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Mapping types: dict.get, indexing and assignment",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -79008,7 +79008,7 @@ const LEARNING_PATHS = [
         "id": "can-fill-pair",
         "title": "12. Pack exactly two entries",
         "stage": "intermediate",
-        "takeaway": "developing · Python 3.11+ · Test your solution locally",
+        "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -79027,7 +79027,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Sizes and `target` are integers from -10,000 to 10,000. Input is already sorted."
             ]
           }
@@ -79065,7 +79065,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence indexing and numeric comparisons",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -79073,7 +79073,7 @@ const LEARNING_PATHS = [
         "id": "shared-readings",
         "title": "13. Match repeated readings",
         "stage": "intermediate",
-        "takeaway": "developing · Python 3.11+ · Test your solution locally",
+        "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -79092,7 +79092,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Both lists are nondecreasing integer lists with values from -10,000 to 10,000."
             ]
           }
@@ -79130,7 +79130,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence indexing and mutable sequence append",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -79138,7 +79138,7 @@ const LEARNING_PATHS = [
         "id": "busiest-block",
         "title": "14. Find the busiest fixed block",
         "stage": "intermediate",
-        "takeaway": "developing · Python 3.11+ · Test your solution locally",
+        "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -79157,7 +79157,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "`width` is an integer from 1 to 1,001. Counts are integers from 0 to 10,000."
             ]
           }
@@ -79195,7 +79195,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence indexing and integer arithmetic",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -79203,7 +79203,7 @@ const LEARNING_PATHS = [
         "id": "affordable-stretch",
         "title": "15. Fit consecutive costs into a budget",
         "stage": "intermediate",
-        "takeaway": "developing · Python 3.11+ · Test your solution locally",
+        "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -79222,7 +79222,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Costs and `budget` are nonnegative integers from 0 to 10,000. Negative costs are outside the contract."
             ]
           }
@@ -79260,7 +79260,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence indexing and integer arithmetic",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -79268,7 +79268,7 @@ const LEARNING_PATHS = [
         "id": "range-totals",
         "title": "16. Answer several range totals",
         "stage": "intermediate",
-        "takeaway": "developing · Python 3.11+ · Test your solution locally",
+        "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -79287,7 +79287,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Values are integers from -10,000 to 10,000. Every query has `0 <= start <= stop <= len(values)`. At most 1,000 queries."
             ]
           }
@@ -79325,7 +79325,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "List indexing including negative indices; mutable sequence append",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -79333,7 +79333,7 @@ const LEARNING_PATHS = [
         "id": "balance-marker",
         "title": "17. Place a balanced marker",
         "stage": "intermediate",
-        "takeaway": "developing · Python 3.11+ · Test your solution locally",
+        "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -79352,7 +79352,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Integer values from -10,000 to 10,000; negative values are allowed."
             ]
           }
@@ -79390,7 +79390,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Numeric types: integer addition, subtraction and equality",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -79398,7 +79398,7 @@ const LEARNING_PATHS = [
         "id": "first-suitable",
         "title": "18. Find the first suitable capacity",
         "stage": "intermediate",
-        "takeaway": "developing · Python 3.11+ · Test your solution locally",
+        "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -79417,7 +79417,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Capacities and `required` are integers from 0 to 10,000."
             ]
           }
@@ -79455,7 +79455,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence indexing; numeric comparisons and floor division",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           },
           {
             "title": "Python documentation: bisect",
@@ -79470,7 +79470,7 @@ const LEARNING_PATHS = [
         "id": "balanced-groups",
         "title": "19. Check nested groups",
         "stage": "intermediate",
-        "takeaway": "developing · Python 3.11+ · Test your solution locally",
+        "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -79489,7 +79489,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Only ASCII letters, spaces and the characters `()[]{}` appear."
             ]
           }
@@ -79527,7 +79527,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "List append and pop; string and dictionary membership",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -79535,7 +79535,7 @@ const LEARNING_PATHS = [
         "id": "undo-notes",
         "title": "20. Apply note edits with undo",
         "stage": "intermediate",
-        "takeaway": "developing · Python 3.11+ · Test your solution locally",
+        "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -79554,7 +79554,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "All commands follow this grammar and use ASCII characters only. Notes may contain additional colons or the word `undo`."
             ]
           }
@@ -79592,7 +79592,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "String slicing; list append and pop",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -79600,7 +79600,7 @@ const LEARNING_PATHS = [
         "id": "read-settings",
         "title": "21. Read small settings lines",
         "stage": "advanced",
-        "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+        "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -79619,7 +79619,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "All lines use printable ASCII characters. Invalid lines are expected and must be skipped."
             ]
           }
@@ -79657,7 +79657,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "String methods: strip with explicit characters, startswith and partition; mapping assignment",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -79665,7 +79665,7 @@ const LEARNING_PATHS = [
         "id": "latest-samples",
         "title": "22. Keep the latest device sample",
         "stage": "advanced",
-        "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+        "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -79684,7 +79684,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Device is a nonempty ASCII string. Timestamp is an integer from 0 to 1,000,000. Reading is an integer from -10,000 to 10,000. Every row has exactly three entries."
             ]
           }
@@ -79722,7 +79722,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Dictionary membership and assignment; list indexing",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -79730,7 +79730,7 @@ const LEARNING_PATHS = [
         "id": "maintenance-coverage",
         "title": "23. Combine maintenance coverage",
         "stage": "advanced",
-        "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+        "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -79749,7 +79749,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Every row has two integer endpoints with `0 <= start < end <= 1_000_000`. Input may be unsorted or repeated."
             ]
           }
@@ -79787,7 +79787,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence comparisons and mutable sequence assignment",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -79795,7 +79795,7 @@ const LEARNING_PATHS = [
         "id": "first-open-slot",
         "title": "24. Find time for a short appointment",
         "stage": "advanced",
-        "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+        "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -79814,7 +79814,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "`0 <= day_end <= 1_000_000` and `1 <= duration <= 1_000_000`. Every `busy` row satisfies `0 <= start < end <= day_end`."
             ]
           }
@@ -79852,7 +79852,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence comparisons and numeric comparisons",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -79860,7 +79860,7 @@ const LEARNING_PATHS = [
         "id": "peak-requests",
         "title": "25. Measure a request burst",
         "stage": "advanced",
-        "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+        "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -79879,7 +79879,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Timestamps are nondecreasing integers from 0 to 1,000,000. `width` is from 1 to 1,000,000."
             ]
           }
@@ -79917,7 +79917,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence indexing and integer arithmetic",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -79925,7 +79925,7 @@ const LEARNING_PATHS = [
         "id": "parse-price",
         "title": "26. Convert a price into cents",
         "stage": "advanced",
-        "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+        "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -79944,7 +79944,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Input is any ASCII string of at most 100 characters. Invalid strings are part of the task."
             ]
           }
@@ -79982,7 +79982,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "String split and membership; integer conversion",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -79990,7 +79990,7 @@ const LEARNING_PATHS = [
         "id": "compare-releases",
         "title": "27. Compare numeric release labels",
         "stage": "advanced",
-        "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+        "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -80009,7 +80009,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Each label has 1 to 20 nonempty components. Each component has 1 to 6 ASCII digits. No signs, suffixes or spaces."
             ]
           }
@@ -80047,7 +80047,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "String split; integer conversion and numeric comparisons",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -80055,7 +80055,7 @@ const LEARNING_PATHS = [
         "id": "ready-order",
         "title": "28. Plan a small preparation list",
         "stage": "advanced",
-        "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+        "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -80074,7 +80074,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "`tasks` contains at most 100 names, with no duplicates. Each name is a nonempty lowercase ASCII word. Every requirement names two existing tasks. At most 1,000 requirement rows."
             ]
           }
@@ -80112,7 +80112,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Set types: subset comparison and add; mapping indexing",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -80120,7 +80120,7 @@ const LEARNING_PATHS = [
         "id": "fulfill-orders",
         "title": "29. Process complete stock requests",
         "stage": "advanced",
-        "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+        "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -80139,7 +80139,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "ASCII item names. Stock quantities are integers from 0 to 10,000. Order quantities are integers from 1 to 10,000. Each order row has exactly two entries."
             ]
           }
@@ -80177,7 +80177,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Dictionary copy, get and assignment",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       },
@@ -80185,7 +80185,7 @@ const LEARNING_PATHS = [
         "id": "book-most-sessions",
         "title": "30. Fit the most optional sessions",
         "stage": "advanced",
-        "takeaway": "stretch · Python 3.11+ · Test your solution locally",
+        "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
           {
             "title": "The problem",
@@ -80204,7 +80204,7 @@ const LEARNING_PATHS = [
           {
             "title": "Constraints and edge cases",
             "paragraphs": [
-              "Use Python 3.11 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
               "Each row contains integer times with `0 <= start < end <= 1_000_000`. Input may be unsorted."
             ]
           }
@@ -80242,7 +80242,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/builtins/stdtypes.html",
             "section": "Sequence indexing; numeric comparisons",
             "reviewed": "2026-10-02",
-            "scope": "API behavior for original Python 3.11+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
           }
         ]
       }
@@ -80343,7 +80343,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11 or newer. Standard library only; no accounts, packages or network requests.",
+            "Python 3.14 or newer. Standard library only; no accounts, packages or network requests.",
             "The runner executes code with your normal local permissions. Its timeout is an accidental-hang safeguard, not a security sandbox.",
             "Commands test the original challenge only. Variation prompts are ungraded follow-ups; add your own tests for changed requirements."
           ]
@@ -80391,7 +80391,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11 or newer. Standard library only; no accounts, packages or network requests.",
+            "Python 3.14 or newer. Standard library only; no accounts, packages or network requests.",
             "The runner executes code with your normal local permissions. Its timeout is an accidental-hang safeguard, not a security sandbox.",
             "Commands test the original challenge only. Variation prompts are ungraded follow-ups; add your own tests for changed requirements."
           ]
@@ -80439,7 +80439,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11 or newer. Standard library only; no accounts, packages or network requests.",
+            "Python 3.14 or newer. Standard library only; no accounts, packages or network requests.",
             "The runner executes code with your normal local permissions. Its timeout is an accidental-hang safeguard, not a security sandbox.",
             "Commands test the original challenge only. Variation prompts are ungraded follow-ups; add your own tests for changed requirements."
           ]
@@ -80499,7 +80499,7 @@ const LEARNING_PATHS = [
       "Make a compatible CLI change with evidence and a recovery plan."
     ],
     "setup": [
-      "Use Python 3.11 or later; no external packages, account or GPU are required.",
+      "Use Python 3.14 or later; no external packages, account or GPU are required.",
       "Download and extract the practice ZIP. Run commands from its folder.",
       "Read CONTRACT.md and attempt projects.md before reading report.py."
     ],
@@ -80959,7 +80959,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Basic example; assert methods; command-line interface",
             "reviewed": "2026-10-02",
-            "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+            "scope": "Standard-library tests use Python 3.14 or later. No external services are required."
           }
         ],
         "extraQuiz": [
@@ -81081,7 +81081,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Basic example; assert methods; command-line interface",
             "reviewed": "2026-10-02",
-            "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+            "scope": "Standard-library tests use Python 3.14 or later. No external services are required."
           }
         ],
         "visual": {
@@ -81711,7 +81711,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Basic example; assert methods; command-line interface",
             "reviewed": "2026-10-02",
-            "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+            "scope": "Standard-library tests use Python 3.14 or later. No external services are required."
           }
         ],
         "extraQuiz": [
@@ -81894,7 +81894,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Basic example; assert methods; command-line interface",
             "reviewed": "2026-10-02",
-            "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+            "scope": "Standard-library tests use Python 3.14 or later. No external services are required."
           }
         ],
         "extraQuiz": [
@@ -81955,7 +81955,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/argparse.html",
             "section": "ArgumentParser; add_argument; choices; error",
             "reviewed": "2026-10-02",
-            "scope": "The lab uses stable Python 3.11+ APIs. Invalid arguments use argparse error handling."
+            "scope": "The lab uses stable Python 3.14+ APIs. Invalid arguments use argparse error handling."
           }
         ],
         "extraQuiz": [
@@ -82077,7 +82077,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Basic example; assert methods; command-line interface",
             "reviewed": "2026-10-02",
-            "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+            "scope": "Standard-library tests use Python 3.14 or later. No external services are required."
           }
         ],
         "extraQuiz": [
@@ -82479,7 +82479,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Basic example; assert methods; command-line interface",
             "reviewed": "2026-10-02",
-            "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+            "scope": "Standard-library tests use Python 3.14 or later. No external services are required."
           }
         ],
         "extraQuiz": [
@@ -90229,7 +90229,7 @@ const LEARNING_PATHS = [
     "level": "Foundations → intermediate design reasoning → local experiments",
     "prerequisites": [
       "Comfort with a small application, basic HTTP and database concepts is helpful; the foundation lessons explain the vocabulary.",
-      "No cloud account or paid service is required. Optional calculator exercises need Python 3.10+ and basic terminal use."
+      "No cloud account or paid service is required. Optional calculator exercises need Python 3.14+ and basic terminal use."
     ],
     "outcomes": [
       "Translate user needs into invariants, SLIs and scoped architecture decisions.",
@@ -94080,7 +94080,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.10 or newer to run the calculator; a text editor for the workbook and ADR.",
+            "Python 3.14 or newer to run the calculator; a text editor for the workbook and ADR.",
             "The calculator checks arithmetic under stated assumptions. The workbook and ADR are paper assessments; no live load, availability, security or recovery test is supplied.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -94131,7 +94131,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.10 or newer to run the calculator; a text editor for the workbook and ADR.",
+            "Python 3.14 or newer to run the calculator; a text editor for the workbook and ADR.",
             "The calculator checks arithmetic under stated assumptions. The workbook and ADR are paper assessments; no live load, availability, security or recovery test is supplied.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -94179,7 +94179,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.10 or newer to run the calculator; a text editor for the workbook and ADR.",
+            "Python 3.14 or newer to run the calculator; a text editor for the workbook and ADR.",
             "The calculator checks arithmetic under stated assumptions. The workbook and ADR are paper assessments; no live load, availability, security or recovery test is supplied.",
             "Use the supplied code as a reference. Test your own project and report its results separately."
           ]
@@ -97243,7 +97243,7 @@ const LEARNING_PATHS = [
     "level": "Foundations → intermediate → selected advanced topics",
     "prerequisites": [
       "Basic Python functions, lists and exceptions; vocabulary is introduced before deeper diagnosis.",
-      "Python 3.11+ and a terminal for runnable labs; no third-party package, account or external service required."
+      "Python 3.14+ and a terminal for runnable labs; no third-party package, account or external service required."
     ],
     "outcomes": [
       "Build a pure parser and independently demonstrate allowed values, type boundaries and malformed records.",
@@ -97525,7 +97525,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Basic example; assert methods",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -97593,7 +97593,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Basic example",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -97654,7 +97654,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Distinguishing test iterations using subtests",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -97715,7 +97715,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "assertRaises; assertRaisesRegex",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -97776,7 +97776,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/tempfile.html",
             "section": "TemporaryDirectory; context-managed cleanup",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -97837,7 +97837,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/traceback.html",
             "section": "TracebackException; exception chaining output",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -97913,7 +97913,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/pdb.html",
             "section": "Debugger commands; run",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "diagram": {
@@ -98092,7 +98092,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/pdb.html",
             "section": "break; p; next; step; continue",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "diagram": {
@@ -98243,7 +98243,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Organizing test code; test fixtures",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "diagram": {
@@ -98420,7 +98420,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.mock.html",
             "section": "Mock.side_effect; assert_not_called; where to patch",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -98481,7 +98481,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.mock.html",
             "section": "Autospeccing; specification of doubles",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -98542,7 +98542,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/tempfile.html",
             "section": "NamedTemporaryFile; temporary-file lifecycle",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "diagram": {
@@ -98707,7 +98707,7 @@ const LEARNING_PATHS = [
             "url": "https://hypothesis.readthedocs.io/en/latest/quickstart.html",
             "section": "An example; falsifying and shrinking",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -98775,7 +98775,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "TestCase; assert methods",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -98842,7 +98842,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "assertEqual; test discovery",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "diagram": {
@@ -98972,7 +98972,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "Do not overwrite a historical captured incident merely to make a new test pass. Add a new fixture or document a migration. Avoid copying credentials or raw production records into regression folders. Time and external state should be injected or controlled when they are not the subject of the test."
             ],
-            "example": "Fixture: IDs a,b; durations 7,2\nSeed: 27\nExpected sum: 9\nEnvironment: Python 3.11+; local filesystem"
+            "example": "Fixture: IDs a,b; durations 7,2\nSeed: 27\nExpected sum: 9\nEnvironment: Python 3.14+; local filesystem"
           }
         ],
         "exercise": {
@@ -99000,7 +99000,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/tempfile.html",
             "section": "TemporaryDirectory; cleanup",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -99068,7 +99068,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/threading.html",
             "section": "Barrier; Lock objects",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "diagram": {
@@ -99221,7 +99221,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/threading.html",
             "section": "Event objects; Thread.join",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "visual": {
@@ -99611,7 +99611,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "IsolatedAsyncioTestCase; asyncSetUp and asyncTearDown",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "diagram": {
@@ -99801,7 +99801,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/logging.html",
             "section": "LogRecord attributes; logging levels",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -99868,7 +99868,7 @@ const LEARNING_PATHS = [
             "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
             "section": "Latency; traffic; saturation",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -99929,7 +99929,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Command-Line Interface; Test Discovery",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -99990,7 +99990,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/pdb.html",
             "section": "Debugger commands; post-mortem debugging",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -100051,7 +100051,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.python.org/3/library/unittest.html",
             "section": "Command-Line Interface; test suites",
             "reviewed": "2026-09-27",
-            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.11+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
           }
         ],
         "extraQuiz": [
@@ -100387,7 +100387,7 @@ const LEARNING_PATHS = [
             }
           ],
           "notes": [
-            "Python 3.11+ for the required local exercises. Coverage installation is optional; see the workbook.",
+            "Python 3.14+ for the required local exercises. Coverage installation is optional; see the workbook.",
             "A synthetic cleanup test does not demonstrate recovery after process termination."
           ]
         }

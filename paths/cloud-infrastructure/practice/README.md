@@ -1,6 +1,6 @@
 # Cloud practice: no resources are provisioned by this kit
 
-Extract all flat files together. Offline baseline requires Python 3.11+ only, with no pip packages, network, Azure identity, Terraform or billing account.
+Extract all flat files together. Offline baseline requires Python 3.14+ only, with no pip packages, network, Azure identity, Terraform or billing account.
 
 ```text
 python --version
@@ -38,4 +38,4 @@ Offline scripts mutate only copied in-memory inventories and leave no resource/s
 
 See [mechanism-lab.md](mechanism-lab.md) for `terraform_plan_drill.py`: Four PASS plan lines: create/2, no-op/0, update/2, delete-create/2. Only initial built-in local state is applied; no cloud provider runs.
 
-Requirements: Python 3.11+ and an existing Terraform 1.4+ CLI.
+Requirements: Python 3.14+ and an existing Terraform 1.4+ CLI.

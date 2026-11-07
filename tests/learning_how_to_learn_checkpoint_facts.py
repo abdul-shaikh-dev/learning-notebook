@@ -5,7 +5,7 @@ and models none of this course's content, so every answer here comes from the le
 printable kits. Each entry names its source and a phrase that must appear there word for word; see
 tests/checkpoint_citations.py. The routing answers follow the fictional policies in foundation-kit.md
 and lesson 16.
-Run with Python 3.11+: python tests/learning_how_to_learn_checkpoint_facts.py
+Run with Python 3.14+: python tests/learning_how_to_learn_checkpoint_facts.py
 """
 import sys
 

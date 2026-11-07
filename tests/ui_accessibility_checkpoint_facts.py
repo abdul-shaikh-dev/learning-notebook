@@ -5,7 +5,7 @@ ratios, semantics.test.cjs as shipped, and demo.js inside a minimal fake DOM (on
 demo.js calls), so its real submit, preview and close handlers run. Other facts read demo.html and
 demo.css. Each returns the text of the option the result supports, and the script fails if that differs
 from the authored correct option. No browser or network is used. Needs Node.js on PATH.
-Run with Python 3.11+: python tests/ui_accessibility_checkpoint_facts.py
+Run with Python 3.14+: python tests/ui_accessibility_checkpoint_facts.py
 """
 from html.parser import HTMLParser
 import json

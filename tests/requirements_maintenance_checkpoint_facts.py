@@ -4,7 +4,7 @@ Each fact runs the course's lab in paths/requirements-maintenance/practice: the 
 the reference report.py (in process and as a command), and its test_report.py suite. Inputs are written to
 a temporary directory, so the shipped tickets.csv is only read. Each fact returns the text of the option
 the result supports, and the script fails if that differs from the authored correct option.
-Run with Python 3.11+: python tests/requirements_maintenance_checkpoint_facts.py
+Run with Python 3.14+: python tests/requirements_maintenance_checkpoint_facts.py
 """
 import ast
 import json

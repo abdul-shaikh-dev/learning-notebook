@@ -1,4 +1,4 @@
-"""Fresh-owned Git exercises; Python 3.11+, Git 2.28+. No push/network."""
+"""Fresh-owned Git exercises; Python 3.14+, Git 2.28+. No push/network."""
 import argparse
 import json
 import os

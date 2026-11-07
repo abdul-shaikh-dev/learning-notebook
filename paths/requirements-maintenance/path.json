@@ -15,7 +15,7 @@
     "Make a compatible CLI change with evidence and a recovery plan."
   ],
   "setup": [
-    "Use Python 3.11 or later; no external packages, account or GPU are required.",
+    "Use Python 3.14 or later; no external packages, account or GPU are required.",
     "Download and extract the practice ZIP. Run commands from its folder.",
     "Read CONTRACT.md and attempt projects.md before reading report.py."
   ],
@@ -343,7 +343,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Basic example; assert methods; command-line interface",
           "reviewed": "2026-10-02",
-          "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          "scope": "Standard-library tests use Python 3.14 or later. No external services are required."
         }
       ]
     },
@@ -441,7 +441,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Basic example; assert methods; command-line interface",
           "reviewed": "2026-10-02",
-          "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          "scope": "Standard-library tests use Python 3.14 or later. No external services are required."
         }
       ]
     },
@@ -539,7 +539,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Basic example; assert methods; command-line interface",
           "reviewed": "2026-10-02",
-          "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          "scope": "Standard-library tests use Python 3.14 or later. No external services are required."
         }
       ]
     },
@@ -686,7 +686,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Basic example; assert methods; command-line interface",
           "reviewed": "2026-10-02",
-          "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          "scope": "Standard-library tests use Python 3.14 or later. No external services are required."
         }
       ]
     },
@@ -735,7 +735,7 @@
           "url": "https://docs.python.org/3/library/argparse.html",
           "section": "ArgumentParser; add_argument; choices; error",
           "reviewed": "2026-10-02",
-          "scope": "The lab uses stable Python 3.11+ APIs. Invalid arguments use argparse error handling."
+          "scope": "The lab uses stable Python 3.14+ APIs. Invalid arguments use argparse error handling."
         }
       ]
     },
@@ -833,7 +833,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Basic example; assert methods; command-line interface",
           "reviewed": "2026-10-02",
-          "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          "scope": "Standard-library tests use Python 3.14 or later. No external services are required."
         }
       ]
     },
@@ -1080,7 +1080,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Basic example; assert methods; command-line interface",
           "reviewed": "2026-10-02",
-          "scope": "Standard-library tests use Python 3.11 or later. No external services are required."
+          "scope": "Standard-library tests use Python 3.14 or later. No external services are required."
         }
       ]
     },

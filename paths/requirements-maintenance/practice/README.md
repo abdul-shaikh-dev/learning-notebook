@@ -1,6 +1,6 @@
 # Requirements and maintenance practice
 
-Use Python 3.11 or later. No packages, model, GPU or account are needed. Extract the ZIP and run commands in its folder.
+Use Python 3.14 or later. No packages, model, GPU or account are needed. Extract the ZIP and run commands in its folder.
 
 Read CONTRACT.md. Attempt the three projects in projects.md before comparing with report.py. legacy_report.py is deliberately flawed; edit a copy. tickets.csv is fictional and can be copied freely for exercises.
 

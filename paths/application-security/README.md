@@ -1,6 +1,6 @@
 # Application security: synthetic offline practice
 
-Requirements: Python 3.11+ standard library, including SQLite. Keep security_lab.py, security_http.py and both test files together in the extracted folder.
+Requirements: Python 3.14+ standard library, including SQLite. Keep security_lab.py, security_http.py and both test files together in the extracted folder.
 
 ```
 python -B -m unittest -v test_security_lab.py test_security_http.py
@@ -17,4 +17,4 @@ identity-provider-lab.md is an optional learner exercise. Its prerequisite is an
 
 ## Reference scope and verification limits
 
-The course covers selected web-application controls from ASVS 5.0.0, released in 2025. Its original exercises use fictional data and require Python 3.11 or later. They are neither an ASVS certification nor a complete HTTP server or identity-provider implementation.
+The course covers selected web-application controls from ASVS 5.0.0, released in 2025. Its original exercises use fictional data and require Python 3.14 or later. They are neither an ASVS certification nor a complete HTTP server or identity-provider implementation.

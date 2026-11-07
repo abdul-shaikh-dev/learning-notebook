@@ -35,7 +35,7 @@
       "id": "requirements-txt",
       "href": "paths/machine-learning-foundations/practice/requirements.txt",
       "role": "reference",
-      "description": "Pinned Python 3.11/3.12 dependencies"
+      "description": "Pinned Python 3.14 dependencies"
     }
   ],
   "tasks": [

@@ -20,7 +20,7 @@
   ],
   "setup": [
     "Read the task contract and trust-boundary lessons before running code.",
-    "Download harness_workshop.py and test_harness_workshop.py into one folder with Python 3.10+ installed.",
+    "Download harness_workshop.py and test_harness_workshop.py into one folder with Python 3.14+ installed.",
     "Run python harness_workshop.py, then python -m unittest -v test_harness_workshop.py. The scripts use only the standard library.",
     "All model actions are scripted and all business tools are in-memory fakes. The runtime does not make network calls, execute shell commands or read/write application files.",
     "The runbook and ADR are design exercises, not production deployment instructions."

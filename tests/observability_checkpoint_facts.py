@@ -4,7 +4,7 @@ Each fact runs the course's offline labs in paths/observability-performance/prac
 analysis, the manual-span experiment, the lookup benchmark functions and the loopback service handler)
 and returns the text of the option its result supports. The script fails if that differs from the
 authored correct option. The service handler runs on an ephemeral 127.0.0.1 port; no outside network.
-Run with Python 3.11+: python tests/observability_checkpoint_facts.py
+Run with Python 3.14+: python tests/observability_checkpoint_facts.py
 """
 from contextlib import contextmanager
 from http.server import ThreadingHTTPServer

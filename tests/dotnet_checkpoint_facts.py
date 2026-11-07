@@ -9,7 +9,7 @@ that runs edge cases against them. The EF Core and SQLite lab (persistence-check
 NuGet and run as shipped; the persistence answers name the assertion in it that states the expected
 behaviour, and that run must pass. Each fact returns the text of the option the result supports, and
 the script fails if that differs from the authored correct option.
-Run with Python 3.11+ and the .NET 10 SDK: python tests/dotnet_checkpoint_facts.py
+Run with Python 3.14+ and the .NET 10 SDK: python tests/dotnet_checkpoint_facts.py
 For a local compatibility run with another SDK, pass --framework, for example --framework net9.0; the
 persistence lab pins net10.0 and its packages, so its answers fail on any other framework.
 """

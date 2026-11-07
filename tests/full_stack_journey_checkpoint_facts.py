@@ -6,7 +6,7 @@ imported and its address guard is called; no request is sent. The .NET API, SQL 
 and build files are read as data, because building and running the API needs the .NET 10 SDK and NuGet
 (scripts/verify-fullstack.py does that in its own CI job). Each fact returns the text of the option the
 result supports, and the script fails if that differs from the authored correct option.
-Needs Node.js 22.18+ on PATH. Run with Python 3.11+: python tests/full_stack_journey_checkpoint_facts.py
+Needs Node.js 22.18+ on PATH. Run with Python 3.14+: python tests/full_stack_journey_checkpoint_facts.py
 """
 import importlib.util
 import json

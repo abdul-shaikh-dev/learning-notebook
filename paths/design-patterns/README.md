@@ -5,7 +5,7 @@ Visual companions in the notebook: [Export-preview collaboration](https://abdul-
 
 Read the 24-lesson path first or use this workshop beside its three stage projects.
 Basic functions, collections, exceptions and classes are prerequisites. Python
-3.11+ is sufficient; no packages, accounts or services are required.
+3.14+ is sufficient; no packages, accounts or services are required.
 
 Save `workshop.py` and `test_workshop.py` into the same folder. Run:
 

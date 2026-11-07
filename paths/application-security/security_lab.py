@@ -1,4 +1,4 @@
-"""Offline, synthetic security boundaries. Python 3.11+ standard library.
+"""Offline, synthetic security boundaries. Python 3.14+ standard library.
 
 Principal means already authenticated by a trusted adapter. This module does
 not decode/sign/verify JWTs and must not accept a Principal from request JSON.

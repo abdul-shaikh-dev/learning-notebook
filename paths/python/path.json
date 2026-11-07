@@ -27,7 +27,7 @@
     "Create an empty practice folder. Save each example as a .py file and run it from that folder.",
     "Examples show expected output as comments; the exercise starter and solution are separate snippets. Predict the result, attempt the exercise, then compare the solution.",
     "In lesson 10 create an optional project virtual environment; no third-party packages or live API credentials are required.",
-    "Intermediate and advanced practice require Python 3.11+. Download the three project scripts and test_projects.py into one folder, then run python -m unittest -v test_projects.py there. No external packages are required."
+    "Intermediate and advanced practice require Python 3.14+. Download the three project scripts and test_projects.py into one folder, then run python -m unittest -v test_projects.py there. No external packages are required."
   ],
   "nextSteps": [
     "Rebuild each stage project from its brief before comparing the reference; explain its failure tests.",
@@ -157,7 +157,7 @@
           "url": "https://docs.python.org/3/tutorial/interpreter.html",
           "section": "Using the Python interpreter",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -214,7 +214,7 @@
           "url": "https://docs.python.org/3/tutorial/introduction.html",
           "section": "Numbers and strings",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -271,7 +271,7 @@
           "url": "https://docs.python.org/3/tutorial/introduction.html",
           "section": "Strings",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -328,7 +328,7 @@
           "url": "https://docs.python.org/3/tutorial/controlflow.html",
           "section": "if statements",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -385,7 +385,7 @@
           "url": "https://docs.python.org/3/tutorial/datastructures.html",
           "section": "Lists, sets and dictionaries",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -457,7 +457,7 @@
           "url": "https://docs.python.org/3/tutorial/controlflow.html",
           "section": "for and range",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -530,7 +530,7 @@
           "url": "https://docs.python.org/3/tutorial/controlflow.html",
           "section": "Defining functions",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -594,7 +594,7 @@
           "url": "https://docs.python.org/3/tutorial/errors.html",
           "section": "Exceptions and handling",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -658,7 +658,7 @@
           "url": "https://docs.python.org/3/library/json.html",
           "section": "Basic usage and encoders/decoders",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -717,7 +717,7 @@
           "url": "https://docs.python.org/3/tutorial/venv.html",
           "section": "Creating virtual environments",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -783,7 +783,7 @@
           "url": "https://docs.python.org/3/library/unittest.html",
           "section": "Test cases and assertions",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -850,7 +850,7 @@
           "url": "https://docs.python.org/3/library/pathlib.html",
           "section": "Reading and writing files",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -907,7 +907,7 @@
           "url": "https://docs.python.org/3/library/dataclasses.html",
           "section": "Dataclass parameters and frozen instances",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -964,7 +964,7 @@
           "url": "https://docs.python.org/3/library/typing.html",
           "section": "Protocols",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -1021,7 +1021,7 @@
           "url": "https://docs.python.org/3/tutorial/classes.html",
           "section": "Iterators and generators",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -1078,7 +1078,7 @@
           "url": "https://docs.python.org/3/library/contextlib.html",
           "section": "contextmanager and closing",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -1140,7 +1140,7 @@
           "url": "https://docs.python.org/3/library/argparse.html",
           "section": "ArgumentParser",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         },
         {
           "title": "PyPA packaging tutorial",
@@ -1211,7 +1211,7 @@
           "url": "https://docs.python.org/3/howto/logging.html",
           "section": "Logging HOWTO",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -1253,17 +1253,17 @@
         {
           "title": "Fail and cancel a task group",
           "paragraphs": [
-            "Run `practice/async_failure_lab.py` and `python -m unittest test_async_failure_lab.py` from practice with Python 3.11+. An `Event` ensures the sibling is waiting before the failing child raises. Observe an `ExceptionGroup` containing `ValueError`, sibling cancellation and `finally` cleanup before the group exits. The second test cancels the parent and asserts `CancelledError` propagates after child cleanup. Do not swallow cancellation; no forceful thread termination is demonstrated."
+            "Run `practice/async_failure_lab.py` and `python -m unittest test_async_failure_lab.py` from practice with Python 3.14+. An `Event` ensures the sibling is waiting before the failing child raises. Observe an `ExceptionGroup` containing `ValueError`, sibling cancellation and `finally` cleanup before the group exits. The second test cancels the parent and asserts `CancelledError` propagates after child cleanup. Do not swallow cancellation; no forceful thread termination is demonstrated."
           ]
         }
       ],
       "exercise": {
-        "prompt": "Collect two simulated I/O values with asyncio.TaskGroup, retaining task handles so output remains ordered. Run as a script with Python 3.11+.",
+        "prompt": "Collect two simulated I/O values with asyncio.TaskGroup, retaining task handles so output remains ordered. Run as a script with Python 3.14+.",
         "starter": "import asyncio\n\nasync def read_minutes(value):\n    await asyncio.sleep(0)  # Yield to another task without using a service.\n    return value\n\nasync def collect():\n    async with asyncio.TaskGroup() as group:\n        tasks = []\n        # TODO: for each value in [10, 20], create a task and save its handle.\n        # group.create_task(read_minutes(value)) returns that handle.\n    # TODO: after the group exits, return each task.result() in list order.\n    raise NotImplementedError\n\nvalues = asyncio.run(collect())\nassert values == [10, 20]\nassert sum(values) == 30\nprint(\"async checks passed\")",
         "runLocally": "asyncio.run needs a browser feature the in-browser Python does not have, so copy this into a file and run it locally.",
         "solution": "import asyncio\nasync def read_minutes(value):\n    await asyncio.sleep(0)\n    return value\nasync def collect():\n    async with asyncio.TaskGroup() as group:\n        tasks = [group.create_task(read_minutes(v)) for v in [10, 20]]\n    return [task.result() for task in tasks]\nvalues = asyncio.run(collect())\nassert values == [10, 20] and sum(values) == 30\nprint(\"async checks passed\")",
         "checks": [
-          "Run this as a .py script with Python 3.11+. The result must be [10, 20] with total 30, regardless of completion order.",
+          "Run this as a .py script with Python 3.14+. The result must be [10, 20] with total 30, regardless of completion order.",
           "This checks successful collection only. The optional async_failure_lab.py and its tests cover child failure and cancellation."
         ]
       },
@@ -1283,7 +1283,7 @@
           "url": "https://docs.python.org/3/library/asyncio-task.html#task-groups",
           "section": "Task cancellation and task groups",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -1339,7 +1339,7 @@
           "url": "https://docs.python.org/3/library/profile.html",
           "section": "Profiling and statistics",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -1395,7 +1395,7 @@
           "url": "https://docs.python.org/3/library/json.html",
           "section": "Warning: untrusted JSON resource consumption",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -1451,7 +1451,7 @@
           "url": "https://docs.python.org/3/library/os.html#os.replace",
           "section": "os.replace",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     },
@@ -1508,7 +1508,7 @@
           "url": "https://docs.python.org/3/library/concurrent.futures.html",
           "section": "Executor.map and shutdown",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
         }
       ]
     }

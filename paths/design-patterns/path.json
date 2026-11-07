@@ -8,7 +8,7 @@
   "runExamples": true,
   "prerequisites": [
     "Basic programming: functions, collections, exceptions and simple classes. Python learners should reach classes-and-dataclasses; the beginner foundation stage alone does not cover classes.",
-    "Examples use Python 3.11+ and only the standard library; ideas transfer to C#, TypeScript and other languages."
+    "Examples use Python 3.14+ and only the standard library; ideas transfer to C#, TypeScript and other languages."
   ],
   "outcomes": [
     "Identify a real variation point before choosing a pattern.",
@@ -19,7 +19,7 @@
     "Refactor incrementally and document alternatives, costs and evidence."
   ],
   "setup": [
-    "Use Python 3.11+ and save each lesson example in its own file; examples are independent.",
+    "Use Python 3.14+ and save each lesson example in its own file; examples are independent.",
     "Download workshop.py and test_workshop.py into the same empty folder. Run python -m unittest -v test_workshop.py.",
     "Run python workshop.py for a deterministic demonstration. No packages, credentials or live services are required.",
     "Lesson code is deliberately small; read the stated contracts and limits before adapting it to production."
@@ -226,7 +226,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "Introduction and catalog organization",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         },
         {
           "title": "Gamma, Helm and Johnson: Design Patterns 15 Years Later",
@@ -288,7 +288,7 @@
           "url": "https://www.cs.cmu.edu/~wing/publications/LiskovWing94.pdf",
           "section": "Sections 1–2: subtype requirement and motivation",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 behavioral-subtyping paper; Python 3.11+ examples illustrate contracts without claiming formal proof."
+          "scope": "Original 1994 behavioral-subtyping paper; Python 3.14+ examples illustrate contracts without claiming formal proof."
         }
       ]
     },
@@ -353,7 +353,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "Class versus object inheritance",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         }
       ]
     },
@@ -409,7 +409,7 @@
           "url": "https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html",
           "section": "S, O, L, I and D discussions",
           "reviewed": "2026-09-27",
-          "scope": "Original author discussion (2020); principles are design review questions in this Python 3.11+ course."
+          "scope": "Original author discussion (2020); principles are design review questions in this Python 3.14+ course."
         }
       ]
     },
@@ -500,7 +500,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "Strategy",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         }
       ]
     },
@@ -556,7 +556,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "Factory Method and Abstract Factory",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         },
         {
           "title": "GoF: Abstract Factory, publisher excerpt",
@@ -619,7 +619,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "Builder",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         }
       ]
     },
@@ -674,7 +674,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "Adapter",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         },
         {
           "title": "GoF: Adapter, publisher excerpt",
@@ -736,7 +736,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "Facade",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         }
       ]
     },
@@ -799,7 +799,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "Decorator",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         }
       ]
     },
@@ -854,7 +854,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "Composite",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         }
       ]
     },
@@ -910,7 +910,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "Proxy",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         }
       ]
     },
@@ -996,7 +996,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "Observer",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         }
       ]
     },
@@ -1055,7 +1055,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "Chain Of Responsibility",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         },
         {
           "title": "GoF: Chain of Responsibility, publisher excerpt",
@@ -1118,7 +1118,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "Command",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         }
       ]
     },
@@ -1174,7 +1174,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "State",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         }
       ]
     },
@@ -1233,7 +1233,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "Mediator",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         }
       ]
     },
@@ -1289,7 +1289,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "Template Method",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         }
       ]
     },
@@ -1345,7 +1345,7 @@
           "url": "https://docs.python.org/3.11/reference/datamodel.html#object.__iter__",
           "section": "Iterator protocol",
           "reviewed": "2026-09-27",
-          "scope": "Python 3.11+ iterator semantics."
+          "scope": "Python 3.14+ iterator semantics."
         },
         {
           "title": "GoF: Iterator",
@@ -1408,7 +1408,7 @@
           "url": "https://martinfowler.com/articles/injection.html",
           "section": "Dependency Injection",
           "reviewed": "2026-09-27",
-          "scope": "Original architectural pattern description; Python 3.11+ in-memory teaching adaptations. No durability/concurrency claim."
+          "scope": "Original architectural pattern description; Python 3.14+ in-memory teaching adaptations. No durability/concurrency claim."
         }
       ]
     },
@@ -1464,7 +1464,7 @@
           "url": "https://martinfowler.com/eaaCatalog/repository.html",
           "section": "Repository",
           "reviewed": "2026-09-27",
-          "scope": "Original architectural pattern description; Python 3.11+ in-memory teaching adaptations. No durability/concurrency claim."
+          "scope": "Original architectural pattern description; Python 3.14+ in-memory teaching adaptations. No durability/concurrency claim."
         }
       ]
     },
@@ -1563,7 +1563,7 @@
           "url": "https://martinfowler.com/eaaCatalog/unitOfWork.html",
           "section": "Unit Of Work",
           "reviewed": "2026-09-27",
-          "scope": "Original architectural pattern description; Python 3.11+ in-memory teaching adaptations. No durability/concurrency claim."
+          "scope": "Original architectural pattern description; Python 3.14+ in-memory teaching adaptations. No durability/concurrency claim."
         }
       ]
     },
@@ -1627,7 +1627,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "How to use a design pattern",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         },
         {
           "title": "Martin Fowler: Definition of refactoring",
@@ -1696,7 +1696,7 @@
           "url": "https://www.pearson.com/en-us/subject-catalog/p/design-patterns-elements-of-reusable-object-oriented-software/P200000009480/9780201633610",
           "section": "How to select a design pattern",
           "reviewed": "2026-09-27",
-          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.11+ examples are original course adaptations."
+          "scope": "Original 1994 catalog intent; publisher page establishes book provenance, not online access to full chapters. Python 3.14+ examples are original course adaptations."
         },
         {
           "title": "Gamma, Helm and Johnson: Design Patterns 15 Years Later",

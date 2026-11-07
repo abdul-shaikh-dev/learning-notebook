@@ -121,7 +121,7 @@
       ],
       "commands": [
         {
-          "label": "Optional · Python 3.11+ · kit folder",
+          "label": "Optional · Python 3.14+ · kit folder",
           "command": "python finance_workbook.py\npython -m unittest -v test_finance_workbook.py",
           "expected": "USD period result 765.20; curve difference EUR -21.50; five tests pass."
         }
@@ -178,7 +178,7 @@
         }
       ],
       "notes": [
-        "Paper/spreadsheet is sufficient; optional Python needs 3.11+.",
+        "Paper/spreadsheet is sufficient; optional Python needs 3.14+.",
         "Synthetic supplied factors, projections and accruals; no market calibration or production pricer.",
         "The daily-P&L and FX workbook is a later, separate investigation. It is not a prerequisite for this same-time swap comparison."
       ]

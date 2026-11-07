@@ -6,12 +6,12 @@
   "description": "Learn Git state, team review, history integration and recovery in 20 lessons. Three executable projects create local workspaces you can inspect after each run.",
   "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
-    "Basic terminal use and editing text files. Python 3.11+ is needed for the offline fixtures."
+    "Basic terminal use and editing text files. Python 3.14+ is needed for the offline fixtures."
   ],
   "setup": [
     "Extract the practice bundle and keep all files together at its flat folder root.",
     "Read README.md and the three stage kits before executing commands.",
-    "Install Git 2.28+ and Python 3.11+; run python -B -m unittest -v test_sandbox.py. The fixture uses only its own disposable repositories."
+    "Install Git 2.28+ and Python 3.14+; run python -B -m unittest -v test_sandbox.py. The fixture uses only its own disposable repositories."
   ],
   "outcomes": [
     "Explain working tree/index/commit and inspect intended changes.",

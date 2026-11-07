@@ -7,7 +7,7 @@
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Basic application, network and terminal concepts; earlier delivery, security and system-design paths are helpful.",
-    "Python 3.11+ for the offline lab. No cloud account, payment method or broker is required."
+    "Python 3.14+ for the offline lab. No cloud account, payment method or broker is required."
   ],
   "outcomes": [
     "Map Azure scope, identity and network responsibilities.",
