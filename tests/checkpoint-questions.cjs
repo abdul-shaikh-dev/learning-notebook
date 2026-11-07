@@ -33,12 +33,12 @@ for(const p of paths){
  if(slots.size)assert.ok(slots.size>1,p.id+': correct answers do not all sit in one position');
 }
 // Courses with extra questions carry one per lesson and three per stage.
-const extended=['python','data-structures-algorithms','design-patterns','practical-maths-statistics','git-team-workflows','networking-web','messaging-events','data-engineering','sql-server','ai-agents','agent-harnesses','application-security','testing-debugging','observability-performance','system-design','kubernetes','cloud-infrastructure','delivery-operations','ui-accessibility','full-stack-journey','requirements-maintenance','data-analysis-python','machine-learning-foundations','dotnet','react','linux-operating-systems','learning-how-to-learn','weekly-planning-journey','habits-behaviour-change','self-awareness-communication','task-project-management','time-attention-energy'].map(id=>paths.find(x=>x.id===id));
+const extended=['python','data-structures-algorithms','design-patterns','practical-maths-statistics','git-team-workflows','networking-web','messaging-events','data-engineering','sql-server','ai-agents','agent-harnesses','application-security','testing-debugging','observability-performance','system-design','kubernetes','cloud-infrastructure','delivery-operations','ui-accessibility','full-stack-journey','requirements-maintenance','data-analysis-python','machine-learning-foundations','dotnet','react','linux-operating-systems','learning-how-to-learn','weekly-planning-journey','habits-behaviour-change','self-awareness-communication','task-project-management','time-attention-energy','financial-foundations'].map(id=>paths.find(x=>x.id===id));
 assert.deepEqual(paths.filter(x=>x.lessons.some(l=>l.extraQuiz)).map(x=>x.id).sort(),extended.map(x=>x.id).sort(),'Courses with extra questions');
 for(const p of extended){
- assert.ok(p.lessons.every(l=>l.extraQuiz?.length===1),p.id+': one extra question per lesson');assert.deepEqual(p.stages.map(s=>s.stageCheck.length),p.stages.map(()=>3),p.id+': three questions per stage');
+ assert.ok(p.lessons.every(l=>l.quiz?l.extraQuiz?.length===1:!l.extraQuiz),p.id+': one extra question per lesson with a checkpoint');assert.deepEqual(p.stages.map(s=>s.stageCheck.length),p.stages.map(()=>3),p.id+': three questions per stage');
  // Lesson pages: each extra question saves its own first answer, independent of the main checkpoint.
- for(const l of p.lessons){
+ for(const l of p.lessons.filter(l=>l.extraQuiz)){
   lessons++;stored.clear();
   const key=l.id+'/2',q=l.extraQuiz[0],b=block(key,q.options.length);
   context.location.hash='#topic/'+p.id+'/'+l.id;node('main').querySelectorAll=s=>s==='[data-quiz-key]'?[b]:[];vm.runInContext('renderCatalog()',context);
@@ -57,15 +57,15 @@ for(const p of extended){
  const blocks=p.stages.flatMap(s=>s.stageCheck.map((q,i)=>block('stage/'+s.id+'/'+(i+1),q.options.length)));
  context.location.hash='#path/'+p.id;node('main').querySelectorAll=s=>s==='[data-quiz-key]'?blocks:[];vm.runInContext('renderCatalog()',context);
  let html=node('main').innerHTML;
- for(const s of p.stages){stages+=s.stageCheck.length;const at=html.indexOf('id="stage-'+s.id+'"');assert.ok(html.indexOf('Check this stage',at)<html.indexOf('class="stage-project"',at),s.id+': the check comes before the project');}
- assert.equal((html.match(/data-quiz-key="stage\//g)||[]).length,9);
+ for(const s of p.stages){stages+=s.stageCheck.length;const at=html.indexOf('id="stage-'+s.id+'"');const check=html.indexOf('Check this stage',at);assert.ok(check>at,s.id+': the stage has a check');if(s.project)assert.ok(check<html.indexOf('class="stage-project"',at),s.id+': the check comes before the project');}
+ assert.equal((html.match(/data-quiz-key="stage\//g)||[]).length,p.stages.length*3);
  blocks[0].buttons[p.stages[0].stageCheck[0].correct].click();
  assert.deepEqual(Object.keys(saved(p.id)),['stage/'+p.stages[0].id+'/1']);assert.match(blocks[0].note.textContent,/returns in 1 day/);
  node('main').querySelectorAll=()=>[];
  // Print pack: every question with its answer and no answer buttons.
  context.location.hash='#pack/'+p.id;vm.runInContext('renderCatalog()',context);html=node('main').innerHTML;
  assert.ok(!html.includes('data-quiz-key')&&!html.includes('data-key-choice'));
- assert.equal((html.match(/<strong>Answer:<\/strong>/g)||[]).length,p.lessons.length*2+9,p.id+': checkpoint, extra and stage answers are printed');
+ assert.equal((html.match(/<strong>Answer:<\/strong>/g)||[]).length,p.lessons.filter(l=>l.quiz).length*2+p.stages.length*3,p.id+': checkpoint, extra and stage answers are printed');
 }
 const p=extended[0];let html;
 // Review: a missed stage question comes back with the course link and keyed order.
