@@ -53493,6 +53493,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Maya's baseline is one correct decision out of three sample leave requests. What should her Friday check use?",
+            "options": [
+              "The same three cases, to show a clean improvement",
+              "Three different cases that test the same rules",
+              "A count of the policy pages she has read"
+            ],
+            "correct": 1,
+            "explanation": "New cases show whether she can apply the rules, not whether she remembers three answers. Pages read record exposure, not a change in what she can do."
+          }
         ]
       },
       {
@@ -53542,6 +53554,18 @@ const LEARNING_PATHS = [
             "section": "Author-hosted full text; experiments 1 and 2 and general discussion",
             "reviewed": "2026-10-02",
             "scope": "Experiments with studied prose and delayed recall; practical exercises here are adaptations, not replications."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Maya recognises the phrase line manager approval but cannot say which request needs it. How does she record this?",
+            "options": [
+              "Familiar, not yet retrievable",
+              "Learned, because she recognises it",
+              "Evidence that she lacks ability"
+            ],
+            "correct": 0,
+            "explanation": "Recognising a phrase with the page open is a different task from producing the answer without it. A missing detail is information about this attempt, not a judgement of ability."
           }
         ]
       },
@@ -53700,7 +53724,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Why open the source after a low-stakes retrieval attempt?",
+            "options": [
+              "To copy the answer until it feels fluent",
+              "To raise the stakes of the next attempt",
+              "So that an incorrect guess does not become the only record"
+            ],
+            "correct": 2,
+            "explanation": "Checking and correcting the attempt keeps the right answer in the record. A later attempt, not immediate copying, then gives evidence of retention."
+          }
+        ]
       },
       {
         "id": "small-prompts",
@@ -53749,6 +53785,18 @@ const LEARNING_PATHS = [
             "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
             "reviewed": "2026-10-02",
             "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does the lesson suggest for practising a long procedure?",
+            "options": [
+              "A scenario or checklist practice",
+              "Dozens of separate word cards",
+              "Rereading the procedure until it feels familiar"
+            ],
+            "correct": 0,
+            "explanation": "Disconnected word cards can reward memorising sentences while missing how the steps fit together. A scenario or checklist asks for the procedure itself."
           }
         ]
       },
@@ -53882,7 +53930,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Recall keeps failing after the gaps you chose. What does the lesson suggest?",
+            "options": [
+              "Keep the gaps and wait for it to improve",
+              "Revisit sooner or simplify the prompt",
+              "Restart the whole course from the first lesson"
+            ],
+            "correct": 1,
+            "explanation": "Gaps should be adjusted to the difficulty you observe. A gap that is too long for the current material can be shortened, or the prompt made smaller."
+          }
+        ]
       },
       {
         "id": "check-baseline",
@@ -53931,6 +53991,18 @@ const LEARNING_PATHS = [
             "section": "Accepted manuscript; monitoring results, moderator analyses and limitations",
             "reviewed": "2026-10-02",
             "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In the foundation project, when does a case count as correct?",
+            "options": [
+              "When the approval route is right, whatever the reason",
+              "When the learner feels confident about it",
+              "Only when both the approval route and the reason are correct"
+            ],
+            "correct": 2,
+            "explanation": "A right route reached for the wrong reason can fail on the next case, so the scoring rule checks the reason as well."
           }
         ]
       },
@@ -53981,6 +54053,18 @@ const LEARNING_PATHS = [
             "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
             "reviewed": "2026-10-02",
             "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Why compare your own explanation with a reliable source?",
+            "options": [
+              "A fluent invented explanation can still be wrong",
+              "Explanations only count when copied from the source",
+              "Self-explanation works only for experts"
+            ],
+            "correct": 0,
+            "explanation": "An explanation can sound plausible and add a story the rule does not establish. Checking it against the material keeps it anchored."
           }
         ]
       },
@@ -54034,6 +54118,18 @@ const LEARNING_PATHS = [
             "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
             "reviewed": "2026-10-02",
             "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Maya answers correctly with the policy visible but the route hidden. What does that show?",
+            "options": [
+              "Independent recall of the policy",
+              "Supported application, not yet independent recall",
+              "Transfer to a different organisation's policy"
+            ],
+            "correct": 1,
+            "explanation": "The visible policy is support. Independent recall needs an attempt with the policy hidden as well, and the result checked."
           }
         ]
       },
@@ -54224,7 +54320,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "When should you start mixing related cases?",
+            "options": [
+              "Before any of the rules has been introduced",
+              "Only when switching between unrelated subjects",
+              "Once you can explain each category on its own"
+            ],
+            "correct": 2,
+            "explanation": "Mixing tests whether you can choose the right rule. Without the basic rules it may only produce confusion, and unrelated switching is a different thing."
+          }
+        ]
       },
       {
         "id": "feedback-action",
@@ -54353,7 +54461,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A colleague tells Maya to be more careful. What does she do next?",
+            "options": [
+              "Asks which case and rule were wrong",
+              "Rereads every policy page",
+              "Takes it as proof that she is careless"
+            ],
+            "correct": 0,
+            "explanation": "Vague feedback gives little direction. Asking for the specific case turns it into a repair she can test on a new example."
+          }
+        ]
       },
       {
         "id": "error-patterns",
@@ -54402,6 +54522,18 @@ const LEARNING_PATHS = [
             "section": "Feedback model: target, current performance, next steps and differential feedback effects",
             "reviewed": "2026-09-30",
             "scope": "Educational feedback review and conceptual model; feedback effects depend on what information is provided and how it is used."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A learner can state the urgent exception but still sends an urgent case to the coordinator. How does the lesson classify this?",
+            "options": [
+              "Missing knowledge",
+              "Rule selection",
+              "Reading accuracy"
+            ],
+            "correct": 1,
+            "explanation": "Knowing a rule but not applying it points to choosing the rule, so the repair is mixed urgent and planned cases with the first decision explained. The label stays a hypothesis to check."
           }
         ]
       },
@@ -54460,6 +54592,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Supports checking confidence against delayed results. Does not validate the low/medium/high worksheet or a diagnostic cutoff."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A low-confidence answer turns out to be correct. What does the lesson suggest?",
+            "options": [
+              "Mark it as mastered and stop reviewing it",
+              "Reread it straight away until confidence rises",
+              "Another delayed attempt rather than endless immediate rereading"
+            ],
+            "correct": 2,
+            "explanation": "A later attempt shows whether the answer is still available. Rereading at once mostly makes the page feel familiar."
+          }
         ]
       },
       {
@@ -54509,6 +54653,18 @@ const LEARNING_PATHS = [
             "section": "Author university full text; implementation-intention framework",
             "reviewed": "2026-10-02",
             "scope": "Research review on linking cues to actions; if-then plans support action but do not create time or eliminate structural constraints."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What is the required minimum length of a study session?",
+            "options": [
+              "There is no required minimum",
+              "At least 30 minutes",
+              "At least an hour, or it does not count"
+            ],
+            "correct": 0,
+            "explanation": "A session that is easy to begin and fits the day matters more than a length rule. When time shrinks, the lesson suggests a smaller target and a fallback."
           }
         ]
       },
@@ -54567,6 +54723,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Review distinguishes format preferences from evidence for the learning-styles matching hypothesis. It does not dismiss accessibility needs."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "According to the lesson, what can be less useful than a short set of questions you revisit?",
+            "options": [
+              "A note that records the source and the exception",
+              "An accurate summary that is never used",
+              "A card with a case on one side and answer points on the other"
+            ],
+            "correct": 1,
+            "explanation": "Notes help when they support later practice. The other two options are what the lesson recommends putting in notes."
+          }
         ]
       },
       {
@@ -54616,6 +54784,18 @@ const LEARNING_PATHS = [
             "section": "University repository manuscript; inter-study interval analyses and discussion",
             "reviewed": "2026-10-02",
             "scope": "Quantitative review of verbal recall; interval choices depend on retention horizon. No universal expanding-interval formula is claimed."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A two-week plan schedules a delayed check for next Monday. What evidence does the plan itself provide?",
+            "options": [
+              "Delayed evidence of retention",
+              "Evidence of how a skipped session would have changed results",
+              "None until the later attempt actually happens"
+            ],
+            "correct": 2,
+            "explanation": "A schedule shows what you intend to do. Only a completed attempt shows what you could answer."
           }
         ]
       },
@@ -54749,7 +54929,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Under the equipment-booking policy, where does a standard two-hour booking go?",
+            "options": [
+              "The desk coordinator",
+              "The facilities lead",
+              "The line manager"
+            ],
+            "correct": 0,
+            "explanation": "Standard bookings up to two hours go to the desk coordinator, and two hours is at the boundary. Longer or restricted bookings go to the facilities lead; this policy has no manager route."
+          }
+        ]
       },
       {
         "id": "evaluate-advice",
@@ -54798,6 +54990,18 @@ const LEARNING_PATHS = [
             "section": "Original article, university-hosted full text; sections 2, 8, 9, 10 and closing recommendations",
             "reviewed": "2026-10-02",
             "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which of these is a design choice of this course rather than a research finding?",
+            "options": [
+              "Retrieval practice has evidence across many studied conditions",
+              "Spacing has evidence across many studied conditions",
+              "The number of questions and the weekly dates used in the course"
+            ],
+            "correct": 2,
+            "explanation": "The lesson separates the two: retrieval and spacing have research evidence, while the specific numbers and dates are teaching examples."
           }
         ]
       },
@@ -54849,6 +55053,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Educational feedback review and conceptual model; feedback effects depend on what information is provided and how it is used."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Maya misses urgent cases after a long shift but can explain them on a rested day. What does she do before concluding the rule is too hard?",
+            "options": [
+              "Tests the same skill in a shorter, earlier window",
+              "Changes six techniques at once",
+              "Doubles the number of practice questions"
+            ],
+            "correct": 0,
+            "explanation": "The pattern points to conditions rather than the rule, so she changes one plausible cause and checks again."
+          }
         ]
       },
       {
@@ -54898,6 +55114,18 @@ const LEARNING_PATHS = [
             "section": "Abstract: four prose-learning experiments with same and new inferential questions",
             "reviewed": "2026-09-30",
             "scope": "Prose-learning experiments with later inference questions; transfer to every workplace skill is not established."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In the advanced portfolio, what is more informative than an invented perfect score?",
+            "options": [
+              "A longer, better-decorated notebook",
+              "A clear unsuccessful attempt with a sensible next step",
+              "Leaving out the original baseline"
+            ],
+            "correct": 1,
+            "explanation": "The portfolio is assessed on its evidence, not its appearance. An honest failed attempt shows what still needs work."
           }
         ]
       },
@@ -54949,6 +55177,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "Review of ten techniques; utility varies by task, learner and conditions. Does not prescribe a universal timetable."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Where does a rarely used but current detail belong?",
+            "options": [
+              "On a daily card, forever",
+              "On the retirement list",
+              "In a reliable reference that you practise finding"
+            ],
+            "correct": 2,
+            "explanation": "Rare details are cheaper to look up than to rehearse. The retirement list is for outdated rules."
+          }
         ]
       }
     ],
@@ -54980,7 +55220,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "The synthetic sample begins one of three, corrects the urgency exception and later scores three of three on new cases. Actual learners must record their own results. A pending check is honestly pending; it cannot be graded as demonstrated retention. See foundation-kit.md for the full worked record and criterion scoring.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "Baseline case B in foundation-kit.md is an urgent request for today, lasting one day. Which route and reason are correct?",
+            "options": [
+              "Coordinator, because it lasts one day",
+              "Manager, because the urgent same-day override applies",
+              "Manager, because it lasts at least two days"
+            ],
+            "correct": 1,
+            "explanation": "Urgent same-day requests need a manager regardless of duration, so the one-day route does not apply. A case counts only when the reason is right too."
+          },
+          {
+            "question": "Case F is a planned one-day request for next month. Which route applies?",
+            "options": [
+              "Coordinator: next month does not make it urgent today",
+              "Manager: requests for a future month need a manager",
+              "Manager: every planned request needs a manager"
+            ],
+            "correct": 0,
+            "explanation": "It is planned and lasts one day, so it goes to the coordinator. Only planned requests of two or more days, or urgent same-day requests, go to a manager."
+          },
+          {
+            "question": "The later check in the foundation project has not happened yet. How is it recorded?",
+            "options": [
+              "As passed, because it is planned",
+              "Copied from the synthetic sample",
+              "As pending, not as demonstrated retention"
+            ],
+            "correct": 2,
+            "explanation": "A planned check is not evidence until it happens. The synthetic sample is an example, never your result."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -55009,7 +55281,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "The worked policy plan uses Tuesday 12 minutes, Thursday eight and next Monday ten; an unavailable Thursday is removed rather than squeezed into a care duty. The urgent-rule error receives targeted feedback and a new mixed case. See intermediate-kit.md; different feasible timings are acceptable if the evidence and limits are explicit.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "In the worked plan, the learner knows the ordinary duration rule but leaves out urgency. How is the error tentatively classified?",
+            "options": [
+              "Missing knowledge",
+              "Case reading",
+              "Method selection"
+            ],
+            "correct": 2,
+            "explanation": "The learner has the rule but picks the wrong first decision, so the repair is to check urgency before duration."
+          },
+          {
+            "question": "After feedback, the learner answers a new urgent half-day case correctly at once. What does that immediate answer show?",
+            "options": [
+              "A repair, but not delayed retention evidence",
+              "Delayed retention of the urgent rule",
+              "That the earlier 4/5 prediction was accurate"
+            ],
+            "correct": 0,
+            "explanation": "An answer straight after feedback shows the repair worked for now. Retention needs an attempt after a gap."
+          },
+          {
+            "question": "In the worked plan, which time is not used as a catch-up slot?",
+            "options": [
+              "Monday of week two",
+              "Wednesday care evening",
+              "Tuesday of week one"
+            ],
+            "correct": 1,
+            "explanation": "The plan respects care duties: if Thursday is lost, that occasion is removed rather than squeezed into Wednesday evening."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -55038,7 +55342,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "A strong sample reports one of three baseline and three of three delayed leave cases, then applies the new equipment-booking rules: standard two hours to the desk coordinator; restricted half-hour to the facilities lead; standard urgent ninety minutes to the desk coordinator. It carries forward checking exceptions, not the old urgency rule. It does not claim real workplace competence or guaranteed retention. See advanced-kit.md for the complete synthetic example and a failed-transfer alternative.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "Under the new equipment-booking rules, where does a restricted half-hour booking go?",
+            "options": [
+              "The desk coordinator, because it is short",
+              "The line manager, because it is restricted",
+              "The facilities lead"
+            ],
+            "correct": 2,
+            "explanation": "Restricted equipment always goes to the facilities lead, whatever the duration."
+          },
+          {
+            "question": "A standard ninety-minute booking is urgent. Where does it go?",
+            "options": [
+              "The desk coordinator: this policy has no urgency exception",
+              "The facilities lead: urgency always escalates a booking",
+              "The line manager, as in the leave policy"
+            ],
+            "correct": 0,
+            "explanation": "The booking policy says nothing about urgency, so the standard short route applies. Importing the leave policy's urgency rule is the transfer error the stage checks for."
+          },
+          {
+            "question": "What does the strong advanced sample carry forward from the leave policy?",
+            "options": [
+              "The urgency rule itself",
+              "The habit of checking for exceptions",
+              "A claim of real workplace competence"
+            ],
+            "correct": 1,
+            "explanation": "Transfer means reading each new policy's own rules. The habit of checking exceptions carries over; the old rule and claims of competence do not."
+          }
+        ]
       }
     ],
     "resources": {
@@ -69697,6 +70033,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Sam works 09:00–17:00 with a one-hour lunch, five days a week. How many working hours is that?",
+            "options": [
+              "40",
+              "35",
+              "30"
+            ],
+            "correct": 1,
+            "explanation": "Each day is eight hours at work minus a one-hour lunch, so seven working hours, and five days make 35."
+          }
         ]
       },
       {
@@ -69746,6 +70094,18 @@ const LEARNING_PATHS = [
             "section": "Implementation intentions: linking specified situations to goal-directed responses",
             "reviewed": "2026-09-30",
             "scope": "Research review on linking cues to actions; if-then plans support action but do not create time or eliminate structural constraints."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Sam captures redesign noticeboard alongside the event pack. Is the noticeboard a Friday obligation?",
+            "options": [
+              "No: it is an optional idea, not an agreed obligation",
+              "Yes: everything captured is scheduled this week",
+              "Yes: it shares the event pack's deadline"
+            ],
+            "correct": 0,
+            "explanation": "Capturing an item does not make it a commitment. The event pack has a recipient and a deadline; the noticeboard has neither."
           }
         ]
       },
@@ -69950,7 +70310,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Which event-pack action should wait until Lee sends the attendee names?",
+            "options": [
+              "Preparing the cover sheet",
+              "Checking the venue details",
+              "Formatting the final list"
+            ],
+            "correct": 2,
+            "explanation": "The final list depends on the names, so formatting it early risks rework. The cover sheet and venue check can go ahead while Sam waits."
+          }
+        ]
       },
       {
         "id": "priorities-capacity",
@@ -70121,7 +70493,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Sam has 11 hours, with eight planned for the event pack and three reserved. A second agreed task needs two hours. What is the shortfall?",
+            "options": [
+              "None: it fits",
+              "One hour",
+              "Two hours"
+            ],
+            "correct": 2,
+            "explanation": "8 + 2 + 3 = 13 hours against 11. Sam has to cut scope, move a deadline or knowingly use the reserve; putting all 13 on the calendar does not create time."
+          }
+        ]
       },
       {
         "id": "calendar-energy",
@@ -70170,6 +70554,18 @@ const LEARNING_PATHS = [
             "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
             "reviewed": "2026-09-30",
             "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does the lesson say about low-energy time?",
+            "options": [
+              "It is not automatically spare time",
+              "It counts the same as rested time",
+              "It is the best time for demanding drafting"
+            ],
+            "correct": 0,
+            "explanation": "Time on the calendar and the attention available in it are different. Demanding work goes in a window where both are available."
           }
         ]
       },
@@ -70221,6 +70617,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Research review on linking cues to actions; if-then plans support action but do not create time or eliminate structural constraints."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does Sam's Friday delivery assume?",
+            "options": [
+              "That nothing depends on anyone else",
+              "That the attendee list arrives by Thursday morning",
+              "That the noticeboard redesign is finished first"
+            ],
+            "correct": 1,
+            "explanation": "The plan states its dependency so that a late list triggers the fallback instead of a silent guess."
+          }
         ]
       },
       {
@@ -70270,6 +70678,18 @@ const LEARNING_PATHS = [
             "section": "Implementation intentions: linking specified situations to goal-directed responses",
             "reviewed": "2026-09-30",
             "scope": "Research review on linking cues to actions; if-then plans support action but do not create time or eliminate structural constraints."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In the practice studio's habit activity, the cue is I close the service desk, the action is update the waiting list and the fallback is note the most important waiting request. What plan does it write?",
+            "options": [
+              "When I close the service desk, I will update the waiting list. If that is not feasible, I will note the most important waiting request.",
+              "I will update the waiting list every day, and catch up on missed days.",
+              "If I close the service desk, I might update the waiting list."
+            ],
+            "correct": 0,
+            "explanation": "The studio joins the three parts into one if-then plan with its fallback, so a late close still has a smaller action instead of a catch-up routine."
           }
         ]
       },
@@ -70446,7 +70866,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Sam began with 11 project hours. By Wednesday four event hours are done, and an essential meeting removes two more. What is left to plan with?",
+            "options": [
+              "Eleven hours, as in the original plan",
+              "Seven hours: four for event work and three reserve",
+              "Five hours: four for event work and one uncommitted"
+            ],
+            "correct": 2,
+            "explanation": "11 − 4 − 2 = 5 hours remain, and the event pack needs 8 − 4 = 4 of them. The revision starts from what is left, not from the original total."
+          }
+        ]
       },
       {
         "id": "communicate-tradeoffs",
@@ -70499,6 +70931,18 @@ const LEARNING_PATHS = [
             "section": "Feedback model: target, current performance, next steps and differential feedback effects",
             "reviewed": "2026-09-30",
             "scope": "Educational feedback review and conceptual model; feedback effects depend on what information is provided and how it is used."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "The alternative venue needs a one-hour map revision and a half-hour proofread on top of four hours of original work. Sam has five hours. What is the position?",
+            "options": [
+              "It fits, with half an hour spare",
+              "Half an hour short",
+              "One and a half hours short"
+            ],
+            "correct": 1,
+            "explanation": "4 + 1 + 0.5 = 5.5 hours against five. Sam first checks whether the venue change removes any original work, then agrees a real choice with the decision owner."
           }
         ]
       },
@@ -70666,7 +71110,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "When does Sam's optional two-minute Friday question count as completed?",
+            "options": [
+              "When it is written into the plan",
+              "Automatically, if Monday's check goes well",
+              "Only once it actually happens"
+            ],
+            "correct": 2,
+            "explanation": "The record keeps planned and completed practice apart, so the plan shows what really happened."
+          }
+        ]
       },
       {
         "id": "revised-plan-project",
@@ -70717,6 +71173,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In the day-level revision, why does the service owner agree to defer one routine hour?",
+            "options": [
+              "Monday's spare hour has passed and cannot be reused",
+              "The event pack grew back to eight hours",
+              "The urgent request was cancelled"
+            ],
+            "correct": 0,
+            "explanation": "The weekly total still balances at 11, but reserve that sat in a day that is already over cannot absorb later work. The timing gap needs its own agreed decision."
+          }
         ]
       },
       {
@@ -70766,6 +71234,18 @@ const LEARNING_PATHS = [
             "section": "Abstract: experimental interventions promoting progress monitoring and goal attainment",
             "reviewed": "2026-09-30",
             "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Friday's log shows the pack took seven hours, the urgent task two and the service issue three. How does that compare with the 11-hour budget?",
+            "options": [
+              "Exactly on budget",
+              "One hour under",
+              "One hour over"
+            ],
+            "correct": 2,
+            "explanation": "7 + 2 + 3 = 12 hours. Before concluding the plan worked, Sam records where the extra hour came from and what it cost."
           }
         ]
       },
@@ -70917,7 +71397,19 @@ const LEARNING_PATHS = [
               ]
             }
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "Why does the review avoid a statement such as I am always disorganised?",
+            "options": [
+              "It is too broad to test or repair",
+              "Reviews should leave reactions out entirely",
+              "It is too specific to be useful"
+            ],
+            "correct": 0,
+            "explanation": "A review names specific outcomes, conditions and reactions so that it can lead to a repair. A global judgement points to nothing to change."
+          }
+        ]
       },
       {
         "id": "choose-next-experiment",
@@ -70971,6 +71463,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Next week Sam asks for the venue confirmation two working days earlier. What will Sam observe?",
+            "options": [
+              "Whether editing takes less time",
+              "Whether a usable answer arrives before the decision point",
+              "Whether every part of the planning system improves"
+            ],
+            "correct": 1,
+            "explanation": "The experiment changes one thing linked to the observed delay, so the observation is about that delay. Estimation stays unchanged so the result can be read."
+          }
         ]
       },
       {
@@ -71022,6 +71526,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-09-30",
             "scope": "Meta-analysis of experimental progress-monitoring interventions; these fictional worksheets are not validated assessments."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Before subtracting carried work from next week's capacity, what should Sam confirm?",
+            "options": [
+              "That last week's numbers can be copied unchanged",
+              "That it is not already in the new routine estimate",
+              "That every unfinished item has been carried forward"
+            ],
+            "correct": 1,
+            "explanation": "Counting the same work in the routine estimate and again as carried work would subtract it twice and understate the capacity."
+          }
         ]
       }
     ],
@@ -71053,7 +71569,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "The baseline allocates eight of 11 remaining hours to the event pack and three to reserve. It defers the four-hour noticeboard idea, requests names Monday and schedules Tuesday follow-up. See foundation-kit.md for one acceptable placement and filled planner; alternate feasible calendars are allowed.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "Sam has 35 working hours, 12 hours of fixed meetings and duties and an estimated 12 hours of routine work. How many hours remain for the event pack and reserve?",
+            "options": [
+              "23",
+              "11",
+              "35"
+            ],
+            "correct": 1,
+            "explanation": "35 − 12 − 12 = 11 hours. The baseline puts eight of them into the event pack and keeps three as reserve."
+          },
+          {
+            "question": "On the practice studio's task board, the work-in-progress limit is 2, one task is Doing and one is Blocked. What happens when you move a Ready task to Doing?",
+            "options": [
+              "It moves, because blocked work is not started work",
+              "It is refused, because blocked work still counts as started",
+              "It moves and the limit rises to 3"
+            ],
+            "correct": 1,
+            "explanation": "Doing and Blocked both count as started work, so the board refuses a third start. Finish or review work before starting another task."
+          },
+          {
+            "question": "Where does the four-hour noticeboard idea go in the baseline plan?",
+            "options": [
+              "Into the three reserve hours",
+              "Into Wednesday evening",
+              "Deferred to a later week"
+            ],
+            "correct": 2,
+            "explanation": "Eight event hours and three reserve hours already use all 11. Reserve is for uncertainty, and Wednesday evening is a care commitment."
+          }
+        ]
       },
       {
         "id": "intermediate",
@@ -71082,7 +71630,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "Three service hours plus six shorter-pack hours plus two urgent hours equals 11. The full eight-hour pack is replaced by six. The scripted agreement accepts a shorter layout, cancels Thursday learning and retains Monday’s check. See intermediate-kit.md for the message, revised ledger and remaining-risk note.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "The revised plan has three service hours, the six-hour shorter pack and the two-hour urgent request. What does that add up to?",
+            "options": [
+              "11 hours, with no reserve left",
+              "13 hours, two over budget",
+              "8 hours, with three reserve hours"
+            ],
+            "correct": 0,
+            "explanation": "3 + 6 + 2 = 11. The shorter pack replaces the eight-hour one rather than adding to it, and no reserve remains for another change."
+          },
+          {
+            "question": "In the practice studio's disrupted week, 60 of 300 minutes are reserved, 90 are lost and the plan stays at 240 minutes. What does the capacity sketch report?",
+            "options": [
+              "The plan fits, using 30 minutes of the buffer",
+              "A shortfall of 30 minutes after the disruption",
+              "A shortfall of 90 minutes after the disruption"
+            ],
+            "correct": 1,
+            "explanation": "300 − 90 leaves 210 minutes, so 240 planned minutes are 30 too many. Keeping the same commitment needs a scope or timing decision."
+          },
+          {
+            "question": "In the scripted agreement, what happens to Sam's learning occasions?",
+            "options": [
+              "Both are moved into Wednesday evening",
+              "Thursday's review is cancelled and Monday's check is kept",
+              "Both are dropped until the event is over"
+            ],
+            "correct": 1,
+            "explanation": "The changed week keeps one realistic later check instead of cramming missed practice into a full evening or a care commitment."
+          }
+        ]
       },
       {
         "id": "advanced",
@@ -71111,7 +71691,39 @@ const LEARNING_PATHS = [
           ],
           "solution": "The supplied next week has 35 - 14 - 12 - 2 = seven available hours. Choose the accepted four-hour task and three hours of reserve; defer the noticeboard redesign. Explain that fixed work and carried routine tasks reduced capacity. Check whether carried work is already in the routine estimate before subtracting it. See advanced-kit.md for an optional longer worked review.",
           "solutionFormat": "prose"
-        }
+        },
+        "stageCheck": [
+          {
+            "question": "Next week has 14 fixed hours, 12 routine hours and two carried routine hours. How many hours remain before reserve?",
+            "options": [
+              "11",
+              "9",
+              "7"
+            ],
+            "correct": 2,
+            "explanation": "35 − 14 − 12 − 2 = 7 hours, so last week's 11-hour plan cannot be copied."
+          },
+          {
+            "question": "With those seven hours, which selection fits the advanced project?",
+            "options": [
+              "The accepted four-hour task and three hours of reserve",
+              "The four-hour task plus the four-hour noticeboard redesign",
+              "Seven hours of tasks and no reserve, to make up for last week"
+            ],
+            "correct": 0,
+            "explanation": "Four planned hours plus three reserve fill the seven, and the noticeboard redesign is named as deferred."
+          },
+          {
+            "question": "Which part of the advanced project is optional?",
+            "options": [
+              "The sentence explaining one change",
+              "The larger review worksheet and five-topic portfolio",
+              "Naming one deferral"
+            ],
+            "correct": 1,
+            "explanation": "The required output is one usable plan with its reserve, a deferral and one explained change. The longer review is a way to explore further."
+          }
+        ]
       }
     ],
     "resources": {
