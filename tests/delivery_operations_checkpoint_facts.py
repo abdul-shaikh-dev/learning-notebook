@@ -261,7 +261,7 @@ def foundation_healthcheck():
 
 def foundation_base():
     bases = {line.split()[1] for stage in stages().values() for line in stage if line.startswith('FROM ')}
-    return pick(tuple(bases), {('python:3.13-slim',): 'python:3.13-slim'})
+    return pick(tuple(bases), {('python:3.14-slim',): 'python:3.14-slim'})
 
 
 def intermediate_late_write():

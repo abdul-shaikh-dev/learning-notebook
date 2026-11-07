@@ -84,7 +84,7 @@
     },
     {
       "title": "Python sqlite3 documentation",
-      "url": "https://docs.python.org/3.11/library/sqlite3.html"
+      "url": "https://docs.python.org/3.14/library/sqlite3.html"
     },
     {
       "title": "OWASP ASVS 5.0.0: V10: authorization flow defenses",
@@ -786,9 +786,9 @@
         },
         {
           "title": "Python sqlite3 documentation",
-          "url": "https://docs.python.org/3.11/library/sqlite3.html",
+          "url": "https://docs.python.org/3.14/library/sqlite3.html",
           "section": "How to use placeholders to bind values",
-          "reviewed": "2026-09-27",
+          "reviewed": "2026-11-07",
           "scope": "Python 3.14+ SQLite in-memory fixture; syntax of another database driver may differ."
         }
       ]

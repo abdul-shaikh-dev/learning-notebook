@@ -7801,7 +7801,7 @@ const LEARNING_PATHS = [
       },
       {
         "title": "Python sqlite3 documentation",
-        "url": "https://docs.python.org/3.11/library/sqlite3.html"
+        "url": "https://docs.python.org/3.14/library/sqlite3.html"
       },
       {
         "title": "OWASP ASVS 5.0.0: V10: authorization flow defenses",
@@ -9599,9 +9599,9 @@ const LEARNING_PATHS = [
           },
           {
             "title": "Python sqlite3 documentation",
-            "url": "https://docs.python.org/3.11/library/sqlite3.html",
+            "url": "https://docs.python.org/3.14/library/sqlite3.html",
             "section": "How to use placeholders to bind values",
-            "reviewed": "2026-09-27",
+            "reviewed": "2026-11-07",
             "scope": "Python 3.14+ SQLite in-memory fixture; syntax of another database driver may differ."
           }
         ],
@@ -20439,10 +20439,10 @@ const LEARNING_PATHS = [
           },
           {
             "title": "Python hashlib",
-            "url": "https://docs.python.org/3.11/library/hashlib.html",
+            "url": "https://docs.python.org/3.14/library/hashlib.html",
             "section": "Hash objects and hexdigest",
             "scope": "Hash API behaviour. Collision resistance is practical evidence, not proof that distinct inputs can never share a digest.",
-            "reviewed": "2026-10-02"
+            "reviewed": "2026-11-07"
           }
         ],
         "extraQuiz": [
@@ -27206,9 +27206,9 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Primary reference: Dictionary operations supporting maintained state",
-            "url": "https://docs.python.org/3.11/library/stdtypes.html#mapping-types-dict",
+            "url": "https://docs.python.org/3.14/builtins/stdtypes.html#mapping-types-dict",
             "section": "Dictionary operations supporting maintained state",
-            "reviewed": "2026-09-27",
+            "reviewed": "2026-11-07",
             "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
@@ -28052,9 +28052,9 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Primary reference: Test cases and assertions",
-            "url": "https://docs.python.org/3.11/library/unittest.html",
+            "url": "https://docs.python.org/3.14/library/unittest.html",
             "section": "Test cases and assertions",
-            "reviewed": "2026-09-27",
+            "reviewed": "2026-11-07",
             "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
           }
         ],
@@ -28976,7 +28976,7 @@ const LEARNING_PATHS = [
           {
             "title": "Pinning a verified image digest",
             "paragraphs": [
-              "The downloadable Dockerfile deliberately uses the readable `python:3.13-slim` tag. Tags can change. As an assessed extension, resolve its current digest, replace both `FROM` references with that digest and record an upgrade process; do not invent or paste an unverified digest from a tutorial."
+              "The downloadable Dockerfile deliberately uses the readable `python:3.14-slim` tag. Tags can change. As an assessed extension, resolve its current digest, replace both `FROM` references with that digest and record an upgrade process; do not invent or paste an unverified digest from a tutorial."
             ],
             "example": "React: npm ci; npm test; npm run build\n.NET: dotnet restore; dotnet test -c Release; dotnet publish -c Release\nPython: python --version; python -m unittest -v"
           }
@@ -29012,7 +29012,7 @@ const LEARNING_PATHS = [
         "stage": "foundation",
         "extraQuiz": [
           {
-            "question": "The Dockerfile uses the python:3.13-slim tag. Does that tag always name the same image?",
+            "question": "The Dockerfile uses the python:3.14-slim tag. Does that tag always name the same image?",
             "options": [
               "No: tags can move; a digest pins one image",
               "Yes: tags are immutable",
@@ -29134,7 +29134,7 @@ const LEARNING_PATHS = [
             "url": "https://docs.docker.com/build/concepts/overview/",
             "section": "Images and containers",
             "reviewed": "2026-09-27",
-            "scope": "Linux containers/BuildKit; local Python 3.13 image lab, not a production hardening certification. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
+            "scope": "Linux containers/BuildKit; local Python 3.14 image lab, not a production hardening certification. Review date records source/lesson applicability; local execution evidence is listed separately in the kit README."
           }
         ],
         "stage": "foundation",
@@ -29167,7 +29167,7 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "The `.dockerignore` file permits only the Dockerfile and two named Python sources. The numeric runtime user can write `/tmp`; it cannot write arbitrary `/app` files. Verify the final image user and filesystem with `docker inspect`, rather than assuming a small image is hardened or vulnerability-free."
             ],
-            "example": "FROM python:3.13-slim AS test\nCOPY release_app.py test_release_app.py ./\nRUN python -m unittest -v test_release_app.py\n# Runtime copies only release_app.py from the test stage."
+            "example": "FROM python:3.14-slim AS test\nCOPY release_app.py test_release_app.py ./\nRUN python -m unittest -v test_release_app.py\n# Runtime copies only release_app.py from the test stage."
           }
         ],
         "exercise": {
@@ -31452,8 +31452,8 @@ const LEARNING_PATHS = [
           {
             "question": "Which base image do both Dockerfile stages use?",
             "options": [
-              "python:3.13-slim",
-              "python:3.13",
+              "python:3.14-slim",
+              "python:3.14",
               "alpine"
             ],
             "correct": 0,
@@ -35487,9 +35487,9 @@ const LEARNING_PATHS = [
         "references": [
           {
             "title": "Python data model",
-            "url": "https://docs.python.org/3.11/reference/datamodel.html#object.__iter__",
+            "url": "https://docs.python.org/3.14/reference/datamodel.html#object.__iter__",
             "section": "Iterator protocol",
-            "reviewed": "2026-09-27",
+            "reviewed": "2026-11-07",
             "scope": "Python 3.14+ iterator semantics."
           },
           {
@@ -72295,12 +72295,12 @@ const LEARNING_PATHS = [
     ],
     "sources": [
       {
-        "title": "Python 3.11 documentation",
-        "url": "https://docs.python.org/3.11/library/stdtypes.html"
+        "title": "Python 3.14 documentation",
+        "url": "https://docs.python.org/3.14/builtins/stdtypes.html"
       },
       {
-        "title": "Python 3.11 statistics documentation",
-        "url": "https://docs.python.org/3.11/library/statistics.html"
+        "title": "Python 3.14 statistics documentation",
+        "url": "https://docs.python.org/3.14/library/statistics.html"
       },
       {
         "title": "OpenStax Introductory Statistics 2e",
@@ -72392,11 +72392,11 @@ const LEARNING_PATHS = [
         },
         "references": [
           {
-            "title": "Python 3.11 documentation",
-            "url": "https://docs.python.org/3.11/library/stdtypes.html",
+            "title": "Python 3.14 documentation",
+            "url": "https://docs.python.org/3.14/builtins/stdtypes.html",
             "section": "Boolean operations, numeric types and set types",
-            "reviewed": "2026-10-02",
-            "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
+            "reviewed": "2026-11-07",
+            "scope": "Python 3.14 standard-library semantics; examples use plain bool, int, float and set values."
           }
         ],
         "extraQuiz": [
@@ -72459,11 +72459,11 @@ const LEARNING_PATHS = [
         },
         "references": [
           {
-            "title": "Python 3.11 documentation",
-            "url": "https://docs.python.org/3.11/library/stdtypes.html",
+            "title": "Python 3.14 documentation",
+            "url": "https://docs.python.org/3.14/builtins/stdtypes.html",
             "section": "Boolean operations, numeric types and set types",
-            "reviewed": "2026-10-02",
-            "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
+            "reviewed": "2026-11-07",
+            "scope": "Python 3.14 standard-library semantics; examples use plain bool, int, float and set values."
           }
         ],
         "extraQuiz": [
@@ -72527,11 +72527,11 @@ const LEARNING_PATHS = [
         },
         "references": [
           {
-            "title": "Python 3.11 documentation",
-            "url": "https://docs.python.org/3.11/library/stdtypes.html",
+            "title": "Python 3.14 documentation",
+            "url": "https://docs.python.org/3.14/builtins/stdtypes.html",
             "section": "Boolean operations, numeric types and set types",
-            "reviewed": "2026-10-02",
-            "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
+            "reviewed": "2026-11-07",
+            "scope": "Python 3.14 standard-library semantics; examples use plain bool, int, float and set values."
           }
         ],
         "extraQuiz": [
@@ -72595,11 +72595,11 @@ const LEARNING_PATHS = [
         },
         "references": [
           {
-            "title": "Python 3.11 statistics documentation",
-            "url": "https://docs.python.org/3.11/library/statistics.html",
+            "title": "Python 3.14 statistics documentation",
+            "url": "https://docs.python.org/3.14/library/statistics.html",
             "section": "mean, median, pvariance, variance and correlation",
-            "reviewed": "2026-10-02",
-            "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
+            "reviewed": "2026-11-07",
+            "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
           }
         ],
         "extraQuiz": [
@@ -72663,11 +72663,11 @@ const LEARNING_PATHS = [
         },
         "references": [
           {
-            "title": "Python 3.11 documentation",
-            "url": "https://docs.python.org/3.11/library/stdtypes.html",
+            "title": "Python 3.14 documentation",
+            "url": "https://docs.python.org/3.14/builtins/stdtypes.html",
             "section": "Boolean operations, numeric types and set types",
-            "reviewed": "2026-10-02",
-            "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
+            "reviewed": "2026-11-07",
+            "scope": "Python 3.14 standard-library semantics; examples use plain bool, int, float and set values."
           }
         ],
         "extraQuiz": [
@@ -72867,11 +72867,11 @@ const LEARNING_PATHS = [
         },
         "references": [
           {
-            "title": "Python 3.11 statistics documentation",
-            "url": "https://docs.python.org/3.11/library/statistics.html",
+            "title": "Python 3.14 statistics documentation",
+            "url": "https://docs.python.org/3.14/library/statistics.html",
             "section": "mean, median, pvariance, variance and correlation",
-            "reviewed": "2026-10-02",
-            "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
+            "reviewed": "2026-11-07",
+            "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
           }
         ],
         "visual": {
@@ -73411,11 +73411,11 @@ const LEARNING_PATHS = [
         },
         "references": [
           {
-            "title": "Python 3.11 statistics documentation",
-            "url": "https://docs.python.org/3.11/library/statistics.html",
+            "title": "Python 3.14 statistics documentation",
+            "url": "https://docs.python.org/3.14/library/statistics.html",
             "section": "mean, median, pvariance, variance and correlation",
-            "reviewed": "2026-10-02",
-            "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
+            "reviewed": "2026-11-07",
+            "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
           }
         ],
         "extraQuiz": [
@@ -74023,11 +74023,11 @@ const LEARNING_PATHS = [
         },
         "references": [
           {
-            "title": "Python 3.11 statistics documentation",
-            "url": "https://docs.python.org/3.11/library/statistics.html",
+            "title": "Python 3.14 statistics documentation",
+            "url": "https://docs.python.org/3.14/library/statistics.html",
             "section": "mean, median, pvariance, variance and correlation",
-            "reviewed": "2026-10-02",
-            "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
+            "reviewed": "2026-11-07",
+            "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
           }
         ],
         "extraQuiz": [

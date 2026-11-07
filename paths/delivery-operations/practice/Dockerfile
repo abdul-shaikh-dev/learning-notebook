@@ -1,9 +1,9 @@
-FROM python:3.13-slim AS test
+FROM python:3.14-slim AS test
 WORKDIR /src
 COPY release_app.py test_release_app.py ./
 RUN python -m unittest -v test_release_app.py
 
-FROM python:3.13-slim AS runtime
+FROM python:3.14-slim AS runtime
 WORKDIR /app
 COPY --from=test /src/release_app.py ./
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 BIND_HOST=0.0.0.0 PORT=8080 RELEASE_DB=/tmp/notes.db

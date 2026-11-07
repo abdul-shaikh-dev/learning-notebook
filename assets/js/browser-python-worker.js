@@ -1,7 +1,9 @@
 /* One fresh worker per attempt or run. Terminating it also stops an infinite Python loop.
-   A {type:'load'} message starts Python before any code arrives, so a spare worker can wait ready; each worker still runs one job. */
+   A {type:'load'} message starts Python before any code arrives, so a spare worker can wait ready; each worker still runs one job.
+   This is a module worker: Pyodide 314 loads only as an ES module. Tests replace importRuntime to reuse one loaded runtime. */
 let loading=null;
-const load=runtime=>loading||(loading=(async()=>{importScripts(runtime+'pyodide.js');return loadPyodide({indexURL:runtime,stdout:()=>{},stderr:()=>{}});})());
+const importRuntime=self.importRuntime||(url=>import(url));
+const load=runtime=>loading||(loading=(async()=>{const {loadPyodide}=await importRuntime(runtime+'pyodide.mjs');return loadPyodide({indexURL:runtime,stdout:()=>{},stderr:()=>{}});})());
 self.onmessage=async ({data})=>{
  if(data.type==='load'){try{await load(data.runtime);self.postMessage({type:'ready'});}catch(error){self.postMessage({type:'error',text:String(error.message||error).slice(0,1500)});}return;}
  try{

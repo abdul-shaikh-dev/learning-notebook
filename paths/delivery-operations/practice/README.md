@@ -42,7 +42,7 @@ Invoke-RestMethod http://127.0.0.1:8080/version
 docker stop notebook-release-lab
 ```
 
-Expect user 10001:10001; readiness must become healthy after startup. Docker tests execute in a build stage; the runtime copies only the app. The /tmp database is disposable with this run command. Add a separately reviewed writable volume and prove its permissions/replacement behavior before claiming persistence. Resolve/pin a verified base-image digest as an assessment extension; the readable python:3.13-slim tag is mutable.
+Expect user 10001:10001; readiness must become healthy after startup. Docker tests execute in a build stage; the runtime copies only the app. The /tmp database is disposable with this run command. Add a separately reviewed writable volume and prove its permissions/replacement behavior before claiming persistence. Resolve/pin a verified base-image digest as an assessment extension; the readable python:3.14-slim tag is mutable.
 
 For a container rollout, build each reviewed source tree into its own image, record immutable image IDs/digests, run health and user smoke gates, then roll back to the retained v1 image against compatible data. Keep container evidence distinct from the Python process drill.
 

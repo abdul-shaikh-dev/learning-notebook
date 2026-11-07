@@ -10,7 +10,7 @@
       {"question": "Two byte-identical copies of release_app.py sit in different folders. Do their release_tools.digest values match?", "options": ["Yes: the digest depends only on the bytes", "No: the path is part of the digest", "Only if the files have the same timestamp"], "correct": 0, "explanation": "A SHA-256 checksum identifies content. It says nothing about who built it or whether it was tested."}
     ],
     "reproducible-builds": [
-      {"question": "The Dockerfile uses the python:3.13-slim tag. Does that tag always name the same image?", "options": ["No: tags can move; a digest pins one image", "Yes: tags are immutable", "Yes, within the same minor version"], "correct": 0, "explanation": "Record the resolved digest with test results. A tag is a readable pointer that can be updated."}
+      {"question": "The Dockerfile uses the python:3.14-slim tag. Does that tag always name the same image?", "options": ["No: tags can move; a digest pins one image", "Yes: tags are immutable", "Yes, within the same minor version"], "correct": 0, "explanation": "Record the resolved digest with test results. A tag is a readable pointer that can be updated."}
     ],
     "test-gates": [
       {"question": "test_release_app.py fails. Why can the Dockerfile still not produce a runtime image?", "options": ["The test stage runs the tests, and the runtime stage copies from it", "Docker skips images whose repository has failing tests", "The HEALTHCHECK fails the build"], "correct": 0, "explanation": "The runtime stage depends on the test stage, so a failing RUN stops the build before anything is copied."}
@@ -77,7 +77,7 @@
     "foundation": [
       {"question": "What does release_tools.digest return for an empty file?", "options": ["The SHA-256 of zero bytes, beginning e3b0c442", "An empty string", "ValueError"], "correct": 0, "explanation": "Every input, including no bytes, has a fixed SHA-256 digest. The value is well known, which makes it a useful sanity check."},
       {"question": "Which endpoint does the Dockerfile's HEALTHCHECK call?", "options": ["/ready", "/live", "/version"], "correct": 0, "explanation": "The image's health reflects readiness, including the database check, rather than only whether the process runs."},
-      {"question": "Which base image do both Dockerfile stages use?", "options": ["python:3.13-slim", "python:3.13", "alpine"], "correct": 0, "explanation": "Both stages use the same tag, so the tests run on the same runtime that ships."}
+      {"question": "Which base image do both Dockerfile stages use?", "options": ["python:3.14-slim", "python:3.14", "alpine"], "correct": 0, "explanation": "Both stages use the same tag, so the tests run on the same runtime that ships."}
     ],
     "intermediate": [
       {"question": "After the first backfill, an old writer inserts a row with only a title. How many rows then have a NULL label?", "options": ["1", "0", "All of them"], "correct": 0, "explanation": "Old writers keep running during a rolling change, so a second backfill is needed before contraction."},

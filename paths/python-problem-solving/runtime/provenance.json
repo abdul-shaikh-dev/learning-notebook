@@ -1,27 +1,27 @@
 {
-  "pyodide.js": {
-    "source": "https://cdn.jsdelivr.net/pyodide/v0.28.2/full/pyodide.js",
-    "bytes": 17340,
-    "sha256": "23e89e2adb3efdbaaeb275977d797d91ada6c06d5f6fe38d341b5cc293cfef49"
+  "pyodide.mjs": {
+    "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs",
+    "bytes": 17931,
+    "sha256": "6f1d60f7bf529beb300f0f47983c921d3982363640ba20af0e38efdddbc66109"
   },
-  "pyodide.asm.js": {
-    "source": "https://cdn.jsdelivr.net/pyodide/v0.28.2/full/pyodide.asm.js",
-    "bytes": 1072977,
-    "sha256": "d95b16f8e3114c802ba89ef50f2727dd53ac253ed8c420a805261c5dfa73e0c0"
+  "pyodide.asm.mjs": {
+    "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.mjs",
+    "bytes": 1250344,
+    "sha256": "f7cdc8ece80678ceb712f8e65ebe6d3a83203a180c399865f49612a051693635"
   },
   "pyodide.asm.wasm": {
-    "source": "https://cdn.jsdelivr.net/pyodide/v0.28.2/full/pyodide.asm.wasm",
-    "bytes": 8645911,
-    "sha256": "bfc24d3d89379e529aabea84e989294cffa797adcdbf8ff74019e690a06488d9"
+    "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.wasm",
+    "bytes": 9598218,
+    "sha256": "cc36e3cab04fdfc9a63ff13eb52eae2b911bf46c025cc7b281f394bd3de1d5e6"
   },
   "python_stdlib.zip": {
-    "source": "https://cdn.jsdelivr.net/pyodide/v0.28.2/full/python_stdlib.zip",
-    "bytes": 2416715,
-    "sha256": "9fb268300c752b54e507b196fcb753e7a15326971e192ebe0396e12778a0df84"
+    "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/python_stdlib.zip",
+    "bytes": 2545637,
+    "sha256": "fa1957e5777068fc4f7437f96d860ae2fbe9c19732ba06c84e004ec16dd7dd7a"
   },
   "pyodide-lock.json": {
-    "source": "https://cdn.jsdelivr.net/pyodide/v0.28.2/full/pyodide-lock.json",
-    "bytes": 109732,
-    "sha256": "f6e6f42f451f42affbbcddb00e8c9a3278dcbf399f57aab9f3f568839a7ff4a6"
+    "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide-lock.json",
+    "bytes": 119077,
+    "sha256": "5dc2fc119108bc148c7457dc86e7675b5c87e1cafd420b9c34c1eaef7b36c010"
   }
 }

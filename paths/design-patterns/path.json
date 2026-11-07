@@ -1342,9 +1342,9 @@
       "references": [
         {
           "title": "Python data model",
-          "url": "https://docs.python.org/3.11/reference/datamodel.html#object.__iter__",
+          "url": "https://docs.python.org/3.14/reference/datamodel.html#object.__iter__",
           "section": "Iterator protocol",
-          "reviewed": "2026-09-27",
+          "reviewed": "2026-11-07",
           "scope": "Python 3.14+ iterator semantics."
         },
         {

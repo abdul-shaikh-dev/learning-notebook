@@ -923,9 +923,9 @@
       "references": [
         {
           "title": "Primary reference: Dictionary operations supporting maintained state",
-          "url": "https://docs.python.org/3.11/library/stdtypes.html#mapping-types-dict",
+          "url": "https://docs.python.org/3.14/builtins/stdtypes.html#mapping-types-dict",
           "section": "Dictionary operations supporting maintained state",
-          "reviewed": "2026-09-27",
+          "reviewed": "2026-11-07",
           "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]
@@ -1288,9 +1288,9 @@
       "references": [
         {
           "title": "Primary reference: Test cases and assertions",
-          "url": "https://docs.python.org/3.11/library/unittest.html",
+          "url": "https://docs.python.org/3.14/library/unittest.html",
           "section": "Test cases and assertions",
-          "reviewed": "2026-09-27",
+          "reviewed": "2026-11-07",
           "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
         }
       ]

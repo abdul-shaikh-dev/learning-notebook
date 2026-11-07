@@ -27,12 +27,12 @@
   ],
   "sources": [
     {
-      "title": "Python 3.11 documentation",
-      "url": "https://docs.python.org/3.11/library/stdtypes.html"
+      "title": "Python 3.14 documentation",
+      "url": "https://docs.python.org/3.14/builtins/stdtypes.html"
     },
     {
-      "title": "Python 3.11 statistics documentation",
-      "url": "https://docs.python.org/3.11/library/statistics.html"
+      "title": "Python 3.14 statistics documentation",
+      "url": "https://docs.python.org/3.14/library/statistics.html"
     },
     {
       "title": "OpenStax Introductory Statistics 2e",
@@ -124,11 +124,11 @@
       },
       "references": [
         {
-          "title": "Python 3.11 documentation",
-          "url": "https://docs.python.org/3.11/library/stdtypes.html",
+          "title": "Python 3.14 documentation",
+          "url": "https://docs.python.org/3.14/builtins/stdtypes.html",
           "section": "Boolean operations, numeric types and set types",
-          "reviewed": "2026-10-02",
-          "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
+          "reviewed": "2026-11-07",
+          "scope": "Python 3.14 standard-library semantics; examples use plain bool, int, float and set values."
         }
       ]
     },
@@ -180,11 +180,11 @@
       },
       "references": [
         {
-          "title": "Python 3.11 documentation",
-          "url": "https://docs.python.org/3.11/library/stdtypes.html",
+          "title": "Python 3.14 documentation",
+          "url": "https://docs.python.org/3.14/builtins/stdtypes.html",
           "section": "Boolean operations, numeric types and set types",
-          "reviewed": "2026-10-02",
-          "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
+          "reviewed": "2026-11-07",
+          "scope": "Python 3.14 standard-library semantics; examples use plain bool, int, float and set values."
         }
       ]
     },
@@ -236,11 +236,11 @@
       },
       "references": [
         {
-          "title": "Python 3.11 documentation",
-          "url": "https://docs.python.org/3.11/library/stdtypes.html",
+          "title": "Python 3.14 documentation",
+          "url": "https://docs.python.org/3.14/builtins/stdtypes.html",
           "section": "Boolean operations, numeric types and set types",
-          "reviewed": "2026-10-02",
-          "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
+          "reviewed": "2026-11-07",
+          "scope": "Python 3.14 standard-library semantics; examples use plain bool, int, float and set values."
         }
       ]
     },
@@ -292,11 +292,11 @@
       },
       "references": [
         {
-          "title": "Python 3.11 statistics documentation",
-          "url": "https://docs.python.org/3.11/library/statistics.html",
+          "title": "Python 3.14 statistics documentation",
+          "url": "https://docs.python.org/3.14/library/statistics.html",
           "section": "mean, median, pvariance, variance and correlation",
-          "reviewed": "2026-10-02",
-          "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
+          "reviewed": "2026-11-07",
+          "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
         }
       ]
     },
@@ -348,11 +348,11 @@
       },
       "references": [
         {
-          "title": "Python 3.11 documentation",
-          "url": "https://docs.python.org/3.11/library/stdtypes.html",
+          "title": "Python 3.14 documentation",
+          "url": "https://docs.python.org/3.14/builtins/stdtypes.html",
           "section": "Boolean operations, numeric types and set types",
-          "reviewed": "2026-10-02",
-          "scope": "Python 3.11 standard-library semantics; examples use plain bool, int, float and set values."
+          "reviewed": "2026-11-07",
+          "scope": "Python 3.14 standard-library semantics; examples use plain bool, int, float and set values."
         }
       ]
     },
@@ -516,11 +516,11 @@
       },
       "references": [
         {
-          "title": "Python 3.11 statistics documentation",
-          "url": "https://docs.python.org/3.11/library/statistics.html",
+          "title": "Python 3.14 statistics documentation",
+          "url": "https://docs.python.org/3.14/library/statistics.html",
           "section": "mean, median, pvariance, variance and correlation",
-          "reviewed": "2026-10-02",
-          "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
+          "reviewed": "2026-11-07",
+          "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
         }
       ]
     },
@@ -572,11 +572,11 @@
       },
       "references": [
         {
-          "title": "Python 3.11 statistics documentation",
-          "url": "https://docs.python.org/3.11/library/statistics.html",
+          "title": "Python 3.14 statistics documentation",
+          "url": "https://docs.python.org/3.14/library/statistics.html",
           "section": "mean, median, pvariance, variance and correlation",
-          "reviewed": "2026-10-02",
-          "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
+          "reviewed": "2026-11-07",
+          "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
         }
       ]
     },
@@ -1076,11 +1076,11 @@
       },
       "references": [
         {
-          "title": "Python 3.11 statistics documentation",
-          "url": "https://docs.python.org/3.11/library/statistics.html",
+          "title": "Python 3.14 statistics documentation",
+          "url": "https://docs.python.org/3.14/library/statistics.html",
           "section": "mean, median, pvariance, variance and correlation",
-          "reviewed": "2026-10-02",
-          "scope": "Python 3.11 APIs; descriptions distinguish population summaries from sample estimates."
+          "reviewed": "2026-11-07",
+          "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
         }
       ]
     },
