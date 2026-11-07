@@ -40,7 +40,7 @@ const NotebookLoader = (() => {
   const p=LEARNING_PATHS.find(p=>p.id===id&&p.status==='ready');
   let work;
   if(route==='search'&&!searchReady)work=()=>script(NOTEBOOK_SEARCH_FILE).then(()=>{if(typeof NOTEBOOK_SEARCH==='undefined')throw Error('Missing search index');searchReady=true;});
-  else if(['path','topic','pack','resources'].includes(route)&&p&&(!p.href||route==='resources')){
+  else if(['path','topic','pack','resources','glossary'].includes(route)&&p&&(!p.href||route==='resources')){
    const course=!loaded.has(id),assets=lessonPending();
    if(course||assets)work=()=>Promise.all([course?script(p.dataFile).then(()=>{if(!loaded.has(id))throw Error('Missing course data');}):null,assets?loadLessonAssets():null]);
   }

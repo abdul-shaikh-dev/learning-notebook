@@ -41,6 +41,16 @@ and `scope` explaining the version, applicability and limits. These appear besid
 the lesson and in its printable pack. A review date records an editorial check;
 it does not establish continued regulatory or API validity. Prefer primary sources.
 
+A section may also carry `evidence`: notes naming the exact paragraph it relies on, each with
+`label`, an HTTPS `url` and optional `paragraph`, `checked` (YYYY-MM-DD) and `status`. They appear
+under the section and in the printable pack. Course `sources` may add `note`, `edition`, `checked`,
+`access` and `changeTrigger`; sources with edition or check details form a source register on the
+course overview, introduced by the optional path-level `sourcesNote`.
+
+Calculation exercises add `numericAnswer` and optional `tolerance` (absolute, default 0.01) and `unit`.
+The lesson offers a number check before the worked answer; `rubric` lists self-check criteria shown
+with the worked answer and in the printable pack.
+
 Quiz answers retain their original zero-based `correct` index. The reader places
 options in a stable, balanced display order; do not change source answer indices
 to match the screen. Quizzes should test plausible misconceptions, with explanations.
@@ -53,6 +63,16 @@ Regenerate with `node scripts/sync-catalog.cjs` and
 `scripts/verify-python.py`; framework suites live in `validation/react` and
 `scripts/verify-dotnet.py`. Clearly distinguish locally verified tests, CI checks,
 opt-in external services and learner extensions.
+
+## Glossary and quick reference
+
+An optional `paths/<id>/glossary.json` gives the course a glossary page at `#glossary/<id>`, linked from
+its course tools and lesson contents. It holds `terms` (each `term` and `definition`), optional
+`title`, `intro` and search `placeholder`, and `reference` blocks: a table (`columns` and equal-length
+`rows`) or a numbered list (`items`), each with a `title` and optional `intro`. Optional `plainTerms`
+(and `plainIntro`) give plain-language words: each lesson that mentions one shows it under "Words for
+this lesson". Alternative spellings are separated by " / ". Terms join the notebook search, and the
+glossary prints at the end of the course pack. `scripts/manifest.cjs` validates the file.
 
 ## Container and infrastructure practice files
 

@@ -1,6 +1,7 @@
 const path=require('node:path');process.chdir(path.resolve(__dirname,'..'));
 require('./financial-foundations.cjs');
 require('./catalog.cjs');
+require('./course-reference.cjs');
 require('./study-pack.cjs');
 const fs=require('node:fs'),assert=require('node:assert/strict');assert.equal(fs.readFileSync('content/paths.js','utf8'),require('../scripts/manifest.cjs').catalogSource(),'Run scripts/sync-catalog.cjs');
 
