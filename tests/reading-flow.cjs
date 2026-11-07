@@ -19,15 +19,14 @@ for(const p of paths){
  assert(!overview.includes('atlas-visual-shelf'),p.id+' avoids a duplicate lesson directory');
  assert(overview.includes('<h2>What you will learn</h2>'));
  for(const l of p.lessons){
-  if(l.diagram){diagrams++;const html=ctx.diagramView(l);assert(html.includes('<section class="walkthrough-reading">'));assert(!html.includes('<summary>Read all diagram steps'));for(const step of l.diagram.steps)assert(html.includes(escapeText(step.explanation)));}
+  if(l.diagram){diagrams++;const html=ctx.diagramView(l);assert(html.includes('<section class="walkthrough-reading">')===l.diagram.steps.length>0);assert(!html.includes('<summary>Read all diagram steps'));for(const step of l.diagram.steps)assert(html.includes(escapeText(step.explanation)));}
   if(l.visual){visuals++;const html=ctx.visualExplorerView(l);assert(html.includes('id="visual-walkthrough"'));for(const step of l.visual.scenarios[0].steps)assert(html.includes(escapeText(step.explanation)));}
   const t=ctx.taskForLesson(p,l);const kit=ctx.taskKit(p,t,true);assert(!kit.startsWith('<details'));assert(kit.includes(p.resources.bundle.href));assert(kit.includes('#resources/'+p.id+'/'+t.id));
  }
 }
 const finance=fs.readFileSync('paths/financial-foundations/runtime/app.js','utf8');
-const fn=finance.slice(finance.indexOf('function lessonBody'),finance.indexOf('function moduleList'));
-const fctx={};vm.createContext(fctx);vm.runInContext(fn,fctx);const body=fctx.lessonBody({id:1,take:'Idea',body:['Concept'],example:{title:'Example',text:'Numbers',explain:'Explanation'},deep:'Mechanism',data:'Records',pitfall:'Trap'});
-assert(body.includes('<section id="deeper">'));assert(body.includes('<section id="systems">'));assert(!body.includes('<details id="deeper"'));
+// Finance lessons keep their technical detail open on the page, after the worked example.
+for(const l of paths.find(p=>p.id==='financial-foundations').lessons.filter(l=>l.stage!=='start'&&l.stage!=='foundation-explainers'))assert.deepEqual(l.sections.slice(0,5).map(s=>s.title.split(':')[0]),['The concept','Worked example','Go deeper','Data & systems','Common trap'],l.id);
 for(const p of paths)for(const l of p.lessons)for(const s of l.sections)if(s.example)assert.notEqual(s.example,l.exercise?.solution,p.id+'/'+l.id+' teaches with a different example before its exercise');
 const saveCode=finance.slice(finance.indexOf('function save()'),finance.indexOf('function progress()'));
 const recovery={localStorage:{setItem(){throw Error('blocked');}}};vm.createContext(recovery);vm.runInContext("const KEY='test';let state={},storageOK=true;function progress(){}\n"+saveCode,recovery);recovery.save();assert.equal(vm.runInContext('storageOK',recovery),false);recovery.localStorage.setItem=()=>{};recovery.save();assert.equal(vm.runInContext('storageOK',recovery),true);

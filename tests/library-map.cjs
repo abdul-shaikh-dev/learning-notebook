@@ -21,7 +21,7 @@ const buttons=['map','list'].map(view=>({dataset:{libraryView:view},setAttribute
 ctx.bindLibraryMap({querySelectorAll:()=>buttons});buttons[1].click();assert.equal(node('learning-map').hidden,true);assert.equal(node('path-list').hidden,false);assert.equal(buttons[1]['aria-pressed'],'true');ctx.bindLibraryMap({querySelectorAll:()=>buttons});assert.equal(node('learning-map').hidden,true,'View preference survives returning');buttons[0].click();assert.equal(node('path-list').hidden,true);
 assert.ok(ctx.libraryMap('zz_absent').includes('No matching paths'));assert.ok(!ctx.libraryMap('zz_absent').includes('map-node'));assert.ok(ctx.libraryMap('SQL').includes('#path/sql-server'));
 store.set('learning-notebook:path:python:v1',JSON.stringify(['run-a-program','run-a-program','unknown']));assert.equal(ctx.libraryProgress(paths.find(p=>p.id==='python')).done,1);
-store.set('valuation-lab-v1',JSON.stringify({done:[1,1,19],starterDone:[1,7]}));assert.equal(ctx.libraryProgress(paths.find(p=>p.id==='financial-foundations')).done,2);
+{const fin=paths.find(p=>p.id==='financial-foundations');store.set('learning-notebook:path:financial-foundations:v1',JSON.stringify([fin.lessons[0].id,fin.lessons[0].id,fin.lessons[20].id,'unknown']));assert.equal(ctx.libraryProgress(fin).done,2);assert.equal(ctx.libraryProgress(fin).next.id,fin.lessons[1].id,'Finance resumes at its first unread lesson');}
 ctx.LEARNING_PATHS.push({id:'new-path',title:'New subject',status:'ready',category:'Other',description:'Future learning',lessons:[]});assert.ok(ctx.libraryMap().includes('#path/new-path'));
 console.log('PASS: visual map course coverage, filtering, progress integrity, map/list switching and session preference.');
 
@@ -56,7 +56,7 @@ input.value='';for(const listener of input.listeners.input)listener({target:inpu
 assert(!node('learning-map').innerHTML.includes('#path/sql-server'));
 assert.equal(node('map-route').disabled,false);
 node('map-route').value='independent';node('map-route').change();
-assert(node('learning-map').innerHTML.includes('course.html'));
+assert(node('learning-map').innerHTML.includes('#path/financial-foundations'));
 assert(!node('learning-map').innerHTML.includes('#path/python'));
 preferences.set('learning-notebook:map-route','invalid');ctx.bindLibraryMap({querySelectorAll:()=>buttons});
 assert.equal(node('map-route').value,'all');
@@ -92,7 +92,7 @@ console.log('PASS: every map connector stays outside every card interior.');
  assert(!ctx.libraryList().includes('data-route="programming" open'),'A route the learner closed stays closed');
  vm.runInContext('libraryOpenRoutes.clear()',ctx);
  assert(!ctx.libraryList('Python').includes('<details'),'Search results are not grouped');
- store.delete('valuation-lab-v1');store.delete('learning-notebook:path:python:v1');
+ store.delete('learning-notebook:path:financial-foundations:v1');store.delete('learning-notebook:path:python:v1');
  const fresh=ctx.libraryToday();
  assert(fresh.includes('Where to start')&&fresh.includes('href="#path/python"'),'A new learner gets starting points');
  store.set('learning-notebook:path:python:v1',JSON.stringify(python.lessons.slice(0,2).map(l=>l.id)));

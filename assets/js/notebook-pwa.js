@@ -106,7 +106,7 @@
         const remove = element('button', 'Remove', 'quiet'); remove.type = 'button'; remove.dataset.course = course.id; remove.dataset.action = 'remove'; remove.setAttribute('aria-label', 'Remove offline download: ' + course.title); remove.disabled = busy;
         remove.addEventListener('click', () => mutate('REMOVE_COURSE', course, row)); actions.append(remove);
       }
-      const open = element('a', 'Open path →'); open.href = course.id === 'financial-foundations' ? new URL('course.html', root).href : new URL('index.html#path/' + encodeURIComponent(course.id), root).href;
+      const open = element('a', 'Open path →'); open.href = new URL('index.html#path/' + encodeURIComponent(course.id), root).href;
       actions.append(open); row.append(info, actions); manager.append(row);
     }
     if (focusId) {

@@ -7,7 +7,8 @@ for(const p of paths.filter(p=>p.status==='ready')){
  for(const f of kit.files){assert.ok(fs.existsSync(f.href));assert.ok(f.description&&f.role);}
  for(const t of kit.tasks){tasks++;assert.ok(t.steps.length);assert.ok(t.fileIds.length);t.fileIds.forEach(id=>assert.ok(ids.has(id)));for(const c of t.commands)assert.ok(c.command&&c.expected);}
  if(!Array.isArray(p.lessons))continue;
- for(const l of p.lessons){assert.ok(kit.tasks.some(t=>t.id===kit.lessonTasks[l.id]),p.id+'/'+l.id+' kit mapping');const d=l.diagram;if(!d)continue;diagrams++;const nodes=new Set(d.nodes.map(n=>n.id));assert.equal(nodes.size,d.nodes.length);assert.ok(d.title&&d.summary&&d.steps.length);for(const n of d.nodes)assert.ok(n.label&&n.description);for(const e of d.edges){assert.ok(nodes.has(e.from)&&nodes.has(e.to));assert.ok(e.label);}for(const s of d.steps){assert.ok(s.title&&s.explanation);s.activeNodes.forEach(n=>assert.ok(nodes.has(n)));s.activeEdges.forEach(i=>assert.ok(Number.isInteger(i)&&d.edges[i]));}}
+ for(const l of p.lessons){assert.ok(kit.tasks.some(t=>t.id===kit.lessonTasks[l.id]),p.id+'/'+l.id+' kit mapping');const d=l.diagram;if(!d)continue;diagrams++;const nodes=new Set(d.nodes.map(n=>n.id));assert.equal(nodes.size,d.nodes.length);// Finance diagrams describe their nodes and connections without a step walkthrough.
+assert.ok(d.title&&d.summary&&(d.steps.length||p.id==='financial-foundations'));for(const n of d.nodes)assert.ok(n.label&&n.description);for(const e of d.edges){assert.ok(nodes.has(e.from)&&nodes.has(e.to));assert.ok(e.label);}for(const s of d.steps){assert.ok(s.title&&s.explanation);s.activeNodes.forEach(n=>assert.ok(nodes.has(n)));s.activeEdges.forEach(i=>assert.ok(Number.isInteger(i)&&d.edges[i]));}}
 }
 const elements=new Map(),stored=new Map();
 const element=id=>{if(!elements.has(id))elements.set(id,{innerHTML:'',textContent:'',addEventListener(type,fn){this[type]=fn;},querySelectorAll(){return [];}});return elements.get(id);};

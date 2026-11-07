@@ -12,5 +12,10 @@
  "practical-maths-statistics: size_mb",
  "practical-maths-statistics: /sigma=\\d+",
  "data-structures-algorithms: /ways\\(.*\\)",
- "data-structures-algorithms: log(V+E)"
+ "data-structures-algorithms: log(V+E)",
+ "financial-foundations: swap-repricing.md",
+ "financial-foundations: repricing.md",
+ "financial-foundations: valuation-transfer.md",
+ "financial-foundations: transfer.md",
+ "financial-foundations: INNER JOIN"
 ]

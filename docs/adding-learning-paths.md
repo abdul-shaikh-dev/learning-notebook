@@ -8,13 +8,26 @@
 
 ## Specialized courses
 
-A course needing its own simulations can set `href` to its HTML entry point and declare its course-owned assets in `publicFiles`, relative to its own path directory. The build reads these manifests; adding a course does not require adding finance-specific switches to the shared catalog. A specialized HTML entry inside its directory must reference shared assets using appropriate relative paths. Add the HTML itself to publicFiles. Finance retains root course.html/handbook.html as compatibility entry points.
+A course needing its own simulations can set `href` to its HTML entry point and declare its course-owned assets in `publicFiles`, relative to its own path directory. The build reads these manifests; adding a course does not require adding finance-specific switches to the shared catalog. A specialized HTML entry inside its directory must reference shared assets using appropriate relative paths. Add the HTML itself to publicFiles.
 
-Use a unique local-storage key and documented backup schema. Generic reader keys are `learning-notebook:path:<id>:v1`. The financial course retains `valuation-lab-v1` solely to preserve existing progress; this is an internal compatibility key, not website branding. Its `study` object stores practised/checked flags by module, while original `done` and `starterDone` arrays track reading. Old backup files remain accepted.
+Financial foundations reads on the shared course page like any standard path. Its root `course.html` is the
+practice studio (calculators and lab worksheets, the month-end case, the trade journey, visual stories and module
+practice), and `handbook.html` prints the complete study pack. Old reader links (`course.html#lesson/3`, `#start/2`,
+`#foundations/<id>`, `#reference`, `#sources`, `#learn`) redirect to the shared lessons through
+`assets/js/finance-legacy.js`.
+
+Use a unique local-storage key and documented backup schema. Generic reader keys are `learning-notebook:path:<id>:v1`. The financial practice studio keeps `valuation-lab-v1` for its `study` object (practised/checked flags by module) and quiz answers; this is an internal compatibility key, not website branding. Reading progress uses the generic key. Reading marks in the old `done` (main lessons 1–18) and `starterDone` (introductions 1–6) arrays, including those restored from an old backup, move once to the generic key and the arrays are emptied, so a lesson later marked unread stays unread. Old backup files remain accepted.
 
 ## Content ownership
 
 Keep a path's lessons, quizzes, sources, labs and practice material inside its own directory. Share design/reader utilities only when they are truly subject-independent. Preserve historical review documents; publish a new response/verification record rather than rewriting them.
+
+The finance lessons are generated: `node scripts/sync-finance-lessons.cjs` builds `path.json` lessons and stages,
+`glossary.json` and `diagrams.json` from `paths/financial-foundations/content/*.js`, which the practice studio and
+the handbook also read. Edit the content files, then rerun it; `--check` (run by the tests) fails when the generated
+files are stale. Main lessons follow the six introductions and eight foundation explainers, so "lesson 3" in the
+content text becomes lesson 17 on the shared page. `tests/finance-parity.cjs` checks that every original feature
+still has a home.
 
 The finance printable pack and interactive app consume the same content files. Edit canonical CSV/answer key under the finance practice directory, then run `node scripts/sync-finance.cjs` to regenerate the embedded printable data and old download aliases. Current sample CSV is unquoted; the synchronizer fails clearly if quoted fields are introduced, requiring a real CSV parser.
 
@@ -46,6 +59,12 @@ A section may also carry `evidence`: notes naming the exact paragraph it relies 
 under the section and in the printable pack. Course `sources` may add `note`, `edition`, `checked`,
 `access` and `changeTrigger`; sources with edition or check details form a source register on the
 course overview, introduced by the optional path-level `sourcesNote`.
+
+A section with an `example` may add `exampleNote`, a paragraph shown after the example. A lesson may give its
+reading time in whole `minutes`. Lessons and the course may list `activities`: links to practice pages, tasks or
+files outside the lesson, each with a `title`, a relative or HTTPS `href` and an optional `description`. They appear
+after the lesson exercise or on the course overview, and in the printable pack, under the path-level
+`activitiesTitle` (default "Practice activities").
 
 Calculation exercises add `numericAnswer` and optional `tolerance` (absolute, default 0.01) and `unit`.
 The lesson offers a number check before the worked answer; `rubric` lists self-check criteria shown

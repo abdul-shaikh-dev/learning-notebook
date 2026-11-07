@@ -25,12 +25,11 @@ const NotebookProgress = (() => {
     }
     return result;
   }
-  function finance(p) {
+  // Financial foundations reads like any course; its self-checks are the practice studio's study sections.
+  function financeStudy() {
     const saved = load(FINANCE, {}), data = saved && typeof saved === 'object' ? saved : {};
-    const ints = (value, max) => Array.isArray(value) ? new Set(value.filter(n => Number.isInteger(n) && n >= 1 && n <= max)).size : 0;
     const study = data.study && typeof data.study === 'object' ? data.study : {};
-    return {read:ints(data.done, 18) + ints(data.starterDone, 6), total:24, next:null,
-      projects:{done:FINANCE_SECTIONS.filter(id => study[id]?.checked === true).length, total:FINANCE_SECTIONS.length, label:'study sections'}};
+    return {done:FINANCE_SECTIONS.filter(id => study[id]?.checked === true).length, total:FINANCE_SECTIONS.length, label:'study sections', href:'course.html#practice'};
   }
   // One course's state and the single next step that moves it forward.
   function course(p, now) {
@@ -38,14 +37,13 @@ const NotebookProgress = (() => {
     const entries = attempts && typeof attempts === 'object' && !Array.isArray(attempts) ? Object.entries(attempts) : [];
     const solved = new Set(entries.filter(([, a]) => a?.status === 'solved').map(([id]) => id));
     let state;
-    if (p.id === 'financial-foundations') state = finance(p);
-    else {
+    {
       const lessons = Array.isArray(p.lessons) ? p.lessons : [], ids = lessons.map(l => l.id);
       const read = new Set(strings(load('learning-notebook:path:' + p.id + ':v1', []), ids));
       const stages = (p.stages || []).map(s => s.id);
       // A solved challenge needs no further visit, so the next step skips it as well as read lessons.
       state = {read:read.size, total:lessons.length, next:lessons.find(l => !read.has(l.id) && !solved.has(l.id)) || null,
-        projects:{done:strings(load('learning-notebook:path:' + p.id + ':assessments:v1', []), stages).length, total:stages.length, label:'projects'}};
+        projects:p.id === 'financial-foundations' ? financeStudy() : {done:strings(load('learning-notebook:path:' + p.id + ':assessments:v1', []), stages).length, total:stages.length, label:'projects'}};
     }
     state.challenges = {solved:solved.size, attempted:entries.filter(([, a]) => a?.status === 'attempted').length, total:p.challenges || 0};
     state.review = review(p, now);
@@ -53,7 +51,7 @@ const NotebookProgress = (() => {
     const home = p.href || '#path/' + p.id;
     state.step = state.read < state.total
       ? (state.next ? {label:(state.read || state.challenges.solved ? 'Next: ' : 'Start: ') + plainTitle(state.next.title), href:'#topic/' + p.id + '/' + state.next.id} : {label:'Continue the course', href:home})
-      : state.projects.done < state.projects.total ? {label:'Self-check your ' + state.projects.label, href:home}
+      : state.projects.done < state.projects.total ? {label:'Self-check your ' + state.projects.label, href:state.projects.href || home}
       : {label:'Course complete · revisit it', href:home};
     return {p, ...state};
   }
