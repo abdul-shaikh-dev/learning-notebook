@@ -225,6 +225,12 @@ Writing the facts corrected one draft answer: the join of orders to payments tot
 
 `tests/time_attention_checkpoint_facts.py` runs in the `python` CI job with Node 24; run it locally with `python tests/time_attention_checkpoint_facts.py`.
 
+### Financial foundations
+
+2026-11-07: one extra question for each of the 24 lessons that has a checkpoint and three per stage (24 lesson questions, 21 stage questions across the 7 stages). The 8 foundation explainers have no checkpoint, so they get no extra question; their stage still has three. 31 of the 45 answers are computed. Bond values, IPV differences and statuses, discounting, the short-position uncertainty price, the reserve increment, hierarchy levels and the CET1 ratio change run the course calculators in `runtime/calculations.js` under Node. The swap bridge, the two-date P&L and the curve contribution run `practice/swap_repricing.py` and `practice/finance_workbook.py`, and the BOND-003 and OPTION-001 questions read `practice/sample-positions.csv`. The Annex Method 2 and fallback answers recompute the formulas the lessons give. The other 14 are cited from the lessons. Questions keep the course's limits, such as an IPV difference being a reason to investigate rather than proof of an error, and a regulatory capital charge not being the same thing as a CVA amount.
+
+`tests/finance_checkpoint_facts.py` runs in the `python` CI job with Node 24; run it locally with `python tests/finance_checkpoint_facts.py`.
+
 ### Plan for the remaining courses
 
 Work one course per change, in this order, so that each answer can be checked against something that runs or a cited source:
@@ -233,7 +239,7 @@ Work one course per change, in this order, so that each answer can be checked ag
 2. **Courses checked against their cited sources:** Networking & the Web, Messaging & Event-Driven Systems, Data Engineering, AI Agents, Agent Harnesses, Application Security, Testing & Debugging, Observability & Performance, System Design, Kubernetes, Cloud & Infrastructure as Code, Delivery & Operations, UI Design & Accessibility, Full-Stack Project Journey and Requirements & software maintenance are done. Each answer should trace to a lesson source or a primary reference such as a specification or WCAG success criterion.
 3. **Personal effectiveness and development courses:** Learning How to Learn, Plan and Review Your Week, Habits & Behaviour Change, Self-Awareness & Communication, Task & Project Management and Time, Attention & Energy are done. Questions should test the course's own model and avoid claims stronger than its sources. Answers from the text are checked as citations with `tests/checkpoint_citations.py`; answers from the shared practice studio run `lab-model.js` through the same helper.
 
-Python Problem Solving is left out because its lessons are challenges with tests, and Financial foundations because it has its own course page and question format.
+Financial foundations is done. Python Problem Solving is left out because its lessons are challenges with tests.
 
 Code: `assets/js/notebook-review.js`, with rendering in `assets/js/catalog.js`. Tests: `tests/notebook-review.cjs`, `tests/checkpoint-questions.cjs`, the checkpoint cases in `tests/notebook-backup.cjs`, and the lesson-page check in `tests/programming-paths.cjs`.
 

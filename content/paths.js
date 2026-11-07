@@ -36752,6 +36752,18 @@ const LEARNING_PATHS = [
             "reviewed": "2026-10-02",
             "scope": "CAP50.3 systems and controls; CAP50.6 models; CAP50.7–8 independent price verification; CAP50.9–14 valuation adjustments. International framework, implemented through local rules. This introduction uses synthetic everyday examples; the source is the formal reference for the main lesson it prepares you for."
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Dealer B sells the bank 10 Company A shares. Who is the counterparty to the trade?",
+            "options": [
+              "Company A, because it issued the shares",
+              "Dealer B, the party on the other side of the trade",
+              "The bank's customer book"
+            ],
+            "correct": 1,
+            "explanation": "The counterparty is the other party to the agreement. Company A issued the shares, but Dealer B sold them."
+          }
         ]
       },
       {
@@ -36807,6 +36819,18 @@ const LEARNING_PATHS = [
             "section": "Conceptual foundations; use the sources for context.",
             "reviewed": "2026-10-02",
             "scope": "CAP50.3 systems and controls; CAP50.6 models; CAP50.7–8 independent price verification; CAP50.9–14 valuation adjustments. International framework, implemented through local rules. This introduction uses synthetic everyday examples; the source is the formal reference for the main lesson it prepares you for."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A position of 11 shares sells 6, then buys 2. Each share is now worth $102. What is the position value?",
+            "options": [
+              "7 shares",
+              "$714",
+              "$1,122"
+            ],
+            "correct": 1,
+            "explanation": "11 − 6 + 2 = 7 shares, and 7 × $102 = $714. Seven is the quantity; $714 is the currency value."
           }
         ]
       },
@@ -36931,7 +36955,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A team moves a position from its customer book to its hedge book. What has changed?",
+            "options": [
+              "The grouping, without necessarily a new external transaction",
+              "The bank has traded with an outside party",
+              "The position's price"
+            ],
+            "correct": 0,
+            "explanation": "A book transfer changes how the position is grouped. A system must tell it apart from an external purchase."
+          }
+        ]
       },
       {
         "id": "price-value-cash-and-profit-are-not-the-same",
@@ -36986,6 +37022,18 @@ const LEARNING_PATHS = [
             "section": "Conceptual foundations; use the sources for context.",
             "reviewed": "2026-10-02",
             "scope": "CAP50.3 systems and controls; CAP50.6 models; CAP50.7–8 independent price verification; CAP50.9–14 valuation adjustments. International framework, implemented through local rules. This introduction uses synthetic everyday examples; the source is the formal reference for the main lesson it prepares you for."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "You buy 20 shares at $50 each. The price rises to $53 and you still hold them. What is the gain before fees?",
+            "options": [
+              "$60 realised",
+              "$1,060 of cash",
+              "$60 unrealised"
+            ],
+            "correct": 2,
+            "explanation": "20 × ($53 − $50) = $60. The holding is still open, so the gain is unrealised and no cash has arrived."
           }
         ]
       },
@@ -37105,7 +37153,19 @@ const LEARNING_PATHS = [
             }
           ],
           "steps": []
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "An independent source disagrees with the front-office mark. What does the difference show by itself?",
+            "options": [
+              "That the front-office mark is wrong",
+              "A reason to investigate, not proof that either side is wrong",
+              "That an adjustment must be booked"
+            ],
+            "correct": 1,
+            "explanation": "A difference triggers investigation. Time, instrument and price basis must be aligned before reaching a conclusion."
+          }
+        ]
       },
       {
         "id": "read-one-trade-record-with-confidence",
@@ -37160,6 +37220,18 @@ const LEARNING_PATHS = [
             "section": "Conceptual foundations; use the sources for context.",
             "reviewed": "2026-10-02",
             "scope": "CAP50.3 systems and controls; CAP50.6 models; CAP50.7–8 independent price verification; CAP50.9–14 valuation adjustments. International framework, implemented through local rules. This introduction uses synthetic everyday examples; the source is the formal reference for the main lesson it prepares you for."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A record names the owner, book, instrument, quantity, price, currency and date. Which question is still open?",
+            "options": [
+              "Nothing; the row is complete",
+              "Which trader booked it",
+              "Where the price came from and whether it is current"
+            ],
+            "correct": 2,
+            "explanation": "A tidy row is not enough without its connections: the price source, whether it is current and whether the position includes all trades."
           }
         ]
       },
@@ -37770,6 +37842,18 @@ const LEARNING_PATHS = [
             "title": "Apply this module: calculate, explain and investigate (Foundations)",
             "href": "course.html#practice/foundations"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A $5m bond face amount is priced at a clean 101.25 per 100, with $15,000 of accrued interest. What is the dirty value?",
+            "options": [
+              "$5,077,500",
+              "$5,062,500",
+              "$5,000,101.25"
+            ],
+            "correct": 0,
+            "explanation": "$5m × 101.25 / 100 = $5,062,500 clean value; adding the accrued interest once gives $5,077,500 dirty value."
+          }
         ]
       },
       {
@@ -37877,6 +37961,18 @@ const LEARNING_PATHS = [
           {
             "title": "Apply this module: calculate, explain and investigate (Foundations)",
             "href": "course.html#practice/foundations"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Venue A is the accessible principal market: price 102, transaction cost 4. Venue B quotes 101 with cost 1. What is fair value?",
+            "options": [
+              "100, venue B's net proceeds",
+              "98, venue A's net proceeds",
+              "102, the principal market price"
+            ],
+            "correct": 2,
+            "explanation": "The principal market is used even if another venue looks better, and transaction costs stay outside fair value."
           }
         ]
       },
@@ -38026,7 +38122,19 @@ const LEARNING_PATHS = [
             }
           ],
           "steps": []
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "With annual compounding at 4%, what is the present value of 1,000 received in two years?",
+            "options": [
+              "924.56",
+              "960.00",
+              "1,081.60"
+            ],
+            "correct": 0,
+            "explanation": "PV = 1,000 / 1.04² = 924.56. 960 subtracts simple interest, and 1,081.60 compounds forward instead of discounting."
+          }
+        ]
       },
       {
         "id": "ipv-an-independent-challenge",
@@ -38181,7 +38289,19 @@ const LEARNING_PATHS = [
           "textExampleSections": [
             1
           ]
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "A $10m long face is marked at 100.10; current independent evidence says 99.95. The amount tolerance is $10,000. What does the IPV lab report?",
+            "options": [
+              "+$15,000, within tolerance",
+              "−$15,000, investigate the difference",
+              "−$15,000, within tolerance"
+            ],
+            "correct": 1,
+            "explanation": "$10m × (99.95 − 100.10) / 100 = −$15,000, which exceeds the $10,000 amount tolerance, so the difference is investigated."
+          }
+        ]
       },
       {
         "id": "sources-tolerances-and-exceptions",
@@ -38264,6 +38384,18 @@ const LEARNING_PATHS = [
           {
             "title": "Apply this module: calculate, explain and investigate (Valuation control)",
             "href": "course.html#practice/valuation-control"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A $5m short face is marked at 99.80; the independent price is 99.65. What is the signed difference?",
+            "options": [
+              "−$7,500",
+              "+$75,000",
+              "+$7,500"
+            ],
+            "correct": 2,
+            "explanation": "−$5m × (99.65 − 99.80) / 100 = +$7,500. For a short, a lower independent price is a positive signed difference."
           }
         ]
       },
@@ -38352,6 +38484,18 @@ const LEARNING_PATHS = [
           {
             "title": "Apply this module: calculate, explain and investigate (Valuation control)",
             "href": "course.html#practice/valuation-control"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A long-asset reserve deduction falls from $35k to $25k, with nothing else changing. What is the valuation movement?",
+            "options": [
+              "+$10k",
+              "−$25k",
+              "−$10k"
+            ],
+            "correct": 0,
+            "explanation": "The balance falls by $10k, so releasing that part of the deduction is a positive $10k movement. The new balance is not booked again."
           }
         ]
       },
@@ -38456,6 +38600,18 @@ const LEARNING_PATHS = [
           {
             "title": "Apply this module: calculate, explain and investigate (Valuation control)",
             "href": "course.html#practice/valuation-control"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Is a CVA amount the same as a regulatory CVA risk capital charge?",
+            "options": [
+              "Yes, both measure counterparty credit",
+              "No, they answer different questions",
+              "Yes, once netting is applied"
+            ],
+            "correct": 1,
+            "explanation": "CVA is part of derivative valuation; the capital charge covers the risk of its future movement."
           }
         ]
       },
@@ -38611,7 +38767,19 @@ const LEARNING_PATHS = [
             }
           ],
           "steps": []
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "There is no qualifying Level 1 quote. Forty inputs are observable and one unobservable input is significant to the overall measurement. Which level follows?",
+            "options": [
+              "Level 2, because most inputs are observable",
+              "Level 3",
+              "Level 1"
+            ],
+            "correct": 1,
+            "explanation": "The lowest significant input level decides the classification. Observable inputs do not cancel one significant unobservable input."
+          }
+        ]
       },
       {
         "id": "observability-and-significance-in-practice",
@@ -38696,6 +38864,18 @@ const LEARNING_PATHS = [
           {
             "title": "Apply this module: calculate, explain and investigate (Fair value hierarchy)",
             "href": "course.html#practice/fair-value-hierarchy"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A correlation input arrives as null in the feed. How should the system treat it?",
+            "options": [
+              "As zero",
+              "As an approved unobservable estimate",
+              "As missing data to resolve, not as an estimate or zero"
+            ],
+            "correct": 2,
+            "explanation": "Missing is a data and control state; an approved estimate is a documented methodological choice. Treating null as zero hides the difference."
           }
         ]
       },
@@ -38793,6 +38973,18 @@ const LEARNING_PATHS = [
           {
             "title": "Apply this module: calculate, explain and investigate (Fair value hierarchy)",
             "href": "course.html#practice/fair-value-hierarchy"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A Level 3 balance opens at 50, with purchases of 10, sales of 6, gains of 2, transfers in of 4 and transfers out of 1. What is the closing balance?",
+            "options": [
+              "59",
+              "61",
+              "53"
+            ],
+            "correct": 0,
+            "explanation": "50 + 10 − 6 + 2 + 4 − 1 = 59. Each movement, including transfers in and out, is shown separately in the reconciliation."
           }
         ]
       },
@@ -38970,7 +39162,19 @@ const LEARNING_PATHS = [
             }
           ],
           "steps": []
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "The raw mark is €8.0m, a €0.1m same-source accounting deduction is booked, and the total prudent deduction is €0.4m. What is the schematic incremental amount?",
+            "options": [
+              "€0.4m",
+              "€0.3m",
+              "€0.5m"
+            ],
+            "correct": 1,
+            "explanation": "Only the same-source booked amount offsets: €0.4m − €0.1m = €0.3m. Deducting €0.4m from the €7.9m fair value would double count."
+          }
+        ]
       },
       {
         "id": "market-price-uncertainty",
@@ -39074,6 +39278,18 @@ const LEARNING_PATHS = [
             "title": "Apply this module: calculate, explain and investigate (Prudent valuation)",
             "href": "course.html#practice/prudent-valuation"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "For a short position, the uncertainty lab assumes a central price of 100.00 and a standard deviation of 0.50. What is the adverse-side price?",
+            "options": [
+              "99.3592",
+              "100.6408",
+              "100.5000"
+            ],
+            "correct": 1,
+            "explanation": "For a short, the adverse direction is higher: 100 + 1.28155 × 0.50 = 100.6408, the 90th percentile of the assumed distribution."
+          }
         ]
       },
       {
@@ -39159,6 +39375,18 @@ const LEARNING_PATHS = [
           {
             "title": "Apply this module: calculate, explain and investigate (Prudent valuation)",
             "href": "course.html#practice/prudent-valuation"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Bid is 98.90 and ask 99.30, the mark is mid, and the long face is $5m. What is the illustrative mid-to-bid exit cost?",
+            "options": [
+              "$20,000",
+              "$10,000",
+              "$5,000"
+            ],
+            "correct": 1,
+            "explanation": "The full spread is 0.40 points, so mid-to-bid is 0.20 points: $5m × 0.20 / 100 = $10,000. Subtracting the full spread would double it."
           }
         ]
       },
@@ -39316,7 +39544,19 @@ const LEARNING_PATHS = [
             }
           ],
           "steps": []
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "With trade data and market snapshot fixed, Model A values a long asset at 12.4m and Model B at 11.8m. What is the 0.6m difference?",
+            "options": [
+              "The model-risk AVA",
+              "The difference after halving with alpha",
+              "A question to assess, not automatically the AVA"
+            ],
+            "correct": 2,
+            "explanation": "Model validity, plausible alternatives, the prudent point, what is booked and the permitted aggregation still need assessing."
+          }
+        ]
       },
       {
         "id": "approaches-aggregation-and-cet1",
@@ -39570,7 +39810,19 @@ const LEARNING_PATHS = [
             }
           ],
           "steps": []
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "CET1 is €500m, risk-weighted assets are €4,000m and the final AVA deduction is €2m. How does the CET1 ratio change, holding all else fixed?",
+            "options": [
+              "−5 basis points, from 12.50% to 12.45%",
+              "−0.4%, a fall of €2m in €500m",
+              "−2 percentage points"
+            ],
+            "correct": 0,
+            "explanation": "€498m / €4,000m = 12.45% against 12.50% before. The deduction moves the ratio by 0.05 percentage points, or 5 basis points."
+          }
+        ]
       },
       {
         "id": "day-one-pnl-and-valuation-movements",
@@ -39664,6 +39916,18 @@ const LEARNING_PATHS = [
           {
             "title": "Apply this module: calculate, explain and investigate (Working knowledge)",
             "href": "course.html#practice/working-knowledge"
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Dirty value falls from $2,000,000 to $1,990,000 while a $15,000 coupon is received. What is the simplified total return?",
+            "options": [
+              "−$10,000",
+              "+$5,000",
+              "+$15,000"
+            ],
+            "correct": 1,
+            "explanation": "$1,990,000 − $2,000,000 + $15,000 = +$5,000. Ignoring the coupon would show a misleading $10,000 loss."
           }
         ]
       },
@@ -39877,7 +40141,19 @@ const LEARNING_PATHS = [
             }
           ],
           "steps": []
-        }
+        },
+        "extraQuiz": [
+          {
+            "question": "One 100-unit position is duplicated and another 100-unit position is dropped. Total value and row count are unchanged. What finds the error?",
+            "options": [
+              "Checking the total value",
+              "Checking the row count",
+              "Reconciling identifiers and multiplicity"
+            ],
+            "correct": 2,
+            "explanation": "A zero aggregate difference can conceal different errors, so amounts alone are not enough."
+          }
+        ]
       },
       {
         "id": "put-it-all-together-at-month-end",
@@ -39972,6 +40248,18 @@ const LEARNING_PATHS = [
             "title": "Apply this module: calculate, explain and investigate (Working knowledge)",
             "href": "course.html#practice/working-knowledge"
           }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In the changed month-end case, the face amount is halved to $10m with FO 99.80 and independent 99.65. What is the signed IPV difference?",
+            "options": [
+              "−$15,000",
+              "−$30,000",
+              "−$7,500"
+            ],
+            "correct": 0,
+            "explanation": "$10m × (99.65 − 99.80) / 100 = −$15,000. The price difference is linear in face amount; the separate supplied adjustments are not halved automatically."
+          }
         ]
       }
     ],
@@ -39984,6 +40272,38 @@ const LEARNING_PATHS = [
           "Tell a trade, a position, a price, a value and P&L apart.",
           "Place a position in its legal entity, desk and book.",
           "Read one trade record field by field."
+        ],
+        "stageCheck": [
+          {
+            "question": "The bank buys 6 shares at $50 and later sells all 6 at $55. What are the cash proceeds and the realised gain before fees?",
+            "options": [
+              "$330 proceeds and a $30 gain",
+              "A $330 gain",
+              "$300 proceeds and a $30 gain"
+            ],
+            "correct": 0,
+            "explanation": "6 × $55 = $330 of proceeds; subtracting the $300 cost leaves a $30 realised gain. Proceeds are not profit."
+          },
+          {
+            "question": "A rate moves from 5.00% to 5.01%. How many basis points is that?",
+            "options": [
+              "1 basis point",
+              "0.01 basis points",
+              "100 basis points"
+            ],
+            "correct": 0,
+            "explanation": "One basis point is 0.01 percentage point, so the move is 1 basis point."
+          },
+          {
+            "question": "What does a bond quote of 98.50 per 100 of face mean for $1,000 face?",
+            "options": [
+              "$98.50 for the whole holding",
+              "$985 before accrued interest",
+              "$1,000 less $98.50"
+            ],
+            "correct": 1,
+            "explanation": "$1,000 × 98.50 / 100 = $985, before accrued interest."
+          }
         ]
       },
       {
@@ -39994,6 +40314,38 @@ const LEARNING_PATHS = [
           "Draw a bond as a timeline of payments.",
           "Translate an input move into money.",
           "Reconcile a day of P&L, including cash and FX."
+        ],
+        "stageCheck": [
+          {
+            "question": "A two-year bond with $1,000 face pays a 5% annual coupon. Discounted at a flat 4%, what is its present value?",
+            "options": [
+              "$1,000.00",
+              "$981.67",
+              "$1,018.86"
+            ],
+            "correct": 2,
+            "explanation": "50 / 1.04 + 1,050 / 1.04² = $1,018.86. A discount rate below the coupon rate gives a value above face."
+          },
+          {
+            "question": "A bank pays 3% fixed and receives 3.5% floating on $2m for a half-year period with accrual 0.5, and payment netting applies. What is the net payment?",
+            "options": [
+              "−$5,000",
+              "+$35,000",
+              "+$5,000 to the bank"
+            ],
+            "correct": 2,
+            "explanation": "$2m × (3.5% − 3%) × 0.5 = +$5,000. The notional is only the reference amount, and this one payment is not the swap's value."
+          },
+          {
+            "question": "CET1 is $60 and RWA $500. A final AVA deduction of $1 is applied. How does the ratio move?",
+            "options": [
+              "From 12.00% to 11.80%",
+              "From 12.00% to 11.00%",
+              "From 12.00% to 11.98%"
+            ],
+            "correct": 0,
+            "explanation": "$60 / $500 = 12.00% and $59 / $500 = 11.80%, a fall of 20 basis points. The deduction is not a cash payment."
+          }
         ]
       },
       {
@@ -40002,6 +40354,38 @@ const LEARNING_PATHS = [
         "description": "Understand how a contract and market inputs become a value.",
         "exitCriteria": [
           "Understand how a contract and market inputs become a value."
+        ],
+        "stageCheck": [
+          {
+            "question": "In swap-repricing.md the receive-floating swap's FO value is EUR −100.00. Using the independent forwards and discount factors, what is the total difference?",
+            "options": [
+              "EUR −473.50",
+              "EUR +473.50",
+              "EUR −573.50"
+            ],
+            "correct": 0,
+            "explanation": "The independent value is EUR −573.50, so the difference is −573.50 − (−100.00) = EUR −473.50, split into forecast and discount effects."
+          },
+          {
+            "question": "A report shows \"Value = 9.85m\" and nothing else. What is it?",
+            "options": [
+              "A complete clean value",
+              "An incomplete record",
+              "A dirty value"
+            ],
+            "correct": 1,
+            "explanation": "A value needs a valuation date, currency, position quantity, product identifier and convention attached."
+          },
+          {
+            "question": "A position's sensitivity is +$8,000 per basis point and the independent rate is 3bp above the FO rate. What is the linear value change?",
+            "options": [
+              "+$24,000",
+              "−$24,000",
+              "+$8,003"
+            ],
+            "correct": 0,
+            "explanation": "+$8,000 × 3 = +$24,000, a first-order estimate. Exact repricing is safer when nonlinear effects are material."
+          }
         ]
       },
       {
@@ -40010,6 +40394,38 @@ const LEARNING_PATHS = [
         "description": "Challenge the mark, investigate exceptions and explain adjustments.",
         "exitCriteria": [
           "Challenge the mark, investigate exceptions and explain adjustments."
+        ],
+        "stageCheck": [
+          {
+            "question": "Raw clean value is $5,000,000. The approved price correction is −$50,000, bid-offer −$20,000 and the model adjustment −$10,000, none overlapping. What is accounting fair value?",
+            "options": [
+              "$4,950,000",
+              "$4,920,000",
+              "$5,080,000"
+            ],
+            "correct": 1,
+            "explanation": "$5,000,000 − $50,000 − $20,000 − $10,000 = $4,920,000, assuming none of the effects is already in the raw mark."
+          },
+          {
+            "question": "Which join keeps positions with no matching price visible?",
+            "options": [
+              "An INNER JOIN against the price feed",
+              "A left join with explicit missing flags",
+              "Dropping rows that have no price"
+            ],
+            "correct": 1,
+            "explanation": "An inner join silently drops unmatched positions. A left join with missing flags and reconciliation keeps the population."
+          },
+          {
+            "question": "In sample-positions.csv, BOND-003 is a $10m short face marked at 101.00, with an independent price of 100.80 and a learning tolerance of $15,000. What is the result?",
+            "options": [
+              "−$20,000, within tolerance",
+              "+$20,000, within tolerance",
+              "+$20,000, investigate the difference"
+            ],
+            "correct": 2,
+            "explanation": "−$10m × (100.80 − 101.00) / 100 = +$20,000, above the $15,000 tolerance. A lower independent price helps the short."
+          }
         ]
       },
       {
@@ -40018,6 +40434,38 @@ const LEARNING_PATHS = [
         "description": "Assess observability and explain the Level 1 / 2 / 3 decision.",
         "exitCriteria": [
           "Assess observability and explain the Level 1 / 2 / 3 decision."
+        ],
+        "stageCheck": [
+          {
+            "question": "A qualifying unadjusted active-market quote exists for the identical instrument. In the hierarchy lab, does a significant unobservable model input change the level?",
+            "options": [
+              "Yes, it gives Level 3",
+              "No, it stays Level 1",
+              "It becomes Level 2"
+            ],
+            "correct": 1,
+            "explanation": "A qualifying Level 1 quote supports Level 1, and the input branch does not apply."
+          },
+          {
+            "question": "Can a system average a Level 1 input and a Level 3 input to classify a measurement as Level 2?",
+            "options": [
+              "Yes, for a portfolio",
+              "Yes, if both inputs are significant",
+              "No, the hierarchy is not an average"
+            ],
+            "correct": 2,
+            "explanation": "The lowest significant input level decides the classification; levels are not averaged."
+          },
+          {
+            "question": "OPTION-001 in sample-positions.csv has no qualifying quote and a significant unobservable input. What is its illustrative level?",
+            "options": [
+              "Level 3",
+              "Level 2",
+              "Level 1"
+            ],
+            "correct": 0,
+            "explanation": "A significant unobservable input drives the measurement to Level 3, as the practice file records."
+          }
         ]
       },
       {
@@ -40026,6 +40474,38 @@ const LEARNING_PATHS = [
         "description": "Distinguish remaining uncertainty, AVAs and the capital effect.",
         "exitCriteria": [
           "Distinguish remaining uncertainty, AVAs and the capital effect."
+        ],
+        "stageCheck": [
+          {
+            "question": "An exposure has FV 498, PV 494 and EV 497, with alpha 0.50. Under Annex Method 2, what is the APVA?",
+            "options": [
+              "2.5",
+              "2",
+              "4.5"
+            ],
+            "correct": 0,
+            "explanation": "max(0, 498 − 0.50 × 497 − 0.50 × 494) = 2.5. Method 1 would give 0.50 × (498 − 494) = 2; the methods are alternatives, not added together."
+          },
+          {
+            "question": "Articles 9–17 cannot be applied to a non-derivative with inception value €50k and current fair value €56k. What is the Article 7(2)(b) fallback?",
+            "options": [
+              "€6k",
+              "€18.5k",
+              "€14k"
+            ],
+            "correct": 1,
+            "explanation": "€6k unrealised profit + 25% × |€56k − €6k| = €6k + €12.5k = €18.5k."
+          },
+          {
+            "question": "An eligible institution's defined aggregate absolute fair-valued amount is €12bn. What is the simplified AVA?",
+            "options": [
+              "€120m",
+              "€1.2m",
+              "€12m"
+            ],
+            "correct": 2,
+            "explanation": "0.1% of €12bn is €12m. The base is the defined aggregate fair-valued amount, not derivative notional."
+          }
         ]
       },
       {
@@ -40034,6 +40514,38 @@ const LEARNING_PATHS = [
         "description": "Trace the data and explain a complete month-end result.",
         "exitCriteria": [
           "Trace the data and explain a complete month-end result."
+        ],
+        "stageCheck": [
+          {
+            "question": "In the two-date workbook, what is the reporting-currency P&L?",
+            "options": [
+              "USD 765.20",
+              "USD 565.60",
+              "EUR 505.00"
+            ],
+            "correct": 0,
+            "explanation": "Translating each carrying value and cash flow at its own rate gives USD 765.20. EUR 505.00 is the local result and USD 565.60 one part of the FX bridge."
+          },
+          {
+            "question": "In curve-inputs.csv, which payment contributes most of the −21.50 difference between the FO and independent values?",
+            "options": [
+              "Year 1, −0.50",
+              "Year 2, −21.00",
+              "Both equally"
+            ],
+            "correct": 1,
+            "explanation": "1,050 × (0.88 − 0.90) = −21.00 for year two, against 50 × (0.94 − 0.95) = −0.50 for year one."
+          },
+          {
+            "question": "Late data arrives after a report is signed off. What should happen?",
+            "options": [
+              "Update the signed-off report silently",
+              "A controlled revised run that explains what changed",
+              "Wait for next month's run"
+            ],
+            "correct": 1,
+            "explanation": "A revised run keeps the signed-off result traceable and explains the change."
+          }
         ]
       }
     ],
