@@ -2,7 +2,7 @@
 
 Optional extension after the curve investigation. Paper or spreadsheet first; Python 3.14+ is optional. Everything is synthetic. This example teaches input attribution, not a production pricing model or an instruction to post a correction.
 
-See the [visual map of forecast and discount dependencies](https://abdul-shaikh-dev.github.io/learning-notebook/course.html#lesson/3) in the notebook. The text flow below remains a portable reference for readers without diagram rendering.
+See the [visual map of forecast and discount dependencies](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#topic/financial-foundations/market-data-and-the-model-underneath) in the notebook. The text flow below remains a portable reference for readers without diagram rendering.
 
 ## Contract before calculation
 

@@ -85,7 +85,7 @@
       ],
       "steps": [
         "Extract the bundle; sample-positions.csv and answers.md are at the financial-foundations-practice folder root.",
-        "Start with the bond rows in the CSV after lessons 1–5. Preserve missing values and short-position signs. Use the model-input explanation in lesson 3 before interpreting swap and option rows.",
+        "Start with the bond rows in the CSV after lessons 15–19. Preserve missing values and short-position signs. Use the model-input explanation in lesson 17 before interpreting swap and option rows.",
         "Compare like-for-like independent and front-office values; separate amount thresholds from evidence quality and stale-price review.",
         "Write your decisions before opening answers.md; compare the bond, swap and option interpretations."
       ],
@@ -93,7 +93,7 @@
       "prerequisites": [
         {
           "label": "Sources, tolerances and exceptions",
-          "href": "course.html#lesson/5"
+          "href": "#topic/financial-foundations/sources-tolerances-and-exceptions"
         }
       ],
       "notes": [
@@ -129,11 +129,11 @@
       "prerequisites": [
         {
           "label": "Day-one P&L and valuation movements",
-          "href": "course.html#lesson/16"
+          "href": "#topic/financial-foundations/day-one-pnl-and-valuation-movements"
         },
         {
           "label": "Market data and the model underneath",
-          "href": "course.html#lesson/3"
+          "href": "#topic/financial-foundations/market-data-and-the-model-underneath"
         }
       ],
       "notes": [
@@ -174,7 +174,7 @@
       "prerequisites": [
         {
           "label": "Market data and models, including the fixed-cash-flow example",
-          "href": "course.html#lesson/3"
+          "href": "#topic/financial-foundations/market-data-and-the-model-underneath"
         }
       ],
       "notes": [
@@ -184,7 +184,40 @@
       ]
     }
   ],
-  "lessonTasks": {},
+  "lessonTasks": {
+    "what-are-people-actually-trading": "practice",
+    "a-trade-is-an-event-a-position-is-what-remains": "practice",
+    "where-do-desks-books-and-portfolios-fit": "practice",
+    "price-value-cash-and-profit-are-not-the-same": "practice",
+    "who-checks-the-banks-numbers": "practice",
+    "read-one-trade-record-with-confidence": "practice",
+    "a-bond-is-a-timeline-of-payments": "daily-pnl-and-curves",
+    "swaps-and-options-payment-is-not-value": "swap-repricing",
+    "translate-an-input-move-into-money": "daily-pnl-and-curves",
+    "netting-and-collateral-change-exposure": "practice",
+    "from-a-balance-sheet-to-a-capital-ratio": "practice",
+    "read-a-percentile-before-using-it": "practice",
+    "reconcile-a-whole-day-including-cash-and-fx": "daily-pnl-and-curves",
+    "reprice-the-same-cash-flows-with-different-inputs": "daily-pnl-and-curves",
+    "from-a-trade-to-a-value": "practice",
+    "what-fair-value-is-trying-to-measure": "practice",
+    "market-data-and-the-model-underneath": "swap-repricing",
+    "ipv-an-independent-challenge": "practice",
+    "sources-tolerances-and-exceptions": "practice",
+    "reserves-and-the-accounting-value-bridge": "practice",
+    "bid-offer-liquidity-and-model-uncertainty": "practice",
+    "level-1-level-2-level-3": "practice",
+    "observability-and-significance-in-practice": "practice",
+    "fvh-classification-and-reporting-exercises": "practice",
+    "pruval-avas-and-capital": "practice",
+    "market-price-uncertainty": "practice",
+    "close-out-cost-and-concentration": "practice",
+    "model-risk-and-the-other-ava-categories": "practice",
+    "approaches-aggregation-and-cet1": "practice",
+    "day-one-pnl-and-valuation-movements": "daily-pnl-and-curves",
+    "data-lineage-controls-and-debugging": "practice",
+    "put-it-all-together-at-month-end": "practice"
+  },
   "bundle": {
     "href": "paths/financial-foundations/practice-bundle.zip"
   }

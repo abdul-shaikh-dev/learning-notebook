@@ -19,11 +19,11 @@ The notebook currently contains **34 learning paths and 752 lessons and challeng
 | Personal effectiveness | [Time, Attention & Energy](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/time-attention-energy) · [Task & Project Management](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/task-project-management) · [Habits & Behaviour Change](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/habits-behaviour-change) · [Learning How to Learn](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/learning-how-to-learn) · [Self-Awareness & Communication](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/self-awareness-communication) · [Plan and Review Your Week](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/weekly-planning-journey) |
 | Maths, data analysis and machine learning | [Practical maths & statistics](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/practical-maths-statistics) · [Data analysis with Python](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/data-analysis-python) · [Machine learning foundations](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/machine-learning-foundations) |
 | Software maintenance | [Requirements & software maintenance](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/requirements-maintenance) |
-| Financial concepts | [Financial foundations](https://abdul-shaikh-dev.github.io/learning-notebook/course.html#explore) |
+| Financial concepts | [Financial foundations](https://abdul-shaikh-dev.github.io/learning-notebook/index.html#path/financial-foundations) · [practice studio](https://abdul-shaikh-dev.github.io/learning-notebook/course.html#explore) |
 
 ## Study at your own pace
 
-Start at a course overview to see its prerequisites, learning outcomes and stages. Courses cover foundations and intermediate practice, with selected advanced exercises. Financial foundations has its own beginner introductions, main lessons, visual stories and labs.
+Start at a course overview to see its prerequisites, learning outcomes and stages. Courses cover foundations and intermediate practice, with selected advanced exercises. Financial foundations starts with beginner introductions and foundation explainers, and adds a practice studio with labs, a month-end case, a trade journey and visual stories.
 
 - Read the explanations and worked examples directly. Animations and interactive diagrams are optional.
 - Download practice files beside each exercise. The guides explain which local tools you need. Code examples include copy controls and syntax highlighting.
@@ -91,8 +91,8 @@ Follow the [authoring guide](docs/adding-learning-paths.md) to add lessons, prer
 | `paths/<id>/path.json` | Canonical course metadata, lessons and public-file inventory |
 | `paths/<id>/resources.json`, `paths/<id>/practice/` | Course task kits, commands and downloadable workshop files |
 | `paths/<id>/diagrams.json`, `paths/<id>/visuals.json`, `paths/<id>/glossary.json` | Authored diagrams, concept explorers and glossaries, where present |
-| `paths/financial-foundations/content/`, `paths/financial-foundations/runtime/` | Financial course content and its dedicated reader |
-| `course.html`, `handbook.html` | Stable entry points for the financial course and study pack |
+| `paths/financial-foundations/content/`, `paths/financial-foundations/runtime/` | Financial course content (the source of its generated lessons) and its practice studio |
+| `course.html`, `handbook.html` | Financial practice studio and complete printable study pack |
 | `practice/personal-effectiveness-studio/` | Shared browser planning and reflection studio |
 | `content/` | Generated catalog, lazy course payloads and local search index |
 | `scripts/`, `tests/` | Generation, verification and deployment tooling |

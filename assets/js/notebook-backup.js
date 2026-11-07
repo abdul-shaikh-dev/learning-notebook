@@ -258,10 +258,13 @@ const NotebookBackup = (() => {
       drafts:Object.keys(value.paths[path.id]?.challenges || {}).length,
       attempted:Object.values(value.paths[path.id]?.challenges || {}).filter(a=>a.status==='attempted').length,
       solved:Object.values(value.paths[path.id]?.challenges || {}).filter(a=>a.status==='solved').length}));
-    const financePath = LEARNING_PATHS.find(p=>p.id==='financial-foundations');
-    if (financePath) all.unshift({id:financePath.id,title:financePath.title,total:24,
-      read:(value.financial?.done.length || 0)+(value.financial?.starterDone.length || 0),
-      checks:Object.values(value.financial?.study || {}).filter(s=>s.checked).length});
+    // Financial foundations reads like any course. Reading marks still in an older finance backup
+    // and the practice studio's self-checks count towards its row.
+    const finance = all.find(row => row.id === 'financial-foundations');
+    if (finance) {
+      finance.read += (value.financial?.done.length || 0)+(value.financial?.starterDone.length || 0);
+      finance.checks += Object.values(value.financial?.study || {}).filter(s=>s.checked).length;
+    }
     return all;
   }
   const count = row => `${row.read} read · ${row.checks} self-checked` + (row.answers ? ` · ${row.answers} checkpoints answered` : '') + (row.exercises ? ` · ${row.exercises} exercises attempted` : '') + (row.drafts ? ` · ${row.drafts} code drafts · ${row.attempted} attempted · ${row.solved} solved` : '');

@@ -24,13 +24,13 @@ assert.ok(!html.includes('progress-stats'),'No row of zero totals before any pro
 const paths=e.LEARNING_PATHS,python=paths.find(p=>p.id==='python'),sql=paths.find(p=>p.id==='sql-server'),pps=paths.find(p=>p.id==='python-problem-solving');
 assert.equal(pps.challenges,pps.lessons.length,'The catalog counts challenges without loading the course');
 assert.ok(!('challenges' in python),'Courses without challenges carry no count');
-const [l1,l2,l3]=python.lessons;
+const [l1,l2,l3]=python.lessons;const fin0=paths.find(p=>p.id==='financial-foundations');
 e=env({
  [key('python')]:json([l1.id,l2.id,l1.id,'not-a-lesson']),[checks('python')]:json([python.stages[0].id,'nope']),
  [answers('python')]:json({[l1.id]:{correct:false,streak:0,at:NOW-DAY},[l2.id]:{correct:true,streak:1,at:NOW},[l3.id]:{correct:true,streak:4,at:NOW-30*DAY},[l3.id+'/2']:{correct:true,streak:2,at:NOW-4*DAY}}),
  [key('sql-server')]:json(sql.lessons.map(l=>l.id)),
  'learning-notebook:challenges:python-problem-solving:v1':json({[pps.lessons[0].id]:{code:'x',status:'solved'},[pps.lessons[1].id]:{code:'y',status:'attempted'},[pps.lessons[2].id]:{code:'',status:'not-started'}}),
- 'valuation-lab-v1':json({done:[1,2,2,99],starterDone:[1],study:{foundations:{checked:true},revision:{checked:false}}}),
+ [key('financial-foundations')]:json([fin0.lessons[0].id,fin0.lessons[1].id,fin0.lessons[1].id,fin0.lessons[14].id,'not-a-lesson']),'valuation-lab-v1':json({done:[],starterDone:[],study:{foundations:{checked:true},revision:{checked:false}}}),
  [key('react')]:'{not json','learning-notebook:last-lesson:v1':json({path:'sql-server',lesson:sql.lessons[0].id})});
 s=e.P.summary(NOW);
 const byId=Object.fromEntries(s.started.map(c=>[c.p.id,c]));
@@ -53,8 +53,8 @@ same(ch.challenges,{solved:1,attempted:1,total:pps.lessons.length});assert.equal
 same(ch.step,{label:'Next: '+pps.lessons[1].title.replace(/^\d+\.\s*/,''),href:'#topic/python-problem-solving/'+pps.lessons[1].id},'The next step skips a solved challenge');
 
 const fin=byId['financial-foundations'];
-assert.equal(fin.read,3,'Finance counts each valid lesson once');same(fin.projects,{done:1,total:7,label:'study sections'});
-assert.equal(fin.step.href,paths.find(p=>p.id==='financial-foundations').href,'Finance continues in its own course page');
+assert.equal(fin.read,3,'Finance counts each valid lesson once');same(fin.projects,{done:1,total:7,label:'study sections',href:'course.html#practice'});
+same(fin.step,{label:'Next: '+fin0.lessons[2].title.replace(/^\d+\.\s*/,''),href:'#topic/financial-foundations/'+fin0.lessons[2].id},'Finance continues with its first unread lesson');
 
 assert.equal(s.read,2+sql.lessons.length+3,'Total lessons read');assert.equal(s.projects,1,'Finance study sections are not counted as projects');
 assert.equal(s.solved,1);assert.equal(s.challenges,pps.lessons.length);

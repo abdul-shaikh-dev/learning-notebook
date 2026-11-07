@@ -1,0 +1,447 @@
+{
+  "title": "Find the term. Check the units.",
+  "intro": "A desk reference for the language, formulas and distinctions used throughout the guide.",
+  "placeholder": "Try: clean, AVA, notional, sensitivity…",
+  "terms": [
+    {
+      "term": "Accounting fair value",
+      "definition": "The recognised fair-value measurement under the applicable accounting framework, including relevant adjustments."
+    },
+    {
+      "term": "Accrued interest",
+      "definition": "Interest earned since the last coupon date but not yet paid. Dirty bond value includes it; clean price excludes it."
+    },
+    {
+      "term": "Adjustment / reserve",
+      "definition": "A valuation change with a defined reason and basis. \"Reserve\" is bank-specific terminology; identify whether it is accounting, prudential or another item."
+    },
+    {
+      "term": "Aggregation",
+      "definition": "Combining calculation components under defined rules, including only permitted offsets or diversification."
+    },
+    {
+      "term": "Asset",
+      "definition": "Something that provides an economic resource or right. A positive-value claim can be an asset for its holder."
+    },
+    {
+      "term": "AVA",
+      "definition": "Additional Valuation Adjustment: a prudential increment for valuation uncertainty under the applicable framework. Distinct from an accounting journal."
+    },
+    {
+      "term": "Basis point (bp)",
+      "definition": "0.01 percentage point; 0.0001 as a decimal. For a per-100 bond quote, 0.01 price point corresponds to 1bp of face value, not necessarily 1bp of yield."
+    },
+    {
+      "term": "Bid / ask / mid",
+      "definition": "Bid is a dealer's buying price; ask is their selling price; mid is their midpoint. Always specify perspective."
+    },
+    {
+      "term": "Book",
+      "definition": "An internal grouping of positions used to manage and report activity. It is not a physical book or necessarily a separate bank account. The word can have other meanings, so check the local context."
+    },
+    {
+      "term": "Calibration",
+      "definition": "Selecting model parameters so a model fits chosen observations or objectives."
+    },
+    {
+      "term": "CET1",
+      "definition": "Common Equity Tier 1: a regulatory capital measure after prescribed inclusions and deductions."
+    },
+    {
+      "term": "Clean / dirty",
+      "definition": "Clean bond price excludes accrued interest; dirty includes it. Compare prices on the same basis."
+    },
+    {
+      "term": "Close-out cost (COC)",
+      "definition": "Cost or uncertainty associated with exiting a valuation exposure, often linked to bid-offer."
+    },
+    {
+      "term": "Concentration",
+      "definition": "Position size relative to market capacity and the practical difficulty of exit."
+    },
+    {
+      "term": "Consensus price",
+      "definition": "A price derived from multiple submitted observations; quality depends on contributor independence and relevance."
+    },
+    {
+      "term": "Correlation",
+      "definition": "A measure of joint movement. Long-dated or specific correlations may lack observable market support."
+    },
+    {
+      "term": "Counterparty",
+      "definition": "The other party to a transaction. If a bank buys a bond from a dealer, that dealer is the trade counterparty. The bond issuer may be a different company."
+    },
+    {
+      "term": "Coupon",
+      "definition": "A bond's interest payment. A 5% annual coupon on $1,000 face is $50 a year before any special conventions."
+    },
+    {
+      "term": "Currency",
+      "definition": "The unit in which a price or amount is measured, such as USD or INR. Do not add different currencies without an exchange-rate conversion."
+    },
+    {
+      "term": "CVA / DVA",
+      "definition": "Credit / Debit Valuation Adjustment: counterparty-credit / own-credit effects in valuation. Not the same as CVA risk capital."
+    },
+    {
+      "term": "Day-one difference",
+      "definition": "Difference between transaction price and model fair value at inception; recognition or deferral follows specific accounting criteria."
+    },
+    {
+      "term": "Desk",
+      "definition": "A team responsible for a type of trading activity. A desk may manage several books."
+    },
+    {
+      "term": "Discount factor",
+      "definition": "The multiplier that converts a future cash flow to present value."
+    },
+    {
+      "term": "DV01 / PV01",
+      "definition": "Value sensitivity to a 1bp rate move. Sign, curve scope and unit conventions must be checked."
+    },
+    {
+      "term": "Evidence status",
+      "definition": "Whether a usable independent source exists and meets the required quality criteria. Separate from the size of a price difference."
+    },
+    {
+      "term": "Exit price",
+      "definition": "A market-participant perspective on selling an asset or transferring a liability at the measurement date."
+    },
+    {
+      "term": "Face value / principal",
+      "definition": "For a plain bond, the reference amount the issuer promises to repay at maturity, subject to its terms and ability to pay. It can differ from the bond's current market value."
+    },
+    {
+      "term": "Fair Value Hierarchy (FVH)",
+      "definition": "Level 1/2/3 classification of the measurement based on qualifying quotes and significant input observability."
+    },
+    {
+      "term": "Front office / FO",
+      "definition": "The client-facing or trading side of a bank that enters transactions and produces initial marks. Responsibilities vary by institution."
+    },
+    {
+      "term": "FVA",
+      "definition": "Funding Valuation Adjustment. The term and methodology need context; it is not a universal notional percentage."
+    },
+    {
+      "term": "Idempotency",
+      "definition": "Rerunning the same logical operation does not create duplicate business effects, such as extra reserve postings."
+    },
+    {
+      "term": "Instrument",
+      "definition": "The financial item or contract involved, such as a share, bond or interest-rate swap."
+    },
+    {
+      "term": "IPV",
+      "definition": "Independent Price Verification: independent challenge of prices or model inputs and investigation of supporting evidence."
+    },
+    {
+      "term": "Legal entity",
+      "definition": "The legally recognised company that owns rights and obligations. Several desks and books may belong to the same legal entity."
+    },
+    {
+      "term": "Liability",
+      "definition": "An obligation. A contract can be an asset for one party and a liability for the other."
+    },
+    {
+      "term": "Liquidity",
+      "definition": "The ability to trade size in a relevant market with limited cost and delay."
+    },
+    {
+      "term": "Long / short",
+      "definition": "In the simple price examples, long means holding a positive exposure; short means an opposite exposure that generally benefits from a price fall. Borrowing, delivery and collateral can also matter for an actual short sale."
+    },
+    {
+      "term": "Mark",
+      "definition": "The price or value currently used for a position. Marking a position means updating that number."
+    },
+    {
+      "term": "Mark-to-market / MTM",
+      "definition": "Valuation using relevant market prices. MTM is also used informally to mean the resulting market value."
+    },
+    {
+      "term": "Mark-to-model",
+      "definition": "Valuation using a model, contractual terms and inputs. It can use observable or unobservable inputs."
+    },
+    {
+      "term": "Maturity",
+      "definition": "The contract's scheduled end or repayment date."
+    },
+    {
+      "term": "Model risk",
+      "definition": "Uncertainty from model choice, assumptions or limitations. Known code defects require correction and impact assessment."
+    },
+    {
+      "term": "MPU",
+      "definition": "Market Price Uncertainty: uncertainty around the current market price or input, distinct from future market risk."
+    },
+    {
+      "term": "Netting set",
+      "definition": "A defined group subject to enforceable netting arrangements. Eligibility depends on legal and methodological conditions."
+    },
+    {
+      "term": "Notional",
+      "definition": "Contractual reference amount used in calculations. For derivatives it is generally not the fair value."
+    },
+    {
+      "term": "Observability",
+      "definition": "The extent to which relevant market evidence supports an input used in the valuation."
+    },
+    {
+      "term": "Override",
+      "definition": "A controlled exception to a default input or decision, with reason, approver and review/expiry."
+    },
+    {
+      "term": "P&L",
+      "definition": "Profit and loss. Valuation movement is only one contributor; cash flows, trades and other effects matter."
+    },
+    {
+      "term": "Portfolio",
+      "definition": "A collection of positions considered together. Its boundary depends on the purpose: a person, book, desk, fund or risk analysis."
+    },
+    {
+      "term": "Position",
+      "definition": "What remains held or owed at a point in time after trades and other changes. Multiple trades can contribute to one position."
+    },
+    {
+      "term": "Product",
+      "definition": "A category of instruments with similar features, such as equities, bonds or swaps."
+    },
+    {
+      "term": "Proxy",
+      "definition": "A substitute input based on related instruments or markets, requiring a justified mapping and uncertainty assessment."
+    },
+    {
+      "term": "Prudent valuation / PruVal",
+      "definition": "Assessment of valuation uncertainty for prudential purposes, with applicable additional capital deductions."
+    },
+    {
+      "term": "Realised P&L",
+      "definition": "Profit or loss associated with completed activity under the chosen accounting convention. In a simple sale example, sale proceeds minus the relevant cost gives realised trading profit, before fees."
+    },
+    {
+      "term": "Repricing",
+      "definition": "Running the valuation again with a specified alternative input set or model configuration."
+    },
+    {
+      "term": "RWA",
+      "definition": "Risk-weighted assets, the denominator in a CET1 capital ratio. It is not total notional or total accounting assets."
+    },
+    {
+      "term": "Sensitivity",
+      "definition": "How much value changes when an input moves by a stated amount, under specified assumptions."
+    },
+    {
+      "term": "Settlement",
+      "definition": "Completion of agreed delivery and payment. The trade date and settlement date can differ."
+    },
+    {
+      "term": "Significance",
+      "definition": "Importance of an input to the overall measurement; not merely whether the input appears in the model."
+    },
+    {
+      "term": "Stale price",
+      "definition": "An observation too old to support the current measurement under the relevant policy and market conditions."
+    },
+    {
+      "term": "Tolerance",
+      "definition": "An investigation or escalation threshold; not proof that values within it are correct."
+    },
+    {
+      "term": "Trade",
+      "definition": "An agreement to buy, sell or exchange something on specified terms. It is an event, not the total amount still held."
+    },
+    {
+      "term": "Unrealised P&L",
+      "definition": "A change in the value of an open position that has not yet been closed out. Accounting recognition and cash receipt are different questions."
+    },
+    {
+      "term": "Valuation control",
+      "definition": "An independent function that challenges valuations and their supporting evidence. Exact organisational names vary."
+    },
+    {
+      "term": "Valuation exposure",
+      "definition": "Under the EU RTS, the amount of a valuation position sensitive to movement in a valuation input. Distinguish it from the valuation position itself (an instrument or portfolio)."
+    },
+    {
+      "term": "Vega",
+      "definition": "Sensitivity to volatility, often per volatility percentage point. Check whether the system uses points or decimal units."
+    },
+    {
+      "term": "Volatility surface",
+      "definition": "Implied volatilities across strikes and maturities, used in option valuation."
+    }
+  ],
+  "plainTerms": [
+    {
+      "term": "Trade",
+      "definition": "An agreement to buy, sell or exchange something on specified terms. It is an event, not the total amount still held."
+    },
+    {
+      "term": "Instrument",
+      "definition": "The financial item or contract involved, such as a share, bond or interest-rate swap."
+    },
+    {
+      "term": "Product",
+      "definition": "A category of instruments with similar features, such as equities, bonds or swaps."
+    },
+    {
+      "term": "Counterparty",
+      "definition": "The other party to a transaction. If a bank buys a bond from a dealer, that dealer is the trade counterparty. The bond issuer may be a different company."
+    },
+    {
+      "term": "Position",
+      "definition": "What remains held or owed at a point in time after trades and other changes. Multiple trades can contribute to one position."
+    },
+    {
+      "term": "Book",
+      "definition": "An internal grouping of positions used to manage and report activity. It is not a physical book or necessarily a separate bank account. The word can have other meanings, so check the local context."
+    },
+    {
+      "term": "Desk",
+      "definition": "A team responsible for a type of trading activity. A desk may manage several books."
+    },
+    {
+      "term": "Portfolio",
+      "definition": "A collection of positions considered together. Its boundary depends on the purpose: a person, book, desk, fund or risk analysis."
+    },
+    {
+      "term": "Legal entity",
+      "definition": "The legally recognised company that owns rights and obligations. Several desks and books may belong to the same legal entity."
+    },
+    {
+      "term": "Front office / FO",
+      "definition": "The client-facing or trading side of a bank that enters transactions and produces initial marks. Responsibilities vary by institution."
+    },
+    {
+      "term": "Valuation control",
+      "definition": "An independent function that challenges valuations and their supporting evidence. Exact organisational names vary."
+    },
+    {
+      "term": "Settlement",
+      "definition": "Completion of agreed delivery and payment. The trade date and settlement date can differ."
+    },
+    {
+      "term": "Asset",
+      "definition": "Something that provides an economic resource or right. A positive-value claim can be an asset for its holder."
+    },
+    {
+      "term": "Liability",
+      "definition": "An obligation. A contract can be an asset for one party and a liability for the other."
+    },
+    {
+      "term": "Long / short",
+      "definition": "In the simple price examples, long means holding a positive exposure; short means an opposite exposure that generally benefits from a price fall. Borrowing, delivery and collateral can also matter for an actual short sale."
+    },
+    {
+      "term": "Mark",
+      "definition": "The price or value currently used for a position. Marking a position means updating that number."
+    },
+    {
+      "term": "Currency",
+      "definition": "The unit in which a price or amount is measured, such as USD or INR. Do not add different currencies without an exchange-rate conversion."
+    },
+    {
+      "term": "Face value / principal",
+      "definition": "For a plain bond, the reference amount the issuer promises to repay at maturity, subject to its terms and ability to pay. It can differ from the bond's current market value."
+    },
+    {
+      "term": "Coupon",
+      "definition": "A bond's interest payment. A 5% annual coupon on $1,000 face is $50 a year before any special conventions."
+    },
+    {
+      "term": "Maturity",
+      "definition": "The contract's scheduled end or repayment date."
+    },
+    {
+      "term": "Unrealised P&L",
+      "definition": "A change in the value of an open position that has not yet been closed out. Accounting recognition and cash receipt are different questions."
+    },
+    {
+      "term": "Realised P&L",
+      "definition": "Profit or loss associated with completed activity under the chosen accounting convention. In a simple sale example, sale proceeds minus the relevant cost gives realised trading profit, before fees."
+    }
+  ],
+  "plainIntro": "New to trading? Start with the six introductory lessons, beginning at lesson 1.",
+  "reference": [
+    {
+      "title": "Formula card",
+      "columns": [
+        "Calculation",
+        "Expression",
+        "Assumption to remember"
+      ],
+      "rows": [
+        [
+          "Bond clean value",
+          "Signed face × clean price / 100",
+          "Per-100 quotation; no FX conversion."
+        ],
+        [
+          "Bond dirty value",
+          "Clean value + signed accrued interest",
+          "Accrued interest must match position and date."
+        ],
+        [
+          "Direct IPV difference",
+          "Independent value − FO value",
+          "A signed diagnostic, not automatic posting authority."
+        ],
+        [
+          "First-order input impact",
+          "Signed sensitivity × input change",
+          "Units aligned; nonlinear effects omitted."
+        ],
+        [
+          "Present value",
+          "Cash flow / (1 + annual rate)^years",
+          "Single cash flow, annual compounding only."
+        ],
+        [
+          "Accounting bridge",
+          "Raw value + signed accounting adjustments",
+          "Teaching labs use positive deduction magnitudes for long assets."
+        ],
+        [
+          "Schematic incremental uncertainty",
+          "max(0, gross requirement − eligible same-source booked deduction)",
+          "Before applicable aggregation; long-asset teaching bridge."
+        ],
+        [
+          "CET1 ratio",
+          "CET1 / RWA × 100%",
+          "Hold RWA fixed only when explicitly assumed."
+        ],
+        [
+          "Reserve movement",
+          "Closing deduction − opening deduction",
+          "An increase is negative value impact for the long-asset convention."
+        ]
+      ]
+    },
+    {
+      "title": "Questions worth asking at work",
+      "items": [
+        "What valuation date, currency, unit and price convention is this number using?",
+        "Which population and source snapshots produced it?",
+        "Is this an observed price, a model input, a value, a reserve balance or a movement?",
+        "What is independently verified, and what remains unverified?",
+        "Is the amount gross, booked, incremental or after aggregation?",
+        "Which same-source adjustment has already been captured?",
+        "What evidence supports the hierarchy classification?",
+        "Which entity, jurisdiction, policy version and effective date apply?"
+      ]
+    },
+    {
+      "title": "Scope and limits",
+      "intro": "This reference edition was researched on 26 September 2026. It teaches general concepts first, using IFRS and EU prudent valuation as explicit reference frameworks.",
+      "items": [
+        "What this guide covers: trade and model foundations; source quality; IPV workflow and exceptions; accounting adjustments; all three FVH levels; all nine EU AVA categories; aggregation concepts; capital effects; day-one differences; governance and data lineage.",
+        "Where deeper implementation starts: this is a substantial learning foundation, not an exhaustive bank methodology or regulatory implementation specification. It does not implement full curve construction, option pricing, xVA exposure simulation, legal netting tests, production AVA calibration, all Annex conditions or jurisdiction-specific reporting templates. Each requires the applicable bank policy and current authoritative rules.",
+        "Numbers, tolerances, decisions and positions are invented for teaching. The normal-distribution lab and pre-aggregation bridge use simplified assumptions shown beside the controls.",
+        "Publication date is not effective date: the 2024 EBA targeted-amendment material is a consultation, and this guide does not treat it as enacted law. The PRA restatement published in January 2026 has relevant provisions effective in January 2027. Verify the rule version for the reporting date before implementing a production calculation.",
+        "Keep your learning portable: the lessons and labs work without the internet; source links need an internet connection. Progress is local to this browser; use Progress & backups before moving the folder or switching browsers. No account or external service is used."
+      ]
+    }
+  ]
+}

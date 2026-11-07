@@ -1,6 +1,7 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const {readPaths}=require('../scripts/manifest.cjs');
-const paths=readPaths().filter(p=>p.status==='ready'&&!p.href&&p.stages);
+// Financial foundations uses reading stages without projects; its own tests cover it.
+const paths=readPaths().filter(p=>p.status==='ready'&&!p.href&&p.stages&&p.id!=='financial-foundations');
 assert.ok(paths.length>=5);
 const nodes=new Map(),stored=new Map();
 function node(id){if(!nodes.has(id))nodes.set(id,{innerHTML:'',textContent:'',disabled:false,addEventListener(t,fn){this[t]=fn;},querySelectorAll(){return [];}});return nodes.get(id);}
