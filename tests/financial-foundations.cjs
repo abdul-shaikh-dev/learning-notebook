@@ -53,7 +53,7 @@ for(const bad of [null,[],'x'])assert.throws(()=>validate(bad));
 console.log('PASS: studio progress keeps only valid practice status.');
 
 // Exercise the actual lab renderer with its real field contract, including sd=0.
-const labs=vm.runInNewContext(fs.readFileSync('paths/financial-foundations/content/activities.js','utf8')+';LABS');
+const labs=require('./finance-data.cjs').financeData().LABS;
 const labSource=app.slice(app.indexOf('const row='),app.indexOf('function caseView'));
 function renderUncertainty(sd,side){
   const nodes={lab:{dataset:{key:'uncertainty'}},result:{},experiment:{},side:{value:side}};

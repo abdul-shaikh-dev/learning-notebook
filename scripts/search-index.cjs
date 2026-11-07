@@ -10,13 +10,9 @@ function searchEntries(){
   for(const t of p.glossary?.terms||[])add(p,'Glossary',t.term,'#glossary/'+p.id,[t.term,t.definition],t.definition);
   for(const t of p.resources?.tasks||[])add(p,'Task',t.title,'#resources/'+p.id+'/'+t.id,[t.goal,t.steps,t.notes],t.goal);
   for(const f of p.resources?.files||[]){const source=path.resolve(root,f.href);if(!source.startsWith(root+path.sep))throw Error('Unsafe search source');add(p,'File',path.basename(f.href),f.href,[f.description,fs.readFileSync(source,'utf8')],f.description);}
-  // The finance practice studio's labs and trade journey are searchable alongside its lessons.
-  if(p.id==='financial-foundations'){
-   const code=['activities','journey'].map(name=>fs.readFileSync(path.join(root,'paths',p.id,'content',name+'.js'),'utf8')).join('\n');
-   const data=vm.runInNewContext(code+';({LABS,TRADE_JOURNEY})',{}, {timeout:1000});
-   for(const [id,l]of Object.entries(data.LABS))add(p,'Task',l.title,'course.html#labs/'+id,[l.name,l.intro],l.intro);
-   for(const l of data.TRADE_JOURNEY)add(p,'Lesson',l.label,'course.html#journey/'+l.id,[l.body,l.input,l.output,l.control],l.body);
-  }
+  // A practice studio's labs and trade journey (practice.json) are searchable alongside its lessons.
+  for(const [id,l]of Object.entries(p.practice?.labs||{}))add(p,'Task',l.title,'course.html#labs/'+id,[l.name,l.intro],l.intro);
+  for(const l of p.practice?.journey||[])add(p,'Lesson',l.label,'course.html#journey/'+l.id,[l.body,l.input,l.output,l.control],l.body);
  }
  return result;
 }

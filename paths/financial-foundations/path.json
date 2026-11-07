@@ -2817,10 +2817,6 @@
     }
   ],
   "publicFiles": [
-    "content/activities.js",
-    "content/exercises.js",
-    "content/lab-guides.js",
-    "content/practice-data.js",
     "runtime/calculations.js",
     "runtime/study.js",
     "runtime/handbook.js",
@@ -2831,7 +2827,6 @@
     "runtime/story-math.js",
     "runtime/visual-stories.js",
     "styles/visuals.css",
-    "content/journey.js",
     "runtime/journey.js",
     "styles/journey.css",
     "practice/curve-inputs.csv",

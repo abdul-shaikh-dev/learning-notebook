@@ -115,7 +115,7 @@ After changing page styles or markup, run `node tests/ui-audit.cjs`. It opens ev
 
 Colours, type and spacing come from the tokens described in [docs/design-system.md](docs/design-system.md); `node verify.cjs` rejects hard-coded values in other stylesheets.
 
-If editing problem-solving challenges, first run `python scripts/sync-problem-solving.py` to rebuild the lessons, starters, references and test cases from `paths/python-problem-solving/challenges.json`. Extract practice downloads into a separate learner folder before editing attempts. If editing the shared personal studio, first run `node scripts/sync-personal-studio.cjs`. If editing the canonical financial CSV or answer key, first run `node scripts/sync-finance.cjs`. Commit the source and its regenerated outputs together.
+If editing problem-solving challenges, first run `python scripts/sync-problem-solving.py` to rebuild the lessons, starters, references and test cases from `paths/python-problem-solving/challenges.json`. Extract practice downloads into a separate learner folder before editing attempts. If editing the shared personal studio, first run `node scripts/sync-personal-studio.cjs`. If editing the finance practice studio (`paths/financial-foundations/practice.json`) or its canonical CSV or answer key, run `node scripts/sync-catalog.cjs`, and `node scripts/sync-finance.cjs` after changing the CSV or answer key. Commit the source and its regenerated outputs together.
 
 Executable workshop checks are separate from site/content checks:
 

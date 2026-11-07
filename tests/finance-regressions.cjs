@@ -3,8 +3,7 @@ const root=path.resolve(__dirname,'..');
 const read=file=>fs.readFileSync(path.join(root,file),'utf8');
 const app=read('paths/financial-foundations/runtime/app.js');
 const study=read('paths/financial-foundations/runtime/study.js');
-let FINANCE_COURSE;vm.runInNewContext(read('content/courses/financial-foundations.js'),{NotebookLoader:{register:p=>{FINANCE_COURSE=p;}}});
-const fixtures={FINANCE_COURSE,...vm.runInNewContext(read('paths/financial-foundations/content/exercises.js')+';({EXERCISES})')};
+const {FINANCE_COURSE,EXERCISES}=require('./finance-data.cjs').financeData(),fixtures={FINANCE_COURSE,EXERCISES};
 const key='valuation-lab-v1',readKey='learning-notebook:path:financial-foundations:v1',lesson=n=>FINANCE_COURSE.lessons[n].id;
 function harness(initial,read){
   const disk=new Map([...(initial?[[key,JSON.stringify(initial)]]:[]),...(read?[[readKey,JSON.stringify(read)]]:[])]),events={},nodes=new Map(),replaced=[];let fail=false,focused=null;

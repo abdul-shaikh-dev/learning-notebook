@@ -1,11 +1,9 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const root='paths/financial-foundations/';
-const names=['exercises','activities','lab-guides','practice-data','journey'];
-const source=names.map(n=>fs.readFileSync(root+'content/'+n+'.js','utf8')).join('\n');
-// Lessons, glossary and sources come from the shared course data, as the handbook page loads them.
-let FINANCE_COURSE;vm.runInNewContext(fs.readFileSync('content/courses/financial-foundations.js','utf8'),{NotebookLoader:{register:p=>{FINANCE_COURSE=p;}}});
+// Lessons, glossary, sources and practice content come from the shared course data, as the handbook page loads them.
+const data=require('./finance-data.cjs').financeData(),{FINANCE_COURSE}=data;
+const source=fs.readFileSync(root+'runtime/course-data.js','utf8')+'\n'+fs.readFileSync('content/courses/financial-foundations.js','utf8');
 const MAIN=FINANCE_COURSE.lessons.filter(l=>!['start','foundation-explainers'].includes(l.stage));
-const data=vm.runInNewContext(source+';({EXERCISES,LABS,LAB_GUIDES,CASE_STEPS,PRACTICE_ROWS})');
 assert.equal(FINANCE_COURSE.lessons.filter(l=>l.stage==='foundation-explainers').length,8);assert.equal(MAIN.length,18);assert.equal(data.EXERCISES.modules.length,6);assert.equal(data.EXERCISES.revision.length,6);
 const expected={'integrated-numeric':765.2,'foundations-numeric':2000000*97.4/100+12000,'control-numeric':-4000000*(101.05-101.2)/100,'hierarchy-numeric':12+3-2+.8-.2+1.5-.6,'prudence-numeric':Math.max(0,998-.5*996-.5*990),'working-numeric':-5000+8000,'revision-price-units':6000000*(99.65-99.8)/100,'revision-bridge':2500000-12000-7000+9000};
 for(const m of data.EXERCISES.modules){assert.equal(m.tasks.length,4);assert.equal(new Set(m.tasks.map(t=>t.type)).size,4);for(const id of m.lessonIds)assert.ok(MAIN.some(l=>l.id===id),m.id+': lesson '+id);}
@@ -16,7 +14,7 @@ assert.equal(data.LAB_GUIDES.length,Object.keys(data.LABS).length);for(const g o
 assert.equal(data.CASE_STEPS.length,6);assert.equal(data.PRACTICE_ROWS.length,6);
 for(const file of ['sample-positions.csv','answers.md'])assert.equal(fs.readFileSync('practice/'+file,'utf8'),fs.readFileSync(root+'practice/'+file,'utf8'));
 const nodes=new Map();const node=id=>{if(!nodes.has(id))nodes.set(id,{innerHTML:'',textContent:'',value:'',addEventListener(type,fn){this[type]=fn;}});return nodes.get(id);};
-vm.runInNewContext(source+'\n'+fs.readFileSync(root+'runtime/diagrams.js','utf8')+'\n'+fs.readFileSync(root+'runtime/handbook.js','utf8'),{FINANCE_COURSE,document:{getElementById:node},window:{print(){}}});
+vm.runInNewContext(source+'\n'+fs.readFileSync(root+'runtime/diagrams.js','utf8')+'\n'+fs.readFileSync(root+'runtime/handbook.js','utf8'),{document:{getElementById:node},window:{print(){}}});
 const pack=node('book').innerHTML,esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Every lesson, checkpoint, glossary term, source edition and concept map is in the printed pack.
 for(const l of FINANCE_COURSE.lessons){assert.ok(pack.includes(esc(l.title)),l.id);if(l.quiz)assert.ok(pack.includes(esc(l.quiz.question))&&pack.includes(esc(l.quiz.explanation)),l.id);if(l.exercise)assert.ok(pack.includes(esc(l.exercise.solution)),l.id);
@@ -24,7 +22,7 @@ for(const l of FINANCE_COURSE.lessons){assert.ok(pack.includes(esc(l.title)),l.i
 for(const g of FINANCE_COURSE.glossary.terms)assert.ok(pack.includes(esc(g.definition)),g.term);for(const s of FINANCE_COURSE.sources)assert.ok(pack.includes(esc(s.edition)),s.title);
 assert.equal((pack.match(/class="concept-diagram finance-concept-diagram"/g)||[]).length,FINANCE_COURSE.lessons.filter(l=>l.diagram).length);for(const id of ['introductions','foundations','main-lessons','labs','case','population','practice','reference','answers','sources','visual-stories','trade-journey'])assert.ok(pack.includes('id="'+id+'"'),id);
 for(const g of data.LAB_GUIDES)assert.ok(pack.includes(g.id==='pv'?'Discounting':data.LABS[g.id].name));
-for(const r of data.PRACTICE_ROWS)assert.ok(pack.includes(r.TradeId));
+for(const r of data.PRACTICE_ROWS)assert.ok(pack.includes(r.TradeId));for(const s of data.TRADE_JOURNEY)assert.ok(pack.includes(s.answer),s.id);
 assert.ok(pack.indexOf('id="answers"')>pack.indexOf('id="practice"'));
 const events={};const ctx={document:{addEventListener:(type,fn)=>events[type]=fn,getElementById:node},state:{study:{}},readLessons:()=>[MAIN[0].id],esc:s=>String(s),save(){},render(){}};
 vm.runInNewContext(source+'\n'+fs.readFileSync(root+'runtime/study.js','utf8'),ctx);

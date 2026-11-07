@@ -8,10 +8,9 @@ const paths=require('../scripts/manifest.cjs').readPaths(),p=paths.find(x=>x.id=
 // path.json, glossary.json and diagrams.json are the only copy of the lessons; the studio content files hold labs,
 // the case, module practice, the practice population and the trade journey. This section was checked field by field
 // against the original reader's content files before they were removed.
-const c={document:{addEventListener(){}},window:{addEventListener(){}}};vm.createContext(c);
-for(const f of ['exercises','journey','activities'])vm.runInContext(fs.readFileSync('paths/financial-foundations/content/'+f+'.js','utf8').replace(/^const /gm,'var '),c);
-for(const k of ['LABS','TRADE_JOURNEY','EXERCISES'])c[k]=JSON.parse(JSON.stringify(c[k]));
-c.VISUAL_STORIES=vm.runInNewContext('('+fs.readFileSync('paths/financial-foundations/runtime/visual-stories.js','utf8').match(/^const VISUAL_STORIES\s*=\s*(\[[\s\S]*?\]);$/m)[1]+')');
+// The studio content now lives in practice.json and is built into the same course data.
+const c=JSON.parse(JSON.stringify(require('./finance-data.cjs').financeData()));
+assert.ok(!fs.existsSync('paths/financial-foundations/content'),'The studio content lives in practice.json');
 for(const f of ['curriculum','starter','foundations','advanced','source-register','diagrams'])assert.ok(!fs.existsSync('paths/financial-foundations/content/'+f+'.js'),'No second copy of the lessons: '+f);
 
 // Lessons: six introductions, eight explainers and eighteen main lessons, in reading order, under the old ids' new names.
@@ -78,9 +77,11 @@ for(const m of c.EXERCISES.modules)for(const id of m.lessonIds)assert.ok(byId.ha
 for(const s of c.VISUAL_STORIES)for(const id of s.lessons)assert.ok(byId.has(id),s.id+': '+id);
 for(const s of c.TRADE_JOURNEY)assert.ok(byId.has(s.lesson),s.id+': '+s.lesson);
 show('#labs/ipv');assert.equal(replaced.at(-1),'course.html#labs/ipv','Studio routes on the notebook page open the studio');
-// The handbook and studio read the lessons from the shared course data, loaded after its register, plus the studio content.
+// The handbook and studio read the lessons and practice content from the shared course data, loaded after its register.
 for(const page of ['handbook.html','course.html']){const html=fs.readFileSync(page,'utf8'),at=f=>html.indexOf(f+'?');
  assert.ok(at('paths/financial-foundations/runtime/course-data.js')>-1&&at('paths/financial-foundations/runtime/course-data.js')<at('content/courses/financial-foundations.js'),page+': course data');
- for(const f of ['exercises','activities','lab-guides','practice-data','journey'])assert.ok(at('paths/financial-foundations/content/'+f+'.js')>-1,page+' still loads '+f);}
+ assert.ok(!html.includes('paths/financial-foundations/content/'),page+' loads no separate content files');}
+// The published course files list no content files; practice.json is source data built into the course file.
+assert.ok(!p.publicFiles.some(f=>f.startsWith('content/')||f==='practice.json'));assert.ok(p.practice&&p.practice.population.rows.length===6);
 console.log('PASS: practice modules, visual stories and the trade journey name real lessons; no old reader routes remain; the handbook keeps its content.');
 
