@@ -3,7 +3,9 @@
 Each fact runs the course's lab in paths/linux-operating-systems/practice: diagnostic_lab.py's run_python,
 classify and backlog, the demo and the test_os_labs.py suite, which are portable. The two descriptor
 answers run linux_fd_drill.py, which works only on Linux; on any other platform they are reported as
-skipped, not passed, and the summary says so. CI runs this script on Linux, so all of them run there.
+skipped, not passed, and the summary says so. The three command-line answers run GNU bash, grep, uniq and tar
+(on Windows, Git for Windows' bash); without bash they are skipped the same way.
+CI runs this script on Linux, so all of them run there.
 Each fact returns the text of the option the result supports, and the script fails if that differs from
 the authored correct option.
 Run with Python 3.14+: python tests/linux_checkpoint_facts.py
@@ -12,6 +14,7 @@ from functools import cache
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 from tempfile import TemporaryDirectory
@@ -25,13 +28,13 @@ import diagnostic_lab as lab  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
-    'signals-and-shutdown/2': 'SIGTERM requests shutdown; SIGKILL prevents cleanup, lesson 10',
-    'memory-and-virtual-addresses/2': 'VSZ and RSS typically appear in KiB; confirm your ps manual, lesson 11',
-    'threads-scheduling-and-races/2': 'Separate processes need coordination that they can both access, lesson 12',
-    'storage-and-durability/2': 'Data reaches userspace buffers, kernel caches and storage at different times, lesson 14',
-    'network-observation/2': 'A server on 127.0.0.1 is reachable only on that computer through loopback, lesson 15',
-    'services-and-supervision/2': 'Units describe executable, identity, working directory, dependencies and restart policy, lesson 16',
-    'namespaces-and-cgroups/2': 'Namespaces give distinct views of process IDs, mounts and networking, lesson 19',
+    'signals-and-shutdown/2': 'SIGTERM requests shutdown; SIGKILL prevents cleanup, lesson 12',
+    'memory-and-virtual-addresses/2': 'VSZ and RSS typically appear in KiB; confirm your ps manual, lesson 13',
+    'threads-scheduling-and-races/2': 'Separate processes need coordination that they can both access, lesson 14',
+    'storage-and-durability/2': 'Data reaches userspace buffers, kernel caches and storage at different times, lesson 16',
+    'network-observation/2': 'A server on 127.0.0.1 is reachable only on that computer through loopback, lesson 17',
+    'services-and-supervision/2': 'Units describe executable, identity, working directory, dependencies and restart policy, lesson 18',
+    'namespaces-and-cgroups/2': 'Namespaces give distinct views of process IDs, mounts and networking, lesson 22',
 }
 
 
@@ -66,6 +69,31 @@ def drill():
                          capture_output=True, text=True, timeout=30, check=True)
     report, verdict = run.stdout.strip().splitlines()
     return json.loads(report), verdict
+
+
+def bash(script):
+    """Run a script with GNU bash and coreutils: Linux, or Git for Windows' bash where installed."""
+    program = shutil.which('bash') if sys.platform != 'win32' else r'C:\Program Files\Git\bin\bash.exe'
+    if not program or not os.path.exists(program):
+        raise NeedsLinux
+    with TemporaryDirectory() as folder:
+        run = subprocess.run([program, '--noprofile', '--norc', '-c', script], cwd=folder, capture_output=True,
+                             text=True, timeout=30, env={**os.environ, 'LC_ALL': 'C'})
+    return run.stdout.replace('\r', '')
+
+
+def text_pipelines():
+    return bash("printf 'b\\na\\nb\\n' | uniq | wc -l").strip()
+
+
+def shell_scripts():
+    printed = bash("bash -c 'set -e; false | true; echo reached'; echo \"status $?\"")
+    return pick(printed, {'reached\nstatus 0\n': "It prints reached: the pipeline's status is true's 0",
+                          'status 1\n': 'The script exits at the pipeline'})
+
+
+def remote_access_scheduling():
+    return bash("mkdir data && printf 'id\\n' > data/a.csv && tar -czf backup.tgz data && tar -tzf backup.tgz | grep csv").strip()
 
 
 def kernel_and_user_space():
@@ -208,6 +236,8 @@ FACTS = {
     'logs-and-evidence/2': logs_and_evidence, 'resource-limits/2': resource_limits,
     'security-and-packages/2': security_and_packages, 'incident-diagnosis/2': incident_diagnosis,
     'operating-systems-capstone/2': operating_systems_capstone,
+    'text-pipelines/2': text_pipelines, 'shell-scripts/2': shell_scripts,
+    'remote-access-scheduling/2': remote_access_scheduling,
     'stage/foundation/1': foundation_bool, 'stage/foundation/2': foundation_timeout,
     'stage/foundation/3': foundation_arguments,
     'stage/intermediate/1': intermediate_demo, 'stage/intermediate/2': intermediate_silent_exit,

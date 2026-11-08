@@ -3,7 +3,7 @@
   "title": "Linux & Operating Systems",
   "category": "Systems and operations",
   "status": "ready",
-  "description": "Follow 22 lessons from Linux paths, shell arguments and permission bits to process lifetimes, memory, resource limits, containers and incident diagnosis. Includes portable child-process tests and an optional Windows-to-WSL observation guide.",
+  "description": "Follow 25 lessons from Linux paths, shell arguments and permission bits to process lifetimes, memory, resource limits, containers and incident diagnosis. Includes portable child-process tests and an optional Windows-to-WSL observation guide.",
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Comfort creating files and opening a terminal.",
@@ -384,8 +384,97 @@
       ]
     },
     {
+      "id": "text-pipelines",
+      "title": "6. Search and transform text with pipelines",
+      "stage": "foundation",
+      "takeaway": "Small tools joined by pipes answer most log and file questions; quote patterns and pass file names with NUL separators.",
+      "sections": [
+        {
+          "title": "Filters that do one job",
+          "paragraphs": [
+            "Most text tools read lines from files or standard input and write lines to standard output, so they can be joined with `|`. `grep` selects lines that match a pattern (`-c` counts them, `-l` lists matching files, `-v` inverts, `-E` enables extended regular expressions). `cut` takes fields by a delimiter, `sort` orders lines (`-n` numerically, `-r` reversed, `-k` by field), and `uniq -c` counts runs of identical adjacent lines, which is why it almost always follows `sort`.",
+            "`awk` splits each line into fields `$1`, `$2` and so on, and runs a pattern-and-action program: `$4 >= 500 {n++}` counts lines whose fourth field is at least 500, and an `END` block runs after the last line, where `NR` holds the number of lines read. `sed` edits a stream: `s/old/new/` substitutes, `-E` enables extended regular expressions, and `-i` edits a file in place.",
+            "Put patterns and programs in single quotes so the shell passes `$4` and `*` to the tool instead of expanding them itself, as lesson 4 explained."
+          ]
+        },
+        {
+          "title": "Counting failures in an access log",
+          "paragraphs": [
+            "The log has five requests. `grep -c` counts the two failures. `awk | sort | uniq -c | sort -rn` builds a frequency table of method and path. `awk` with a numeric comparison counts errors without a regular expression, and `sed` strips the `ms` suffix so `awk` can average the durations. The last pipeline prints the timestamps of failed `GET /orders` requests.",
+            "These outputs were produced with GNU grep, sed and awk. BSD and macOS versions differ in some options, such as `sed -i` needing an explicit suffix argument."
+          ],
+          "example": "cat > access.log <<'EOF'\n2026-11-08T10:00:01 GET /orders 200 12ms\n2026-11-08T10:00:02 GET /orders 500 40ms\n2026-11-08T10:00:03 POST /orders 201 30ms\n2026-11-08T10:00:04 GET /health 200 1ms\n2026-11-08T10:00:05 GET /orders 500 38ms\nEOF\ngrep -c ' 500 ' access.log\n# 2\nawk '{print $2, $3}' access.log | sort | uniq -c | sort -rn\n#       3 GET /orders\n#       1 POST /orders\n#       1 GET /health\nawk '$4 >= 500 {n++} END {print n \" errors of \" NR \" requests\"}' access.log\n# 2 errors of 5 requests\nsed -E 's/([0-9]+)ms$/\\1/' access.log | awk '{sum += $5} END {printf \"mean %.1f ms\\n\", sum / NR}'\n# mean 24.2 ms\ngrep -E '^[^ ]+ GET /orders 5[0-9]{2} ' access.log | cut -d' ' -f1\n# 2026-11-08T10:00:02\n# 2026-11-08T10:00:05"
+        },
+        {
+          "title": "File names, find and xargs",
+          "paragraphs": [
+            "`find` walks a directory tree and tests each entry: `-type f`, `-name '*.log'`, `-mtime +7` (modified more than seven days ago), `-size +100M`. It can run a command itself with `-exec cmd {} +`, or pass names to `xargs`, which builds command lines from its input.",
+            "By default `xargs` splits its input on spaces and newlines, so a file named `day one.log` becomes two arguments. `find -print0` with `xargs -0` separates names with a NUL byte, which cannot appear in a file name, and keeps every name intact. The first command below finds the failing log; the second, without NUL separators, breaks the name in two.",
+            "`sed -i` rewrites a file. Keep a backup suffix (`-i.bak`) or work on a copy until the expression is proven, and test the command without `-i` first so its output appears on screen."
+          ],
+          "example": "mkdir -p logs/old\ncp access.log \"logs/old/day one.log\"\nprintf 'nothing failed\\n' > logs/today.log\nfind logs -type f -name '*.log' -print0 | xargs -0 grep -l ' 500 '\n# logs/old/day one.log\nfind logs -type f -name '*.log' | xargs grep -l ' 500 '\n# grep: logs/old/day: No such file or directory\n# grep: one.log: No such file or directory\n\nprintf 'host=old.example.test\\nport=80\\n' > app.conf\nsed -i.bak 's/^host=.*/host=new.example.test/' app.conf\ncat app.conf\n# host=new.example.test\n# port=80\nls app.conf*\n# app.conf\n# app.conf.bak"
+        }
+      ],
+      "exercise": {
+        "prompt": "Using access.log from the lesson, print each path with its number of 500 responses, most frequent first, and only for paths that had at least one. Then explain why `sort` must come before `uniq -c`.",
+        "solution": "awk '$4 == 500 {print $3}' access.log | sort | uniq -c | sort -rn\n#       2 /orders",
+        "checks": [
+          "Only /orders appears, with a count of 2.",
+          "awk filters on the status field instead of matching 500 anywhere in the line, such as in a duration.",
+          "uniq -c counts adjacent duplicates only, so unsorted input would split the same path into several counts."
+        ]
+      },
+      "quiz": {
+        "question": "A script runs `find . -name '*.log' | xargs rm` and one file is called `old report.log`. What happens to it?",
+        "options": [
+          "It is removed normally",
+          "rm receives `./old` and `report.log` as two names and fails to remove it",
+          "find skips names containing spaces"
+        ],
+        "correct": 1,
+        "explanation": "xargs splits its input on blanks by default. Use find -print0 with xargs -0, or find -exec rm {} +, to keep each name as one argument."
+      },
+      "references": [
+        {
+          "title": "GNU grep manual",
+          "url": "https://www.gnu.org/software/grep/manual/grep.html",
+          "section": "Command-line options",
+          "reviewed": "2026-11-08",
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
+        },
+        {
+          "title": "GNU sed manual",
+          "url": "https://www.gnu.org/software/sed/manual/sed.html",
+          "section": "The s command and in-place editing",
+          "reviewed": "2026-11-08",
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
+        },
+        {
+          "title": "GNU awk manual",
+          "url": "https://www.gnu.org/software/gawk/manual/gawk.html",
+          "section": "Getting started with awk",
+          "reviewed": "2026-11-08",
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
+        },
+        {
+          "title": "find(1) manual page",
+          "url": "https://man7.org/linux/man-pages/man1/find.1.html",
+          "section": "TESTS and -print0",
+          "reviewed": "2026-11-08",
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
+        },
+        {
+          "title": "xargs(1) manual page",
+          "url": "https://man7.org/linux/man-pages/man1/xargs.1.html",
+          "section": "DESCRIPTION and -0",
+          "reviewed": "2026-11-08",
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
+        }
+      ]
+    },
+    {
       "id": "permissions-and-identities",
-      "title": "6. Users, groups and permission bits",
+      "title": "7. Users, groups and permission bits",
       "stage": "foundation",
       "takeaway": "Each process has identities used in access decisions.",
       "sections": [
@@ -455,7 +544,7 @@
     },
     {
       "id": "processes-and-exit-status",
-      "title": "7. Processes and exit status",
+      "title": "8. Processes and exit status",
       "stage": "foundation",
       "takeaway": "A process is an executing program with a PID, resources and execution state.",
       "sections": [
@@ -510,7 +599,7 @@
     },
     {
       "id": "environment-and-path",
-      "title": "8. Environment, PATH and configuration",
+      "title": "9. Environment, PATH and configuration",
       "stage": "foundation",
       "takeaway": "A child normally inherits an environment snapshot from its parent.",
       "sections": [
@@ -571,8 +660,93 @@
       ]
     },
     {
+      "id": "shell-scripts",
+      "title": "10. Write shell scripts that fail safely",
+      "stage": "foundation",
+      "takeaway": "Start with strict mode, quote every expansion, check arguments, clean up with trap and return meaningful exit codes.",
+      "sections": [
+        {
+          "title": "Strict mode, tests and loops",
+          "paragraphs": [
+            "A script is a file of commands with a first line naming its interpreter, such as `#!/usr/bin/env bash`, and the execute permission from lesson 7. By default Bash keeps going after a failed command and treats an unset variable as empty, so a mistake in line 3 can make line 30 delete the wrong directory.",
+            "`set -e` exits when a command fails, except where the failure is being tested, such as in an `if` condition or before `||`. `set -u` makes an unset variable an error. `set -o pipefail` gives a pipeline the status of its last failing command instead of only the last command. Together, `set -euo pipefail` is a common first line, but it is not a substitute for checking the cases you expect.",
+            "`[[ ... ]]` tests strings, numbers (`-eq`, `-lt`) and files (`-d` directory, `-f` regular file, `-e` exists). `for file in \"$dir\"/*.csv` loops over a glob; if nothing matches, Bash leaves the pattern itself, so check that the file exists. `$((...))` does integer arithmetic. Functions group commands and read their arguments as `$1`, `$2` and `\"$@\"`.",
+            "Exit codes are the script's contract with its caller: 0 for success, 1 for a failure in the work, 2 for incorrect usage is a common convention. Error messages go to standard error with `>&2`, so a caller can capture the real output separately."
+          ]
+        },
+        {
+          "title": "A CSV line counter",
+          "paragraphs": [
+            "`count-lines.sh` checks it has exactly one argument, checks that it is a directory, and uses a temporary file that `trap ... EXIT` removes however the script ends. It quotes every expansion, so `q1 report.csv` stays one file name. `${file##*/}` removes the directory part, like `basename`.",
+            "The three runs show the three exit codes: 0 with a report, 1 for a missing directory, and 2 with a usage message when the argument is missing."
+          ],
+          "example": "#!/usr/bin/env bash\n# Report the line count of each CSV file in a directory, largest first.\nset -euo pipefail\n\nusage() { echo \"usage: ${0##*/} DIRECTORY\" >&2; exit 2; }\n[[ $# -eq 1 ]] || usage\ndir=$1\n[[ -d $dir ]] || { echo \"not a directory: $dir\" >&2; exit 1; }\n\ntmp=$(mktemp)\ntrap 'rm -f \"$tmp\"' EXIT\n\ncount=0\nfor file in \"$dir\"/*.csv; do\n  [[ -e $file ]] || continue            # the glob matched nothing\n  lines=$(wc -l < \"$file\")\n  printf '%s\\t%s\\n' \"$lines\" \"${file##*/}\" >> \"$tmp\"\n  count=$((count + 1))\ndone\nsort -rn \"$tmp\"\necho \"files: $count\"\n\n./count-lines.sh data; echo \"status $?\"\n# 3\tq1 report.csv\n# 1\tq2.csv\n# files: 2\n# status 0\n./count-lines.sh missing; echo \"status $?\"\n# not a directory: missing\n# status 1\n./count-lines.sh; echo \"status $?\"\n# usage: count-lines.sh DIRECTORY\n# status 2"
+        },
+        {
+          "title": "What strict mode does and does not catch",
+          "paragraphs": [
+            "Without `pipefail`, `false | true` succeeds because only the last command's status counts. `set -u` stops at the first unset variable with status 127 in this Bash, before the next line runs. A failing command used as an `if` condition does not trigger `set -e`, which is what makes `if grep -q` safe.",
+            "`set -e` has surprising exceptions: it is ignored inside functions called from an `if` or `||`, and a failing command substitution inside `local var=$(cmd)` is masked by `local` itself succeeding. Check important results explicitly, and run ShellCheck, a static analyser that catches unquoted expansions and these traps.",
+            "When logic grows to data structures, error recovery or more than a page, move it to Python or another language with real error handling, and keep the shell script as a thin launcher."
+          ],
+          "example": "bash -c 'false | true; echo \"without pipefail: $?\"'\n# without pipefail: 0\nbash -c 'set -o pipefail; false | true; echo \"with pipefail: $?\"'\n# with pipefail: 1\nbash -c 'set -u; echo \"name=$NAME\"; echo unreachable'; echo \"status $?\"\n# bash: line 1: NAME: unbound variable\n# status 127\nbash -c 'set -e; if grep -q x /dev/null; then echo found; else echo \"no match, still running\"; fi'\n# no match, still running"
+        }
+      ],
+      "exercise": {
+        "prompt": "Write a script `archive-old.sh DIR DAYS` that lists `.log` files in DIR older than DAYS days, one per line, safely for names with spaces. It must exit 2 with a usage message if the arguments are wrong, and 1 if DIR is not a directory or DAYS is not a whole number.",
+        "starter": "#!/usr/bin/env bash\nset -euo pipefail\n# Check arguments, then use find with -mtime and -print0.\n",
+        "solution": "#!/usr/bin/env bash\nset -euo pipefail\n\nusage() { echo \"usage: ${0##*/} DIRECTORY DAYS\" >&2; exit 2; }\n[[ $# -eq 2 ]] || usage\ndir=$1 days=$2\n[[ -d $dir ]] || { echo \"not a directory: $dir\" >&2; exit 1; }\n[[ $days =~ ^[0-9]+$ ]] || { echo \"DAYS must be a whole number: $days\" >&2; exit 1; }\n\nfind \"$dir\" -type f -name '*.log' -mtime +\"$days\" -print0 |\n  while IFS= read -r -d '' file; do\n    printf '%s\\n' \"$file\"\n  done",
+        "checks": [
+          "Wrong argument count prints usage to stderr and exits 2.",
+          "A missing directory or a non-numeric DAYS exits 1 with a message on stderr.",
+          "find -print0 with read -d '' keeps names containing spaces intact.",
+          "Every expansion is quoted, including \"$dir\" and \"$days\"."
+        ]
+      },
+      "quiz": {
+        "question": "A script uses set -e. Which failing command does NOT stop it?",
+        "options": [
+          "`cp a b` on a line of its own",
+          "`grep -q x file` used as an `if` condition",
+          "`cd /missing` on a line of its own"
+        ],
+        "correct": 1,
+        "explanation": "set -e ignores failures in commands that are being tested, such as an if condition or the left side of || and &&."
+      },
+      "references": [
+        {
+          "title": "Bash manual: The Set Builtin",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html",
+          "section": "-e, -u and -o pipefail",
+          "reviewed": "2026-11-08",
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
+        },
+        {
+          "title": "Bash manual: Bash Conditional Expressions",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Bash-Conditional-Expressions.html",
+          "section": "File and string tests",
+          "reviewed": "2026-11-08",
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
+        },
+        {
+          "title": "Bash manual: Exit Status",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html",
+          "section": "Exit status values",
+          "reviewed": "2026-11-08",
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
+        },
+        {
+          "title": "ShellCheck",
+          "url": "https://www.shellcheck.net/",
+          "section": "Static analysis for shell scripts",
+          "reviewed": "2026-11-08",
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
+        }
+      ]
+    },
+    {
       "id": "process-lifetimes",
-      "title": "9. Launch, wait and time out",
+      "title": "11. Launch, wait and time out",
       "stage": "intermediate",
       "takeaway": "A parent must manage child completion, bounded output and cleanup.",
       "sections": [
@@ -633,7 +807,7 @@
     },
     {
       "id": "signals-and-shutdown",
-      "title": "10. Graceful shutdown and signals",
+      "title": "12. Graceful shutdown and signals",
       "stage": "intermediate",
       "takeaway": "A signal is an OS notification to a process or thread.",
       "sections": [
@@ -688,7 +862,7 @@
     },
     {
       "id": "memory-and-virtual-addresses",
-      "title": "11. Virtual memory and resident memory",
+      "title": "13. Virtual memory and resident memory",
       "stage": "intermediate",
       "takeaway": "Each process works with a virtual address space.",
       "sections": [
@@ -750,7 +924,7 @@
     },
     {
       "id": "threads-scheduling-and-races",
-      "title": "12. Threads, scheduling and shared state",
+      "title": "14. Threads, scheduling and shared state",
       "stage": "intermediate",
       "takeaway": "Threads within a process share resources such as address space but have separate execution contexts.",
       "sections": [
@@ -805,7 +979,7 @@
     },
     {
       "id": "file-descriptors-and-leaks",
-      "title": "13. File descriptors and resource lifetimes",
+      "title": "15. File descriptors and resource lifetimes",
       "stage": "intermediate",
       "takeaway": "A descriptor is a process-local handle to an open resource.",
       "sections": [
@@ -876,7 +1050,7 @@
     },
     {
       "id": "storage-and-durability",
-      "title": "14. Filesystems, caching and durability",
+      "title": "16. Filesystems, caching and durability",
       "stage": "intermediate",
       "takeaway": "Writing data may update userspace buffers, kernel caches and finally storage at different times.",
       "sections": [
@@ -938,7 +1112,7 @@
     },
     {
       "id": "network-observation",
-      "title": "15. Inspect listeners and connections",
+      "title": "17. Inspect listeners and connections",
       "stage": "intermediate",
       "takeaway": "A network service binds an address and port.",
       "sections": [
@@ -1000,7 +1174,7 @@
     },
     {
       "id": "services-and-supervision",
-      "title": "16. Services and supervision",
+      "title": "18. Services and supervision",
       "stage": "intermediate",
       "takeaway": "A supervisor starts a long-running process and manages its lifecycle.",
       "sections": [
@@ -1061,8 +1235,108 @@
       ]
     },
     {
+      "id": "remote-access-scheduling",
+      "title": "19. Work remotely, copy files and schedule jobs",
+      "stage": "intermediate",
+      "takeaway": "Use SSH keys and host verification for access, rsync or tar for copies, and a scheduler that records failures.",
+      "sections": [
+        {
+          "title": "SSH keys and host verification",
+          "paragraphs": [
+            "SSH authenticates in both directions. The server proves its identity with a host key: the first connection shows its fingerprint, and the client stores it in `~/.ssh/known_hosts`. A changed host key on a later connection is a warning to investigate, not to bypass. Confirm a new fingerprint through another channel, such as the cloud console.",
+            "The user usually authenticates with a key pair. `ssh-keygen -t ed25519` creates a private key (keep it, protected by a passphrase) and a public key (copy it to the server's `~/.ssh/authorized_keys`, for example with `ssh-copy-id`). `ssh-agent` holds unlocked keys for a session. Password logins and root logins are commonly disabled on servers once keys work.",
+            "`~/.ssh/config` names hosts so commands stay short: a `Host` block can set `HostName`, `User`, `IdentityFile` and `ProxyJump` for reaching a private server through a bastion host. `ssh host 'command'` runs one command remotely and returns its exit status, which makes it usable in scripts."
+          ],
+          "example": "ssh-keygen -t ed25519 -C \"ada@laptop\" -f ~/.ssh/id_ed25519\nssh-copy-id -i ~/.ssh/id_ed25519.pub ada@app1.example.test\n\n# ~/.ssh/config\nHost app1\n    HostName app1.example.test\n    User ada\n    IdentityFile ~/.ssh/id_ed25519\n    ProxyJump bastion.example.test\n\nssh app1 'systemctl is-active importer'   # prints active and exits 0 when the unit is running"
+        },
+        {
+          "title": "Copying and archiving",
+          "paragraphs": [
+            "`scp` copies files over SSH. `rsync -a` copies a tree and, on later runs, sends only what changed, which suits repeated deployments and backups. A trailing slash matters: `rsync -a data/ host:/srv/data/` copies the contents of `data`, while `rsync -a data host:/srv/` creates `/srv/data`. `--dry-run` shows what would change, and `--delete` removes destination files missing from the source, so try it with `--dry-run` first.",
+            "`tar` bundles a tree into one file that keeps names, permissions and times. `-c` creates, `-x` extracts, `-t` lists, `-z` compresses with gzip, and `-C` changes directory first. Paths are stored as given, so archive from the parent directory to get relative paths. Listing before extracting an archive from elsewhere shows whether it would write outside the target.",
+            "The run below was made with GNU tar in a temporary directory: the archive lists relative paths, and extracting into `restore` recreates `data/a.csv` there."
+          ],
+          "example": "cd /srv\ntar -czf backup.tgz data\ntar -tzf backup.tgz\n# data/\n# data/a.csv\nmkdir restore && tar -xzf backup.tgz -C restore && cat restore/data/a.csv\n# id\n# 1\n\nscp report.csv app1:/srv/reports/\nrsync -a --dry-run --delete site/ app1:/srv/www/   # review, then run without --dry-run"
+        },
+        {
+          "title": "Scheduling with cron and systemd timers",
+          "paragraphs": [
+            "A crontab line has five time fields (minute, hour, day of month, month, day of week) and a command: `30 2 * * 1` means 02:30 every Monday, in the system's time zone. Cron starts commands with a minimal environment and `PATH`, from the user's home directory, so use absolute paths and redirect output to a log; otherwise output is mailed locally or discarded.",
+            "A systemd timer activates a service unit. `OnCalendar=Mon *-*-* 02:30:00` sets the schedule, and `Persistent=true` runs a missed job after the machine was off. The service's output goes to the journal (`journalctl -u backup.service`), its exit status is recorded, and `systemctl list-timers` shows the next and last run. Lesson 18 covered the service side.",
+            "Either way, a scheduled job should be safe to run twice, take a lock (for example `flock`) so a slow run does not overlap the next, and report failures to someone who will act on them."
+          ],
+          "example": "# crontab -e : every Monday at 02:30, with a lock and a log\n30 2 * * 1 /usr/bin/flock -n /run/lock/backup.lock /opt/backup/run.sh >> /var/log/backup.log 2>&1\n\n# /etc/systemd/system/backup.timer\n[Unit]\nDescription=Weekly backup\n\n[Timer]\nOnCalendar=Mon *-*-* 02:30:00\nPersistent=true\n\n[Install]\nWantedBy=timers.target\n\nsystemctl enable --now backup.timer\nsystemctl list-timers backup.timer"
+        }
+      ],
+      "exercise": {
+        "prompt": "A nightly report script works when you run it by hand but produces nothing from cron. List the likely causes in order of what you would check, and rewrite the crontab line to make the next failure diagnosable.",
+        "solution": "1. Environment: cron's PATH is minimal, so commands such as python or aws may not be found. Use absolute paths or set PATH in the crontab.\n2. Working directory: cron starts in the home directory, so relative paths such as data/input.csv resolve elsewhere.\n3. Output: stdout and stderr were not captured, so the error was mailed locally or lost.\n4. Permissions and identity: the job runs as the crontab's owner, which may lack access that your interactive shell had.\n5. Schedule and time zone: confirm the five fields and the system time zone.\n\n0 1 * * * cd /opt/report && /usr/bin/flock -n /run/lock/report.lock /opt/report/run.sh >> /var/log/report.log 2>&1",
+        "checks": [
+          "Names the minimal environment and PATH as the first suspect.",
+          "Sets the working directory explicitly or uses absolute paths.",
+          "Redirects both stdout and stderr to a log the operator can read.",
+          "Mentions identity and the schedule's time zone."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Connecting to a known server, SSH warns that the host key has changed. What should you do first?",
+        "options": [
+          "Delete the line from known_hosts and reconnect",
+          "Confirm the new fingerprint through another trusted channel before trusting it",
+          "Disable StrictHostKeyChecking for that host"
+        ],
+        "correct": 1,
+        "explanation": "A changed host key can mean a rebuilt server or an interception. Verify the new fingerprint out of band before accepting it."
+      },
+      "references": [
+        {
+          "title": "ssh(1) manual page",
+          "url": "https://man7.org/linux/man-pages/man1/ssh.1.html",
+          "section": "AUTHENTICATION and VERIFYING HOST KEYS",
+          "reviewed": "2026-11-08",
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
+        },
+        {
+          "title": "ssh_config(5) manual page",
+          "url": "https://man7.org/linux/man-pages/man5/ssh_config.5.html",
+          "section": "Host, IdentityFile and ProxyJump",
+          "reviewed": "2026-11-08",
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
+        },
+        {
+          "title": "rsync(1) manual page",
+          "url": "https://man7.org/linux/man-pages/man1/rsync.1.html",
+          "section": "USAGE and --delete",
+          "reviewed": "2026-11-08",
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
+        },
+        {
+          "title": "crontab(5) manual page",
+          "url": "https://man7.org/linux/man-pages/man5/crontab.5.html",
+          "section": "DESCRIPTION",
+          "reviewed": "2026-11-08",
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
+        },
+        {
+          "title": "systemd.timer(5) manual page",
+          "url": "https://man7.org/linux/man-pages/man5/systemd.timer.5.html",
+          "section": "OnCalendar and Persistent",
+          "reviewed": "2026-11-08",
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
+        },
+        {
+          "title": "GNU tar manual",
+          "url": "https://www.gnu.org/software/tar/manual/tar.html",
+          "section": "Basic tar operations",
+          "reviewed": "2026-11-08",
+          "scope": "Linux command/runtime behavior varies by distribution and WSL configuration; examples are optional Linux observations, while the portable suite targets Python 3.14+."
+        }
+      ]
+    },
+    {
       "id": "logs-and-evidence",
-      "title": "17. Logs, clocks and incident evidence",
+      "title": "20. Logs, clocks and incident evidence",
       "stage": "advanced",
       "takeaway": "A useful incident record includes observation time, affected scope, exact command, relevant output and a testable hypothesis.",
       "sections": [
@@ -1124,7 +1398,7 @@
     },
     {
       "id": "resource-limits",
-      "title": "18. Resource limits and overload",
+      "title": "21. Resource limits and overload",
       "stage": "advanced",
       "takeaway": "Finite CPU, memory, handles and storage impose capacity limits.",
       "sections": [
@@ -1186,7 +1460,7 @@
     },
     {
       "id": "namespaces-and-cgroups",
-      "title": "19. Containers through an OS lens",
+      "title": "22. Containers through an OS lens",
       "stage": "advanced",
       "takeaway": "Namespaces give processes distinct views of selected OS resources such as process IDs, mounts and networking.",
       "sections": [
@@ -1248,7 +1522,7 @@
     },
     {
       "id": "security-and-packages",
-      "title": "20. Least privilege and package hygiene",
+      "title": "23. Least privilege and package hygiene",
       "stage": "advanced",
       "takeaway": "Least privilege grants only required operations to an application identity.",
       "sections": [
@@ -1303,7 +1577,7 @@
     },
     {
       "id": "incident-diagnosis",
-      "title": "21. Diagnose a failed importer",
+      "title": "24. Diagnose a failed importer",
       "stage": "advanced",
       "takeaway": "Start with a symptom and a bounded hypothesis rather than a broad fix.",
       "sections": [
@@ -1367,7 +1641,7 @@
     },
     {
       "id": "operating-systems-capstone",
-      "title": "22. Build your diagnosis portfolio",
+      "title": "25. Build your diagnosis portfolio",
       "stage": "advanced",
       "takeaway": "A portfolio should show reproducible observations, an explanation of mechanisms and a tested recovery procedure.",
       "sections": [

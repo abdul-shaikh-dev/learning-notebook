@@ -15,6 +15,9 @@
     "streams-and-pipelines": [
       {"question": "A child prints a warning to stderr and exits normally. What does run_python report?", "options": ["Status 0, with the warning in stderr", "A nonzero status, because stderr is not empty", "The warning in stdout"], "correct": 0, "explanation": "The streams and the exit status are separate. Text on stderr is a diagnostic, not by itself a failure."}
     ],
+    "text-pipelines": [
+      {"question": "What does `printf 'b\\na\\nb\\n' | uniq | wc -l` print?", "options": ["3", "2", "1"], "correct": 0, "explanation": "uniq removes only adjacent duplicate lines. The two b lines are separated by a, so all three lines remain; sort first to count distinct values."}
+    ],
     "permissions-and-identities": [
       {"question": "How does classify label a PermissionError?", "options": ["access", "configuration", "lifecycle"], "correct": 0, "explanation": "The path was found, but the identity running the program may not use it, so check owners, modes and parent directories."}
     ],
@@ -23,6 +26,9 @@
     ],
     "environment-and-path": [
       {"question": "The parent sets NOTEBOOK_LAB=on in os.environ, then runs a child that prints that variable. What does it print?", "options": ["on: the child inherits the environment at start", "Nothing: children start with an empty environment", "unset"], "correct": 0, "explanation": "A child receives a copy of the parent's environment when it starts. Later changes in either process do not reach the other."}
+    ],
+    "shell-scripts": [
+      {"question": "A script has set -e but not pipefail. It runs `false | true`, then `echo reached`. What happens?", "options": ["It prints reached: the pipeline's status is true's 0", "The script exits at the pipeline", "Bash reports a syntax error"], "correct": 0, "explanation": "Without pipefail a pipeline's status is its last command's status, so set -e sees success. Add set -o pipefail to catch earlier failures."}
     ],
     "process-lifetimes": [
       {"question": "run_python runs time.sleep(5) with timeout 0.2. What happens, and how does classify label it?", "options": ["TimeoutExpired is raised, labelled lifecycle", "It returns status 0 after five seconds", "ValueError is raised, labelled application validation"], "correct": 0, "explanation": "The bounded wait turns a hung child into an explicit error instead of a stuck parent."}
@@ -47,6 +53,9 @@
     ],
     "services-and-supervision": [
       {"question": "What does a systemd unit typically describe?", "options": ["The executable, identity, working directory, dependencies and restart policy", "Only the command to run", "The application's health checks and their results"], "correct": 0, "explanation": "The unit tells the supervisor how to run the process. Whether the application is ready to accept work needs its own check."}
+    ],
+    "remote-access-scheduling": [
+      {"question": "You run `tar -czf backup.tgz data` from /srv. Which path does `tar -tzf backup.tgz` list for /srv/data/a.csv?", "options": ["data/a.csv", "/srv/data/a.csv", "a.csv"], "correct": 0, "explanation": "tar stores paths as given on the command line, so archiving data from /srv records data/a.csv."}
     ],
     "logs-and-evidence": [
       {"question": "How does classify label a RuntimeError?", "options": ["unclassified; inspect evidence", "application validation", "configuration"], "correct": 0, "explanation": "An error outside the known categories is not forced into one, so the investigation starts from the evidence rather than a guess."}
