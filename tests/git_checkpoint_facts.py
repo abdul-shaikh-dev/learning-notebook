@@ -17,7 +17,8 @@ sys.path.insert(0, str(COURSE))
 from sandbox import Sandbox  # noqa: E402
 
 # Answers that follow from the lesson text rather than Git behaviour.
-SOURCED = {'team-release-review/2': 'Team policy and recovery, lesson 20'}
+SOURCED = {'team-release-review/2': 'Team policy and recovery, lesson 24',
+           'branching-strategies/2': 'Trunk-based development and its alternatives, lesson 13'}
 
 
 def raw(box, repo, *args):
@@ -294,6 +295,41 @@ def advanced_empty_pick(box):
     return pick((code != 0, 'empty' in out + err), {(True, True): 'Stops and reports that the cherry-pick is empty'})
 
 
+def investigate_history(box):
+    repo = box.repo('history')
+    box.put(repo, 'client.py', 'import json\n'); box.commit(repo, 'Add client')
+    box.put(repo, 'client.py', 'import json\nTIMEOUT = 30\n'); box.commit(repo, 'Set timeout')
+    box.run(repo, 'mv', 'client.py', 'http_client.py'); box.commit(repo, 'Rename client')
+    box.put(repo, 'http_client.py', 'import json\nTIMEOUT = 10\n'); box.commit(repo, 'Shorten timeout')
+    plain = tuple(box.run(repo, 'log', '--format=%s', '--', 'http_client.py').splitlines())
+    followed = box.run(repo, 'log', '--follow', '--format=%s', '--', 'http_client.py').splitlines()
+    return pick((plain, len(followed)), {(('Shorten timeout', 'Rename client'), 4):
+                'Only the commits since the rename; --follow continues past it'})
+
+
+def interactive_rebase(box):
+    repo = started(box, 'autosquash')
+    box.run(repo, 'switch', '-c', 'topic')
+    box.put(repo, 'parser.py', 'one\n'); parser = box.commit(repo, 'Add CSV parser')
+    box.put(repo, 'test_parser.py', 'ok\n'); box.commit(repo, 'Add parser tests')
+    box.put(repo, 'parser.py', 'two\n'); box.run(repo, 'add', 'parser.py'); box.run(repo, 'commit', '--fixup', parser)
+    box.env['GIT_SEQUENCE_EDITOR'] = 'true'
+    box.run(repo, 'rebase', '-i', '--autosquash', 'main')
+    return box.run(repo, 'rev-list', '--count', 'main..HEAD')
+
+
+def repository_configuration(box):
+    repo = started(box, 'hooked')
+    hooks = repo / '.githooks'; hooks.mkdir()
+    box.put(repo, '.githooks/pre-commit', '#!/bin/sh\nexit 1\n')
+    (hooks / 'pre-commit').chmod(0o755)
+    box.put(repo, 'notes.txt', 'two\n'); box.run(repo, 'add', 'notes.txt')
+    code = raw(box, repo, '-c', 'core.hooksPath=.githooks', 'commit', '-m', 'Blocked')[0]
+    commits = box.run(repo, 'rev-list', '--count', 'HEAD')
+    staged = box.run(repo, 'diff', '--cached', '--name-only')
+    return pick((code, commits, staged), {(1, '1', 'notes.txt'): 'No commit is created; the staged changes remain staged'})
+
+
 FACTS = {
     'safe-sandbox/2': safe_sandbox, 'three-states/2': three_states, 'inspect-changes/2': inspect_changes,
     'coherent-commits/2': coherent_commits, 'ignore-secrets/2': ignore_secrets, 'history-refs/2': history_refs,
@@ -301,6 +337,8 @@ FACTS = {
     'conflict-resolution/2': conflict_resolution, 'remotes-fetch/2': remotes_fetch, 'pull-request-review/2': pull_request_review,
     'revert-reset/2': revert_reset, 'reflog-recovery/2': reflog_recovery, 'bisect/2': bisect, 'cherry-pick/2': cherry_pick,
     'rebase/2': rebase, 'stash/2': stash, 'tags-release/2': tags_release,
+    'investigate-history/2': investigate_history, 'interactive-rebase/2': interactive_rebase,
+    'repository-configuration/2': repository_configuration,
     'stage/foundation/1': foundation_status, 'stage/foundation/2': foundation_amend, 'stage/foundation/3': foundation_parents,
     'stage/intermediate/1': intermediate_clean_merge, 'stage/intermediate/2': intermediate_revert_merge, 'stage/intermediate/3': intermediate_range,
     'stage/advanced/1': advanced_lightweight, 'stage/advanced/2': advanced_bisect_skip, 'stage/advanced/3': advanced_empty_pick,

@@ -3,7 +3,7 @@
   "title": "Git & Team Workflows",
   "category": "Engineering practice",
   "status": "ready",
-  "description": "Learn Git state, team review, history integration and recovery in 20 lessons. Three executable projects create local workspaces you can inspect after each run.",
+  "description": "Learn Git state, team review, history integration and recovery in 24 lessons. Three executable projects create local workspaces you can inspect after each run.",
   "level": "Foundations → intermediate → selected advanced topics",
   "prerequisites": [
     "Basic terminal use and editing text files. Python 3.14+ is needed for the offline fixtures."
@@ -776,8 +776,75 @@
       ]
     },
     {
+      "id": "branching-strategies",
+      "title": "13. Choose a branching strategy for the team's release rhythm",
+      "stage": "intermediate",
+      "takeaway": "Short-lived branches merged to one main line keep integration cheap; long-lived branches suit products that must support several released versions.",
+      "sections": [
+        {
+          "title": "Trunk-based development and its alternatives",
+          "paragraphs": [
+            "In trunk-based development everyone integrates into one main branch at least daily, through small pull requests from branches that live hours or a few days. Unfinished features stay hidden behind feature flags rather than on long branches. Continuous integration runs on every change, and main is always releasable. Conflicts stay small because nobody drifts far from main.",
+            "GitFlow keeps a `develop` branch for integration, `feature/*` branches from it, `release/*` branches for stabilising a version, `main` for released code and `hotfix/*` branches for urgent fixes merged back to both. It fits software shipped as numbered versions on a schedule, but long-lived branches delay integration and make merges larger.",
+            "Many teams use a middle path: trunk-based development plus release branches cut from main when a version ships. Fixes land on main first and are cherry-picked (lesson 18) to the supported release branches, so no fix is lost in the next release."
+          ]
+        },
+        {
+          "title": "Choosing and enforcing a policy",
+          "paragraphs": [
+            "Choose from how the software is delivered. A web service deployed many times a day suits trunk-based development. A mobile app or library with several supported versions needs release branches. Regulated releases may need a stabilisation branch with stricter review.",
+            "Write the policy down and let the hosting platform enforce it: protected main, required reviews and status checks, linear history or merge commits by choice, and automatic deletion of merged branches. A rule people must remember will drift; a rule the platform checks will not."
+          ],
+          "example": "# Trunk-based: a short-lived branch, merged within a day or two\ngit switch -c fix/receipt-rounding main\ngit commit -am \"Round receipt totals half-up\"\ngit push -u origin fix/receipt-rounding        # open a pull request, merge after review and CI\n\n# Release branch: cut at release time, fixes flow from main\ngit switch -c release/2.4 main\ngit tag -a v2.4.0 -m \"Release 2.4.0\"\ngit switch release/2.4\ngit cherry-pick -x <fix-commit-on-main>         # backport a fix that already landed on main\ngit tag -a v2.4.1 -m \"Release 2.4.1\""
+        }
+      ],
+      "exercise": {
+        "prompt": "A team of six deploys a web API several times a week. Feature branches live two to three weeks, and merge week is painful. Propose a branching policy and two platform settings that support it.",
+        "solution": "Move to trunk-based development: branches from main that merge within one or two days, with incomplete features behind flags so they can merge early. Keep main always releasable with CI on every pull request. Settings: protect main so changes need a reviewed pull request with passing status checks, and delete branches automatically after merge. Optionally require branches to be up to date with main before merging.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Shortens branch lifetime and integrates at least daily.",
+          "Uses feature flags for unfinished work.",
+          "Names enforceable platform settings such as protected branches and required checks."
+        ]
+      },
+      "quiz": {
+        "question": "In trunk-based development, how is an unfinished feature kept out of users' hands?",
+        "options": [
+          "It stays on a long-lived branch until complete",
+          "It is merged to main behind a feature flag that is off",
+          "It is committed directly to a release branch"
+        ],
+        "correct": 1,
+        "explanation": "Trunk-based teams merge small changes early and hide incomplete behaviour with flags, so integration stays continuous."
+      },
+      "references": [
+        {
+          "title": "Pro Git: Branching workflows",
+          "url": "https://git-scm.com/book/en/v2/Git-Branching-Branching-Workflows",
+          "section": "Long-running branches and topic branches",
+          "reviewed": "2026-11-08",
+          "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.56.0.windows.4. Commands in lessons run only in owned training repositories; hosting policies are separate."
+        },
+        {
+          "title": "Trunk Based Development",
+          "url": "https://trunkbaseddevelopment.com/",
+          "section": "Introduction and short-lived feature branches",
+          "reviewed": "2026-11-08",
+          "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.56.0.windows.4. Commands in lessons run only in owned training repositories; hosting policies are separate."
+        },
+        {
+          "title": "GitHub Docs: About protected branches",
+          "url": "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches",
+          "section": "About branch protection rules",
+          "reviewed": "2026-11-08",
+          "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.56.0.windows.4. Commands in lessons run only in owned training repositories; hosting policies are separate."
+        }
+      ]
+    },
+    {
       "id": "revert-reset",
-      "title": "13. Choose revert or reset by the recovery contract",
+      "title": "14. Choose revert or reset by the recovery contract",
       "stage": "intermediate",
       "takeaway": "Revert adds a compensating commit; reset moves local references and may discard state.",
       "sections": [
@@ -829,7 +896,7 @@
     },
     {
       "id": "reflog-recovery",
-      "title": "14. Recover a local reference with the reflog",
+      "title": "15. Recover a local reference with the reflog",
       "stage": "intermediate",
       "takeaway": "The reflog records local reference movements, not a permanent shared backup.",
       "sections": [
@@ -881,7 +948,7 @@
     },
     {
       "id": "bisect",
-      "title": "15. Find a regression with a repeatable bisect test",
+      "title": "16. Find a regression with a repeatable bisect test",
       "stage": "advanced",
       "takeaway": "Bisect narrows history using a predicate that must mean the same thing at each candidate.",
       "sections": [
@@ -932,8 +999,68 @@
       ]
     },
     {
+      "id": "investigate-history",
+      "title": "17. Find when and why a line changed",
+      "stage": "advanced",
+      "takeaway": "blame names the last commit to touch each line; log -S, -G and -L search the whole history for when code appeared, changed or vanished.",
+      "sections": [
+        {
+          "title": "Blame, pickaxe and line history",
+          "paragraphs": [
+            "`git blame FILE` shows, for each line, the last commit that changed it. That is often a formatting change or a rename, not the decision you are looking for, so follow up with `git blame <commit>^ -- FILE` to look one step earlier, `-w` to ignore whitespace changes, or a `.git-blame-ignore-revs` file listing bulk reformatting commits.",
+            "`git log -S 'text'` (the pickaxe) lists commits that changed how many times a string occurs: where it was added or removed. `git log -G 'regex'` lists commits whose diff has an added or removed line matching a pattern, including edits that keep the count the same. `git log -L` shows the history of a line range (`-L 2,3:file`) or of a function (`-L :name:file`).",
+            "Plain `git log -- path` stops at a rename because it filters by the current path. Add `--follow` to continue through renames of a single file. `git blame` already follows lines moved by a rename."
+          ]
+        },
+        {
+          "title": "Tracing a timeout through a rename",
+          "paragraphs": [
+            "The sandbox history adds `client.py`, sets `TIMEOUT = 30`, adds retries, renames the file to `http_client.py`, then shortens the timeout to 10. `-S` finds the two commits that added and removed the exact text `TIMEOUT = 30`. Without `--follow`, the log of the new name stops at the rename. Blame for lines 2 and 3 reports different commits and, for the untouched retries line, the original file name.",
+            "The commit message explains why only if someone wrote it down. Link the pull request or issue in the message so the reasoning survives."
+          ],
+          "example": "git log -S 'TIMEOUT = 30' --format=%s\n# Shorten timeout\n# Set request timeout\ngit log --format=%s -- http_client.py\n# Shorten timeout\n# Rename client module\ngit log --follow --format=%s -- http_client.py\n# Shorten timeout\n# Rename client module\n# Add retries\n# Set request timeout\n# Add client\ngit log -L 2,2:http_client.py --format=%s --no-patch\n# Shorten timeout\n# Set request timeout\ngit blame -L 2,3 --porcelain http_client.py      # summary and filename fields:\n# line 2: summary Shorten timeout, filename http_client.py\n# line 3: summary Add retries, filename client.py"
+        }
+      ],
+      "exercise": {
+        "prompt": "A config constant `MAX_UPLOAD_MB = 50` was removed some time ago and you need the commit that removed it, even though the file was later renamed. Write the commands and explain each choice.",
+        "solution": "git log -S 'MAX_UPLOAD_MB = 50' --format='%h %ad %s' --date=short --all\n\n-S lists commits that changed the number of occurrences of the string, so it finds both the commit that added it and the one that removed it. --all searches every branch. If you know the current file name, add --follow -- <file> to keep searching past its rename. Then git show <commit> displays the removal diff and message.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Uses the pickaxe -S with the exact text.",
+          "Searches past renames with --follow or across all paths.",
+          "Inspects the found commit with git show."
+        ]
+      },
+      "quiz": {
+        "question": "git blame shows a line was last changed by \"Reformat with black\". What should you try next?",
+        "options": [
+          "Accept that commit as the origin of the logic",
+          "Blame the parent of that commit, or ignore it with -w or .git-blame-ignore-revs",
+          "Run git log without arguments"
+        ],
+        "correct": 1,
+        "explanation": "Blame reports the most recent change to the line. Skipping formatting-only commits reveals the commit that introduced the logic."
+      },
+      "references": [
+        {
+          "title": "Git reference: git-blame",
+          "url": "https://git-scm.com/docs/git-blame",
+          "section": "Options -L, -w and --ignore-revs-file",
+          "reviewed": "2026-11-08",
+          "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.56.0.windows.4. Commands in lessons run only in owned training repositories; hosting policies are separate."
+        },
+        {
+          "title": "Git reference: git-log",
+          "url": "https://git-scm.com/docs/git-log",
+          "section": "-S, -G, -L and --follow",
+          "reviewed": "2026-11-08",
+          "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.56.0.windows.4. Commands in lessons run only in owned training repositories; hosting policies are separate."
+        }
+      ]
+    },
+    {
       "id": "cherry-pick",
-      "title": "16. Transfer a selected change with cherry-pick",
+      "title": "18. Transfer a selected change with cherry-pick",
       "stage": "advanced",
       "takeaway": "Cherry-pick reapplies a change; it does not preserve the original ancestry identity.",
       "sections": [
@@ -985,7 +1112,7 @@
     },
     {
       "id": "rebase",
-      "title": "17. Rebase private history with clear ownership",
+      "title": "19. Rebase private history with clear ownership",
       "stage": "advanced",
       "takeaway": "Rebase replays commits onto a new base and changes their identities.",
       "sections": [
@@ -1036,8 +1163,75 @@
       ]
     },
     {
+      "id": "interactive-rebase",
+      "title": "20. Clean up a branch with interactive rebase",
+      "stage": "advanced",
+      "takeaway": "Before review or merge, reorder, squash and reword your own unpublished commits so each tells one story; never rewrite commits others build on.",
+      "sections": [
+        {
+          "title": "The todo list",
+          "paragraphs": [
+            "`git rebase -i main` replays the commits on your branch after `main` according to a todo list you edit. Each line names an action: `pick` keeps a commit, `reword` keeps it and edits the message, `edit` stops so you can amend or split it, `squash` combines it with the previous commit and merges the messages, `fixup` combines it and keeps only the previous message, and `drop` removes it. Reordering lines reorders commits.",
+            "`git commit --fixup=<commit>` records a correction with the subject `fixup! <original subject>`. Later, `git rebase -i --autosquash main` moves each fixup under its target and marks it `fixup`, so you only confirm the list. Set `rebase.autoSquash=true` to make this the default.",
+            "Rebasing creates new commits with new IDs (lesson 19). Do it only on commits nobody else has based work on, typically your own branch before merge. After rewriting a pushed branch, update it with `git push --force-with-lease`, which refuses if the remote moved since you last fetched. If something goes wrong, `git rebase --abort` returns to the starting point during the rebase, and the reflog (lesson 15) recovers it afterwards."
+          ]
+        },
+        {
+          "title": "Folding a fix into the commit it belongs to",
+          "paragraphs": [
+            "In the sandbox, a branch adds a parser, its tests, a fixup for the parser and a stray `wip` commit. Autosquash places the fixup directly after `Add CSV parser`; accepting the list leaves three commits, and the parser commit now contains the corrected code. Changing `pick` to `drop` for `wip`, or `squash` to merge it into a neighbour, would finish the cleanup.",
+            "Run the tests at the end, and ideally at each commit with `git rebase -i --exec 'make test' main`, so every commit on main builds; that keeps `git bisect` (lesson 16) reliable."
+          ],
+          "example": "git log --format=%s main..HEAD\n# wip\n# fixup! Add CSV parser\n# Add parser tests\n# Add CSV parser\ngit rebase -i --autosquash main     # the editor opens with:\n# pick 1a5c826 # Add CSV parser\n# fixup c472206 # fixup! Add CSV parser\n# pick 4ff8ab7 # Add parser tests\n# pick 5f0e83a # wip\ngit log --format=%s main..HEAD      # after accepting the list\n# wip\n# Add parser tests\n# Add CSV parser"
+        }
+      ],
+      "exercise": {
+        "prompt": "Your pushed, unreviewed branch has commits: \"Add export endpoint\", \"fix typo\", \"Add export tests\", \"address review: rename param\". Nobody else uses the branch. Write the todo list you would use and the command to update the remote safely.",
+        "solution": "git rebase -i main\n\npick a1 Add export endpoint\nfixup b2 fix typo\nfixup d4 address review: rename param\npick c3 Add export tests\n\ngit push --force-with-lease\n\nThe typo and rename fixes fold into the endpoint commit (reorder the rename line if it touches the endpoint), leaving two coherent commits. --force-with-lease refuses to overwrite the branch if someone pushed to it since your last fetch.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Uses fixup (or squash) to fold corrections into the commit they belong to.",
+          "Reorders lines when a fix belongs to an earlier commit.",
+          "Pushes with --force-with-lease, not a plain --force, and only because the branch is private."
+        ]
+      },
+      "quiz": {
+        "question": "What is the difference between squash and fixup in an interactive rebase?",
+        "options": [
+          "fixup deletes the commit's changes",
+          "squash combines and lets you merge both messages; fixup combines and keeps only the earlier message",
+          "There is no difference"
+        ],
+        "correct": 1,
+        "explanation": "Both meld the commit into the one above it. squash opens the editor to combine messages; fixup discards the fixup commit's message."
+      },
+      "references": [
+        {
+          "title": "Git reference: git-rebase",
+          "url": "https://git-scm.com/docs/git-rebase",
+          "section": "Interactive mode and --autosquash",
+          "reviewed": "2026-11-08",
+          "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.56.0.windows.4. Commands in lessons run only in owned training repositories; hosting policies are separate."
+        },
+        {
+          "title": "Git reference: git-commit",
+          "url": "https://git-scm.com/docs/git-commit",
+          "section": "--fixup",
+          "reviewed": "2026-11-08",
+          "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.56.0.windows.4. Commands in lessons run only in owned training repositories; hosting policies are separate."
+        },
+        {
+          "title": "Git reference: git-push",
+          "url": "https://git-scm.com/docs/git-push",
+          "section": "--force-with-lease",
+          "reviewed": "2026-11-08",
+          "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.56.0.windows.4. Commands in lessons run only in owned training repositories; hosting policies are separate."
+        }
+      ]
+    },
+    {
       "id": "stash",
-      "title": "18. Park local work without confusing it with delivery",
+      "title": "21. Park local work without confusing it with delivery",
       "stage": "advanced",
       "takeaway": "A stash is local temporary storage with its own inclusion and recovery limits.",
       "sections": [
@@ -1089,7 +1283,7 @@
     },
     {
       "id": "tags-release",
-      "title": "19. Identify a release candidate with a tag",
+      "title": "22. Identify a release candidate with a tag",
       "stage": "advanced",
       "takeaway": "A tag identifies a candidate; verification and publication remain separate actions.",
       "sections": [
@@ -1140,8 +1334,90 @@
       ]
     },
     {
+      "id": "repository-configuration",
+      "title": "23. Configure hooks, attributes, worktrees and signed commits",
+      "stage": "advanced",
+      "takeaway": "Hooks and attributes encode team rules in the repository, worktrees let you work on two branches at once, and signatures prove who made a commit.",
+      "sections": [
+        {
+          "title": "Hooks and attributes",
+          "paragraphs": [
+            "Hooks are scripts Git runs at points such as `pre-commit`, `commit-msg` and `pre-push`. A non-zero exit stops the operation. Hooks in `.git/hooks` are not committed, so teams keep them in a tracked folder and set `core.hooksPath`, or use a hook manager. Hooks run on each developer's machine and can be skipped with `--no-verify`, so anything that must hold also runs in CI.",
+            "`.gitattributes` assigns attributes to paths. `text eol=lf` normalises line endings for shell scripts so they run on Linux even when edited on Windows. `binary` marks files that should never be diffed or merged as text. `filter=lfs diff=lfs merge=lfs -text` hands large files to Git LFS, which stores a small pointer in the repository and the content on an LFS server. `git check-attr` shows what applies to a path.",
+            "Submodules embed another repository at a fixed commit. They suit vendored dependencies with their own history, but every clone needs `--recurse-submodules` and updates need a deliberate commit, so a package manager is usually simpler."
+          ],
+          "example": "# .githooks/pre-commit (tracked), enabled with: git config core.hooksPath .githooks\n#!/bin/sh\nif git diff --cached | grep -q \"^+.*DO NOT COMMIT\"; then\n  echo \"pre-commit: remove DO NOT COMMIT markers\" >&2\n  exit 1\nfi\n\ngit commit -m \"Try\"          # with a staged DO NOT COMMIT line\n# pre-commit: remove DO NOT COMMIT markers   (exit 1, no commit created)\n\n# .gitattributes\n*.sh  text eol=lf\n*.png binary\n*.psd filter=lfs diff=lfs merge=lfs -text\n\ngit check-attr eol diff filter -- deploy.sh logo.png art.psd\n# deploy.sh: eol: lf\n# deploy.sh: diff: unspecified\n# deploy.sh: filter: unspecified\n# logo.png: eol: unspecified\n# logo.png: diff: unset\n# logo.png: filter: unspecified\n# art.psd: eol: unspecified\n# art.psd: diff: lfs\n# art.psd: filter: lfs"
+        },
+        {
+          "title": "Worktrees and signing",
+          "paragraphs": [
+            "`git worktree add ../app-hotfix -b hotfix` checks out a second branch in another folder that shares the same repository and objects. You can fix production in one folder while a long build or a half-finished change stays untouched in the other, without stashing. A branch can be checked out in only one worktree at a time. Remove finished ones with `git worktree remove`.",
+            "Anyone can set `user.name` and `user.email` to any value, so a commit's author field proves nothing. Signing a commit or tag with a GPG or SSH key (`git config gpg.format ssh`, `user.signingkey`, `commit.gpgsign true`) lets others verify it with `git log --show-signature` or `git verify-tag`, and hosting platforms can require signed commits on protected branches. Keep signing keys protected like any other credential."
+          ],
+          "example": "git worktree add -b hotfix ../plumbing-hotfix\ngit -C ../plumbing-hotfix branch --show-current\n# hotfix\ngit worktree list --porcelain | grep ^branch\n# branch refs/heads/main\n# branch refs/heads/hotfix\ngit worktree remove ../plumbing-hotfix\n\ngit config gpg.format ssh\ngit config user.signingkey ~/.ssh/id_ed25519.pub\ngit commit -S -m \"Sign this commit\"\ngit log --show-signature -1"
+        }
+      ],
+      "exercise": {
+        "prompt": "A repository has Windows and Linux developers. Shell scripts sometimes fail in CI with `/bin/sh^M: bad interpreter`, 200 MB design files make clones slow, and a pre-commit secret scanner is installed by only half the team. Propose a change for each problem.",
+        "solution": "Line endings: add `*.sh text eol=lf` to .gitattributes and renormalise once with `git add --renormalize .`, so scripts are stored and checked out with LF.\nLarge files: track design files with Git LFS (`git lfs track \"*.psd\"`, which writes the .gitattributes filter line) and, if history must shrink, migrate old versions with `git lfs migrate` after agreeing a rewrite with the team.\nSecret scanning: keep the hook in a tracked .githooks folder with `core.hooksPath` documented in setup, and run the same scanner in CI as a required check, because local hooks can be skipped.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Uses .gitattributes eol=lf for shell scripts.",
+          "Moves large binaries to Git LFS.",
+          "Backs up a local hook with a required CI check."
+        ]
+      },
+      "quiz": {
+        "question": "Why must a rule enforced by a local pre-commit hook also run in CI?",
+        "options": [
+          "Hooks only run on Linux",
+          "Hooks are not installed automatically and can be skipped with --no-verify",
+          "CI cannot read .gitattributes"
+        ],
+        "correct": 1,
+        "explanation": "Hooks live on each machine and are optional. A required CI check is the enforcement point everyone passes through."
+      },
+      "references": [
+        {
+          "title": "Git reference: githooks",
+          "url": "https://git-scm.com/docs/githooks",
+          "section": "pre-commit and core.hooksPath",
+          "reviewed": "2026-11-08",
+          "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.56.0.windows.4. Commands in lessons run only in owned training repositories; hosting policies are separate."
+        },
+        {
+          "title": "Git reference: gitattributes",
+          "url": "https://git-scm.com/docs/gitattributes",
+          "section": "text, eol, binary and filter",
+          "reviewed": "2026-11-08",
+          "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.56.0.windows.4. Commands in lessons run only in owned training repositories; hosting policies are separate."
+        },
+        {
+          "title": "Git reference: git-worktree",
+          "url": "https://git-scm.com/docs/git-worktree",
+          "section": "add, list and remove",
+          "reviewed": "2026-11-08",
+          "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.56.0.windows.4. Commands in lessons run only in owned training repositories; hosting policies are separate."
+        },
+        {
+          "title": "Pro Git: Signing your work",
+          "url": "https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work",
+          "section": "Signing commits",
+          "reviewed": "2026-11-08",
+          "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.56.0.windows.4. Commands in lessons run only in owned training repositories; hosting policies are separate."
+        },
+        {
+          "title": "Git LFS",
+          "url": "https://git-lfs.com/",
+          "section": "Getting started",
+          "reviewed": "2026-11-08",
+          "scope": "Git 2.28+ command scope; verified offline sandbox with Git 2.56.0.windows.4. Commands in lessons run only in owned training repositories; hosting policies are separate."
+        }
+      ]
+    },
+    {
       "id": "team-release-review",
-      "title": "20. Review a team workflow from change to recovery",
+      "title": "24. Review a team workflow from change to recovery",
       "stage": "advanced",
       "takeaway": "A team workflow defines ownership, integration, verification and recovery.",
       "sections": [
