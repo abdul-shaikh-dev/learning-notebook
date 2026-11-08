@@ -29664,7 +29664,7 @@ const LEARNING_PATHS = [
     "title": "Delivery & Operations",
     "category": "Software engineering",
     "status": "ready",
-    "description": "Practise releasing and recovering a service across 24 lessons. Use the local service to test health checks, schema compatibility and telemetry. The integration runbook applies those decisions to React, .NET and SQL Server.",
+    "description": "Practise releasing and recovering a service across 27 lessons. Use the local service to test health checks, schema compatibility and telemetry. The integration runbook applies those decisions to React, .NET and SQL Server.",
     "level": "Foundations → intermediate practice with optional systems labs",
     "prerequisites": [
       "Basic HTTP, Python and terminal use for the local note-service track. React, C#/.NET and SQL Server are needed only for the optional full-stack integration runbook.",
@@ -30368,8 +30368,86 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "docker-compose",
+        "title": "9. Run the whole stack locally with Docker Compose",
+        "stage": "foundation",
+        "takeaway": "A Compose file declares the services, networks, volumes and start order of a local stack, so one command reproduces it; it is a development tool, not a production deployment.",
+        "sections": [
+          {
+            "title": "Services, networks and start order",
+            "paragraphs": [
+              "Running React, a .NET API and SQL Server by hand means three terminals, remembered ports and an install of SQL Server. Docker Compose describes them in one `compose.yaml`: each service names an image or a build context, its environment, published ports and volumes. `docker compose up` creates a private network on which services reach each other by service name, so the API connects to `db`, not `localhost` (lesson 2's boundaries, lesson 11's topology).",
+              "`depends_on` controls start order only. A started database container may still be initialising, so give the database a health check and make the API wait for `condition: service_healthy`. The API should still retry its first connection, because a database can restart later too (lesson 15).",
+              "Named volumes keep data across `docker compose down` and `up`; `docker compose down -v` deletes them, which is useful for a clean slate and destructive for anything you wanted to keep (lesson 6). Variables such as the database password come from the shell or an uncommitted `.env` file; the `${NAME:?message}` form stops with an error when a value is missing instead of starting with an empty secret (lesson 10)."
+            ]
+          },
+          {
+            "title": "A local stack for the integration runbook",
+            "paragraphs": [
+              "`docker compose config` validated this file: without `.env` it stops with the message, and with the variable set it prints the resolved configuration. Ports bind to 127.0.0.1 so the stack is not exposed to the network. The API uses the administrator login only because this database is a disposable local copy; staging and production use a least-privilege login (lesson 10)."
+            ],
+            "example": "# compose.yaml - local development only; ports bind to 127.0.0.1\nservices:\n  db:\n    image: mcr.microsoft.com/mssql/server:2022-latest\n    environment:\n      ACCEPT_EULA: \"Y\"\n      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?set MSSQL_SA_PASSWORD in .env}\n    ports: [\"127.0.0.1:14333:1433\"]\n    volumes: [\"sqldata:/var/opt/mssql\"]\n    healthcheck:\n      test: [\"CMD-SHELL\", \"/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \\\"$$MSSQL_SA_PASSWORD\\\" -C -b -Q 'SELECT 1'\"]\n      interval: 10s\n      timeout: 5s\n      retries: 10\n      start_period: 30s\n  api:\n    build: ./api\n    environment:\n      ConnectionStrings__Notebook: \"Server=db;Database=Notebook;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True\"\n    depends_on:\n      db:\n        condition: service_healthy\n    ports: [\"127.0.0.1:8080:8080\"]\n  web:\n    build: ./web\n    depends_on: [api]\n    ports: [\"127.0.0.1:5173:80\"]\nvolumes:\n  sqldata:"
+          }
+        ],
+        "exercise": {
+          "prompt": "A teammate's Compose stack fails on the first `up`: the API logs \"cannot connect to localhost:1433\", and on retry it connects but every run starts with an empty database. Diagnose both problems and give the fixes in the Compose file.",
+          "solution": "First, inside the Compose network localhost is the API container itself; the connection string must use the service name db (port 1433, not the published host port). The API also starts before SQL Server is ready, so add a database health check and depends_on with condition service_healthy, plus a connection retry in the API. Second, the empty database means data is in the container's writable layer or the stack is being removed with down -v: mount a named volume at /var/opt/mssql and use docker compose down without -v when the data should be kept.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Explains that service names, not localhost, address other containers.",
+            "Adds a health check with service_healthy and a retry.",
+            "Uses a named volume and avoids down -v to keep data."
+          ]
+        },
+        "quiz": {
+          "question": "The API has `depends_on: [db]` without a condition. What does that guarantee?",
+          "options": [
+            "The database accepts connections before the API starts",
+            "The database container is started before the API container",
+            "The API restarts when the database fails"
+          ],
+          "correct": 1,
+          "explanation": "Plain depends_on orders container start. Readiness needs a health check and condition: service_healthy."
+        },
+        "references": [
+          {
+            "title": "Docker Docs: Control startup and shutdown order in Compose",
+            "url": "https://docs.docker.com/compose/how-tos/startup-order/",
+            "section": "Control startup",
+            "reviewed": "2026-11-08",
+            "scope": "Docker Compose v2 behaviour, validated locally with docker compose config; the stack was not started in the course checks."
+          },
+          {
+            "title": "Docker Docs: Variable interpolation",
+            "url": "https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/",
+            "section": "Interpolation syntax",
+            "reviewed": "2026-11-08",
+            "scope": "Docker Compose v2 behaviour; the .env file holds local development values only."
+          },
+          {
+            "title": "Microsoft Learn: Run SQL Server Linux container images with Docker",
+            "url": "https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker",
+            "section": "Pull and run the container image; connect to SQL Server",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2022 container image; tool paths and image tags can change between releases."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which command removes the stack's containers and also deletes its named volumes?",
+            "options": [
+              "docker compose stop",
+              "docker compose down",
+              "docker compose down -v"
+            ],
+            "correct": 2,
+            "explanation": "down removes containers and networks but keeps named volumes; -v deletes the volumes too."
+          }
+        ]
+      },
+      {
         "id": "secrets",
-        "title": "9. Keep secrets out of artifacts and logs",
+        "title": "10. Keep secrets out of artifacts and logs",
         "takeaway": "A secret is a value whose disclosure grants access or reveals protected data.",
         "sections": [
           {
@@ -30430,7 +30508,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "web-topology",
-        "title": "10. Connect React, .NET and SQL across explicit boundaries",
+        "title": "11. Connect React, .NET and SQL across explicit boundaries",
         "takeaway": "A browser downloads React static assets and sends API requests; the API authenticates the caller and accesses SQL with its own identity.",
         "sections": [
           {
@@ -30596,7 +30674,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "schema-evolution",
-        "title": "11. Release application and schema compatibly",
+        "title": "12. Release application and schema compatibly",
         "takeaway": "A rolling release can run old and new application versions against one database.",
         "sections": [
           {
@@ -31175,7 +31253,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "ci-pipeline",
-        "title": "12. Build CI as a bounded trust boundary",
+        "title": "13. Build CI as a bounded trust boundary",
         "takeaway": "CI runs code from contributors and third-party actions with runner permissions.",
         "sections": [
           {
@@ -31328,7 +31406,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "artifact-promotion",
-        "title": "13. Promote the tested artifact and retain provenance",
+        "title": "14. Promote the tested artifact and retain provenance",
         "takeaway": "Rebuilding from a tag at deployment can select different dependencies than the tested build.",
         "sections": [
           {
@@ -31478,7 +31556,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "health-contracts",
-        "title": "14. Split liveness, readiness and user smoke checks",
+        "title": "15. Split liveness, readiness and user smoke checks",
         "takeaway": "Liveness asks whether the process should continue running; readiness asks whether it can accept the intended work.",
         "sections": [
           {
@@ -31611,7 +31689,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "deployment-strategies",
-        "title": "15. Choose a rollout strategy and admission gate",
+        "title": "16. Choose a rollout strategy and admission gate",
         "takeaway": "A rolling deployment mixes old and new instances, blue/green keeps two environments, and a canary exposes a smaller population to a candidate.",
         "sections": [
           {
@@ -31671,8 +31749,79 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "feature-flags",
+        "title": "17. Separate deployment from release with feature flags",
+        "stage": "intermediate",
+        "takeaway": "A feature flag lets you deploy code switched off and release it later to chosen users; every flag needs a safe default, an owner and a removal date.",
+        "sections": [
+          {
+            "title": "Deploy is not release",
+            "paragraphs": [
+              "A deployment puts a new artifact into an environment; a release exposes behaviour to users. Feature flags separate them: the new export runs in production but stays off until you turn it on for staff, then 10% of learners, then everyone. Turning it off is a configuration change measured in seconds, faster and narrower than rolling back the artifact (lesson 18).",
+              "Flags differ by purpose and lifetime. Release flags hide unfinished work and should be removed within weeks. Operational flags (kill switches) disable an expensive or risky path during an incident and may live long. Experiment flags split traffic to compare outcomes. Permission flags gate features by plan or role and are really product configuration.",
+              "Flags do not remove compatibility work. Both code paths run against the same database, so a flag cannot hide a breaking schema change: the expand-and-contract steps of lesson 12 still apply. Every flag combination is a code path to test, which is why old flags must be deleted."
+            ]
+          },
+          {
+            "title": "Stable percentage rollouts",
+            "paragraphs": [
+              "Hashing the flag name with the user ID gives each user a stable bucket, so a learner does not flip between old and new behaviour on each request, and raising the percentage only adds users. When the flag service is unreachable, the code falls back to the safe default instead of failing the request."
+            ],
+            "example": "import hashlib\n\ndef bucket(flag, user_id):                 # stable 0-99 position for this user and flag\n    digest = hashlib.sha256(f'{flag}:{user_id}'.encode()).hexdigest()\n    return int(digest[:8], 16) % 100\n\ndef enabled(flag, user_id, percent, flags_available=True):\n    if not flags_available:                # flag service down: use the safe default\n        return False\n    return bucket(flag, user_id) < percent\n\nusers = [f'learner-{i}' for i in range(2000)]\nat_10 = {u for u in users if enabled('new-export', u, 10)}\nat_25 = {u for u in users if enabled('new-export', u, 25)}\nprint(len(at_10), len(at_25), at_10 <= at_25)   # raising the percentage keeps earlier users in\nprint(enabled('new-export', users[0], 100, flags_available=False))\n\n# Expected output:\n# 227 499 True\n# False"
+          }
+        ],
+        "exercise": {
+          "prompt": "The new export path is behind a release flag at 25% when its error rate rises. Describe what you do in the first five minutes, what you check before raising the percentage again, and when and how the flag is removed.",
+          "solution": "Turn the flag to 0% (or off) to stop exposure without redeploying, confirm the error rate returns to its baseline, and record the time and change in the incident log. Investigate with logs and metrics tagged by flag state. Before raising again: fix and deploy, test both flag states, roll back out to staff then a small percentage while comparing error rate and latency between flag-on and flag-off users. Once at 100% and stable for an agreed period, delete the flag and the old code path in a normal change, because the flag owner and removal date were recorded when it was created.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Turns the flag off rather than redeploying first.",
+            "Compares metrics by flag state before widening the rollout.",
+            "Removes the flag and the dead code path after full release."
+          ]
+        },
+        "quiz": {
+          "question": "Why bucket users by hashing the flag name and user ID instead of choosing randomly on each request?",
+          "options": [
+            "Hashing is more secure",
+            "Each user gets a stable result, and raising the percentage only adds users",
+            "Random numbers are too slow"
+          ],
+          "correct": 1,
+          "explanation": "Per-request randomness flips users between versions. A stable bucket keeps their experience consistent."
+        },
+        "references": [
+          {
+            "title": "Martin Fowler: Feature Toggles",
+            "url": "https://martinfowler.com/articles/feature-toggles.html",
+            "section": "Categories of toggles; managing the carrying cost of toggles",
+            "reviewed": "2026-11-08",
+            "scope": "Author article (Pete Hodgson) used for flag categories; the export example is original."
+          },
+          {
+            "title": "OpenFeature: Introduction",
+            "url": "https://openfeature.dev/docs/reference/intro",
+            "section": "What is OpenFeature",
+            "reviewed": "2026-11-08",
+            "scope": "Vendor-neutral flag API specification, named for context; the lesson's code does not use an SDK."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A flag is at 10% and is raised to 25% using the lesson's hash bucketing. What happens to the users who already had the feature?",
+            "options": [
+              "They all keep it",
+              "About a quarter of them lose it",
+              "They are reassigned at random"
+            ],
+            "correct": 0,
+            "explanation": "A user is on when their bucket is below the percentage. Every bucket below 10 is also below 25."
+          }
+        ]
+      },
+      {
         "id": "rollback",
-        "title": "16. Roll back bytes without assuming data rollback",
+        "title": "18. Roll back bytes without assuming data rollback",
         "takeaway": "Rollback restores a previous application artifact or configuration only when that version still understands current data and external effects.",
         "sections": [
           {
@@ -31814,7 +31963,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "structured-logs",
-        "title": "17. Log events without leaking payloads",
+        "title": "19. Log events without leaking payloads",
         "takeaway": "Logs explain a specific event; metrics aggregate behavior.",
         "sections": [
           {
@@ -31875,7 +32024,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "metrics",
-        "title": "18. Measure traffic, errors, latency and saturation",
+        "title": "20. Measure traffic, errors, latency and saturation",
         "takeaway": "Counters measure cumulative events, gauges describe a current level, and histograms retain a distribution useful for latency.",
         "sections": [
           {
@@ -31936,7 +32085,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "slos",
-        "title": "19. Turn a user SLI into an error budget",
+        "title": "21. Turn a user SLI into an error budget",
         "takeaway": "An SLI is a measured fraction or distribution; an SLO is its target over a defined window.",
         "sections": [
           {
@@ -31996,8 +32145,87 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "versioning-and-delivery-metrics",
+        "title": "22. Version releases and measure delivery",
+        "stage": "advanced",
+        "takeaway": "Semantic versions tell consumers what a release may break; changelogs tell people what changed; DORA's delivery metrics tell the team whether its delivery is getting faster and safer.",
+        "sections": [
+          {
+            "title": "Semantic versioning and changelogs",
+            "paragraphs": [
+              "Semantic Versioning (SemVer) numbers a release `MAJOR.MINOR.PATCH` for software with a declared public API: increment MAJOR for incompatible changes, MINOR for backwards-compatible features and PATCH for backwards-compatible fixes. Pre-release versions such as `1.10.0-rc.2` sort before `1.10.0`, and their numeric parts compare as numbers. Build metadata after `+` is ignored for precedence. Version 0.y.z promises nothing about stability.",
+              "The version names the artifact (lesson 3) and must be immutable: never republish different bytes under a released version. A changelog groups changes for humans (Added, Changed, Deprecated, Removed, Fixed, Security) under each version, so a consumer can decide whether to upgrade without reading commits. A deprecation in a MINOR release gives notice before the removal in the next MAJOR."
+            ]
+          },
+          {
+            "title": "Delivery metrics",
+            "paragraphs": [
+              "DORA measures software delivery with throughput and instability metrics: change lead time (commit to running in production), deployment frequency, failed deployment recovery time, change fail rate (deployments that need immediate intervention such as a rollback or hotfix) and deployment rework rate (unplanned deployments caused by production incidents). Its research finds that speed and stability tend to improve together rather than trade off.",
+              "Use the metrics to see trends for one service and to find bottlenecks, not to rank teams or individuals: a target on deployment count invites splitting changes artificially. Define each metric precisely from deployment and incident records (lessons 14 and 26), and read them beside user-facing reliability such as the SLOs of lesson 21.",
+              "The sketch sorts versions by SemVer precedence and computes four metrics from a week's deployment log."
+            ],
+            "example": "import re\nfrom datetime import datetime\nfrom statistics import median\n\ndef semver_key(version):                   # SemVer 2.0.0 precedence, build metadata ignored\n    core, _, pre = version.split('+')[0].partition('-')\n    major, minor, patch = map(int, core.split('.'))\n    parts = [(0, int(p), '') if p.isdigit() else (1, 0, p) for p in pre.split('.')] if pre else []\n    return (major, minor, patch, 0 if pre else 1, parts)\n\nprint(sorted(['1.10.0', '1.2.0', '1.10.0-rc.10', '1.10.0-rc.2', '2.0.0-alpha'], key=semver_key))\n\nt = lambda s: datetime.fromisoformat(s)\ndeploys = [  # commit time, deploy time, needed immediate intervention, recovery minutes\n    ('2026-11-02T09:00', '2026-11-02T15:00', False, 0),\n    ('2026-11-03T10:00', '2026-11-04T10:00', True, 45),\n    ('2026-11-04T11:00', '2026-11-04T13:00', False, 0),\n    ('2026-11-05T08:00', '2026-11-06T08:00', False, 0),\n]\nlead_hours = [(t(d) - t(c)).total_seconds() / 3600 for c, d, _, _ in deploys]\nfailed = [m for *_, bad, m in deploys if bad]\nprint('deployments per week:', len(deploys))\nprint('median change lead time (h):', median(lead_hours))\nprint('change fail rate:', f'{len(failed) / len(deploys):.0%}')\nprint('failed deployment recovery time (min):', median(failed))\n\n# Expected output:\n# ['1.2.0', '1.10.0-rc.2', '1.10.0-rc.10', '1.10.0', '2.0.0-alpha']\n# deployments per week: 4\n# median change lead time (h): 15.0\n# change fail rate: 25%\n# failed deployment recovery time (min): 45"
+          }
+        ],
+        "exercise": {
+          "prompt": "The notebook API is at 2.3.1. Assign the next version for each change and justify it: (a) a new optional query parameter; (b) a fix to a wrong total; (c) removing a field that clients read; (d) a release candidate of (c). Then name two DORA metrics you would watch after (c) ships and why.",
+          "solution": "(a) 2.4.0: a backwards-compatible feature. (b) 2.3.2 if released alone, or included in 2.4.0: a backwards-compatible fix. (c) 3.0.0: removing a field consumers read is incompatible; deprecate it in a 2.x release and changelog first. (d) 3.0.0-rc.1, which sorts before 3.0.0. After 3.0.0: change fail rate, because breaking changes are more likely to need a rollback or hotfix, and failed deployment recovery time, to confirm rollback works; also watch client error rates against the SLO.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Applies MAJOR, MINOR and PATCH according to compatibility.",
+            "Uses a pre-release identifier for the candidate.",
+            "Chooses metrics that would reveal a risky breaking release."
+          ]
+        },
+        "quiz": {
+          "question": "Under SemVer, which version has the lowest precedence?",
+          "options": [
+            "1.10.0",
+            "1.10.0-rc.2",
+            "1.2.0"
+          ],
+          "correct": 2,
+          "explanation": "Compare numerically: 1.2.0 < 1.10.0-rc.2 < 1.10.0. A pre-release sorts before its release but after lower versions."
+        },
+        "references": [
+          {
+            "title": "Semantic Versioning 2.0.0",
+            "url": "https://semver.org/",
+            "section": "Semantic Versioning Specification, items 2-11",
+            "reviewed": "2026-11-08",
+            "scope": "Specification text; how a project defines its public API remains a project decision."
+          },
+          {
+            "title": "Keep a Changelog 1.1.0",
+            "url": "https://keepachangelog.com/en/1.1.0/",
+            "section": "How do I make a good changelog?",
+            "reviewed": "2026-11-08",
+            "scope": "Community convention, not a standard."
+          },
+          {
+            "title": "DORA: Software delivery performance metrics",
+            "url": "https://dora.dev/guides/dora-metrics/",
+            "section": "Throughput and instability",
+            "reviewed": "2026-11-08",
+            "scope": "DORA research guidance; the deployment log in the example is invented."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In the lesson's deployment log, what is the change fail rate?",
+            "options": [
+              "25%",
+              "45%",
+              "75%"
+            ],
+            "correct": 0,
+            "explanation": "One of four deployments needed immediate intervention: 1 / 4 = 25%."
+          }
+        ]
+      },
+      {
         "id": "load-testing",
-        "title": "20. Describe the workload before interpreting speed",
+        "title": "23. Describe the workload before interpreting speed",
         "takeaway": "A load result belongs to its workload, environment and dataset.",
         "sections": [
           {
@@ -32058,7 +32286,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "backups",
-        "title": "21. Capture a consistent backup and define RPO",
+        "title": "24. Capture a consistent backup and define RPO",
         "takeaway": "A backup is a recoverable copy, not simply a file that exists.",
         "sections": [
           {
@@ -32119,7 +32347,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "restore-drill",
-        "title": "22. Restore into isolation and verify business state",
+        "title": "25. Restore into isolation and verify business state",
         "takeaway": "A restore drill starts with a known snapshot, restores into a separate location, checks integrity and application-level invariants, and measures elapsed recovery work.",
         "sections": [
           {
@@ -32281,7 +32509,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "incident-response",
-        "title": "23. Stabilize an incident and preserve evidence",
+        "title": "26. Stabilize an incident and preserve evidence",
         "takeaway": "An incident response coordinates impact reduction, investigation and communication.",
         "sections": [
           {
@@ -32434,7 +32662,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "release-review",
-        "title": "24. Document release tests and recovery steps",
+        "title": "27. Document release tests and recovery steps",
         "takeaway": "A release record identifies the tested build, supported schema and configuration, access controls, rollout checks and recovery results.",
         "sections": [
           {
@@ -32999,6 +33227,7 @@ const LEARNING_PATHS = [
         "containers": "foundation",
         "docker-build": "foundation",
         "runtime-configuration": "foundation",
+        "docker-compose": "foundation",
         "secrets": "intermediate",
         "web-topology": "intermediate",
         "schema-evolution": "intermediate",
@@ -33006,10 +33235,12 @@ const LEARNING_PATHS = [
         "artifact-promotion": "intermediate",
         "health-contracts": "intermediate",
         "deployment-strategies": "intermediate",
+        "feature-flags": "intermediate",
         "rollback": "intermediate",
         "structured-logs": "advanced",
         "metrics": "advanced",
         "slos": "advanced",
+        "versioning-and-delivery-metrics": "advanced",
         "load-testing": "advanced",
         "backups": "advanced",
         "restore-drill": "advanced",
