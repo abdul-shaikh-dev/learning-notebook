@@ -1,7 +1,7 @@
 {
   "id": "cloud-infrastructure",
   "title": "Cloud & Infrastructure as Code",
-  "category": "Software engineering",
+  "category": "Infrastructure & operations",
   "status": "ready",
   "description": "25 lessons, three stage projects and a locally runnable practice kit covering Azure infrastructure decisions, Terraform concepts, policy and safe lifecycle review.",
   "level": "Foundations → intermediate practice with optional systems labs",

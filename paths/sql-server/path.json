@@ -1,7 +1,7 @@
 {
   "id": "sql-server",
   "title": "SQL Server & T-SQL",
-  "category": "Data",
+  "category": "Data & AI",
   "status": "ready",
   "description": "Learn to query SQL Server, model data, replay imports safely and diagnose query plans. Finish by building and testing a reconciliation pipeline.",
   "level": "Foundations → intermediate T-SQL → selected engine labs",

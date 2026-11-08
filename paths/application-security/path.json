@@ -1,7 +1,7 @@
 {
   "id": "application-security",
   "title": "Application Security",
-  "category": "Security",
+  "category": "Software engineering",
   "status": "ready",
   "description": "Study trusted identity, object authorization, input validation, session controls and OAuth/OIDC in 24 lessons. Three offline projects test these controls with synthetic records.",
   "level": "Foundations → intermediate application controls → integration extensions",

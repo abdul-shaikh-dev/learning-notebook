@@ -1,7 +1,7 @@
 {
   "id": "design-patterns",
   "title": "Design Patterns",
-  "category": "Software design",
+  "category": "Programming",
   "status": "ready",
   "description": "Study contracts, composition, object creation, wrappers, lifecycle behavior and persistence in 28 lessons. Use three projects to compare named patterns with simpler designs.",
   "level": "Foundations → intermediate → selected advanced topics",

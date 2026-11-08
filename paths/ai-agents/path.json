@@ -1,7 +1,7 @@
 {
   "id": "ai-agents",
   "title": "AI Agents",
-  "category": "AI engineering",
+  "category": "Data & AI",
   "status": "ready",
   "description": "Learn how agents use tools, state, retrieved sources and permissions in 28 lessons. Three projects start with an offline scripted workshop, then examine what changes when a real model chooses actions.",
   "level": "Foundations → intermediate agents → local framework practice",

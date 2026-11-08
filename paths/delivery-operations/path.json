@@ -1,7 +1,7 @@
 {
   "id": "delivery-operations",
   "title": "Delivery & Operations",
-  "category": "Software engineering",
+  "category": "Infrastructure & operations",
   "status": "ready",
   "description": "Practise releasing and recovering a service across 27 lessons. Use the local service to test health checks, schema compatibility and telemetry. The integration runbook applies those decisions to React, .NET and SQL Server.",
   "level": "Foundations → intermediate practice with optional systems labs",

@@ -3,7 +3,7 @@ const LEARNING_PATHS = [
   {
     "id": "agent-harnesses",
     "title": "Agent Harnesses",
-    "category": "AI engineering",
+    "category": "Data & AI",
     "status": "ready",
     "description": "Build an agent runtime with controlled tool dispatch, scoped approvals, bounded loops and state recovery. Follow 24 lessons and three projects in an offline Python workshop.",
     "level": "Intermediate runtime engineering → selected recovery extensions",
@@ -3902,7 +3902,7 @@ const LEARNING_PATHS = [
   {
     "id": "ai-agents",
     "title": "AI Agents",
-    "category": "AI engineering",
+    "category": "Data & AI",
     "status": "ready",
     "description": "Learn how agents use tools, state, retrieved sources and permissions in 28 lessons. Three projects start with an offline scripted workshop, then examine what changes when a real model chooses actions.",
     "level": "Foundations → intermediate agents → local framework practice",
@@ -8038,7 +8038,7 @@ const LEARNING_PATHS = [
   {
     "id": "application-security",
     "title": "Application Security",
-    "category": "Security",
+    "category": "Software engineering",
     "status": "ready",
     "description": "Study trusted identity, object authorization, input validation, session controls and OAuth/OIDC in 24 lessons. Three offline projects test these controls with synthetic records.",
     "level": "Foundations → intermediate application controls → integration extensions",
@@ -16407,7 +16407,7 @@ const LEARNING_PATHS = [
   {
     "id": "cloud-infrastructure",
     "title": "Cloud & Infrastructure as Code",
-    "category": "Software engineering",
+    "category": "Infrastructure & operations",
     "status": "ready",
     "description": "25 lessons, three stage projects and a locally runnable practice kit covering Azure infrastructure decisions, Terraform concepts, policy and safe lifecycle review.",
     "level": "Foundations → intermediate practice with optional systems labs",
@@ -22307,7 +22307,7 @@ const LEARNING_PATHS = [
   {
     "id": "data-engineering",
     "title": "Data Engineering",
-    "category": "Data and databases",
+    "category": "Data & AI",
     "status": "ready",
     "description": "Follow 24 lessons from data grain, CSV contracts, UTC time and exact amounts to transactional imports, replay, watermarks, CDC, dimensional models, dbt transformation layers and recovery. Includes a tested SQLite pipeline and an optional SQL Server integration brief.",
     "level": "Foundations → intermediate batch pipelines → selected extensions",
@@ -25367,7 +25367,7 @@ const LEARNING_PATHS = [
   {
     "id": "data-structures-algorithms",
     "title": "Data Structures & Algorithms",
-    "category": "Computer science",
+    "category": "Programming",
     "status": "ready",
     "description": "Choose data structures and algorithms using their preconditions, invariants and costs. Practise graph traversal, greedy reasoning and dynamic programming in tested projects.",
     "level": "Foundations → intermediate → selected advanced topics",
@@ -30358,7 +30358,7 @@ const LEARNING_PATHS = [
   {
     "id": "delivery-operations",
     "title": "Delivery & Operations",
-    "category": "Software engineering",
+    "category": "Infrastructure & operations",
     "status": "ready",
     "description": "Practise releasing and recovering a service across 27 lessons. Use the local service to test health checks, schema compatibility and telemetry. The integration runbook applies those decisions to React, .NET and SQL Server.",
     "level": "Foundations → intermediate practice with optional systems labs",
@@ -33951,7 +33951,7 @@ const LEARNING_PATHS = [
   {
     "id": "design-patterns",
     "title": "Design Patterns",
-    "category": "Software design",
+    "category": "Programming",
     "status": "ready",
     "description": "Study contracts, composition, object creation, wrappers, lifecycle behavior and persistence in 28 lessons. Use three projects to compare named patterns with simpler designs.",
     "level": "Foundations → intermediate → selected advanced topics",
@@ -44613,7 +44613,7 @@ const LEARNING_PATHS = [
   {
     "id": "full-stack-journey",
     "title": "Full-Stack Project Journey",
-    "category": "Applied projects",
+    "category": "Software engineering",
     "status": "ready",
     "description": "Build one study planner through 20 connected milestones: React UI, .NET API, SQL Server persistence, conflict handling, verification, identity design and release/recovery decisions. Includes a working local reference and complete task files.",
     "level": "Intermediate full-stack project → deployment extensions",
@@ -47492,7 +47492,7 @@ const LEARNING_PATHS = [
   {
     "id": "git-team-workflows",
     "title": "Git & Team Workflows",
-    "category": "Engineering practice",
+    "category": "Software engineering",
     "status": "ready",
     "description": "Learn Git state, team review, history integration and recovery in 24 lessons. Three executable projects create local workspaces you can inspect after each run.",
     "level": "Foundations → intermediate → selected advanced topics",
@@ -50690,7 +50690,7 @@ const LEARNING_PATHS = [
   {
     "id": "habits-behaviour-change",
     "title": "Habits & Behaviour Change",
-    "category": "Personal development",
+    "category": "Personal effectiveness",
     "status": "ready",
     "description": "Design everyday routines around available time and materials, then check whether they help.",
     "level": "Foundations → everyday experiments → adaptation and review",
@@ -53843,7 +53843,7 @@ const LEARNING_PATHS = [
   {
     "id": "react",
     "title": "JavaScript → TypeScript → React",
-    "category": "Web development",
+    "category": "Programming",
     "status": "ready",
     "description": "Learn JavaScript and TypeScript, then build React features with tested state updates, asynchronous loading and local persistence.",
     "level": "Foundations → intermediate → selected advanced topics",
@@ -58133,7 +58133,7 @@ const LEARNING_PATHS = [
   {
     "id": "kubernetes",
     "title": "Kubernetes",
-    "category": "Software engineering",
+    "category": "Infrastructure & operations",
     "status": "ready",
     "description": "27 lessons progress from reconciliation and ready Services to scoped security, storage, jobs, scaling, templating, GitOps and recovery, with offline checks and a guarded dedicated local lab.",
     "level": "Foundations → intermediate practice with optional systems labs",
@@ -64782,7 +64782,7 @@ const LEARNING_PATHS = [
   {
     "id": "linux-operating-systems",
     "title": "Linux & Operating Systems",
-    "category": "Systems and operations",
+    "category": "Infrastructure & operations",
     "status": "ready",
     "description": "Follow 25 lessons from Linux paths, shell arguments and permission bits to process lifetimes, memory, resource limits, containers and incident diagnosis. Includes portable child-process tests and an optional Windows-to-WSL observation guide.",
     "level": "Foundations → intermediate practice with optional systems labs",
@@ -67848,7 +67848,7 @@ const LEARNING_PATHS = [
   {
     "id": "machine-learning-foundations",
     "title": "Machine learning foundations",
-    "category": "Data and databases",
+    "category": "Data & AI",
     "status": "ready",
     "description": "25 lessons on prediction questions, baselines, regression and classification, preprocessing, evaluation, leakage and reproducible experiments. Includes a CPU-only support-ticket lab.",
     "level": "Foundations through a supervised-learning capstone",
@@ -73967,7 +73967,7 @@ const LEARNING_PATHS = [
   {
     "id": "networking-web",
     "title": "Networking & the Web",
-    "category": "Software engineering",
+    "category": "Infrastructure & operations",
     "status": "ready",
     "description": "Follow requests from names to validated bodies through 28 lessons, offline protocol models, an ephemeral loopback HTTP server and bounded diagnostic-client projects.",
     "level": "Foundations → intermediate practice with optional systems labs",
@@ -77609,7 +77609,7 @@ const LEARNING_PATHS = [
   {
     "id": "observability-performance",
     "title": "Observability & Performance",
-    "category": "Engineering practice",
+    "category": "Software engineering",
     "status": "ready",
     "description": "Investigate latency and failures using structured signals, local measurements, SLO arithmetic and bounded fault experiments.",
     "level": "Foundations → intermediate practice with optional systems labs",
@@ -91694,7 +91694,7 @@ const LEARNING_PATHS = [
   {
     "id": "requirements-maintenance",
     "title": "Requirements & software maintenance",
-    "category": "Engineering foundations",
+    "category": "Software engineering",
     "status": "ready",
     "description": "Turn unclear requests into testable changes. Read an existing Python command, repair a defect and preserve its callers.",
     "level": "Foundations through a local maintenance capstone",
@@ -94250,7 +94250,7 @@ const LEARNING_PATHS = [
   {
     "id": "self-awareness-communication",
     "title": "Self-Awareness & Communication",
-    "category": "Personal development",
+    "category": "Personal effectiveness",
     "status": "ready",
     "description": "Practise reflection, listening, clear requests and respectful disagreement in everyday situations.",
     "level": "Foundations → everyday conversation practice → adaptation and review",
@@ -97382,7 +97382,7 @@ const LEARNING_PATHS = [
   {
     "id": "sql-server",
     "title": "SQL Server & T-SQL",
-    "category": "Data",
+    "category": "Data & AI",
     "status": "ready",
     "description": "Learn to query SQL Server, model data, replay imports safely and diagnose query plans. Finish by building and testing a reconciliation pipeline.",
     "level": "Foundations → intermediate T-SQL → selected engine labs",
@@ -116651,7 +116651,7 @@ const LEARNING_PATHS = [
   {
     "id": "ui-accessibility",
     "title": "UI Design & Accessibility",
-    "category": "Product design",
+    "category": "Design & accessibility",
     "status": "ready",
     "description": "Build responsive interfaces, test their keyboard access and error recovery, and record the results of semantic and contrast checks.",
     "level": "Foundations → applied interaction practice → scoped release review",

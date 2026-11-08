@@ -1,7 +1,7 @@
 {
   "id": "requirements-maintenance",
   "title": "Requirements & software maintenance",
-  "category": "Engineering foundations",
+  "category": "Software engineering",
   "status": "ready",
   "description": "Turn unclear requests into testable changes. Read an existing Python command, repair a defect and preserve its callers.",
   "level": "Foundations through a local maintenance capstone",

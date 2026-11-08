@@ -1,7 +1,7 @@
 {
   "id": "observability-performance",
   "title": "Observability & Performance",
-  "category": "Engineering practice",
+  "category": "Software engineering",
   "status": "ready",
   "description": "Investigate latency and failures using structured signals, local measurements, SLO arithmetic and bounded fault experiments.",
   "level": "Foundations → intermediate practice with optional systems labs",
