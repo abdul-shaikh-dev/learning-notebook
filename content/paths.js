@@ -71666,7 +71666,7 @@ const LEARNING_PATHS = [
     "title": "Networking & the Web",
     "category": "Software engineering",
     "status": "ready",
-    "description": "Follow requests from names to validated bodies through 24 lessons, offline protocol models, an ephemeral loopback HTTP server and bounded diagnostic-client projects.",
+    "description": "Follow requests from names to validated bodies through 28 lessons, offline protocol models, an ephemeral loopback HTTP server and bounded diagnostic-client projects.",
     "level": "Foundations → intermediate practice with optional systems labs",
     "prerequisites": [
       "Basic Python functions, lists and exceptions; vocabulary is introduced before deeper diagnosis.",
@@ -72145,8 +72145,94 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "subnets-nat-routing",
+        "title": "3. Divide addresses into subnets and follow NAT and routing",
+        "stage": "foundation",
+        "takeaway": "A prefix length splits an address into network and host parts; routers forward by the longest matching prefix, and NAT rewrites private addresses at the edge.",
+        "sections": [
+          {
+            "title": "Prefixes, private ranges and IPv6",
+            "paragraphs": [
+              "An IPv4 address is 32 bits. CIDR notation such as `10.20.0.0/16` says the first 16 bits name the network and the remaining 16 bits number hosts within it. A longer prefix is a smaller network: a `/24` has 256 addresses, of which 254 are usable for hosts because the first is the network address and the last is the broadcast address. Splitting a `/16` into `/24` subnets gives 256 of them.",
+              "Three IPv4 ranges are reserved for private networks: `10.0.0.0/8`, `172.16.0.0/12` and `192.168.0.0/16`. They are not routed on the public internet, so many organisations reuse them; overlapping ranges become a problem when two private networks are later connected by a VPN or peering. `127.0.0.0/8` is loopback, and `169.254.0.0/16` is link-local, often a sign that automatic configuration failed.",
+              "IPv6 addresses are 128 bits, written in hexadecimal groups with `::` for one run of zeros. A typical LAN is a `/64`, so address exhaustion is not a design constraint. `::1` is loopback, `fe80::/10` is link-local on every interface, and a documentation range (`2001:db8::/32`) is reserved for examples, like `192.0.2.0/24` in IPv4. Hosts usually have both kinds of address, and clients try both (Happy Eyeballs) and use whichever connects first."
+            ]
+          },
+          {
+            "title": "Routing and NAT",
+            "paragraphs": [
+              "A router or host chooses where to send a packet by comparing the destination with its routing table and taking the most specific matching prefix. The default route `0.0.0.0/0` matches everything, so it is used only when nothing more specific does. The example below implements that rule with the standard library's `ipaddress` module.",
+              "Network address translation lets many private hosts share one public address. The NAT device rewrites the source address and port of outgoing connections and keeps a table to map replies back. Outside hosts cannot start a connection to a private host unless a port is forwarded, which is why inbound access to home and cloud-private machines needs a load balancer, a port forward or a tunnel. NAT is not a firewall policy, although it often behaves like one."
+            ],
+            "example": "import ipaddress\n\noffice = ipaddress.ip_network('10.20.0.0/16')\nsubnets = list(office.subnets(new_prefix=24))\nprint(len(subnets), 'subnets, first', subnets[0], 'with', subnets[0].num_addresses - 2, 'usable hosts')\nprint(ipaddress.ip_address('10.20.7.9') in subnets[7], ipaddress.ip_address('172.31.0.5').is_private,\n      ipaddress.ip_address('8.8.8.8').is_private)\n\nroutes = {'0.0.0.0/0': 'internet gateway', '10.20.0.0/16': 'office VPN', '10.20.7.0/24': 'build servers'}\n\ndef next_hop(destination):\n    address = ipaddress.ip_address(destination)\n    matches = [ipaddress.ip_network(prefix) for prefix in routes if address in ipaddress.ip_network(prefix)]\n    best = max(matches, key=lambda network: network.prefixlen)       # longest prefix wins\n    return routes[str(best)]\n\nfor destination in ['10.20.7.9', '10.20.1.4', '93.184.215.14']:\n    print(destination, '->', next_hop(destination))\n\nv6 = ipaddress.ip_network('2001:db8:abcd::/48')\nprint(v6.num_addresses // 2**64, 'IPv6 /64 subnets in a /48;', ipaddress.ip_address('fe80::1').is_link_local)\n\n# Expected output:\n# 256 subnets, first 10.20.0.0/24 with 254 usable hosts\n# True True False\n# 10.20.7.9 -> build servers\n# 10.20.1.4 -> office VPN\n# 93.184.215.14 -> internet gateway\n# 65536 IPv6 /64 subnets in a /48; True"
+          }
+        ],
+        "exercise": {
+          "prompt": "A team plans a cloud network `10.0.0.0/16` and wants four equal subnets for two availability zones, each with a public and a private subnet. Give the four prefixes and the usable host count of each, then say what goes wrong if the office VPN already uses `10.0.128.0/20`.",
+          "solution": "Splitting 10.0.0.0/16 into four gives /18 subnets: 10.0.0.0/18, 10.0.64.0/18, 10.0.128.0/18 and 10.0.192.0/18, each with 16,384 addresses and 16,382 usable hosts (cloud providers often reserve a few more). The office range 10.0.128.0/20 lies inside 10.0.128.0/18, so once the VPN connects, traffic for those addresses is ambiguous: routes overlap and some hosts become unreachable from one side. Choose a non-overlapping range such as 10.1.0.0/16 before building.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Four /18 subnets with the correct starting addresses.",
+            "16,382 usable hosts per subnet, noting provider reservations.",
+            "Identifies the overlap with 10.0.128.0/18 and its routing consequence."
+          ]
+        },
+        "quiz": {
+          "question": "A routing table has 0.0.0.0/0, 10.0.0.0/8 and 10.1.2.0/24. Which route carries traffic to 10.1.2.50?",
+          "options": [
+            "0.0.0.0/0",
+            "10.0.0.0/8",
+            "10.1.2.0/24"
+          ],
+          "correct": 2,
+          "explanation": "All three match, and routing uses the longest matching prefix, which is the /24."
+        },
+        "references": [
+          {
+            "title": "Python ipaddress",
+            "url": "https://docs.python.org/3/library/ipaddress.html",
+            "section": "Network objects and is_private",
+            "reviewed": "2026-11-08",
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          },
+          {
+            "title": "RFC 1918: Address Allocation for Private Internets",
+            "url": "https://www.rfc-editor.org/rfc/rfc1918",
+            "section": "Section 3, private address space",
+            "reviewed": "2026-11-08",
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          },
+          {
+            "title": "RFC 4291: IPv6 Addressing Architecture",
+            "url": "https://www.rfc-editor.org/rfc/rfc4291",
+            "section": "Section 2.4, address type identification",
+            "reviewed": "2026-11-08",
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          },
+          {
+            "title": "RFC 8305: Happy Eyeballs Version 2",
+            "url": "https://www.rfc-editor.org/rfc/rfc8305",
+            "section": "Section 1, introduction",
+            "reviewed": "2026-11-08",
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "How many usable host addresses does 192.168.10.0/26 have?",
+            "options": [
+              "62",
+              "64",
+              "254"
+            ],
+            "correct": 0,
+            "explanation": "A /26 has 2^6 = 64 addresses; the network and broadcast addresses leave 62 for hosts."
+          }
+        ]
+      },
+      {
         "id": "dns",
-        "title": "3. Names, records and resolver roles",
+        "title": "4. Names, records and resolver roles",
         "stage": "foundation",
         "takeaway": "DNS relates names to typed records; a name can have more than one address and resolution can involve caching and delegation.",
         "sections": [
@@ -72207,7 +72293,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "dns-cache",
-        "title": "4. TTL and stale DNS observations",
+        "title": "5. TTL and stale DNS observations",
         "stage": "foundation",
         "takeaway": "A TTL limits how long a DNS answer may be retained under the resolver's rules.",
         "sections": [
@@ -72732,7 +72818,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "transport",
-        "title": "5. TCP streams and message boundaries",
+        "title": "6. TCP streams and message boundaries",
         "stage": "foundation",
         "takeaway": "TCP exposes an ordered byte stream while a connection is healthy; one write is not promised to equal one read.",
         "sections": [
@@ -72801,8 +72887,93 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "udp-and-tcp",
+        "title": "7. Choose UDP or TCP for the job",
+        "stage": "foundation",
+        "takeaway": "UDP delivers separate datagrams with no delivery or order guarantee; TCP delivers an ordered byte stream. Protocols built on UDP add only the guarantees they need.",
+        "sections": [
+          {
+            "title": "Datagrams versus streams",
+            "paragraphs": [
+              "TCP (lesson 6) sets up a connection with a handshake, then delivers an ordered, reliable byte stream: lost segments are resent, and the receiver sees bytes in order but must frame its own messages. UDP has no connection. Each `sendto` is one datagram that arrives whole or not at all, may arrive out of order or twice, and is never resent by the transport.",
+              "That makes UDP suitable when a late answer is useless or the application wants its own rules: DNS queries (one small question, one small answer, retried by the resolver), voice and video calls and games (a late frame is worse than a missing one), and service discovery on a local network. Large DNS answers and zone transfers switch to TCP.",
+              "QUIC, the transport under HTTP/3, runs over UDP and builds its own reliable, encrypted streams. Because each stream is independent, a lost packet delays only its stream, avoiding TCP's head-of-line blocking across everything on the connection. Running over UDP also lets QUIC be updated in applications rather than in operating-system kernels."
+            ]
+          },
+          {
+            "title": "Two datagrams on loopback",
+            "paragraphs": [
+              "The example sends two short datagrams to a UDP socket bound to an ephemeral loopback port. Each `recvfrom` returns exactly one datagram, so the message boundaries survive. TCP would have delivered the same ten bytes as a stream that a single read might return together. On loopback nothing is lost, which is precisely why loopback tests cannot show UDP's loss and reordering; production code needs timeouts, retries and sequence numbers where they matter."
+            ],
+            "example": "import socket\n\nreceiver = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\nreceiver.bind(('127.0.0.1', 0))\nreceiver.settimeout(2)\nsender = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\nfor message in (b'hello', b'world'):\n    sender.sendto(message, receiver.getsockname())\nfor _ in range(2):\n    data, _ = receiver.recvfrom(1024)\n    print(len(data), data)\nsender.close(); receiver.close()\n\n# Expected output:\n# 5 b'hello'\n# 5 b'world'"
+          }
+        ],
+        "exercise": {
+          "prompt": "For each of these, choose UDP or TCP (or a protocol over one of them) and give the deciding reason: a bank transfer API, a multiplayer game's position updates, a DNS lookup for an A record, a large file download, a video call.",
+          "solution": "Bank transfer API: TCP (HTTPS), because every byte must arrive in order and the request must not be silently lost. Game positions: UDP, because the newest update replaces older ones and resending a stale position only adds delay. DNS A lookup: UDP, one small query and answer, with the resolver retrying or falling back to TCP for large answers. Large file download: TCP (HTTP/1.1 or HTTP/2) or QUIC (HTTP/3), both reliable; QUIC avoids head-of-line blocking across streams. Video call: UDP-based media (RTP over UDP), because a late frame is worse than a dropped one.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Uses reliability and ordering needs to pick TCP for transfers and downloads.",
+            "Uses timeliness to pick UDP for game updates and calls.",
+            "Notes DNS uses UDP with TCP fallback, and QUIC is reliable over UDP."
+          ]
+        },
+        "quiz": {
+          "question": "Why does HTTP/3 run over QUIC on UDP instead of TCP?",
+          "options": [
+            "UDP is always faster on every network",
+            "QUIC provides independent reliable streams, so one lost packet does not stall the others",
+            "HTTP/3 does not need reliable delivery"
+          ],
+          "correct": 1,
+          "explanation": "QUIC adds reliability, ordering per stream and encryption itself. A loss stalls only the affected stream, not the whole connection."
+        },
+        "references": [
+          {
+            "title": "RFC 768: User Datagram Protocol",
+            "url": "https://www.rfc-editor.org/rfc/rfc768",
+            "section": "Introduction",
+            "reviewed": "2026-11-08",
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          },
+          {
+            "title": "RFC 9000: QUIC",
+            "url": "https://www.rfc-editor.org/rfc/rfc9000",
+            "section": "Section 2, streams",
+            "reviewed": "2026-11-08",
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          },
+          {
+            "title": "RFC 7766: DNS Transport over TCP",
+            "url": "https://www.rfc-editor.org/rfc/rfc7766",
+            "section": "Section 1, introduction",
+            "reviewed": "2026-11-08",
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          },
+          {
+            "title": "Python socket",
+            "url": "https://docs.python.org/3/library/socket.html",
+            "section": "socket.SOCK_DGRAM, sendto and recvfrom",
+            "reviewed": "2026-11-08",
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A client sends two 5-byte datagrams over UDP to a loopback socket. How many recvfrom calls return data?",
+            "options": [
+              "Two: each datagram arrives as one message",
+              "One, containing all 10 bytes",
+              "Ten, one per byte"
+            ],
+            "correct": 0,
+            "explanation": "UDP preserves datagram boundaries. Each recvfrom returns one whole datagram, unlike a TCP stream."
+          }
+        ]
+      },
+      {
         "id": "urls-origins",
-        "title": "6. Parse a URL and its origin",
+        "title": "8. Parse a URL and its origin",
         "stage": "foundation",
         "takeaway": "A URL contains scheme, authority, path, query and sometimes a fragment.",
         "sections": [
@@ -72863,7 +73034,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "encoding",
-        "title": "7. Decode bytes at a named boundary",
+        "title": "9. Decode bytes at a named boundary",
         "stage": "foundation",
         "takeaway": "A response body arrives as bytes.",
         "sections": [
@@ -72937,7 +73108,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "http-message",
-        "title": "8. Read methods, fields and content",
+        "title": "10. Read methods, fields and content",
         "stage": "foundation",
         "takeaway": "An HTTP request has a method and target plus fields and optional content.",
         "sections": [
@@ -72998,7 +73169,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "status",
-        "title": "9. Interpret status without overclaiming",
+        "title": "11. Interpret status without overclaiming",
         "stage": "intermediate",
         "takeaway": "Status codes describe HTTP response semantics.",
         "sections": [
@@ -73059,7 +73230,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "methods-retries",
-        "title": "10. Safety, idempotency and retry decisions",
+        "title": "12. Safety, idempotency and retry decisions",
         "stage": "intermediate",
         "takeaway": "A safe method requests a read-oriented operation according to HTTP semantics; idempotency concerns the intended effect of repeating a request.",
         "sections": [
@@ -73120,7 +73291,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "tls",
-        "title": "11. TLS protects a transport boundary",
+        "title": "13. TLS protects a transport boundary",
         "stage": "intermediate",
         "takeaway": "TLS authenticates peers under its configuration and protects transport confidentiality and integrity.",
         "sections": [
@@ -73181,7 +73352,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "certificates",
-        "title": "12. Inspect trust configuration without bypasses",
+        "title": "14. Inspect trust configuration without bypasses",
         "stage": "intermediate",
         "takeaway": "Certificate trust is configured by a client's trust roots and verification policy.",
         "sections": [
@@ -73242,7 +73413,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "cookies",
-        "title": "13. Cookies add state with explicit scope",
+        "title": "15. Cookies add state with explicit scope",
         "stage": "intermediate",
         "takeaway": "A server uses Set-Cookie to ask a user agent to retain a name/value and attributes; later requests may send matching Cookie values.",
         "sections": [
@@ -73383,7 +73554,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "browser-boundaries",
-        "title": "14. CORS and browser-specific enforcement",
+        "title": "16. CORS and browser-specific enforcement",
         "stage": "intermediate",
         "takeaway": "An origin policy and CORS affect how browsers expose cross-origin responses to scripts.",
         "sections": [
@@ -73524,7 +73695,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "cache",
-        "title": "15. Freshness, reuse and storage permission",
+        "title": "17. Freshness, reuse and storage permission",
         "stage": "intermediate",
         "takeaway": "An HTTP cache can store a response and decide when it is fresh enough to reuse under the applicable rules.",
         "sections": [
@@ -73585,7 +73756,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "validators",
-        "title": "16. Conditional requests and 304 responses",
+        "title": "18. Conditional requests and 304 responses",
         "stage": "intermediate",
         "takeaway": "A validator lets a client ask whether its stored representation still matches the server's current one.",
         "sections": [
@@ -73749,8 +73920,93 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "websockets-and-sse",
+        "title": "19. Keep connections open with WebSockets and server-sent events",
+        "stage": "intermediate",
+        "takeaway": "Server-sent events stream text from server to browser over ordinary HTTP; WebSockets give both sides a message channel after an HTTP upgrade.",
+        "sections": [
+          {
+            "title": "Push without polling",
+            "paragraphs": [
+              "Polling asks the server every few seconds whether anything changed, which wastes requests and adds delay. Two standard browser mechanisms keep one connection open instead.",
+              "Server-sent events (SSE) are an ordinary HTTP response with `Content-Type: text/event-stream` that never ends. The server writes lines such as `event: price`, `data: 101.5` and `id: 42`, with a blank line ending each event. The browser's `EventSource` parses them, reconnects automatically after a drop and sends `Last-Event-ID` so the server can resume. SSE is one-way, text-only and works through most proxies because it is plain HTTP.",
+              "A WebSocket starts as an HTTP/1.1 request with `Upgrade: websocket` and a random `Sec-WebSocket-Key`. The server proves it understands the protocol by returning `101 Switching Protocols` and `Sec-WebSocket-Accept`: the base64 SHA-1 of the key joined to a fixed GUID. From then on, both sides send framed text or binary messages at any time. Use it for chat, collaborative editing or games, where the client also sends a stream of messages."
+            ]
+          },
+          {
+            "title": "The handshake and an event stream",
+            "paragraphs": [
+              "The first part reproduces the handshake example from RFC 6455: the sample key produces the accept value the RFC lists. The second part parses a short event stream the way a client does, joining multi-line `data` and remembering the last `id` for reconnection."
+            ],
+            "example": "import base64, hashlib\n\nGUID = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11'          # fixed by RFC 6455\nkey = 'dGhlIHNhbXBsZSBub25jZQ=='\naccept = base64.b64encode(hashlib.sha1((key + GUID).encode()).digest()).decode()\nprint('Sec-WebSocket-Accept:', accept)\n\nstream = 'id: 41\\nevent: price\\ndata: 101.5\\n\\nid: 42\\ndata: line one\\ndata: line two\\n\\n'\nlast_id = None\nfor block in stream.split('\\n\\n'):\n    if not block:\n        continue\n    fields = {'event': 'message', 'data': []}\n    for line in block.split('\\n'):\n        name, _, value = line.partition(': ')\n        if name == 'data':\n            fields['data'].append(value)\n        else:\n            fields[name] = value\n    last_id = fields.get('id', last_id)\n    print(fields['event'], repr('\\n'.join(fields['data'])))\nprint('reconnect with Last-Event-ID:', last_id)\n\n# Expected output:\n# Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=\n# price '101.5'\n# message 'line one\\nline two'\n# reconnect with Last-Event-ID: 42"
+          },
+          {
+            "title": "Operating long-lived connections",
+            "paragraphs": [
+              "Each open connection holds memory and a file descriptor on every proxy and server along the path. Plan capacity in concurrent connections, not requests per second, and set idle timeouts on load balancers longer than your heartbeat interval, or send periodic pings or SSE comments so idle connections are not cut.",
+              "Clients must reconnect with backoff and resume from a known position, because deploys, network changes and timeouts will drop connections. When servers scale out, a message published on one server must reach clients connected to the others, usually through a shared broker. Authenticate the initial HTTP request, check the `Origin` header for WebSockets because browsers do not apply CORS to them, and limit message size and rate."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A dashboard shows order counts that change a few times a minute, and users never send data back over the same channel. Choose between polling, SSE and WebSockets, and list three operational settings you would check.",
+          "solution": "Server-sent events: updates flow only from server to browser, are text, and EventSource reconnects and resumes with Last-Event-ID, all over ordinary HTTP. Polling every few seconds would waste requests; WebSockets add a two-way protocol that is not needed. Check: the load balancer and proxy idle timeouts against a heartbeat comment interval; response buffering disabled on proxies so events are not held back; and a resumable event id and a shared broker so a reconnect to another server still receives missed events.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Chooses SSE because communication is one-way text.",
+            "Mentions reconnection with Last-Event-ID.",
+            "Names idle timeouts or heartbeats, proxy buffering, and resumption across servers."
+          ]
+        },
+        "quiz": {
+          "question": "Which statement about server-sent events is true?",
+          "options": [
+            "They require a WebSocket upgrade",
+            "They are an ordinary HTTP response the browser reads as a stream of text events",
+            "They let the browser send messages over the same connection"
+          ],
+          "correct": 1,
+          "explanation": "SSE uses a long-running HTTP response with Content-Type text/event-stream. The browser sends data back with ordinary requests."
+        },
+        "references": [
+          {
+            "title": "RFC 6455: The WebSocket Protocol",
+            "url": "https://www.rfc-editor.org/rfc/rfc6455",
+            "section": "Section 1.3, opening handshake",
+            "reviewed": "2026-11-08",
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          },
+          {
+            "title": "HTML Standard: Server-sent events",
+            "url": "https://html.spec.whatwg.org/multipage/server-sent-events.html",
+            "section": "Parsing an event stream",
+            "reviewed": "2026-11-08",
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          },
+          {
+            "title": "MDN: Using server-sent events",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events",
+            "section": "Event stream format",
+            "reviewed": "2026-11-08",
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A WebSocket request sends Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==. Which Sec-WebSocket-Accept must the server return?",
+            "options": [
+              "s3pPLMBiTxaQ9kYGzzhZRbK+xOo=",
+              "dGhlIHNhbXBsZSBub25jZQ==",
+              "Any random base64 value"
+            ],
+            "correct": 0,
+            "explanation": "The accept value is base64(SHA-1(key + the RFC 6455 GUID)). For this sample key it is s3pPLMBiTxaQ9kYGzzhZRbK+xOo=."
+          }
+        ]
+      },
+      {
         "id": "redirects",
-        "title": "17. Follow redirects with a policy",
+        "title": "20. Follow redirects with a policy",
         "stage": "advanced",
         "takeaway": "A redirect describes another target; deciding to follow it belongs to the client's policy.",
         "sections": [
@@ -73891,7 +74147,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "proxies",
-        "title": "18. Forward proxies, reverse proxies and trust",
+        "title": "21. Forward proxies, reverse proxies and trust",
         "stage": "advanced",
         "takeaway": "A forward proxy acts for clients; a reverse proxy or gateway faces clients on behalf of an origin service.",
         "sections": [
@@ -74031,8 +74287,88 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "load-balancers-cdn",
+        "title": "22. Spread load with balancers and serve from the edge",
+        "stage": "advanced",
+        "takeaway": "A load balancer sends traffic only to healthy backends; a CDN answers from caches near the user, under the cache rules you send.",
+        "sections": [
+          {
+            "title": "Layer 4 and layer 7 balancing",
+            "paragraphs": [
+              "A load balancer is a reverse proxy (lesson 21) with several backends. A layer 4 balancer forwards TCP or UDP connections by address and port without reading HTTP, so it is fast and protocol-neutral. A layer 7 balancer terminates the connection, reads HTTP and can route by host name, path or header, add headers such as `X-Forwarded-For`, and retry idempotent requests.",
+              "Algorithms include round robin, least outstanding requests and hashing on a key such as client address. Health checks probe each backend; failing ones are removed until they recover. A readiness endpoint should report whether this instance can serve, not whether every dependency is perfect, or one slow database can take every backend out at once. Sticky sessions pin a user to one backend, which hides state problems and unbalances load; keep session state in a shared store instead.",
+              "During a deploy, connection draining lets in-flight requests finish before a backend is removed. Long-lived connections (lesson 19) make draining and rebalancing slower."
+            ],
+            "example": "from itertools import cycle\n\nbackends = ['app-a', 'app-b', 'app-c']\nhealthy = {'app-a': True, 'app-b': False, 'app-c': True}    # app-b failed its last two health checks\nring = cycle(backends)\n\ndef choose():\n    for _ in backends:\n        candidate = next(ring)\n        if healthy[candidate]:\n            return candidate\n    raise RuntimeError('no healthy backend: return 503')\n\nprint([choose() for _ in range(4)])\nhealthy['app-b'] = True                                   # recovered\nprint([choose() for _ in range(3)])\n\n# Expected output:\n# ['app-a', 'app-c', 'app-a', 'app-c']\n# ['app-a', 'app-b', 'app-c']"
+          },
+          {
+            "title": "CDNs and edge caching",
+            "paragraphs": [
+              "A content delivery network runs caches in many locations. Clients reach a nearby edge through DNS or anycast routing; the edge serves a stored copy or fetches it from your origin. This cuts latency and origin load, and absorbs traffic spikes and some attacks.",
+              "The CDN follows the HTTP caching rules from lesson 17. `s-maxage` sets freshness for shared caches and overrides `max-age` there, so `Cache-Control: public, max-age=60, s-maxage=600` lets browsers keep a copy for one minute and the CDN for ten. `private` or `no-store` keeps responses out of shared caches, which is essential for personalised pages. The cache key is normally the method and URL plus any headers named in `Vary`; unbounded query strings or `Vary: User-Agent` fragment the cache.",
+              "Version static file names (for example `app.3f9c2.js`) and cache them for a long time, so a deploy publishes new names instead of waiting for expiry. Purge or use short lifetimes for HTML that refers to them. Never let a CDN cache a response that set a cookie or depended on authorisation unless the key includes it."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "An online shop serves product images, a JavaScript bundle, product pages that are the same for everyone, and a basket page per user. Write a Cache-Control header for each and say which a CDN should cache.",
+          "solution": "Images and the versioned JavaScript bundle (for example app.3f9c2.js): Cache-Control: public, max-age=31536000, immutable. The CDN and browsers cache them for a year; a new deploy uses new file names. Product pages: Cache-Control: public, max-age=60, s-maxage=300. Browsers recheck after a minute, the CDN after five; purge on price changes if five minutes is too stale. Basket page: Cache-Control: private, no-store. It must never be stored by the CDN because it is specific to one user.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Long-lived, immutable caching only for versioned static files.",
+            "Uses s-maxage to give the CDN a different lifetime from browsers.",
+            "Keeps the per-user basket out of shared caches with private or no-store."
+          ]
+        },
+        "quiz": {
+          "question": "A layer 7 load balancer can do something a layer 4 balancer cannot. Which?",
+          "options": [
+            "Forward TCP connections",
+            "Route requests by URL path or Host header",
+            "Balance across several backends"
+          ],
+          "correct": 1,
+          "explanation": "Only a balancer that terminates and parses HTTP can route by path, host or header. Both kinds can forward connections across backends."
+        },
+        "references": [
+          {
+            "title": "RFC 9111: HTTP Caching",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111",
+            "section": "Section 5.2.2.10, s-maxage",
+            "reviewed": "2026-11-08",
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          },
+          {
+            "title": "RFC 9110: HTTP Semantics",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110",
+            "section": "Section 7.6, message forwarding",
+            "reviewed": "2026-11-08",
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          },
+          {
+            "title": "MDN: Cache-Control",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control",
+            "section": "Response directives",
+            "reviewed": "2026-11-08",
+            "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A response carries Cache-Control: public, max-age=60, s-maxage=600. How long may a CDN treat it as fresh?",
+            "options": [
+              "600 seconds",
+              "60 seconds",
+              "Until the browser's copy expires"
+            ],
+            "correct": 0,
+            "explanation": "s-maxage applies to shared caches such as CDNs and overrides max-age there; browsers still use max-age."
+          }
+        ]
+      },
+      {
         "id": "timeouts",
-        "title": "19. Distinguish waits and overall deadlines",
+        "title": "23. Distinguish waits and overall deadlines",
         "stage": "advanced",
         "takeaway": "A timeout bounds a particular wait under a library's semantics; an overall deadline limits how long the application is willing to keep trying.",
         "sections": [
@@ -74194,7 +74530,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "retry-budgets",
-        "title": "20. Bound retries by attempts and time",
+        "title": "24. Bound retries by attempts and time",
         "stage": "advanced",
         "takeaway": "Repeated reads can recover a transient failure, but every retry adds load.",
         "sections": [
@@ -74364,7 +74700,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "body-contracts",
-        "title": "21. Validate response bodies after transport",
+        "title": "25. Validate response bodies after transport",
         "stage": "advanced",
         "takeaway": "A client should bound content and validate media type, syntax and application schema.",
         "sections": [
@@ -74517,7 +74853,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "diagnostics",
-        "title": "22. Build a layered incident timeline",
+        "title": "26. Build a layered incident timeline",
         "stage": "advanced",
         "takeaway": "A good network diagnosis reports which stage completed, what failed and the relevant bounded metadata.",
         "sections": [
@@ -74578,7 +74914,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "protocol-evolution",
-        "title": "23. Keep semantics separate from HTTP version",
+        "title": "27. Keep semantics separate from HTTP version",
         "stage": "advanced",
         "takeaway": "HTTP/1.1, HTTP/2 and HTTP/3 carry related HTTP semantics through different wire protocols and transports.",
         "sections": [
@@ -74639,7 +74975,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "network-review",
-        "title": "24. Defend a client with explicit evidence",
+        "title": "28. Defend a client with explicit evidence",
         "stage": "advanced",
         "takeaway": "The final project combines URL policy, observed HTTP semantics, validated bodies, public-cache isolation and bounded reads.",
         "sections": [
@@ -74935,9 +75271,11 @@ const LEARNING_PATHS = [
       "lessonTasks": {
         "request-journey": "foundation",
         "addresses-ports": "foundation",
+        "subnets-nat-routing": "foundation",
         "dns": "foundation",
         "dns-cache": "foundation",
         "transport": "foundation",
+        "udp-and-tcp": "foundation",
         "urls-origins": "foundation",
         "encoding": "foundation",
         "http-message": "foundation",
@@ -74949,8 +75287,10 @@ const LEARNING_PATHS = [
         "browser-boundaries": "intermediate",
         "cache": "intermediate",
         "validators": "intermediate",
+        "websockets-and-sse": "intermediate",
         "redirects": "advanced",
         "proxies": "advanced",
+        "load-balancers-cdn": "advanced",
         "timeouts": "advanced",
         "retry-budgets": "advanced",
         "body-contracts": "advanced",

@@ -23,9 +23,10 @@ from tcp_framing import exchange  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
-    'proxies/2': 'Trusted forwarding boundaries, lesson 18',
-    'protocol-evolution/2': 'HTTP semantics and wire protocols, lesson 23',
-    'network-review/2': 'Unexecuted network extensions, lesson 24',
+    'proxies/2': 'Trusted forwarding boundaries, lesson 21',
+    'protocol-evolution/2': 'HTTP semantics and wire protocols, lesson 27',
+    'network-review/2': 'Unexecuted network extensions, lesson 28',
+    'load-balancers-cdn/2': 'CDNs and edge caching (s-maxage overrides max-age in shared caches), lesson 22',
 }
 JSON = {'Content-Type': 'application/json'}
 
@@ -227,7 +228,32 @@ def advanced_extra():
     return pick(result, {'ProtocolError: invalid lesson contract': 'ProtocolError: the contract allows exactly the fields lesson and version'})
 
 
+def subnets_nat_routing():
+    return str(len(list(ipaddress.ip_network('192.168.10.0/26').hosts())))
+
+
+def udp_and_tcp():
+    import socket
+    receiver = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sender = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    with receiver, sender:
+        receiver.bind(('127.0.0.1', 0))
+        receiver.settimeout(2)
+        for message in (b'hello', b'world'):
+            sender.sendto(message, receiver.getsockname())
+        received = [receiver.recvfrom(1024)[0] for _ in range(2)]
+    return pick(tuple(received), {(b'hello', b'world'): 'Two: each datagram arrives as one message'})
+
+
+def websockets_and_sse():
+    import base64
+    import hashlib
+    key = 'dGhlIHNhbXBsZSBub25jZQ=='
+    return base64.b64encode(hashlib.sha1((key + '258EAFA5-E914-47DA-95CA-C5AB0DC85B11').encode()).digest()).decode()
+
+
 FACTS = {
+    'subnets-nat-routing/2': subnets_nat_routing, 'udp-and-tcp/2': udp_and_tcp, 'websockets-and-sse/2': websockets_and_sse,
     'request-journey/2': request_journey, 'addresses-ports/2': addresses_ports, 'dns/2': dns, 'dns-cache/2': dns_cache,
     'transport/2': transport, 'urls-origins/2': urls_origins, 'encoding/2': encoding, 'http-message/2': http_message,
     'status/2': status, 'methods-retries/2': methods_retries, 'tls/2': tls, 'certificates/2': certificates,
