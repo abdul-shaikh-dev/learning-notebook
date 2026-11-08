@@ -339,8 +339,59 @@
       ]
     },
     {
+      "id": "text-cleaning",
+      "title": "7. Clean text columns before you group them",
+      "stage": "foundation",
+      "takeaway": "Free-text categories split one group into many spellings; normalise them with vectorised .str methods and an explicit mapping, and count what you changed.",
+      "sections": [
+        {
+          "title": "Understand the decision",
+          "paragraphs": [
+            "A channel column typed by agents may contain `Email`, `email `, `E-mail` and `EMAIL`. Grouping it directly reports four channels where there is one. The `.str` accessor applies string methods to a whole column at once: `strip` removes surrounding spaces, `lower` or `casefold` fixes case, `replace` with a regular expression collapses repeated whitespace and `extract` pulls a pattern such as a ticket reference into its own column.",
+            "Normalising is a decision, not a cleanup chore. Map known variants to canonical values with an explicit dictionary, leave unknown values visible rather than guessing, and report how many rows each rule changed. Missing values stay missing: `.str` methods return missing for missing input, and `str.contains` needs `na=False` when it feeds a filter."
+          ]
+        },
+        {
+          "title": "Worked example",
+          "paragraphs": [
+            "Four spellings collapse to one channel after stripping, lowercasing and mapping. The unknown value `fax` is kept and counted, not hidden. `extract` finds the order reference where one exists and leaves missing values elsewhere."
+          ],
+          "example": "import pandas as pd\n\ndf = pd.DataFrame({\n    \"channel\": [\"Email\", \" email \", \"E-mail\", \"EMAIL\", \"chat\", \"Chat \", \"fax\", None],\n    \"subject\": [\"Refund ORD-1042\", \"login\", \"ord-77 late\", \"Login\", \"hi\", \"ORD-9 lost\", \"x\", \"y\"],\n})\ncanonical = {\"email\": \"email\", \"e-mail\": \"email\", \"chat\": \"chat\"}\ncleaned = df[\"channel\"].str.strip().str.lower()\ndf[\"channel_clean\"] = cleaned.map(canonical)\nprint(df[\"channel\"].nunique(), \"raw spellings ->\", df[\"channel_clean\"].nunique(), \"channels\")\nprint(\"unknown:\", cleaned[df[\"channel_clean\"].isna() & cleaned.notna()].tolist())\nprint(df[\"channel_clean\"].value_counts().to_dict())\ndf[\"order\"] = df[\"subject\"].str.upper().str.extract(r\"(ORD-\\d+)\", expand=False)\nprint(df[\"order\"].tolist())\nprint(df[\"subject\"].str.contains(\"login\", case=False, na=False).sum())\n\n# Output:\n# 7 raw spellings -> 2 channels\n# unknown: ['fax']\n# {'email': 4, 'chat': 2}\n# ['ORD-1042', nan, 'ORD-77', nan, nan, 'ORD-9', nan, nan]\n# 2"
+        }
+      ],
+      "exercise": {
+        "prompt": "A `priority` column contains `High`, `high `, `HIGH`, `hi`, `Urgent`, `low` and missing values. Write the cleaning steps, decide what happens to `hi` and `Urgent`, and say what you report alongside the cleaned counts.",
+        "solution": "Strip and lowercase with .str.strip().str.lower(), then map through an explicit dictionary such as {'high': 'high', 'low': 'low'}. Whether 'hi' means high and whether 'urgent' is a separate level or an alias of high must be confirmed with the data owner, not guessed; until then keep them as unmapped values. Report the number of rows changed by each step, the unmapped values with counts, and the missing values separately.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Strips and normalises case with vectorised .str methods.",
+          "Uses an explicit mapping and does not guess ambiguous values.",
+          "Reports changed, unmapped and missing counts."
+        ]
+      },
+      "quiz": {
+        "question": "Why pass `na=False` to `str.contains` when building a filter?",
+        "options": [
+          "It makes the match case-insensitive",
+          "Missing text would otherwise produce missing values in the mask instead of False",
+          "It removes missing rows from the table"
+        ],
+        "correct": 1,
+        "explanation": "A boolean filter needs True or False for every row. na=False treats missing text as not matching."
+      },
+      "references": [
+        {
+          "title": "pandas user guide: Working with text data",
+          "url": "https://pandas.pydata.org/docs/user_guide/text.html",
+          "section": "String methods; extracting substrings",
+          "reviewed": "2026-11-08",
+          "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+        }
+      ]
+    },
+    {
       "id": "indexes-and-alignment",
-      "title": "7. Understand labels and row positions",
+      "title": "8. Understand labels and row positions",
       "stage": "foundation",
       "takeaway": "Pandas aligns labeled values by index, which can differ from row position.",
       "sections": [
@@ -390,7 +441,7 @@
     },
     {
       "id": "derive-and-validate",
-      "title": "8. Derive columns with units and boundary checks",
+      "title": "9. Derive columns with units and boundary checks",
       "takeaway": "A derived column must implement a stated rule, including equality at its boundary.",
       "stage": "intermediate",
       "sections": [
@@ -439,8 +490,66 @@
       ]
     },
     {
+      "id": "vectorize-not-apply",
+      "title": "10. Prefer vectorised operations to row-wise apply",
+      "stage": "intermediate",
+      "takeaway": "Whole-column operations run in compiled code; row-wise apply calls Python once per row. Use vectorised arithmetic, np.where and np.select, and keep apply for logic that cannot be expressed on columns.",
+      "sections": [
+        {
+          "title": "Understand the decision",
+          "paragraphs": [
+            "`df.apply(f, axis=1)` builds a Series for each row and calls a Python function on it, so its cost grows with Python overhead per row. Column arithmetic, comparisons, `.str` and `.dt` methods operate on whole arrays in compiled code. For conditional values use `np.where` for two outcomes and `np.select` for several, with conditions checked in order and an explicit default.",
+            "Vectorised code is not only faster; it states the rule once for the column, which makes boundary checks (lesson 9) easier to test. Keep apply (or a plain loop) for logic that genuinely needs per-row Python, such as calling a parser that has no vectorised form, and measure before optimising anything else."
+          ]
+        },
+        {
+          "title": "Worked example",
+          "paragraphs": [
+            "Both versions assign the same service level to 100,000 tickets. The row-wise version is many times slower; the exact ratio depends on the machine, so the example prints only whether the vectorised version was at least five times faster."
+          ],
+          "example": "import time\nimport numpy as np\nimport pandas as pd\n\nrng = np.random.default_rng(7)\ndf = pd.DataFrame({\"hours\": rng.integers(0, 100, 100_000),\n                   \"priority\": rng.choice([\"high\", \"low\"], 100_000)})\n\ndef level(row):\n    if row[\"priority\"] == \"high\" and row[\"hours\"] > 8:\n        return \"breach\"\n    if row[\"hours\"] > 48:\n        return \"breach\"\n    return \"ok\" if row[\"hours\"] <= 24 else \"late\"\n\nstart = time.perf_counter()\nby_row = df.apply(level, axis=1)\nrow_seconds = time.perf_counter() - start\n\nstart = time.perf_counter()\nbreach = ((df[\"priority\"] == \"high\") & (df[\"hours\"] > 8)) | (df[\"hours\"] > 48)\nby_column = pd.Series(np.select([breach, df[\"hours\"] <= 24], [\"breach\", \"ok\"], default=\"late\"))\ncolumn_seconds = time.perf_counter() - start\n\nprint(by_row.equals(by_column), by_column.value_counts().sort_index().to_dict())\nprint(\"vectorised at least 5x faster:\", row_seconds > 5 * column_seconds)\n\n# Output:\n# True {'breach': 71283, 'late': 11868, 'ok': 16849}\n# vectorised at least 5x faster: True"
+        }
+      ],
+      "exercise": {
+        "prompt": "A report labels each ticket `quick` (under 2 hours), `normal` (2 to 24 hours) or `slow` (over 24 hours), and missing durations must stay unlabelled. The current code uses apply with if statements and takes minutes on a large file. Rewrite the rule with vectorised operations and say how you would show the result is unchanged.",
+        "solution": "Use np.select with conditions [hours < 2, hours <= 24, hours > 24] and choices ['quick', 'normal', 'slow'], with default set to a missing value so missing durations, which fail every comparison, stay unlabelled (or pd.cut with bins [0, 2, 24, inf] and right edges chosen to match the rule exactly). Check boundaries 2 and 24 explicitly. Show equivalence by running both versions on the same sample, including boundary and missing values, and asserting the Series are equal before replacing the old code.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Expresses the rule with np.select or pd.cut on whole columns.",
+          "Handles the 2 and 24 hour boundaries and missing durations.",
+          "Proves equivalence by comparing old and new results on the same data."
+        ]
+      },
+      "quiz": {
+        "question": "Why is `df.apply(f, axis=1)` usually slow on large tables?",
+        "options": [
+          "It sorts the table first",
+          "It calls a Python function once per row instead of operating on whole columns in compiled code",
+          "It copies the file from disk"
+        ],
+        "correct": 1,
+        "explanation": "Per-row Python calls dominate the cost. Column operations run once over arrays."
+      },
+      "references": [
+        {
+          "title": "pandas user guide: Enhancing performance",
+          "url": "https://pandas.pydata.org/docs/user_guide/enhancingperf.html",
+          "section": "Cython (writing C extensions for pandas); vectorisation advice",
+          "reviewed": "2026-11-08",
+          "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+        },
+        {
+          "title": "NumPy: numpy.select",
+          "url": "https://numpy.org/doc/stable/reference/generated/numpy.select.html",
+          "section": "numpy.select",
+          "reviewed": "2026-11-08",
+          "scope": "NumPy 2.5 API; the practice environment pins its own NumPy version."
+        }
+      ]
+    },
+    {
       "id": "group-and-denominators",
-      "title": "9. Summarize groups with counts",
+      "title": "11. Summarize groups with counts",
       "takeaway": "Show the group denominator beside its rate.",
       "stage": "intermediate",
       "sections": [
@@ -490,7 +599,7 @@
     },
     {
       "id": "joins-and-cardinality",
-      "title": "10. Join lookup tables without multiplying tickets",
+      "title": "12. Join lookup tables without multiplying tickets",
       "takeaway": "Validate the expected relationship before accepting a join.",
       "stage": "intermediate",
       "sections": [
@@ -540,7 +649,7 @@
     },
     {
       "id": "distributions-and-outliers",
-      "title": "11. Read a distribution before choosing one average",
+      "title": "13. Read a distribution before choosing one average",
       "takeaway": "An unusual value needs investigation, and one average can hide its effect.",
       "stage": "intermediate",
       "sections": [
@@ -590,8 +699,66 @@
       ]
     },
     {
+      "id": "correlation-and-outliers",
+      "title": "14. Measure association and flag outliers with explicit rules",
+      "stage": "intermediate",
+      "takeaway": "Pearson correlation measures linear association and is pulled by a few extreme values; Spearman uses ranks. Flag outliers with a stated rule such as the IQR fences and report results with and without them.",
+      "sections": [
+        {
+          "title": "Understand the decision",
+          "paragraphs": [
+            "A correlation coefficient summarises how two columns move together, from -1 to 1. Pearson's coefficient measures linear association and can be dominated by one extreme point. Spearman's coefficient correlates ranks, so it measures any monotonic relationship and resists outliers. Neither says one variable causes the other (lesson 18), and a near-zero value can hide a strong curved relationship, so plot the data first (lesson 16).",
+            "Lesson 13 asked whether a long duration is real before excluding it. To flag candidates consistently, use a stated rule: the interquartile range (IQR) fences mark values below Q1 - 1.5 × IQR or above Q3 + 1.5 × IQR. Flag them in a column, investigate, and show the result with and without them; do not delete rows silently."
+          ]
+        },
+        {
+          "title": "Worked example",
+          "paragraphs": [
+            "Without the extreme ticket, replies and hours are strongly associated by both measures. One ticket with 400 hours drags Pearson's coefficient from 0.98 to 0.64, while Spearman stays at 0.99 because the ticket is still simply the largest rank. The IQR rule flags exactly that ticket."
+          ],
+          "example": "import pandas as pd\n\ndf = pd.DataFrame({\"replies\": [1, 2, 2, 3, 4, 5, 6, 7],\n                   \"hours\":   [2, 3, 5, 6, 8, 9, 12, 400]})\nclean = df.iloc[:-1]\nprint(\"without outlier:\", round(clean.corr().loc[\"replies\", \"hours\"], 2),\n      round(clean.corr(method=\"spearman\").loc[\"replies\", \"hours\"], 2))\nprint(\"with outlier:   \", round(df.corr().loc[\"replies\", \"hours\"], 2),\n      round(df.corr(method=\"spearman\").loc[\"replies\", \"hours\"], 2))\n\nq1, q3 = df[\"hours\"].quantile([0.25, 0.75])\niqr = q3 - q1\ndf[\"outlier\"] = (df[\"hours\"] < q1 - 1.5 * iqr) | (df[\"hours\"] > q3 + 1.5 * iqr)\nprint(q1, q3, df.loc[df[\"outlier\"], \"hours\"].tolist())\n\n# Output:\n# without outlier: 0.98 0.99\n# with outlier:    0.64 0.99\n# 4.5 9.75 [400]"
+        }
+      ],
+      "exercise": {
+        "prompt": "A manager reads a Pearson correlation of 0.05 between ticket length (characters) and resolution hours and concludes that length does not matter. List what you would check before agreeing and how you would report the result.",
+        "solution": "Plot length against hours to look for a curved or clustered relationship that Pearson misses. Compute Spearman as well. Flag outliers with the IQR rule and recompute both coefficients with and without them, because a few extreme tickets can hide or create an association. Check groups (priority, channel) separately, since mixing groups can cancel a relationship. Report the coefficients with their method and row count, the outlier rule and its effect, and state that correlation describes association in this data, not whether making tickets shorter would change resolution time.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Plots the data and compares Pearson with Spearman.",
+          "Tests sensitivity to flagged outliers with a stated rule.",
+          "Checks subgroups and avoids a causal conclusion."
+        ]
+      },
+      "quiz": {
+        "question": "Which coefficient is less affected by a single extreme value?",
+        "options": [
+          "Pearson",
+          "Spearman",
+          "Both are affected equally"
+        ],
+        "correct": 1,
+        "explanation": "Spearman uses ranks, so an extreme value is only the largest rank, not a huge distance."
+      },
+      "references": [
+        {
+          "title": "pandas API: DataFrame.corr",
+          "url": "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corr.html",
+          "section": "method: pearson, kendall, spearman",
+          "reviewed": "2026-11-08",
+          "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+        },
+        {
+          "title": "pandas API: Series.quantile",
+          "url": "https://pandas.pydata.org/docs/reference/api/pandas.Series.quantile.html",
+          "section": "interpolation",
+          "reviewed": "2026-11-08",
+          "scope": "pandas 3.0.6 API; examples use fictional ticket data."
+        }
+      ]
+    },
+    {
       "id": "dates-and-aggregation",
-      "title": "12. Group dates without inventing observations",
+      "title": "15. Group dates without inventing observations",
       "takeaway": "A date with no rows is different from a measured zero.",
       "stage": "intermediate",
       "sections": [
@@ -641,7 +808,7 @@
     },
     {
       "id": "charts-for-questions",
-      "title": "13. Choose a chart for the comparison",
+      "title": "16. Choose a chart for the comparison",
       "takeaway": "Label the measure and units, and keep the plot consistent with the table.",
       "stage": "intermediate",
       "sections": [
@@ -691,7 +858,7 @@
     },
     {
       "id": "reshape-for-comparison",
-      "title": "14. Reshape after checking unique combinations",
+      "title": "17. Reshape after checking unique combinations",
       "stage": "intermediate",
       "takeaway": "A pivot needs a defined value for every row-and-column combination.",
       "sections": [
@@ -741,7 +908,7 @@
     },
     {
       "id": "association-and-comparison",
-      "title": "15. Compare groups without claiming a cause",
+      "title": "18. Compare groups without claiming a cause",
       "takeaway": "A difference between groups does not establish why it occurred.",
       "stage": "advanced",
       "sections": [
@@ -798,7 +965,7 @@
     },
     {
       "id": "validation-functions",
-      "title": "16. Make invalid input fail before reporting",
+      "title": "19. Make invalid input fail before reporting",
       "takeaway": "Check the data contract before creating summaries or charts.",
       "stage": "advanced",
       "sections": [
@@ -848,7 +1015,7 @@
     },
     {
       "id": "functions-and-tests",
-      "title": "17. Separate transformation from file output",
+      "title": "20. Separate transformation from file output",
       "takeaway": "Test calculations as functions before testing the exported report.",
       "stage": "advanced",
       "sections": [
@@ -897,8 +1064,66 @@
       ]
     },
     {
+      "id": "reproducible-notebooks",
+      "title": "21. Keep notebooks reproducible",
+      "stage": "advanced",
+      "takeaway": "A notebook's kernel remembers every cell you ran, in the order you ran it; a result counts only if a fresh kernel reproduces it by running all cells from the top.",
+      "sections": [
+        {
+          "title": "Understand the decision",
+          "paragraphs": [
+            "Jupyter notebooks are good for exploration: code, output, charts and notes sit together. The kernel, however, keeps every variable you created in any order. Re-running an earlier cell after a later one, deleting a cell whose variable still exists, or editing a cell without re-running its dependants all produce outputs that the saved notebook cannot reproduce.",
+            "Before sharing a result, restart the kernel and run all cells, or execute the notebook from the command line (for example `jupyter nbconvert --to notebook --execute`). Read inputs from files with fixed paths and seeds, pin library versions, keep reusable transformations in a tested module (lesson 20) that the notebook imports, and clear large or sensitive outputs before committing. Use the notebook to explain; let the report command (lesson 23) produce the final numbers."
+          ]
+        },
+        {
+          "title": "Worked example",
+          "paragraphs": [
+            "The three cells are run once in the order a person might run them while exploring, and once top to bottom as a fresh kernel would. Re-running the conversion cell converts minutes to minutes again, so the exploratory total is 60 times too large, and nothing on screen says so. A restart and run-all exposes it."
+          ],
+          "example": "cells = [\n    \"durations = [2, 30, 50, 4]                       # hours, loaded from the file\",\n    \"durations = [d * 60 for d in durations]          # convert to minutes\",\n    \"total_minutes = sum(durations)\",\n]\n\ndef run(order):\n    kernel = {}                                       # the variables a kernel keeps\n    for index in order:\n        exec(cells[index], kernel)\n    return kernel[\"total_minutes\"]\n\nprint(\"exploration order 0,1,2,1,2:\", run([0, 1, 2, 1, 2]))\nprint(\"fresh kernel order 0,1,2:\", run([0, 1, 2]))\n\n# Output:\n# exploration order 0,1,2,1,2: 309600\n# fresh kernel order 0,1,2: 5160"
+        }
+      ],
+      "exercise": {
+        "prompt": "A colleague shares a notebook whose final chart shows 412 late tickets, but when you run it you get an error in cell 6 and, after fixing it, 388. Describe how you find out which result is right and what you change so this cannot recur.",
+        "solution": "Trust neither number until a fresh kernel reproduces one. Check the execution counts in the saved notebook for out-of-order runs, then restart and run all from the original input file and pinned environment, fixing cell 6 in the open. Compare intermediate row counts with the colleague's outputs to find where they diverge, often a variable defined by a deleted cell or a filter applied twice. Then move the transformations into a tested module, run the notebook headless in CI with nbconvert --execute, fix seeds and paths, pin versions, and have the report command produce the published count.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Reproduces the result from a fresh kernel before choosing one.",
+          "Uses execution counts and intermediate counts to locate the divergence.",
+          "Moves logic to a tested module and executes the notebook automatically."
+        ]
+      },
+      "quiz": {
+        "question": "Why can a saved notebook show an output that running it again does not reproduce?",
+        "options": [
+          "Notebooks store outputs in a compressed format",
+          "The kernel kept state from cells run out of order, edited or deleted after they ran",
+          "Jupyter randomises cell order"
+        ],
+        "correct": 1,
+        "explanation": "Outputs record what the kernel held at the time, not what the cells produce from the top."
+      },
+      "references": [
+        {
+          "title": "nbconvert: Executing notebooks",
+          "url": "https://nbconvert.readthedocs.io/en/latest/execute_api.html",
+          "section": "Executing notebooks from the command line",
+          "reviewed": "2026-11-08",
+          "scope": "nbconvert 7 documentation; the course practice uses a report command, and Jupyter is optional."
+        },
+        {
+          "title": "Rule et al. (2019): Ten simple rules for writing and sharing computational analyses in Jupyter Notebooks",
+          "url": "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1007007",
+          "section": "Rules 4-9",
+          "reviewed": "2026-11-08",
+          "scope": "Peer-reviewed guidance used for workflow practices, not a tool requirement."
+        }
+      ]
+    },
+    {
       "id": "chunking-and-weighting",
-      "title": "18. Combine chunks using sufficient totals",
+      "title": "22. Combine chunks using sufficient totals",
       "stage": "advanced",
       "takeaway": "Combine sums and counts rather than averaging unequal chunk means.",
       "sections": [
@@ -948,7 +1173,7 @@
     },
     {
       "id": "reproducible-report",
-      "title": "19. Generate a report from one command",
+      "title": "23. Generate a report from one command",
       "takeaway": "Record inputs and versions so another run can explain its result.",
       "stage": "advanced",
       "sections": [
@@ -1005,7 +1230,7 @@
     },
     {
       "id": "sensitivity-and-limits",
-      "title": "20. Check how choices change the conclusion",
+      "title": "24. Check how choices change the conclusion",
       "takeaway": "Show when a result depends on a threshold or exclusion rule.",
       "stage": "advanced",
       "sections": [
@@ -1055,7 +1280,7 @@
     },
     {
       "id": "handoff-to-modeling",
-      "title": "21. Hand analysis to a model without leaking the answer",
+      "title": "25. Hand analysis to a model without leaking the answer",
       "takeaway": "Separate intake information from outcomes before attempting prediction.",
       "stage": "advanced",
       "sections": [

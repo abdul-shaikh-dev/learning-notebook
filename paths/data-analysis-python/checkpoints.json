@@ -18,11 +18,17 @@
     "missing-and-duplicates": [
       {"question": "A copy of T001 with a different duration is appended to the data. What does validate do?", "options": ["Raises ValueError: Ticket IDs must be nonblank and unique", "Keeps the later row", "Averages the two durations"], "correct": 0, "explanation": "The reference has no documented rule for choosing between conflicting records, so it rejects the duplicate instead of picking one silently."}
     ],
+    "text-cleaning": [
+      {"question": "In the lesson's example, how many raw channel spellings are there before cleaning?", "options": ["4", "7", "8"], "correct": 1, "explanation": "Email, ' email ', E-mail, EMAIL, chat, 'Chat ' and fax are seven distinct non-missing values; nunique ignores the missing one."}
+    ],
     "indexes-and-alignment": [
       {"question": "high = df[df.priority == 'high']. What does high.iloc[1].ticket_id return?", "options": ["T005", "T002", "A KeyError"], "correct": 0, "explanation": "iloc counts positions in the filtered table, whose second row is T005. Its index label is still 4, from the original table."}
     ],
     "derive-and-validate": [
       {"question": "T004 has resolution_hours 24. Its breached flag is changed to 1. What does validate do?", "options": ["Raises ValueError: Breach flag disagrees with strict 24-hour rule", "Accepts it, because 24 hours is a breach", "Corrects the flag to 0"], "correct": 0, "explanation": "The flag is checked against resolution_hours > 24, so a stored value that disagrees with the rule is rejected rather than repaired."}
+    ],
+    "vectorize-not-apply": [
+      {"question": "With np.select, a ticket matches both the first and the second condition. Which choice does it get?", "options": ["The first matching condition's choice", "The last matching condition's choice", "The default"], "correct": 0, "explanation": "np.select checks conditions in order and uses the first that is true for each element."}
     ],
     "group-and-denominators": [
       {"question": "What breach rates does summarize report for billing and technical?", "options": ["Billing about 33.3%, technical 50%", "Billing 40%, technical 60%, sharing the 10 breaches", "Billing about 16.7%, technical 25%, out of all 24"], "correct": 0, "explanation": "Each team's rate uses its own 12 tickets: 4 breaches for billing and 6 for technical."}
@@ -32,6 +38,9 @@
     ],
     "distributions-and-outliers": [
       {"question": "What are the mean and median of resolution_hours in the dataset?", "options": ["Mean about 26.4 hours, median 22 hours", "Mean 22 hours, median about 26.4 hours", "Both 24 hours"], "correct": 0, "explanation": "A few long tickets, up to 96 hours, pull the mean above the median. Report both and the tail rather than one average."}
+    ],
+    "correlation-and-outliers": [
+      {"question": "In the lesson's example, what happens to Pearson's coefficient when the 400-hour ticket is included?", "options": ["It stays at 0.98", "It falls to 0.64", "It becomes negative"], "correct": 1, "explanation": "The single extreme point dominates the linear measure, while Spearman, based on ranks, stays at 0.99."}
     ],
     "dates-and-aggregation": [
       {"question": "Tickets are counted per week ending on Sunday. How many fall in the week ending 2026-01-04?", "options": ["4, because the data starts on Thursday 1 January", "7", "0"], "correct": 0, "explanation": "The first week is partial: the data begins mid-week. Say so instead of comparing it with full weeks."}
@@ -50,6 +59,9 @@
     ],
     "functions-and-tests": [
       {"question": "One customer_messages value is changed to 1.5. What does validate do?", "options": ["Raises ValueError: Message counts must be nonnegative whole numbers", "Rounds it to 2", "Accepts it, because it is numeric"], "correct": 0, "explanation": "Counts must be whole numbers. Testing the validation function alone makes the failure quick to check, without writing a report."}
+    ],
+    "reproducible-notebooks": [
+      {"question": "In the lesson's simulation, what does the exploration order 0, 1, 2, 1, 2 report?", "options": ["5160", "309600", "86"], "correct": 1, "explanation": "The conversion runs twice, multiplying by 3,600 instead of 60: 86 hours × 3,600 = 309,600."}
     ],
     "chunking-and-weighting": [
       {"question": "The CSV is read in chunks of 10 rows, and each chunk's sum and count are combined. What mean resolution time results?", "options": ["About 26.4 hours, the same as the whole file", "The mean of the three chunk means", "It cannot be computed from chunks"], "correct": 0, "explanation": "Sums and counts combine exactly. Averaging chunk means would weight the final 4-row chunk as heavily as the 10-row ones."}

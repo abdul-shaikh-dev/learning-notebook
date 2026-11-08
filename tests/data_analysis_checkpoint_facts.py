@@ -23,7 +23,7 @@ import analysis  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
-    'handoff-to-modeling/2': 'Outcome fields are unavailable at prediction time and leak the answer, lesson 21',
+    'handoff-to-modeling/2': 'Outcome fields are unavailable at prediction time and leak the answer, lesson 25',
 }
 
 
@@ -252,7 +252,41 @@ def advanced_blank_line():
     return pick((tuple(differs), padded['rows']), {(('source_sha256',), 24): 'Only source_sha256: it still reports 24 rows'})
 
 
+
+def _lesson_output(lesson_id):
+    import subprocess
+    course = json.loads((ROOT / 'paths' / 'data-analysis-python' / 'path.json').read_text(encoding='utf-8'))
+    lesson = next(l for l in course['lessons'] if l['id'] == lesson_id)
+    code = next(s['example'] for s in lesson['sections'] if s.get('example')).split('# Output:')[0]
+    run = subprocess.run([sys.executable, '-c', code], capture_output=True, text=True, timeout=120)
+    if run.returncode:
+        raise AssertionError(run.stderr)
+    return run.stdout.splitlines()
+
+
+def text_cleaning():
+    return _lesson_output('text-cleaning')[0].split()[0]
+
+
+def vectorize_not_apply():
+    import numpy as np
+    hours = pd.Series([1, 5, 9])
+    picked = np.select([hours > 0, hours > 4], ['first', 'second'], default='none')
+    return pick(picked[1], {'first': "The first matching condition's choice"})
+
+
+def correlation_and_outliers():
+    with_outlier = float(_lesson_output('correlation-and-outliers')[1].split()[2])
+    return pick(with_outlier, {0.64: 'It falls to 0.64', 0.98: 'It stays at 0.98'})
+
+
+def reproducible_notebooks():
+    return _lesson_output('reproducible-notebooks')[0].split(':')[1].strip()
+
+
 FACTS = {
+    'text-cleaning/2': text_cleaning, 'vectorize-not-apply/2': vectorize_not_apply,
+    'correlation-and-outliers/2': correlation_and_outliers, 'reproducible-notebooks/2': reproducible_notebooks,
     'question-and-grain/2': question_and_grain, 'load-and-inspect/2': load_and_inspect,
     'numpy-arrays/2': numpy_arrays, 'types-and-dates/2': types_and_dates, 'select-and-filter/2': select_and_filter,
     'missing-and-duplicates/2': missing_and_duplicates, 'indexes-and-alignment/2': indexes_and_alignment,
