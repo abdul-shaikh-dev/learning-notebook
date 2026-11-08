@@ -36,6 +36,9 @@
     "pull-request-review": [
       {"question": "After feature branched, main gained a commit that changes other.txt. What does git diff main...feature (three dots) show?", "options": ["Only feature's changes since the common ancestor", "feature's changes plus the reversal of main's new commit", "Only main's new commit"], "correct": 0, "explanation": "Three dots diff from the merge base to feature, which is what a reviewer of feature needs. Two dots would compare the two tips and show main's change as if feature removed it."}
     ],
+    "branching-strategies": [
+      {"question": "A product supports versions 3.1 and 3.2 while developing 3.3 on main. A security fix is needed in all three. Where should it land first?", "options": ["On the oldest release branch, then merged forward", "On main, then cherry-picked to release/3.2 and release/3.1", "Only on release/3.2, since that is the newest release"], "correct": 1, "explanation": "Fixing main first guarantees the next release includes it; backports to supported release branches follow with cherry-pick -x for traceability."}
+    ],
     "revert-reset": [
       {"question": "HEAD added the line \"beta\" to notes.txt. What does git revert HEAD produce?", "options": ["A new commit that removes the line; the original stays in history", "The branch moves back one commit and the original disappears", "An unstaged edit that removes the line"], "correct": 0, "explanation": "Revert records a compensating commit on top. History gains a commit rather than losing one, which is why it suits shared branches."}
     ],
@@ -45,17 +48,26 @@
     "bisect": [
       {"question": "git bisect starts with 16 commits after the known good one, the last of them known bad. Git checks out a midpoint and prints \"Bisecting: 7 revisions left to test after this (roughly K steps)\". What is K?", "options": ["3", "7", "15"], "correct": 0, "explanation": "The first midpoint already halves the 16 candidates, so about 8 remain and log2(8) = 3 more tests find the first bad commit: about log2(16) = 4 tests in all."}
     ],
+    "investigate-history": [
+      {"question": "client.py was renamed to http_client.py two commits ago. What does `git log --format=%s -- http_client.py` list?", "options": ["Every commit in the file's history", "Only the commits since the rename; --follow continues past it", "Nothing until the rename is committed again"], "correct": 1, "explanation": "Path filtering uses the current name, so the log stops at the rename commit. --follow tracks one file through renames."}
+    ],
     "cherry-pick": [
       {"question": "What does git cherry-pick -x C add to the new commit's message?", "options": ["A line naming C: (cherry picked from commit followed by C's ID)", "Nothing; -x only checks for conflicts", "C's author name in place of yours"], "correct": 0, "explanation": "-x appends a reference to the original commit, so a maintenance branch records where the fix came from."}
     ],
     "rebase": [
       {"question": "topic has 3 commits that main lacks. After git rebase main, how many commits does git rev-list --count main..topic report?", "options": ["3, each with a new ID", "1, the commits squashed", "0, the commits moved into main"], "correct": 0, "explanation": "Rebase replays each commit onto main's tip. The topic keeps three commits, but their parents change, so their IDs change. main itself does not move."}
     ],
+    "interactive-rebase": [
+      {"question": "A branch has \"Add CSV parser\", \"Add parser tests\" and \"fixup! Add CSV parser\". After git rebase -i --autosquash main with the list accepted, how many commits are on the branch?", "options": ["2", "3", "1"], "correct": 0, "explanation": "Autosquash moves the fixup under its target and marks it fixup, so it melds into Add CSV parser, leaving two commits."}
+    ],
     "stash": [
       {"question": "notes.txt is tracked and modified. After git stash, what does git status --short show?", "options": ["Nothing: the working tree matches HEAD", " M notes.txt", "?? notes.txt"], "correct": 0, "explanation": "An ordinary stash saves tracked changes and resets them to HEAD. git stash pop reapplies them."}
     ],
     "tags-release": [
       {"question": "You tag a commit v1.0 with git tag -a, then make one more commit. What does git describe print?", "options": ["v1.0-1-g followed by the short commit ID", "v1.0", "v1.1"], "correct": 0, "explanation": "describe names the nearest annotated tag, the number of commits since it, and g plus the abbreviated ID of the current commit."}
+    ],
+    "repository-configuration": [
+      {"question": "A pre-commit hook exits with status 1. What happens to the commit?", "options": ["It is created, and the hook's message is shown as a warning", "No commit is created; the staged changes remain staged", "The staged changes are discarded"], "correct": 1, "explanation": "A non-zero exit from pre-commit aborts the commit before it is recorded. The index is left as it was."}
     ],
     "team-release-review": [
       {"question": "A release fails after deployment. Which step does the course's workflow take before choosing a revert or a forward fix?", "options": ["Preserve evidence and stop the harmful rollout", "Force-push main back to the previous tag", "Delete the release tag"], "correct": 0, "explanation": "The lesson's recovery order is to preserve evidence, stop harmful rollout, identify the failing candidate, then choose a tested revert or forward fix. Rewriting shared history as a surprise is ruled out."}

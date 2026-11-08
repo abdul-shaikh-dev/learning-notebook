@@ -236,13 +236,17 @@
     "conflict-resolution": "intermediate",
     "remotes-fetch": "intermediate",
     "pull-request-review": "intermediate",
+    "branching-strategies": "intermediate",
     "revert-reset": "intermediate",
     "reflog-recovery": "intermediate",
     "bisect": "advanced",
+    "investigate-history": "advanced",
     "cherry-pick": "advanced",
     "rebase": "advanced",
+    "interactive-rebase": "advanced",
     "stash": "advanced",
     "tags-release": "advanced",
+    "repository-configuration": "advanced",
     "team-release-review": "advanced"
   },
   "bundle": {
