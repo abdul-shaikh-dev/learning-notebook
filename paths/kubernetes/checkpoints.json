@@ -42,6 +42,9 @@
     "network-policy": [
       {"question": "Which of the two policy-client Pods does the app-ingress rule allow?", "options": ["allowed-client only", "Both", "denied-client only"], "correct": 0, "explanation": "The ingress rule selects app: notebook-client. Enforcement still depends on a network plugin that implements NetworkPolicy."}
     ],
+    "ingress-gateway": [
+      {"question": "In the Gateway API, which object would an application team usually own in its own namespace?", "options": ["GatewayClass", "Gateway", "HTTPRoute"], "correct": 2, "explanation": "Routes are application-level and attach to a shared Gateway owned by the platform team."}
+    ],
     "rbac": [
       {"question": "The viewer ServiceAccount is bound to the pod-viewer Role. Can it delete Pods, or read Secrets?", "options": ["Neither", "Delete Pods only", "Both"], "correct": 0, "explanation": "The Role grants get, list and watch on pods and pods/log, nothing else. RBAC has no implicit extra verbs."}
     ],
@@ -54,6 +57,9 @@
     "jobs": [
       {"question": "version-check has backoffLimit 1 and restartPolicy Never. How many Pods can it create before the Job fails, ignoring the deadline?", "options": ["2", "1", "Unlimited"], "correct": 0, "explanation": "The first attempt plus one retry. The 60-second activeDeadlineSeconds can end it sooner."}
     ],
+    "workload-types": [
+      {"question": "A StatefulSet named queue with 3 replicas is scaled down to 1. What happens to the PersistentVolumeClaims of queue-1 and queue-2 by default?", "options": ["They are deleted with the Pods", "They are kept, so data and storage cost remain until removed", "They are moved to queue-0"], "correct": 1, "explanation": "By default StatefulSet claims are retained on scale-down and deletion; a retention policy must be set to remove them."}
+    ],
     "autoscaling": [
       {"question": "The HPA targets 60% average CPU utilization. With a 100m request per Pod, what average CPU per Pod is the target?", "options": ["60m", "300m, 60% of the limit", "600m"], "correct": 0, "explanation": "Utilization is measured against requests, not limits, which is why CPU-percentage autoscaling needs requests set."}
     ],
@@ -65,6 +71,9 @@
     ],
     "gitops": [
       {"question": "Someone fixes a GitOps-managed Deployment with kubectl edit. What can happen next?", "options": ["The controller overwrites it on reconciliation", "Git is updated to match", "The controller stops managing it"], "correct": 0, "explanation": "The source of truth is the reviewed desired state. A durable change goes there."}
+    ],
+    "quotas-and-extensions": [
+      {"question": "A namespace's ResourceQuota covers requests.memory. A container manifest sets no memory request, and the namespace has a LimitRange with defaultRequest memory 128Mi. What happens?", "options": ["The Pod is rejected for missing a request", "The LimitRange fills in 128Mi and the Pod is admitted if the quota has room", "The Pod runs with no memory request"], "correct": 1, "explanation": "LimitRange defaults are applied at admission before the quota check, so the defaulted request counts against the quota."}
     ],
     "troubleshooting": [
       {"question": "release_app's database file has been removed. What do /live and /ready return?", "options": ["/live 200 and /ready 503", "/live 503 and /ready 503", "/live 200 and /ready 200"], "correct": 0, "explanation": "The process runs, so the Pod looks Running, but readiness fails its database check and the Pod gets no Service traffic."}

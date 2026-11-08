@@ -33,12 +33,15 @@ import check_manifests  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
+    'ingress-gateway/2': 'Application teams own routes attached to a shared Gateway, lesson 15',
+    'workload-types/2': 'StatefulSet claims are retained on scale-down by default, lesson 20',
+    'quotas-and-extensions/2': 'LimitRange defaults are applied before the quota check, lesson 25',
     'control-plane/2': 'A Pod can remain Pending though the API request succeeded, lesson 2',
     'secrets/2': 'Anyone able to create a Pod that mounts a Secret may obtain it, lesson 9',
     'scheduling/2': 'A single-node kind cluster cannot meaningfully satisfy multi-zone rules, lesson 13',
-    'persistent-storage/2': 'Deleting a Pod need not delete the claim or its data, lesson 17',
-    'helm/2': 'A chart does not make invalid selectors or unsafe privileges correct, lesson 21',
-    'gitops/2': 'Manual changes can be overwritten on reconciliation, lesson 22',
+    'persistent-storage/2': 'Deleting a Pod need not delete the claim or its data, lesson 18',
+    'helm/2': 'A chart does not make invalid selectors or unsafe privileges correct, lesson 23',
+    'gitops/2': 'Manual changes can be overwritten on reconciliation, lesson 24',
 }
 
 
