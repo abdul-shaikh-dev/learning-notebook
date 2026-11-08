@@ -670,6 +670,21 @@ a, b, c = (1, 1000), (2, 1000), (1, 1010)
 assert (math.dist(a, b), math.dist(a, c)) == (1, 10)
 answer = 'b'
 ''',
+    'practical-maths-statistics/logarithms-and-log-scales/2': '''
+import math
+answer = f"{math.ceil(math.log2(1_000_000))}"
+''',
+    'practical-maths-statistics/bayes-and-base-rates/2': '''
+posterior = 0.9 * 0.02 / (0.9 * 0.02 + 0.1 * 0.98)
+answer = f"About {round(posterior * 100)}%"
+''',
+    'practical-maths-statistics/distributions/2': '''
+from statistics import NormalDist
+answer = f"About {(1 - NormalDist(100, 15).cdf(130)) * 100:.1f}%"
+''',
+    'practical-maths-statistics/hypothesis-tests/2': '''
+answer = f"About {round((1 - 0.95 ** 20) * 100)}%"
+''',
     'practical-maths-statistics/stage/foundation/1': '''
 seconds = 1500 / 25
 assert seconds == 60
