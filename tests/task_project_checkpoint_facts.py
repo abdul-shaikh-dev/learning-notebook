@@ -56,6 +56,9 @@ FACTS = {
 }
 
 SOURCED = {
+    'raci/2': ('raci', 'two As means nobody can make the final call'),
+    'critical-path/2': ('critical-path', 'Booking the room can slip two days without moving the workshop'),
+    'status-reporting/2': ('status-reporting', 'Amber: at risk, with a recovery plan the team can carry out itself'),
     'capture/2': ('capture', 'Create one inbox item with links to all three and retain the unresolved collection time '
                   'as a question; do not create three bookings.'),
     'task-project/2': ('task-project', 'If a task repeatedly expands into several deliverables, promote it into a small '

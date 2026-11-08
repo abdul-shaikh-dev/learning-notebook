@@ -107842,8 +107842,78 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "raci",
+        "title": "12. Record roles with a RACI chart",
+        "stage": "intermediate",
+        "takeaway": "A RACI chart lists, for each deliverable or decision, who does the work, the one person accountable, who is consulted before and who is informed after.",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Lesson 11 separated coordinating from deciding. A RACI chart writes those roles down for each item. Responsible: the people who do the work. Accountable: the single person who approves the result and answers for it. Consulted: people whose input is needed before the work is finished, in a two-way conversation. Informed: people told about the outcome afterwards.",
+              "Read the chart by rows and by columns. Every row needs exactly one A and at least one R; two As means nobody can make the final call. A row with many Cs will be slow, so ask whether each consultation changes the outcome. A column full of Rs shows one person carrying too much. Agree the chart with the people named in it, because an A assigned without their agreement is only a wish."
+            ]
+          },
+          {
+            "title": "A chart for the workshop",
+            "paragraphs": [
+              "Mira coordinates and writes, Dev checks details, Jo approves anything published and Lee manages the room. Reading the columns shows Mira responsible for four of six rows, which is a workload question worth raising before the plan starts."
+            ],
+            "example": "Item                          Mira  Dev  Jo  Lee\nBook the room                  C          I   R/A\nConfirm the speaker            R/A        I\nDraft the invitation           R     C    A\nTest the registration link     R     R    A\nPublish the invitation         R     I    A   I\nOrder materials                I     R/A  C\nCheck: each row has exactly one A and at least one R."
+          }
+        ],
+        "exercise": {
+          "prompt": "A newsletter team's chart has these rows: \"Choose topics: Ana A, Ben A, Cy C\"; \"Edit issue: Ana R, Ben C, Cy C, Dee C, Eli C\"; \"Send issue: (no one marked)\". Find the problems and rewrite the three rows.",
+          "solution": "Choose topics has two people accountable, so decisions stall: keep one A (for example Ana) and make Ben R or C. Edit issue has no A and four consultations, which will be slow: name an A (Ana or the editor) and keep only the consultations that change the content, informing the others. Send issue has no R and no A, so nobody will send it: mark Ben R and Ana A, and inform the readers' contact. Then check columns for overload and agree the chart with the people named.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Finds the double A, the missing A and the empty row.",
+            "Leaves exactly one A and at least one R per row.",
+            "Reduces consultations that do not change the outcome."
+          ]
+        },
+        "quiz": {
+          "question": "What is the difference between Consulted and Informed?",
+          "options": [
+            "There is none",
+            "Consulted people give input before the work is finished; informed people are told about the result afterwards",
+            "Informed people approve the work"
+          ],
+          "correct": 1,
+          "explanation": "Consultation is a two-way exchange that can change the result; informing is one-way."
+        },
+        "references": [
+          {
+            "title": "Atlassian: RACI chart",
+            "url": "https://www.atlassian.com/work-management/project-management/raci-chart",
+            "section": "RACI roles; how to create a RACI chart",
+            "reviewed": "2026-11-08",
+            "scope": "Vendor explainer for the RACI roles; the workshop chart is an original synthetic example."
+          },
+          {
+            "title": "NASA Systems Engineering Handbook",
+            "url": "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/",
+            "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
+            "reviewed": "2026-11-08",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A row in a RACI chart has two people marked Accountable. What is the main risk?",
+            "options": [
+              "The work will be done twice",
+              "Nobody can make the final call, so decisions stall or conflict",
+              "Nothing; more accountability is safer"
+            ],
+            "correct": 1,
+            "explanation": "Every row needs exactly one A so one person can approve the result."
+          }
+        ]
+      },
+      {
         "id": "estimates",
-        "title": "12. Forecast using comparable items",
+        "title": "13. Forecast using comparable items",
         "takeaway": "Estimate with historical work that uses the same start and finish definitions.",
         "stage": "intermediate",
         "sections": [
@@ -107906,8 +107976,79 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "critical-path",
+        "title": "14. Find the critical path and read a Gantt chart",
+        "stage": "intermediate",
+        "takeaway": "The critical path is the longest chain of dependent work; any delay on it moves the finish date, while work off it has float that can absorb some delay.",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Lesson 7 mapped which work waits for which. Add an estimated duration to each item (lesson 13) and walk the map forwards: an item can start only when all its predecessors have finished. The earliest finish of the last item is the earliest possible end date. Walking backwards from that date gives each item's latest start that still keeps the end date.",
+              "The difference between an item's latest and earliest start is its float. Items with zero float form the critical path: the longest chain through the map. A day lost on the critical path is a day lost at the end; a day lost on an item with two days of float is absorbed. To finish sooner, shorten or overlap critical items. Speeding up anything else changes nothing until it becomes critical.",
+              "A Gantt chart draws the same plan as bars on a calendar. It shows when things happen, but not why: always keep the dependencies with it, mark the critical items, and update the chart when an estimate or dependency changes rather than when a date is missed."
+            ]
+          },
+          {
+            "title": "A workshop plan, worked through",
+            "paragraphs": [
+              "A club plans a workshop. Confirming the speaker takes three days and materials can be ordered only after that, so speaker, materials and the workshop itself form the critical path of six days. Booking the room can slip two days without moving the workshop; publishing the invitation has one day of float."
+            ],
+            "example": "Item                         Days  Waits for       Earliest  Latest   Float\n                                                   start     start\nA Book the room                 2  -               day 0     day 2    2\nB Draft the invitation          1  -               day 0     day 2    2\nC Confirm the speaker           3  -               day 0     day 0    0  critical\nD Test the registration link    1  B               day 1     day 3    2\nE Publish the invitation        1  A, C, D         day 3     day 4    1\nF Order materials               2  C               day 3     day 3    0  critical\nG Run the workshop              1  E, F            day 5     day 5    0  critical\n\nDay          1  2  3  4  5  6        # = work   - = float\nC speaker    #  #  #                 critical\nF materials           #  #           critical\nG workshop                  #        critical\nA room       #  #  -  -\nB draft      #  -  -\nD link          #  -  -\nE publish             #  -"
+          }
+        ],
+        "exercise": {
+          "prompt": "In the workshop plan, the speaker confirms one day late, and the room booking also takes three days instead of two. Work out the new end date and say which single change would recover the original date.",
+          "solution": "The speaker is on the critical path, so the one-day delay moves materials to days 4 to 6 and the workshop to day 7. The room booking taking one extra day uses one of its two days of float and does not affect the end date on its own. To recover day 6, shorten a critical item: for example order the standard materials before the speaker confirms (removing the dependency) or get the materials delivered in one day instead of two. Speeding up the invitation or the room would not help because they are not critical.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Recognises the speaker delay as critical and the room delay as absorbed by float.",
+            "Gives the new end date from the dependencies.",
+            "Recovers time only by changing a critical item or dependency."
+          ]
+        },
+        "quiz": {
+          "question": "Which items should you speed up to finish a plan earlier?",
+          "options": [
+            "Any item that is running late",
+            "Items on the critical path",
+            "The shortest items"
+          ],
+          "correct": 1,
+          "explanation": "Only the critical path sets the end date. Shortening anything else leaves it unchanged."
+        },
+        "references": [
+          {
+            "title": "NASA Systems Engineering Handbook: 6.1 Technical Planning",
+            "url": "https://www.nasa.gov/reference/6-1-technical-planning/",
+            "section": "Schedule; network schedules and the critical path",
+            "reviewed": "2026-11-08",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          },
+          {
+            "title": "Atlassian: What is a Gantt chart?",
+            "url": "https://www.atlassian.com/agile/project-management/gantt-chart",
+            "section": "Gantt chart features",
+            "reviewed": "2026-11-08",
+            "scope": "Vendor explainer used for the chart's conventions; the workshop plan is an original synthetic example."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In the workshop plan, booking the room (two days of float) takes two days longer than estimated. What happens to the workshop date?",
+            "options": [
+              "It moves two days later",
+              "It does not move; the delay uses the room's float",
+              "It moves one day later"
+            ],
+            "correct": 1,
+            "explanation": "The room's two days of float absorb a two-day delay exactly. A third day would move the workshop."
+          }
+        ]
+      },
+      {
         "id": "blocked",
-        "title": "13. Make blocked work actionable",
+        "title": "15. Make blocked work actionable",
         "takeaway": "A blocked card records the missing input, responsible contact, next check and consequence.",
         "stage": "intermediate",
         "sections": [
@@ -108108,7 +108249,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "risk",
-        "title": "14. Distinguish risks from issues",
+        "title": "16. Distinguish risks from issues",
         "takeaway": "A risk is an uncertain future event; an issue has occurred.",
         "stage": "intermediate",
         "sections": [
@@ -108172,7 +108313,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "change",
-        "title": "15. Handle new scope as a decision",
+        "title": "17. Handle new scope as a decision",
         "takeaway": "A new request changes cost, schedule, quality or benefit.",
         "stage": "intermediate",
         "sections": [
@@ -108245,7 +108386,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "metrics",
-        "title": "16. Measure flow with defined boundaries",
+        "title": "18. Measure flow with defined boundaries",
         "takeaway": "Cycle time runs from the defined start to finish; age applies to unfinished items; throughput counts finished items in a period.",
         "stage": "advanced",
         "sections": [
@@ -108308,8 +108449,77 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "status-reporting",
+        "title": "19. Report status that leads to decisions",
+        "stage": "advanced",
+        "takeaway": "A useful status report states the overall position against agreed criteria, the evidence for it, the risks and issues, and the decisions needed from the reader by a date.",
+        "sections": [
+          {
+            "title": "Understand and apply",
+            "paragraphs": [
+              "Write for the reader's decision, not to record activity. A sponsor needs to know whether the agreed outcome and date are still realistic, what has changed and what they must decide. List of tasks completed belongs in the team's board (lesson 8), not the report.",
+              "Define the status colours before using them, so they mean the same thing every week. Green: on track for the agreed scope and date. Amber: at risk, with a recovery plan the team can carry out itself. Red: the date or scope will be missed unless someone outside the team decides something. A report that stays green until the week before a deadline and then turns red has hidden its risks; show the trend and raise amber early.",
+              "Support the colour with evidence, such as the critical path's float (lesson 14) or measured flow (lesson 18), then list risks and issues with owners (lesson 16), scope changes awaiting a decision (lesson 17), and each decision needed with the date by which it is needed."
+            ]
+          },
+          {
+            "title": "One week's report for the workshop",
+            "paragraphs": [],
+            "example": "Workshop status, week 2                              Overall: AMBER (was GREEN)\nOutcome: 20-person workshop on 14 March, invitation published by 7 March.\nEvidence: speaker confirmation is 1 day late and on the critical path.\n          Recovery: Dev collects materials in person (1 day, not 2), which\n          recovers the day; no float remains.\nSince last week: room booked; invitation drafted and checked.\nNext week: publish the invitation; order materials once the speaker confirms.\nRisks:  speaker may cancel (owner Mira; backup speaker asked to hold the date).\nIssues: none open.\nDecision needed from Jo by Friday: approve the backup speaker's fee (60).\n          Without it, a cancellation would move the date and the status would be RED."
+          }
+        ],
+        "exercise": {
+          "prompt": "Rewrite this report so a sponsor can act on it: \"Status: Green. Lots of progress this week! Worked on the guide, had meetings with reviewers, some delays with printing but should be fine. Will keep going.\"",
+          "solution": "Reading guide status, week 3. Overall: AMBER (was GREEN), using the agreed definition at risk with a recovery plan. Outcome: printed guide for 30 readers by 2 May. Evidence: the printer quotes 6 working days and the print file is due on the critical path, leaving 1 day of float. Since last week: chapters 1 to 4 reviewed; 2 corrections open. Next: final review by Thursday, send to printer Friday. Risk: printer delay (owner Sam; second printer quote requested). Decision needed from the sponsor by Wednesday: approve 20 extra for express printing if the first printer cannot commit to 6 days.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Uses a defined status colour with a trend and evidence.",
+            "States the outcome, date and remaining float or measured flow.",
+            "Names risks with owners and a specific decision with a deadline."
+          ]
+        },
+        "quiz": {
+          "question": "What makes a status colour useful from week to week?",
+          "options": [
+            "Choosing it by how the team feels",
+            "Defining green, amber and red in advance against the agreed scope and date",
+            "Keeping it green to avoid alarming the sponsor"
+          ],
+          "correct": 1,
+          "explanation": "Shared definitions let the reader trust the colour and see real changes."
+        },
+        "references": [
+          {
+            "title": "Government Functional Standard GovS 002: Project Delivery",
+            "url": "https://www.gov.uk/government/publications/project-delivery-functional-standard",
+            "section": "Governance; assurance and reporting",
+            "reviewed": "2026-11-08",
+            "scope": "UK government standard used for its governance and reporting principles; the status definitions here are an original adaptation, not compliance."
+          },
+          {
+            "title": "NASA Systems Engineering Handbook",
+            "url": "https://www.nasa.gov/reference/6-0-crosscutting-technical-management/",
+            "section": "Technical planning, risk and decision analysis; adapted educational heuristics, not NASA compliance",
+            "reviewed": "2026-11-08",
+            "scope": "Primary source researched for the named concept. Exercises and numeric cases are original synthetic examples. Scheduling and management adaptations are heuristics unless explicitly described as research findings."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Under the lesson's definitions, the team can recover a slipping date with its own plan. Which colour applies?",
+            "options": [
+              "Green",
+              "Amber",
+              "Red"
+            ],
+            "correct": 1,
+            "explanation": "Amber means at risk with a recovery plan the team can carry out; red needs a decision from outside the team."
+          }
+        ]
+      },
+      {
         "id": "review",
-        "title": "17. Inspect outcomes with the beneficiary",
+        "title": "20. Inspect outcomes with the beneficiary",
         "takeaway": "A review checks whether the deliverable helps the intended user.",
         "stage": "advanced",
         "sections": [
@@ -108493,7 +108703,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "retrospective",
-        "title": "18. Improve one workflow constraint",
+        "title": "21. Improve one workflow constraint",
         "takeaway": "A retrospective examines how work happened and chooses a change with an owner and review date.",
         "stage": "advanced",
         "sections": [
@@ -108557,7 +108767,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "parallel",
-        "title": "19. Coordinate parallel branches and handoffs",
+        "title": "22. Coordinate parallel branches and handoffs",
         "takeaway": "Independent branches can progress together, but integration work still consumes capacity.",
         "stage": "advanced",
         "sections": [
@@ -108621,7 +108831,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "close",
-        "title": "20. Close the project with usable evidence",
+        "title": "23. Close the project with usable evidence",
         "takeaway": "Closure records delivered outputs, acceptance, unresolved issues and ownership of any ongoing routine.",
         "stage": "advanced",
         "sections": [
@@ -108787,7 +108997,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "system-review",
-        "title": "21. Select a proportionate management system",
+        "title": "24. Select a proportionate management system",
         "takeaway": "A useful system supports the project's decisions with modest maintenance.",
         "stage": "advanced",
         "sections": [
@@ -109726,11 +109936,14 @@ const LEARNING_PATHS = [
         "wip": "practice-wip",
         "pull": "practice-pull",
         "owners": "practice-owners",
+        "raci": "practice-owners",
         "estimates": "practice-estimates",
+        "critical-path": "practice-estimates",
         "blocked": "practice-blocked",
         "risk": "practice-risk",
         "change": "practice-change",
         "metrics": "practice-metrics",
+        "status-reporting": "practice-metrics",
         "review": "practice-review",
         "retrospective": "practice-retrospective",
         "parallel": "practice-parallel",

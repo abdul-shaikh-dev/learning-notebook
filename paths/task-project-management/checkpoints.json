@@ -33,8 +33,14 @@
     "owners": [
       {"question": "The agreed reviewer is unavailable and the card is waiting. What does the lesson suggest?", "options": ["Publish without review to keep the date", "Leave it until the reviewer returns, without telling anyone", "Use an explicit alternate or escalate the decision"], "correct": 2, "explanation": "A blocked card should not invite an unauthorised shortcut. The coordinator follows up through a named alternate or the person who can decide."}
     ],
+    "raci": [
+      {"question": "A row in a RACI chart has two people marked Accountable. What is the main risk?", "options": ["The work will be done twice", "Nobody can make the final call, so decisions stall or conflict", "Nothing; more accountability is safer"], "correct": 1, "explanation": "Every row needs exactly one A so one person can approve the result."}
+    ],
     "estimates": [
       {"question": "Three comparable reading guides took 1, 4 and 5 elapsed days from agreed start to acceptance. What provisional range does that give?", "options": ["Exactly 4 days", "1–5 days", "About 3.3 days, the mean"], "correct": 1, "explanation": "The observed range shows the variation. Three samples cannot support a reliable percentile or a single-number promise."}
+    ],
+    "critical-path": [
+      {"question": "In the workshop plan, booking the room (two days of float) takes two days longer than estimated. What happens to the workshop date?", "options": ["It moves two days later", "It does not move; the delay uses the room's float", "It moves one day later"], "correct": 1, "explanation": "The room's two days of float absorb a two-day delay exactly. A third day would move the workshop."}
     ],
     "blocked": [
       {"question": "A started item becomes blocked. Where does it stay?", "options": ["Inside the WIP count", "Out of the count until it is unblocked", "In the backlog with new items"], "correct": 0, "explanation": "Moving blocked work out of sight does not remove its delivery risk, and it still occupies capacity."}
@@ -47,6 +53,9 @@
     ],
     "metrics": [
       {"question": "A card started on Tuesday and was completed on Saturday. Another started on Thursday and is unfinished on Sunday. Using elapsed date differences, what are the figures?", "options": ["Cycle time 4 days; age 3 days", "Cycle time 5 days; age 4 days", "Cycle time 4 days; cycle time 3 days"], "correct": 0, "explanation": "Only finished items have a cycle time. An unfinished item has an age, and only the finished card counts toward that week's throughput."}
+    ],
+    "status-reporting": [
+      {"question": "Under the lesson's definitions, the team can recover a slipping date with its own plan. Which colour applies?", "options": ["Green", "Amber", "Red"], "correct": 1, "explanation": "Amber means at risk with a recovery plan the team can carry out; red needs a decision from outside the team."}
     ],
     "review": [
       {"question": "A joining notice contains every required field, but a new reader cannot find how to register. Which check fails?", "options": ["Verification, though validation passes", "Validation, though verification may pass", "Neither: the checklist passed"], "correct": 1, "explanation": "Verification asks whether specified criteria are met; validation asks whether the result serves its intended use."}
