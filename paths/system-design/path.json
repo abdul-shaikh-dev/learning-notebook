@@ -3,7 +3,7 @@
   "title": "System Design",
   "category": "Software engineering",
   "status": "ready",
-  "description": "Build and defend a system from requirements to recovery: 24 lessons on APIs, data, capacity, distributed behavior and operations, with three design projects and a tested offline calculator.",
+  "description": "Build and defend a system from requirements to recovery: 28 lessons on APIs, data, capacity, distributed behavior and operations, with three design projects and a tested offline calculator.",
   "level": "Foundations → intermediate design reasoning → local experiments",
   "prerequisites": [
     "Comfort with a small application, basic HTTP and database concepts is helpful; the foundation lessons explain the vocabulary.",
@@ -807,8 +807,82 @@
       ]
     },
     {
+      "id": "edge-and-object-storage",
+      "title": "11. Serve files from object storage and the edge",
+      "stage": "intermediate",
+      "takeaway": "Keep large files out of the database and application servers: store them as objects, let clients transfer them directly with short-lived signed URLs, and cache public ones at a CDN.",
+      "sections": [
+        {
+          "title": "Concept",
+          "paragraphs": [
+            "Object storage keeps files as objects in buckets, addressed by key, with very high durability and practically unlimited capacity. It is cheaper than block storage or database rows for large binary data, but it is not a file system: there are no in-place edits or renames, and listing is slow at scale. Store the object key and metadata (owner, size, content type, checksum) in the database, and the bytes in the bucket.",
+            "Routing every upload and download through application servers wastes their bandwidth and memory. Instead the server checks authorisation, then issues a presigned URL: a URL for one object and one method, signed with the server's credentials and valid for a few minutes. The client transfers the file directly with the storage service, which checks the signature and expiry.",
+            "A content delivery network (CDN) caches responses at edge locations near users (lesson 10's caching rules apply). Public, versioned assets such as images and scripts suit long CDN lifetimes; private files should use short-lived signed URLs or signed cookies and must not be cached for other users."
+          ]
+        },
+        {
+          "title": "Design",
+          "paragraphs": [
+            "The sketch signs a download URL with an HMAC over the method, key and expiry, the way storage services do in more elaborate form. A request within the expiry with the correct signature is accepted; changing the key or arriving after expiry is rejected. Real services also bind headers and the credential scope, so use their SDKs rather than writing your own signer."
+          ],
+          "example": "import hashlib, hmac\n\nSECRET = b'server-side signing key'          # never sent to the client\n\ndef sign(method, key, expires):\n    message = f'{method}\\n{key}\\n{expires}'.encode()\n    return hmac.new(SECRET, message, hashlib.sha256).hexdigest()[:16]\n\ndef check(method, key, expires, signature, now):\n    if now > expires:\n        return 'rejected: expired'\n    if not hmac.compare_digest(signature, sign(method, key, expires)):\n        return 'rejected: bad signature'\n    return 'allowed'\n\nexpires = 1_000_000 + 300                     # five minutes after issue\nurl_sig = sign('GET', 'recordings/ws-42/session-1.mp4', expires)\nprint(check('GET', 'recordings/ws-42/session-1.mp4', expires, url_sig, now=1_000_120))\nprint(check('GET', 'recordings/ws-43/session-1.mp4', expires, url_sig, now=1_000_120))\nprint(check('GET', 'recordings/ws-42/session-1.mp4', expires, url_sig, now=1_000_301))\n\n# Expected output:\n# allowed\n# rejected: bad signature\n# rejected: expired"
+        },
+        {
+          "title": "Tradeoffs",
+          "paragraphs": [
+            "A presigned URL is a bearer token: anyone holding it can use it until it expires, so keep lifetimes short, never log full URLs, and issue one per authorised request. Revoking access means waiting for expiry or rotating the signing key.",
+            "Direct uploads arrive without passing through your code. Record the upload as pending, then confirm it with a storage event or a follow-up call that checks size, type and checksum before the file becomes visible; scan untrusted files before serving them. Lifecycle rules can move old objects to cheaper storage classes and delete abandoned uploads."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Workshop hosts upload recordings of up to 4 GB that only registered attendees may watch. Design the upload and playback flow, naming what the database stores, what the bucket stores and what the CDN may cache.",
+        "solution": "Upload: the host asks the API for an upload; the API checks the host owns the workshop, creates a pending recording row (id, workshop, object key, expected size) and returns a presigned multipart upload URL. The client uploads directly to the bucket. A storage event or completion call verifies size, content type and checksum, then marks the row ready. Playback: the API checks the viewer is registered and returns a short-lived signed URL (or signed cookie) for the object or its CDN path. The database stores metadata and ownership; the bucket stores the bytes; the CDN may cache the video segments only behind signed access, never as public content, and the thumbnails can be public if they reveal nothing private.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Authorises before issuing any signed URL.",
+          "Keeps bytes in the bucket and metadata in the database.",
+          "Verifies uploads before marking them ready.",
+          "Restricts CDN caching of private content to signed access."
+        ]
+      },
+      "quiz": {
+        "question": "Why issue a presigned URL instead of streaming uploads through the application server?",
+        "options": [
+          "Presigned URLs encrypt the file",
+          "The client transfers bytes directly to storage, sparing the servers' bandwidth and memory, after the server has authorised the request",
+          "Object storage cannot accept uploads from servers"
+        ],
+        "correct": 1,
+        "explanation": "The server keeps the authorisation decision but no longer carries the bytes."
+      },
+      "references": [
+        {
+          "title": "Amazon S3: Sharing objects with presigned URLs",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html",
+          "section": "Presigned URL capabilities and expiration",
+          "reviewed": "2026-11-08",
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+        },
+        {
+          "title": "Azure Storage: Shared access signatures",
+          "url": "https://learn.microsoft.com/en-us/azure/storage/common/storage-sas-overview",
+          "section": "Best practices when using SAS",
+          "reviewed": "2026-11-08",
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+        },
+        {
+          "title": "Azure Architecture: Valet Key pattern",
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/valet-key",
+          "section": "Solution; issues and considerations",
+          "reviewed": "2026-11-08",
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+        }
+      ]
+    },
+    {
       "id": "queues",
-      "title": "11. Queues, acknowledgments and duplicate delivery",
+      "title": "12. Queues, acknowledgments and duplicate delivery",
       "stage": "intermediate",
       "takeaway": "A queue decouples timing; consumers still need correctness and limits.",
       "sections": [
@@ -863,7 +937,7 @@
     },
     {
       "id": "replication",
-      "title": "12. Replication and read-your-writes",
+      "title": "13. Replication and read-your-writes",
       "stage": "intermediate",
       "takeaway": "Copies improve some failure and read scenarios but introduce coordination and lag.",
       "sections": [
@@ -925,7 +999,7 @@
     },
     {
       "id": "consistency-cap",
-      "title": "13. Consistency, partitions and CAP carefully",
+      "title": "14. Consistency, partitions and CAP carefully",
       "stage": "intermediate",
       "takeaway": "During a network partition, some guarantees cannot all be maintained.",
       "sections": [
@@ -980,7 +1054,7 @@
     },
     {
       "id": "partitioning",
-      "title": "14. Partition data and handle hot keys",
+      "title": "15. Partition data and handle hot keys",
       "stage": "intermediate",
       "takeaway": "A shard key distributes work and determines which operations need coordination.",
       "sections": [
@@ -1034,8 +1108,74 @@
       ]
     },
     {
+      "id": "consistent-hashing",
+      "title": "16. Rebalance partitions with consistent hashing",
+      "stage": "intermediate",
+      "takeaway": "Hashing modulo the node count moves most keys when a node is added; a hash ring with virtual nodes moves only about 1/N of them.",
+      "sections": [
+        {
+          "title": "Concept",
+          "paragraphs": [
+            "Lesson 15 chose a partition key. The next question is how keys map to nodes. `hash(key) % N` spreads keys evenly, but changing N changes almost every result: adding a fifth node to four moves about 80% of keys, which for a cache means a burst of misses and for a database a huge migration.",
+            "Consistent hashing places nodes at points on a ring of hash values. Each key belongs to the first node clockwise from its hash. Adding a node takes over only the keys between it and its predecessor, about 1/N of the total, and removing one hands its keys to its neighbour.",
+            "With only one point per node, the gaps on the ring are uneven and some nodes get far more keys. Virtual nodes give each physical node many points, which evens out the share and lets a larger machine take more points. Rendezvous (highest random weight) hashing achieves the same minimal movement without a ring."
+          ]
+        },
+        {
+          "title": "Design",
+          "paragraphs": [
+            "Ten thousand learner keys are assigned to four nodes and then five. With modulo hashing about 80% move; with a ring of 100 virtual nodes per server about a fifth move, close to the ideal 1/5, and the five nodes hold similar shares."
+          ],
+          "example": "import bisect, hashlib\n\ndef h(text):\n    return int(hashlib.sha256(text.encode()).hexdigest()[:8], 16)\n\nkeys = [f'learner-{i}' for i in range(10_000)]\n\ndef modulo(nodes):\n    return {k: nodes[h(k) % len(nodes)] for k in keys}\n\ndef ring(nodes, vnodes=100):\n    points = sorted((h(f'{n}#{v}'), n) for n in nodes for v in range(vnodes))\n    hashes = [p for p, _ in points]\n    return {k: points[bisect.bisect(hashes, h(k)) % len(points)][1] for k in keys}\n\ndef moved(before, after):\n    return sum(before[k] != after[k] for k in keys) / len(keys)\n\nfour, five = ['a', 'b', 'c', 'd'], ['a', 'b', 'c', 'd', 'e']\nprint(f'modulo:           {moved(modulo(four), modulo(five)):.1%} of keys move')\nprint(f'consistent (100): {moved(ring(four), ring(five)):.1%} of keys move')\ncounts = {n: 0 for n in five}\nfor node in ring(five).values():\n    counts[node] += 1\nprint('keys per node:', counts)\n\n# Expected output:\n# modulo:           79.7% of keys move\n# consistent (100): 17.4% of keys move\n# keys per node: {'a': 2140, 'b': 1758, 'c': 2174, 'd': 2185, 'e': 1743}"
+        },
+        {
+          "title": "Tradeoffs",
+          "paragraphs": [
+            "Consistent hashing reduces how much data moves; it does not move it. The system still needs to copy the affected keys, route reads correctly while they are in transit, and handle replicas, usually by placing copies on the next distinct nodes clockwise. A hot key (lesson 15) stays hot on whichever node owns it.",
+            "Many databases instead split data into a fixed, large number of logical partitions and assign those to nodes through a directory. Rebalancing then moves whole partitions, which is easier to observe and throttle. Choose the managed behaviour of your datastore before building your own ring."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "A cache cluster of 10 nodes uses hash(key) % 10. During a traffic peak one node fails and is removed, and the database behind the cache is overwhelmed. Explain why and propose a design that limits the damage next time.",
+        "solution": "Removing a node changes the modulus from 10 to 9, so roughly 90% of keys map to a different node and miss in the cache at once; the database receives almost all traffic. With consistent hashing (with virtual nodes), only the failed node's keys, about 10%, move to its neighbours. Also add request coalescing so concurrent misses for one key cause one database read, warm or replicate hot keys, and protect the database with admission control (lesson 20).",
+        "solutionFormat": "prose",
+        "checks": [
+          "Explains that changing N remaps most keys.",
+          "Uses consistent or rendezvous hashing to limit movement to the failed node's share.",
+          "Adds protection for the database during misses."
+        ]
+      },
+      "quiz": {
+        "question": "Why give each physical node many virtual nodes on the ring?",
+        "options": [
+          "To store more copies of each key",
+          "To even out each node's share of the ring and let larger nodes take more",
+          "To make hashing faster"
+        ],
+        "correct": 1,
+        "explanation": "One point per node leaves uneven gaps. Many points average them out, and a node's weight can be set by its number of points."
+      },
+      "references": [
+        {
+          "title": "Karger et al.: Consistent Hashing and Random Trees (1997)",
+          "url": "https://dl.acm.org/doi/10.1145/258533.258660",
+          "section": "Consistent hashing",
+          "reviewed": "2026-11-08",
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+        },
+        {
+          "title": "Amazon DynamoDB paper (2007)",
+          "url": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf",
+          "section": "Section 4.2, partitioning; virtual nodes",
+          "reviewed": "2026-11-08",
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+        }
+      ]
+    },
+    {
       "id": "transactions",
-      "title": "15. Transactions, isolation and the final seat",
+      "title": "17. Transactions, isolation and the final seat",
       "stage": "intermediate",
       "takeaway": "A transaction boundary must enforce the invariant under concurrent attempts.",
       "sections": [
@@ -1103,7 +1243,7 @@
     },
     {
       "id": "idempotency",
-      "title": "16. Idempotency and uncertain outcomes",
+      "title": "18. Idempotency and uncertain outcomes",
       "stage": "intermediate",
       "takeaway": "A retry-safe operation needs stable intent and durable coordination.",
       "sections": [
@@ -1199,7 +1339,7 @@
     },
     {
       "id": "resilience",
-      "title": "17. Deadlines, bounded retries and isolation",
+      "title": "19. Deadlines, bounded retries and isolation",
       "stage": "advanced",
       "takeaway": "Recovery mechanisms must not turn a partial failure into overload.",
       "sections": [
@@ -1262,7 +1402,7 @@
     },
     {
       "id": "backpressure",
-      "title": "18. Admission control, rate limits and backlog",
+      "title": "20. Admission control, rate limits and backlog",
       "stage": "advanced",
       "takeaway": "A bounded system decides what to reject before resources are exhausted.",
       "sections": [
@@ -1366,7 +1506,7 @@
     },
     {
       "id": "outbox",
-      "title": "19. Reliable events, outbox and compensating workflows",
+      "title": "21. Reliable events, outbox and compensating workflows",
       "stage": "advanced",
       "takeaway": "Cross-system workflows need explicit intermediate states and recovery.",
       "sections": [
@@ -1393,7 +1533,7 @@
         {
           "title": "Try the crash sequence before opening the lab",
           "paragraphs": [
-            "Use the optional booking lab to connect lessons 15 through 19. Assume the booking, caller-scoped request key and outbox event commit together. The response is lost, the client retries the same key, and the relay then crashes after publication but before recording success. Predict the booking count, remaining seats and number of event deliveries after replay.",
+            "Use the optional booking lab to connect lessons 17 through 19. Assume the booking, caller-scoped request key and outbox event commit together. The response is lost, the client retries the same key, and the relay then crashes after publication but before recording success. Predict the booking count, remaining seats and number of event deliveries after replay.",
             "For a one-seat workshop, the invariant is one booking and zero remaining seats. The relay can deliver the same event twice. A consumer must keep the business effect safe on replay. Run `python -m unittest -v test_booking_lab.py` from the extracted System Design practice folder, then inspect `test_response_loss_replay_and_intent_conflict` and `test_outbox_replay_requires_consumer_deduplication`. These tests cover the two failure boundaries separately; they do not prove atomic delivery to an external provider."
           ]
         }
@@ -1428,8 +1568,81 @@
       ]
     },
     {
+      "id": "search-systems",
+      "title": "22. Keep a search index in step with the source of truth",
+      "stage": "advanced",
+      "takeaway": "A search engine answers text queries from an inverted index built from your data; it is a derived copy that lags the database and must be rebuildable.",
+      "sections": [
+        {
+          "title": "Concept",
+          "paragraphs": [
+            "`LIKE '%join%'` cannot use an ordinary index (lesson 8) and scans every row. A search engine instead builds an inverted index: for each term, the list of documents containing it. A query looks up each term and combines the lists, then ranks results by relevance, for example with BM25, which rewards rare terms and frequent matches in short documents.",
+            "Analysis decides what counts as a term: lowercasing, splitting on punctuation, removing very common words and stemming so that `join`, `joins` and `joined` match. The same analysis must apply to documents and queries. Search engines also provide filters, facets, typo tolerance and highlighting, which are hard to build in a relational database."
+          ]
+        },
+        {
+          "title": "Design",
+          "paragraphs": [
+            "The tiny index lowercases and splits text, so `Rows` finds lesson 2, and both terms of `tables joins` must match. `join` finds only lesson 1 and misses lesson 3's `joins`, because there is no stemming: a real analyser would reduce both to one term."
+          ],
+          "example": "import re\nfrom collections import defaultdict\n\nlessons = {\n    1: 'Join tables without losing records',\n    2: 'Window functions rank rows and running totals',\n    3: 'Indexes speed up joins on large tables',\n}\n\ndef tokens(text):\n    return re.findall(r'[a-z0-9]+', text.lower())\n\nindex = defaultdict(set)              # term -> ids of documents containing it\nfor doc_id, text in lessons.items():\n    for term in tokens(text):\n        index[term].add(doc_id)\n\ndef search(query):\n    sets = [index.get(term, set()) for term in tokens(query)]\n    return sorted(set.intersection(*sets)) if sets else []\n\nprint(dict(sorted((t, sorted(ids)) for t, ids in index.items() if t in ('joins', 'tables', 'rows'))))\nprint(search('tables joins'), search('join'), search('Rows'))\n\n# Expected output:\n# {'joins': [3], 'rows': [2], 'tables': [1, 3]}\n# [3] [1] [2]"
+        },
+        {
+          "title": "Keeping it consistent",
+          "paragraphs": [
+            "The database stays the source of truth; the search index is a projection. Update it from change events, ideally written with the outbox pattern (lesson 21) or captured from the database log, so no committed change is missed. Updates are applied asynchronously, so search results can briefly show old data: re-check permissions and current state against the database when a user opens a result.",
+            "Make index updates idempotent and ordered by a version number, so a delayed old event cannot overwrite a newer document. Keep a way to rebuild the whole index from the database into a new index and switch an alias to it; schema and analyser changes need exactly that, and it is also the recovery plan if the index is lost."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Workshop titles and descriptions must be searchable within a few seconds of being edited, and private workshops must never appear to other users. Design the indexing pipeline and the query path.",
+        "solution": "Writes: the API updates the workshop in the database and, in the same transaction, inserts an outbox event with the workshop id and version. A relay publishes events; an indexer reads the current row and upserts the document if its version is newer than the indexed one, or deletes it. Documents include visibility and owner/tenant fields. Queries: the search service always filters by what the user may see (public, or their tenant), then the API re-checks each returned id against the database before showing details, which also hides results whose visibility changed since indexing. A full rebuild job writes a new index and switches an alias. Monitor lag between the database version and the indexed version.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Uses an outbox or log-based change capture so committed changes are not missed.",
+          "Orders updates by version and handles deletes.",
+          "Filters by permissions in the query and re-checks against the database.",
+          "Provides a full rebuild path and monitors lag."
+        ]
+      },
+      "quiz": {
+        "question": "Why can a search result briefly show a workshop's old title after an edit?",
+        "options": [
+          "The search engine rejected the update",
+          "The index is updated asynchronously from the database, so it lags behind the source of truth",
+          "Inverted indexes cannot store titles"
+        ],
+        "correct": 1,
+        "explanation": "The index is a derived copy refreshed after the database commit. Design for that delay and re-check important state."
+      },
+      "references": [
+        {
+          "title": "Elasticsearch: Text analysis",
+          "url": "https://www.elastic.co/docs/manage-data/data-store/text-analysis",
+          "section": "Text analysis concepts",
+          "reviewed": "2026-11-08",
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+        },
+        {
+          "title": "Introduction to Information Retrieval (Manning, Raghavan, Schütze)",
+          "url": "https://nlp.stanford.edu/IR-book/html/htmledition/a-first-take-at-building-an-inverted-index-1.html",
+          "section": "A first take at building an inverted index",
+          "reviewed": "2026-11-08",
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+        },
+        {
+          "title": "Azure Architecture: Transactional outbox",
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/databases/guide/transactional-outbox-cosmos",
+          "section": "Solution",
+          "reviewed": "2026-11-08",
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+        }
+      ]
+    },
+    {
       "id": "observability",
-      "title": "20. Observe user outcomes and investigate causality",
+      "title": "23. Observe user outcomes and investigate causality",
       "stage": "advanced",
       "takeaway": "Telemetry should answer what users lost and where time or work went.",
       "sections": [
@@ -1484,7 +1697,7 @@
     },
     {
       "id": "security",
-      "title": "21. Trust boundaries and authorization",
+      "title": "24. Trust boundaries and authorization",
       "stage": "advanced",
       "takeaway": "Security decisions belong at every protected server boundary.",
       "sections": [
@@ -1552,7 +1765,7 @@
     },
     {
       "id": "recovery",
-      "title": "22. Backups, recovery objectives and restore drills",
+      "title": "25. Backups, recovery objectives and restore drills",
       "stage": "advanced",
       "takeaway": "Recovery is a tested procedure, not a checkbox saying backups exist.",
       "sections": [
@@ -1607,7 +1820,7 @@
     },
     {
       "id": "evolution",
-      "title": "23. Evolve schemas and choose service boundaries",
+      "title": "26. Evolve schemas and choose service boundaries",
       "stage": "advanced",
       "takeaway": "Change architecture where evidence justifies an independently operated boundary.",
       "sections": [
@@ -1661,8 +1874,74 @@
       ]
     },
     {
+      "id": "case-study",
+      "title": "27. Work a design from requirements to review",
+      "stage": "advanced",
+      "takeaway": "A design is a chain of decisions, each justified by a requirement, a number or an invariant, and each with a known failure mode.",
+      "sections": [
+        {
+          "title": "Concept",
+          "paragraphs": [
+            "This lesson walks one design end to end: workshop recordings for the notebook, where hosts upload sessions and registered attendees watch them. Each step uses an earlier lesson. Requirements and invariants (lesson 1): only registered attendees may watch; a recording is either fully available or not visible; uploads may take minutes. Objectives (lesson 2): 99.9% of playback starts succeed within 2 seconds; an upload confirmed to the host is never lost.",
+            "Estimates (lesson 3) decide which parts need special treatment. Page reads are modest; storage and video traffic are large. That points to object storage with direct uploads and CDN delivery for the bytes, and an ordinary relational database for metadata, registrations and permissions."
+          ]
+        },
+        {
+          "title": "Design",
+          "paragraphs": [
+            "The numbers are assumptions to revisit, not measurements. Peak reads near 11 per second fit one database with a read cache; storage growth near 164 TB a year and several terabytes of daily video traffic must never touch the application servers.",
+            "Components: an API (stateless, behind a load balancer); a relational database for workshops, registrations and recording metadata; object storage with presigned multipart uploads (lesson 11) and lifecycle rules; a CDN with signed access for playback; a queue and worker that verify and transcode uploads, using the outbox pattern (lesson 21) so a confirmed upload always produces a job; a search index fed from the same events (lesson 22)."
+          ],
+          "example": "daily_active = 40_000\nviews_per_user, uploads_per_day = 6, 300\npeak_factor = 4                                  # busiest hour versus the daily average\nseconds = 24 * 60 * 60\n\nread_rps = daily_active * views_per_user / seconds * peak_factor\nupload_gb_day = uploads_per_day * 1.5            # recordings average 1.5 GB\nstream_gb_day = daily_active * 0.25 * 0.6        # a quarter watch, 0.6 GB each\nprint(f'peak page reads ~{read_rps:.0f} per second')\nprint(f'storage growth ~{upload_gb_day * 365 / 1000:.0f} TB per year')\nprint(f'video egress ~{stream_gb_day / 1000:.1f} TB per day, mostly served by the CDN')\n\n# Expected output:\n# peak page reads ~11 per second\n# storage growth ~164 TB per year\n# video egress ~6.0 TB per day, mostly served by the CDN"
+        },
+        {
+          "title": "Tradeoffs",
+          "paragraphs": [
+            "Failure walk-through: if transcoding fails, the recording stays pending and is retried with a bounded budget, then flagged to the host; if the CDN fails, playback falls back to signed URLs from the storage origin at higher cost; if the database is unavailable, playback of already-issued URLs continues but new authorisations fail closed. Each failure has an observable signal (lesson 23) and an owner.",
+            "Alternatives considered: storing video in the database (rejected for cost and backup size), proxying playback through the API (rejected for bandwidth), and a third-party video platform (a strong option if its access control and data residency meet the requirements). Record these choices and their reasons; the review in lesson 28 tests them against counterexamples."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Extend the case study: hosts now want live-streamed workshops with up to 2,000 viewers each, and at most 10 live at once. List the requirements that change, the new estimates you need, and one component you would add or replace.",
+        "solution": "Changed requirements: latency from capture to viewer (seconds, not minutes), behaviour when the host's connection drops, and whether the live stream is recorded. Estimates: peak concurrent viewers 20,000; per-viewer bitrate (for example 3 Mbit/s gives about 60 Gbit/s at peak) and ingest bandwidth for 10 streams. Component: a live ingest and packaging service (or a managed live-video service) that produces segments for the CDN, with signed access for registered viewers; the existing upload and transcode pipeline then receives the finished recording.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Names latency and failure behaviour as new requirements.",
+          "Estimates concurrent viewers and bandwidth with units.",
+          "Adds a live ingest component or managed service and keeps access control."
+        ]
+      },
+      "quiz": {
+        "question": "In the case study, why do recordings go to object storage instead of the relational database?",
+        "options": [
+          "Relational databases cannot store binary data",
+          "Their size and transfer volume make database storage, backup and serving costly, while object storage and a CDN handle them directly",
+          "Object storage supports SQL joins"
+        ],
+        "correct": 1,
+        "explanation": "Databases can store blobs, but large media inflate backups and load. Metadata stays in the database; bytes go to storage."
+      },
+      "references": [
+        {
+          "title": "Azure Architecture: Design principles",
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/guide/design-principles/",
+          "section": "Design principles for Azure applications",
+          "reviewed": "2026-11-08",
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+        },
+        {
+          "title": "AWS Well-Architected Framework",
+          "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+          "section": "The pillars of the framework",
+          "reviewed": "2026-11-08",
+          "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+        }
+      ]
+    },
+    {
       "id": "design-review",
-      "title": "24. Test the design assumptions",
+      "title": "28. Test the design assumptions",
       "stage": "advanced",
       "takeaway": "A good design exposes assumptions and proposes tests that could prove it wrong.",
       "sections": [
