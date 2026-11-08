@@ -18,15 +18,17 @@ from event_lab import connect, consume, create_job, mark_sent, pending, retry_de
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
+    'cqrs/2': 'A query that requires the command position reports a stale projection, lesson 18',
+    'azure-service-bus/2': 'Duplicate detection covers repeated sends, not redelivery after a lock expires, lesson 24',
     'messages-events/2': 'Commands, events and completion, lesson 1',
     'topologies/2': 'Worker and subscriber counts, lesson 2',
     'delivery-semantics/2': 'Atomic SQLite effects, lesson 5',
     'ordering/2': 'Last-value versus ledger projections, lesson 13',
     'stream-replay/2': 'Partition offsets and retention, lesson 16',
-    'sagas/2': 'Reconciling uncertain charges, lesson 17',
-    'security/2': 'Channel rights and trusted tenancy, lesson 18',
-    'broker-choice/2': 'Broker capabilities and operations, lesson 21',
-    'launch-review/2': 'Recovery across durable stores, lesson 22',
+    'sagas/2': 'Reconciling uncertain charges, lesson 19',
+    'security/2': 'Channel rights and trusted tenancy, lesson 20',
+    'broker-choice/2': 'Broker capabilities and operations, lesson 23',
+    'launch-review/2': 'Recovery across durable stores, lesson 25',
 }
 IDENTIFIER = 'ValueError: identifier must be 1-128 characters without surrounding whitespace: '
 
@@ -212,7 +214,20 @@ def advanced_same_job():
         return str(total(db, 'projection', 'j-4'))
 
 
+
+def event_sourcing():
+    stream, results = ['e1', 'e2', 'e3'], []
+    for writer in ('a', 'b'):              # both writers expect version 3
+        if len(stream) == 3:
+            stream.append(writer)
+            results.append('ok')
+        else:
+            results.append('conflict')
+    return pick(tuple(results), {('ok', 'conflict'): 'The first succeeds; the second is rejected as a concurrency conflict'})
+
+
 FACTS = {
+    'event-sourcing/2': event_sourcing,
     'envelopes/2': envelopes, 'acceptance/2': acceptance, 'consumer-lifecycle/2': consumer_lifecycle,
     'durability/2': durability, 'routing/2': routing, 'idempotent-consumers/2': idempotent_consumers,
     'transactional-outbox/2': transactional_outbox, 'retry-budget/2': retry_budget,

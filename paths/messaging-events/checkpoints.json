@@ -48,6 +48,12 @@
     "stream-replay": [
       {"question": "A log consumer commits its offset before performing the effect, then crashes. What happens after restart?", "options": ["It resumes after that record, so the effect may be skipped", "It replays that record, so the effect may happen twice", "Nothing is lost, because the record is retained"], "correct": 0, "explanation": "The committed offset says the record is done. Committing after the effect instead permits replay, which requires duplicate-safe effects."}
     ],
+    "event-sourcing": [
+      {"question": "Two writers both read a stream at version 3 and each append with expected version 3. What happens?", "options": ["Both appends succeed", "The first succeeds; the second is rejected as a concurrency conflict", "Both are rejected"], "correct": 1, "explanation": "After the first append the stream is at version 4, so the second writer's expectation no longer holds."}
+    ],
+    "cqrs": [
+      {"question": "In the lesson's example, what does query('learner-7', at_least=position) return before the projector catches up?", "options": ["10", "7", "A stale result naming the projection's position"], "correct": 2, "explanation": "The projection is at position 1 and the spend is at position 2, so the query reports staleness instead of a wrong balance."}
+    ],
     "sagas": [
       {"question": "In a seat-booking saga, the outcome of the charge is uncertain after a timeout. What should the workflow do next?", "options": ["Reconcile with the provider before charging again or declaring failure", "Charge again immediately", "Release the seat and report failure"], "correct": 0, "explanation": "The charge may have succeeded. Retrying could charge twice and releasing could lose a paid seat, so the uncertain step is resolved first and recorded durably."}
     ],
@@ -62,6 +68,9 @@
     ],
     "broker-choice": [
       {"question": "Before introducing a separate broker for the notebook's small export queue, what does the lesson say to consider?", "options": ["Whether a database-backed job worker is sufficient", "Which product has the highest published throughput", "Whether a partitioned log can replace the database"], "correct": 0, "explanation": "Choose from required semantics and operating costs, not product names. A small queue and independent audit events may not need new infrastructure yet."}
+    ],
+    "azure-service-bus": [
+      {"question": "Service Bus duplicate detection is enabled. Why does the consumer still need an idempotent inbox?", "options": ["Duplicate detection only checks message bodies", "A message can be redelivered after a lock expires or a consumer crashes, and detection only covers repeated sends within its window", "Duplicate detection is disabled for queues"], "correct": 1, "explanation": "Detection drops repeated publications; it cannot stop the broker redelivering a message whose processing was not completed."}
     ],
     "launch-review": [
       {"question": "The business database is restored from an older backup, including its inbox table. What risk does that create?", "options": ["Events processed after the backup can apply their effects again", "Every event is permanently lost", "Nothing, because the broker keeps acknowledgements"], "correct": 0, "explanation": "The restored inbox no longer remembers later event IDs, so redelivered or replayed events look new. Recovery needs reconciliation and an isolated replay mode."}
