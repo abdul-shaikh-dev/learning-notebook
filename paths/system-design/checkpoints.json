@@ -30,6 +30,9 @@
     "cache": [
       {"question": "A stale cached display still shows 1 seat after the last seat sold. What does book() do for the next learner?", "options": ["Raises ValueError: sold out or unknown workshop", "Books the seat shown in the cache", "Waits for the cache to refresh"], "correct": 0, "explanation": "The booking transaction rechecks remaining seats. A cache can serve browsing but must not authorize the last seat."}
     ],
+    "edge-and-object-storage": [
+      {"question": "A presigned download URL expires 300 seconds after issue. A client uses it 301 seconds after issue. What happens?", "options": ["It is rejected as expired", "It works, because the signature is still valid", "It works once, then expires"], "correct": 0, "explanation": "The expiry is part of the signed message and is checked on every request; after it passes, the URL is refused."}
+    ],
     "queues": [
       {"question": "relay_one publishes an event, then crashes before marking it sent. The relay restarts. Which event IDs were published?", "options": ["1 twice", "1 once", "None"], "correct": 0, "explanation": "The outbox row stays unsent, so the restarted relay publishes it again. Consumers must tolerate duplicate delivery."}
     ],
@@ -41,6 +44,9 @@
     ],
     "partitioning": [
       {"question": "Progress is hash-partitioned by user_id. What can still overload a single partition?", "options": ["One large tenant or a celebrity workshop", "Adding more learners", "Nothing: hashing spreads load evenly"], "correct": 0, "explanation": "Hashing spreads keys, not activity. A hot key concentrates traffic wherever it lands."}
+    ],
+    "consistent-hashing": [
+      {"question": "Keys are spread with hash(key) % N across 4 nodes. A fifth node is added. Roughly what share of keys changes node?", "options": ["About 80%", "About 20%", "None"], "correct": 0, "explanation": "A key stays only if its hash gives the same remainder for 4 and 5, which happens for about one key in five."}
     ],
     "transactions": [
       {"question": "book() runs with fail_after_decrement=True on a one-seat workshop. What remains afterwards?", "options": ["1 seat, with no booking", "0 seats, with no booking", "0 seats, with one booking"], "correct": 0, "explanation": "The decrement and the booking insert share one transaction. The injected failure rolls both back."}
@@ -57,6 +63,9 @@
     "outbox": [
       {"question": "A booking commits. What does the outbox hold for it?", "options": ["One row, with sent 0 until the relay runs", "Nothing until the relay runs", "One row, already marked sent"], "correct": 0, "explanation": "The event is written in the same transaction as the booking. Publishing happens later, from the outbox."}
     ],
+    "search-systems": [
+      {"question": "With the lesson's index (lowercase, split on punctuation, no stemming), which lessons does the query \"tables joins\" return?", "options": ["[1]", "[3]", "[1, 3]"], "correct": 1, "explanation": "Both terms must match. Lesson 1 contains tables but join, not joins; only lesson 3 contains both tables and joins."}
+    ],
     "observability": [
       {"question": "An export returns HTTP 200 but contains the wrong rows. How should it be counted?", "options": ["As a failure: the user outcome is wrong", "As a success: the status was 200", "Not at all, because exports are background work"], "correct": 0, "explanation": "A successful response with an incorrect result is still a product failure. Measure user outcomes, not only status codes."}
     ],
@@ -68,6 +77,9 @@
     ],
     "evolution": [
       {"question": "An application rollback follows a migration that dropped a column. Is the column back?", "options": ["No: rolling back binaries does not reverse the migration", "Yes: the rollback restores the schema", "Yes, after the next deploy"], "correct": 0, "explanation": "Destructive schema changes outlive a binary rollback. Expand-and-contract keeps old and new versions compatible meanwhile."}
+    ],
+    "case-study": [
+      {"question": "Using the case study's assumptions (40,000 daily users, 6 views each, peak 4 times the average), roughly how many page reads per second arrive at peak?", "options": ["About 11", "About 2,800", "About 240,000"], "correct": 0, "explanation": "40,000 × 6 = 240,000 views a day; divided by 86,400 seconds is about 2.8 per second, and four times that is about 11."}
     ],
     "design-review": [
       {"question": "What does drain_seconds(1200, 100, 100) return?", "options": ["None: the backlog never drains", "12", "0"], "correct": 0, "explanation": "With service equal to arrivals there is no spare capacity, so a positive backlog stays. A capacity claim needs that case stated."}

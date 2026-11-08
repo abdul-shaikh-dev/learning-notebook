@@ -23,14 +23,14 @@ import capacity_calculator as capacity  # noqa: E402
 SOURCED = {
     'network/2': 'A stable operation identifier lets the server look up the original intent, lesson 5',
     'data-model/2': 'A composite key encodes one record per learner and lesson, lesson 7',
-    'replication/2': 'An asynchronous follower can lag, so a learner may read an old value, lesson 12',
-    'consistency-cap/2': 'Returning an error does not satisfy CAP availability, lesson 13',
-    'partitioning/2': 'A large tenant or celebrity workshop can still create a hot key, lesson 14',
-    'resilience/2': 'The 1,000 ms worked budget leaves 100 ms for a third attempt, lesson 17',
-    'observability/2': 'A successful response with an incorrect result is still a product failure, lesson 20',
-    'security/2': 'Client-supplied tenant identifiers are inputs to validate, not proof, lesson 21',
-    'recovery/2': 'A backup schedule alone does not prove a recovery point, lesson 22',
-    'evolution/2': 'A binary rollback may not reverse a destructive schema migration, lesson 23',
+    'replication/2': 'An asynchronous follower can lag, so a learner may read an old value, lesson 13',
+    'consistency-cap/2': 'Returning an error does not satisfy CAP availability, lesson 14',
+    'partitioning/2': 'A large tenant or celebrity workshop can still create a hot key, lesson 15',
+    'resilience/2': 'The 1,000 ms worked budget leaves 100 ms for a third attempt, lesson 19',
+    'observability/2': 'A successful response with an incorrect result is still a product failure, lesson 23',
+    'security/2': 'Client-supplied tenant identifiers are inputs to validate, not proof, lesson 24',
+    'recovery/2': 'A backup schedule alone does not prove a recovery point, lesson 25',
+    'evolution/2': 'A binary rollback may not reverse a destructive schema migration, lesson 26',
 }
 
 
@@ -205,7 +205,40 @@ def advanced_unknown_workshop():
         return error
 
 
+
+def edge_and_object_storage():
+    import hashlib, hmac
+    secret, key, expires = b'k', 'recordings/a.mp4', 300
+    sig = hmac.new(secret, f'GET\n{key}\n{expires}'.encode(), hashlib.sha256).hexdigest()
+    def check(now):
+        return 'expired' if now > expires else 'ok'
+    return pick(check(301), {'expired': 'It is rejected as expired'})
+
+
+def consistent_hashing():
+    import hashlib
+    keys = [f'learner-{i}' for i in range(10_000)]
+    h = lambda t: int(hashlib.sha256(t.encode()).hexdigest()[:8], 16)
+    moved = sum(h(k) % 4 != h(k) % 5 for k in keys) / len(keys)
+    return pick(round(moved, 1), {0.8: 'About 80%'})
+
+
+def search_systems():
+    import re
+    docs = {1: 'Join tables without losing records', 2: 'Window functions rank rows and running totals',
+            3: 'Indexes speed up joins on large tables'}
+    tokens = lambda text: set(re.findall(r'[a-z0-9]+', text.lower()))
+    found = sorted(i for i, text in docs.items() if {'tables', 'joins'} <= tokens(text))
+    return str(found)
+
+
+def case_study():
+    return f'About {round(40_000 * 6 / 86_400 * 4)}'
+
+
 FACTS = {
+    'edge-and-object-storage/2': edge_and_object_storage, 'consistent-hashing/2': consistent_hashing,
+    'search-systems/2': search_systems, 'case-study/2': case_study,
     'requirements/2': requirements, 'slos/2': slos, 'workload/2': workload, 'latency/2': latency,
     'api-contracts/2': api_contracts, 'indexes-storage/2': indexes_storage, 'scaling/2': scaling,
     'cache/2': cache, 'queues/2': queues, 'transactions/2': transactions, 'idempotency/2': idempotency,
