@@ -4,7 +4,7 @@ A personal, customizable notebook for learning software, AI, financial concepts 
 
 **[Open the notebook](https://abdul-shaikh-dev.github.io/learning-notebook/)** · **[Browse the source](paths/)**
 
-The notebook currently contains **34 learning paths and 846 lessons and challenges**. It is a static site with no account requirement, available on desktop and mobile through GitHub Pages.
+The notebook currently contains **34 learning paths and 849 lessons and challenges**. It is a static site with no account requirement, available on desktop and mobile through GitHub Pages.
 
 ## Choose a learning path
 
