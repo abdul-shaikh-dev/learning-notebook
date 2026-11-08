@@ -1175,6 +1175,387 @@
     ]
   },
   {
+    "id": "robot-moves",
+    "title": "Keep a robot inside the grid",
+    "stage": "foundation",
+    "difficulty": "starter",
+    "function": "robot_position",
+    "signature": "moves: str, width: int, height: int",
+    "returns": "list[int]",
+    "statement": "A cleaning robot starts at column 0, row 0 of a grid that is `width` columns wide and `height` rows tall. Each character of `moves` is `R` (column + 1), `L` (column - 1), `D` (row + 1) or `U` (row - 1). A move that would leave the grid is ignored and the robot stays where it is. Return the final position as `[column, row]`.",
+    "constraints": [
+      "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+      "`width` and `height` are between 1 and 100. `moves` contains only the characters R, L, U and D and may be empty."
+    ],
+    "examples": [
+      {
+        "args": [
+          "RRDD",
+          3,
+          3
+        ],
+        "expected": [
+          2,
+          2
+        ]
+      },
+      {
+        "args": [
+          "LLUU",
+          3,
+          3
+        ],
+        "expected": [
+          0,
+          0
+        ]
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          "RRDD",
+          3,
+          3
+        ],
+        "expected": [
+          2,
+          2
+        ]
+      },
+      {
+        "args": [
+          "LLUU",
+          3,
+          3
+        ],
+        "expected": [
+          0,
+          0
+        ]
+      },
+      {
+        "args": [
+          "RRRR",
+          3,
+          2
+        ],
+        "expected": [
+          2,
+          0
+        ]
+      },
+      {
+        "args": [
+          "",
+          1,
+          1
+        ],
+        "expected": [
+          0,
+          0
+        ]
+      },
+      {
+        "args": [
+          "RDLU",
+          2,
+          2
+        ],
+        "expected": [
+          0,
+          0
+        ]
+      },
+      {
+        "args": [
+          "DDDR",
+          4,
+          2
+        ],
+        "expected": [
+          1,
+          1
+        ]
+      },
+      {
+        "args": [
+          "RDRDRD",
+          3,
+          5
+        ],
+        "expected": [
+          2,
+          3
+        ]
+      }
+    ],
+    "hints": [
+      "Keep two variables for the current column and row, starting at 0.",
+      "Work out the proposed position first, then decide whether to accept it.",
+      "A position is inside the grid when 0 <= column < width and 0 <= row < height."
+    ],
+    "approach": [
+      "This is a simulation: the state is the current position and each move is one step. Computing the candidate position and checking it before assigning keeps the rule \"ignore a move that leaves the grid\" in one place.",
+      "A dictionary from move letter to a (column change, row change) pair avoids four nearly identical branches and makes the direction convention easy to check."
+    ],
+    "solution": "def robot_position(moves: str, width: int, height: int) -> list[int]:\n    steps = {\"R\": (1, 0), \"L\": (-1, 0), \"D\": (0, 1), \"U\": (0, -1)}\n    column = row = 0\n    for move in moves:\n        dx, dy = steps[move]\n        new_column, new_row = column + dx, row + dy\n        if 0 <= new_column < width and 0 <= new_row < height:\n            column, row = new_column, new_row\n    return [column, row]\n",
+    "complexity": "O(m) time for m moves and O(1) extra space.",
+    "pitfalls": [
+      "Clamping each coordinate separately after the move can be fine here, but it hides the rule that the whole move is ignored; keep the check explicit.",
+      "Mixing up which letter changes the row: in screen coordinates D increases the row."
+    ],
+    "transfer": "Add obstacle cells that also block a move, and return how many moves were ignored as well as the final position.",
+    "references": [
+      {
+        "title": "Python tutorial: dictionaries",
+        "url": "https://docs.python.org/3/tutorial/datastructures.html#dictionaries",
+        "section": "Dictionaries and looping",
+        "reviewed": "2026-11-08",
+        "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "occupied-neighbours",
+    "title": "Count occupied neighbouring desks",
+    "stage": "foundation",
+    "difficulty": "starter",
+    "function": "occupied_neighbours",
+    "signature": "grid: list[list[int]]",
+    "returns": "list[list[int]]",
+    "statement": "An office plan is a grid of desks where 1 means occupied and 0 means free. Return a new grid of the same shape in which each cell holds how many of its up to eight neighbouring desks (horizontally, vertically and diagonally adjacent) are occupied. A desk does not count itself. Cells on the edge have fewer neighbours.",
+    "constraints": [
+      "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+      "The grid has 0 to 50 rows; every row has the same length, between 1 and 50. Every value is 0 or 1."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            [
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            0
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            3,
+            5,
+            3
+          ],
+          [
+            5,
+            8,
+            5
+          ],
+          [
+            3,
+            5,
+            3
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              1,
+              0,
+              0
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            0,
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              1
+            ],
+            [
+              0
+            ],
+            [
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            0
+          ],
+          [
+            2
+          ],
+          [
+            0
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      }
+    ],
+    "hints": [
+      "Build the result row by row as a new list; do not write counts into the input.",
+      "For each cell, look at row offsets -1, 0, 1 and column offsets -1, 0, 1, skipping (0, 0).",
+      "Check that a neighbour's row and column are inside the grid before reading it."
+    ],
+    "approach": [
+      "Each output cell depends only on the input, so read from `grid` and write into a separate result. Updating the input while scanning would make later counts include earlier answers.",
+      "Looping over the eight offsets with a bounds check handles corners, edges and single-row or single-column grids with the same code, instead of special cases."
+    ],
+    "solution": "def occupied_neighbours(grid: list[list[int]]) -> list[list[int]]:\n    rows = len(grid)\n    result = []\n    for r in range(rows):\n        cols = len(grid[r])\n        line = []\n        for c in range(cols):\n            count = 0\n            for dr in (-1, 0, 1):\n                for dc in (-1, 0, 1):\n                    if (dr or dc) and 0 <= r + dr < rows and 0 <= c + dc < cols:\n                        count += grid[r + dr][c + dc]\n            line.append(count)\n        result.append(line)\n    return result\n",
+    "complexity": "O(r × c) time for r rows and c columns, because each cell checks at most eight neighbours; O(r × c) space for the result.",
+    "pitfalls": [
+      "Counting the cell itself by not skipping the (0, 0) offset.",
+      "Negative indexes: grid[-1] silently reads the last row instead of failing, so the bounds check must reject r + dr < 0."
+    ],
+    "transfer": "Use the counts to compute the next generation of Conway's Game of Life, returning a new grid each step.",
+    "references": [
+      {
+        "title": "Python tutorial: nested list comprehensions",
+        "url": "https://docs.python.org/3/tutorial/datastructures.html#nested-list-comprehensions",
+        "section": "Nested lists",
+        "reviewed": "2026-11-08",
+        "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
     "id": "group-by-initial",
     "title": "Group names by initial",
     "stage": "foundation",
@@ -2536,6 +2917,416 @@
         "url": "https://docs.python.org/3/builtins/stdtypes.html",
         "section": "List append and pop; string and dictionary membership",
         "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "rooms-needed",
+    "title": "Count rooms for overlapping meetings",
+    "stage": "intermediate",
+    "difficulty": "developing",
+    "function": "rooms_needed",
+    "signature": "meetings: list[list[int]]",
+    "returns": "int",
+    "statement": "Each meeting is `[start, end]` in minutes and occupies a room from `start` up to, but not including, `end`; a meeting ending at 10 and another starting at 10 can share a room. Return the smallest number of rooms that can hold every meeting. An empty list needs 0 rooms.",
+    "constraints": [
+      "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+      "Every meeting has 0 <= start < end <= 1,440. The list may be in any order."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            [
+              0,
+              30
+            ],
+            [
+              5,
+              10
+            ],
+            [
+              15,
+              20
+            ]
+          ]
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": 0
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              0,
+              30
+            ],
+            [
+              5,
+              10
+            ],
+            [
+              15,
+              20
+            ]
+          ]
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            [
+              10,
+              20
+            ],
+            [
+              20,
+              30
+            ]
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            [
+              1,
+              5
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              1,
+              5
+            ]
+          ]
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [
+            [
+              9,
+              12
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              6
+            ],
+            [
+              5,
+              10
+            ]
+          ]
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              1440
+            ]
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              10
+            ],
+            [
+              10,
+              20
+            ],
+            [
+              5,
+              15
+            ],
+            [
+              15,
+              25
+            ]
+          ]
+        ],
+        "expected": 2
+      }
+    ],
+    "hints": [
+      "Process meetings in order of start time.",
+      "Keep the end times of meetings that are currently running. Which one frees a room first?",
+      "A min-heap from `heapq` gives the earliest end time in O(log n); pop it when that meeting has ended by the new start."
+    ],
+    "approach": [
+      "Sort by start. For each meeting, rooms whose meeting ended at or before this start become free. A min-heap of end times exposes the earliest ending meeting, so you can release every finished room before allocating one for the new meeting.",
+      "The heap holds exactly the meetings in progress, and its largest size during the scan is the answer. Sorting a copy keeps the input unchanged."
+    ],
+    "solution": "import heapq\n\ndef rooms_needed(meetings: list[list[int]]) -> int:\n    ends = []\n    most = 0\n    for start, end in sorted(meetings):\n        while ends and ends[0] <= start:\n            heapq.heappop(ends)\n        heapq.heappush(ends, end)\n        most = max(most, len(ends))\n    return most\n",
+    "complexity": "O(n log n) time for sorting and heap operations; O(n) space for the sorted copy and the heap.",
+    "pitfalls": [
+      "Using `<` instead of `<=` when releasing rooms, so back-to-back meetings need two rooms.",
+      "Sorting the input list in place, which changes the caller's data."
+    ],
+    "transfer": "Return which room number each meeting gets, reusing the lowest free room number, by keeping (end, room) pairs in the heap and a second heap of free room numbers.",
+    "references": [
+      {
+        "title": "Python documentation: heapq",
+        "url": "https://docs.python.org/3/library/heapq.html",
+        "section": "heappush and heappop",
+        "reviewed": "2026-11-08",
+        "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "large-folders",
+    "title": "Count folders over a size limit",
+    "stage": "intermediate",
+    "difficulty": "developing",
+    "function": "count_large_folders",
+    "signature": "folder: dict, limit: int",
+    "returns": "int",
+    "statement": "A folder is a dictionary `{\"files\": [sizes], \"folders\": [subfolders]}`, where each subfolder has the same shape. A folder's total size is the sum of its own file sizes plus the totals of all its subfolders. Return how many folders, including the outer one, have a total size of at least `limit`.",
+    "constraints": [
+      "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+      "Sizes and `limit` are integers from 0 to 1,000,000. Folders nest at most 50 levels deep and contain at most 1,000 folders in all."
+    ],
+    "examples": [
+      {
+        "args": [
+          {
+            "files": [
+              10
+            ],
+            "folders": [
+              {
+                "files": [
+                  50
+                ],
+                "folders": []
+              },
+              {
+                "files": [
+                  5
+                ],
+                "folders": [
+                  {
+                    "files": [
+                      60
+                    ],
+                    "folders": []
+                  }
+                ]
+              }
+            ]
+          },
+          60
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          {
+            "files": [],
+            "folders": []
+          },
+          0
+        ],
+        "expected": 1
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          {
+            "files": [
+              10
+            ],
+            "folders": [
+              {
+                "files": [
+                  50
+                ],
+                "folders": []
+              },
+              {
+                "files": [
+                  5
+                ],
+                "folders": [
+                  {
+                    "files": [
+                      60
+                    ],
+                    "folders": []
+                  }
+                ]
+              }
+            ]
+          },
+          60
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          {
+            "files": [],
+            "folders": []
+          },
+          0
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          {
+            "files": [],
+            "folders": []
+          },
+          1
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          {
+            "files": [
+              1,
+              2
+            ],
+            "folders": [
+              {
+                "files": [
+                  3
+                ],
+                "folders": [
+                  {
+                    "files": [
+                      4
+                    ],
+                    "folders": []
+                  }
+                ]
+              }
+            ]
+          },
+          7
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          {
+            "files": [
+              100
+            ],
+            "folders": [
+              {
+                "files": [
+                  1
+                ],
+                "folders": []
+              },
+              {
+                "files": [
+                  1
+                ],
+                "folders": []
+              }
+            ]
+          },
+          100
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          {
+            "files": [
+              0
+            ],
+            "folders": [
+              {
+                "files": [
+                  0
+                ],
+                "folders": [
+                  {
+                    "files": [
+                      0
+                    ],
+                    "folders": [
+                      {
+                        "files": [
+                          9
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          9
+        ],
+        "expected": 4
+      }
+    ],
+    "hints": [
+      "A folder's total depends on its subfolders' totals, so compute those first.",
+      "Write a helper that returns a folder's total and, while doing so, adds to a count of large folders.",
+      "Returning (total, count) from the helper avoids a variable shared across calls."
+    ],
+    "approach": [
+      "The folders form a tree, and the natural traversal is recursive: the total of a folder is its files plus the totals returned by recursive calls on its subfolders. Visiting children before deciding about the parent is a post-order traversal.",
+      "Computing totals bottom-up means every folder is visited once. Calling a separate `total` function from every folder would re-add the same deep folders many times."
+    ],
+    "solution": "def count_large_folders(folder: dict, limit: int) -> int:\n    def visit(current: dict) -> tuple[int, int]:\n        total, count = sum(current[\"files\"]), 0\n        for sub in current[\"folders\"]:\n            sub_total, sub_count = visit(sub)\n            total += sub_total\n            count += sub_count\n        return total, count + (total >= limit)\n    return visit(folder)[1]\n",
+    "complexity": "O(n + f) time for n folders and f file sizes; O(d) call-stack space for nesting depth d.",
+    "pitfalls": [
+      "Counting only the files directly in a folder and forgetting nested subfolders.",
+      "Recomputing every subtree total from scratch for each ancestor, which makes deep trees quadratic."
+    ],
+    "transfer": "Rewrite the traversal with an explicit stack so that very deep folder trees cannot exceed Python's recursion limit.",
+    "references": [
+      {
+        "title": "Python tutorial: defining functions",
+        "url": "https://docs.python.org/3/tutorial/controlflow.html#defining-functions",
+        "section": "Defining functions",
+        "reviewed": "2026-11-08",
         "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
       }
     ]
@@ -4053,6 +4844,441 @@
         "url": "https://docs.python.org/3/builtins/stdtypes.html",
         "section": "Dictionary copy, get and assignment",
         "reviewed": "2026-10-02",
+        "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "shortest-route",
+    "title": "Find the shortest route through a floor plan",
+    "stage": "advanced",
+    "difficulty": "stretch",
+    "function": "shortest_route",
+    "signature": "grid: list[str]",
+    "returns": "int",
+    "statement": "A floor plan is a list of equal-length strings. `S` is the start, `E` is the exit, `.` is open floor and `#` is a wall. You may move one cell up, down, left or right onto any cell that is not a wall. Return the fewest moves from `S` to `E`, or -1 if the exit cannot be reached.",
+    "constraints": [
+      "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+      "The plan has 1 to 100 rows and 1 to 100 columns. It contains exactly one `S` and exactly one `E`, and otherwise only `.` and `#`."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            "S.#",
+            "..#",
+            "#.E"
+          ]
+        ],
+        "expected": 4
+      },
+      {
+        "args": [
+          [
+            "S#E"
+          ]
+        ],
+        "expected": -1
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            "S.#",
+            "..#",
+            "#.E"
+          ]
+        ],
+        "expected": 4
+      },
+      {
+        "args": [
+          [
+            "S#E"
+          ]
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            "SE"
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            "S...",
+            "###.",
+            "E..."
+          ]
+        ],
+        "expected": 8
+      },
+      {
+        "args": [
+          [
+            "S",
+            ".",
+            ".",
+            "E"
+          ]
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [
+            "S.#.",
+            ".##.",
+            "...E"
+          ]
+        ],
+        "expected": 5
+      },
+      {
+        "args": [
+          [
+            "S..",
+            "###",
+            "..E"
+          ]
+        ],
+        "expected": -1
+      }
+    ],
+    "hints": [
+      "Treat each open cell as a node with edges to its open neighbours; every move costs the same.",
+      "Breadth-first search visits cells in order of distance from the start.",
+      "Mark a cell as seen when you add it to the queue, not when you remove it, so no cell is queued twice."
+    ],
+    "approach": [
+      "When every move costs 1, breadth-first search finds shortest paths: a queue processes all cells at distance d before any at distance d + 1, so the first time the exit is reached is with the fewest moves.",
+      "A `deque` gives O(1) appends and pops from the front. Recording the distance with each queued cell, and a `seen` set, avoids revisiting cells. If the queue empties without reaching the exit, it is unreachable."
+    ],
+    "solution": "from collections import deque\n\ndef shortest_route(grid: list[str]) -> int:\n    rows, cols = len(grid), len(grid[0])\n    start = next((r, c) for r in range(rows) for c in range(cols) if grid[r][c] == \"S\")\n    queue = deque([(start, 0)])\n    seen = {start}\n    while queue:\n        (r, c), steps = queue.popleft()\n        if grid[r][c] == \"E\":\n            return steps\n        for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):\n            if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] != \"#\" and (nr, nc) not in seen:\n                seen.add((nr, nc))\n                queue.append(((nr, nc), steps + 1))\n    return -1\n",
+    "complexity": "O(r × c) time and space for r rows and c columns: each cell is queued at most once.",
+    "pitfalls": [
+      "Using depth-first search, which finds a route but not necessarily the shortest one.",
+      "Marking cells as seen only when dequeued, which can queue the same cell many times on open floors."
+    ],
+    "transfer": "Return the route itself as a list of positions by storing each cell's predecessor and walking back from the exit.",
+    "references": [
+      {
+        "title": "Python documentation: collections.deque",
+        "url": "https://docs.python.org/3/library/collections.html#collections.deque",
+        "section": "deque objects",
+        "reviewed": "2026-11-08",
+        "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "fewest-coins",
+    "title": "Pay an exact amount with the fewest coins",
+    "stage": "advanced",
+    "difficulty": "stretch",
+    "function": "fewest_coins",
+    "signature": "coins: list[int], amount: int",
+    "returns": "int",
+    "statement": "A ticket machine gives change using coins of the values in `coins`; it has an unlimited number of each. Return the fewest coins that add up to exactly `amount`, or -1 if no combination does. An amount of 0 needs 0 coins.",
+    "constraints": [
+      "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+      "`coins` has 1 to 20 distinct values, each between 1 and 1,000. `amount` is between 0 and 10,000."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            1,
+            3,
+            4
+          ],
+          6
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [
+            5,
+            10
+          ],
+          3
+        ],
+        "expected": -1
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            1,
+            3,
+            4
+          ],
+          6
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [
+            5,
+            10
+          ],
+          3
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            2
+          ],
+          0
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            1,
+            5,
+            10,
+            25
+          ],
+          63
+        ],
+        "expected": 6
+      },
+      {
+        "args": [
+          [
+            7
+          ],
+          21
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [
+            4,
+            6
+          ],
+          9
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            3,
+            7
+          ],
+          11
+        ],
+        "expected": -1
+      }
+    ],
+    "hints": [
+      "Taking the largest coin first fails for coins [1, 3, 4] and amount 6.",
+      "Let best[a] be the fewest coins for amount a. How does best[a] relate to best[a - coin]?",
+      "Fill best from 0 up to amount, using a large sentinel for amounts that cannot be made."
+    ],
+    "approach": [
+      "Greedy choice is not safe for arbitrary coin systems, so consider every last coin. The fewest coins for amount `a` is one more than the best of `best[a - coin]` over the coins that fit. That recurrence has overlapping subproblems, which dynamic programming solves once each.",
+      "Filling a table from 0 upwards guarantees each smaller amount is ready when needed. A sentinel larger than any real answer marks impossible amounts, and is converted to -1 at the end."
+    ],
+    "solution": "def fewest_coins(coins: list[int], amount: int) -> int:\n    impossible = amount + 1\n    best = [0] + [impossible] * amount\n    for value in range(1, amount + 1):\n        for coin in coins:\n            if coin <= value and best[value - coin] + 1 < best[value]:\n                best[value] = best[value - coin] + 1\n    return -1 if best[amount] == impossible else best[amount]\n",
+    "complexity": "O(a × k) time for amount a and k coin values; O(a) space for the table.",
+    "pitfalls": [
+      "Using the largest coin first, which returns 3 (4 + 1 + 1) instead of 2 (3 + 3) for amount 6.",
+      "Returning the sentinel instead of -1 for amounts that cannot be made."
+    ],
+    "transfer": "Return the coins used, not just how many, by recording which coin achieved each best value and walking back from the amount.",
+    "references": [
+      {
+        "title": "Python documentation: lists",
+        "url": "https://docs.python.org/3/tutorial/datastructures.html#more-on-lists",
+        "section": "More on lists",
+        "reviewed": "2026-11-08",
+        "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+      }
+    ]
+  },
+  {
+    "id": "seating-orders",
+    "title": "Count seating orders that keep rivals apart",
+    "stage": "advanced",
+    "difficulty": "stretch",
+    "function": "seating_orders",
+    "signature": "guests: list[str], rivals: list[list[str]]",
+    "returns": "int",
+    "statement": "Guests sit in a single row. Each pair in `rivals` must not sit next to each other, in either order. Return how many different orders of all the guests satisfy every rivalry. With no guests there is exactly one order, the empty one.",
+    "constraints": [
+      "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+      "`guests` has 0 to 8 distinct names. Each rivalry names two different guests from the list; a pair may appear more than once."
+    ],
+    "examples": [
+      {
+        "args": [
+          [
+            "Ana",
+            "Ben",
+            "Cy"
+          ],
+          [
+            [
+              "Ana",
+              "Ben"
+            ]
+          ]
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [],
+          []
+        ],
+        "expected": 1
+      }
+    ],
+    "cases": [
+      {
+        "args": [
+          [
+            "Ana",
+            "Ben",
+            "Cy"
+          ],
+          [
+            [
+              "Ana",
+              "Ben"
+            ]
+          ]
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [],
+          []
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            "Ana"
+          ],
+          []
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            "Ana",
+            "Ben"
+          ],
+          [
+            [
+              "Ben",
+              "Ana"
+            ]
+          ]
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          []
+        ],
+        "expected": 24
+      },
+      {
+        "args": [
+          [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "A",
+              "C"
+            ]
+          ]
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "B"
+            ]
+          ]
+        ],
+        "expected": 72
+      }
+    ],
+    "hints": [
+      "Build an order one seat at a time, choosing an unseated guest for the next seat.",
+      "Before placing a guest, check only the person in the previous seat.",
+      "After exploring a choice, undo it: remove the guest from the order and mark them unseated."
+    ],
+    "approach": [
+      "Backtracking explores orders seat by seat and abandons a partial order as soon as it breaks a rule, so whole families of invalid orders are never generated. Only the newly placed neighbour pair needs checking, because earlier pairs were checked already.",
+      "Storing rivalries as a set of frozensets makes the check order-independent and O(1). Undoing each choice after the recursive call returns the shared state to how it was, so one list and one set serve the whole search."
+    ],
+    "solution": "def seating_orders(guests: list[str], rivals: list[list[str]]) -> int:\n    banned = {frozenset(pair) for pair in rivals}\n    order: list[str] = []\n    seated: set[str] = set()\n\n    def place() -> int:\n        if len(order) == len(guests):\n            return 1\n        total = 0\n        for guest in guests:\n            if guest in seated:\n                continue\n            if order and frozenset((order[-1], guest)) in banned:\n                continue\n            order.append(guest)\n            seated.add(guest)\n            total += place()\n            order.pop()\n            seated.remove(guest)\n        return total\n\n    return place()\n",
+    "complexity": "O(n! × n) time in the worst case for n guests, but rivalries prune invalid branches early; O(n) space for the partial order and recursion.",
+    "pitfalls": [
+      "Forgetting to undo a choice, so later branches see guests who are not really seated.",
+      "Checking only (previous, guest) in one order when rivalries are unordered pairs."
+    ],
+    "transfer": "Seat guests around a round table, where the first and last seats are also neighbours and rotations of the same arrangement count once.",
+    "references": [
+      {
+        "title": "Python documentation: frozenset",
+        "url": "https://docs.python.org/3/library/stdtypes.html#frozenset",
+        "section": "Set types",
+        "reviewed": "2026-11-08",
         "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
       }
     ]

@@ -112,7 +112,41 @@ def column_totals(rows: list[list[int]]) -> list[int]:
 
 
 
-# 10. Group names by initial
+# 10. Keep a robot inside the grid
+
+def robot_position(moves: str, width: int, height: int) -> list[int]:
+    steps = {"R": (1, 0), "L": (-1, 0), "D": (0, 1), "U": (0, -1)}
+    column = row = 0
+    for move in moves:
+        dx, dy = steps[move]
+        new_column, new_row = column + dx, row + dy
+        if 0 <= new_column < width and 0 <= new_row < height:
+            column, row = new_column, new_row
+    return [column, row]
+
+
+
+# 11. Count occupied neighbouring desks
+
+def occupied_neighbours(grid: list[list[int]]) -> list[list[int]]:
+    rows = len(grid)
+    result = []
+    for r in range(rows):
+        cols = len(grid[r])
+        line = []
+        for c in range(cols):
+            count = 0
+            for dr in (-1, 0, 1):
+                for dc in (-1, 0, 1):
+                    if (dr or dc) and 0 <= r + dr < rows and 0 <= c + dc < cols:
+                        count += grid[r + dr][c + dc]
+            line.append(count)
+        result.append(line)
+    return result
+
+
+
+# 12. Group names by initial
 
 def group_by_initial(names: list[str]) -> dict[str, list[str]]:
     groups = {}
@@ -127,7 +161,7 @@ def group_by_initial(names: list[str]) -> dict[str, list[str]]:
 
 
 
-# 11. Choose the most requested label
+# 13. Choose the most requested label
 
 def most_requested(labels: list[str]) -> str | None:
     counts = {}
@@ -143,7 +177,7 @@ def most_requested(labels: list[str]) -> str | None:
 
 
 
-# 12. Pack exactly two entries
+# 14. Pack exactly two entries
 
 def can_fill_pair(sizes: list[int], target: int) -> bool:
     left = 0
@@ -160,7 +194,7 @@ def can_fill_pair(sizes: list[int], target: int) -> bool:
 
 
 
-# 13. Match repeated readings
+# 15. Match repeated readings
 
 def shared_readings(left: list[int], right: list[int]) -> list[int]:
     i = 0
@@ -179,7 +213,7 @@ def shared_readings(left: list[int], right: list[int]) -> list[int]:
 
 
 
-# 14. Find the busiest fixed block
+# 16. Find the busiest fixed block
 
 def busiest_block(counts: list[int], width: int) -> int:
     if width > len(counts):
@@ -198,7 +232,7 @@ def busiest_block(counts: list[int], width: int) -> int:
 
 
 
-# 15. Fit consecutive costs into a budget
+# 17. Fit consecutive costs into a budget
 
 def affordable_stretch(costs: list[int], budget: int) -> int:
     left = 0
@@ -214,7 +248,7 @@ def affordable_stretch(costs: list[int], budget: int) -> int:
 
 
 
-# 16. Answer several range totals
+# 18. Answer several range totals
 
 def range_totals(values: list[int], queries: list[list[int]]) -> list[int]:
     prefix = [0]
@@ -224,7 +258,7 @@ def range_totals(values: list[int], queries: list[list[int]]) -> list[int]:
 
 
 
-# 17. Place a balanced marker
+# 19. Place a balanced marker
 
 def balance_marker(values: list[int]) -> int:
     total = sum(values)
@@ -237,7 +271,7 @@ def balance_marker(values: list[int]) -> int:
 
 
 
-# 18. Find the first suitable capacity
+# 20. Find the first suitable capacity
 
 def first_suitable(capacities: list[int], required: int) -> int:
     low = 0
@@ -252,7 +286,7 @@ def first_suitable(capacities: list[int], required: int) -> int:
 
 
 
-# 19. Check nested groups
+# 21. Check nested groups
 
 def balanced_groups(text: str) -> bool:
     stack = []
@@ -268,7 +302,37 @@ def balanced_groups(text: str) -> bool:
 
 
 
-# 20. Apply note edits with undo
+# 22. Count rooms for overlapping meetings
+
+import heapq
+
+def rooms_needed(meetings: list[list[int]]) -> int:
+    ends = []
+    most = 0
+    for start, end in sorted(meetings):
+        while ends and ends[0] <= start:
+            heapq.heappop(ends)
+        heapq.heappush(ends, end)
+        most = max(most, len(ends))
+    return most
+
+
+
+# 23. Count folders over a size limit
+
+def count_large_folders(folder: dict, limit: int) -> int:
+    def visit(current: dict) -> tuple[int, int]:
+        total, count = sum(current["files"]), 0
+        for sub in current["folders"]:
+            sub_total, sub_count = visit(sub)
+            total += sub_total
+            count += sub_count
+        return total, count + (total >= limit)
+    return visit(folder)[1]
+
+
+
+# 24. Apply note edits with undo
 
 def undo_notes(commands: list[str]) -> list[str]:
     notes = []
@@ -282,7 +346,7 @@ def undo_notes(commands: list[str]) -> list[str]:
 
 
 
-# 21. Read small settings lines
+# 25. Read small settings lines
 
 def read_settings(lines: list[str]) -> dict[str, str]:
     result = {}
@@ -300,7 +364,7 @@ def read_settings(lines: list[str]) -> dict[str, str]:
 
 
 
-# 22. Keep the latest device sample
+# 26. Keep the latest device sample
 
 def latest_samples(samples: list[list]) -> dict[str, list[int]]:
     latest = {}
@@ -311,7 +375,7 @@ def latest_samples(samples: list[list]) -> dict[str, list[int]]:
 
 
 
-# 23. Combine maintenance coverage
+# 27. Combine maintenance coverage
 
 def maintenance_coverage(intervals: list[list[int]]) -> list[list[int]]:
     result = []
@@ -324,7 +388,7 @@ def maintenance_coverage(intervals: list[list[int]]) -> list[list[int]]:
 
 
 
-# 24. Find time for a short appointment
+# 28. Find time for a short appointment
 
 def first_open_slot(busy: list[list[int]], day_end: int, duration: int) -> int:
     candidate = 0
@@ -338,7 +402,7 @@ def first_open_slot(busy: list[list[int]], day_end: int, duration: int) -> int:
 
 
 
-# 25. Measure a request burst
+# 29. Measure a request burst
 
 def peak_requests(timestamps: list[int], width: int) -> int:
     left = 0
@@ -351,7 +415,7 @@ def peak_requests(timestamps: list[int], width: int) -> int:
 
 
 
-# 26. Convert a price into cents
+# 30. Convert a price into cents
 
 def parse_price(text: str) -> int | None:
     parts = text.split(".")
@@ -369,7 +433,7 @@ def parse_price(text: str) -> int | None:
 
 
 
-# 27. Compare numeric release labels
+# 31. Compare numeric release labels
 
 def compare_releases(left: str, right: str) -> int:
     a = [int(part) for part in left.split(".")]
@@ -385,7 +449,7 @@ def compare_releases(left: str, right: str) -> int:
 
 
 
-# 28. Plan a small preparation list
+# 32. Plan a small preparation list
 
 def ready_order(tasks: list[str], requirements: list[list[str]]) -> list[str] | None:
     needed = {task: set() for task in tasks}
@@ -408,7 +472,7 @@ def ready_order(tasks: list[str], requirements: list[list[str]]) -> list[str] | 
 
 
 
-# 29. Process complete stock requests
+# 33. Process complete stock requests
 
 def fulfill_orders(stock: dict[str, int], orders: list[list]) -> list[bool]:
     remaining = stock.copy()
@@ -423,7 +487,68 @@ def fulfill_orders(stock: dict[str, int], orders: list[list]) -> list[bool]:
 
 
 
-# 30. Fit the most optional sessions
+# 34. Find the shortest route through a floor plan
+
+from collections import deque
+
+def shortest_route(grid: list[str]) -> int:
+    rows, cols = len(grid), len(grid[0])
+    start = next((r, c) for r in range(rows) for c in range(cols) if grid[r][c] == "S")
+    queue = deque([(start, 0)])
+    seen = {start}
+    while queue:
+        (r, c), steps = queue.popleft()
+        if grid[r][c] == "E":
+            return steps
+        for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
+            if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] != "#" and (nr, nc) not in seen:
+                seen.add((nr, nc))
+                queue.append(((nr, nc), steps + 1))
+    return -1
+
+
+
+# 35. Pay an exact amount with the fewest coins
+
+def fewest_coins(coins: list[int], amount: int) -> int:
+    impossible = amount + 1
+    best = [0] + [impossible] * amount
+    for value in range(1, amount + 1):
+        for coin in coins:
+            if coin <= value and best[value - coin] + 1 < best[value]:
+                best[value] = best[value - coin] + 1
+    return -1 if best[amount] == impossible else best[amount]
+
+
+
+# 36. Count seating orders that keep rivals apart
+
+def seating_orders(guests: list[str], rivals: list[list[str]]) -> int:
+    banned = {frozenset(pair) for pair in rivals}
+    order: list[str] = []
+    seated: set[str] = set()
+
+    def place() -> int:
+        if len(order) == len(guests):
+            return 1
+        total = 0
+        for guest in guests:
+            if guest in seated:
+                continue
+            if order and frozenset((order[-1], guest)) in banned:
+                continue
+            order.append(guest)
+            seated.add(guest)
+            total += place()
+            order.pop()
+            seated.remove(guest)
+        return total
+
+    return place()
+
+
+
+# 37. Fit the most optional sessions
 
 def book_most_sessions(sessions: list[list[int]]) -> int:
     count = 0

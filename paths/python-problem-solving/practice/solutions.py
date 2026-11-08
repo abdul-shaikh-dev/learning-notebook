@@ -67,147 +67,196 @@ def column_totals(rows: list[list[int]]) -> list[int]:
 
 
 
-# 10. Group names by initial | group-by-initial
+# 10. Keep a robot inside the grid | robot-moves
+
+def robot_position(moves: str, width: int, height: int) -> list[int]:
+    raise NotImplementedError("Write your solution here")
+
+
+
+# 11. Count occupied neighbouring desks | occupied-neighbours
+
+def occupied_neighbours(grid: list[list[int]]) -> list[list[int]]:
+    raise NotImplementedError("Write your solution here")
+
+
+
+# 12. Group names by initial | group-by-initial
 
 def group_by_initial(names: list[str]) -> dict[str, list[str]]:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 11. Choose the most requested label | most-requested
+# 13. Choose the most requested label | most-requested
 
 def most_requested(labels: list[str]) -> str | None:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 12. Pack exactly two entries | can-fill-pair
+# 14. Pack exactly two entries | can-fill-pair
 
 def can_fill_pair(sizes: list[int], target: int) -> bool:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 13. Match repeated readings | shared-readings
+# 15. Match repeated readings | shared-readings
 
 def shared_readings(left: list[int], right: list[int]) -> list[int]:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 14. Find the busiest fixed block | busiest-block
+# 16. Find the busiest fixed block | busiest-block
 
 def busiest_block(counts: list[int], width: int) -> int:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 15. Fit consecutive costs into a budget | affordable-stretch
+# 17. Fit consecutive costs into a budget | affordable-stretch
 
 def affordable_stretch(costs: list[int], budget: int) -> int:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 16. Answer several range totals | range-totals
+# 18. Answer several range totals | range-totals
 
 def range_totals(values: list[int], queries: list[list[int]]) -> list[int]:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 17. Place a balanced marker | balance-marker
+# 19. Place a balanced marker | balance-marker
 
 def balance_marker(values: list[int]) -> int:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 18. Find the first suitable capacity | first-suitable
+# 20. Find the first suitable capacity | first-suitable
 
 def first_suitable(capacities: list[int], required: int) -> int:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 19. Check nested groups | balanced-groups
+# 21. Check nested groups | balanced-groups
 
 def balanced_groups(text: str) -> bool:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 20. Apply note edits with undo | undo-notes
+# 22. Count rooms for overlapping meetings | rooms-needed
+
+def rooms_needed(meetings: list[list[int]]) -> int:
+    raise NotImplementedError("Write your solution here")
+
+
+
+# 23. Count folders over a size limit | large-folders
+
+def count_large_folders(folder: dict, limit: int) -> int:
+    raise NotImplementedError("Write your solution here")
+
+
+
+# 24. Apply note edits with undo | undo-notes
 
 def undo_notes(commands: list[str]) -> list[str]:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 21. Read small settings lines | read-settings
+# 25. Read small settings lines | read-settings
 
 def read_settings(lines: list[str]) -> dict[str, str]:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 22. Keep the latest device sample | latest-samples
+# 26. Keep the latest device sample | latest-samples
 
 def latest_samples(samples: list[list]) -> dict[str, list[int]]:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 23. Combine maintenance coverage | maintenance-coverage
+# 27. Combine maintenance coverage | maintenance-coverage
 
 def maintenance_coverage(intervals: list[list[int]]) -> list[list[int]]:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 24. Find time for a short appointment | first-open-slot
+# 28. Find time for a short appointment | first-open-slot
 
 def first_open_slot(busy: list[list[int]], day_end: int, duration: int) -> int:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 25. Measure a request burst | peak-requests
+# 29. Measure a request burst | peak-requests
 
 def peak_requests(timestamps: list[int], width: int) -> int:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 26. Convert a price into cents | parse-price
+# 30. Convert a price into cents | parse-price
 
 def parse_price(text: str) -> int | None:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 27. Compare numeric release labels | compare-releases
+# 31. Compare numeric release labels | compare-releases
 
 def compare_releases(left: str, right: str) -> int:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 28. Plan a small preparation list | ready-order
+# 32. Plan a small preparation list | ready-order
 
 def ready_order(tasks: list[str], requirements: list[list[str]]) -> list[str] | None:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 29. Process complete stock requests | fulfill-orders
+# 33. Process complete stock requests | fulfill-orders
 
 def fulfill_orders(stock: dict[str, int], orders: list[list]) -> list[bool]:
     raise NotImplementedError("Write your solution here")
 
 
 
-# 30. Fit the most optional sessions | book-most-sessions
+# 34. Find the shortest route through a floor plan | shortest-route
+
+def shortest_route(grid: list[str]) -> int:
+    raise NotImplementedError("Write your solution here")
+
+
+
+# 35. Pay an exact amount with the fewest coins | fewest-coins
+
+def fewest_coins(coins: list[int], amount: int) -> int:
+    raise NotImplementedError("Write your solution here")
+
+
+
+# 36. Count seating orders that keep rivals apart | seating-orders
+
+def seating_orders(guests: list[str], rivals: list[list[str]]) -> int:
+    raise NotImplementedError("Write your solution here")
+
+
+
+# 37. Fit the most optional sessions | book-most-sessions
 
 def book_most_sessions(sessions: list[list[int]]) -> int:
     raise NotImplementedError("Write your solution here")

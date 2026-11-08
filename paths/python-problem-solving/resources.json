@@ -68,7 +68,7 @@
         {
           "label": "List the available challenges",
           "command": "python check.py --list",
-          "expected": "The 30 challenge identifiers and titles."
+          "expected": "The 37 challenge identifiers and titles."
         },
         {
           "label": "Try the first challenge in this stage",
@@ -97,7 +97,7 @@
       "id": "intermediate",
       "title": "Recognise reusable patterns",
       "kind": "lesson",
-      "goal": "Practise counting, two pointers, windows, prefix sums, search and stacks.",
+      "goal": "Practise counting, two pointers, windows, prefix sums, search, stacks, heaps and recursion.",
       "fileIds": [
         "attempts",
         "runner",
@@ -116,7 +116,7 @@
         {
           "label": "List the available challenges",
           "command": "python check.py --list",
-          "expected": "The 30 challenge identifiers and titles."
+          "expected": "The 37 challenge identifiers and titles."
         },
         {
           "label": "Try the first challenge in this stage",
@@ -164,7 +164,7 @@
         {
           "label": "List the available challenges",
           "command": "python check.py --list",
-          "expected": "The 30 challenge identifiers and titles."
+          "expected": "The 37 challenge identifiers and titles."
         },
         {
           "label": "Try the first challenge in this stage",
@@ -200,6 +200,8 @@
     "keep-first-labels": "foundation",
     "stock-totals": "foundation",
     "column-totals": "foundation",
+    "robot-moves": "foundation",
+    "occupied-neighbours": "foundation",
     "group-by-initial": "foundation",
     "most-requested": "intermediate",
     "can-fill-pair": "intermediate",
@@ -210,6 +212,8 @@
     "balance-marker": "intermediate",
     "first-suitable": "intermediate",
     "balanced-groups": "intermediate",
+    "rooms-needed": "intermediate",
+    "large-folders": "intermediate",
     "undo-notes": "intermediate",
     "read-settings": "advanced",
     "latest-samples": "advanced",
@@ -220,6 +224,9 @@
     "compare-releases": "advanced",
     "ready-order": "advanced",
     "fulfill-orders": "advanced",
+    "shortest-route": "advanced",
+    "fewest-coins": "advanced",
+    "seating-orders": "advanced",
     "book-most-sessions": "advanced"
   },
   "bundle": {

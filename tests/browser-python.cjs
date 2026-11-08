@@ -70,5 +70,5 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
   ['def broken(',r=>!r.ok&&/SyntaxError/.test(r.error)],
   ['import sys; print("oops", file=sys.stderr)',r=>r.ok&&r.output==='oops\n']
  ]){const r=await runCode(code);assert.ok(check(r),code+' -> '+JSON.stringify(r));}
- console.log('PASS: real browser Python runtime executes all 30 references / 192 cases and rejects wrong answers, types, mutation, syntax, missing functions and SystemExit; checks 84 code-based checkpoint answers; runs 25 Python course references and 125 lesson examples (4 with their practice modules; '+stated+' matching their stated output), confirms 2 thread examples cannot run in the browser, as scripts with bounded output, exit codes, no stdin and learner-only tracebacks.');
+ console.log('PASS: real browser Python runtime executes all 37 references / 240 cases and rejects wrong answers, types, mutation, syntax, missing functions and SystemExit; checks 84 code-based checkpoint answers; runs 25 Python course references and 125 lesson examples (4 with their practice modules; '+stated+' matching their stated output), confirms 2 thread examples cannot run in the browser, as scripts with bounded output, exit codes, no stdin and learner-only tracebacks.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
