@@ -26,7 +26,10 @@ PRACTICE = COURSE / 'practice'
 NODE = shutil.which('node')
 
 # Answers that follow from the lesson text rather than lab behaviour.
-SOURCED = {}
+SOURCED = {
+    'generics-utility-types/2': 'A key outside keyof T fails the K extends keyof T constraint at compile time, lesson 8',
+    'where-react-runs/2': 'A "use server" function is reachable by any client and must authenticate and validate, React docs on use server',
+}
 
 # Evaluates each [key, expression] pair with the lab modules in scope and prints one JSON object.
 # persistence-bridge.ts imports "./tracker-core" without an extension, as Vite allows, so a resolve
@@ -78,6 +81,8 @@ EXPRESSIONS = {
     'load_empty': "bridge.loadLocal({getItem: () => null})",
     'v3_migrate': "bridge.migrateSaved(JSON.stringify({version: 3, lessons: []}))",
     'filter_focus': "perf.filterRows(perf.makeRows(), '  FOCUS ').length",
+    'or_vs_nullish': "[0 || 25, 0 ?? 25]",
+    'inline_object': "Object.is({padding: 8}, {padding: 8})",
 }
 
 
@@ -266,7 +271,16 @@ def advanced_filter():
     return str(value('filter_focus'))
 
 
+def language_core():
+    return pick(tuple(value('or_vs_nullish')), {(25, 0): '25 and 0'})
+
+
+def refs_memo():
+    return pick(value('inline_object'), {False: 'A new object is created on each render, so the shallow comparison fails'})
+
+
 FACTS = {
+    'language-core/2': language_core, 'refs-memo/2': refs_memo,
     'web-basics/2': web_basics, 'values/2': values, 'collections/2': collections, 'functions/2': functions,
     'async/2': async_, 'typescript/2': typescript, 'components/2': components, 'state/2': state,
     'forms/2': forms, 'effects/2': effects, 'capstone/2': capstone, 'modules-closures/2': modules_closures,
