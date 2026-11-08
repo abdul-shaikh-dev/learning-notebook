@@ -6,6 +6,9 @@
     "addresses-ports": [
       {"question": "The lab server binds ('127.0.0.1', 0). What does server.server_port hold once it is listening?", "options": ["A nonzero port chosen by the operating system", "0", "8000, the default HTTP port for the lab"], "correct": 0, "explanation": "Port zero asks the operating system for any free port. The client reads the assigned port from server_port, so no fixed port can collide with another program."}
     ],
+    "subnets-nat-routing": [
+      {"question": "How many usable host addresses does 192.168.10.0/26 have?", "options": ["62", "64", "254"], "correct": 0, "explanation": "A /26 has 2^6 = 64 addresses; the network and broadcast addresses leave 62 for hosts."}
+    ],
     "dns": [
       {"question": "Why does the course use 192.0.2.10 as its example address?", "options": ["It is in 192.0.2.0/24, a range reserved for documentation, not a live host", "It is a loopback address", "It is the address of a public DNS resolver"], "correct": 0, "explanation": "RFC 5737 reserves 192.0.2.0/24 (TEST-NET-1) for examples. The offline model stores it without sending a DNS query, so the example never reaches a real machine."}
     ],
@@ -14,6 +17,9 @@
     ],
     "transport": [
       {"question": "A peer sends b'incomplete' with no newline and then closes the connection. What does receive_lines in tcp_framing.py do?", "options": ["Raises ValueError: EOF inside a frame", "Returns ['incomplete']", "Returns an empty list"], "correct": 0, "explanation": "The newline delimiter ends a frame. Bytes still pending when the stream ends belong to a truncated message, so the parser reports it instead of accepting a partial frame."}
+    ],
+    "udp-and-tcp": [
+      {"question": "A client sends two 5-byte datagrams over UDP to a loopback socket. How many recvfrom calls return data?", "options": ["Two: each datagram arrives as one message", "One, containing all 10 bytes", "Ten, one per byte"], "correct": 0, "explanation": "UDP preserves datagram boundaries. Each recvfrom returns one whole datagram, unlike a TCP stream."}
     ],
     "urls-origins": [
       {"question": "What does the lab's origin() helper do with https://example.test/page#top?", "options": ["Raises ValueError: request URLs must not include a fragment", "Returns ('https', 'example.test', 443)", "Returns ('https', 'example.test#top', 443)"], "correct": 0, "explanation": "A fragment identifies a client-side location and is never sent as the request target. The helper's explicit request policy rejects it rather than silently dropping it."}
@@ -48,11 +54,17 @@
     "validators": [
       {"question": "A client sends GET /lesson with If-None-Match: \"lesson-v2\", but the server's ETag is \"lesson-v1\". What comes back?", "options": ["200 with the full body and ETag \"lesson-v1\"", "304 with no body", "412 Precondition Failed"], "correct": 0, "explanation": "The validator does not match, so the stored copy is out of date and the server sends the current representation with its current ETag. Only a match produces 304."}
     ],
+    "websockets-and-sse": [
+      {"question": "A WebSocket request sends Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==. Which Sec-WebSocket-Accept must the server return?", "options": ["s3pPLMBiTxaQ9kYGzzhZRbK+xOo=", "dGhlIHNhbXBsZSBub25jZQ==", "Any random base64 value"], "correct": 0, "explanation": "The accept value is base64(SHA-1(key + the RFC 6455 GUID)). For this sample key it is s3pPLMBiTxaQ9kYGzzhZRbK+xOo=."}
+    ],
     "redirects": [
       {"question": "A request to http://127.0.0.1:8080/a/redirect returns Location: /lesson. Which URL does that reference resolve to?", "options": ["http://127.0.0.1:8080/lesson", "http://127.0.0.1:8080/a/lesson", "http://lesson/"], "correct": 0, "explanation": "A Location starting with / replaces the whole path of the request URL and keeps its scheme, host and port. Validate the resolved target before following it."}
     ],
     "proxies": [
       {"question": "A request reaches the origin with an X-Forwarded-For field that the client itself supplied. What does it prove?", "options": ["Nothing on its own: only a trusted proxy that removes incoming copies can vouch for it", "The client's real IP address", "That the request passed through a proxy"], "correct": 0, "explanation": "Any client can send any field. Forwarded metadata is evidence only when a defined intermediary sets it and strips spoofed copies at the trusted boundary."}
+    ],
+    "load-balancers-cdn": [
+      {"question": "A response carries Cache-Control: public, max-age=60, s-maxage=600. How long may a CDN treat it as fresh?", "options": ["600 seconds", "60 seconds", "Until the browser's copy expires"], "correct": 0, "explanation": "s-maxage applies to shared caches such as CDNs and overrides max-age there; browsers still use max-age."}
     ],
     "timeouts": [
       {"question": "fetch(server, '/stall', timeout=0.15) raises TimeoutError. Had the server received the request?", "options": ["Yes: the handler had started; the client only stopped waiting", "No: a timeout means the request was never delivered", "It cannot have, because the timeout was shorter than the connection time"], "correct": 0, "explanation": "The /stall handler signals that it started before it waits. The client's timeout bounds its own wait for a response; it says nothing about what the server did."}
