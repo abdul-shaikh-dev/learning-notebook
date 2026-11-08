@@ -327,8 +327,66 @@
       ]
     },
     {
+      "id": "wireframes-prototypes",
+      "title": "3. Sketch, wireframe and prototype before polishing",
+      "stage": "foundation",
+      "takeaway": "Match fidelity to the question: sketches and wireframes test structure and flow cheaply, clickable prototypes test tasks, and accessibility decisions such as headings, labels and focus order belong in the wireframe, not after the visual design.",
+      "sections": [
+        {
+          "title": "Fidelity follows the question",
+          "paragraphs": [
+            "A sketch answers \"what goes on this screen and in what order?\" in minutes. A wireframe fixes layout, content priority and navigation with grey boxes and real labels, without colour or imagery that invites debate about taste. A clickable low-fidelity prototype links screens so a person can attempt a task (lesson 1's task, tested as in lesson 23). High-fidelity prototypes are for questions about visual detail, motion or exact wording, and cost more to change.",
+            "Use real content early. Placeholder text hides long names, empty states and error messages that break layouts; the real list of destinations from lesson 2 tests the navigation. Throw prototypes away freely: their job is to answer a question, not to become the product code."
+          ]
+        },
+        {
+          "title": "An annotated wireframe",
+          "paragraphs": [
+            "Annotate what the visual does not show: heading levels, the reading and focus order, labels and instructions, states (empty, loading, error) and what happens at narrow widths. Decisions made here are cheap; the same decisions found in testing after build are not."
+          ],
+          "example": "+--------------------------------------------------+\n| Notebook        [Search courses      ] [Sign in]  |  banner; search has a visible label\n+--------------------------------------------------+\n| h1 Continue learning                             |  1 heading per page\n| [Resume: SQL joins, lesson 7 of 24 ->]           |  primary action; focus 1 after skip link\n|                                                  |\n| h2 Your courses                                  |\n| | SQL Server        12/24 | Next: Window funcs | |  list, not a table; progress also as text\n| | Networking         3/26 | Next: DNS          | |\n| empty state: \"No courses started. Browse all.\"   |  shown when the list is empty\n+--------------------------------------------------+\nNarrow screens: search moves below the heading; list items stack; no horizontal scroll.\nFocus order: skip link, search, sign in, resume, each course in list order."
+        }
+      ],
+      "exercise": {
+        "prompt": "You must design a \"weekly review\" screen where learners see what they studied and choose next week's goals. Say which fidelity you would start with and why, list five annotations your wireframe must carry, and name the question a clickable prototype would answer.",
+        "solution": "Start with paper sketches or a grey-box wireframe, because the open questions are content and order (which summary, how goals are chosen), not visual style. Annotations: heading structure (h1 Weekly review, h2 sections); focus and reading order; labels and instructions for the goal inputs; the empty state for a week with no study and the error state for invalid goals; behaviour at narrow widths and 200% zoom. A clickable prototype would test whether a learner can review the week and set three goals without help, timed and observed as in lesson 23.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Chooses low fidelity for structural questions.",
+          "Annotates headings, order, labels, states and narrow layouts.",
+          "Frames the prototype around a task that can be observed."
+        ]
+      },
+      "quiz": {
+        "question": "Why use real content instead of placeholder text in a wireframe?",
+        "options": [
+          "It looks more polished",
+          "Real names, empty states and error messages reveal layout and wording problems that placeholders hide",
+          "Placeholder text fails contrast checks"
+        ],
+        "correct": 1,
+        "explanation": "Lorem ipsum is always the right length. Real content is not."
+      },
+      "references": [
+        {
+          "title": "Nielsen Norman Group: UX prototypes, low fidelity versus high fidelity",
+          "url": "https://www.nngroup.com/articles/ux-prototype-hi-lo-fidelity/",
+          "section": "Prototype fidelity",
+          "reviewed": "2026-11-08",
+          "scope": "Practitioner guidance from Nielsen Norman Group; the notebook findings are original examples, not a study."
+        },
+        {
+          "title": "W3C WAI: Designing for web accessibility",
+          "url": "https://www.w3.org/WAI/tips/designing/",
+          "section": "Design tips",
+          "reviewed": "2026-11-08",
+          "scope": "W3C introductory guidance; it does not replace the WCAG success criteria."
+        }
+      ]
+    },
+    {
       "id": "hierarchy-layout",
-      "title": "3. Visual hierarchy, spacing and alignment",
+      "title": "4. Visual hierarchy, spacing and alignment",
       "takeaway": "A small set of visual rules makes priority visible.",
       "stage": "foundation",
       "sections": [
@@ -378,8 +436,73 @@
       ]
     },
     {
+      "id": "usability-heuristics",
+      "title": "5. Review a design against usability heuristics",
+      "stage": "foundation",
+      "takeaway": "A heuristic evaluation has several reviewers inspect the interface independently against named principles, then merge findings with locations, evidence and severity; it finds likely problems cheaply but does not replace watching people use it.",
+      "sections": [
+        {
+          "title": "Ten principles and how to use them",
+          "paragraphs": [
+            "Jakob Nielsen's ten heuristics are broad principles: visibility of system status; match between the system and the real world; user control and freedom; consistency and standards; error prevention; recognition rather than recall; flexibility and efficiency of use; aesthetic and minimalist design; helping users recognise, diagnose and recover from errors; and help and documentation. Several overlap with this course: status messages (lesson 13), error recovery (lesson 12) and visual hierarchy (lesson 4).",
+            "Run the evaluation with three to five reviewers who each walk through realistic tasks alone, noting every problem with the heuristic it breaks, where it occurs and what they observed. Merge the lists afterwards; independent reviewers find different problems. Rate severity from 0 (not a problem) to 4 (usability catastrophe) by frequency, impact and persistence, and fix the high ratings first."
+          ]
+        },
+        {
+          "title": "Findings that someone can act on",
+          "paragraphs": [
+            "A useful finding names the location and the observed behaviour, not a vague opinion. The evaluation predicts problems from principles; usability testing (lesson 23) shows which ones real people actually hit, and accessibility needs its own checks (lesson 22)."
+          ],
+          "example": "Finding                                         Heuristic                    Where               Severity\nSaving a note shows no confirmation;            Visibility of system status  Note editor         3\n  learners click Save repeatedly\nDeleting a course progress record has no         User control and freedom     Settings > Progress 4\n  undo and no confirmation\n\"Sync\" and \"Refresh\" do the same thing          Consistency and standards    Header, dashboard   2\nError says \"Invalid input\" without the field    Help users recover from      Goal form           3\n  or the rule                                     errors\nLearners must remember lesson numbers to        Recognition rather than      Search              2\n  resume; titles are not searchable               recall"
+        }
+      ],
+      "exercise": {
+        "prompt": "Pick one screen of the notebook (or any app you use). Walk through one task and write three heuristic findings with heuristic, location, observation and severity, then say which finding you would confirm with a usability test first and why.",
+        "solution": "Example: (1) Visibility of system status, lesson page: marking complete gives no feedback, so it is unclear whether progress saved; severity 3. (2) Error recovery, import form: an invalid file shows only 'Failed' with no reason; severity 3. (3) Recognition rather than recall, search: results show IDs, not titles; severity 2. Confirm finding 1 first: it is frequent, affects every learner's progress and the evaluator's guess about repeated clicks can be observed directly in a short task test.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Names the heuristic, location and observed behaviour for each finding.",
+          "Assigns severities using frequency, impact and persistence.",
+          "Chooses a finding to verify with real users and justifies it."
+        ]
+      },
+      "quiz": {
+        "question": "Why should heuristic evaluators review the interface independently before merging findings?",
+        "options": [
+          "It is faster to type alone",
+          "Different reviewers find different problems, and discussing first narrows what each one notices",
+          "Heuristics forbid teamwork"
+        ],
+        "correct": 1,
+        "explanation": "Independent passes increase coverage; merging afterwards removes duplicates."
+      },
+      "references": [
+        {
+          "title": "Nielsen Norman Group: 10 usability heuristics for user interface design",
+          "url": "https://www.nngroup.com/articles/ten-usability-heuristics/",
+          "section": "The ten heuristics",
+          "reviewed": "2026-11-08",
+          "scope": "Practitioner guidance from Nielsen Norman Group; the notebook findings are original examples, not a study."
+        },
+        {
+          "title": "Nielsen Norman Group: How to conduct a heuristic evaluation",
+          "url": "https://www.nngroup.com/articles/how-to-conduct-a-heuristic-evaluation/",
+          "section": "Steps; number of evaluators",
+          "reviewed": "2026-11-08",
+          "scope": "Practitioner guidance from Nielsen Norman Group; the notebook findings are original examples, not a study."
+        },
+        {
+          "title": "Nielsen Norman Group: Severity ratings for usability problems",
+          "url": "https://www.nngroup.com/articles/how-to-rate-the-severity-of-usability-problems/",
+          "section": "Severity scale 0-4",
+          "reviewed": "2026-11-08",
+          "scope": "Practitioner guidance from Nielsen Norman Group; the notebook findings are original examples, not a study."
+        }
+      ]
+    },
+    {
       "id": "semantic-html",
-      "title": "4. HTML meaning and the accessibility tree",
+      "title": "6. HTML meaning and the accessibility tree",
       "takeaway": "Native elements provide relationships and behaviour that appearance alone cannot.",
       "stage": "foundation",
       "sections": [
@@ -430,7 +553,7 @@
     },
     {
       "id": "keyboard-focus",
-      "title": "5. Keyboard navigation and visible focus",
+      "title": "7. Keyboard navigation and visible focus",
       "takeaway": "Focus should follow the task and remain visible.",
       "stage": "foundation",
       "sections": [
@@ -490,7 +613,7 @@
     },
     {
       "id": "contrast-colour",
-      "title": "6. Contrast and meaning beyond colour",
+      "title": "8. Contrast and meaning beyond colour",
       "takeaway": "Measure contrast, then preserve meaning when colour is unavailable.",
       "stage": "foundation",
       "sections": [
@@ -547,8 +670,73 @@
       ]
     },
     {
+      "id": "colour-palettes",
+      "title": "9. Build a colour palette that keeps its contrast",
+      "stage": "foundation",
+      "takeaway": "Define a small palette of neutral, brand and status colours as semantic tokens, check every foreground-background pair you will actually use, and give dark mode its own checked values instead of reusing light-mode colours.",
+      "sections": [
+        {
+          "title": "Roles before hues",
+          "paragraphs": [
+            "Start from roles, not favourite colours: text and muted text, surfaces and borders, one primary action colour, and status colours for success, warning, error and information. Name them as semantic tokens (lesson 18), such as `text-muted` or `status-error`, so a component asks for a role and the palette can change underneath it. A tonal scale for each hue (lighter to darker steps) gives room for hover, focus and background tints.",
+            "Contrast is a property of a pair, not a colour. Check each pair your interface really shows: muted text on a card, white text on the primary button, error text on the page and on a tinted error background, focus rings and input borders against their surroundings (3:1 for non-text contrast). Status must never depend on hue alone, because many people do not distinguish red from green; pair colour with an icon, text or pattern (lesson 8)."
+          ]
+        },
+        {
+          "title": "Light and dark pairs, measured",
+          "paragraphs": [
+            "Each ratio below came from the course's `contrast.cjs`. The placeholder grey passes only for large text. The light-mode primary and error colours fail as text on the dark background, so dark mode maps the same tokens to lighter values that pass."
+          ],
+          "example": "Token           Light value on #ffffff        Dark value on #121417\ntext            #1f2933  14.76:1  AA          #e4e7eb  14.87:1  AA\ntext-muted      #52606d   6.46:1  AA          -\nplaceholder     #8a96a3   3.01:1  large only  -\nprimary (text)  #1f5fbf   (white on it 6.09)  #1f5fbf   3.03:1  large only -> use #7fb0ff  8.40:1  AA\nstatus-success  #1e7b34   5.33:1  AA\nstatus-warning  #b25e00   4.67:1  AA\nstatus-error    #c62828   5.62:1  AA          #d64545   4.21:1  large only -> use #ff8a80  8.08:1  AA"
+        }
+      ],
+      "exercise": {
+        "prompt": "A designer proposes one brand blue (#1f5fbf) for links, buttons and focus rings in both light and dark themes, and green/red text alone to show passed and failed checks. Using the lesson's measurements, explain what fails and propose a palette change and a non-colour cue.",
+        "solution": "On the light background the blue works: white text on it is 6.09:1 and it would be used as a button fill. On the dark background #1f5fbf as link text or a focus ring is only 3.03:1, which fails ordinary text (4.5:1) and is marginal for a focus indicator, so map the primary token to a lighter value in dark mode such as #7fb0ff (8.40:1). Green and red text alone fail Use of Color for people who cannot distinguish them; add an icon and the word Passed or Failed, and keep each colour's text contrast at 4.5:1 or more on its actual background. Define the tokens semantically so components pick up the dark-mode values automatically.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Uses measured ratios for each theme rather than the colour alone.",
+          "Maps the token to a separate, passing dark-mode value.",
+          "Adds a non-colour cue for pass and fail status."
+        ]
+      },
+      "quiz": {
+        "question": "Why can't a palette simply be declared \"accessible\" once each colour has been chosen?",
+        "options": [
+          "Colours change in different browsers",
+          "Contrast belongs to each foreground and background pair, so every pair actually used must be checked in each theme",
+          "WCAG forbids blue"
+        ],
+        "correct": 1,
+        "explanation": "The same blue passes on white and fails on near-black. Only pairs have ratios."
+      },
+      "references": [
+        {
+          "title": "W3C: Understanding SC 1.4.3 Contrast (Minimum)",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+          "section": "Intent; relative luminance",
+          "reviewed": "2026-11-08",
+          "scope": "WCAG 2.2 Understanding documents; ratios in the example were computed with the course's contrast.cjs."
+        },
+        {
+          "title": "W3C: Understanding SC 1.4.11 Non-text Contrast",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html",
+          "section": "User interface components; graphical objects",
+          "reviewed": "2026-11-08",
+          "scope": "WCAG 2.2 Understanding documents; ratios in the example were computed with the course's contrast.cjs."
+        },
+        {
+          "title": "W3C: Understanding SC 1.4.1 Use of Color",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html",
+          "section": "Intent",
+          "reviewed": "2026-11-08",
+          "scope": "WCAG 2.2 Understanding documents; ratios in the example were computed with the course's contrast.cjs."
+        }
+      ]
+    },
+    {
       "id": "type-content",
-      "title": "7. Typography and understandable writing",
+      "title": "10. Typography and understandable writing",
       "takeaway": "Readable text depends on structure, wording and user adjustment.",
       "stage": "foundation",
       "sections": [
@@ -599,7 +787,7 @@
     },
     {
       "id": "responsive-reflow",
-      "title": "8. Responsive layout and reflow",
+      "title": "11. Responsive layout and reflow",
       "takeaway": "Content should adapt to available space rather than shrink into unreadable miniatures.",
       "stage": "intermediate",
       "sections": [
@@ -657,7 +845,7 @@
     },
     {
       "id": "forms-validation",
-      "title": "9. Form labels, instructions and recovery",
+      "title": "12. Form labels, instructions and recovery",
       "takeaway": "Validation should explain what failed while preserving the person's work.",
       "stage": "intermediate",
       "sections": [
@@ -717,7 +905,7 @@
     },
     {
       "id": "states-feedback",
-      "title": "10. Loading, empty, error and success states",
+      "title": "13. Loading, empty, error and success states",
       "takeaway": "Show what an operation is doing and whether it succeeded or failed.",
       "stage": "intermediate",
       "sections": [
@@ -768,7 +956,7 @@
     },
     {
       "id": "dialog-pattern",
-      "title": "11. Dialogs and focus ownership",
+      "title": "14. Dialogs and focus ownership",
       "takeaway": "A modal temporarily owns interaction and must return it predictably.",
       "stage": "intermediate",
       "sections": [
@@ -828,7 +1016,7 @@
     },
     {
       "id": "images-diagrams",
-      "title": "12. Images and diagrams that explain",
+      "title": "15. Images and diagrams that explain",
       "takeaway": "Alternatives should communicate the image's purpose in this context.",
       "stage": "intermediate",
       "sections": [
@@ -879,7 +1067,7 @@
     },
     {
       "id": "tables-charts",
-      "title": "13. Tables and charts with values you can check",
+      "title": "16. Tables and charts with values you can check",
       "takeaway": "Visual summaries need explicit labels and a route to the underlying values.",
       "stage": "intermediate",
       "sections": [
@@ -930,7 +1118,7 @@
     },
     {
       "id": "motion-media",
-      "title": "14. Motion, reduced motion and media alternatives",
+      "title": "17. Motion, reduced motion and media alternatives",
       "takeaway": "Motion should teach a change while respecting a person's control.",
       "stage": "intermediate",
       "sections": [
@@ -981,7 +1169,7 @@
     },
     {
       "id": "design-tokens",
-      "title": "15. Design tokens and reusable components",
+      "title": "18. Design tokens and reusable components",
       "takeaway": "Reuse decisions as well as colours and spacing values.",
       "stage": "advanced",
       "sections": [
@@ -1032,7 +1220,7 @@
     },
     {
       "id": "accessible-data-entry",
-      "title": "16. Complex interactions and alternatives",
+      "title": "19. Complex interactions and alternatives",
       "takeaway": "A richer interaction must retain a simpler way to complete the task.",
       "stage": "advanced",
       "sections": [
@@ -1098,7 +1286,7 @@
     },
     {
       "id": "internationalisation",
-      "title": "17. Language, localisation and content expansion",
+      "title": "20. Language, localisation and content expansion",
       "takeaway": "Treat language and direction as layout and meaning requirements.",
       "stage": "advanced",
       "sections": [
@@ -1149,7 +1337,7 @@
     },
     {
       "id": "accessible-auth",
-      "title": "18. Authentication, sensitive actions and cognitive load",
+      "title": "21. Authentication, sensitive actions and cognitive load",
       "takeaway": "Security flows should support recovery without imposing avoidable memory tasks.",
       "stage": "advanced",
       "sections": [
@@ -1207,7 +1395,7 @@
     },
     {
       "id": "manual-evaluation",
-      "title": "19. Evaluate with keyboard, zoom and assistive technology",
+      "title": "22. Evaluate with keyboard, zoom and assistive technology",
       "takeaway": "Accessibility evaluation combines automated checks and human task evidence.",
       "stage": "advanced",
       "sections": [
@@ -1258,7 +1446,7 @@
     },
     {
       "id": "usability-testing",
-      "title": "20. Test whether a person can actually complete the task",
+      "title": "23. Test whether a person can actually complete the task",
       "takeaway": "Task observation turns a visual opinion into actionable evidence.",
       "stage": "advanced",
       "sections": [
@@ -1268,7 +1456,7 @@
             "Give a realistic task without telling the participant which control to use. Ask them to think aloud if appropriate, while avoiding hints that change the result. Track completion, major wrong turns and requests for help. A quick session with a few people can reveal obvious friction, but it does not establish population-level statistics.",
             "Separate usability findings from visual preference. A participant may dislike a colour while completing the task easily; another may like the page while missing the download. Prioritise defects by impact, frequency in your evidence and cost of recovery. Keep the tested scenario constant when comparing designs."
           ],
-          "example": "Prompt: \"Find the files needed for the next form-validation exercise.\"\nAvoid: \"Click the green download button beside lesson 9.\"\nMeasure: completion, wrong turns, help requested"
+          "example": "Prompt: \"Find the files needed for the next form-validation exercise.\"\nAvoid: \"Click the green download button beside lesson 12.\"\nMeasure: completion, wrong turns, help requested"
         },
         {
           "title": "Small-sample evidence",
@@ -1309,7 +1497,7 @@
     },
     {
       "id": "inclusive-release",
-      "title": "21. Release evidence and accessibility maintenance",
+      "title": "24. Release evidence and accessibility maintenance",
       "takeaway": "Accessibility is a maintained property of the complete journey.",
       "stage": "advanced",
       "sections": [

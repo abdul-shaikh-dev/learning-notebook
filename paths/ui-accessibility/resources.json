@@ -195,10 +195,13 @@
   "lessonTasks": {
     "user-goals": "foundation",
     "information-architecture": "foundation",
+    "wireframes-prototypes": "foundation",
     "hierarchy-layout": "foundation",
+    "usability-heuristics": "foundation",
     "semantic-html": "foundation",
     "keyboard-focus": "foundation",
     "contrast-colour": "foundation",
+    "colour-palettes": "foundation",
     "type-content": "foundation",
     "responsive-reflow": "intermediate",
     "forms-validation": "intermediate",

@@ -6,8 +6,14 @@
     "information-architecture": [
       {"question": "A course is navigated through a graphical map only. What should sit alongside it?", "options": ["An ordered list of the same destinations", "A larger map", "A tooltip on each node"], "correct": 0, "explanation": "A visual map can hide the sequence from keyboard and screen-reader users. An ordered list preserves it."}
     ],
+    "wireframes-prototypes": [
+      {"question": "The open question is whether learners can find the resume action at all. Which fidelity fits first?", "options": ["A polished visual mock-up", "A grey-box wireframe or low-fidelity clickable prototype", "The production build"], "correct": 1, "explanation": "Findability is a question of structure and labels, which low fidelity answers quickly and cheaply."}
+    ],
     "hierarchy-layout": [
       {"question": "Three equally loud buttons compete at the end of a form. What should change?", "options": ["Make the action that advances the task the dominant one", "Make all three larger", "Hide two of them"], "correct": 0, "explanation": "Equal emphasis makes people infer importance. Document which action is primary and style the others as secondary."}
+    ],
+    "usability-heuristics": [
+      {"question": "Deleting progress has no undo and no confirmation. Which heuristic does this break most directly?", "options": ["Aesthetic and minimalist design", "User control and freedom", "Help and documentation"], "correct": 1, "explanation": "People need a clearly marked way to leave or reverse an unwanted action."}
     ],
     "semantic-html": [
       {"question": "How does demo.html give the lesson title input its accessible name?", "options": ["A label element whose for matches the input's id", "A placeholder", "An aria-label on the form"], "correct": 0, "explanation": "A native label is associated by id, so the name is exposed and clicking the label focuses the field."}
@@ -17,6 +23,9 @@
     ],
     "contrast-colour": [
       {"question": "What does contrast.cjs report for #777777 text on white?", "options": ["About 4.48:1, failing AA for ordinary text but passing for large text", "About 4.5:1, passing AA for ordinary text", "About 3:1, failing both"], "correct": 0, "explanation": "4.48 is below the 4.5:1 ordinary-text threshold, and no rounding up is allowed. It clears the 3:1 large-text threshold."}
+    ],
+    "colour-palettes": [
+      {"question": "Using contrast.cjs, what is the ratio of #1f5fbf text on the dark background #121417, and does it pass AA for ordinary text?", "options": ["About 3.03:1; it fails for ordinary text", "About 6.09:1; it passes", "About 8.40:1; it passes"], "correct": 0, "explanation": "3.03:1 is below 4.5:1. The light-mode primary needs a lighter dark-mode value."}
     ],
     "type-content": [
       {"question": "Text spacing is increased, and a card with a fixed height holds a long title. What is likely to happen?", "options": ["The text is clipped or hidden", "The card grows to fit", "The title shrinks to fit"], "correct": 0, "explanation": "Fixed heights fail when text wraps or spacing increases. Let containers grow with their content."}
