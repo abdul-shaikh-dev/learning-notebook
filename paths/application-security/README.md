@@ -18,3 +18,22 @@ identity-provider-lab.md is an optional learner exercise. Its prerequisite is an
 ## Reference scope and verification limits
 
 The course covers selected web-application controls from ASVS 5.0.0, released in 2025. Its original exercises use fictional data and require Python 3.14 or later. They are neither an ASVS certification nor a complete HTTP server or identity-provider implementation.
+
+## OWASP Top 10:2025 mapping
+
+The lessons follow ASVS controls rather than the Top 10, but each Top 10:2025 category maps to lessons as follows. Lesson numbers match the course list.
+
+| Category | Lessons |
+| --- | --- |
+| A01 Broken Access Control | 4 authorization, 5 mass assignment, 9 CSRF, 13 SSRF |
+| A02 Security Misconfiguration | 7 cookies and transport, 11 browser security headers |
+| A03 Software Supply Chain Failures | 21 dependencies and advisories |
+| A04 Cryptographic Failures | 7 HTTPS, 8 password hashing, 19 secrets |
+| A05 Injection | 10 output encoding (XSS), 12 SQL parameter binding |
+| A06 Insecure Design | 1 threat modelling, 22 abuse limits |
+| A07 Authentication Failures | 3 authentication boundary, 6 sessions, 8 passwords and MFA, 15-18 OAuth, OIDC, PKCE and token validation |
+| A08 Software or Data Integrity Failures | 14 unsafe deserialization and uploads, 18 token integrity |
+| A09 Security Logging and Alerting Failures | 20 security events, 24 incident response |
+| A10 Mishandling of Exceptional Conditions | Partly: deny-by-default checks in 4 and negative tests in 23. Error handling as a whole is not covered. |
+
+Source: https://owasp.org/Top10/2025/ (reviewed 2026-11-08). The Top 10 is an awareness document, not a testing standard; use ASVS for verification.

@@ -3,7 +3,7 @@
   "title": "Application Security",
   "category": "Security",
   "status": "ready",
-  "description": "Study trusted identity, object authorization, input validation, session controls and OAuth/OIDC in 21 lessons. Three offline projects test these controls with synthetic records.",
+  "description": "Study trusted identity, object authorization, input validation, session controls and OAuth/OIDC in 24 lessons. Three offline projects test these controls with synthetic records.",
   "level": "Foundations → intermediate application controls → integration extensions",
   "prerequisites": [
     "Basic programming and HTTP concepts; complete Python or web foundations if functions, dictionaries and requests are unfamiliar."
@@ -735,8 +735,81 @@
       ]
     },
     {
+      "id": "security-headers",
+      "title": "11. Add browser security headers as a second layer",
+      "stage": "intermediate",
+      "takeaway": "Response headers tell the browser which scripts may run, whether the page may be framed, and to use HTTPS only; they limit the damage of a mistake but do not replace output encoding.",
+      "sections": [
+        {
+          "title": "What each header controls",
+          "paragraphs": [
+            "Content-Security-Policy (CSP) restricts where scripts, styles, images and connections may load from. A strict policy allows scripts only from the site or with a per-response nonce, and forbids inline event handlers, so an injected `<script>` that slipped past encoding (lesson 10) does not run. `object-src 'none'` and `base-uri 'none'` close common bypasses, and `frame-ancestors 'none'` stops other sites framing your pages for clickjacking.",
+            "Strict-Transport-Security (HSTS) tells the browser to use HTTPS for the host for `max-age` seconds, removing the first insecure request that lesson 7's redirect cannot protect. Add `includeSubDomains` only when every subdomain serves HTTPS, and treat preload lists as hard to undo. `X-Content-Type-Options: nosniff` stops the browser guessing a script type from content. `Referrer-Policy: strict-origin-when-cross-origin` keeps paths and query strings, which may contain identifiers, out of other sites' logs."
+          ]
+        },
+        {
+          "title": "Review and roll out",
+          "paragraphs": [
+            "Roll CSP out with `Content-Security-Policy-Report-Only` first, collect violation reports, fix legitimate inline scripts, then enforce. Set headers in one place (the framework middleware or the reverse proxy) and test them, because a single missing route or error page is enough for an attacker to use. The sketch flags common gaps in a header set."
+          ],
+          "example": "def review(headers):\n    h = {k.lower(): v for k, v in headers.items()}\n    findings = []\n    csp = h.get('content-security-policy', '')\n    if not csp:\n        findings.append('missing Content-Security-Policy')\n    else:\n        if \"'unsafe-inline'\" in csp and 'nonce-' not in csp:\n            findings.append(\"CSP allows inline script without a nonce\")\n        if 'frame-ancestors' not in csp:\n            findings.append('CSP does not restrict framing (frame-ancestors)')\n    if 'max-age=' not in h.get('strict-transport-security', ''):\n        findings.append('missing Strict-Transport-Security max-age')\n    if h.get('x-content-type-options', '').lower() != 'nosniff':\n        findings.append('missing X-Content-Type-Options: nosniff')\n    if h.get('referrer-policy', '') in ('', 'unsafe-url', 'no-referrer-when-downgrade'):\n        findings.append('Referrer-Policy leaks full URLs')\n    return findings or ['ok']\n\nweak = {'Content-Security-Policy': \"script-src 'self' 'unsafe-inline'\"}\nstrong = {\n    'Content-Security-Policy': \"default-src 'self'; script-src 'self' 'nonce-r4nd0m'; \"\n                               \"object-src 'none'; base-uri 'none'; frame-ancestors 'none'\",\n    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',\n    'X-Content-Type-Options': 'nosniff',\n    'Referrer-Policy': 'strict-origin-when-cross-origin',\n}\nfor name, headers in (('weak', weak), ('strong', strong)):\n    print(name, review(headers))\n\n# Expected output:\n# weak ['CSP allows inline script without a nonce', 'CSP does not restrict framing (frame-ancestors)', 'missing Strict-Transport-Security max-age', 'missing X-Content-Type-Options: nosniff', 'Referrer-Policy leaks full URLs']\n# strong ['ok']"
+        }
+      ],
+      "exercise": {
+        "prompt": "The notebook renders learner-written notes and embeds a video player from a third-party origin. Write a Content-Security-Policy for it and the other headers you would send, explain one directive that stops an attack, and say how you would deploy the policy without breaking pages.",
+        "solution": "Policy: default-src 'self'; script-src 'self' 'nonce-{per-response}'; object-src 'none'; base-uri 'none'; frame-src https://player.example.org; frame-ancestors 'none'; img-src 'self' data:; connect-src 'self'. Other headers: Strict-Transport-Security: max-age=31536000 (add includeSubDomains once all subdomains are HTTPS), X-Content-Type-Options: nosniff, Referrer-Policy: strict-origin-when-cross-origin. Example: if a note's text escaped encoding and contained an inline script, script-src without 'unsafe-inline' and without the nonce stops it running. Deploy with Content-Security-Policy-Report-Only, review reports, remove inline scripts or add nonces, then enforce, and keep HTML encoding as the primary defence.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Allows scripts only from self or a per-response nonce, without unsafe-inline.",
+          "Allows the video origin in frame-src while denying framing of the notebook with frame-ancestors.",
+          "Includes HSTS, nosniff and a Referrer-Policy.",
+          "Deploys in report-only mode first and keeps output encoding."
+        ]
+      },
+      "quiz": {
+        "question": "Which directive stops other websites from embedding the notebook's pages in a frame?",
+        "options": [
+          "frame-src 'none'",
+          "frame-ancestors 'none'",
+          "object-src 'none'"
+        ],
+        "correct": 1,
+        "explanation": "frame-ancestors controls who may frame this page. frame-src controls what this page may frame."
+      },
+      "references": [
+        {
+          "title": "OWASP ASVS 5.0.0: V3: web frontend security",
+          "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x12-V3-Web-Frontend-Security.md",
+          "section": "V3.4 Browser Security Mechanism Headers",
+          "reviewed": "2026-11-08",
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
+        },
+        {
+          "title": "OWASP Content Security Policy Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html",
+          "section": "Strict CSP; refactoring inline code",
+          "reviewed": "2026-11-08",
+          "scope": "Current OWASP guidance reviewed 2026-11-08; production mechanisms remain framework- and platform-specific."
+        },
+        {
+          "title": "OWASP HTTP Headers Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html",
+          "section": "Security headers",
+          "reviewed": "2026-11-08",
+          "scope": "Current OWASP guidance reviewed 2026-11-08; production mechanisms remain framework- and platform-specific."
+        },
+        {
+          "title": "MDN: Content Security Policy (CSP)",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP",
+          "section": "Strict CSP; testing your policy",
+          "reviewed": "2026-11-08",
+          "scope": "Browser documentation; support for individual directives varies by browser version."
+        }
+      ]
+    },
+    {
       "id": "sql-injection",
-      "title": "11. Bind data separately from SQL structure",
+      "title": "12. Bind data separately from SQL structure",
       "stage": "intermediate",
       "takeaway": "A query parameter is data; it must not become SQL syntax.",
       "sections": [
@@ -794,8 +867,150 @@
       ]
     },
     {
+      "id": "ssrf",
+      "title": "13. Restrict the requests your server makes for users",
+      "stage": "intermediate",
+      "takeaway": "When a user can influence a URL your server fetches, allowlist the destinations, check every resolved address, connect to the checked address, and limit outbound network access as a second layer.",
+      "sections": [
+        {
+          "title": "How server-side request forgery works",
+          "paragraphs": [
+            "A feature such as \"import a note from a URL\" or \"fetch a link preview\" makes the server send a request the user chose. The server sits inside your network, so it can reach what the attacker cannot: admin ports on localhost, internal APIs, databases and the cloud instance metadata endpoint at 169.254.169.254, which can return credentials. The response, an error message or even the response time can leak what was reached.",
+            "Blocklists of strings fail: addresses have many spellings (decimal, IPv6-mapped, short forms), redirects can point anywhere after the check, URL parsers disagree about `user@host` forms, and DNS can return a public address when you check and a private one when you connect (DNS rebinding). OWASP's Top 10:2025 places SSRF under Broken Access Control because the server is acting with authority the user does not have (lesson 4)."
+          ]
+        },
+        {
+          "title": "An allowlist with address checks",
+          "paragraphs": [
+            "Allow only the schemes, hosts and ports the feature needs. Resolve the name, reject any non-public address, then connect to that exact address so the check and the connection cannot diverge; disable redirects or re-check each hop; set short timeouts and a response size limit; and never return raw upstream errors. The stub resolver keeps the example offline. Notice that the `user@host` URL is parsed with the metadata address as its host and is rejected.",
+            "Add a network layer: run fetchers in an egress-restricted subnet or through a proxy that enforces the allowlist, and require session tokens for instance metadata (for example IMDSv2 on AWS) so a simple GET cannot read credentials."
+          ],
+          "example": "import ipaddress\nfrom urllib.parse import urlsplit\n\nALLOWED_HOSTS = {'images.example.org'}            # destinations this feature needs\nDNS = {'images.example.org': ['93.184.215.14'],    # stub resolver: a public address\n       'evil.example': ['169.254.169.254']}\n\ndef check(url):\n    parts = urlsplit(url)\n    if parts.scheme != 'https':\n        return 'blocked: scheme'\n    host = parts.hostname or ''\n    if host not in ALLOWED_HOSTS:\n        return 'blocked: host not allowlisted'\n    for address in DNS.get(host, []):              # check every resolved address\n        ip = ipaddress.ip_address(address)\n        if not ip.is_global:\n            return f'blocked: {ip} is not a public address'\n    return f'allowed: connect to {DNS[host][0]} with Host {host}'\n\nfor url in ['https://images.example.org/cat.png', 'http://images.example.org/cat.png',\n            'https://evil.example/latest/meta-data/', 'https://127.0.0.1:8080/admin',\n            'https://images.example.org@169.254.169.254/']:\n    print(url, '->', check(url))\n\n# Expected output:\n# https://images.example.org/cat.png -> allowed: connect to 93.184.215.14 with Host images.example.org\n# http://images.example.org/cat.png -> blocked: scheme\n# https://evil.example/latest/meta-data/ -> blocked: host not allowlisted\n# https://127.0.0.1:8080/admin -> blocked: host not allowlisted\n# https://images.example.org@169.254.169.254/ -> blocked: host not allowlisted"
+        }
+      ],
+      "exercise": {
+        "prompt": "Learners may add a cover image to a notebook by pasting an image URL, and the server downloads and resizes it. List the controls you would put on that fetch, in the order the request passes through them, and the tests that prove them.",
+        "solution": "Prefer uploads or a fixed set of image hosts; if arbitrary hosts are a requirement, still allow only https on port 443. Parse with one URL parser, reject credentials in the URL, resolve the host, reject any non-global address (loopback, private, link-local, IPv6 forms), and connect to the checked address with the original Host and TLS name. Disable redirects or repeat the checks for each redirect. Apply a short timeout, a maximum byte count and an image content check, then re-encode the image. Return a generic error. Run the fetcher with egress only through a filtering proxy and with metadata service tokens required. Tests: requests to 127.0.0.1, 169.254.169.254, an IPv6 loopback, a host resolving to a private address, a redirect to a private address and an oversized response are all refused without contacting the target.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Allowlists scheme, host and port rather than blocklisting strings.",
+          "Checks every resolved address and connects to the checked one.",
+          "Handles redirects, timeouts and size limits.",
+          "Adds an egress or metadata-service control and adversarial tests."
+        ]
+      },
+      "quiz": {
+        "question": "Why connect to the IP address you checked instead of passing the hostname to the HTTP client after the check?",
+        "options": [
+          "It is faster",
+          "A second DNS lookup could return a different, internal address (DNS rebinding)",
+          "HTTP clients cannot resolve names"
+        ],
+        "correct": 1,
+        "explanation": "Checking one lookup and connecting after another lets an attacker change the answer in between."
+      },
+      "references": [
+        {
+          "title": "OWASP ASVS 5.0.0: V1: encoding and sanitization",
+          "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x10-V1-Encoding-and-Sanitization.md",
+          "section": "1.3.6 Server-side request forgery; 1.5.3 consistent parsers",
+          "reviewed": "2026-11-08",
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
+        },
+        {
+          "title": "OWASP SSRF Prevention Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html",
+          "section": "Case 1: allowlist; Case 2: network layer and application layer",
+          "reviewed": "2026-11-08",
+          "scope": "Current OWASP guidance reviewed 2026-11-08; production mechanisms remain framework- and platform-specific."
+        },
+        {
+          "title": "OWASP Top 10:2025 A01 Broken Access Control",
+          "url": "https://owasp.org/Top10/2025/A01_2025-Broken_Access_Control/",
+          "section": "List of mapped CWEs (CWE-918)",
+          "reviewed": "2026-11-08",
+          "scope": "Current OWASP guidance reviewed 2026-11-08; production mechanisms remain framework- and platform-specific."
+        }
+      ]
+    },
+    {
+      "id": "deserialization-uploads",
+      "title": "14. Treat serialized objects and uploaded files as hostile",
+      "stage": "intermediate",
+      "takeaway": "Never deserialize untrusted bytes with a format that can build arbitrary objects; accept uploads only after checking size and real content type, store them under server-chosen names, and serve them so the browser cannot run them.",
+      "sections": [
+        {
+          "title": "Unsafe deserialization",
+          "paragraphs": [
+            "Formats such as Python's `pickle`, Java native serialization and .NET's removed `BinaryFormatter` rebuild arbitrary objects, and object construction can run code. Whoever controls the bytes controls what runs, before your validation sees a value. The Python documentation warns that `pickle` is not secure against malicious data. OWASP's Top 10:2025 lists this under Software or Data Integrity Failures.",
+            "Use a data-only format (JSON) for anything crossing a trust boundary and validate its shape as narrowly as lesson 5 did. If you must accept a richer format, use its safe loader (`yaml.safe_load`, not `yaml.load`), or sign the bytes and verify the signature before parsing so only your own service's output is read. The demonstration below runs only a harmless `print` while loading."
+          ],
+          "example": "import json, pickle\n\nclass Payload:                       # what an attacker can put in a pickle\n    def __reduce__(self):\n        return (print, ('code ran during pickle.loads',))\n\nblob = pickle.dumps(Payload())\npickle.loads(blob)                   # never do this with untrusted bytes\n\ndef load_note(text):                 # data-only format plus an explicit schema\n    data = json.loads(text)\n    if set(data) != {'title', 'body'} or not all(isinstance(v, str) for v in data.values()):\n        raise ValueError('unexpected note shape')\n    return data\n\nprint(load_note('{\"title\": \"Joins\", \"body\": \"inner and outer\"}'))\n\n# Expected output:\n# code ran during pickle.loads\n# {'title': 'Joins', 'body': 'inner and outer'}"
+        },
+        {
+          "title": "File uploads",
+          "paragraphs": [
+            "An upload carries a name, a declared type and content, and the client controls all three. Limit size before reading everything; decide the type from the content's signature and an allowlist, not the extension or Content-Type header; store the file under a generated name outside the web root (or in object storage), so `../` paths and overwrites are impossible; keep the original name only as an escaped display label.",
+            "Serve user files from a separate origin or with `Content-Disposition: attachment` and `X-Content-Type-Options: nosniff`, so an HTML or SVG file cannot run script in your site's origin. Re-encode images to strip active content and metadata, scan files where malware matters, and check authorization on download like any other object (lesson 4)."
+          ],
+          "example": "import re, uuid\n\nSIGNATURES = {b'\\x89PNG\\r\\n\\x1a\\n': ('png', 'image/png'), b'%PDF-': ('pdf', 'application/pdf')}\nMAX_BYTES = 5_000_000\n\ndef accept(filename, content):\n    if len(content) > MAX_BYTES:\n        return 'rejected: too large'\n    kind = next((v for sig, v in SIGNATURES.items() if content.startswith(sig)), None)\n    if kind is None:\n        return 'rejected: content is not an allowed type'\n    ext, mime = kind\n    stored = f'{uuid.uuid4().hex}.{ext}'          # server-chosen name, never the user's path\n    label = re.sub(r'[^A-Za-z0-9._ -]', '_', filename)[-100:]\n    return f'stored as <id>.{ext}, served as {mime}, shown as {label!r}'\n\nprint(accept('diagram.png', b'\\x89PNG\\r\\n\\x1a\\n...'))\nprint(accept('report.pdf', b'<script>alert(1)</script>'))\nprint(accept('../../app/settings.png', b'\\x89PNG\\r\\n\\x1a\\n...'))\n\n# Expected output:\n# stored as <id>.png, served as image/png, shown as 'diagram.png'\n# rejected: content is not an allowed type\n# stored as <id>.png, served as image/png, shown as '.._.._app_settings.png'"
+        }
+      ],
+      "exercise": {
+        "prompt": "A colleague proposes saving learner session state by pickling a Python object into a cookie, and accepting notebook attachments \"if the filename ends in .pdf\". Explain the attack each proposal enables and give a safer design for both.",
+        "solution": "Pickle in a cookie: the client controls the cookie, so an attacker sends a crafted pickle and pickle.loads runs code on the server. Use an opaque session ID that maps to server-side state (lesson 6), or a signed and validated JSON payload with no executable types. Attachments: the extension proves nothing; an HTML or SVG file renamed to .pdf could be served and run script in the site's origin, and an attacker-chosen name could traverse paths. Check size, verify the PDF signature against an allowlist, store under a generated name in object storage, record the escaped original name as metadata, scan if needed, and serve with Content-Disposition: attachment, the correct Content-Type and nosniff after an ownership check.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Explains that deserializing attacker bytes can run code.",
+          "Replaces pickle with server-side state or validated data-only content.",
+          "Checks uploads by size and content signature, not the extension.",
+          "Stores under generated names and serves without letting the browser execute content."
+        ]
+      },
+      "quiz": {
+        "question": "Why is pickle.loads on bytes from a request dangerous even if you validate the resulting object?",
+        "options": [
+          "Pickle is slow on large inputs",
+          "Loading can run code chosen by the sender before any validation happens",
+          "Pickle loses type information"
+        ],
+        "correct": 1,
+        "explanation": "Object reconstruction itself can call functions. Validation afterwards is too late."
+      },
+      "references": [
+        {
+          "title": "OWASP ASVS 5.0.0: V5: file handling",
+          "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x14-V5-File-Handling.md",
+          "section": "V5.2 File upload and content; V5.3 file storage",
+          "reviewed": "2026-11-08",
+          "scope": "Selected ASVS 5.0.0 controls with Python 3.14+ exercises. The practice guide explains implementation and certification limits."
+        },
+        {
+          "title": "OWASP Deserialization Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html",
+          "section": "Python; guidance on deserializing objects safely",
+          "reviewed": "2026-11-08",
+          "scope": "Current OWASP guidance reviewed 2026-11-08; production mechanisms remain framework- and platform-specific."
+        },
+        {
+          "title": "OWASP File Upload Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
+          "section": "File upload protection",
+          "reviewed": "2026-11-08",
+          "scope": "Current OWASP guidance reviewed 2026-11-08; production mechanisms remain framework- and platform-specific."
+        },
+        {
+          "title": "Python pickle documentation",
+          "url": "https://docs.python.org/3/library/pickle.html",
+          "section": "Warning; restricting globals",
+          "reviewed": "2026-11-08",
+          "scope": "Python 3.14 standard library documentation."
+        }
+      ]
+    },
+    {
       "id": "oauth-roles",
-      "title": "12. Understand OAuth delegation and its participants",
+      "title": "15. Understand OAuth delegation and its participants",
       "stage": "intermediate",
       "takeaway": "OAuth delegates access; it is not by itself a complete user-login protocol.",
       "sections": [
@@ -854,7 +1069,7 @@
     },
     {
       "id": "oidc-login",
-      "title": "13. Use OpenID Connect for verified login context",
+      "title": "16. Use OpenID Connect for verified login context",
       "stage": "intermediate",
       "takeaway": "An ID token has a specific client and validation contract.",
       "sections": [
@@ -913,7 +1128,7 @@
     },
     {
       "id": "pkce-state",
-      "title": "14. Bind an authorization response to its initiating flow",
+      "title": "17. Bind an authorization response to its initiating flow",
       "stage": "intermediate",
       "takeaway": "PKCE, state and nonce address related but distinct protocol threats.",
       "sections": [
@@ -980,7 +1195,7 @@
     },
     {
       "id": "token-validation",
-      "title": "15. Verify tokens before trusting claims",
+      "title": "18. Verify tokens before trusting claims",
       "stage": "intermediate",
       "takeaway": "Decoding is parsing; cryptographic and claim validation establish a trusted token.",
       "sections": [
@@ -1039,7 +1254,7 @@
     },
     {
       "id": "secrets",
-      "title": "16. Keep secrets out of source and routine evidence",
+      "title": "19. Keep secrets out of source and routine evidence",
       "stage": "advanced",
       "takeaway": "A secret needs restricted access, rotation and a safe failure path.",
       "sections": [
@@ -1098,7 +1313,7 @@
     },
     {
       "id": "logging",
-      "title": "17. Record useful security events without sensitive payloads",
+      "title": "20. Record useful security events without sensitive payloads",
       "stage": "advanced",
       "takeaway": "Logs should explain a decision without becoming a second sensitive-data store.",
       "sections": [
@@ -1150,7 +1365,7 @@
     },
     {
       "id": "dependencies",
-      "title": "18. Track dependencies and respond to advisories",
+      "title": "21. Track dependencies and respond to advisories",
       "stage": "advanced",
       "takeaway": "A dependency inventory links shipped software to maintenance decisions.",
       "sections": [
@@ -1202,7 +1417,7 @@
     },
     {
       "id": "abuse-limits",
-      "title": "19. Bound abuse without overstating a local limiter",
+      "title": "22. Bound abuse without overstating a local limiter",
       "stage": "advanced",
       "takeaway": "Rate controls need identity, resource and deployment assumptions.",
       "sections": [
@@ -1254,7 +1469,7 @@
     },
     {
       "id": "verification",
-      "title": "20. Verify controls with adversarial cases and explicit evidence",
+      "title": "23. Verify controls with adversarial cases and explicit evidence",
       "stage": "advanced",
       "takeaway": "A security claim needs an observed boundary and a stated coverage limit.",
       "sections": [
@@ -1320,7 +1535,7 @@
     },
     {
       "id": "incident-recovery",
-      "title": "21. Prepare a bounded response and secure recovery",
+      "title": "24. Prepare a bounded response and secure recovery",
       "stage": "advanced",
       "takeaway": "Response restores control while preserving useful, sanitized evidence.",
       "sections": [
