@@ -42,6 +42,12 @@
     "dag-and-orchestration": [
       {"question": "In the lesson's DAG, extract → validate → load → reconcile → publish, what must publish depend on?", "options": ["Successful reconciliation", "Only a successful load", "The notification task"], "correct": 0, "explanation": "Publishing before reconciliation would release unchecked results. The notification task observes publication; it is not a prerequisite for it."}
     ],
+    "sql-transformation-layer": [
+      {"question": "In a dbt project, which layer should trim, lowercase and cast the raw status column?", "options": ["The staging model for that source", "Every mart that uses status", "The dashboard query"], "correct": 0, "explanation": "Staging models clean each source once, so every later model starts from the same values."}
+    ],
+    "dbt-tests-and-incremental-models": [
+      {"question": "An incremental model keeps only rows newer than the latest loaded timestamp. A correction arrives with an older timestamp. What happens?", "options": ["It is merged automatically", "It is skipped unless the filter reprocesses a look-back window or a full refresh runs", "dbt raises an error"], "correct": 1, "explanation": "The filter excludes it. A window, a change timestamp or a full refresh is needed to pick it up."}
+    ],
     "late-data-and-windows": [
       {"question": "In revision_lab, order A's revision 1 contributes 100 cents to 2026-09-28. Revision 2 changes it to 150 cents. What does totals() return?", "options": ["{'2026-09-28': 150}", "{'2026-09-28': 250}", "{'2026-09-28': 100}"], "correct": 0, "explanation": "The projection keeps the current revision of each order and sums those, so the corrected contribution replaces the old one instead of adding to it."}
     ],

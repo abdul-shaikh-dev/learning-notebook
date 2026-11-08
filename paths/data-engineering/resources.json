@@ -205,6 +205,8 @@
     "joins-and-dimensional-models": "intermediate",
     "slowly-changing-dimensions": "intermediate",
     "dag-and-orchestration": "intermediate",
+    "sql-transformation-layer": "intermediate",
+    "dbt-tests-and-incremental-models": "intermediate",
     "late-data-and-windows": "intermediate",
     "partitioning-and-formats": "intermediate",
     "schema-evolution": "advanced",

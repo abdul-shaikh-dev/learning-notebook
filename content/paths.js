@@ -22309,7 +22309,7 @@ const LEARNING_PATHS = [
     "title": "Data Engineering",
     "category": "Data and databases",
     "status": "ready",
-    "description": "Follow 22 lessons from data grain, CSV contracts, UTC time and exact amounts to transactional imports, replay, watermarks, CDC, dimensional models and recovery. Includes a tested SQLite pipeline and an optional SQL Server integration brief.",
+    "description": "Follow 24 lessons from data grain, CSV contracts, UTC time and exact amounts to transactional imports, replay, watermarks, CDC, dimensional models, dbt transformation layers and recovery. Includes a tested SQLite pipeline and an optional SQL Server integration brief.",
     "level": "Foundations → intermediate batch pipelines → selected extensions",
     "prerequisites": [
       "Comfort creating files and opening a terminal.",
@@ -24216,8 +24216,171 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "sql-transformation-layer",
+        "title": "15. Build SQL transformation layers with dbt",
+        "stage": "intermediate",
+        "takeaway": "In an ELT pipeline the transformations are SQL `SELECT` statements kept in version control; a tool such as dbt turns them into views and tables in dependency order, so the warehouse logic is reviewed, tested and rebuilt like code.",
+        "sections": [
+          {
+            "title": "Models, layers and references",
+            "paragraphs": [
+              "Lesson 2 separated loading raw data from transforming it. dbt manages the transform step: each model is one file containing a `SELECT`, and dbt creates the corresponding view or table in the warehouse. A model refers to another with `ref('stg_orders')` instead of a hard-coded table name, so dbt knows the dependency, builds models in the right order (the DAG of lesson 14) and can point the same code at a development or production schema.",
+              "Organise models in layers. Staging models map one-to-one to raw sources and only rename, cast and clean values (trim, lowercase, cents as integers), so every later model starts from consistent columns. Intermediate models combine and reshape. Mart models are the facts and dimensions consumers read (lesson 12), each with a stated grain (lesson 1). Keep business rules in one layer so a definition such as \"paid revenue\" is written once."
+            ]
+          },
+          {
+            "title": "Materializations and a worked build",
+            "paragraphs": [
+              "A materialization decides what the `SELECT` becomes: a view (always current, computed on read), a table (rebuilt each run, fast to read), an incremental table (only new or changed rows are processed) or an ephemeral model (inlined into its dependants). Staging models are often views and marts tables. `dbt build` runs seeds, models and tests together in dependency order.",
+              "The staging model normalises `Paid` and `paid ` to `paid`; the mart joins customers and keeps the grain of one row per day and region. These files ran unchanged under dbt Core 1.12 with DuckDB, giving the rows in the final comment."
+            ],
+            "example": "-- models/staging/stg_orders.sql: one row per order, cleaned names and types\nselect\n    cast(order_id as integer)    as order_id,\n    cast(customer_id as integer) as customer_id,\n    cast(amount_cents as bigint) as amount_cents,\n    lower(trim(status))          as status,\n    cast(order_date as date)     as order_date\nfrom {{ ref('raw_orders') }}\n\n-- models/marts/fct_daily_revenue.sql: one row per day and region\nselect\n    o.order_date,\n    c.region,\n    count(*)            as paid_orders,\n    sum(o.amount_cents) as revenue_cents\nfrom {{ ref('stg_orders') }} as o\njoin {{ ref('stg_customers') }} as c using (customer_id)\nwhere o.status = 'paid'\ngroup by o.order_date, c.region\n\n-- dbt build ran: 2 seeds, 2 staging views, 2 mart tables, 5 tests, in dependency order.\n-- fct_daily_revenue: (2026-09-01, north, 1, 2500), (2026-09-02, north, 1, 4000), (2026-09-02, south, 1, 800)"
+          }
+        ],
+        "exercise": {
+          "prompt": "Three dashboards each compute paid revenue with their own SQL, and they disagree. Plan a dbt project that removes the disagreement: name the models in each layer, where the paid-revenue rule lives, and how a change to that rule reaches every dashboard.",
+          "solution": "Staging: stg_orders and stg_customers, one per raw table, casting types, trimming and lowercasing status, amounts in integer cents. Intermediate (optional): int_paid_orders filters status = 'paid' and excludes refunds according to the agreed definition. Mart: fct_daily_revenue at one row per day and region built with ref() from the paid-orders model; dashboards read only this mart. The rule lives in a single model, so a change is a reviewed pull request to that file; dbt build rebuilds the dependants in order and the tests and reconciliation run before publication. Document the definition and grain in the model's YAML.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Separates staging, intermediate and mart models with stated purposes.",
+            "Puts the business rule in one model referenced with ref().",
+            "Changes the rule through review and a rebuild of dependants."
+          ]
+        },
+        "quiz": {
+          "question": "Why write `{{ ref('stg_orders') }}` instead of the table name in a dbt model?",
+          "options": [
+            "ref() makes the query run faster",
+            "dbt learns the dependency, builds models in order and resolves the right schema for each environment",
+            "ref() copies the table into the model"
+          ],
+          "correct": 1,
+          "explanation": "ref() is how dbt builds its DAG and switches between development and production schemas."
+        },
+        "references": [
+          {
+            "title": "dbt: How we structure our dbt projects",
+            "url": "https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview",
+            "section": "Staging, intermediate and marts layers",
+            "reviewed": "2026-11-08",
+            "scope": "dbt Core 1.12 with the dbt-duckdb adapter, run on a scratch project on 2026-11-09; the course's SQLite lab does not use dbt."
+          },
+          {
+            "title": "dbt: Materializations",
+            "url": "https://docs.getdbt.com/docs/build/materializations",
+            "section": "View, table, incremental, ephemeral",
+            "reviewed": "2026-11-08",
+            "scope": "dbt Core 1.12 with the dbt-duckdb adapter, run on a scratch project on 2026-11-09; the course's SQLite lab does not use dbt."
+          },
+          {
+            "title": "dbt: About the ref function",
+            "url": "https://docs.getdbt.com/reference/dbt-jinja-functions/ref",
+            "section": "ref",
+            "reviewed": "2026-11-08",
+            "scope": "dbt Core 1.12 with the dbt-duckdb adapter, run on a scratch project on 2026-11-09; the course's SQLite lab does not use dbt."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In a dbt project, which layer should trim, lowercase and cast the raw status column?",
+            "options": [
+              "The staging model for that source",
+              "Every mart that uses status",
+              "The dashboard query"
+            ],
+            "correct": 0,
+            "explanation": "Staging models clean each source once, so every later model starts from the same values."
+          }
+        ]
+      },
+      {
+        "id": "dbt-tests-and-incremental-models",
+        "title": "16. Test models and build them incrementally",
+        "stage": "intermediate",
+        "takeaway": "Data tests stop a bad batch before it reaches consumers; incremental models save work by processing recent rows, but need a unique key, a look-back window for late changes and a full rebuild when the logic changes.",
+        "sections": [
+          {
+            "title": "Data tests that block publication",
+            "paragraphs": [
+              "dbt data tests are queries that return failing rows. Generic tests are declared in YAML: `unique`, `not_null`, `accepted_values` and `relationships` (every `customer_id` exists in the customer model). Singular tests are SQL files for rules specific to the project, such as the reconciliation of lesson 20: the mart's revenue must equal the paid amounts in staging.",
+              "Because `dbt build` runs tests in dependency order, a failing test on a staging model skips every model that depends on it. Consumers keep reading the last good tables instead of a duplicated or broken batch, the same reconcile-before-publish rule as lesson 14. Choose severity deliberately: some checks should warn rather than block."
+            ]
+          },
+          {
+            "title": "Incremental models and snapshots",
+            "paragraphs": [
+              "An incremental model inserts or merges only rows selected by its `is_incremental()` filter. With `unique_key`, changed rows replace their earlier version. Filtering on \"newer than the latest loaded row\" misses late arrivals and corrections (lesson 17), so reprocess a window, here from the latest loaded day, or longer if corrections arrive later. Run `dbt build --full-refresh` when the model's logic changes, because old rows were built with the old logic.",
+              "dbt snapshots record how a source row changes over time with validity intervals, which implements the slowly changing dimension history of lesson 13. The example ran three times: a clean build, a correction plus a new order, and a duplicated order that the unique test caught."
+            ],
+            "example": "version: 2\nmodels:\n  - name: stg_orders\n    columns:\n      - name: order_id\n        data_tests: [unique, not_null]\n      - name: status\n        data_tests:\n          - accepted_values:\n              arguments:\n                values: ['paid', 'refunded']\n      - name: customer_id\n        data_tests:\n          - relationships:\n              arguments:\n                to: ref('stg_customers')\n                field: customer_id\n\n-- tests/daily_revenue_reconciles.sql: returns a row (a failure) if the mart and its source disagree\nselect mart.total as mart_total, source.total as source_total\nfrom (select sum(revenue_cents) as total from {{ ref('fct_daily_revenue') }}) as mart\ncross join (select sum(amount_cents) as total from {{ ref('stg_orders') }} where status = 'paid') as source\nwhere mart.total <> source.total\n\n-- models/marts/fct_orders.sql\n{{ config(materialized='incremental', unique_key='order_id') }}\n\nselect order_id, customer_id, amount_cents, status, order_date\nfrom {{ ref('stg_orders') }}\n{% if is_incremental() %}\n-- reprocess from the latest loaded day, so late or corrected rows on that day are merged\nwhere order_date >= (select max(order_date) from {{ this }})\n{% endif %}\n\n-- Run 2 (order 4 refunded on its original day, order 5 arrives on 2026-09-03):\n--   fct_orders merges order 4 as refunded and inserts order 5; all 5 tests pass.\n-- Run 3 (order 3 appears twice in the raw file):\n--   FAIL 1 unique_stg_orders_order_id\n--   SKIP fct_daily_revenue, fct_orders and daily_revenue_reconciles; dbt exits with status 1."
+          }
+        ],
+        "exercise": {
+          "prompt": "An incremental `fct_orders` model filters `where updated_at > (select max(updated_at) from {{ this }})`. Refunds are sometimes recorded up to three days after an order, with the original order's timestamp, and the finance team reports totals that never decrease. Explain the defect and fix the model and its tests.",
+          "solution": "Refunds keep the original timestamp, so after newer orders have loaded they are never greater than the maximum and are skipped; finance totals never include them. Set unique_key='order_id' so changed rows merge, and filter with a look-back window, for example rows with updated_at at or after the maximum minus three days, or better, filter on an ingestion or change timestamp that moves when the row changes. Add tests: unique and not_null on order_id, accepted_values on status, a singular reconciliation of mart totals against staging, and run a full refresh once after deploying the fix to repair rows already missed.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Explains why a strict greater-than filter skips late corrections.",
+            "Adds unique_key and a look-back window or a change timestamp.",
+            "Adds tests and a one-off full refresh to repair past rows."
+          ]
+        },
+        "quiz": {
+          "question": "During dbt build, the unique test on stg_orders fails. What happens to the mart models that depend on it?",
+          "options": [
+            "They are built anyway with a warning",
+            "They are skipped, so consumers keep the last good tables",
+            "They are dropped"
+          ],
+          "correct": 1,
+          "explanation": "build runs tests in dependency order and skips dependants of a failing test."
+        },
+        "references": [
+          {
+            "title": "dbt: Add data tests to your DAG",
+            "url": "https://docs.getdbt.com/docs/build/data-tests",
+            "section": "Generic and singular data tests",
+            "reviewed": "2026-11-08",
+            "scope": "dbt Core 1.12 with the dbt-duckdb adapter, run on a scratch project on 2026-11-09; the course's SQLite lab does not use dbt."
+          },
+          {
+            "title": "dbt: Configure incremental models",
+            "url": "https://docs.getdbt.com/docs/build/incremental-models",
+            "section": "Filtering rows on an incremental run; defining a unique key",
+            "reviewed": "2026-11-08",
+            "scope": "dbt Core 1.12 with the dbt-duckdb adapter, run on a scratch project on 2026-11-09; the course's SQLite lab does not use dbt."
+          },
+          {
+            "title": "dbt: About dbt build command",
+            "url": "https://docs.getdbt.com/reference/commands/build",
+            "section": "Tests and skipping downstream resources",
+            "reviewed": "2026-11-08",
+            "scope": "dbt Core 1.12 with the dbt-duckdb adapter, run on a scratch project on 2026-11-09; the course's SQLite lab does not use dbt."
+          },
+          {
+            "title": "dbt: Add snapshots to your DAG",
+            "url": "https://docs.getdbt.com/docs/build/snapshots",
+            "section": "Snapshot meta-fields",
+            "reviewed": "2026-11-08",
+            "scope": "dbt Core 1.12 with the dbt-duckdb adapter, run on a scratch project on 2026-11-09; the course's SQLite lab does not use dbt."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An incremental model keeps only rows newer than the latest loaded timestamp. A correction arrives with an older timestamp. What happens?",
+            "options": [
+              "It is merged automatically",
+              "It is skipped unless the filter reprocesses a look-back window or a full refresh runs",
+              "dbt raises an error"
+            ],
+            "correct": 1,
+            "explanation": "The filter excludes it. A window, a change timestamp or a full refresh is needed to pick it up."
+          }
+        ]
+      },
+      {
         "id": "late-data-and-windows",
-        "title": "15. Late data, windows and corrections",
+        "title": "17. Late data, windows and corrections",
         "stage": "intermediate",
         "takeaway": "Windowed reporting groups events by an explicit time interval.",
         "sections": [
@@ -24298,7 +24461,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "partitioning-and-formats",
-        "title": "16. Partitions, formats and bounded reads",
+        "title": "18. Partitions, formats and bounded reads",
         "stage": "intermediate",
         "takeaway": "Partitioning organizes data by a useful key, often event date, so consumers can scan relevant subsets.",
         "sections": [
@@ -24372,7 +24535,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "schema-evolution",
-        "title": "17. Evolve schemas without silent breakage",
+        "title": "19. Evolve schemas without silent breakage",
         "stage": "advanced",
         "takeaway": "A compatible change preserves existing consumers under a stated contract.",
         "sections": [
@@ -24439,7 +24602,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "reconciliation-and-lineage",
-        "title": "18. Reconcile counts, totals and lineage",
+        "title": "20. Reconcile counts, totals and lineage",
         "stage": "advanced",
         "takeaway": "Reconciliation compares expected and actual records/effects with an explicit tolerance policy.",
         "sections": [
@@ -24506,7 +24669,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "privacy-and-data-governance",
-        "title": "19. Privacy, ownership and retention",
+        "title": "21. Privacy, ownership and retention",
         "stage": "advanced",
         "takeaway": "Governance defines who owns a dataset, who may use it, how long it is retained and how changes/deletions propagate.",
         "sections": [
@@ -24580,7 +24743,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "sql-server-bridge",
-        "title": "20. Bridge the local lab to SQL Server",
+        "title": "22. Bridge the local lab to SQL Server",
         "stage": "advanced",
         "takeaway": "SQLite makes the baseline runnable with the Python standard library.",
         "sections": [
@@ -24654,7 +24817,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "failure-recovery",
-        "title": "21. Failures, retries and backfills",
+        "title": "23. Failures, retries and backfills",
         "stage": "advanced",
         "takeaway": "Classify failures before retrying.",
         "sections": [
@@ -24721,7 +24884,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "data-engineering-capstone",
-        "title": "22. Build a replayable import portfolio",
+        "title": "24. Build a replayable import portfolio",
         "stage": "advanced",
         "takeaway": "Combine a bounded file contract, exact amount units, timezone policy, transactional target and replay identity.",
         "sections": [
@@ -25185,6 +25348,8 @@ const LEARNING_PATHS = [
         "joins-and-dimensional-models": "intermediate",
         "slowly-changing-dimensions": "intermediate",
         "dag-and-orchestration": "intermediate",
+        "sql-transformation-layer": "intermediate",
+        "dbt-tests-and-incremental-models": "intermediate",
         "late-data-and-windows": "intermediate",
         "partitioning-and-formats": "intermediate",
         "schema-evolution": "advanced",
