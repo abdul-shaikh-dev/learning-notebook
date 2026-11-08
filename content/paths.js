@@ -107536,7 +107536,7 @@ const LEARNING_PATHS = [
     "title": "Testing & Debugging",
     "category": "Software engineering",
     "status": "ready",
-    "description": "Write tests and diagnose failures in 24 lessons and three runnable projects. Test strict parsing, file replacement and competing stale writes.",
+    "description": "Write tests and diagnose failures in 27 lessons and three runnable projects. Test strict parsing, file replacement and competing stale writes.",
     "level": "Foundations → intermediate → selected advanced topics",
     "prerequisites": [
       "Basic Python functions, lists and exceptions; vocabulary is introduced before deeper diagnosis.",
@@ -108090,8 +108090,87 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "test-driven-development",
+        "title": "6. Drive a change with a failing test",
+        "stage": "foundation",
+        "takeaway": "Red, green, refactor: write one failing test for the next behaviour, make it pass simply, then improve the design with the tests as a safety net.",
+        "sections": [
+          {
+            "title": "Red, green, refactor",
+            "paragraphs": [
+              "Test-driven development (TDD) repeats a short cycle. Red: write a test for one small piece of behaviour you have not built and watch it fail, which proves the test can detect its absence. Green: write the simplest code that passes. Refactor: improve names, structure and duplication while every test stays green. Then pick the next behaviour.",
+              "Writing the test first forces the contract from lesson 1 to be concrete: the function's name, inputs, outputs and errors are decided from the caller's side. Each step is small, so when a test fails you know which change caused it.",
+              "A test that passes the first time it runs has not shown it can fail. If you add tests after the code, break the code briefly to see the test go red, or check the failing case another way."
+            ]
+          },
+          {
+            "title": "Building parse_minutes step by step",
+            "paragraphs": [
+              "The first test asks for `parse_minutes(\"1h30m\") == 90` while the function only raises `NotImplementedError`, so unittest reports an error. The simplest passing version splits on `h`. Two new tests, minutes only and an unknown unit, fail against it. A refactor to a regular expression with explicit validation passes all three. Each step was run; the comments show the final line of unittest's output.",
+              "The refactor was safe to attempt because the earlier behaviour was pinned by a test. Without that, rewriting the parser would have risked breaking `1h30m` unnoticed."
+            ],
+            "example": "# test_durations.py (step 1)\nimport unittest\nfrom durations import parse_minutes\n\nclass ParseMinutes(unittest.TestCase):\n    def test_hours_and_minutes(self):\n        self.assertEqual(parse_minutes(\"1h30m\"), 90)\n\n# durations.py: def parse_minutes(text): raise NotImplementedError\n# python -m unittest -q  ->  FAILED (errors=1)                     red\n\ndef parse_minutes(text):                                           # green: simplest pass\n    hours, minutes = text.removesuffix(\"m\").split(\"h\")\n    return int(hours) * 60 + int(minutes)\n# python -m unittest -q  ->  OK\n\n#   add test_minutes_only (\"45m\" -> 45) and test_rejects_unknown_unit (\"2d\" -> ValueError)\n# python -m unittest -q  ->  FAILED (errors=1)                     red again\n\nimport re                                                          # refactor with tests green\nPATTERN = re.compile(r\"(?:(\\d+)h)?(?:(\\d+)m)?\")\n\ndef parse_minutes(text):\n    match = PATTERN.fullmatch(text)\n    if not text or not match:\n        raise ValueError(f\"unrecognised duration: {text!r}\")\n    hours, minutes = (int(part or 0) for part in match.groups())\n    return hours * 60 + minutes\n# python -m unittest -q  ->  OK"
+          },
+          {
+            "title": "When it helps",
+            "paragraphs": [
+              "TDD works well for logic with clear inputs and outputs: parsers, calculations, validation, state machines and bug fixes, where the first step is a test that reproduces the bug (lesson 16). It is harder for exploratory work, user-interface layout or code whose shape is still unknown; a short throwaway spike, then TDD for the real version, is a common compromise.",
+              "TDD does not guarantee good tests. Tests can still share the author's misunderstanding, so review cases against the contract and boundaries (lesson 3)."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Using TDD, list the first three tests you would write, in order, for a function `slugify(title)` that lowercases, replaces runs of non-alphanumeric characters with a single hyphen and trims hyphens from the ends. For each, say what minimal code makes it pass.",
+          "solution": "1. slugify('Hello') == 'hello': return title.lower().\n2. slugify('Hello World') == 'hello-world': replace spaces with hyphens; with test 1 green, refactor to re.sub(r'[^a-z0-9]+', '-', title.lower()).\n3. slugify('  Hello, World!  ') == 'hello-world': add .strip('-') after the substitution.\nEach test is run red first, then green, and the code is tidied only while all tests pass.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Starts with the simplest behaviour and adds one behaviour per test.",
+            "Makes each test pass with minimal code before generalising.",
+            "Refactors only with all tests green."
+          ]
+        },
+        "quiz": {
+          "question": "Why watch a new test fail before writing the code?",
+          "options": [
+            "It is required by unittest",
+            "It shows the test can detect the missing behaviour, so a later pass means something",
+            "It makes the test run faster"
+          ],
+          "correct": 1,
+          "explanation": "A test that has never failed might pass for the wrong reason, such as asserting nothing or importing the wrong function."
+        },
+        "references": [
+          {
+            "title": "Python unittest",
+            "url": "https://docs.python.org/3/library/unittest.html",
+            "section": "Basic example and assertRaises",
+            "reviewed": "2026-11-08",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          },
+          {
+            "title": "Martin Fowler: Test Driven Development",
+            "url": "https://martinfowler.com/bliki/TestDrivenDevelopment.html",
+            "section": "The red-green-refactor cycle",
+            "reviewed": "2026-11-08",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A first test calls a function that only raises NotImplementedError. How does unittest report it?",
+            "options": [
+              "As an error (E), because an exception other than an assertion failure was raised",
+              "As a failure (F)",
+              "As a skipped test"
+            ],
+            "correct": 0,
+            "explanation": "unittest counts AssertionError as a failure and any other exception as an error; both make the run fail."
+          }
+        ]
+      },
+      {
         "id": "tracebacks",
-        "title": "6. Read a traceback as a call chain",
+        "title": "7. Read a traceback as a call chain",
         "stage": "foundation",
         "takeaway": "A traceback records how execution reached an exception.",
         "sections": [
@@ -108152,7 +108231,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "reproduce",
-        "title": "7. Build a minimal reproducible case",
+        "title": "8. Build a minimal reproducible case",
         "stage": "foundation",
         "takeaway": "A useful reproduction records the exact command, runtime, smallest synthetic input, expected behavior and observed failure.",
         "sections": [
@@ -108333,7 +108412,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "hypotheses",
-        "title": "8. Debug by falsifying one hypothesis",
+        "title": "9. Debug by falsifying one hypothesis",
         "stage": "foundation",
         "takeaway": "Debugging is an experiment: make a specific prediction, choose an observation that could disprove it, and change one relevant condition.",
         "sections": [
@@ -108496,8 +108575,94 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "debugger",
+        "title": "10. Step through code with a debugger",
+        "stage": "foundation",
+        "takeaway": "A debugger lets you pause at a chosen line, inspect real values and step forward; conditional breakpoints and post-mortem inspection find the case print statements miss.",
+        "sections": [
+          {
+            "title": "Breakpoints, stepping and inspection",
+            "paragraphs": [
+              "A debugger pauses a running program so you can read its state. Python's built-in debugger is `pdb`; IDEs such as VS Code and PyCharm provide the same operations with a graphical interface. Call `breakpoint()` in the code, start a script with `python -m pdb script.py`, or click in the editor margin.",
+              "While paused: `p expr` prints a value, `next` (n) runs the current line and stops at the next one in the same function, `step` (s) enters a called function, `return` (r) runs to the end of the current function, `continue` (c) runs to the next breakpoint, `where` (w) shows the call stack and `up`/`down` move between its frames. `display expr` re-prints an expression whenever it changes, like a watch window.",
+              "A conditional breakpoint stops only when an expression is true: `break 4, d is None` pauses on line 4 for the one bad item instead of every iteration. After an uncaught exception, post-mortem debugging opens the frame where it happened, with all local variables intact: `python -m pdb` does this automatically, and `pdb.pm()` does it in an interactive session."
+            ]
+          },
+          {
+            "title": "Finding the None in a report",
+            "paragraphs": [
+              "`report.py` averages durations and crashes with `TypeError` because one sample is `None`. Running it under `pdb` and continuing drops into the failing frame: `d` is `None` and `total` is 75. A second run uses a conditional breakpoint to stop exactly when `d is None` and asks where it sits in the input. The transcripts were captured from Python 3.14 with paths shortened.",
+              "The debugger answers what happened; lesson 9's hypotheses explain why. Here the next question is which producer writes `None` into the samples, and whether the contract allows missing durations."
+            ],
+            "example": "def average_minutes(durations):\n    total = 0\n    for d in durations:\n        total += d                       # line 4\n    return total / len(durations)\n\nsamples = [30, 45, None, 20]\nprint(average_minutes(samples))\n\n$ python -m pdb report.py\n(Pdb) continue\nUncaught exception. Entering post mortem debugging\n> report.py(4)average_minutes()\n-> total += d\n(Pdb) p d, total\n(None, 75)\n\n$ python -m pdb report.py\n(Pdb) break 4, d is None\nBreakpoint 1 at report.py:4\n(Pdb) continue\n> report.py(4)average_minutes()\n-> total += d\n(Pdb) p samples.index(d)\n2"
+          },
+          {
+            "title": "Debugging beyond one process",
+            "paragraphs": [
+              "A debugger pauses everything, which changes timing; races (lesson 19) may vanish under it, so use logging or recorded events there. In production, attach debuggers only under an agreed procedure, because a paused process stops serving and its memory may hold personal data.",
+              "When a bug is a regression, let Git find the commit: `git bisect run python -m unittest test_report` tests each candidate and marks it good or bad by exit status. Then debug only the change that introduced the failure."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A loop over 10,000 orders produces one wrong total. Describe how you would use a debugger to find the order involved without stepping through every iteration, and what you would inspect once paused.",
+          "solution": "Set a conditional breakpoint inside the loop on the condition that identifies the anomaly, for example `break 42, order.total < 0` or a check that the running total jumped by more than expected. Continue to it, then inspect the current order's fields, the running total and the previous order (up the stack or with a display expression). If the program crashes instead, use post-mortem debugging to open the failing frame directly. Turn the found input into a regression test before fixing.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Uses a conditional breakpoint rather than stepping every iteration.",
+            "Inspects the specific values and stack once paused.",
+            "Mentions post-mortem for crashes and a regression test afterwards."
+          ]
+        },
+        "quiz": {
+          "question": "Paused on a line that calls helper(x), you want to stop inside helper. Which pdb command?",
+          "options": [
+            "The next command",
+            "The step command",
+            "The continue command"
+          ],
+          "correct": 1,
+          "explanation": "step enters the called function; next runs the call to completion and stops at the following line."
+        },
+        "references": [
+          {
+            "title": "Python pdb",
+            "url": "https://docs.python.org/3/library/pdb.html",
+            "section": "Debugger commands and post-mortem debugging",
+            "reviewed": "2026-11-08",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          },
+          {
+            "title": "VS Code: Debugging",
+            "url": "https://code.visualstudio.com/docs/debugtest/debugging",
+            "section": "Breakpoints, conditional breakpoints and logpoints",
+            "reviewed": "2026-11-08",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          },
+          {
+            "title": "Git reference: git-bisect",
+            "url": "https://git-scm.com/docs/git-bisect",
+            "section": "Bisect run",
+            "reviewed": "2026-11-08",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In pdb, what is the difference between next and step on a line that calls a function?",
+            "options": [
+              "They are identical",
+              "next runs the call and stops at the following line; step stops at the first line inside the called function",
+              "step skips the call entirely"
+            ],
+            "correct": 1,
+            "explanation": "Use step to enter a call you suspect, and next to stay at the current level."
+          }
+        ]
+      },
+      {
         "id": "strategy",
-        "title": "9. Choose test scope by risk",
+        "title": "11. Choose test scope by risk",
         "stage": "intermediate",
         "takeaway": "A unit test exercises a small behavior with dependencies controlled.",
         "sections": [
@@ -108674,7 +108839,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "mocks",
-        "title": "10. Use doubles at owned boundaries",
+        "title": "12. Use doubles at owned boundaries",
         "stage": "intermediate",
         "takeaway": "A test double replaces a dependency so the test can control its response or observe how it is called.",
         "sections": [
@@ -108735,7 +108900,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "contracts-adapters",
-        "title": "11. Test an adapter's input and output contract",
+        "title": "13. Test an adapter's input and output contract",
         "stage": "intermediate",
         "takeaway": "A boundary contract includes accepted shape, meaning, failures and effects.",
         "sections": [
@@ -108796,7 +108961,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "integration-files",
-        "title": "12. Verify serialization and replacement together",
+        "title": "14. Verify serialization and replacement together",
         "stage": "intermediate",
         "takeaway": "An integration test should exercise real collaborating components.",
         "sections": [
@@ -108954,7 +109119,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "properties",
-        "title": "13. Use invariant and metamorphic tests",
+        "title": "15. Use invariant and metamorphic tests",
         "stage": "intermediate",
         "takeaway": "A property describes behavior across many inputs; a metamorphic relation links results after a controlled transformation.",
         "sections": [
@@ -109022,7 +109187,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "regressions",
-        "title": "14. Turn a fix into a durable regression",
+        "title": "16. Turn a fix into a durable regression",
         "stage": "intermediate",
         "takeaway": "A regression test preserves the condition that previously failed and the intended user outcome.",
         "sections": [
@@ -109090,7 +109255,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "coverage",
-        "title": "15. Interpret coverage and mutation carefully",
+        "title": "17. Interpret coverage and mutation carefully",
         "stage": "intermediate",
         "takeaway": "Coverage reports which code ran; it does not measure how well expected behavior was checked.",
         "sections": [
@@ -109254,7 +109419,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "test-data",
-        "title": "16. Manage test data and reproducibility",
+        "title": "18. Manage test data and reproducibility",
         "stage": "intermediate",
         "takeaway": "A fixture's provenance matters.",
         "sections": [
@@ -109315,7 +109480,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "concurrency",
-        "title": "17. Make a race observable without sleep",
+        "title": "19. Make a race observable without sleep",
         "stage": "advanced",
         "takeaway": "A race appears when competing actions depend on an ordering the implementation does not enforce.",
         "sections": [
@@ -109475,7 +109640,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "flaky-tests",
-        "title": "18. Diagnose flakiness before rerunning",
+        "title": "20. Diagnose flakiness before rerunning",
         "stage": "advanced",
         "takeaway": "A flaky test changes outcome without a relevant code change.",
         "sections": [
@@ -109858,8 +110023,93 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "end-to-end-tests",
+        "title": "21. Test a user journey end to end without flakiness",
+        "stage": "advanced",
+        "takeaway": "Keep a few end-to-end tests for the journeys that matter, locate elements as users do, wait for conditions not time, and treat every flaky failure as a bug.",
+        "sections": [
+          {
+            "title": "What end-to-end tests are for",
+            "paragraphs": [
+              "An end-to-end test drives the running application as a user would: a real browser, real HTTP and a real (test) database. It catches what unit and integration tests cannot, such as a broken route, a missing script or a form that never submits. It is also the slowest, most expensive test to run and to diagnose, so lesson 11's risk-based choice applies: cover the critical journeys, such as sign-in, checkout or import, and leave detailed cases to faster tests.",
+              "Tools such as Playwright and Cypress control browsers through code. Playwright's locators find elements by role, label or text, which matches what users see and survives styling changes better than CSS paths. Its assertions retry until a condition holds or a timeout passes, so tests wait for the page instead of sleeping."
+            ],
+            "example": "# Playwright for Python (pytest-playwright). Not executed in this notebook.\nfrom playwright.sync_api import Page, expect\n\ndef test_import_shows_summary(page: Page, tmp_path):\n    csv = tmp_path / \"orders.csv\"\n    csv.write_text(\"id,amount\\n1,10\\n2,20\\n\")\n    page.goto(\"http://127.0.0.1:8000/import\")\n    page.get_by_label(\"Orders file\").set_input_files(csv)\n    page.get_by_role(\"button\", name=\"Import\").click()\n    expect(page.get_by_role(\"status\")).to_have_text(\"Imported 2 orders\")   # retries until true or timeout"
+          },
+          {
+            "title": "Keeping them reliable",
+            "paragraphs": [
+              "Flakiness comes from shared state, timing assumptions and environment. Give each test its own data and browser context, never depend on test order, wait for observable conditions (a status message, a network response) instead of fixed sleeps, and pin browser and application versions. Record traces, screenshots or video on failure so a rare failure can be diagnosed from one run.",
+              "Track flaky tests explicitly. Retrying hides the problem (lesson 20); if a retry policy exists, report every retried pass, quarantine a test that keeps flaking with an owner and a deadline, and fix the cause. A suite people no longer trust stops protecting anything."
+            ]
+          },
+          {
+            "title": "Snapshot and contract tests",
+            "paragraphs": [
+              "Snapshot (approval) tests store a previous output, such as rendered HTML, a report or an API response, and fail when it changes. They detect unintended change cheaply, but every intended change requires reviewing and accepting a new snapshot, and large snapshots get approved without reading. Keep them small and focused.",
+              "Contract tests check that two services agree without running both end to end. In consumer-driven contract testing (for example with Pact), the consumer records the requests it makes and the responses it relies on, and the provider's build verifies it still satisfies them. They catch a renamed field before deployment, which is the kind of break lesson 13's adapter tests guard on one side only."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "An end-to-end checkout test fails about once in thirty runs with 'element not found: Pay'. A teammate proposes adding `time.sleep(3)` before the click. Explain why that is a poor fix and propose a better diagnosis and fix.",
+          "solution": "A fixed sleep slows every run and still fails when the page takes longer than three seconds; it guesses at timing instead of waiting for a condition. Collect a trace or screenshot on failure to see the page state: perhaps the Pay button renders only after the basket total loads, or a cookie banner covers it. Then wait for the real condition, for example expect(page.get_by_role('button', name='Pay')).to_be_enabled() after the total appears, or close the banner deterministically in setup. Check isolation too: shared basket data from another test could leave the page in a different state.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Rejects fixed sleeps as timing guesses.",
+            "Collects failure evidence such as a trace.",
+            "Waits for an observable condition and checks test isolation."
+          ]
+        },
+        "quiz": {
+          "question": "Why prefer get_by_role('button', name='Import') over a CSS path that picks the button by its position among nested div elements?",
+          "options": [
+            "CSS selectors are not supported",
+            "It finds the element the way a user or assistive technology does and survives layout changes",
+            "It runs without a browser"
+          ],
+          "correct": 1,
+          "explanation": "Role and accessible-name locators depend on what the user sees, not on page structure, so cosmetic changes do not break them."
+        },
+        "references": [
+          {
+            "title": "Playwright for Python: Locators",
+            "url": "https://playwright.dev/python/docs/locators",
+            "section": "Locate by role",
+            "reviewed": "2026-11-08",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          },
+          {
+            "title": "Playwright for Python: Auto-waiting",
+            "url": "https://playwright.dev/python/docs/actionability",
+            "section": "Actionability checks",
+            "reviewed": "2026-11-08",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          },
+          {
+            "title": "Pact documentation",
+            "url": "https://docs.pact.io/",
+            "section": "Introduction to consumer-driven contract testing",
+            "reviewed": "2026-11-08",
+            "scope": "Primary reference for the named mechanism; scenarios and lab policies are original teaching examples. Python labs require 3.14+; local execution evidence is recorded separately from internet, browser or deployment behavior."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An end-to-end test passes on retry after failing. What should the team do with that result?",
+            "options": [
+              "Count it as a pass and move on",
+              "Report the retried pass as flaky, investigate with the failure trace and fix or quarantine with an owner",
+              "Delete the test"
+            ],
+            "correct": 1,
+            "explanation": "A retried pass hides a real timing or isolation problem. Visible flake tracking keeps the suite trustworthy."
+          }
+        ]
+      },
+      {
         "id": "async-debugging",
-        "title": "19. Test async cleanup and cancellation contracts",
+        "title": "22. Test async cleanup and cancellation contracts",
         "stage": "advanced",
         "takeaway": "Async tests must distinguish an operation failure, caller cancellation and timeout.",
         "sections": [
@@ -110055,7 +110305,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "observability",
-        "title": "20. Use diagnostics to explain a failure",
+        "title": "23. Use diagnostics to explain a failure",
         "stage": "advanced",
         "takeaway": "Assertions say whether a contract held; diagnostics help explain why.",
         "sections": [
@@ -110116,7 +110366,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "performance",
-        "title": "21. Separate correctness from measurement",
+        "title": "24. Separate correctness from measurement",
         "stage": "advanced",
         "takeaway": "A correctness assertion expects a value or invariant.",
         "sections": [
@@ -110183,7 +110433,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "release-evidence",
-        "title": "22. Build a release regression argument",
+        "title": "25. Build a release regression argument",
         "stage": "advanced",
         "takeaway": "A release decision combines targeted evidence and known limits.",
         "sections": [
@@ -110244,7 +110494,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "debug-report",
-        "title": "23. Write a reviewable diagnosis and handoff",
+        "title": "26. Write a reviewable diagnosis and handoff",
         "stage": "advanced",
         "takeaway": "A useful diagnosis connects symptom, reproduction, cause, correction and evidence.",
         "sections": [
@@ -110305,7 +110555,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "cli-route",
-        "title": "24. Test a complete local command route",
+        "title": "27. Test a complete local command route",
         "stage": "advanced",
         "takeaway": "An end-to-end boundary is defined by the product route, not a framework label.",
         "sections": [
@@ -110695,9 +110945,11 @@ const LEARNING_PATHS = [
         "boundaries": "foundation",
         "failures": "foundation",
         "fixtures": "foundation",
+        "test-driven-development": "foundation",
         "tracebacks": "foundation",
         "reproduce": "foundation",
         "hypotheses": "guided-diagnosis",
+        "debugger": "guided-diagnosis",
         "strategy": "intermediate",
         "mocks": "intermediate",
         "contracts-adapters": "intermediate",
@@ -110708,6 +110960,7 @@ const LEARNING_PATHS = [
         "test-data": "intermediate",
         "concurrency": "advanced",
         "flaky-tests": "advanced",
+        "end-to-end-tests": "advanced",
         "async-debugging": "guided-diagnosis",
         "observability": "advanced",
         "performance": "guided-diagnosis",

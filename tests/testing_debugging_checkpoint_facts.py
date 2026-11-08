@@ -32,12 +32,14 @@ import branch_subject  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
+    'debugger/2': 'next runs a call; step enters it, lesson 10',
+    'end-to-end-tests/2': 'Report retried passes as flaky and fix or quarantine them, lesson 21',
     'fixtures/2': 'Register cleanup immediately after acquiring a resource, lesson 5',
-    'strategy/2': 'A real CLI subprocess covers argument parsing and exit status, lesson 9',
-    'test-data/2': 'Add a new fixture or document a migration; keep historical captures, lesson 16',
-    'flaky-tests/2': 'A join timeout detects an unfinished worker and does not terminate it, lesson 18',
-    'release-evidence/2': 'A passing runner can still skip tests or collect the wrong module, lesson 22',
-    'debug-report/2': 'A multi-worker service needs coordination at its real storage boundary, lesson 23',
+    'strategy/2': 'A real CLI subprocess covers argument parsing and exit status, lesson 11',
+    'test-data/2': 'Add a new fixture or document a migration; keep historical captures, lesson 18',
+    'flaky-tests/2': 'A join timeout detects an unfinished worker and does not terminate it, lesson 20',
+    'release-evidence/2': 'A passing runner can still skip tests or collect the wrong module, lesson 25',
+    'debug-report/2': 'A multi-worker service needs coordination at its real storage boundary, lesson 26',
 }
 
 
@@ -302,7 +304,21 @@ def advanced_copies():
                  (True, True): 'Yes for both'})
 
 
+def test_driven_development():
+    class FirstTest(unittest.TestCase):
+        def test_hours_and_minutes(self):
+            def parse_minutes(text):
+                raise NotImplementedError
+            self.assertEqual(parse_minutes('1h30m'), 90)
+    result = unittest.TestResult()
+    FirstTest('test_hours_and_minutes').run(result)
+    return pick((len(result.errors), len(result.failures)),
+                {(1, 0): 'As an error (E), because an exception other than an assertion failure was raised',
+                 (0, 1): 'As a failure (F)'})
+
+
 FACTS = {
+    'test-driven-development/2': test_driven_development,
     'contracts/2': contracts, 'first-test/2': first_test, 'boundaries/2': boundaries, 'failures/2': failures,
     'tracebacks/2': tracebacks, 'reproduce/2': reproduce, 'hypotheses/2': hypotheses, 'mocks/2': mocks,
     'contracts-adapters/2': contracts_adapters, 'integration-files/2': integration_files,
