@@ -210,6 +210,61 @@ for weight, value in [(3, 5)]:
 assert best[6] == 10  # the single item was used twice
 answer = 'Any number of times'
 ''',
+    'data-structures-algorithms/quicksort/2': '''
+def partition(a, lo, hi):
+    """Move a[hi] to its final index p: a[lo:p] < pivot <= a[p+1:hi+1]."""
+    pivot = a[hi]
+    p = lo
+    for i in range(lo, hi):
+        if a[i] < pivot:
+            a[i], a[p] = a[p], a[i]
+            p += 1
+    a[p], a[hi] = a[hi], a[p]
+    return p
+
+def quickselect(a, k):
+    lo, hi = 0, len(a) - 1
+    while True:
+        p = partition(a, lo, hi)
+        if p == k:
+            return a[p]
+        if k < p:
+            hi = p - 1
+        else:
+            lo = p + 1
+answer = str(quickselect([42, 7, 19, 88, 3, 61, 25], 3))
+''',
+    'data-structures-algorithms/prefix-sums-bits/2': '''
+answer = str(12 & (12 - 1))
+''',
+    'data-structures-algorithms/tries-strings/2': '''
+answer = str([i for i in range(len("aaaa")) if "aaaa".startswith("aa", i)])
+''',
+    'data-structures-algorithms/union-find-mst/2': '''class DisjointSet:
+    def __init__(self, items):
+        self.parent = {x: x for x in items}
+        self.size = {x: 1 for x in items}
+
+    def find(self, x):
+        while self.parent[x] != x:
+            self.parent[x] = self.parent[self.parent[x]]  # path halving
+            x = self.parent[x]
+        return x
+
+    def union(self, a, b):
+        ra, rb = self.find(a), self.find(b)
+        if ra == rb:
+            return False
+        if self.size[ra] < self.size[rb]:
+            ra, rb = rb, ra
+        self.parent[rb] = ra
+        self.size[ra] += self.size[rb]
+        return True
+
+groups = DisjointSet("ABCDE")
+groups.union("A", "B"); groups.union("C", "D"); groups.union("B", "D")
+answer = str(len({groups.find(x) for x in "ABCDE"}))
+''',
     # Design Patterns
     'design-patterns/contracts/2': '''
 def total(prices):

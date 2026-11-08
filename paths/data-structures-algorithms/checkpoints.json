@@ -39,17 +39,29 @@
     "merge-sort": [
       {"question": "Merging [1, 4] and [2, 3] compares the two front values until one run is empty. How many comparisons does it make?", "options": ["2", "3", "4"], "correct": 1, "explanation": "1 vs 2, then 4 vs 2, then 4 vs 3. The right run is then empty, so 4 is appended without a comparison."}
     ],
+    "quicksort": [
+      {"question": "What does quickselect([42, 7, 19, 88, 3, 61, 25], 3) return, with k counted from 0?", "options": ["19", "25", "42"], "correct": 1, "explanation": "The sorted order is 3, 7, 19, 25, 42, 61, 88; index 3 holds 25."}
+    ],
     "two-pointers": [
       {"question": "Values [1, 2, 4, 7, 11] are sorted and the target sum is 15. With left at 1 and right at 11, the sum is 12. Which pointer moves?", "options": ["left moves right", "right moves left", "both move inward"], "correct": 0, "explanation": "The sum is too small. Pairing 1 with any value left of 11 is smaller still, so 1 cannot be part of a solution and left moves right."}
     ],
+    "prefix-sums-bits": [
+      {"question": "What is 12 & (12 - 1)?", "options": ["8", "11", "0"], "correct": 0, "explanation": "12 is 0b1100 and 11 is 0b1011; the AND is 0b1000, which is 12 with its lowest set bit cleared."}
+    ],
     "sliding-window": [
       {"question": "What is the length of the longest substring of 'abcabcbb' with no repeated character?", "options": ["3", "4", "7"], "correct": 0, "explanation": "Windows such as 'abc' and 'bca' have 3 distinct characters. Any window of 4 repeats one of a, b or c."}
+    ],
+    "tries-strings": [
+      {"question": "Counting overlapping matches, where does \"aa\" occur in \"aaaa\"?", "options": ["[0, 2]", "[0, 1, 2]", "[0]"], "correct": 1, "explanation": "A match may start inside the previous one, so positions 0, 1 and 2 all match. str.count(\"aa\") counts 2 because it does not overlap."}
     ],
     "topological": [
       {"question": "TopologicalSorter({'b': {'a'}, 'c': {'b'}}) maps each node to its predecessors. What is list(ts.static_order())?", "options": ["['a', 'b', 'c']", "['c', 'b', 'a']", "['b', 'c', 'a']"], "correct": 0, "explanation": "b depends on a and c depends on b, so the only valid order is a, b, c. graphlib returns predecessors first."}
     ],
     "dijkstra": [
       {"question": "Directed edges are A→B (1), B→C (1) and A→C (5). What is the minimum cost from A to C?", "options": ["2", "5", "1"], "correct": 0, "explanation": "The direct edge has one hop but costs 5. The two-hop route through B costs 1 + 1 = 2, which is the minimum."}
+    ],
+    "union-find-mst": [
+      {"question": "Starting from separate items A to E, after union(A, B), union(C, D) and union(B, D), how many groups remain?", "options": ["1", "2", "3"], "correct": 1, "explanation": "A, B, C and D form one group and E remains alone."}
     ],
     "greedy": [
       {"question": "Coins are 1, 3 and 4. Taking the largest coin that fits each time, how many coins make 6?", "options": ["2", "3", "6"], "correct": 1, "explanation": "Greedy takes 4, then 1 and 1: three coins. The optimum is 3 + 3, two coins, so this greedy rule is not safe for these coins."}

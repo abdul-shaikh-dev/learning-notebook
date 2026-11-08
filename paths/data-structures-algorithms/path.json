@@ -154,6 +154,14 @@
           "paragraphs": [
             "Appending to a dynamic array is amortized O(1), not a promise that every individual append costs the same. Slicing copies selected references and uses extra memory."
           ]
+        },
+        {
+          "title": "Amortized cost of appending",
+          "paragraphs": [
+            "A dynamic array such as a Python list reserves spare capacity. When it is full, it allocates a larger block and copies every item, an O(n) step. Because capacity grows by a constant factor, those copies are rare: over n appends the total copying is less than 2n, so each append is O(1) amortized, meaning averaged over the whole sequence rather than guaranteed for every call.",
+            "Growing by a fixed amount instead, say 10 slots, makes n appends cost O(n²) in total. Amortized bounds also explain why a single append can occasionally be slow even though the average is constant."
+          ],
+          "example": "capacity, size, copies = 1, 0, 0\nfor _ in range(1000):\n    if size == capacity:\n        copies += size   # move every item into a block twice as large\n        capacity *= 2\n    size += 1\nprint(size, capacity, copies, copies < 2 * size)\n\n# Expected output:\n# 1000 1024 1023 True"
         }
       ],
       "exercise": {
@@ -515,6 +523,14 @@
           "paragraphs": [
             "Use `test_trees_graphs.py` to compare every four-key insertion/deletion order against a set. Check global ancestor bounds, not only immediate parent-child comparisons: a misplaced descendant can satisfy its immediate parent while violating the root bound. The successor-with-right-child fixture tests the splice above. Sorted insertion creates a chain; iterative traversal avoids recursion failure but does not improve that chain's linear search cost."
           ]
+        },
+        {
+          "title": "Why search trees need balancing",
+          "paragraphs": [
+            "Search, insertion and deletion in a binary search tree cost O(h) for a tree of height h. Inserting already sorted keys builds a chain where h = n; random insertion order gives a height close to the O(log n) of a balanced tree, but real data is often sorted.",
+            "Self-balancing trees repair the shape after each change with local rotations. AVL trees keep subtree heights within one of each other; red-black trees allow a little more imbalance in exchange for fewer rotations. Databases use B-trees, whose wide nodes hold many keys per disk page. Python has no built-in balanced tree: use a `dict` for exact lookups and `bisect` on a sorted list for ordered queries."
+          ],
+          "example": "import random\n\ndef bst_height(values):\n    def insert(node, value):\n        if node is None:\n            return [value, None, None]\n        side = 1 if value < node[0] else 2\n        node[side] = insert(node[side], value)\n        return node\n\n    def height(node):\n        return 0 if node is None else 1 + max(height(node[1]), height(node[2]))\n\n    root = None\n    for value in values:\n        root = insert(root, value)\n    return height(root)\n\nn = 127\nordered = list(range(n))\nshuffled = ordered[:]\nrandom.Random(4).shuffle(shuffled)\nprint(\"sorted inserts:\", bst_height(ordered))\nprint(\"random inserts:\", bst_height(shuffled))\nprint(\"balanced:\", n.bit_length())\n\n# Expected output:\n# sorted inserts: 127\n# random inserts: 13\n# balanced: 7"
         }
       ],
       "exercise": {
@@ -816,8 +832,68 @@
       ]
     },
     {
+      "id": "quicksort",
+      "stage": "intermediate",
+      "title": "14. Quicksort, partitioning and quickselect",
+      "takeaway": "Partitioning puts one value in its final place; recursing on both sides sorts, recursing on one side selects.",
+      "sections": [
+        {
+          "title": "Model",
+          "paragraphs": [
+            "Divide and conquer splits a problem, solves the parts and combines the answers. Merge sort does its work in the combine step. Quicksort does it in the split: it partitions around a pivot so smaller values sit to the left and larger values to the right, then sorts each side. Nothing needs combining.",
+            "Picking the pivot at random makes bad splits unlikely for any input. Grouping values equal to the pivot, as below, keeps many duplicates from causing deep recursion."
+          ],
+          "example": "import random\n\ndef quicksort(values, rng):\n    if len(values) <= 1:\n        return list(values)\n    pivot = values[rng.randrange(len(values))]\n    less = [v for v in values if v < pivot]\n    equal = [v for v in values if v == pivot]\n    greater = [v for v in values if v > pivot]\n    return quicksort(less, rng) + equal + quicksort(greater, rng)\n\ndata = [5, 3, 8, 3, 1, 9, 3]\nprint(quicksort(data, random.Random(7)))\nprint(data)\n\n# Expected output:\n# [1, 3, 3, 3, 5, 8, 9]\n# [5, 3, 8, 3, 1, 9, 3]"
+        },
+        {
+          "title": "Implementation",
+          "paragraphs": [
+            "In-place quicksort uses a partition with an invariant. Lomuto's scheme keeps `a[lo:p]` below the pivot while `i` scans; a swap extends that region. At the end the pivot moves to index `p`, which is exactly where it belongs in sorted order.",
+            "Quickselect reuses partition to find the k-th smallest value. After partitioning, `k` lies on one side only, so it continues there and ignores the other. That is how you find a median or the top k without sorting everything."
+          ],
+          "example": "def partition(a, lo, hi):\n    \"\"\"Move a[hi] to its final index p: a[lo:p] < pivot <= a[p+1:hi+1].\"\"\"\n    pivot = a[hi]\n    p = lo\n    for i in range(lo, hi):\n        if a[i] < pivot:\n            a[i], a[p] = a[p], a[i]\n            p += 1\n    a[p], a[hi] = a[hi], a[p]\n    return p\n\ndef quickselect(a, k):\n    \"\"\"Return the k-th smallest value (0-based). Reorders a.\"\"\"\n    lo, hi = 0, len(a) - 1\n    while True:\n        p = partition(a, lo, hi)\n        if p == k:\n            return a[p]\n        if k < p:\n            hi = p - 1\n        else:\n            lo = p + 1\n\nscores = [42, 7, 19, 88, 3, 61, 25]\nprint(quickselect(scores[:], 3), sorted(scores)[3])\n\n# Expected output:\n# 25 25"
+        },
+        {
+          "title": "Correctness and cost",
+          "paragraphs": [
+            "Each partition places one pivot correctly and leaves two independent subproblems, so quicksort is correct by induction on their size. With random pivots the expected cost is O(n log n). If the pivot is always the smallest or largest value, as with a last-element pivot on already sorted input, every split removes one item and the cost becomes O(n²). Recursing into the smaller side first keeps the stack depth O(log n).",
+            "Quickselect averages O(n) and has the same quadratic worst case. Quicksort is not stable. No comparison sort can beat O(n log n) in the worst case; counting sort avoids comparisons and runs in O(n + k) when keys are small integers below k. Python's `sorted` uses Timsort, which is stable, O(n log n) and fast on partly sorted data, so write your own sort only to learn or for a special case."
+          ],
+          "example": "import random\n\ndef comparisons(a):\n    count = 0\n    def sort(lo, hi):\n        nonlocal count\n        while lo < hi:\n            pivot, p = a[hi], lo\n            for i in range(lo, hi):\n                count += 1\n                if a[i] < pivot:\n                    a[i], a[p] = a[p], a[i]\n                    p += 1\n            a[p], a[hi] = a[hi], a[p]\n            if p - lo < hi - p:        # recurse into the smaller side\n                sort(lo, p - 1)\n                lo = p + 1\n            else:\n                sort(p + 1, hi)\n                hi = p - 1\n    sort(0, len(a) - 1)\n    return count\n\nn = 400\nshuffled = list(range(n))\nrandom.Random(1).shuffle(shuffled)\nprint(\"already sorted:\", comparisons(list(range(n))))\nprint(\"shuffled:\", comparisons(shuffled))\nprint(\"n(n-1)/2 =\", n * (n - 1) // 2)\n\n# Expected output:\n# already sorted: 79800\n# shuffled: 3476\n# n(n-1)/2 = 79800"
+        }
+      ],
+      "exercise": {
+        "prompt": "Write k_smallest(values, k) that returns the k smallest values in ascending order using partition and quickselect on a copy, then sorting only those k. Compare it with sorted(values)[:k] on 200 random lists that include duplicates, k = 0 and k = len(values).",
+        "solution": "import random\n\ndef partition(a, lo, hi):\n    \"\"\"Move a[hi] to its final index p: a[lo:p] < pivot <= a[p+1:hi+1].\"\"\"\n    pivot = a[hi]\n    p = lo\n    for i in range(lo, hi):\n        if a[i] < pivot:\n            a[i], a[p] = a[p], a[i]\n            p += 1\n    a[p], a[hi] = a[hi], a[p]\n    return p\n\ndef k_smallest(values, k):\n    if not 0 <= k <= len(values):\n        raise ValueError(\"k out of range\")\n    if k == 0:\n        return []\n    a = list(values)\n    lo, hi = 0, len(a) - 1\n    while True:\n        p = partition(a, lo, hi)\n        if p == k - 1:\n            return sorted(a[:k])\n        if p < k - 1:\n            lo = p + 1\n        else:\n            hi = p - 1\n\nrng = random.Random(3)\nfor _ in range(200):\n    values = [rng.randint(0, 20) for _ in range(rng.randint(1, 30))]\n    k = rng.randint(0, len(values))\n    assert k_smallest(values, k) == sorted(values)[:k]\nprint(\"k_smallest matches sorted on 200 random lists\")",
+        "checks": [
+          "The input list is not modified.",
+          "k = 0 returns an empty list and k = len(values) returns everything sorted.",
+          "Duplicates of the pivot are handled because the left side holds only smaller values."
+        ]
+      },
+      "quiz": {
+        "question": "When does quicksort with the last element as pivot take quadratic time?",
+        "options": [
+          "On already sorted input",
+          "Only when the input has duplicates",
+          "Never; quicksort is always O(n log n)"
+        ],
+        "correct": 0,
+        "explanation": "Each partition then removes only the pivot, so the sizes are n, n-1, n-2 and so on. Random pivots make this unlikely."
+      },
+      "references": [
+        {
+          "title": "Primary reference: Quicksort",
+          "url": "https://algs4.cs.princeton.edu/23quicksort/",
+          "section": "Quicksort",
+          "reviewed": "2026-11-08",
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
+    },
+    {
       "id": "two-pointers",
-      "title": "14. Two pointers on ordered data",
+      "title": "15. Two pointers on ordered data",
       "stage": "intermediate",
       "takeaway": "Monotonic structure lets you discard candidates without checking every pair.",
       "sections": [
@@ -870,8 +946,74 @@
       ]
     },
     {
+      "id": "prefix-sums-bits",
+      "stage": "intermediate",
+      "title": "16. Prefix sums and bit manipulation",
+      "takeaway": "A prefix array answers any range sum with one subtraction; an integer's bits can store a small set and combine sets in one operation.",
+      "sections": [
+        {
+          "title": "Model",
+          "paragraphs": [
+            "A prefix array stores running totals with a leading zero: `prefix[i]` is the sum of the first `i` values. The sum of `values[i:j]` is then `prefix[j] - prefix[i]`, an O(1) answer after an O(n) build. The leading zero removes the special case for ranges that start at 0.",
+            "Prefix sums also count subarrays with a target sum when values can be negative, which breaks the sliding window from lesson 17. A range ending here sums to the target exactly when an earlier prefix equals `running - target`, so a Counter of earlier prefixes answers it in one pass. A difference array runs the idea backwards: record each range update at its two ends, then a prefix sum applies all of them."
+          ],
+          "example": "from collections import Counter\nfrom itertools import accumulate\n\nminutes = [30, 0, 45, 15, 60, 20, 10]\nprefix = [0, *accumulate(minutes)]\nprint(prefix)\nprint(prefix[5] - prefix[2], sum(minutes[2:5]))\n\ndef count_subarrays(values, target):\n    seen, running, count = Counter({0: 1}), 0, 0\n    for value in values:\n        running += value\n        count += seen[running - target]\n        seen[running] += 1\n    return count\n\nprint(count_subarrays([3, -1, 4, -3, 2, 1], 3))\n\ndef apply_ranges(n, updates):\n    diff = [0] * (n + 1)\n    for start, stop, amount in updates:  # add amount to positions start..stop-1\n        diff[start] += amount\n        diff[stop] -= amount\n    return list(accumulate(diff[:-1]))\n\nprint(apply_ranges(6, [(0, 3, 10), (2, 6, 5)]))\n\n# Expected output:\n# [0, 30, 30, 75, 90, 150, 170, 180]\n# 120 120\n# 6\n# [10, 10, 15, 5, 5, 5]"
+        },
+        {
+          "title": "Implementation",
+          "paragraphs": [
+            "An integer can represent a set drawn from a small fixed universe: bit `i` is 1 when item `i` is present. `|` is union, `&` intersection, `^` symmetric difference, and `1 << i` builds a one-item set. Test membership with `mask >> i & 1` and count members with `int.bit_count()`.",
+            "`n & (n - 1)` clears the lowest set bit, so it is 0 exactly for powers of two (and 0 itself). XOR cancels equal values, which finds the one value that appears an odd number of times. Counting from 0 to `2**k - 1` enumerates every subset of k items."
+          ],
+          "example": "DAYS = [\"Mon\", \"Tue\", \"Wed\", \"Thu\", \"Fri\", \"Sat\", \"Sun\"]\n\ndef mask(*days):\n    m = 0\n    for day in days:\n        m |= 1 << DAYS.index(day)\n    return m\n\nada, lin = mask(\"Mon\", \"Wed\", \"Fri\"), mask(\"Wed\", \"Thu\", \"Fri\", \"Sat\")\nboth = ada & lin\nprint(bin(both), [d for i, d in enumerate(DAYS) if both >> i & 1])\nprint((ada | lin).bit_count(), ada ^ lin == mask(\"Mon\", \"Thu\", \"Sat\"))\nprint([n for n in [1, 6, 8, 12, 64] if n & (n - 1) == 0])\n\nodd_one = 0\nfor n in [4, 9, 4, 7, 9]:\n    odd_one ^= n\nprint(odd_one)\n\nitems = [\"a\", \"b\", \"c\"]\nprint([[x for i, x in enumerate(items) if m >> i & 1] for m in range(1 << len(items))])\n\n# Expected output:\n# 0b10100 ['Wed', 'Fri']\n# 5 True\n# [1, 8, 64]\n# 7\n# [[], ['a'], ['b'], ['a', 'b'], ['c'], ['a', 'c'], ['b', 'c'], ['a', 'b', 'c']]"
+        },
+        {
+          "title": "Correctness and cost",
+          "paragraphs": [
+            "Most prefix-sum bugs are off by one. Keep the convention that `prefix` has `n + 1` entries and ranges are half-open, `[i, j)`, and test empty ranges and ranges touching either end. A prefix array is fixed once built; if values change between queries, a Fenwick or segment tree supports updates and range sums in O(log n) each.",
+            "Python integers have no fixed width, so shifts never overflow and `~x` is `-x - 1`; in C#, Java or SQL, shifting past the type's width does something else. Use a `set` unless the universe is small and fixed, or you need many fast set operations, as in dynamic programming over subsets with its O(2^n) states."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write answer(values, queries) that returns sum(values[i:j]) for each (i, j) query using one prefix array. Check it against direct sums for 500 random half-open ranges over 100 values that include negatives, including empty ranges, then print the answers for [30, 0, 45, 15] with queries (0, 4), (1, 3) and (2, 2).",
+        "solution": "import random\nfrom itertools import accumulate\n\ndef answer(values, queries):\n    prefix = [0, *accumulate(values)]\n    return [prefix[j] - prefix[i] for i, j in queries]\n\nrng = random.Random(5)\nvalues = [rng.randint(-50, 50) for _ in range(100)]\nqueries = [tuple(sorted((rng.randint(0, 100), rng.randint(0, 100)))) for _ in range(500)]\nassert answer(values, queries) == [sum(values[i:j]) for i, j in queries]\nprint(answer([30, 0, 45, 15], [(0, 4), (1, 3), (2, 2)]))",
+        "checks": [
+          "Output is [90, 45, 0].",
+          "The prefix array is built once, not per query.",
+          "Ranges that start at 0, end at len(values) or are empty all match the direct sums."
+        ]
+      },
+      "quiz": {
+        "question": "With prefix = [0, *accumulate(values)], which expression gives sum(values[i:j])?",
+        "options": [
+          "prefix[j] - prefix[i]",
+          "prefix[j] - prefix[i - 1]",
+          "prefix[j + 1] - prefix[i]"
+        ],
+        "correct": 0,
+        "explanation": "prefix[j] totals the first j values and prefix[i] the first i, so their difference is exactly values[i:j]."
+      },
+      "references": [
+        {
+          "title": "Primary reference: Bitwise operations on integer types",
+          "url": "https://docs.python.org/3/library/stdtypes.html#bitwise-operations-on-integer-types",
+          "section": "Bitwise operations on integer types",
+          "reviewed": "2026-11-08",
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        },
+        {
+          "title": "Primary reference: itertools.accumulate",
+          "url": "https://docs.python.org/3/library/itertools.html#itertools.accumulate",
+          "section": "itertools.accumulate",
+          "reviewed": "2026-11-08",
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
+    },
+    {
       "id": "sliding-window",
-      "title": "15. Sliding windows and maintained state",
+      "title": "17. Sliding windows and maintained state",
       "stage": "intermediate",
       "takeaway": "Maintain the property of a contiguous interval instead of rebuilding every interval.",
       "sections": [
@@ -931,8 +1073,73 @@
       ]
     },
     {
+      "id": "tries-strings",
+      "stage": "intermediate",
+      "title": "18. Tries and string search",
+      "takeaway": "A trie shares common prefixes so a prefix lookup costs the prefix's length; a rolling hash slides a fingerprint across text and verifies each candidate.",
+      "sections": [
+        {
+          "title": "Model",
+          "paragraphs": [
+            "A trie stores words as paths from the root, one character per edge, with a marker where a word ends. Words with a common prefix share its nodes. Inserting or finding a word of length L takes L steps however many words are stored, and the node at the end of a prefix leads to every word that starts with it, which is what autocomplete needs."
+          ],
+          "example": "class Trie:\n    def __init__(self):\n        self.root = {}\n\n    def insert(self, word):\n        node = self.root\n        for ch in word:\n            node = node.setdefault(ch, {})\n        node[\"$\"] = True  # end-of-word marker; the words here never contain \"$\"\n\n    def starts_with(self, prefix):\n        node = self.root\n        for ch in prefix:\n            if ch not in node:\n                return []\n            node = node[ch]\n        found, stack = [], [(node, prefix)]\n        while stack:\n            node, text = stack.pop()\n            for ch, child in node.items():\n                if ch == \"$\":\n                    found.append(text)\n                else:\n                    stack.append((child, text + ch))\n        return sorted(found)\n\nwords = Trie()\nfor w in [\"sort\", \"sorted\", \"sorting\", \"stack\", \"set\"]:\n    words.insert(w)\nprint(words.starts_with(\"sort\"))\nprint(words.starts_with(\"st\"), words.starts_with(\"x\"))\n\n# Expected output:\n# ['sort', 'sorted', 'sorting']\n# ['stack'] []"
+        },
+        {
+          "title": "Implementation",
+          "paragraphs": [
+            "Checking a pattern of length m at every position of a text of length n costs O(n·m) in the worst case. Rabin–Karp keeps a hash of the current window and updates it in O(1) as the window slides: remove the leftmost character's contribution, shift, add the new character. Only windows whose hash equals the pattern's are compared character by character, because different strings can share a hash.",
+            "KMP reaches O(n + m) in every case by precomputing how far the pattern can shift after a mismatch. In everyday Python, `pattern in text`, `str.find` and `re` are already optimized; implement these algorithms to understand them or for special cases such as searching many patterns at once."
+          ],
+          "example": "def find_all(text, pattern, base=256, mod=1_000_000_007):\n    n, m = len(text), len(pattern)\n    if m == 0 or m > n:\n        return []\n    high = pow(base, m - 1, mod)\n    target = window = 0\n    for i in range(m):\n        target = (target * base + ord(pattern[i])) % mod\n        window = (window * base + ord(text[i])) % mod\n    hits = []\n    for start in range(n - m + 1):\n        if window == target and text[start:start + m] == pattern:  # verify: hashes can collide\n            hits.append(start)\n        if start + m < n:\n            window = ((window - ord(text[start]) * high) * base + ord(text[start + m])) % mod\n    return hits\n\ntext = \"abracadabra\"\nprint(find_all(text, \"abra\"))\nprint([i for i in range(len(text)) if text.startswith(\"abra\", i)])\n\n# Expected output:\n# [0, 7]\n# [0, 7]"
+        },
+        {
+          "title": "Correctness and cost",
+          "paragraphs": [
+            "A trie trades memory for prefix speed: every node is a dictionary. For a fixed word list, a sorted list with `bisect` finds the block of words with a prefix in O(log n + k) using far less memory. Normalise text before inserting, for example with `casefold()`, or \"Sort\" and \"sort\" become different paths.",
+            "Rabin–Karp's expected time is O(n + m); many hash collisions push it towards O(n·m), which the final comparison keeps correct but slow. Decide whether matches may overlap: \"aa\" occurs at 0, 1 and 2 in \"aaaa\", but `str.count` reports 2 non-overlapping matches."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Build a PrefixCounter whose nodes store how many inserted words pass through them, so count(prefix) answers in O(len(prefix)) without listing words. Insert sort, sorted, sorting, stack and set, check the counts for \"\", \"s\", \"sort\", \"st\" and \"x\", and print the count for \"sor\".",
+        "solution": "class PrefixCounter:\n    def __init__(self):\n        self.root = {\"count\": 0, \"children\": {}}\n\n    def add(self, word):\n        node = self.root\n        node[\"count\"] += 1\n        for ch in word:\n            node = node[\"children\"].setdefault(ch, {\"count\": 0, \"children\": {}})\n            node[\"count\"] += 1\n\n    def count(self, prefix):\n        node = self.root\n        for ch in prefix:\n            node = node[\"children\"].get(ch)\n            if node is None:\n                return 0\n        return node[\"count\"]\n\ncounter = PrefixCounter()\nfor word in [\"sort\", \"sorted\", \"sorting\", \"stack\", \"set\"]:\n    counter.add(word)\nassert [counter.count(p) for p in [\"\", \"s\", \"sort\", \"st\", \"x\"]] == [5, 5, 3, 1, 0]\nprint(counter.count(\"sor\"))",
+        "checks": [
+          "The empty prefix counts every word.",
+          "A missing prefix returns 0 without raising.",
+          "count never walks below the prefix node."
+        ]
+      },
+      "quiz": {
+        "question": "What does finding a prefix of length L in a trie cost?",
+        "options": [
+          "O(L) steps, however many words are stored",
+          "O(n) for n stored words",
+          "O(log n) for n stored words"
+        ],
+        "correct": 0,
+        "explanation": "The lookup follows one edge per character of the prefix; the number of stored words does not change the path length."
+      },
+      "references": [
+        {
+          "title": "Primary reference: Tries",
+          "url": "https://algs4.cs.princeton.edu/52trie/",
+          "section": "Tries",
+          "reviewed": "2026-11-08",
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        },
+        {
+          "title": "Primary reference: Substring search",
+          "url": "https://algs4.cs.princeton.edu/53substring/",
+          "section": "Substring search",
+          "reviewed": "2026-11-08",
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
+    },
+    {
       "id": "topological",
-      "title": "16. Dependencies, DFS and topological ordering",
+      "title": "19. Dependencies, DFS and topological ordering",
       "stage": "intermediate",
       "takeaway": "A dependency order exists only when the directed graph has no cycle.",
       "sections": [
@@ -997,7 +1204,7 @@
     },
     {
       "id": "dijkstra",
-      "title": "17. Weighted shortest paths with Dijkstra",
+      "title": "20. Weighted shortest paths with Dijkstra",
       "stage": "advanced",
       "takeaway": "A shortest-hop path may not be the minimum-cost path.",
       "sections": [
@@ -1056,8 +1263,74 @@
       ]
     },
     {
+      "id": "union-find-mst",
+      "stage": "advanced",
+      "title": "21. Union-find and minimum spanning trees",
+      "takeaway": "Union-find answers whether two items are already connected in near-constant time, which lets Kruskal's algorithm build a minimum spanning tree from the cheapest edges.",
+      "sections": [
+        {
+          "title": "Model",
+          "paragraphs": [
+            "A disjoint-set (union-find) structure keeps items in groups. Each item points towards a parent, and the root names the group. `find` follows parents to the root; `union` links one root under the other. Two items are connected exactly when they have the same root.",
+            "Two rules keep the trees shallow: union by size attaches the smaller tree under the larger, and path halving makes nodes skip a level as `find` walks. Together the amortized cost per operation is almost constant. Groups can merge but never split."
+          ],
+          "example": "class DisjointSet:\n    def __init__(self, items):\n        self.parent = {x: x for x in items}\n        self.size = {x: 1 for x in items}\n\n    def find(self, x):\n        while self.parent[x] != x:\n            self.parent[x] = self.parent[self.parent[x]]  # path halving\n            x = self.parent[x]\n        return x\n\n    def union(self, a, b):\n        ra, rb = self.find(a), self.find(b)\n        if ra == rb:\n            return False\n        if self.size[ra] < self.size[rb]:\n            ra, rb = rb, ra\n        self.parent[rb] = ra\n        self.size[ra] += self.size[rb]\n        return True\n\ngroups = DisjointSet(\"ABCDE\")\nprint(groups.union(\"A\", \"B\"), groups.union(\"C\", \"D\"), groups.union(\"B\", \"A\"))\nprint(groups.find(\"A\") == groups.find(\"B\"), groups.find(\"A\") == groups.find(\"C\"))\ngroups.union(\"B\", \"D\")\nprint(len({groups.find(x) for x in \"ABCDE\"}))\n\n# Expected output:\n# True True False\n# True False\n# 2"
+        },
+        {
+          "title": "Implementation",
+          "paragraphs": [
+            "A minimum spanning tree connects every node of a weighted, undirected graph using the smallest possible total weight. Kruskal's algorithm sorts edges by weight and adds each one unless both ends are already connected; union-find makes that test cheap. A connected graph of n nodes ends with exactly n - 1 edges.",
+            "Prim's algorithm grows one tree from a start node, always adding the cheapest edge that leaves it, using a heap as Dijkstra does. Kruskal suits sparse edge lists; Prim suits dense graphs held as adjacency lists."
+          ],
+          "example": "class DisjointSet:\n    def __init__(self, items):\n        self.parent = {x: x for x in items}\n        self.size = {x: 1 for x in items}\n\n    def find(self, x):\n        while self.parent[x] != x:\n            self.parent[x] = self.parent[self.parent[x]]  # path halving\n            x = self.parent[x]\n        return x\n\n    def union(self, a, b):\n        ra, rb = self.find(a), self.find(b)\n        if ra == rb:\n            return False\n        if self.size[ra] < self.size[rb]:\n            ra, rb = rb, ra\n        self.parent[rb] = ra\n        self.size[ra] += self.size[rb]\n        return True\n\ndef kruskal(nodes, edges):\n    groups = DisjointSet(nodes)\n    chosen = [(w, a, b) for w, a, b in sorted(edges) if groups.union(a, b)]\n    if len(chosen) != len(nodes) - 1:\n        raise ValueError(\"graph is not connected\")\n    return chosen\n\nedges = [(4, \"A\", \"B\"), (1, \"A\", \"C\"), (3, \"B\", \"C\"), (2, \"B\", \"D\"),\n         (5, \"C\", \"D\"), (7, \"D\", \"E\"), (6, \"C\", \"E\")]\ntree = kruskal(\"ABCDE\", edges)\nprint(tree)\nprint(sum(w for w, _, _ in tree))\n\n# Expected output:\n# [(1, 'A', 'C'), (2, 'B', 'D'), (3, 'B', 'C'), (6, 'C', 'E')]\n# 12"
+        },
+        {
+          "title": "Correctness and cost",
+          "paragraphs": [
+            "Kruskal is correct by the cut property: for any split of the nodes into two sides, the cheapest edge crossing it belongs to some minimum spanning tree. Each edge Kruskal accepts is the cheapest one joining its two current groups. Sorting dominates, so the cost is O(E log E).",
+            "A minimum spanning tree minimises the total weight of the network, not the distance between any particular pair; for that, use Dijkstra from lesson 20. Equal weights can give several valid trees with the same total, so tests should compare totals and the edge count rather than one exact edge list. Negative weights are fine here, unlike for Dijkstra."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "A network is built by adding cables in the order given. Write first_redundant(nodes, cables) that returns the first cable whose two ends were already connected, or None. Use DisjointSet. Check it on [(\"A\", \"B\"), (\"B\", \"C\"), (\"C\", \"A\"), (\"C\", \"D\")] and on a tree with no redundant cable.",
+        "solution": "class DisjointSet:\n    def __init__(self, items):\n        self.parent = {x: x for x in items}\n        self.size = {x: 1 for x in items}\n\n    def find(self, x):\n        while self.parent[x] != x:\n            self.parent[x] = self.parent[self.parent[x]]  # path halving\n            x = self.parent[x]\n        return x\n\n    def union(self, a, b):\n        ra, rb = self.find(a), self.find(b)\n        if ra == rb:\n            return False\n        if self.size[ra] < self.size[rb]:\n            ra, rb = rb, ra\n        self.parent[rb] = ra\n        self.size[ra] += self.size[rb]\n        return True\n\ndef first_redundant(nodes, cables):\n    groups = DisjointSet(nodes)\n    for a, b in cables:\n        if not groups.union(a, b):\n            return (a, b)\n    return None\n\nprint(first_redundant(\"ABCD\", [(\"A\", \"B\"), (\"B\", \"C\"), (\"C\", \"A\"), (\"C\", \"D\")]))\nprint(first_redundant(\"ABCD\", [(\"A\", \"B\"), (\"B\", \"C\"), (\"C\", \"D\")]))",
+        "checks": [
+          "Output is ('C', 'A') then None.",
+          "Each cable costs one union call, so the whole check is near-linear.",
+          "A self-loop such as (\"A\", \"A\") is reported as redundant."
+        ]
+      },
+      "quiz": {
+        "question": "When does Kruskal's algorithm skip an edge?",
+        "options": [
+          "When both ends are already in the same group",
+          "When its weight is larger than the previous edge's",
+          "When one end has already been visited"
+        ],
+        "correct": 0,
+        "explanation": "Adding an edge inside one group would create a cycle. Edges arrive in weight order, so a heavier edge is normal."
+      },
+      "references": [
+        {
+          "title": "Primary reference: Union-find",
+          "url": "https://algs4.cs.princeton.edu/15uf/",
+          "section": "Union-find",
+          "reviewed": "2026-11-08",
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        },
+        {
+          "title": "Primary reference: Minimum spanning trees",
+          "url": "https://algs4.cs.princeton.edu/43mst/",
+          "section": "Minimum spanning trees",
+          "reviewed": "2026-11-08",
+          "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ]
+    },
+    {
       "id": "greedy",
-      "title": "18. Greedy algorithms and counterexamples",
+      "title": "22. Greedy algorithms and counterexamples",
       "stage": "advanced",
       "takeaway": "A locally attractive choice needs a proof, not intuition.",
       "sections": [
@@ -1119,7 +1392,7 @@
     },
     {
       "id": "backtracking",
-      "title": "19. Backtracking with reversible choices",
+      "title": "23. Backtracking with reversible choices",
       "stage": "advanced",
       "takeaway": "Explore a search tree while restoring state after each choice.",
       "sections": [
@@ -1173,7 +1446,7 @@
     },
     {
       "id": "knapsack",
-      "title": "20. Designing DP states: 0/1 knapsack",
+      "title": "24. Designing DP states: 0/1 knapsack",
       "stage": "advanced",
       "takeaway": "Iteration order can determine whether an item is used once or repeatedly.",
       "sections": [
@@ -1234,7 +1507,7 @@
     },
     {
       "id": "algorithm-review",
-      "title": "21. Testing and reviewing an algorithm",
+      "title": "25. Testing and reviewing an algorithm",
       "stage": "advanced",
       "takeaway": "A result, a correctness argument and a complexity claim need separate evidence.",
       "sections": [
