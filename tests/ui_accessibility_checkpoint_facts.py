@@ -22,17 +22,19 @@ NODE = shutil.which('node')
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
+    'wireframes-prototypes/2': 'Findability is a structural question for low fidelity, lesson 3',
+    'usability-heuristics/2': 'Users need a way to reverse an unwanted action, lesson 5',
     'user-goals/2': 'Do not invent user preferences and call them research; label hypotheses, lesson 1',
     'information-architecture/2': 'Preserve an ordered list of destinations alongside graphical navigation, lesson 2',
-    'hierarchy-layout/2': 'Do not make every button primary; document which action advances the task, lesson 3',
-    'type-content/2': 'A fixed-height card often fails when a title wraps or text spacing increases, lesson 7',
-    'images-diagrams/2': 'A literal inventory of shapes misses the concept, lesson 12',
-    'tables-charts/2': 'Values must stay discoverable without hover or colour; offer a table, lesson 13',
-    'design-tokens/2': 'colour-danger says why it exists; red-500 says only how it looks, lesson 15',
-    'accessible-data-entry/2': 'AA Target Size generally uses 24 by 24 CSS pixels; 44px is the demo preference, lesson 16',
-    'accessible-auth/2': 'Allow password managers and paste where appropriate, lesson 18',
-    'usability-testing/2': 'Do not convert a sample of three participants into a claim about all users, lesson 20',
-    'inclusive-release/2': 'Passing the demo checks is evidence about that demo at that time, lesson 21',
+    'hierarchy-layout/2': 'Do not make every button primary; document which action advances the task, lesson 4',
+    'type-content/2': 'A fixed-height card often fails when a title wraps or text spacing increases, lesson 10',
+    'images-diagrams/2': 'A literal inventory of shapes misses the concept, lesson 15',
+    'tables-charts/2': 'Values must stay discoverable without hover or colour; offer a table, lesson 16',
+    'design-tokens/2': 'colour-danger says why it exists; red-500 says only how it looks, lesson 18',
+    'accessible-data-entry/2': 'AA Target Size generally uses 24 by 24 CSS pixels; 44px is the demo preference, lesson 19',
+    'accessible-auth/2': 'Allow password managers and paste where appropriate, lesson 21',
+    'usability-testing/2': 'Do not convert a sample of three participants into a claim about all users, lesson 23',
+    'inclusive-release/2': 'Passing the demo checks is evidence about that demo at that time, lesson 24',
 }
 
 # Runs demo.js against a fake document. Each step: ["type", text] then ["submit"], ["preview"] or ["close"].
@@ -214,7 +216,14 @@ def advanced_focus_outline():
     return pick((ratio >= 3, ratio >= 4.5), {(True, False): '3:1 for non-text contrast, but not 4.5:1'})
 
 
+
+def colour_palettes():
+    ratio = contrast('1f5fbf', '121417')
+    return pick((round(ratio, 2), ratio >= 4.5), {(3.03, False): 'About 3.03:1; it fails for ordinary text'})
+
+
 FACTS = {
+    'colour-palettes/2': colour_palettes,
     'semantic-html/2': semantic_html, 'keyboard-focus/2': keyboard_focus, 'contrast-colour/2': contrast_colour,
     'responsive-reflow/2': responsive_reflow, 'forms-validation/2': forms_validation,
     'states-feedback/2': states_feedback, 'dialog-pattern/2': dialog_pattern, 'motion-media/2': motion_media,
