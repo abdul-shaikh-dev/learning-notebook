@@ -250,8 +250,131 @@
       ]
     },
     {
+      "id": "stories-and-priorities",
+      "title": "3. Write user stories and rank them",
+      "stage": "foundation",
+      "takeaway": "A story names who needs what and why; acceptance criteria make it testable; an explicit priority decides what is cut when time runs short.",
+      "sections": [
+        {
+          "title": "The mechanism",
+          "paragraphs": [
+            "A user story is a short placeholder for a conversation: As a <role>, I want <capability>, so that <benefit>. The role and benefit matter more than the template. They tell you whose decision improves (lesson 1) and let you judge alternative solutions. A story is not a specification until it has acceptance criteria, usually written as the examples from lesson 2.",
+            "Good stories are small enough to finish and demonstrate in a few days, valuable on their own, and testable. Split a large story by workflow step, by business rule or by input variation, not by technical layer: \"add the database table\" delivers nothing a user can check, while \"filter by one status\" does.",
+            "MoSCoW sorts the agreed work into Must have, Should have, Could have and Won't have this time. A Must is something without which the release is useless, unlawful or unsafe; if a workaround exists, it is probably a Should. Keeping Musts to a minority of the effort leaves contingency: when an estimate slips, Coulds are dropped first and the deadline holds."
+          ]
+        },
+        {
+          "title": "Worked case",
+          "paragraphs": [],
+          "example": "Story: As a support lead, I want to see the count and minutes for open tickets\nonly, so that I can decide whether to add staff to today's queue.\n\nAcceptance criteria:\n  Given tickets T1 open 0 min, T2 open 12 min, T3 closed 8 min\n  When I run the report with --status open\n  Then count is 2 and minutes is 12\n\n  Given a row with minutes \"abc\"\n  When I run the report with or without a filter\n  Then the command exits non-zero and names the row; no report is written\n\nMust:   --status filter; zero-minute tickets counted; invalid rows rejected\nShould: error message lists every invalid row, not just the first\nCould:  --status accepts several values\nWon't (this release): live ticket service; charts",
+          "language": "text"
+        }
+      ],
+      "exercise": {
+        "prompt": "A manager asks: \"Make the ticket report better for the weekly review.\" Write one user story with two acceptance criteria, then classify three candidate features with MoSCoW and justify the Must.",
+        "solution": "Story: As the weekly reviewer, I want minutes grouped by status, so that I can see where support time went. Criteria: given tickets open 12 and closed 8 minutes, the report shows open 12 and closed 8; given no tickets, it shows an empty grouping and exits 0. Must: grouping by status (the review is impossible without it). Should: a total row (can be added by hand meanwhile). Could: sort by minutes. Won't this time: emailing the report. The Must is justified because the stated decision cannot be made without it; the others have workarounds.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Names a role, a capability and a benefit tied to a decision.",
+          "Writes acceptance criteria as concrete, checkable examples.",
+          "Justifies the Must by the absence of a workaround."
+        ]
+      },
+      "quiz": {
+        "question": "A story cannot be finished in one iteration. Which split keeps each part valuable to a user?",
+        "options": [
+          "Database work first, then the user interface",
+          "One business rule or input variation per story, each demonstrable on its own",
+          "Design in one story, testing in another"
+        ],
+        "correct": 1,
+        "explanation": "Splitting by layer or activity produces parts nobody can use or check. Splitting by rule or variation keeps each slice demonstrable."
+      },
+      "references": [
+        {
+          "title": "Martin Fowler: User Story",
+          "url": "https://martinfowler.com/bliki/UserStory.html",
+          "section": "User Story",
+          "reviewed": "2026-11-08",
+          "scope": "Author explanation of stories as conversation placeholders. The ticket-report stories here are original."
+        },
+        {
+          "title": "Mountain Goat Software: User Stories",
+          "url": "https://www.mountaingoatsoftware.com/agile/user-stories",
+          "section": "Writing user stories; adding detail with conditions of satisfaction",
+          "reviewed": "2026-11-08",
+          "scope": "Practitioner guidance on story format and splitting, not a mandated method."
+        },
+        {
+          "title": "Agile Business Consortium: MoSCoW Prioritisation",
+          "url": "https://www.agilebusiness.org/dsdm-project-framework/moscow-prioritisation.html",
+          "section": "MoSCoW rules; levels of effort",
+          "reviewed": "2026-11-08",
+          "scope": "DSDM guidance used for its priority definitions. This course does not require the DSDM framework."
+        }
+      ]
+    },
+    {
+      "id": "non-functional-requirements",
+      "title": "4. Make quality requirements measurable",
+      "stage": "foundation",
+      "takeaway": "\"Fast\", \"secure\" and \"reliable\" become requirements only when they name a measure, a condition and a threshold that a test can check.",
+      "sections": [
+        {
+          "title": "The mechanism",
+          "paragraphs": [
+            "Functional requirements say what the system does: count tickets, filter by status. Non-functional (quality) requirements say how well: how fast, how reliably, how securely, how easy to change or operate. ISO/IEC 25010 lists such characteristics, including performance efficiency, reliability, security, maintainability and compatibility. Use the list as a prompt for questions, not as a form to fill in.",
+            "A quality requirement is useful only when it is measurable. Write it as a scenario: the stimulus (what happens), the environment (under what conditions), the response and a measure with a threshold. \"The report is fast\" cannot fail a test; \"a 100,000-row file is summarised in under 2 seconds on the reference laptop\" can.",
+            "Quality requirements often conflict and cost more than features. Strict validation slows a report; keeping old reports on failure needs extra disk; detailed logs help diagnosis but may leak ticket text. Ask the stakeholder which matters more, record the decision, and check each requirement with a test, measurement or review step, as lesson 2 does for behaviour."
+          ]
+        },
+        {
+          "title": "Worked case",
+          "paragraphs": [],
+          "example": "Vague                      Measurable scenario\n\"fast\"                     100,000 valid rows -> summary in < 2 s on the reference laptop\n                           (median of 5 runs, measured in CI with the generated fixture)\n\"reliable\"                 replacement fails mid-write -> previous report file unchanged\n                           (test injects the failure and compares bytes)\n\"secure\"                   any error -> stderr contains row numbers, never ticket text\n                           (test with a ticket containing a marker string)\n\"easy to use\"              invalid input -> message names every bad row and its column\n\"compatible\"               default run -> same JSON keys and exit codes as version 1.x\nConflict recorded: full-file validation before output (reliability) beats streaming\n(speed) until a supported input no longer fits in memory.",
+          "language": "text"
+        }
+      ],
+      "exercise": {
+        "prompt": "Rewrite these as measurable requirements for the ticket report and say how each would be checked: \"must handle big files\", \"must not lose data\", \"errors must be clear\".",
+        "solution": "Big files: a generated 500,000-row CSV of 40 MB is summarised within 5 seconds and 200 MB of memory on the reference laptop; checked by a timed, memory-profiled run in CI on that fixture. Not lose data: if writing the output fails at any point, the previous output file is byte-for-byte unchanged and no partial file remains; checked by a test that injects a failure before replacement. Clear errors: for invalid input the command exits with code 2 and stderr names each invalid row number and column; checked by a subprocess test. Each states a condition, a measure and a threshold.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Gives each requirement a measure and a threshold.",
+          "States the conditions (input size, environment, failure point).",
+          "Names a concrete test or measurement for each."
+        ]
+      },
+      "quiz": {
+        "question": "Which statement is a testable quality requirement?",
+        "options": [
+          "The report should be fast",
+          "A 100,000-row file is summarised in under 2 seconds on the reference laptop",
+          "The report uses an efficient algorithm"
+        ],
+        "correct": 1,
+        "explanation": "It names the input, the environment, the measure and the threshold, so a run can pass or fail."
+      },
+      "references": [
+        {
+          "title": "ISO 25000: ISO/IEC 25010 product quality model",
+          "url": "https://iso25000.com/index.php/en/iso-25000-standards/iso-25010",
+          "section": "Product quality model characteristics",
+          "reviewed": "2026-11-08",
+          "scope": "Summary of the quality characteristics used as a checklist. This course does not claim ISO conformance."
+        },
+        {
+          "title": "arc42: Quality Requirements",
+          "url": "https://docs.arc42.org/section-10/",
+          "section": "Quality tree; quality scenarios",
+          "reviewed": "2026-11-08",
+          "scope": "Documentation template guidance on quality scenarios; the ticket-report scenarios are original."
+        }
+      ]
+    },
+    {
       "id": "scope-decisions",
-      "title": "3. Separate required work from ideas",
+      "title": "5. Separate required work from ideas",
       "stage": "foundation",
       "takeaway": "A short scope decision prevents a small request becoming a rewrite.",
       "sections": [
@@ -300,7 +423,7 @@
     },
     {
       "id": "reproduce-environment",
-      "title": "4. Establish a repeatable baseline",
+      "title": "6. Establish a repeatable baseline",
       "stage": "foundation",
       "takeaway": "Record the command and fixture that reproduce the old behavior.",
       "sections": [
@@ -349,7 +472,7 @@
     },
     {
       "id": "trace-code",
-      "title": "5. Read one execution path",
+      "title": "7. Read one execution path",
       "stage": "foundation",
       "takeaway": "Follow input to output before trying to understand every file.",
       "sections": [
@@ -398,7 +521,7 @@
     },
     {
       "id": "characterization",
-      "title": "6. Describe existing behavior without approving every bug",
+      "title": "8. Describe existing behavior without approving every bug",
       "stage": "foundation",
       "takeaway": "A characterization test records behavior that a change might accidentally break.",
       "sections": [
@@ -447,7 +570,7 @@
     },
     {
       "id": "first-project",
-      "title": "7. Write a small change brief",
+      "title": "9. Write a small change brief",
       "stage": "foundation",
       "takeaway": "A useful brief links the request, an example and the code that must change.",
       "sections": [
@@ -496,7 +619,7 @@
     },
     {
       "id": "regression-first",
-      "title": "8. Make the failure observable in a test",
+      "title": "10. Make the failure observable in a test",
       "stage": "intermediate",
       "takeaway": "A regression test should fail for the defect and pass for the repair.",
       "sections": [
@@ -545,7 +668,7 @@
     },
     {
       "id": "validation-boundary",
-      "title": "9. Validate a complete input before producing a report",
+      "title": "11. Validate a complete input before producing a report",
       "stage": "intermediate",
       "takeaway": "A filter must not hide invalid records from validation.",
       "sections": [
@@ -594,7 +717,7 @@
     },
     {
       "id": "change-location",
-      "title": "10. Change the function that owns the decision",
+      "title": "12. Change the function that owns the decision",
       "stage": "intermediate",
       "takeaway": "Keep parsing, selection and formatting responsibilities separate.",
       "sections": [
@@ -643,7 +766,7 @@
     },
     {
       "id": "boundary-cases",
-      "title": "11. Choose tests that divide the input space",
+      "title": "13. Choose tests that divide the input space",
       "stage": "intermediate",
       "takeaway": "Test meaningful boundaries rather than many copies of a happy path.",
       "sections": [
@@ -692,7 +815,7 @@
     },
     {
       "id": "cli-compatibility",
-      "title": "12. Preserve the command contract",
+      "title": "14. Preserve the command contract",
       "stage": "intermediate",
       "takeaway": "A command's arguments, streams and exit codes are part of its behavior.",
       "sections": [
@@ -741,7 +864,7 @@
     },
     {
       "id": "focused-review",
-      "title": "13. Review the contract as well as the diff",
+      "title": "15. Review the contract as well as the diff",
       "stage": "intermediate",
       "takeaway": "A small diff can still change behavior outside the requested case.",
       "sections": [
@@ -790,7 +913,7 @@
     },
     {
       "id": "repair-project",
-      "title": "14. Deliver the filter and count repair",
+      "title": "16. Deliver the filter and count repair",
       "stage": "intermediate",
       "takeaway": "Show both the repaired case and the behavior that stayed compatible.",
       "sections": [
@@ -839,7 +962,7 @@
     },
     {
       "id": "safe-file-update",
-      "title": "15. Preserve the previous report on failure",
+      "title": "17. Preserve the previous report on failure",
       "stage": "advanced",
       "takeaway": "Build the result before replacing the destination file.",
       "sections": [
@@ -888,7 +1011,7 @@
     },
     {
       "id": "change-history",
-      "title": "16. Use history to narrow a regression",
+      "title": "18. Use history to narrow a regression",
       "stage": "advanced",
       "takeaway": "History identifies a candidate change; a reproduction explains the defect.",
       "sections": [
@@ -937,7 +1060,7 @@
     },
     {
       "id": "compatibility-change",
-      "title": "17. Decide what a future change breaks",
+      "title": "19. Decide what a future change breaks",
       "stage": "advanced",
       "takeaway": "Compatibility is assessed against callers and documented promises.",
       "sections": [
@@ -986,7 +1109,7 @@
     },
     {
       "id": "dependency-change",
-      "title": "18. Assess a dependency update",
+      "title": "20. Assess a dependency update",
       "stage": "advanced",
       "takeaway": "An update needs checks of the behavior your tool depends on.",
       "sections": [
@@ -1036,8 +1159,75 @@
       ]
     },
     {
+      "id": "refactoring-and-debt",
+      "title": "21. Refactor safely and manage technical debt",
+      "stage": "advanced",
+      "takeaway": "Refactoring changes structure without changing behaviour, in small steps under tests; technical debt is worth paying down where it slows the changes you are actually making.",
+      "sections": [
+        {
+          "title": "The mechanism",
+          "paragraphs": [
+            "A refactoring is a change to internal structure that leaves observable behaviour unchanged: rename, extract a function, replace a condition with a named rule. Do it in small steps, run the tests after each, and commit refactorings separately from behaviour changes so a reviewer (lesson 15) can check each kind on its own terms and history (lesson 18) can isolate a regression.",
+            "Before refactoring unfamiliar code, pin its current behaviour with characterization tests (lesson 8), including the bugs you have not yet agreed to fix. A preparatory refactoring reshapes the code so the next change becomes easy, then the behaviour change follows in its own commit: \"make the change easy, then make the easy change\".",
+            "Technical debt is the extra cost future changes pay because of past shortcuts or outdated design. Some debt is deliberate and prudent (ship now, clean up after the release); some is accidental. Track it as concrete items with the cost they cause (\"every status rule change touches four functions\") and pay it down where you are already working, rather than in large unscheduled rewrites."
+          ]
+        },
+        {
+          "title": "Worked case",
+          "paragraphs": [
+            "The legacy summary repeats the status test and hides the rule. The refactored version names the rule once. The loop checks both versions agree on the existing cases, including the zero-minute ticket the legacy code skips: that bug is preserved here and fixed later in a separate, tested commit."
+          ],
+          "example": "def legacy_summary(rows):\n    total, count = 0, 0\n    for r in rows:\n        if r[\"status\"] == \"open\" or r[\"status\"] == \"pending\":\n            if r[\"minutes\"]:\n                total = total + int(r[\"minutes\"])\n                count = count + 1\n    return {\"count\": count, \"minutes\": total}\n\nACTIVE = {\"open\", \"pending\"}\n\ndef is_active(row):\n    return row[\"status\"] in ACTIVE\n\ndef summary(rows):                      # same behaviour, clearer structure\n    active = [r for r in rows if is_active(r) and r[\"minutes\"]]\n    return {\"count\": len(active), \"minutes\": sum(int(r[\"minutes\"]) for r in active)}\n\ncases = [\n    [],\n    [{\"status\": \"open\", \"minutes\": \"12\"}, {\"status\": \"closed\", \"minutes\": \"8\"}],\n    [{\"status\": \"pending\", \"minutes\": \"0\"}, {\"status\": \"open\", \"minutes\": \"5\"}],\n]\nfor rows in cases:                      # characterization check before any behaviour change\n    assert summary(rows) == legacy_summary(rows), rows\n    print(summary(rows))\n\n# Expected output:\n# {'count': 0, 'minutes': 0}\n# {'count': 1, 'minutes': 12}\n# {'count': 2, 'minutes': 5}",
+          "language": "python"
+        }
+      ],
+      "exercise": {
+        "prompt": "You must add an \"archived\" status rule to code where the status check is copied into four functions. Describe the sequence of commits you would make, what each one proves, and how you would record any debt you leave behind.",
+        "solution": "Commit 1: characterization tests for the four functions on current inputs, including known odd behaviour. Commit 2: refactoring only, extracting one is_active rule used by all four; tests unchanged and passing proves behaviour is preserved. Commit 3: the behaviour change, adding archived to the rule with new tests for it; the diff is now one line plus tests. Record leftover debt as an issue with its cost, for example that the CSV parsing is still duplicated and slows every new column, and a trigger for paying it.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Pins behaviour with tests before restructuring.",
+          "Separates refactoring commits from behaviour changes.",
+          "Records remaining debt with its concrete cost."
+        ]
+      },
+      "quiz": {
+        "question": "Which change is a refactoring?",
+        "options": [
+          "Counting zero-minute tickets that were previously skipped",
+          "Extracting the repeated status check into one named function with identical results",
+          "Adding a --status option"
+        ],
+        "correct": 1,
+        "explanation": "Only the extraction leaves observable behaviour unchanged. The others are behaviour changes and need their own tests."
+      },
+      "references": [
+        {
+          "title": "Martin Fowler: Definition of Refactoring",
+          "url": "https://martinfowler.com/bliki/DefinitionOfRefactoring.html",
+          "section": "Definition Of Refactoring",
+          "reviewed": "2026-11-08",
+          "scope": "Author definition. The ticket-report code here is original."
+        },
+        {
+          "title": "Martin Fowler: An example of preparatory refactoring",
+          "url": "https://martinfowler.com/articles/preparatory-refactoring-example.html",
+          "section": "Preparatory refactoring",
+          "reviewed": "2026-11-08",
+          "scope": "Worked example in JavaScript; the technique applies unchanged to this Python lab."
+        },
+        {
+          "title": "Martin Fowler: Technical Debt Quadrant",
+          "url": "https://martinfowler.com/bliki/TechnicalDebtQuadrant.html",
+          "section": "Technical Debt Quadrant",
+          "reviewed": "2026-11-08",
+          "scope": "Author classification of debt, used as vocabulary rather than a measurement method."
+        }
+      ]
+    },
+    {
       "id": "operational-check",
-      "title": "19. Define a useful success signal",
+      "title": "22. Define a useful success signal",
       "stage": "advanced",
       "takeaway": "Observe whether the change answers the request and preserves valid reports.",
       "sections": [
@@ -1086,7 +1276,7 @@
     },
     {
       "id": "rollback-plan",
-      "title": "20. Plan recovery before replacing a working version",
+      "title": "23. Plan recovery before replacing a working version",
       "stage": "advanced",
       "takeaway": "Rollback must account for data as well as code.",
       "sections": [
@@ -1135,7 +1325,7 @@
     },
     {
       "id": "maintenance-capstone",
-      "title": "21. Review and hand off a complete change",
+      "title": "24. Review and hand off a complete change",
       "stage": "advanced",
       "takeaway": "A handoff explains the behavior, evidence and remaining limits.",
       "sections": [
