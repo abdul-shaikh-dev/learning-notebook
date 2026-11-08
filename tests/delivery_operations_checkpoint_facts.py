@@ -34,13 +34,14 @@ import distinct_artifact_drill  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
+    'docker-compose/2': 'down keeps named volumes; down -v deletes them, lesson 9',
     'environments/2': 'Container 0.0.0.0 listening and a 127.0.0.1 host binding are different boundaries, lesson 2',
     'reproducible-builds/2': 'Tags can change; resolve and record the digest, lesson 4',
-    'secrets/2': 'ARG, ENV and copied files can leave values in image metadata or layers, lesson 9',
-    'web-topology/2': 'Browser build-time configuration is public; a frontend API URL is acceptable, lesson 10',
-    'deployment-strategies/2': 'Changing which local port a client calls models a traffic switch, lesson 15',
-    'incident-response/2': 'Compare symptoms with recent changes without assuming the newest deploy is the cause, lesson 23',
-    'release-review/2': 'Separate local tests from Docker, staging and production checks, lesson 24',
+    'secrets/2': 'ARG, ENV and copied files can leave values in image metadata or layers, lesson 10',
+    'web-topology/2': 'Browser build-time configuration is public; a frontend API URL is acceptable, lesson 11',
+    'deployment-strategies/2': 'Changing which local port a client calls models a traffic switch, lesson 16',
+    'incident-response/2': 'Compare symptoms with recent changes without assuming the newest deploy is the cause, lesson 26',
+    'release-review/2': 'Separate local tests from Docker, staging and production checks, lesson 27',
 }
 
 DOCKERFILE = (PRACTICE / 'Dockerfile').read_text(encoding='utf-8')
@@ -203,6 +204,11 @@ def structured_logs():
         log = io.StringIO()
         with redirect_stdout(log):
             outcome(lambda: get(base, '/admin?debug=1'))
+            # The server thread may log just after the response is sent; wait for the line.
+            for _ in range(100):
+                if log.getvalue().strip():
+                    break
+                threading.Event().wait(0.05)
         return json.loads(log.getvalue().strip().splitlines()[-1])['route']
 
 
@@ -301,7 +307,22 @@ def advanced_local_load():
         return pick((result['requests'], result['errors']), {(5, 0): '0', (5, 5): '5'})
 
 
+
+def feature_flags():
+    import hashlib
+    bucket = lambda u: int(hashlib.sha256(f'new-export:{u}'.encode()).hexdigest()[:8], 16) % 100
+    users = [f'learner-{i}' for i in range(2000)]
+    kept = {u for u in users if bucket(u) < 10} <= {u for u in users if bucket(u) < 25}
+    return pick(kept, {True: 'They all keep it'})
+
+
+def versioning_and_delivery_metrics():
+    deploys = [False, True, False, False]
+    return f'{sum(deploys) / len(deploys):.0%}'
+
+
 FACTS = {
+    'feature-flags/2': feature_flags, 'versioning-and-delivery-metrics/2': versioning_and_delivery_metrics,
     'release-contract/2': release_contract, 'source-release/2': source_release, 'test-gates/2': test_gates,
     'containers/2': containers, 'docker-build/2': docker_build, 'runtime-configuration/2': runtime_configuration,
     'schema-evolution/2': schema_evolution, 'ci-pipeline/2': ci_pipeline, 'artifact-promotion/2': artifact_promotion,
