@@ -95938,8 +95938,106 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "views-functions-triggers",
+        "title": "15. Package queries in views, functions and triggers",
+        "stage": "intermediate",
+        "takeaway": "Views and inline functions name a query; triggers run inside every matching statement, so keep them set-based and small.",
+        "sections": [
+          {
+            "title": "Model",
+            "paragraphs": [
+              "A view is a stored `SELECT` with a name. It does not store rows (unless it is an indexed view); each query that uses it is expanded and optimised together with the view's text. Use views to give a stable, documented shape to a join or aggregation, and to grant read access to that shape instead of the base tables.",
+              "An inline table-valued function is a parameterised view: `RETURNS TABLE AS RETURN SELECT ...`. The optimiser expands it like a view, so a filter on its result can still use indexes. Multi-statement table-valued functions fill a table variable step by step and are optimised as a black box with fixed row estimates, so prefer the inline form.",
+              "A scalar function returns one value per call. Before SQL Server 2019 every scalar user-defined function ran row by row and blocked parallel plans. From SQL Server 2019 (compatibility level 150) many scalar functions are inlined automatically, but only when they meet the documented requirements. Check `is_inlineable` in `sys.sql_modules` instead of assuming.",
+              "A DML trigger runs inside the same transaction as the `INSERT`, `UPDATE` or `DELETE` that fired it. It fires once per statement, not once per row. The pseudo-tables `inserted` and `deleted` hold every affected row: new values and old values. An error in the trigger rolls back the user's statement too."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Example",
+            "paragraphs": [
+              "The script creates a demonstration table, view and inline function inside a transaction, queries them, and rolls back. DDL is transactional in SQL Server, so no object remains: the final `OBJECT_ID` is `NULL`. `CREATE VIEW` must be the only statement in its batch, which is why it runs through `EXEC`.",
+              "The second script adds an `AFTER UPDATE` trigger that records changed amounts. One `UPDATE` touches two orders, the trigger fires once, and the join between `deleted` and `inserted` writes both audit rows. A trigger written as `SELECT @OrderId = OrderId FROM inserted` would silently record only one of them."
+            ],
+            "example": "BEGIN TRAN;\nCREATE TABLE dbo.LNDemoOrders(OrderId int PRIMARY KEY, CustomerId int NOT NULL, Amount decimal(12,2) NOT NULL);\nINSERT dbo.LNDemoOrders(OrderId,CustomerId,Amount) SELECT OrderId,CustomerId,Amount FROM #LNOrders;\nEXEC(N'CREATE VIEW dbo.LNCustomerTotals AS\n SELECT CustomerId, SUM(Amount) AS Total, COUNT_BIG(*) AS Orders FROM dbo.LNDemoOrders GROUP BY CustomerId;');\nEXEC(N'CREATE FUNCTION dbo.LNOrdersAtLeast(@Min decimal(12,2)) RETURNS TABLE AS RETURN\n SELECT OrderId, CustomerId, Amount FROM dbo.LNDemoOrders WHERE Amount >= @Min;');\nSELECT CustomerId, Total, Orders FROM dbo.LNCustomerTotals ORDER BY CustomerId;\n--1/150.00/2, 2/200.00/2, 3/40.00/1\nSELECT OrderId FROM dbo.LNOrdersAtLeast(80) ORDER BY OrderId;\n--101, 103, 104\nROLLBACK;\nSELECT OBJECT_ID(N'dbo.LNCustomerTotals') AS ViewAfterRollback;\n--NULL\n\nBEGIN TRAN;\nCREATE TABLE dbo.LNDemoOrders(OrderId int PRIMARY KEY, CustomerId int NOT NULL, Amount decimal(12,2) NOT NULL);\nCREATE TABLE dbo.LNAmountAudit(OrderId int NOT NULL, OldAmount decimal(12,2) NOT NULL, NewAmount decimal(12,2) NOT NULL);\nINSERT dbo.LNDemoOrders(OrderId,CustomerId,Amount) SELECT OrderId,CustomerId,Amount FROM #LNOrders;\nEXEC(N'CREATE TRIGGER dbo.LNDemoOrders_AuditAmount ON dbo.LNDemoOrders AFTER UPDATE AS\nBEGIN\n SET NOCOUNT ON;\n INSERT dbo.LNAmountAudit(OrderId,OldAmount,NewAmount)\n SELECT d.OrderId,d.Amount,i.Amount\n FROM deleted d JOIN inserted i ON i.OrderId=d.OrderId\n WHERE i.Amount<>d.Amount;\nEND');\nUPDATE dbo.LNDemoOrders SET Amount=Amount+5 WHERE CustomerId=1;\nSELECT OrderId, OldAmount, NewAmount FROM dbo.LNAmountAudit ORDER BY OrderId;\n--101/100.00/105.00, 102/50.00/55.00\nROLLBACK;"
+          },
+          {
+            "title": "Tradeoffs",
+            "paragraphs": [
+              "Views nested inside views hide how much work a query does. The optimiser sees the expanded text, but a reader does not, and a filter applied outside an aggregating view may not reduce the work as much as expected. Keep views shallow and name the grain they return.",
+              "Triggers are invisible at the call site. They suit rules that must hold no matter which application writes the table, such as an audit trail. They are a poor home for business workflow, calls to other systems or long work, because they lengthen every writing transaction. Many teams prefer constraints, procedures or temporal tables when those can express the rule.",
+              "`SCHEMABINDING` on a view or function stops the referenced tables from being changed underneath it, and it is required for an indexed view. It also means a migration must drop and recreate the bound object before altering those columns."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "Inside a transaction you roll back, create an inline table-valued function that returns each order with its paid amount for one customer, using #LNOrders and #LNPayments copied into permanent demonstration tables. Explain why the function is inline rather than multi-statement.",
+          "starter": "BEGIN TRAN;\n-- Copy #LNOrders and #LNPayments into dbo demonstration tables.\n-- EXEC(N'CREATE FUNCTION dbo.LNCustomerOrderPaid(@CustomerId int) RETURNS TABLE AS RETURN ...');\n-- SELECT ... FROM dbo.LNCustomerOrderPaid(1);\nROLLBACK;",
+          "solution": "BEGIN TRAN;\nSELECT OrderId, CustomerId, Amount INTO dbo.LNDemoOrders FROM #LNOrders;\nSELECT PaymentId, OrderId, Amount INTO dbo.LNDemoPayments FROM #LNPayments;\nEXEC(N'CREATE FUNCTION dbo.LNCustomerOrderPaid(@CustomerId int) RETURNS TABLE AS RETURN\n SELECT o.OrderId, o.Amount, COALESCE(SUM(p.Amount), 0) AS Paid\n FROM dbo.LNDemoOrders o LEFT JOIN dbo.LNDemoPayments p ON p.OrderId = o.OrderId\n WHERE o.CustomerId = @CustomerId\n GROUP BY o.OrderId, o.Amount;');\nSELECT OrderId, Amount, Paid FROM dbo.LNCustomerOrderPaid(2) ORDER BY OrderId;\n--103/80.00/70.00, 104/120.00/0.00\nROLLBACK;",
+          "checks": [
+            "Customer 2 returns order 103 paid 70.00 and order 104 paid 0.00.",
+            "The LEFT JOIN and COALESCE keep the unpaid order.",
+            "Inline: the optimiser expands the single SELECT, so its estimates and indexes apply as if the query were written in place.",
+            "After ROLLBACK the demonstration tables and function no longer exist."
+          ]
+        },
+        "quiz": {
+          "question": "An UPDATE changes 50 rows in a table with an AFTER UPDATE trigger. How often does the trigger run?",
+          "options": [
+            "50 times, once per row",
+            "Once, with 50 rows in inserted and deleted",
+            "Only if the UPDATE has an explicit transaction"
+          ],
+          "correct": 1,
+          "explanation": "DML triggers fire once per statement. The inserted and deleted pseudo-tables hold every affected row, so trigger logic must be set-based."
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: CREATE VIEW",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-view-transact-sql?view=sql-server-ver17",
+            "section": "Remarks and SCHEMABINDING",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          },
+          {
+            "title": "Microsoft Learn: CREATE FUNCTION",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-function-transact-sql?view=sql-server-ver17",
+            "section": "Inline table-valued functions",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          },
+          {
+            "title": "Microsoft Learn: Scalar UDF inlining",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/user-defined-functions/scalar-udf-inlining?view=sql-server-ver17",
+            "section": "Requirements for inlineable scalar UDFs",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          },
+          {
+            "title": "Microsoft Learn: Use the inserted and deleted tables",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/triggers/use-the-inserted-and-deleted-tables?view=sql-server-ver17",
+            "section": "Using the inserted and deleted tables in DML triggers",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An AFTER UPDATE trigger records how many rows it saw. UPDATE ... WHERE CustomerId = 1 changes orders 101 and 102. What does the log hold?",
+            "options": [
+              "One entry that saw 2 rows",
+              "Two entries that each saw 1 row",
+              "No entries: triggers skip multi-row statements"
+            ],
+            "correct": 0,
+            "explanation": "A DML trigger fires once per statement. Both changed rows appear together in inserted and deleted, so the one log entry counts 2."
+          }
+        ]
+      },
+      {
         "id": "window-frames-and-gaps",
-        "title": "15. Specify window frames and compare consecutive observations",
+        "title": "16. Specify window frames and compare consecutive observations",
         "stage": "intermediate",
         "takeaway": "A moving window is defined by rows or values; it is not automatically a time interval.",
         "sections": [
@@ -96010,8 +96108,105 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "reshape-recursive-text-dates",
+        "title": "17. Reshape rows, walk hierarchies and handle text and dates",
+        "stage": "intermediate",
+        "takeaway": "Pivot with a known column list, recurse with a bounded anchor, and compare dates with half-open ranges.",
+        "sections": [
+          {
+            "title": "Model",
+            "paragraphs": [
+              "`PIVOT` turns row values into columns, but the column list is fixed in the query text. Conditional aggregation (`SUM(CASE WHEN ... THEN Amount END)`) gives the same result, works in every SQL dialect and is easier to extend with several measures. A column list that must change with the data needs dynamic SQL, with the identifiers quoted by `QUOTENAME`.",
+              "`UNPIVOT` turns columns back into rows. It drops `NULL` values and requires the unpivoted columns to have exactly the same type. `CROSS APPLY (VALUES ...)` does the same job, keeps NULLs, and lets you cast each column explicitly.",
+              "A recursive common table expression has an anchor member, `UNION ALL`, and a recursive member that refers to the CTE itself. Each step joins the previous step's rows to find the next level, until a step returns no rows. The default limit is 100 levels; `OPTION (MAXRECURSION n)` changes it, and `0` removes it, which turns a cycle in the data into an endless query.",
+              "Text: `STRING_AGG(... ) WITHIN GROUP (ORDER BY ...)` joins values in a stated order, `CONCAT_WS` skips NULLs, and `TRIM` removes surrounding spaces. `STRING_SPLIT` returns no reliable order unless you pass its third argument (SQL Server 2022 and later) and sort by `ordinal`. Dates: `DATEDIFF` counts boundaries crossed, not elapsed time, so 31 December to 1 January is one year. `EOMONTH` finds a month end, and date ranges are safest as `>= start AND < next start`."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Example",
+            "paragraphs": [
+              "The pivot and the conditional aggregation return the same three rows. The calendar CTE generates five days and the `LEFT JOIN` shows that 4 and 5 January have no orders, which a `GROUP BY` over orders alone could never report.",
+              "The hierarchy uses a table variable of four people. Each recursion step adds one level of depth and extends the path. `STRING_AGG` lists each customer's orders in order, and `STRING_SPLIT` with ordinals keeps the empty middle value in position."
+            ],
+            "example": "SELECT CustomerId, [2026-01-01] AS Jan01, [2026-01-02] AS Jan02, [2026-01-03] AS Jan03\nFROM (SELECT CustomerId, OrderDate, Amount FROM #LNOrders) AS s\nPIVOT (SUM(Amount) FOR OrderDate IN ([2026-01-01],[2026-01-02],[2026-01-03])) AS p\nORDER BY CustomerId;\nSELECT CustomerId,\n SUM(CASE WHEN OrderDate='20260101' THEN Amount END) AS Jan01,\n SUM(CASE WHEN OrderDate='20260102' THEN Amount END) AS Jan02,\n SUM(CASE WHEN OrderDate='20260103' THEN Amount END) AS Jan03\nFROM #LNOrders GROUP BY CustomerId ORDER BY CustomerId;\n--Both: 1/100.00/50.00/NULL, 2/NULL/80.00/120.00, 3/NULL/NULL/40.00\n\nWITH Days AS (\n SELECT CAST('20260101' AS date) AS Day\n UNION ALL\n SELECT DATEADD(day, 1, Day) FROM Days WHERE Day < '20260105'\n)\nSELECT d.Day, COUNT(o.OrderId) AS Orders\nFROM Days d LEFT JOIN #LNOrders o ON o.OrderDate = d.Day\nGROUP BY d.Day ORDER BY d.Day;\n--2026-01-01/1, 01-02/2, 01-03/2, 01-04/0, 01-05/0\n\nDECLARE @Staff TABLE(StaffId int PRIMARY KEY, ManagerId int NULL, Name nvarchar(20) NOT NULL);\nINSERT @Staff VALUES (1,NULL,N'Ada'),(2,1,N'Ben'),(3,1,N'Chen'),(4,3,N'Dia');\nWITH Chain AS (\n SELECT StaffId, Name, 0 AS Depth, CAST(Name AS nvarchar(200)) AS Path FROM @Staff WHERE ManagerId IS NULL\n UNION ALL\n SELECT s.StaffId, s.Name, c.Depth+1, CAST(c.Path + N' > ' + s.Name AS nvarchar(200))\n FROM @Staff s JOIN Chain c ON s.ManagerId = c.StaffId\n)\nSELECT StaffId, Depth, Path FROM Chain ORDER BY Path OPTION (MAXRECURSION 10);\n--1/0/Ada, 2/1/Ada > Ben, 3/1/Ada > Chen, 4/2/Ada > Chen > Dia\n\nSELECT CustomerId, STRING_AGG(CAST(OrderId AS nvarchar(10)), N',') WITHIN GROUP (ORDER BY OrderId) AS Orders\nFROM #LNOrders GROUP BY CustomerId ORDER BY CustomerId;\n--1/101,102  2/103,104  3/105\nSELECT DATEDIFF(year, '20251231', '20260101') AS YearBoundaries,\n EOMONTH('20260215') AS MonthEnd,\n CONCAT_WS(N' | ', N'Ada', NULL, N'ada@example.test') AS Joined;\n--1/2026-02-28/Ada | ada@example.test\nSELECT value FROM STRING_SPLIT(N'101,,104', N',', 1) ORDER BY ordinal;\n--101, (empty), 104"
+          },
+          {
+            "title": "Tradeoffs",
+            "paragraphs": [
+              "`UNPIVOT` failed on this fixture until the name was cast: `CustomerName` is `nvarchar(50)` and `Email` is `nvarchar(100)`, and the engine raised error 8167. After the cast it returned three rows for customers 1 and 2, silently dropping Ben's `NULL` email. The `CROSS APPLY (VALUES ...)` form returned all four.",
+              "Recursive CTEs are clear for hierarchies and short series, but they work row by row per level. For a long calendar, a permanent calendar table or `GENERATE_SERIES` (SQL Server 2022 and later) is cheaper and easier to index. Always bound recursion so bad data cannot loop forever.",
+              "Functions on a column in `WHERE`, such as `YEAR(OrderDate) = 2026`, usually stop the optimiser from seeking an index on that column. The equivalent half-open range on the bare column keeps the predicate sargable and handles `datetime2` values with time parts correctly."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "Produce one row per customer from #LNCustomers with a comma-separated list of their order identifiers in order. Customers without orders must appear with an empty list, not be dropped.",
+          "starter": "SELECT c.CustomerId, ... AS Orders\nFROM #LNCustomers c\n...\nORDER BY c.CustomerId;",
+          "solution": "SELECT c.CustomerId,\n COALESCE(STRING_AGG(CAST(o.OrderId AS nvarchar(10)), N',') WITHIN GROUP (ORDER BY o.OrderId), N'') AS Orders\nFROM #LNCustomers c LEFT JOIN #LNOrders o ON o.CustomerId = c.CustomerId\nGROUP BY c.CustomerId ORDER BY c.CustomerId;\n--1/101,102  2/103,104  3/105  4/(empty)",
+          "checks": [
+            "Four rows: customer 4 (Dia) appears with an empty string.",
+            "WITHIN GROUP (ORDER BY o.OrderId) fixes the list order; without it the order is not guaranteed.",
+            "STRING_AGG ignores NULLs, so the unmatched LEFT JOIN row produces NULL, which COALESCE turns into an empty string."
+          ]
+        },
+        "quiz": {
+          "question": "Which query counts January 2026 orders and can still seek an index on OrderDate?",
+          "options": [
+            "WHERE YEAR(OrderDate) = 2026 AND MONTH(OrderDate) = 1",
+            "WHERE OrderDate >= '20260101' AND OrderDate < '20260201'",
+            "WHERE CONVERT(char(6), OrderDate, 112) = '202601'"
+          ],
+          "correct": 1,
+          "explanation": "A half-open range on the bare column is sargable and also includes every time of day when the column has a time part."
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: FROM - Using PIVOT and UNPIVOT",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/from-using-pivot-and-unpivot?view=sql-server-ver17",
+            "section": "UNPIVOT example and remarks",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          },
+          {
+            "title": "Microsoft Learn: WITH common_table_expression",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql?view=sql-server-ver17",
+            "section": "Guidelines for defining and using recursive common table expressions",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          },
+          {
+            "title": "Microsoft Learn: STRING_SPLIT",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/string-split-transact-sql?view=sql-server-ver17",
+            "section": "enable_ordinal and remarks",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          },
+          {
+            "title": "Microsoft Learn: DATEDIFF",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/datediff-transact-sql?view=sql-server-ver17",
+            "section": "Return value and remarks",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does SELECT DATEDIFF(month, '20260131', '20260201') return?",
+            "options": [
+              "1",
+              "0",
+              "NULL"
+            ],
+            "correct": 0,
+            "explanation": "DATEDIFF counts month boundaries crossed. One day apart, the dates sit in different months, so the result is 1."
+          }
+        ]
+      },
+      {
         "id": "index-selectivity-statistics",
-        "title": "16. Design an index for a query and inspect estimates",
+        "title": "18. Design an index for a query and inspect estimates",
         "stage": "intermediate",
         "takeaway": "An index proposal needs a workload, a predicate contract and measured evidence.",
         "sections": [
@@ -96092,7 +96287,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "procedure-transaction-contracts",
-        "title": "17. Give procedures explicit transaction and error contracts",
+        "title": "19. Give procedures explicit transaction and error contracts",
         "stage": "intermediate",
         "takeaway": "A reusable procedure must specify inputs, outputs, transaction ownership and failures.",
         "sections": [
@@ -96164,7 +96359,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "incremental-load-contracts",
-        "title": "18. Make an incremental load replayable",
+        "title": "20. Make an incremental load replayable",
         "stage": "intermediate",
         "takeaway": "Idempotency means a repeated logical input does not create a second business effect.",
         "sections": [
@@ -96241,8 +96436,105 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "json-merge-temporal",
+        "title": "21. Exchange JSON, synchronise with MERGE and keep row history",
+        "stage": "intermediate",
+        "takeaway": "Shred JSON into typed columns at the boundary, give MERGE a unique source, and let temporal tables record history.",
+        "sections": [
+          {
+            "title": "Model",
+            "paragraphs": [
+              "SQL Server stores JSON as text (`nvarchar`; SQL Server 2025 also adds a native `json` type). `ISJSON` validates it. `OPENJSON ... WITH (...)` shreds an array into typed rows, which is the place to convert and validate an incoming document. `JSON_VALUE` extracts a scalar and `JSON_QUERY` extracts an object or array. `FOR JSON PATH` turns a result set into JSON.",
+              "JSON paths are lax by default: a missing property or a wrong kind of value returns `NULL`. Prefix the path with `strict` to raise an error instead. Lax mode is convenient for optional fields and dangerous for required ones.",
+              "`MERGE` compares a source with a target and can insert, update and delete in one statement. `OUTPUT $action` reports what happened to each row. Each target row may be matched by at most one source row, so deduplicate the source first. Under concurrent callers, take `HOLDLOCK` (serializable) on the target or two sessions can both decide to insert the same key.",
+              "A system-versioned temporal table has two `datetime2` period columns maintained by the engine and a history table. Every update or delete copies the old version into history, and `FOR SYSTEM_TIME AS OF` reads the table as it was at a UTC instant. The engine records history without application code."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Example",
+            "paragraphs": [
+              "`OPENJSON` returns order 106 with its note and order 101 with a `NULL` note because the property is absent. Lax `JSON_VALUE` returns `NULL` for an object; `JSON_QUERY` returns it. A `strict` path to a missing property raised error 13608 on SQL Server 2025.",
+              "The `MERGE` updates 102, inserts 106 and deletes 103, because 103 is in the target but not the source. 101 matches with the same amount and the `AND t.Amount <> s.Amount` condition skips it. The temporal script reads the price before and after an update and finds two versions, then turns versioning off so it can drop its tables."
+            ],
+            "example": "DECLARE @doc nvarchar(max) = N'[{\"orderId\":101,\"amount\":\"100.00\"},{\"orderId\":106,\"amount\":\"75.50\",\"note\":\"new\"}]';\nSELECT j.OrderId, j.Amount, j.Note\nFROM OPENJSON(@doc) WITH (OrderId int '$.orderId', Amount decimal(12,2) '$.amount', Note nvarchar(50) '$.note') AS j;\n--101/100.00/NULL, 106/75.50/new\nSELECT JSON_VALUE(N'{\"order\":{\"id\":101}}', '$.order') AS ObjectAsScalar,\n JSON_QUERY(N'{\"order\":{\"id\":101}}', '$.order') AS ObjectAsJson;\n--NULL/{\"id\":101}\nSELECT OrderId, Amount FROM #LNOrders WHERE OrderId IN (101,102) ORDER BY OrderId FOR JSON PATH;\n--[{\"OrderId\":101,\"Amount\":100.00},{\"OrderId\":102,\"Amount\":50.00}]\n\nSELECT OrderId, Amount INTO #Target FROM #LNOrders WHERE OrderId IN (101,102,103);\nDECLARE @Changes TABLE(Action nvarchar(10), OrderId int);\nMERGE #Target WITH (HOLDLOCK) AS t\nUSING (VALUES (101,100.00),(102,55.00),(106,75.50)) AS s(OrderId, Amount)\n ON t.OrderId = s.OrderId\nWHEN MATCHED AND t.Amount <> s.Amount THEN UPDATE SET Amount = s.Amount\nWHEN NOT MATCHED BY TARGET THEN INSERT(OrderId, Amount) VALUES(s.OrderId, s.Amount)\nWHEN NOT MATCHED BY SOURCE THEN DELETE\nOUTPUT $action, COALESCE(inserted.OrderId, deleted.OrderId) INTO @Changes;\nSELECT Action, OrderId FROM @Changes ORDER BY OrderId;\n--UPDATE/102, DELETE/103, INSERT/106\nDROP TABLE #Target;\n\nCREATE TABLE dbo.LNPrice(\n ProductId int NOT NULL PRIMARY KEY, Price decimal(12,2) NOT NULL,\n ValidFrom datetime2 GENERATED ALWAYS AS ROW START NOT NULL,\n ValidTo datetime2 GENERATED ALWAYS AS ROW END NOT NULL,\n PERIOD FOR SYSTEM_TIME (ValidFrom, ValidTo))\nWITH (SYSTEM_VERSIONING = ON (HISTORY_TABLE = dbo.LNPriceHistory));\nINSERT dbo.LNPrice(ProductId, Price) VALUES (1, 10.00);\nWAITFOR DELAY '00:00:00.050';\nDECLARE @Before datetime2 = SYSUTCDATETIME();\nWAITFOR DELAY '00:00:00.050';\nUPDATE dbo.LNPrice SET Price = 12.00 WHERE ProductId = 1;\nSELECT Price FROM dbo.LNPrice WHERE ProductId = 1;                                  --12.00\nSELECT Price FROM dbo.LNPrice FOR SYSTEM_TIME AS OF @Before WHERE ProductId = 1;    --10.00\nSELECT COUNT(*) FROM dbo.LNPrice FOR SYSTEM_TIME ALL WHERE ProductId = 1;           --2\nALTER TABLE dbo.LNPrice SET (SYSTEM_VERSIONING = OFF);\nDROP TABLE dbo.LNPrice, dbo.LNPriceHistory;"
+          },
+          {
+            "title": "Tradeoffs",
+            "paragraphs": [
+              "Keep JSON at the edges. Shred it into typed, constrained columns when the fields are known and queried; store the raw document as well when you need to replay or audit exactly what arrived. Filtering on `JSON_VALUE` in every query cannot use an ordinary index unless you add a computed column and index that.",
+              "`MERGE` is compact but has a long history of documented restrictions and fixed defects, and it fails with error 8672 when two source rows match one target row. Separate `UPDATE` and `INSERT ... WHERE NOT EXISTS` statements inside one transaction are a common, easier-to-reason-about alternative. Either way, the source must be unique by key.",
+              "Temporal periods use the transaction's start time in UTC. When the same transaction inserts and then updates a row, the history row has a zero-length period: in a rolled-back test it was in the history table, yet `FOR SYSTEM_TIME ALL` returned only the current row. History grows without limit unless you set a retention policy or archive it, and schema changes must be applied to both tables."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "An incoming JSON array holds payments. Shred it with OPENJSON into typed columns, reject rows whose amount is not a valid decimal, and report which payment identifiers already exist in #LNPayments.",
+          "starter": "DECLARE @doc nvarchar(max) = N'[{\"paymentId\":201,\"orderId\":101,\"amount\":\"60.00\"},{\"paymentId\":207,\"orderId\":104,\"amount\":\"120.00\"},{\"paymentId\":208,\"orderId\":104,\"amount\":\"abc\"}]';\nSELECT ...\nFROM OPENJSON(@doc) WITH (...) AS j;",
+          "solution": "DECLARE @doc nvarchar(max) = N'[{\"paymentId\":201,\"orderId\":101,\"amount\":\"60.00\"},{\"paymentId\":207,\"orderId\":104,\"amount\":\"120.00\"},{\"paymentId\":208,\"orderId\":104,\"amount\":\"abc\"}]';\nSELECT j.PaymentId, j.OrderId, TRY_CONVERT(decimal(12,2), j.AmountText) AS Amount,\n CASE WHEN TRY_CONVERT(decimal(12,2), j.AmountText) IS NULL THEN N'invalid amount'\n      WHEN EXISTS (SELECT 1 FROM #LNPayments p WHERE p.PaymentId = j.PaymentId) THEN N'already loaded'\n      ELSE N'new' END AS Disposition\nFROM OPENJSON(@doc) WITH (PaymentId int '$.paymentId', OrderId int '$.orderId', AmountText nvarchar(30) '$.amount') AS j\nORDER BY j.PaymentId;\n--201/101/60.00/already loaded, 207/104/120.00/new, 208/104/NULL/invalid amount",
+          "checks": [
+            "Payment 201 is reported as already loaded, 207 as new and 208 as an invalid amount.",
+            "The amount is read as text and converted with TRY_CONVERT, so one bad value does not fail the whole batch.",
+            "Typing amount directly as decimal in the WITH clause would raise a conversion error for the whole statement instead."
+          ]
+        },
+        "quiz": {
+          "question": "A temporal table query uses FOR SYSTEM_TIME AS OF @t. What does @t mean?",
+          "options": [
+            "A local server time",
+            "A UTC instant, compared with the engine-maintained period columns",
+            "The last time the row was read"
+          ],
+          "correct": 1,
+          "explanation": "System-versioned period columns are recorded in UTC, so AS OF compares a UTC datetime2 value with them."
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: OPENJSON",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql?view=sql-server-ver17",
+            "section": "OPENJSON with an explicit schema",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          },
+          {
+            "title": "Microsoft Learn: JSON path expressions",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/json/json-path-expressions-sql-server?view=sql-server-ver17",
+            "section": "Lax mode and strict mode",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          },
+          {
+            "title": "Microsoft Learn: MERGE",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql?view=sql-server-ver17",
+            "section": "Remarks, concurrency and the source uniqueness rule",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          },
+          {
+            "title": "Microsoft Learn: Temporal tables",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/tables/temporal-tables?view=sql-server-ver17",
+            "section": "How does temporal work?",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A MERGE source holds two rows for OrderId 102, and both match one target row in WHEN MATCHED THEN UPDATE. What happens?",
+            "options": [
+              "The statement fails with error 8672",
+              "The last source row wins",
+              "Both updates apply in source order"
+            ],
+            "correct": 0,
+            "explanation": "MERGE allows each target row to be updated or deleted by at most one source row. Deduplicate the source by key first."
+          }
+        ]
+      },
+      {
         "id": "plan-regressions-query-store",
-        "title": "19. Investigate regressions with plans and Query Store",
+        "title": "22. Investigate regressions with plans and Query Store",
         "stage": "advanced",
         "takeaway": "Compare like-for-like workload evidence before deciding that a plan change caused a slowdown.",
         "sections": [
@@ -96342,7 +96634,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "concurrency-lost-updates",
-        "title": "20. Detect stale writes and reason about isolation",
+        "title": "23. Detect stale writes and reason about isolation",
         "stage": "advanced",
         "takeaway": "Reading a value and later writing a replacement creates a concurrency contract.",
         "sections": [
@@ -96775,7 +97067,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "deadlocks-retries",
-        "title": "21. Diagnose deadlocks and bound retries",
+        "title": "24. Diagnose deadlocks and bound retries",
         "stage": "advanced",
         "takeaway": "A deadlock is a wait cycle; recovery needs both database and application reasoning.",
         "sections": [
@@ -96959,7 +97251,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "least-privilege-dynamic-sql",
-        "title": "22. Separate query values, identifiers and permissions",
+        "title": "25. Separate query values, identifiers and permissions",
         "stage": "advanced",
         "takeaway": "Parameterization prevents one class of injection; authorization limits what a caller may do.",
         "sections": [
@@ -97031,7 +97323,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "migrations-and-release",
-        "title": "23. Evolve a schema without breaking the running application",
+        "title": "26. Evolve a schema without breaking the running application",
         "stage": "advanced",
         "takeaway": "A migration is a data and compatibility change with evidence and a recovery plan.",
         "sections": [
@@ -97192,8 +97484,107 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "backup-restore-recovery",
+        "title": "27. Plan backup, restore and recovery for a stated loss tolerance",
+        "stage": "advanced",
+        "takeaway": "A backup plan is defined by the restore it allows: test the restore sequence against the data loss and downtime you can accept.",
+        "sections": [
+          {
+            "title": "Model",
+            "paragraphs": [
+              "Start from two numbers agreed with the system's owner: the recovery point objective (how much recent work may be lost) and the recovery time objective (how long a restore may take). The backup schedule and recovery model follow from them, not the other way round.",
+              "The recovery model decides what the transaction log keeps. Under `SIMPLE`, log space is reused after checkpoints, there are no log backups, and you can only restore to the moment of a full or differential backup. Under `FULL`, every change stays in the log until a log backup copies it, which allows a restore to any point covered by an unbroken chain of log backups. `BULK_LOGGED` minimises logging for some bulk operations, at the cost of point-in-time restore inside those log backups.",
+              "A full backup copies the whole database. A differential copies the pages changed since the last full backup. A log backup copies log records since the previous log backup, forming a chain. A typical restore is: the last full backup `WITH NORECOVERY`, the latest differential `WITH NORECOVERY`, every later log backup in order, and finally `WITH RECOVERY`. `STOPAT` ends the log replay at a chosen time.",
+              "Before restoring over a damaged database, take a tail-log backup (`BACKUP LOG ... WITH NORECOVERY`) so the changes since the last log backup are not lost. A `FULL` database whose log is never backed up grows its log file without limit."
+            ],
+            "example": ""
+          },
+          {
+            "title": "Example",
+            "paragraphs": [
+              "Run this only on a disposable instance or database you own. It creates `LearningNotebookLab_Restore`, takes a full backup with two payments, adds a third, and backs up the log. Restoring the full backup and the log returns three payments; restoring only the full backup returns two.",
+              "`WITH REPLACE` overwrote the database without a tail-log backup. That is what the demonstration wants, but on a real system it would discard every change made since the last log backup. The files are written to the instance's default backup folder; delete them when you finish."
+            ],
+            "example": "-- Disposable training instance only.\nUSE master;\nCREATE DATABASE LearningNotebookLab_Restore;\nALTER DATABASE LearningNotebookLab_Restore SET RECOVERY FULL;\nGO\nUSE LearningNotebookLab_Restore;\nCREATE TABLE dbo.Payment(PaymentId int PRIMARY KEY, Amount decimal(12,2) NOT NULL);\nINSERT dbo.Payment VALUES (201, 60.00), (202, 40.00);\nBACKUP DATABASE LearningNotebookLab_Restore TO DISK = N'LNRestore_full.bak' WITH INIT, CHECKSUM;\nINSERT dbo.Payment VALUES (203, 50.00);\nBACKUP LOG LearningNotebookLab_Restore TO DISK = N'LNRestore_log.trn' WITH INIT, CHECKSUM;\nGO\nUSE master;\nRESTORE DATABASE LearningNotebookLab_Restore FROM DISK = N'LNRestore_full.bak' WITH REPLACE, NORECOVERY;\nRESTORE LOG LearningNotebookLab_Restore FROM DISK = N'LNRestore_log.trn' WITH RECOVERY;\nSELECT COUNT(*) FROM LearningNotebookLab_Restore.dbo.Payment;   --3\nRESTORE DATABASE LearningNotebookLab_Restore FROM DISK = N'LNRestore_full.bak' WITH REPLACE, RECOVERY;\nSELECT COUNT(*) FROM LearningNotebookLab_Restore.dbo.Payment;   --2\nGO\nUSE master;\nDROP DATABASE LearningNotebookLab_Restore;"
+          },
+          {
+            "title": "Tradeoffs",
+            "paragraphs": [
+              "`WITH CHECKSUM` and `RESTORE VERIFYONLY` check that a backup file is readable and internally consistent; they do not prove that a restore produces a usable database. Only a regular, timed test restore (followed by `DBCC CHECKDB` and a business check such as a row count) shows that the plan meets its objectives.",
+              "A backup kept on the same disk or server as the database is lost with it. Copy backups to separate storage, and keep at least one copy that the database's own credentials cannot delete. Encrypt backups that leave the server, and keep the certificate needed to restore them somewhere else.",
+              "An ad hoc full backup taken during the day resets the base for later differential backups. Use `COPY_ONLY` for one-off copies so the scheduled chain stays intact. SQL Server Express has no SQL Server Agent, so schedule its backups with the operating system's task scheduler and monitor that they succeed.",
+              "Availability groups, log shipping and managed cloud databases reduce downtime, but they also replicate mistakes such as a mistaken `DELETE`. Keep point-in-time backups alongside them."
+            ],
+            "example": ""
+          }
+        ],
+        "exercise": {
+          "prompt": "An orders database must lose at most 15 minutes of work and be back within two hours. Propose a recovery model and backup schedule, then write the restore sequence after a failure at 14:20 on a day with a full backup at 01:00, a differential at 12:00 and log backups every 15 minutes.",
+          "solution": "-- Recovery model FULL; full daily 01:00, differential every 6 hours, log every 15 minutes, copied off the server.\n-- 1. If the log file is reachable, take a tail-log backup first:\nBACKUP LOG Orders TO DISK = N'Orders_tail.trn' WITH NORECOVERY, CHECKSUM;\n-- 2. Restore the chain:\nRESTORE DATABASE Orders FROM DISK = N'Orders_full_0100.bak' WITH NORECOVERY;\nRESTORE DATABASE Orders FROM DISK = N'Orders_diff_1200.bak' WITH NORECOVERY;\nRESTORE LOG Orders FROM DISK = N'Orders_log_1215.trn' WITH NORECOVERY;\nRESTORE LOG Orders FROM DISK = N'Orders_log_1230.trn' WITH NORECOVERY;\n-- ... each log backup in order through 14:15 ...\nRESTORE LOG Orders FROM DISK = N'Orders_log_1415.trn' WITH NORECOVERY;\nRESTORE LOG Orders FROM DISK = N'Orders_tail.trn' WITH RECOVERY;\n-- 3. DBCC CHECKDB and a business reconciliation before reopening.",
+          "checks": [
+            "FULL recovery, because a 15-minute recovery point needs log backups at least every 15 minutes.",
+            "The differential at 12:00 replaces the need to replay logs from 01:00, shortening the restore.",
+            "Every log backup after 12:00 is applied in order; a missing one breaks the chain.",
+            "Without a tail-log backup, work after 14:15 is lost; the plan still meets the 15-minute objective.",
+            "The two-hour objective is evidence only after a timed test restore of a realistic size."
+          ]
+        },
+        "quiz": {
+          "question": "A database uses the SIMPLE recovery model with a nightly full backup. A mistaken DELETE runs at 15:00. What is the latest point you can restore to?",
+          "options": [
+            "14:59, using the transaction log",
+            "The last nightly full backup",
+            "Any point, if the log file is still on disk"
+          ],
+          "correct": 1,
+          "explanation": "SIMPLE recovery does not keep a log backup chain, so restores can only reach the moment of a full or differential backup."
+        },
+        "references": [
+          {
+            "title": "Microsoft Learn: Recovery models",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/recovery-models-sql-server?view=sql-server-ver17",
+            "section": "Recovery model overview",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          },
+          {
+            "title": "Microsoft Learn: Back up and restore of SQL Server databases",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/back-up-and-restore-of-sql-server-databases?view=sql-server-ver17",
+            "section": "Backup strategy and testing your backups",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          },
+          {
+            "title": "Microsoft Learn: Tail-log backups",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/tail-log-backups-sql-server?view=sql-server-ver17",
+            "section": "Scenarios that require a tail-log backup",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          },
+          {
+            "title": "Microsoft Learn: Copy-only backups",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/copy-only-backups-sql-server?view=sql-server-ver17",
+            "section": "Types of copy-only backups",
+            "reviewed": "2026-11-08",
+            "scope": "SQL Server 2019+ lessons using SQL Server 2025 documentation. The practice guide lists executed labs and isolation-setting limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Which recovery model lets you restore to 14:37 using log backups?",
+            "options": [
+              "SIMPLE",
+              "FULL",
+              "Either, if a differential backup exists"
+            ],
+            "correct": 1,
+            "explanation": "FULL recovery keeps log records until a log backup copies them, so an unbroken log chain can be replayed with STOPAT to a chosen time."
+          }
+        ]
+      },
+      {
         "id": "advanced-import-capstone",
-        "title": "24. Deliver an auditable, replayable import and reconciliation",
+        "title": "28. Deliver an auditable, replayable import and reconciliation",
         "stage": "advanced",
         "takeaway": "A production-shaped pipeline accounts for every input and proves its replay behavior.",
         "sections": [
@@ -97840,15 +98231,19 @@ const LEARNING_PATHS = [
         "reconciliation-capstone": "foundation",
         "schema-contracts": "intermediate",
         "sets-and-apply": "intermediate",
+        "views-functions-triggers": "intermediate",
         "window-frames-and-gaps": "intermediate",
+        "reshape-recursive-text-dates": "intermediate",
         "index-selectivity-statistics": "intermediate",
         "procedure-transaction-contracts": "intermediate",
         "incremental-load-contracts": "intermediate",
+        "json-merge-temporal": "intermediate",
         "plan-regressions-query-store": "advanced",
         "concurrency-lost-updates": "advanced",
         "deadlocks-retries": "advanced",
         "least-privilege-dynamic-sql": "advanced",
         "migrations-and-release": "advanced",
+        "backup-restore-recovery": "advanced",
         "advanced-import-capstone": "advanced"
       },
       "bundle": {

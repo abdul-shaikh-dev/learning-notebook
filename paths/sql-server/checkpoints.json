@@ -42,8 +42,14 @@
     "sets-and-apply": [
       {"question": "How many rows does SELECT CustomerId FROM #LNOrders UNION SELECT CustomerId FROM #LNCustomers return?", "options": ["4", "9", "3"], "correct": 0, "explanation": "UNION removes duplicates across the combined rows, leaving customers 1 to 4. UNION ALL would keep all nine rows."}
     ],
+    "views-functions-triggers": [
+      {"question": "An AFTER UPDATE trigger records how many rows it saw. UPDATE ... WHERE CustomerId = 1 changes orders 101 and 102. What does the log hold?", "options": ["One entry that saw 2 rows", "Two entries that each saw 1 row", "No entries: triggers skip multi-row statements"], "correct": 0, "explanation": "A DML trigger fires once per statement. Both changed rows appear together in inserted and deleted, so the one log entry counts 2."}
+    ],
     "window-frames-and-gaps": [
       {"question": "What does LAG(Amount) OVER (ORDER BY OrderDate, OrderId) return for order 101, the first row?", "options": ["NULL", "0", "100"], "correct": 0, "explanation": "There is no earlier row, so LAG returns NULL unless a default is supplied. Using 0 instead would claim a previous amount of zero."}
+    ],
+    "reshape-recursive-text-dates": [
+      {"question": "What does SELECT DATEDIFF(month, '20260131', '20260201') return?", "options": ["1", "0", "NULL"], "correct": 0, "explanation": "DATEDIFF counts month boundaries crossed. One day apart, the dates sit in different months, so the result is 1."}
     ],
     "index-selectivity-statistics": [
       {"question": "Which predicate on OrderDate lets an index on that column be searched for 2026?", "options": ["OrderDate >= '20260101' AND OrderDate < '20270101'", "YEAR(OrderDate) = 2026", "CONVERT(char(4), OrderDate, 112) = '2026'"], "correct": 0, "explanation": "A half-open range on the bare column is sargable. Wrapping the column in a function makes the engine compute it for every row before comparing."}
@@ -53,6 +59,9 @@
     ],
     "incremental-load-contracts": [
       {"question": "A NOT EXISTS loader has loaded E1 = 10 and E2 = 20. The batch is replayed with E1 changed to 11. What is the target total?", "options": ["30: the changed E1 is skipped without any warning", "31: E1 is updated to 11", "41: E1 is added again"], "correct": 0, "explanation": "The loader only checks whether E1 exists, so a conflicting value looks like a replay. Detecting it needs a comparison of the stored and incoming payload."}
+    ],
+    "json-merge-temporal": [
+      {"question": "A MERGE source holds two rows for OrderId 102, and both match one target row in WHEN MATCHED THEN UPDATE. What happens?", "options": ["The statement fails with error 8672", "The last source row wins", "Both updates apply in source order"], "correct": 0, "explanation": "MERGE allows each target row to be updated or deleted by at most one source row. Deduplicate the source by key first."}
     ],
     "plan-regressions-query-store": [
       {"question": "A Query Store plan query returns no rows. What does that establish?", "options": ["Nothing on its own: capture settings, a new database or no matching workload could explain it", "That no queries ran in that database", "That Query Store is disabled"], "correct": 0, "explanation": "An empty result has several causes. Check the database's Query Store options and the capture mode before concluding anything about the workload."}
@@ -68,6 +77,9 @@
     ],
     "migrations-and-release": [
       {"question": "A work table's Note column still has one NULL. What does ALTER TABLE ... ALTER COLUMN Note nvarchar(20) NOT NULL do?", "options": ["Fails with error 515, leaving the column nullable", "Succeeds and fills the NULL with an empty string", "Succeeds and leaves the NULL in place"], "correct": 0, "explanation": "The engine checks existing rows before tightening nullability. That is why the migration backfills and verifies that no NULL remains first."}
+    ],
+    "backup-restore-recovery": [
+      {"question": "Which recovery model lets you restore to 14:37 using log backups?", "options": ["SIMPLE", "FULL", "Either, if a differential backup exists"], "correct": 1, "explanation": "FULL recovery keeps log records until a log backup copies them, so an unbroken log chain can be replayed with STOPAT to a chosen time."}
     ],
     "advanced-import-capstone": [
       {"question": "On the advanced fixture's first pass, how many raw rows does the classifier mark as duplicate?", "options": ["1", "2", "0"], "correct": 0, "explanation": "E001 appears twice with identical bytes. The first copy is accepted and the second is a duplicate; an orphan, an invalid amount and two more accepted rows make up the six."}
