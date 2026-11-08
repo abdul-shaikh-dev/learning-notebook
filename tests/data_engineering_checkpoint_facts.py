@@ -24,11 +24,13 @@ import revision_lab  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
+    'sql-transformation-layer/2': 'Staging models clean each source once, lesson 15',
+    'dbt-tests-and-incremental-models/2': 'A strict newer-than filter excludes late corrections, lesson 16',
     'etl-and-elt/2': 'Extraction, transformation and loading, lesson 2',
     'dag-and-orchestration/2': 'Reconcile before publish, lesson 14',
-    'privacy-and-data-governance/2': 'Deletion across data stores, lesson 19',
-    'sql-server-bridge/2': 'UTC and unexecuted integration, lesson 20',
-    'data-engineering-capstone/2': 'Remaining distributed boundaries, lesson 22',
+    'privacy-and-data-governance/2': 'Deletion across data stores, lesson 21',
+    'sql-server-bridge/2': 'UTC and unexecuted integration, lesson 22',
+    'data-engineering-capstone/2': 'Remaining distributed boundaries, lesson 24',
 }
 SAMPLE = (PRACTICE / 'sample_orders.csv').read_bytes()
 HEADER = 'order_id,customer_id,occurred_at,amount_cents\n'
