@@ -21,13 +21,15 @@ import local_framework_lab  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
-    'workflow/2': 'Fixed workflows for known sequences, lesson 2',
-    'memory/2': 'Scoped preferences without authority, lesson 12',
-    'planning/2': 'Revising a plan when evidence changes, lesson 13',
-    'clarification/2': 'Ambiguity that changes the action, lesson 14',
-    'approval/2': 'Approval bound to the concrete action, lesson 15',
-    'multiagent/2': 'Aggregate budgets across workers, lesson 22',
-    'deployment/2': 'The behaviour-changing version bundle, lesson 23',
+    'workflow/2': 'Fixed workflows for known sequences, lesson 3',
+    'memory/2': 'Scoped preferences without authority, lesson 14',
+    'planning/2': 'Revising a plan when evidence changes, lesson 15',
+    'clarification/2': 'Ambiguity that changes the action, lesson 16',
+    'approval/2': 'Approval bound to the concrete action, lesson 17',
+    'multiagent/2': 'Aggregate budgets across workers, lesson 26',
+    'deployment/2': 'The behaviour-changing version bundle, lesson 27',
+    'model-context-protocol/2': 'Tool results report failures with isError, lesson 22',
+    'cost-latency/2': 'Caching reuses an exact prompt prefix, lesson 20',
 }
 
 
@@ -211,7 +213,21 @@ def advanced_offline_rows():
     return pick((len(rows), unsent), {(6, True): '6 request rows, with nothing sent'})
 
 
+def generation():
+    import math
+    scores = [5.0, 3.0, 2.0, 0.0]
+    exps = [math.exp(s / 0.01) for s in [x - max(scores) for x in scores]]
+    top = exps[0] / sum(exps)
+    return pick(top > 0.999, {True: 'Almost always picks the highest-scoring token'})
+
+
+def structured_output():
+    return pick(outcome(lambda: json.loads('{"intent": "explain", "lesson_id": "jo')).split(':')[0],
+                {'JSONDecodeError': 'Raises JSONDecodeError'})
+
+
 FACTS = {
+    'generation/2': generation, 'structured-output/2': structured_output,
     'vocabulary/2': vocabulary, 'context/2': context, 'instructions/2': instructions, 'tools/2': tools,
     'loop/2': loop, 'state/2': state, 'grounding/2': grounding, 'arguments/2': arguments,
     'outputs/2': outputs, 'retrieval/2': retrieval, 'failures/2': failures, 'budgets/2': budgets,

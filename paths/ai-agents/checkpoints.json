@@ -3,6 +3,9 @@
     "vocabulary": [
       {"question": "The workshop demo searches 'joins', then finishes citing SQL-07, and run() returns status completed. What does that status establish?", "options": ["The search ran and every citation is an observed evidence ID", "The answer is semantically correct", "A language model chose to search"], "correct": 0, "explanation": "run() marks completed only after the executor ran the search and the finish cited IDs it had observed. It checks membership, not meaning, and ScriptedSource is a test double, not a model."}
     ],
+    "generation": [
+      {"question": "As temperature approaches 0, what does sampling do with scores 5, 3, 2 and 0?", "options": ["Almost always picks the highest-scoring token", "Picks each token with equal probability", "Picks the lowest-scoring token"], "correct": 0, "explanation": "Dividing scores by a tiny temperature makes the top token's probability approach 1."}
+    ],
     "workflow": [
       {"question": "A page asks for a lesson ID and displays that lesson. Which design fits?", "options": ["Fixed workflow code, because the sequence and rules are known", "An agent loop that decides whether to look the lesson up", "A planner agent with a reviewer agent"], "correct": 0, "explanation": "Deterministic code suits a known sequence. Model-directed choice earns its variability only when the next useful step depends on varied language or evidence."}
     ],
@@ -30,6 +33,9 @@
     "outputs": [
       {"question": "A search adapter returns four hits. The workshop's observation contract allows three. What does run() return?", "options": ["Status failed, after tool_started and tool_failed", "Status completed with the first three hits", "Status invalid, before the tool starts"], "correct": 0, "explanation": "Output is validated after the adapter returns. Too many hits break the contract, so the step fails instead of silently truncating evidence."}
     ],
+    "structured-output": [
+      {"question": "A model's JSON reply is cut off at the output token limit: {\"intent\": \"explain\", \"lesson_id\": \"jo. What does json.loads do?", "options": ["Raises JSONDecodeError", "Returns the fields received so far", "Returns None"], "correct": 0, "explanation": "The text is not complete JSON, so parsing raises JSONDecodeError. Treat it as a failed response, not partial data."}
+    ],
     "retrieval": [
       {"question": "What does the workshop's search_lessons('combining rows') return?", "options": ["No hits", "SQL-07", "SQL-07 and PY-01"], "correct": 0, "explanation": "The lexical search needs every term in a title or excerpt. The join lesson says matching row pairs, so a paraphrase finds nothing until the query is reformulated."}
     ],
@@ -51,8 +57,14 @@
     "budgets": [
       {"question": "What does run(source, max_steps=21) do?", "options": ["Raises ValueError: max_steps must be an integer from 1 to 20", "Runs up to 21 proposals", "Runs up to 20 proposals and ignores the rest"], "correct": 0, "explanation": "The budget itself is validated before the loop starts. It bounds proposal count, not time: a hanging adapter still needs an enforced deadline."}
     ],
+    "cost-latency": [
+      {"question": "Two requests share 15,000 tokens of instructions, but the first line of each is a different request ID. Why does prompt caching not help?", "options": ["Caching only works for output tokens", "Caching reuses an exact prefix, and the differing first line makes every prefix unique", "The instructions are too long to cache"], "correct": 1, "explanation": "Cache lookups match the prompt from its start. Put stable content first and per-request values last."}
+    ],
     "injection": [
       {"question": "provider_eval's injection case forbids PRIVATE_PROFILES_UPLOADED. How does its heuristic score an answer that cites SQL-07 and also says PRIVATE_PROFILES_UPLOADED?", "options": ["False: a forbidden term fails the case", "True: the required citation is present", "Half credit"], "correct": 0, "explanation": "score() requires every required term and no forbidden term. Repeating injected text fails the case even when the answer also cites real evidence."}
+    ],
+    "model-context-protocol": [
+      {"question": "An MCP tool call fails because the wiki page does not exist. How does a well-behaved server report it?", "options": ["It closes the connection", "In the tool result with isError set to true, so the model can see the failure", "It returns an empty successful result"], "correct": 1, "explanation": "MCP reports tool execution errors inside the result with isError: true; protocol-level errors are for malformed requests."}
     ],
     "datasets": [
       {"question": "In evaluation_cases.json, what status does the missing-topic case expect?", "options": ["incomplete", "failed", "completed"], "correct": 0, "explanation": "Empty hits are a successful tool result, so the run should stop as incomplete with the evidence gap stated, not fail or answer."}
