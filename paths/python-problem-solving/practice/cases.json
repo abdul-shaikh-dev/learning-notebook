@@ -664,6 +664,263 @@
     ],
     "preserveInputs": true
   },
+  "robot-moves": {
+    "title": "Keep a robot inside the grid",
+    "function": "robot_position",
+    "cases": [
+      {
+        "args": [
+          "RRDD",
+          3,
+          3
+        ],
+        "expected": [
+          2,
+          2
+        ]
+      },
+      {
+        "args": [
+          "LLUU",
+          3,
+          3
+        ],
+        "expected": [
+          0,
+          0
+        ]
+      },
+      {
+        "args": [
+          "RRRR",
+          3,
+          2
+        ],
+        "expected": [
+          2,
+          0
+        ]
+      },
+      {
+        "args": [
+          "",
+          1,
+          1
+        ],
+        "expected": [
+          0,
+          0
+        ]
+      },
+      {
+        "args": [
+          "RDLU",
+          2,
+          2
+        ],
+        "expected": [
+          0,
+          0
+        ]
+      },
+      {
+        "args": [
+          "DDDR",
+          4,
+          2
+        ],
+        "expected": [
+          1,
+          1
+        ]
+      },
+      {
+        "args": [
+          "RDRDRD",
+          3,
+          5
+        ],
+        "expected": [
+          2,
+          3
+        ]
+      }
+    ],
+    "preserveInputs": true
+  },
+  "occupied-neighbours": {
+    "title": "Count occupied neighbouring desks",
+    "function": "occupied_neighbours",
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": []
+      },
+      {
+        "args": [
+          [
+            [
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            0
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            3,
+            5,
+            3
+          ],
+          [
+            5,
+            8,
+            5
+          ],
+          [
+            3,
+            5,
+            3
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              1,
+              0,
+              0
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            0,
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              1
+            ],
+            [
+              0
+            ],
+            [
+              1
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            0
+          ],
+          [
+            2
+          ],
+          [
+            0
+          ]
+        ]
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      }
+    ],
+    "preserveInputs": true
+  },
   "group-by-initial": {
     "title": "Group names by initial",
     "function": "group_by_initial",
@@ -1440,6 +1697,277 @@
           "[]{}()"
         ],
         "expected": true
+      }
+    ],
+    "preserveInputs": true
+  },
+  "rooms-needed": {
+    "title": "Count rooms for overlapping meetings",
+    "function": "rooms_needed",
+    "cases": [
+      {
+        "args": [
+          [
+            [
+              0,
+              30
+            ],
+            [
+              5,
+              10
+            ],
+            [
+              15,
+              20
+            ]
+          ]
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          []
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            [
+              10,
+              20
+            ],
+            [
+              20,
+              30
+            ]
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            [
+              1,
+              5
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              1,
+              5
+            ]
+          ]
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [
+            [
+              9,
+              12
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              6
+            ],
+            [
+              5,
+              10
+            ]
+          ]
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              1440
+            ]
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            [
+              0,
+              10
+            ],
+            [
+              10,
+              20
+            ],
+            [
+              5,
+              15
+            ],
+            [
+              15,
+              25
+            ]
+          ]
+        ],
+        "expected": 2
+      }
+    ],
+    "preserveInputs": true
+  },
+  "large-folders": {
+    "title": "Count folders over a size limit",
+    "function": "count_large_folders",
+    "cases": [
+      {
+        "args": [
+          {
+            "files": [
+              10
+            ],
+            "folders": [
+              {
+                "files": [
+                  50
+                ],
+                "folders": []
+              },
+              {
+                "files": [
+                  5
+                ],
+                "folders": [
+                  {
+                    "files": [
+                      60
+                    ],
+                    "folders": []
+                  }
+                ]
+              }
+            ]
+          },
+          60
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          {
+            "files": [],
+            "folders": []
+          },
+          0
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          {
+            "files": [],
+            "folders": []
+          },
+          1
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          {
+            "files": [
+              1,
+              2
+            ],
+            "folders": [
+              {
+                "files": [
+                  3
+                ],
+                "folders": [
+                  {
+                    "files": [
+                      4
+                    ],
+                    "folders": []
+                  }
+                ]
+              }
+            ]
+          },
+          7
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          {
+            "files": [
+              100
+            ],
+            "folders": [
+              {
+                "files": [
+                  1
+                ],
+                "folders": []
+              },
+              {
+                "files": [
+                  1
+                ],
+                "folders": []
+              }
+            ]
+          },
+          100
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          {
+            "files": [
+              0
+            ],
+            "folders": [
+              {
+                "files": [
+                  0
+                ],
+                "folders": [
+                  {
+                    "files": [
+                      0
+                    ],
+                    "folders": [
+                      {
+                        "files": [
+                          9
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          9
+        ],
+        "expected": 4
       }
     ],
     "preserveInputs": true
@@ -2356,6 +2884,271 @@
           true,
           true
         ]
+      }
+    ],
+    "preserveInputs": true
+  },
+  "shortest-route": {
+    "title": "Find the shortest route through a floor plan",
+    "function": "shortest_route",
+    "cases": [
+      {
+        "args": [
+          [
+            "S.#",
+            "..#",
+            "#.E"
+          ]
+        ],
+        "expected": 4
+      },
+      {
+        "args": [
+          [
+            "S#E"
+          ]
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            "SE"
+          ]
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            "S...",
+            "###.",
+            "E..."
+          ]
+        ],
+        "expected": 8
+      },
+      {
+        "args": [
+          [
+            "S",
+            ".",
+            ".",
+            "E"
+          ]
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [
+            "S.#.",
+            ".##.",
+            "...E"
+          ]
+        ],
+        "expected": 5
+      },
+      {
+        "args": [
+          [
+            "S..",
+            "###",
+            "..E"
+          ]
+        ],
+        "expected": -1
+      }
+    ],
+    "preserveInputs": true
+  },
+  "fewest-coins": {
+    "title": "Pay an exact amount with the fewest coins",
+    "function": "fewest_coins",
+    "cases": [
+      {
+        "args": [
+          [
+            1,
+            3,
+            4
+          ],
+          6
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [
+            5,
+            10
+          ],
+          3
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            2
+          ],
+          0
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            1,
+            5,
+            10,
+            25
+          ],
+          63
+        ],
+        "expected": 6
+      },
+      {
+        "args": [
+          [
+            7
+          ],
+          21
+        ],
+        "expected": 3
+      },
+      {
+        "args": [
+          [
+            4,
+            6
+          ],
+          9
+        ],
+        "expected": -1
+      },
+      {
+        "args": [
+          [
+            3,
+            7
+          ],
+          11
+        ],
+        "expected": -1
+      }
+    ],
+    "preserveInputs": true
+  },
+  "seating-orders": {
+    "title": "Count seating orders that keep rivals apart",
+    "function": "seating_orders",
+    "cases": [
+      {
+        "args": [
+          [
+            "Ana",
+            "Ben",
+            "Cy"
+          ],
+          [
+            [
+              "Ana",
+              "Ben"
+            ]
+          ]
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [],
+          []
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            "Ana"
+          ],
+          []
+        ],
+        "expected": 1
+      },
+      {
+        "args": [
+          [
+            "Ana",
+            "Ben"
+          ],
+          [
+            [
+              "Ben",
+              "Ana"
+            ]
+          ]
+        ],
+        "expected": 0
+      },
+      {
+        "args": [
+          [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          []
+        ],
+        "expected": 24
+      },
+      {
+        "args": [
+          [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "A",
+              "C"
+            ]
+          ]
+        ],
+        "expected": 2
+      },
+      {
+        "args": [
+          [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "B"
+            ]
+          ]
+        ],
+        "expected": 72
       }
     ],
     "preserveInputs": true

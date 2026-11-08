@@ -24,7 +24,7 @@ class ReferenceTests(unittest.TestCase):
 
     def test_published_cases_and_no_mutation(self):
         cases = json.loads((BASE/"cases.json").read_text(encoding="utf-8"))
-        self.assertEqual(len(cases), 30)
+        self.assertEqual(len(cases), 37)
         for id, job in cases.items():
             for index, case in enumerate(job["cases"]):
                 with self.subTest(challenge=id, case=index):
@@ -131,6 +131,79 @@ class ReferenceTests(unittest.TestCase):
             labels=rng.choices(["","a","A","b"],k=rng.randrange(10))
             winner=min(set(labels),key=lambda s:(-labels.count(s),labels.index(s))) if labels else None
             self.answer("most_requested",[labels],winner)
+
+    def test_robot_and_neighbours_against_direct_rules(self):
+        rng=random.Random(901)
+        steps={"R":(1,0),"L":(-1,0),"D":(0,1),"U":(0,-1)}
+        for _ in range(200):
+            width,height=rng.randint(1,4),rng.randint(1,4)
+            moves="".join(rng.choice("RLUD") for _ in range(rng.randrange(15)))
+            x=y=0
+            for move in moves:
+                dx,dy=steps[move]
+                if (x+dx) in range(width) and (y+dy) in range(height):
+                    x,y=x+dx,y+dy
+            self.answer("robot_position",[moves,width,height],[x,y])
+            grid=[[rng.randint(0,1) for _ in range(width)] for _ in range(height)]
+            cells={(r,c):v for r,row in enumerate(grid) for c,v in enumerate(row)}
+            expected=[[sum(cells.get((r+a,c+b),0) for a in (-1,0,1) for b in (-1,0,1) if a or b)
+                       for c in range(width)] for r in range(height)]
+            self.answer("occupied_neighbours",[grid],expected)
+
+    def test_rooms_against_busiest_instant(self):
+        rng=random.Random(902)
+        for _ in range(300):
+            meetings=[[s,s+rng.randint(1,6)] for s in (rng.randint(0,15) for _ in range(rng.randrange(8)))]
+            expected=max((sum(s<=t<e for s,e in meetings) for t in range(25)),default=0)
+            self.answer("rooms_needed",[meetings],expected)
+
+    def test_folders_against_flattened_totals(self):
+        rng=random.Random(903)
+        def make(depth):
+            return {"files":[rng.randint(0,9) for _ in range(rng.randrange(3))],
+                    "folders":[make(depth+1) for _ in range(rng.randrange(3) if depth<3 else 0)]}
+        def everything(folder):
+            yield folder
+            for sub in folder["folders"]:
+                yield from everything(sub)
+        for _ in range(150):
+            root,limit=make(0),rng.randint(0,40)
+            totals=[sum(sum(f["files"]) for f in everything(folder)) for folder in everything(root)]
+            self.answer("count_large_folders",[root,limit],sum(total>=limit for total in totals))
+
+    def test_route_against_repeated_relaxation(self):
+        rng=random.Random(904)
+        for _ in range(200):
+            rows,cols=rng.randint(1,4),rng.randint(2,4)
+            cells=[[rng.choice("..#") for _ in range(cols)] for _ in range(rows)]
+            (sr,sc),(er,ec)=rng.sample([(r,c) for r in range(rows) for c in range(cols)],2)
+            cells[sr][sc],cells[er][ec]="S","E"
+            dist={(sr,sc):0}
+            for _ in range(rows*cols):
+                for (r,c),d in list(dist.items()):
+                    for n in ((r+1,c),(r-1,c),(r,c+1),(r,c-1)):
+                        if 0<=n[0]<rows and 0<=n[1]<cols and cells[n[0]][n[1]]!="#" and dist.get(n,99)>d+1:
+                            dist[n]=d+1
+            self.answer("shortest_route",[["".join(row) for row in cells]],dist.get((er,ec),-1))
+
+    def test_coins_against_enumerated_combinations(self):
+        rng=random.Random(905)
+        for _ in range(120):
+            coins=sorted(rng.sample(range(1,8),rng.randint(1,3)))
+            amount=rng.randint(0,12)
+            expected=next((n for n in range(amount+1)
+                           if any(sum(c)==amount for c in itertools.combinations_with_replacement(coins,n))),-1)
+            self.answer("fewest_coins",[coins,amount],expected)
+
+    def test_seating_against_all_permutations(self):
+        rng=random.Random(906)
+        for _ in range(100):
+            guests=list("ABCDE")[:rng.randint(0,5)]
+            rivals=[rng.sample(guests,2) for _ in range(rng.randrange(4))] if len(guests)>1 else []
+            banned={frozenset(pair) for pair in rivals}
+            expected=sum(all(frozenset(order[i:i+2]) not in banned for i in range(len(order)-1))
+                         for order in itertools.permutations(guests))
+            self.answer("seating_orders",[guests,rivals],expected)
 
 
 if __name__ == "__main__":

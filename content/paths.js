@@ -85151,7 +85151,7 @@ const LEARNING_PATHS = [
     "title": "Python Problem Solving",
     "category": "Programming",
     "status": "ready",
-    "description": "30 original coding challenges. Start with small functions, practise common patterns, then choose an approach for realistic tasks. Optional hints and local Python tests help you improve each attempt.",
+    "description": "37 original coding challenges. Start with small functions, practise common patterns, then choose an approach for realistic tasks. Optional hints and local Python tests help you improve each attempt.",
     "level": "Guided foundations → common patterns → mixed practical problems",
     "prerequisites": [
       "Comfort with basic Python values, loops and functions. Revisit the Python path whenever a construct is unfamiliar.",
@@ -85159,7 +85159,7 @@ const LEARNING_PATHS = [
     ],
     "outcomes": [
       "Translate a problem statement into a precise function contract.",
-      "Choose between scanning, counting, sorting, windows, prefix sums, stacks and binary search.",
+      "Choose between scanning, counting, sorting, windows, prefix sums, stacks, heaps, binary search, breadth-first search, backtracking and dynamic programming.",
       "Debug from a concrete failing input and check empty, duplicate and boundary cases.",
       "Explain time and space costs under explicit assumptions.",
       "Apply familiar patterns to logs, records and scheduling problems."
@@ -85213,7 +85213,7 @@ const LEARNING_PATHS = [
       {
         "id": "intermediate",
         "title": "Recognise reusable patterns",
-        "description": "Practise counting, two pointers, windows, prefix sums, search and stacks.",
+        "description": "Practise counting, two pointers, windows, prefix sums, search, stacks, heaps and recursion.",
         "exitCriteria": [
           "Solve a fresh case before looking at the reference.",
           "Use a failed test to locate a mistaken assumption."
@@ -85844,8 +85844,138 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "robot-moves",
+        "title": "10. Keep a robot inside the grid",
+        "stage": "foundation",
+        "takeaway": "starter · Python 3.14+ · Test your solution locally",
+        "sections": [
+          {
+            "title": "The problem",
+            "paragraphs": [
+              "A cleaning robot starts at column 0, row 0 of a grid that is `width` columns wide and `height` rows tall. Each character of `moves` is `R` (column + 1), `L` (column - 1), `D` (row + 1) or `U` (row - 1). A move that would leave the grid is ignored and the robot stays where it is. Return the final position as `[column, row]`.",
+              "Return a value from `robot_position`; do not read input or print the answer. Keep the supplied arguments unchanged."
+            ]
+          },
+          {
+            "title": "Examples",
+            "paragraphs": [
+              "The calls below show the expected return values. Indexes, where used, start at zero."
+            ],
+            "example": "robot_position('RRDD', 3, 3)\nExpected: [2, 2]\n\nrobot_position('LLUU', 3, 3)\nExpected: [0, 0]"
+          },
+          {
+            "title": "Constraints and edge cases",
+            "paragraphs": [
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "`width` and `height` are between 1 and 100. `moves` contains only the characters R, L, U and D and may be empty."
+            ]
+          }
+        ],
+        "exercise": {
+          "challenge": true,
+          "prompt": "Complete `robot_position` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
+          "starter": "def robot_position(moves: str, width: int, height: int) -> list[int]:\n    raise NotImplementedError(\"Write your solution here\")",
+          "checks": [
+            "Match the expected return values, including edge cases.",
+            "Do not modify the input arguments.",
+            "A passing finite test set is evidence for these cases, not a proof for every valid input."
+          ],
+          "command": "python check.py robot-moves",
+          "hints": [
+            "Keep two variables for the current column and row, starting at 0.",
+            "Work out the proposed position first, then decide whether to accept it.",
+            "A position is inside the grid when 0 <= column < width and 0 <= row < height."
+          ],
+          "solution": "def robot_position(moves: str, width: int, height: int) -> list[int]:\n    steps = {\"R\": (1, 0), \"L\": (-1, 0), \"D\": (0, 1), \"U\": (0, -1)}\n    column = row = 0\n    for move in moves:\n        dx, dy = steps[move]\n        new_column, new_row = column + dx, row + dy\n        if 0 <= new_column < width and 0 <= new_row < height:\n            column, row = new_column, new_row\n    return [column, row]\n",
+          "reasoning": [
+            "This is a simulation: the state is the current position and each move is one step. Computing the candidate position and checking it before assigning keeps the rule \"ignore a move that leaves the grid\" in one place.",
+            "A dictionary from move letter to a (column change, row change) pair avoids four nearly identical branches and makes the direction convention easy to check."
+          ],
+          "complexity": "O(m) time for m moves and O(1) extra space.",
+          "pitfalls": [
+            "Clamping each coordinate separately after the move can be fine here, but it hides the rule that the whole move is ignored; keep the check explicit.",
+            "Mixing up which letter changes the row: in screen coordinates D increases the row."
+          ],
+          "transfer": "Add obstacle cells that also block a move, and return how many moves were ignored as well as the final position."
+        },
+        "references": [
+          {
+            "title": "Python tutorial: dictionaries",
+            "url": "https://docs.python.org/3/tutorial/datastructures.html#dictionaries",
+            "section": "Dictionaries and looping",
+            "reviewed": "2026-11-08",
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          }
+        ]
+      },
+      {
+        "id": "occupied-neighbours",
+        "title": "11. Count occupied neighbouring desks",
+        "stage": "foundation",
+        "takeaway": "starter · Python 3.14+ · Test your solution locally",
+        "sections": [
+          {
+            "title": "The problem",
+            "paragraphs": [
+              "An office plan is a grid of desks where 1 means occupied and 0 means free. Return a new grid of the same shape in which each cell holds how many of its up to eight neighbouring desks (horizontally, vertically and diagonally adjacent) are occupied. A desk does not count itself. Cells on the edge have fewer neighbours.",
+              "Return a value from `occupied_neighbours`; do not read input or print the answer. Keep the supplied arguments unchanged."
+            ]
+          },
+          {
+            "title": "Examples",
+            "paragraphs": [
+              "The calls below show the expected return values. Indexes, where used, start at zero."
+            ],
+            "example": "occupied_neighbours([[1, 0], [0, 1]])\nExpected: [[1, 2], [2, 1]]\n\noccupied_neighbours([])\nExpected: []"
+          },
+          {
+            "title": "Constraints and edge cases",
+            "paragraphs": [
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "The grid has 0 to 50 rows; every row has the same length, between 1 and 50. Every value is 0 or 1."
+            ]
+          }
+        ],
+        "exercise": {
+          "challenge": true,
+          "prompt": "Complete `occupied_neighbours` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
+          "starter": "def occupied_neighbours(grid: list[list[int]]) -> list[list[int]]:\n    raise NotImplementedError(\"Write your solution here\")",
+          "checks": [
+            "Match the expected return values, including edge cases.",
+            "Do not modify the input arguments.",
+            "A passing finite test set is evidence for these cases, not a proof for every valid input."
+          ],
+          "command": "python check.py occupied-neighbours",
+          "hints": [
+            "Build the result row by row as a new list; do not write counts into the input.",
+            "For each cell, look at row offsets -1, 0, 1 and column offsets -1, 0, 1, skipping (0, 0).",
+            "Check that a neighbour's row and column are inside the grid before reading it."
+          ],
+          "solution": "def occupied_neighbours(grid: list[list[int]]) -> list[list[int]]:\n    rows = len(grid)\n    result = []\n    for r in range(rows):\n        cols = len(grid[r])\n        line = []\n        for c in range(cols):\n            count = 0\n            for dr in (-1, 0, 1):\n                for dc in (-1, 0, 1):\n                    if (dr or dc) and 0 <= r + dr < rows and 0 <= c + dc < cols:\n                        count += grid[r + dr][c + dc]\n            line.append(count)\n        result.append(line)\n    return result\n",
+          "reasoning": [
+            "Each output cell depends only on the input, so read from `grid` and write into a separate result. Updating the input while scanning would make later counts include earlier answers.",
+            "Looping over the eight offsets with a bounds check handles corners, edges and single-row or single-column grids with the same code, instead of special cases."
+          ],
+          "complexity": "O(r × c) time for r rows and c columns, because each cell checks at most eight neighbours; O(r × c) space for the result.",
+          "pitfalls": [
+            "Counting the cell itself by not skipping the (0, 0) offset.",
+            "Negative indexes: grid[-1] silently reads the last row instead of failing, so the bounds check must reject r + dr < 0."
+          ],
+          "transfer": "Use the counts to compute the next generation of Conway's Game of Life, returning a new grid each step."
+        },
+        "references": [
+          {
+            "title": "Python tutorial: nested list comprehensions",
+            "url": "https://docs.python.org/3/tutorial/datastructures.html#nested-list-comprehensions",
+            "section": "Nested lists",
+            "reviewed": "2026-11-08",
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          }
+        ]
+      },
+      {
         "id": "group-by-initial",
-        "title": "10. Group names by initial",
+        "title": "12. Group names by initial",
         "stage": "foundation",
         "takeaway": "starter · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -85910,7 +86040,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "most-requested",
-        "title": "11. Choose the most requested label",
+        "title": "13. Choose the most requested label",
         "stage": "intermediate",
         "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -85975,7 +86105,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "can-fill-pair",
-        "title": "12. Pack exactly two entries",
+        "title": "14. Pack exactly two entries",
         "stage": "intermediate",
         "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -86040,7 +86170,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "shared-readings",
-        "title": "13. Match repeated readings",
+        "title": "15. Match repeated readings",
         "stage": "intermediate",
         "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -86105,7 +86235,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "busiest-block",
-        "title": "14. Find the busiest fixed block",
+        "title": "16. Find the busiest fixed block",
         "stage": "intermediate",
         "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -86170,7 +86300,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "affordable-stretch",
-        "title": "15. Fit consecutive costs into a budget",
+        "title": "17. Fit consecutive costs into a budget",
         "stage": "intermediate",
         "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -86235,7 +86365,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "range-totals",
-        "title": "16. Answer several range totals",
+        "title": "18. Answer several range totals",
         "stage": "intermediate",
         "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -86300,7 +86430,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "balance-marker",
-        "title": "17. Place a balanced marker",
+        "title": "19. Place a balanced marker",
         "stage": "intermediate",
         "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -86365,7 +86495,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "first-suitable",
-        "title": "18. Find the first suitable capacity",
+        "title": "20. Find the first suitable capacity",
         "stage": "intermediate",
         "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -86437,7 +86567,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "balanced-groups",
-        "title": "19. Check nested groups",
+        "title": "21. Check nested groups",
         "stage": "intermediate",
         "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -86501,8 +86631,138 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "rooms-needed",
+        "title": "22. Count rooms for overlapping meetings",
+        "stage": "intermediate",
+        "takeaway": "developing · Python 3.14+ · Test your solution locally",
+        "sections": [
+          {
+            "title": "The problem",
+            "paragraphs": [
+              "Each meeting is `[start, end]` in minutes and occupies a room from `start` up to, but not including, `end`; a meeting ending at 10 and another starting at 10 can share a room. Return the smallest number of rooms that can hold every meeting. An empty list needs 0 rooms.",
+              "Return a value from `rooms_needed`; do not read input or print the answer. Keep the supplied arguments unchanged."
+            ]
+          },
+          {
+            "title": "Examples",
+            "paragraphs": [
+              "The calls below show the expected return values. Indexes, where used, start at zero."
+            ],
+            "example": "rooms_needed([[0, 30], [5, 10], [15, 20]])\nExpected: 2\n\nrooms_needed([])\nExpected: 0"
+          },
+          {
+            "title": "Constraints and edge cases",
+            "paragraphs": [
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Every meeting has 0 <= start < end <= 1,440. The list may be in any order."
+            ]
+          }
+        ],
+        "exercise": {
+          "challenge": true,
+          "prompt": "Complete `rooms_needed` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
+          "starter": "def rooms_needed(meetings: list[list[int]]) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
+          "checks": [
+            "Match the expected return values, including edge cases.",
+            "Do not modify the input arguments.",
+            "A passing finite test set is evidence for these cases, not a proof for every valid input."
+          ],
+          "command": "python check.py rooms-needed",
+          "hints": [
+            "Process meetings in order of start time.",
+            "Keep the end times of meetings that are currently running. Which one frees a room first?",
+            "A min-heap from `heapq` gives the earliest end time in O(log n); pop it when that meeting has ended by the new start."
+          ],
+          "solution": "import heapq\n\ndef rooms_needed(meetings: list[list[int]]) -> int:\n    ends = []\n    most = 0\n    for start, end in sorted(meetings):\n        while ends and ends[0] <= start:\n            heapq.heappop(ends)\n        heapq.heappush(ends, end)\n        most = max(most, len(ends))\n    return most\n",
+          "reasoning": [
+            "Sort by start. For each meeting, rooms whose meeting ended at or before this start become free. A min-heap of end times exposes the earliest ending meeting, so you can release every finished room before allocating one for the new meeting.",
+            "The heap holds exactly the meetings in progress, and its largest size during the scan is the answer. Sorting a copy keeps the input unchanged."
+          ],
+          "complexity": "O(n log n) time for sorting and heap operations; O(n) space for the sorted copy and the heap.",
+          "pitfalls": [
+            "Using `<` instead of `<=` when releasing rooms, so back-to-back meetings need two rooms.",
+            "Sorting the input list in place, which changes the caller's data."
+          ],
+          "transfer": "Return which room number each meeting gets, reusing the lowest free room number, by keeping (end, room) pairs in the heap and a second heap of free room numbers."
+        },
+        "references": [
+          {
+            "title": "Python documentation: heapq",
+            "url": "https://docs.python.org/3/library/heapq.html",
+            "section": "heappush and heappop",
+            "reviewed": "2026-11-08",
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          }
+        ]
+      },
+      {
+        "id": "large-folders",
+        "title": "23. Count folders over a size limit",
+        "stage": "intermediate",
+        "takeaway": "developing · Python 3.14+ · Test your solution locally",
+        "sections": [
+          {
+            "title": "The problem",
+            "paragraphs": [
+              "A folder is a dictionary `{\"files\": [sizes], \"folders\": [subfolders]}`, where each subfolder has the same shape. A folder's total size is the sum of its own file sizes plus the totals of all its subfolders. Return how many folders, including the outer one, have a total size of at least `limit`.",
+              "Return a value from `count_large_folders`; do not read input or print the answer. Keep the supplied arguments unchanged."
+            ]
+          },
+          {
+            "title": "Examples",
+            "paragraphs": [
+              "The calls below show the expected return values. Indexes, where used, start at zero."
+            ],
+            "example": "count_large_folders({'files': [10], 'folders': [{'files': [50], 'folders': []}, {'files': [5], 'folders': [{'files': [60], 'folders': []}]}]}, 60)\nExpected: 3\n\ncount_large_folders({'files': [], 'folders': []}, 0)\nExpected: 1"
+          },
+          {
+            "title": "Constraints and edge cases",
+            "paragraphs": [
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "Sizes and `limit` are integers from 0 to 1,000,000. Folders nest at most 50 levels deep and contain at most 1,000 folders in all."
+            ]
+          }
+        ],
+        "exercise": {
+          "challenge": true,
+          "prompt": "Complete `count_large_folders` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
+          "starter": "def count_large_folders(folder: dict, limit: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
+          "checks": [
+            "Match the expected return values, including edge cases.",
+            "Do not modify the input arguments.",
+            "A passing finite test set is evidence for these cases, not a proof for every valid input."
+          ],
+          "command": "python check.py large-folders",
+          "hints": [
+            "A folder's total depends on its subfolders' totals, so compute those first.",
+            "Write a helper that returns a folder's total and, while doing so, adds to a count of large folders.",
+            "Returning (total, count) from the helper avoids a variable shared across calls."
+          ],
+          "solution": "def count_large_folders(folder: dict, limit: int) -> int:\n    def visit(current: dict) -> tuple[int, int]:\n        total, count = sum(current[\"files\"]), 0\n        for sub in current[\"folders\"]:\n            sub_total, sub_count = visit(sub)\n            total += sub_total\n            count += sub_count\n        return total, count + (total >= limit)\n    return visit(folder)[1]\n",
+          "reasoning": [
+            "The folders form a tree, and the natural traversal is recursive: the total of a folder is its files plus the totals returned by recursive calls on its subfolders. Visiting children before deciding about the parent is a post-order traversal.",
+            "Computing totals bottom-up means every folder is visited once. Calling a separate `total` function from every folder would re-add the same deep folders many times."
+          ],
+          "complexity": "O(n + f) time for n folders and f file sizes; O(d) call-stack space for nesting depth d.",
+          "pitfalls": [
+            "Counting only the files directly in a folder and forgetting nested subfolders.",
+            "Recomputing every subtree total from scratch for each ancestor, which makes deep trees quadratic."
+          ],
+          "transfer": "Rewrite the traversal with an explicit stack so that very deep folder trees cannot exceed Python's recursion limit."
+        },
+        "references": [
+          {
+            "title": "Python tutorial: defining functions",
+            "url": "https://docs.python.org/3/tutorial/controlflow.html#defining-functions",
+            "section": "Defining functions",
+            "reviewed": "2026-11-08",
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          }
+        ]
+      },
+      {
         "id": "undo-notes",
-        "title": "20. Apply note edits with undo",
+        "title": "24. Apply note edits with undo",
         "stage": "intermediate",
         "takeaway": "developing · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -86567,7 +86827,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "read-settings",
-        "title": "21. Read small settings lines",
+        "title": "25. Read small settings lines",
         "stage": "advanced",
         "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -86632,7 +86892,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "latest-samples",
-        "title": "22. Keep the latest device sample",
+        "title": "26. Keep the latest device sample",
         "stage": "advanced",
         "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -86697,7 +86957,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "maintenance-coverage",
-        "title": "23. Combine maintenance coverage",
+        "title": "27. Combine maintenance coverage",
         "stage": "advanced",
         "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -86762,7 +87022,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "first-open-slot",
-        "title": "24. Find time for a short appointment",
+        "title": "28. Find time for a short appointment",
         "stage": "advanced",
         "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -86827,7 +87087,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "peak-requests",
-        "title": "25. Measure a request burst",
+        "title": "29. Measure a request burst",
         "stage": "advanced",
         "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -86892,7 +87152,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "parse-price",
-        "title": "26. Convert a price into cents",
+        "title": "30. Convert a price into cents",
         "stage": "advanced",
         "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -86957,7 +87217,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "compare-releases",
-        "title": "27. Compare numeric release labels",
+        "title": "31. Compare numeric release labels",
         "stage": "advanced",
         "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -87022,7 +87282,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "ready-order",
-        "title": "28. Plan a small preparation list",
+        "title": "32. Plan a small preparation list",
         "stage": "advanced",
         "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -87087,7 +87347,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "fulfill-orders",
-        "title": "29. Process complete stock requests",
+        "title": "33. Process complete stock requests",
         "stage": "advanced",
         "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -87151,8 +87411,203 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "shortest-route",
+        "title": "34. Find the shortest route through a floor plan",
+        "stage": "advanced",
+        "takeaway": "stretch · Python 3.14+ · Test your solution locally",
+        "sections": [
+          {
+            "title": "The problem",
+            "paragraphs": [
+              "A floor plan is a list of equal-length strings. `S` is the start, `E` is the exit, `.` is open floor and `#` is a wall. You may move one cell up, down, left or right onto any cell that is not a wall. Return the fewest moves from `S` to `E`, or -1 if the exit cannot be reached.",
+              "Return a value from `shortest_route`; do not read input or print the answer. Keep the supplied arguments unchanged."
+            ]
+          },
+          {
+            "title": "Examples",
+            "paragraphs": [
+              "The calls below show the expected return values. Indexes, where used, start at zero."
+            ],
+            "example": "shortest_route(['S.#', '..#', '#.E'])\nExpected: 4\n\nshortest_route(['S#E'])\nExpected: -1"
+          },
+          {
+            "title": "Constraints and edge cases",
+            "paragraphs": [
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "The plan has 1 to 100 rows and 1 to 100 columns. It contains exactly one `S` and exactly one `E`, and otherwise only `.` and `#`."
+            ]
+          }
+        ],
+        "exercise": {
+          "challenge": true,
+          "prompt": "Complete `shortest_route` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
+          "starter": "def shortest_route(grid: list[str]) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
+          "checks": [
+            "Match the expected return values, including edge cases.",
+            "Do not modify the input arguments.",
+            "A passing finite test set is evidence for these cases, not a proof for every valid input."
+          ],
+          "command": "python check.py shortest-route",
+          "hints": [
+            "Treat each open cell as a node with edges to its open neighbours; every move costs the same.",
+            "Breadth-first search visits cells in order of distance from the start.",
+            "Mark a cell as seen when you add it to the queue, not when you remove it, so no cell is queued twice."
+          ],
+          "solution": "from collections import deque\n\ndef shortest_route(grid: list[str]) -> int:\n    rows, cols = len(grid), len(grid[0])\n    start = next((r, c) for r in range(rows) for c in range(cols) if grid[r][c] == \"S\")\n    queue = deque([(start, 0)])\n    seen = {start}\n    while queue:\n        (r, c), steps = queue.popleft()\n        if grid[r][c] == \"E\":\n            return steps\n        for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):\n            if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] != \"#\" and (nr, nc) not in seen:\n                seen.add((nr, nc))\n                queue.append(((nr, nc), steps + 1))\n    return -1\n",
+          "reasoning": [
+            "When every move costs 1, breadth-first search finds shortest paths: a queue processes all cells at distance d before any at distance d + 1, so the first time the exit is reached is with the fewest moves.",
+            "A `deque` gives O(1) appends and pops from the front. Recording the distance with each queued cell, and a `seen` set, avoids revisiting cells. If the queue empties without reaching the exit, it is unreachable."
+          ],
+          "complexity": "O(r × c) time and space for r rows and c columns: each cell is queued at most once.",
+          "pitfalls": [
+            "Using depth-first search, which finds a route but not necessarily the shortest one.",
+            "Marking cells as seen only when dequeued, which can queue the same cell many times on open floors."
+          ],
+          "transfer": "Return the route itself as a list of positions by storing each cell's predecessor and walking back from the exit."
+        },
+        "references": [
+          {
+            "title": "Python documentation: collections.deque",
+            "url": "https://docs.python.org/3/library/collections.html#collections.deque",
+            "section": "deque objects",
+            "reviewed": "2026-11-08",
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          }
+        ]
+      },
+      {
+        "id": "fewest-coins",
+        "title": "35. Pay an exact amount with the fewest coins",
+        "stage": "advanced",
+        "takeaway": "stretch · Python 3.14+ · Test your solution locally",
+        "sections": [
+          {
+            "title": "The problem",
+            "paragraphs": [
+              "A ticket machine gives change using coins of the values in `coins`; it has an unlimited number of each. Return the fewest coins that add up to exactly `amount`, or -1 if no combination does. An amount of 0 needs 0 coins.",
+              "Return a value from `fewest_coins`; do not read input or print the answer. Keep the supplied arguments unchanged."
+            ]
+          },
+          {
+            "title": "Examples",
+            "paragraphs": [
+              "The calls below show the expected return values. Indexes, where used, start at zero."
+            ],
+            "example": "fewest_coins([1, 3, 4], 6)\nExpected: 2\n\nfewest_coins([5, 10], 3)\nExpected: -1"
+          },
+          {
+            "title": "Constraints and edge cases",
+            "paragraphs": [
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "`coins` has 1 to 20 distinct values, each between 1 and 1,000. `amount` is between 0 and 10,000."
+            ]
+          }
+        ],
+        "exercise": {
+          "challenge": true,
+          "prompt": "Complete `fewest_coins` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
+          "starter": "def fewest_coins(coins: list[int], amount: int) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
+          "checks": [
+            "Match the expected return values, including edge cases.",
+            "Do not modify the input arguments.",
+            "A passing finite test set is evidence for these cases, not a proof for every valid input."
+          ],
+          "command": "python check.py fewest-coins",
+          "hints": [
+            "Taking the largest coin first fails for coins [1, 3, 4] and amount 6.",
+            "Let best[a] be the fewest coins for amount a. How does best[a] relate to best[a - coin]?",
+            "Fill best from 0 up to amount, using a large sentinel for amounts that cannot be made."
+          ],
+          "solution": "def fewest_coins(coins: list[int], amount: int) -> int:\n    impossible = amount + 1\n    best = [0] + [impossible] * amount\n    for value in range(1, amount + 1):\n        for coin in coins:\n            if coin <= value and best[value - coin] + 1 < best[value]:\n                best[value] = best[value - coin] + 1\n    return -1 if best[amount] == impossible else best[amount]\n",
+          "reasoning": [
+            "Greedy choice is not safe for arbitrary coin systems, so consider every last coin. The fewest coins for amount `a` is one more than the best of `best[a - coin]` over the coins that fit. That recurrence has overlapping subproblems, which dynamic programming solves once each.",
+            "Filling a table from 0 upwards guarantees each smaller amount is ready when needed. A sentinel larger than any real answer marks impossible amounts, and is converted to -1 at the end."
+          ],
+          "complexity": "O(a × k) time for amount a and k coin values; O(a) space for the table.",
+          "pitfalls": [
+            "Using the largest coin first, which returns 3 (4 + 1 + 1) instead of 2 (3 + 3) for amount 6.",
+            "Returning the sentinel instead of -1 for amounts that cannot be made."
+          ],
+          "transfer": "Return the coins used, not just how many, by recording which coin achieved each best value and walking back from the amount."
+        },
+        "references": [
+          {
+            "title": "Python documentation: lists",
+            "url": "https://docs.python.org/3/tutorial/datastructures.html#more-on-lists",
+            "section": "More on lists",
+            "reviewed": "2026-11-08",
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          }
+        ]
+      },
+      {
+        "id": "seating-orders",
+        "title": "36. Count seating orders that keep rivals apart",
+        "stage": "advanced",
+        "takeaway": "stretch · Python 3.14+ · Test your solution locally",
+        "sections": [
+          {
+            "title": "The problem",
+            "paragraphs": [
+              "Guests sit in a single row. Each pair in `rivals` must not sit next to each other, in either order. Return how many different orders of all the guests satisfy every rivalry. With no guests there is exactly one order, the empty one.",
+              "Return a value from `seating_orders`; do not read input or print the answer. Keep the supplied arguments unchanged."
+            ]
+          },
+          {
+            "title": "Examples",
+            "paragraphs": [
+              "The calls below show the expected return values. Indexes, where used, start at zero."
+            ],
+            "example": "seating_orders(['Ana', 'Ben', 'Cy'], [['Ana', 'Ben']])\nExpected: 2\n\nseating_orders([], [])\nExpected: 1"
+          },
+          {
+            "title": "Constraints and edge cases",
+            "paragraphs": [
+              "Use Python 3.14 or newer. Do not change the input. Integer inputs never include `bool` values. Unless stated otherwise, a list has at most 1,000 elements and a string has at most 1,000 characters.",
+              "`guests` has 0 to 8 distinct names. Each rivalry names two different guests from the list; a pair may appear more than once."
+            ]
+          }
+        ],
+        "exercise": {
+          "challenge": true,
+          "prompt": "Complete `seating_orders` below and run the tests. You can also edit `solutions.py` in the downloadable practice ZIP and use the terminal command shown below.",
+          "starter": "def seating_orders(guests: list[str], rivals: list[list[str]]) -> int:\n    raise NotImplementedError(\"Write your solution here\")",
+          "checks": [
+            "Match the expected return values, including edge cases.",
+            "Do not modify the input arguments.",
+            "A passing finite test set is evidence for these cases, not a proof for every valid input."
+          ],
+          "command": "python check.py seating-orders",
+          "hints": [
+            "Build an order one seat at a time, choosing an unseated guest for the next seat.",
+            "Before placing a guest, check only the person in the previous seat.",
+            "After exploring a choice, undo it: remove the guest from the order and mark them unseated."
+          ],
+          "solution": "def seating_orders(guests: list[str], rivals: list[list[str]]) -> int:\n    banned = {frozenset(pair) for pair in rivals}\n    order: list[str] = []\n    seated: set[str] = set()\n\n    def place() -> int:\n        if len(order) == len(guests):\n            return 1\n        total = 0\n        for guest in guests:\n            if guest in seated:\n                continue\n            if order and frozenset((order[-1], guest)) in banned:\n                continue\n            order.append(guest)\n            seated.add(guest)\n            total += place()\n            order.pop()\n            seated.remove(guest)\n        return total\n\n    return place()\n",
+          "reasoning": [
+            "Backtracking explores orders seat by seat and abandons a partial order as soon as it breaks a rule, so whole families of invalid orders are never generated. Only the newly placed neighbour pair needs checking, because earlier pairs were checked already.",
+            "Storing rivalries as a set of frozensets makes the check order-independent and O(1). Undoing each choice after the recursive call returns the shared state to how it was, so one list and one set serve the whole search."
+          ],
+          "complexity": "O(n! × n) time in the worst case for n guests, but rivalries prune invalid branches early; O(n) space for the partial order and recursion.",
+          "pitfalls": [
+            "Forgetting to undo a choice, so later branches see guests who are not really seated.",
+            "Checking only (previous, guest) in one order when rivalries are unordered pairs."
+          ],
+          "transfer": "Seat guests around a round table, where the first and last seats are also neighbours and rotations of the same arrangement count once."
+        },
+        "references": [
+          {
+            "title": "Python documentation: frozenset",
+            "url": "https://docs.python.org/3/library/stdtypes.html#frozenset",
+            "section": "Set types",
+            "reviewed": "2026-11-08",
+            "scope": "API behavior for original Python 3.14+ solutions. Algorithm reasoning and challenge scenarios are original; this page does not establish all complexity claims."
+          }
+        ]
+      },
+      {
         "id": "book-most-sessions",
-        "title": "30. Fit the most optional sessions",
+        "title": "37. Fit the most optional sessions",
         "stage": "advanced",
         "takeaway": "stretch · Python 3.14+ · Test your solution locally",
         "sections": [
@@ -87292,7 +87747,7 @@ const LEARNING_PATHS = [
             {
               "label": "List the available challenges",
               "command": "python check.py --list",
-              "expected": "The 30 challenge identifiers and titles."
+              "expected": "The 37 challenge identifiers and titles."
             },
             {
               "label": "Try the first challenge in this stage",
@@ -87321,7 +87776,7 @@ const LEARNING_PATHS = [
           "id": "intermediate",
           "title": "Recognise reusable patterns",
           "kind": "lesson",
-          "goal": "Practise counting, two pointers, windows, prefix sums, search and stacks.",
+          "goal": "Practise counting, two pointers, windows, prefix sums, search, stacks, heaps and recursion.",
           "fileIds": [
             "attempts",
             "runner",
@@ -87340,7 +87795,7 @@ const LEARNING_PATHS = [
             {
               "label": "List the available challenges",
               "command": "python check.py --list",
-              "expected": "The 30 challenge identifiers and titles."
+              "expected": "The 37 challenge identifiers and titles."
             },
             {
               "label": "Try the first challenge in this stage",
@@ -87388,7 +87843,7 @@ const LEARNING_PATHS = [
             {
               "label": "List the available challenges",
               "command": "python check.py --list",
-              "expected": "The 30 challenge identifiers and titles."
+              "expected": "The 37 challenge identifiers and titles."
             },
             {
               "label": "Try the first challenge in this stage",
@@ -87424,6 +87879,8 @@ const LEARNING_PATHS = [
         "keep-first-labels": "foundation",
         "stock-totals": "foundation",
         "column-totals": "foundation",
+        "robot-moves": "foundation",
+        "occupied-neighbours": "foundation",
         "group-by-initial": "foundation",
         "most-requested": "intermediate",
         "can-fill-pair": "intermediate",
@@ -87434,6 +87891,8 @@ const LEARNING_PATHS = [
         "balance-marker": "intermediate",
         "first-suitable": "intermediate",
         "balanced-groups": "intermediate",
+        "rooms-needed": "intermediate",
+        "large-folders": "intermediate",
         "undo-notes": "intermediate",
         "read-settings": "advanced",
         "latest-samples": "advanced",
@@ -87444,6 +87903,9 @@ const LEARNING_PATHS = [
         "compare-releases": "advanced",
         "ready-order": "advanced",
         "fulfill-orders": "advanced",
+        "shortest-route": "advanced",
+        "fewest-coins": "advanced",
+        "seating-orders": "advanced",
         "book-most-sessions": "advanced"
       },
       "bundle": {
