@@ -16155,7 +16155,7 @@ const LEARNING_PATHS = [
     "title": "Cloud & Infrastructure as Code",
     "category": "Software engineering",
     "status": "ready",
-    "description": "22 lessons, three stage projects and a locally runnable practice kit covering Azure infrastructure decisions, Terraform concepts, policy and safe lifecycle review.",
+    "description": "25 lessons, three stage projects and a locally runnable practice kit covering Azure infrastructure decisions, Terraform concepts, policy and safe lifecycle review.",
     "level": "Foundations → intermediate practice with optional systems labs",
     "prerequisites": [
       "Basic application, network and terminal concepts; earlier delivery, security and system-design paths are helpful.",
@@ -16441,8 +16441,157 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "compute-choices",
+        "title": "4. Choose a compute service",
+        "stage": "foundation",
+        "takeaway": "Pick the most managed compute that still meets the workload's runtime, scaling and control requirements; each step down the list hands you more operating work.",
+        "sections": [
+          {
+            "title": "From virtual machines to functions",
+            "paragraphs": [
+              "Azure offers a ladder of compute services. Virtual Machines give full control of the operating system, so you patch, harden and scale it yourself (lesson 1's responsibility boundary moves towards you). App Service runs web apps and APIs on a managed platform with deployment slots, TLS and built-in scale-out. Container Apps runs containers with HTTP and event-driven scaling, including scaling to zero, without managing a Kubernetes cluster. Azure Kubernetes Service gives a managed control plane, but you operate nodes, upgrades and cluster add-ons. Azure Functions runs short event-triggered code and bills per execution on consumption-style plans.",
+              "Start from the workload requirements of lesson 3: the runtime and dependencies, how load arrives (steady requests, bursts, queue messages, schedules), how long one unit of work runs, start-up latency tolerance, network isolation and the team's operating capacity. Move down to a less managed option only for a stated reason, such as a custom kernel module or a long-running stateful process."
+            ]
+          },
+          {
+            "title": "A decision for the notebook API",
+            "paragraphs": [
+              "The table records one decision for a small notebook API and its nightly export job. It names the trigger that would reopen it, as lesson 3 recommends."
+            ],
+            "example": "Workload                 Needs                                  Choice            Why not the others\nNotebook API (HTTP)      container image, bursts, idle at night  Container Apps    VM: patching for no benefit; AKS: cluster ops\n                                                                                   for one service; Functions: long requests\nNightly export (15 min)  scheduled, runs to completion           Container Apps    Functions: execution time limits on some plans\n                         job, same image                                           and a second packaging model\nLegacy reporting tool    needs a Windows service and a           Virtual Machine   requires OS-level installation\n                         licensed driver\nReopen if: the platform needs service mesh or custom operators (consider AKS), or cold starts break the latency objective (set a minimum replica)."
+          }
+        ],
+        "exercise": {
+          "prompt": "A webhook receiver gets about 200 requests a day in unpredictable bursts, each handled in under a second by a small Python function, and the team has no operations staff. Choose a compute service, state the requirement that decided it, and name one risk and its mitigation.",
+          "solution": "Azure Functions on a consumption-style plan (or Container Apps scaled to zero): the load is rare, bursty and short, so per-execution billing and platform-managed scaling fit, and the team avoids patching. A VM or AKS would leave idle capacity and operating work. Risk: cold starts delay the first request after idle; mitigate by checking the webhook sender's timeout and retry policy, or keep one warm instance on a premium plan if the latency objective requires it. Also make the handler idempotent because senders retry.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Ties the choice to load pattern, duration and operating capacity.",
+            "Explains why a less managed option adds unneeded work.",
+            "Names cold start (or another real risk) with a mitigation."
+          ]
+        },
+        "quiz": {
+          "question": "A service needs a custom kernel module on its hosts. Which compute option fits?",
+          "options": [
+            "Azure Functions",
+            "App Service",
+            "Virtual Machines"
+          ],
+          "correct": 2,
+          "explanation": "Only a VM (or nodes you manage) gives operating-system control. Managed platforms do not let you load kernel modules."
+        },
+        "references": [
+          {
+            "title": "Azure Architecture Center: Choose an Azure compute service",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/guide/technology-choices/compute-decision-tree",
+            "section": "Choose a candidate service; understand the basic features",
+            "reviewed": "2026-11-08",
+            "scope": "Azure service documentation; features, limits and prices change, so confirm current values before deciding."
+          },
+          {
+            "title": "Azure Container Apps: Comparing container options",
+            "url": "https://learn.microsoft.com/en-us/azure/container-apps/compare-options",
+            "section": "Container option comparisons",
+            "reviewed": "2026-11-08",
+            "scope": "Azure service documentation; features, limits and prices change, so confirm current values before deciding."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Moving from App Service to self-managed Virtual Machines, which responsibility moves to your team?",
+            "options": [
+              "Operating-system patching and hardening",
+              "Writing application code",
+              "Choosing a region"
+            ],
+            "correct": 0,
+            "explanation": "On a VM the operating system is yours to patch, harden and scale; the platform handles that on App Service."
+          }
+        ]
+      },
+      {
+        "id": "managed-data",
+        "title": "5. Choose managed databases and storage tiers",
+        "stage": "foundation",
+        "takeaway": "Managed data services take over patching, backups and replicas, but you still choose the redundancy, recovery window and storage tier, and those choices set both cost and what you can recover.",
+        "sections": [
+          {
+            "title": "Managed databases and storage accounts",
+            "paragraphs": [
+              "Azure SQL Database is a managed SQL Server engine: the platform patches it, takes automatic backups for point-in-time restore within a retention window you configure, and can add zone redundancy or readable geo-replicas. You still own the schema, queries, logins, firewall or private endpoint (lesson 6), and testing a restore. Other managed engines (Azure Database for PostgreSQL, Cosmos DB) follow the same split.",
+              "A storage account holds blobs, files, queues and tables. Its redundancy setting decides which failures it survives: locally redundant storage keeps three copies in one datacenter, zone-redundant storage spreads them across availability zones, and geo-redundant options copy asynchronously to a second region, so the latest writes can be lost on a regional failover. Redundancy is not a backup: a deleted or overwritten blob is deleted everywhere, so enable soft delete or versioning for that (lesson 23)."
+            ]
+          },
+          {
+            "title": "Blob access tiers",
+            "paragraphs": [
+              "Blob access tiers trade storage price against access price. Hot is cheapest to read; cool, cold and archive are cheaper to store but charge more to read and have minimum retention periods (30, 90 and 180 days) with early-deletion charges. Archive is offline: a blob must be rehydrated, which can take hours, before it can be read. Lifecycle management rules can move blobs between tiers by age.",
+              "With the invented rates below, rarely read exports are cheapest in archive, but heavy reads make hot the cheapest. Rehydration time, not only price, rules archive out for data a user may need today."
+            ],
+            "example": "# Invented teaching rates per GB-month and per GB read; real prices vary by region and change.\nTIERS = {\n    'hot':     {'store': 0.020, 'read': 0.000, 'min_days': 0},\n    'cool':    {'store': 0.010, 'read': 0.010, 'min_days': 30},\n    'cold':    {'store': 0.004, 'read': 0.030, 'min_days': 90},\n    'archive': {'store': 0.001, 'read': 0.020, 'min_days': 180},\n}\n\ndef monthly(tier, stored_gb, read_gb):\n    t = TIERS[tier]\n    return stored_gb * t['store'] + read_gb * t['read']\n\nfor read_gb in (10, 500, 2000):          # 1,000 GB of exports, three read patterns\n    costs = {tier: round(monthly(tier, 1000, read_gb), 2) for tier in TIERS}\n    print(read_gb, 'GB read ->', costs, 'cheapest:', min(costs, key=costs.get))\n\n# Expected output:\n# 10 GB read -> {'hot': 20.0, 'cool': 10.1, 'cold': 4.3, 'archive': 1.2} cheapest: archive\n# 500 GB read -> {'hot': 20.0, 'cool': 15.0, 'cold': 19.0, 'archive': 11.0} cheapest: archive\n# 2000 GB read -> {'hot': 20.0, 'cool': 30.0, 'cold': 64.0, 'archive': 41.0} cheapest: hot"
+          }
+        ],
+        "exercise": {
+          "prompt": "The notebook keeps learner exports for seven years. They are often downloaded in the first week, rarely after a month, and must be retrievable within a day if a learner asks. Design the storage account settings and lifecycle rules, and say what protects against accidental deletion.",
+          "solution": "Store exports as blobs in a storage account with zone-redundant (or geo-zone-redundant, if a regional outage must be survived) redundancy. Upload to hot; a lifecycle rule moves blobs to cool after 30 days and to cold after 90 days. Archive is acceptable after a year only if standard rehydration fits inside the one-day retrieval requirement, otherwise keep them in cold. Delete after seven years with another rule. Enable blob soft delete and versioning (or an immutability policy if records must not be altered) because redundancy copies deletions too. Record metadata in the database so retrieval does not depend on listing.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Chooses redundancy from the failures that must be survived.",
+            "Uses lifecycle rules that respect access pattern and minimum retention.",
+            "Checks the archive retrieval delay against the one-day requirement.",
+            "Protects against deletion with soft delete, versioning or immutability."
+          ]
+        },
+        "quiz": {
+          "question": "A storage account uses geo-redundant storage. A script deletes a container by mistake. What restores it?",
+          "options": [
+            "Failing over to the secondary region",
+            "Soft delete, versioning or a separate backup enabled in advance",
+            "Nothing is needed; geo-redundancy keeps the deleted data"
+          ],
+          "correct": 1,
+          "explanation": "Replication copies the deletion. Only soft delete, versioning or an independent backup keeps the earlier data."
+        },
+        "references": [
+          {
+            "title": "Azure SQL Database: Automated backups",
+            "url": "https://learn.microsoft.com/en-us/azure/azure-sql/database/automated-backups-overview",
+            "section": "Backup frequency; backup retention",
+            "reviewed": "2026-11-08",
+            "scope": "Azure service documentation; features, limits and prices change, so confirm current values before deciding."
+          },
+          {
+            "title": "Azure Storage: Data redundancy",
+            "url": "https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy",
+            "section": "Redundancy in the primary region; redundancy in a secondary region",
+            "reviewed": "2026-11-08",
+            "scope": "Azure service documentation; features, limits and prices change, so confirm current values before deciding."
+          },
+          {
+            "title": "Azure Storage: Access tiers for blob data",
+            "url": "https://learn.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview",
+            "section": "Online access tiers; archive access tier",
+            "reviewed": "2026-11-08",
+            "scope": "Azure service documentation; features, limits and prices change, so confirm current values before deciding. The rates in the example are invented."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Using the lesson's invented rates, which tier is cheapest for 1,000 GB of exports read at 2,000 GB a month?",
+            "options": [
+              "hot",
+              "cool",
+              "archive"
+            ],
+            "correct": 0,
+            "explanation": "Hot costs 20.00 with free reads; cool costs 30.00 and archive 41.00 once read charges are added."
+          }
+        ]
+      },
+      {
         "id": "networking",
-        "title": "4. Networks, DNS and traffic boundaries",
+        "title": "6. Networks, DNS and traffic boundaries",
         "takeaway": "Connectivity requires routing, name resolution and permitted access.",
         "sections": [
           {
@@ -16611,7 +16760,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "identity",
-        "title": "5. Identity and least privilege",
+        "title": "7. Identity and least privilege",
         "takeaway": "Choose a principal, role and scope for each responsibility.",
         "sections": [
           {
@@ -16678,7 +16827,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "iac-model",
-        "title": "6. Desired state and infrastructure as code",
+        "title": "8. Desired state and infrastructure as code",
         "takeaway": "Version configuration, inspect differences and review changes.",
         "sections": [
           {
@@ -16747,7 +16896,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "provider-init",
-        "title": "7. Providers, versions and initialization",
+        "title": "9. Providers, versions and initialization",
         "takeaway": "Pin compatible dependencies and verify the tool boundary.",
         "sections": [
           {
@@ -16814,7 +16963,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "variables",
-        "title": "8. Variables, validation and outputs",
+        "title": "10. Variables, validation and outputs",
         "takeaway": "Define typed inputs and avoid secrets in state or examples.",
         "sections": [
           {
@@ -16882,7 +17031,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "dependencies",
-        "title": "9. Dependency graph and outputs",
+        "title": "11. Dependency graph and outputs",
         "takeaway": "References describe dependency without requiring a universal sequence.",
         "sections": [
           {
@@ -17029,7 +17178,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "state",
-        "title": "10. State, remote backends and locks",
+        "title": "12. State, remote backends and locks",
         "takeaway": "State is sensitive coordination data, not an application backup.",
         "sections": [
           {
@@ -17198,7 +17347,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "plan-review",
-        "title": "11. Plan review and change classification",
+        "title": "13. Plan review and change classification",
         "takeaway": "A plan is a proposed operation set, not a successful deployment.",
         "sections": [
           {
@@ -17949,7 +18098,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "lifecycle",
-        "title": "12. Replacement and lifecycle safeguards",
+        "title": "14. Replacement and lifecycle safeguards",
         "takeaway": "Protect data across resource identity changes.",
         "sections": [
           {
@@ -18009,7 +18158,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "modules",
-        "title": "13. Modules and environment boundaries",
+        "title": "15. Modules and environment boundaries",
         "takeaway": "Reuse a contract without hiding ownership or mixing environments.",
         "sections": [
           {
@@ -18076,7 +18225,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "drift-import",
-        "title": "14. Drift detection and adopting existing resources",
+        "title": "16. Drift detection and adopting existing resources",
         "takeaway": "Import associates identity; review configuration before changing it.",
         "sections": [
           {
@@ -18152,7 +18301,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "policy",
-        "title": "15. Policy checks and evidence limits",
+        "title": "17. Policy checks and evidence limits",
         "takeaway": "Static checks catch selected mistakes without proving real enforcement.",
         "sections": [
           {
@@ -18227,7 +18376,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "secrets",
-        "title": "16. Secret lifecycle and workload identity",
+        "title": "18. Secret lifecycle and workload identity",
         "takeaway": "Reduce credential storage and test rotation and revocation.",
         "sections": [
           {
@@ -18294,7 +18443,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "cost-control",
-        "title": "17. Cost estimation, budgets and cleanup",
+        "title": "19. Cost estimation, budgets and cleanup",
         "takeaway": "Budget alerts are not automatic spending caps.",
         "sections": [
           {
@@ -18361,8 +18510,100 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "autoscaling-across-clouds",
+        "title": "20. Autoscale, and map the services across clouds",
+        "stage": "advanced",
+        "takeaway": "Autoscaling adds capacity from a measured signal within limits you set; scale out quickly, scale in cautiously, and recognise the same building blocks under AWS and Google Cloud names.",
+        "sections": [
+          {
+            "title": "Scaling rules",
+            "paragraphs": [
+              "Autoscaling changes the number of instances (horizontal) rather than their size (vertical, which usually needs a restart). A rule needs a signal that tracks load: CPU, request rate, queue length or a custom metric. Target tracking computes the instance count that would bring the metric back to its target. Set a minimum for availability and cold starts, and a maximum that protects your budget (lesson 19) and the database behind the service.",
+              "Scale out fast and scale in slowly. New instances take time to start and warm up, and removing capacity on a brief dip causes flapping. Instances must be stateless and handle shutdown signals, finishing in-flight work, because the platform removes them without notice to users. Queue-based scaling (Container Apps and KEDA rules, for example) scales on backlog rather than CPU, which suits workers."
+            ],
+            "example": "import math\n\nMIN, MAX, TARGET_CPU = 2, 10, 60          # replicas and the target average CPU percentage\nSCALE_IN_WAIT = 3                         # intervals of low load before removing replicas\n\ndef desired(replicas, cpu):\n    return max(MIN, min(MAX, math.ceil(replicas * cpu / TARGET_CPU)))\n\nreplicas, calm = 2, 0\nfor minute, cpu in enumerate([55, 95, 90, 70, 40, 30, 30, 30, 30]):\n    want = desired(replicas, cpu)\n    if want > replicas:                   # scale out at once\n        replicas, calm = want, 0\n    elif want < replicas:                 # scale in only after sustained low load\n        calm += 1\n        if calm >= SCALE_IN_WAIT:\n            replicas, calm = want, 0\n    else:\n        calm = 0\n    print(f'minute {minute}: cpu {cpu}% -> {replicas} replicas')\n\n# Expected output:\n# minute 0: cpu 55% -> 2 replicas\n# minute 1: cpu 95% -> 4 replicas\n# minute 2: cpu 90% -> 6 replicas\n# minute 3: cpu 70% -> 7 replicas\n# minute 4: cpu 40% -> 7 replicas\n# minute 5: cpu 30% -> 7 replicas\n# minute 6: cpu 30% -> 4 replicas\n# minute 7: cpu 30% -> 4 replicas\n# minute 8: cpu 30% -> 4 replicas"
+          },
+          {
+            "title": "The same concepts on AWS and Google Cloud",
+            "paragraphs": [
+              "The building blocks recur across providers, with different names and defaults. Learn the concept, then check the provider's limits, pricing and identity model before assuming behaviour carries over."
+            ],
+            "example": "Concept                      Azure                      AWS                           Google Cloud\nVirtual machines             Virtual Machines           EC2                           Compute Engine\nAutoscaled VM group          VM Scale Sets              EC2 Auto Scaling groups       Managed instance groups\nManaged web platform         App Service                Elastic Beanstalk             App Engine\nServerless containers        Container Apps             App Runner, ECS on Fargate    Cloud Run\nFunctions                    Azure Functions            Lambda                        Cloud Run functions\nManaged Kubernetes           AKS                        EKS                           GKE\nObject storage               Blob Storage               S3                            Cloud Storage\nManaged relational database  Azure SQL Database         RDS, Aurora                   Cloud SQL\nWorkload identity            Managed identities         IAM roles                     Service accounts\nHierarchy for governance     Management groups,         Organizations, OUs,           Organization, folders,\n                             subscriptions              accounts                      projects"
+          }
+        ],
+        "exercise": {
+          "prompt": "A queue worker in Container Apps processes export jobs that take up to 3 minutes each. During a campaign the queue grows to 5,000 messages and the database reaches its connection limit. Design the scaling rule and its limits, and explain how scale-in must behave.",
+          "solution": "Scale on queue length (for example one replica per 20 waiting messages) rather than CPU, because backlog is the load signal for a worker. Set minimum 0 or 1 depending on start-up latency needs, and a maximum derived from the database: if each replica uses 5 connections and 100 are available for workers, cap at 20 replicas. Scale out promptly; scale in only after the queue stays short for several minutes. On scale-in, replicas receive a shutdown signal: stop taking new messages, finish or abandon the current one so it returns to the queue, and keep handlers idempotent because a message may be processed twice. Alert on queue age so a capped system is visible.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Scales on backlog rather than CPU.",
+            "Derives the maximum from a downstream limit.",
+            "Handles shutdown so in-flight messages are not lost and are processed idempotently."
+          ]
+        },
+        "quiz": {
+          "question": "Why scale in more slowly than you scale out?",
+          "options": [
+            "Removing instances costs more than adding them",
+            "Brief dips would otherwise remove capacity that is needed again moments later, causing flapping and cold starts",
+            "Platforms forbid fast scale-in"
+          ],
+          "correct": 1,
+          "explanation": "Adding capacity late hurts users; removing it early hurts them too. A sustained-calm window avoids oscillation."
+        },
+        "references": [
+          {
+            "title": "Azure Architecture Center: Autoscaling guidance",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/best-practices/auto-scaling",
+            "section": "Autoscaling guidance",
+            "reviewed": "2026-11-08",
+            "scope": "Azure service documentation; features, limits and prices change, so confirm current values before deciding."
+          },
+          {
+            "title": "Azure Container Apps: Scaling",
+            "url": "https://learn.microsoft.com/en-us/azure/container-apps/scale-app",
+            "section": "Scale definition; scale rules",
+            "reviewed": "2026-11-08",
+            "scope": "Azure service documentation; features, limits and prices change, so confirm current values before deciding."
+          },
+          {
+            "title": "Amazon EC2 Auto Scaling: Target tracking scaling policies",
+            "url": "https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-target-tracking.html",
+            "section": "How target tracking works",
+            "reviewed": "2026-11-08",
+            "scope": "AWS service documentation, used to compare the concept; behaviour and limits differ from Azure."
+          },
+          {
+            "title": "Azure for AWS professionals",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/aws-professional/",
+            "section": "Service comparison",
+            "reviewed": "2026-11-08",
+            "scope": "Azure service documentation; features, limits and prices change, so confirm current values before deciding. Mappings are approximate equivalents, not identical services."
+          },
+          {
+            "title": "Google Cloud to Azure services comparison",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/gcp-professional/services",
+            "section": "Service comparison",
+            "reviewed": "2026-11-08",
+            "scope": "Azure service documentation; features, limits and prices change, so confirm current values before deciding. Mappings are approximate equivalents, not identical services."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In the lesson's simulation (target 60% CPU, minimum 2, maximum 10), the service has 2 replicas when CPU reaches 95%. How many replicas does it scale to?",
+            "options": [
+              "3",
+              "4",
+              "10"
+            ],
+            "correct": 1,
+            "explanation": "2 × 95 / 60 is about 3.2, rounded up to 4."
+          }
+        ]
+      },
+      {
         "id": "deployment-pipeline",
-        "title": "18. CI planning and reviewed deployment",
+        "title": "21. CI planning and reviewed deployment",
         "takeaway": "Separate untrusted validation from credentialed mutation.",
         "sections": [
           {
@@ -18529,7 +18770,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "infra-tests",
-        "title": "19. Infrastructure tests and mock boundaries",
+        "title": "22. Infrastructure tests and mock boundaries",
         "takeaway": "Distinguish syntax, model, provider and deployed-service tests.",
         "sections": [
           {
@@ -18597,7 +18838,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "resilience",
-        "title": "20. Recovery, backups and failure domains",
+        "title": "23. Recovery, backups and failure domains",
         "takeaway": "Infrastructure reconstruction and data restoration are separate plans.",
         "sections": [
           {
@@ -18664,7 +18905,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "cleanup",
-        "title": "21. Teardown and leftover resources",
+        "title": "24. Teardown and leftover resources",
         "takeaway": "Deletion needs scope checks and post-deletion verification.",
         "sections": [
           {
@@ -18731,7 +18972,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "launch-review",
-        "title": "22. Infrastructure launch decision",
+        "title": "25. Infrastructure launch decision",
         "takeaway": "Use an evidence portfolio to separate design confidence from production readiness.",
         "sections": [
           {
@@ -19185,6 +19426,8 @@ const LEARNING_PATHS = [
         "cloud-contract": "foundation",
         "azure-scope": "foundation",
         "requirements": "foundation",
+        "compute-choices": "foundation",
+        "managed-data": "foundation",
         "networking": "foundation",
         "identity": "foundation",
         "iac-model": "foundation",
@@ -19199,6 +19442,7 @@ const LEARNING_PATHS = [
         "policy": "intermediate",
         "secrets": "intermediate",
         "cost-control": "advanced",
+        "autoscaling-across-clouds": "advanced",
         "deployment-pipeline": "advanced",
         "infra-tests": "advanced",
         "resilience": "advanced",

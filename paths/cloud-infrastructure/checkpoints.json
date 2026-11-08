@@ -9,6 +9,12 @@
     "requirements": [
       {"question": "The ADR exercise chose managed application compute for 20 learners. Which new requirement is a stated reason to reconsider?", "options": ["A custom operating-system component", "Ten more learners", "A second lesson topic"], "correct": 0, "explanation": "Managed compute fits because no custom OS packages are needed. A requirement that breaks that assumption reopens the decision."}
     ],
+    "compute-choices": [
+      {"question": "Moving from App Service to self-managed Virtual Machines, which responsibility moves to your team?", "options": ["Operating-system patching and hardening", "Writing application code", "Choosing a region"], "correct": 0, "explanation": "On a VM the operating system is yours to patch, harden and scale; the platform handles that on App Service."}
+    ],
+    "managed-data": [
+      {"question": "Using the lesson's invented rates, which tier is cheapest for 1,000 GB of exports read at 2,000 GB a month?", "options": ["hot", "cool", "archive"], "correct": 0, "explanation": "Hot costs 20.00 with free reads; cool costs 30.00 and archive 41.00 once read charges are added."}
+    ],
     "networking": [
       {"question": "Can an application reach the template's storage account over the network as supplied?", "options": ["No: public access is disabled and no private endpoint exists", "Yes, over its public endpoint", "Yes, through the resource group's network"], "correct": 0, "explanation": "public_network_access_enabled is false and the template defines no private endpoint, so it is deliberately not a usable backend."}
     ],
@@ -50,6 +56,9 @@
     ],
     "cost-control": [
       {"question": "What does infra_lab.estimate(2, 10, 0.5, 8) return?", "options": ["24", "20", "4"], "correct": 0, "explanation": "2 units per hour for 10 hours plus 0.5 units per GB-month for 8 GB. These are invented teaching rates, not Azure prices."}
+    ],
+    "autoscaling-across-clouds": [
+      {"question": "In the lesson's simulation (target 60% CPU, minimum 2, maximum 10), the service has 2 replicas when CPU reaches 95%. How many replicas does it scale to?", "options": ["3", "4", "10"], "correct": 1, "explanation": "2 × 95 / 60 is about 3.2, rounded up to 4."}
     ],
     "deployment-pipeline": [
       {"question": "A pull request runs validation checks. Should those checks receive deployment credentials?", "options": ["No: pull-request code may be untrusted", "Yes, so the plan can be accurate", "Yes, if the job is short"], "correct": 0, "explanation": "Run offline checks without cloud identity. A trusted release job obtains scoped credentials later."}

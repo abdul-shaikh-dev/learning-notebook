@@ -21,15 +21,16 @@ import infra_lab as lab  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
+    'compute-choices/2': 'On a VM the operating system is yours to patch, harden and scale, lesson 4',
     'cloud-contract/2': 'Managed compute does not configure authorization or protect application data, lesson 1',
     'requirements/2': 'A custom OS component is the stated reason to reconsider the choice, lesson 3',
-    'provider-init/2': 'The dependency lock file records selected provider versions and checksums, lesson 7',
-    'state/2': 'State maps addresses to remote identities; application rows need their own backups, lesson 10',
-    'modules/2': 'Workspaces provide multiple states but not isolation of credentials, lesson 13',
-    'drift-import/2': 'A normal plan can propose the configured value after refresh, lesson 14',
-    'deployment-pipeline/2': 'Pull-request code may be untrusted and should not receive deployment secrets, lesson 18',
-    'resilience/2': 'Rebuilding infrastructure does not restore database rows or blob contents, lesson 20',
-    'launch-review/2': 'List the checks run, their results and the questions they cannot answer, lesson 22',
+    'provider-init/2': 'The dependency lock file records selected provider versions and checksums, lesson 9',
+    'state/2': 'State maps addresses to remote identities; application rows need their own backups, lesson 12',
+    'modules/2': 'Workspaces provide multiple states but not isolation of credentials, lesson 15',
+    'drift-import/2': 'A normal plan can propose the configured value after refresh, lesson 16',
+    'deployment-pipeline/2': 'Pull-request code may be untrusted and should not receive deployment secrets, lesson 21',
+    'resilience/2': 'Rebuilding infrastructure does not restore database rows or blob contents, lesson 23',
+    'launch-review/2': 'List the checks run, their results and the questions they cannot answer, lesson 25',
 }
 
 TOPOLOGY = json.loads((PRACTICE / 'topology.json').read_text(encoding='utf-8'))['resources']
@@ -188,7 +189,20 @@ def advanced_owner_role():
     return raises(lambda: lab.validate(changed('group', role='Owner')))
 
 
+
+def managed_data():
+    rates = {'hot': (0.020, 0.000), 'cool': (0.010, 0.010), 'cold': (0.004, 0.030), 'archive': (0.001, 0.020)}
+    costs = {tier: 1000 * store + 2000 * read for tier, (store, read) in rates.items()}
+    return min(costs, key=costs.get)
+
+
+def autoscaling_across_clouds():
+    import math
+    return str(max(2, min(10, math.ceil(2 * 95 / 60))))
+
+
 FACTS = {
+    'managed-data/2': managed_data, 'autoscaling-across-clouds/2': autoscaling_across_clouds,
     'azure-scope/2': azure_scope, 'networking/2': networking, 'identity/2': identity, 'iac-model/2': iac_model,
     'variables/2': variables, 'dependencies/2': dependencies, 'plan-review/2': plan_review,
     'lifecycle/2': lifecycle, 'policy/2': policy, 'secrets/2': secrets, 'cost-control/2': cost_control,
