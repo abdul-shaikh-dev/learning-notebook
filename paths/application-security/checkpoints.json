@@ -30,8 +30,17 @@
     "xss-context": [
       {"question": "What does title_html('<b>Hi</b>') return?", "options": ["<h1>&lt;b&gt;Hi&lt;/b&gt;</h1>", "<h1><b>Hi</b></h1>", "<h1>Hi</h1>"], "correct": 0, "explanation": "The text-node encoder turns markup characters into entities. The title is shown as text, not parsed as HTML or stripped."}
     ],
+    "security-headers": [
+      {"question": "Using the lesson's reviewer, what does it report for a CSP of script-src 'self' 'unsafe-inline' with no other headers?", "options": ["Only a missing HSTS header", "Inline script without a nonce, no frame-ancestors, and missing HSTS, nosniff and Referrer-Policy", "ok"], "correct": 1, "explanation": "The weak header set fails every check except the presence of a CSP header itself."}
+    ],
     "sql-injection": [
       {"question": "find_title receives the title x' OR '1'='1 against the two-row synthetic database. How many rows come back?", "options": ["0", "2", "1"], "correct": 0, "explanation": "The value is bound as a parameter, so it is compared as one literal title. No row has that title."}
+    ],
+    "ssrf": [
+      {"question": "Using the lesson's checker, what happens to https://images.example.org@169.254.169.254/ ?", "options": ["It is allowed because it starts with the allowlisted name", "It is blocked because the parsed host is not allowlisted", "It is blocked because the scheme is wrong"], "correct": 1, "explanation": "Everything before @ is user information. The host is 169.254.169.254, which is not on the allowlist."}
+    ],
+    "deserialization-uploads": [
+      {"question": "Using the lesson's upload check, what happens to report.pdf whose content is <script>alert(1)</script>?", "options": ["It is stored as a PDF", "It is rejected because the content is not an allowed type", "It is stored with the user's file name"], "correct": 1, "explanation": "The extension says PDF, but the bytes do not start with the PDF signature, so the content check refuses it."}
     ],
     "oauth-roles": [
       {"question": "An API receives a valid access token whose scope allows reading documents. May the caller read every document?", "options": ["No: scope does not replace the API's ownership policy", "Yes: the scope grants read access to all documents", "Yes, if the token has not expired"], "correct": 0, "explanation": "The API validates the token, then still applies object authorization. Scope says what kind of access was delegated, not which records."}

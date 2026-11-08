@@ -28,12 +28,12 @@ from login_flow_lab import Pending  # noqa: E402
 SOURCED = {
     'cookies-transport/2': 'A __Host- cookie requires Secure, Path=/ and no Domain, lesson 7',
     'passwords-mfa/2': 'Salted password hashing with a work factor, not encryption or a fast hash, lesson 8',
-    'oauth-roles/2': 'Access token scope is not a substitute for ownership policy, lesson 12',
-    'oidc-login/2': 'Stable subject identity includes the issuer; email is not a permanent key, lesson 13',
-    'token-validation/2': 'Signature success alone is insufficient; audience and issuer must match, lesson 15',
-    'secrets/2': 'Environment variables can leak through diagnostics or error reporting, lesson 16',
-    'dependencies/2': 'A README version does not prove the deployed artifact, lesson 18',
-    'incident-recovery/2': 'Fix server authorization and test every alternate endpoint, lesson 21',
+    'oauth-roles/2': 'Access token scope is not a substitute for ownership policy, lesson 15',
+    'oidc-login/2': 'Stable subject identity includes the issuer; email is not a permanent key, lesson 16',
+    'token-validation/2': 'Signature success alone is insufficient; audience and issuer must match, lesson 18',
+    'secrets/2': 'Environment variables can leak through diagnostics or error reporting, lesson 19',
+    'dependencies/2': 'A README version does not prove the deployed artifact, lesson 21',
+    'incident-recovery/2': 'Fix server authorization and test every alternate endpoint, lesson 24',
 }
 
 ALICE = Principal('alice', 'red')
@@ -229,7 +229,42 @@ def advanced_tenant():
                     {(404, 'unavailable', 'Other tenant'): '404 unavailable, and the title is unchanged'})
 
 
+
+def security_headers():
+    import io
+    from contextlib import redirect_stdout
+    code = LESSON_EXAMPLE('security-headers')
+    out = io.StringIO()
+    with redirect_stdout(out):
+        exec(code, {})
+    weak = out.getvalue().splitlines()[0]
+    expected = ("weak ['CSP allows inline script without a nonce', 'CSP does not restrict framing (frame-ancestors)', "
+                "'missing Strict-Transport-Security max-age', 'missing X-Content-Type-Options: nosniff', 'Referrer-Policy leaks full URLs']")
+    return pick(weak == expected, {True: 'Inline script without a nonce, no frame-ancestors, and missing HSTS, nosniff and Referrer-Policy'})
+
+
+def ssrf():
+    from urllib.parse import urlsplit
+    host = urlsplit('https://images.example.org@169.254.169.254/').hostname
+    return pick(host, {'169.254.169.254': 'It is blocked because the parsed host is not allowlisted'})
+
+
+def deserialization_uploads():
+    content = b'<script>alert(1)</script>'
+    signatures = (b'\x89PNG\r\n\x1a\n', b'%PDF-')
+    return pick(any(content.startswith(s) for s in signatures),
+                {False: 'It is rejected because the content is not an allowed type'})
+
+
+def LESSON_EXAMPLE(lesson_id):
+    course = json.loads((ROOT / 'paths' / 'application-security' / 'path.json').read_text(encoding='utf-8'))
+    lesson = next(l for l in course['lessons'] if l['id'] == lesson_id)
+    example = next(s['example'] for s in lesson['sections'] if s.get('example'))
+    return example.split('# Expected output:')[0]
+
+
 FACTS = {
+    'security-headers/2': security_headers, 'ssrf/2': ssrf, 'deserialization-uploads/2': deserialization_uploads,
     'assets-threats/2': assets_threats, 'identity-principals/2': identity_principals,
     'authentication-boundary/2': authentication_boundary, 'authorization-ownership/2': authorization_ownership,
     'input-contracts/2': input_contracts, 'sessions/2': sessions_rotation, 'csrf/2': csrf,
