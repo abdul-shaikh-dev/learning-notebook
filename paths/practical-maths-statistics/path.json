@@ -413,8 +413,67 @@
       ]
     },
     {
+      "id": "logarithms-and-log-scales",
+      "title": "7. Undo growth with logarithms and read log scales",
+      "stage": "foundation",
+      "takeaway": "A logarithm counts how many times you multiply by the base; equal steps on a log scale are equal ratios.",
+      "sections": [
+        {
+          "title": "How it works",
+          "paragraphs": [
+            "`log2(1024) = 10` because 2 multiplied by itself 10 times is 1024. A logarithm undoes a power: if `b**x = y`, then `log_b(y) = x`. Base 10 counts digits (a six-figure number has a base-10 log between 5 and 6), base 2 counts halvings or doublings, and the natural log uses e, which appears in continuous growth.",
+            "Logarithms turn multiplication into addition: `log(a*b) = log(a) + log(b)`. That is why they answer \"how many periods?\" questions about compound growth from lesson 6. Growing by a factor r per period reaches k times the start after `log(k) / log(r)` periods; at 7% per period, doubling takes about 10.24 periods.",
+            "A log scale on a chart spaces 10, 100 and 1000 equally, because each is ten times the last. Use it when values span several orders of magnitude, or when relative change matters more than absolute change, such as latency percentiles or growth curves. A straight line on a log-scaled y-axis means steady percentage growth."
+          ]
+        },
+        {
+          "title": "Worked example",
+          "paragraphs": [
+            "Binary search halves a sorted list each step, so a million items need at most `ceil(log2(1,000,000)) = 20` comparisons. On a log scale, 10 → 100 → 1000 → 10000 are steps of exactly 1."
+          ],
+          "example": "import math\n\nprint(math.log2(1024), math.log10(1_000_000))\nprint(round(math.log(2) / math.log(1.07), 2), 'periods to double at 7% growth')\nprint(math.ceil(math.log2(1_000_000)), 'halvings to search a million sorted items')\nvalues = [10, 100, 1000, 10000]\nprint([round(math.log10(b) - math.log10(a), 6) for a, b in zip(values, values[1:])])\n\n# Expected output:\n# 10.0 6.0\n# 10.24 periods to double at 7% growth\n# 20 halvings to search a million sorted items\n# [1.0, 1.0, 1.0]"
+        },
+        {
+          "title": "Check the assumption",
+          "paragraphs": [
+            "Logarithms are defined only for positive numbers. Zero or negative values (refunds, zero-latency samples) need handling before a log transform or a log axis, and adding a constant such as `log(x + 1)` changes the meaning near zero.",
+            "A log axis makes large differences look small. Label it clearly, and do not compare the visual gap between two lines as if the axis were linear."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "A user base grows 5% each month from 2,000 users. Use logarithms to find how many whole months until it first exceeds 10,000, then check by repeated multiplication.",
+        "solution": "Months = log(10000/2000) / log(1.05) = log(5) / log(1.05) ≈ 32.99, so the first whole month above 10,000 is month 33.\nCheck: 2000 × 1.05**32 ≈ 9,529 (below), 2000 × 1.05**33 ≈ 10,005 (above).",
+        "checks": [
+          "Divides log of the ratio by log of the growth factor.",
+          "Rounds up to the first whole month that exceeds the target.",
+          "Confirms with the neighbouring months."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "On a chart with a log-scaled y-axis, a metric moves from 100 to 1,000 and later from 1,000 to 10,000. How do the two moves look?",
+        "options": [
+          "The second looks ten times taller",
+          "They look the same height, because each is a tenfold increase",
+          "The first looks taller"
+        ],
+        "correct": 1,
+        "explanation": "A log scale maps equal ratios to equal distances, so two tenfold increases cover the same vertical span."
+      },
+      "references": [
+        {
+          "title": "Python 3.14 math documentation",
+          "url": "https://docs.python.org/3.14/library/math.html",
+          "section": "Power and logarithmic functions; comb",
+          "reviewed": "2026-11-08",
+          "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
+        }
+      ]
+    },
+    {
       "id": "algebra-and-scaling",
-      "title": "7. Solve for an unknown and check it",
+      "title": "8. Solve for an unknown and check it",
       "stage": "foundation",
       "takeaway": "Reverse the operations, then substitute the answer into the original equation.",
       "sections": [
@@ -470,7 +529,7 @@
     },
     {
       "id": "mean-median-and-outliers",
-      "title": "8. Compare centre and distribution",
+      "title": "9. Compare centre and distribution",
       "stage": "intermediate",
       "takeaway": "A single average can hide an uneven distribution.",
       "sections": [
@@ -526,7 +585,7 @@
     },
     {
       "id": "variance-and-spread",
-      "title": "9. Measure spread around the mean",
+      "title": "10. Measure spread around the mean",
       "stage": "intermediate",
       "takeaway": "Variance averages squared deviations; standard deviation restores the original unit.",
       "sections": [
@@ -582,7 +641,7 @@
     },
     {
       "id": "probability-and-complements",
-      "title": "10. Build a finite probability model",
+      "title": "11. Build a finite probability model",
       "stage": "intermediate",
       "takeaway": "Count outcomes only after stating which outcomes are equally likely.",
       "sections": [
@@ -638,7 +697,7 @@
     },
     {
       "id": "conditional-probability",
-      "title": "11. Change the denominator when conditioning",
+      "title": "12. Change the denominator when conditioning",
       "stage": "intermediate",
       "takeaway": "A conditional probability counts within the group named after \"given\".",
       "sections": [
@@ -693,8 +752,67 @@
       ]
     },
     {
+      "id": "bayes-and-base-rates",
+      "title": "13. Update a probability with Bayes' theorem",
+      "stage": "intermediate",
+      "takeaway": "P(cause | evidence) depends on how common the cause was to begin with, not only on how accurate the evidence is.",
+      "sections": [
+        {
+          "title": "How it works",
+          "paragraphs": [
+            "Lesson 12 showed that conditioning changes the denominator. Bayes' theorem turns a conditional probability around: `P(A | B) = P(B | A) × P(A) / P(B)`. A test's accuracy gives `P(positive | condition)`; the question people care about is `P(condition | positive)`.",
+            "`P(B)` usually needs the law of total probability: positives come from true cases and from false alarms, `P(positive) = P(positive | condition) × P(condition) + P(positive | no condition) × P(no condition)`. The starting probability `P(condition)` is the base rate or prior; the result is the posterior.",
+            "When the base rate is low, even an accurate test produces mostly false alarms, because the many people without the condition generate more false positives than the few with it generate true positives. Counting a concrete population, such as 10,000 people, makes this visible and avoids arithmetic slips."
+          ]
+        },
+        {
+          "title": "Worked example",
+          "paragraphs": [
+            "A fraud rule flags 95% of fraudulent payments and 5% of legitimate ones, and 1% of payments are fraudulent. Of 10,000 payments, 95 fraudulent ones are flagged and 495 legitimate ones are flagged too. Only about 16% of flagged payments are fraud, although the rule is \"95% accurate\"."
+          ],
+          "example": "base_rate, sensitivity, false_positive_rate = 0.01, 0.95, 0.05\n\np_flag = sensitivity * base_rate + false_positive_rate * (1 - base_rate)\nposterior = sensitivity * base_rate / p_flag\nprint(f'P(flagged) = {p_flag:.4f}, P(fraud | flagged) = {posterior:.3f}')\n\npayments = 10_000\nfraud = payments * base_rate\ntrue_flags = round(fraud * sensitivity)\nfalse_flags = round((payments - fraud) * false_positive_rate)\nprint(true_flags, 'true flags,', false_flags, 'false flags')\n\n# Expected output:\n# P(flagged) = 0.0590, P(fraud | flagged) = 0.161\n# 95 true flags, 495 false flags"
+        },
+        {
+          "title": "Check the assumption",
+          "paragraphs": [
+            "The base rate must describe the population being tested. A rule applied only to payments already flagged by another system sees a much higher fraud rate, and its posterior changes accordingly.",
+            "Sensitivity and false-positive rates are themselves estimates, often measured on a different population. Report the posterior with that uncertainty, and use Bayes' theorem to ask which input most changes the decision before collecting more data."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "An alert fires for 90% of real outages and, on healthy days, for 2% of checks. Real outages affect 0.5% of checks. Out of 100,000 checks, how many alerts are real and how many are false? What fraction of alerts are real?",
+        "solution": "Outage checks: 100,000 × 0.005 = 500; real alerts = 500 × 0.9 = 450.\nHealthy checks: 99,500; false alerts = 99,500 × 0.02 = 1,990.\nFraction real = 450 / (450 + 1,990) = 450 / 2,440 ≈ 0.184, about 18%.",
+        "checks": [
+          "Splits the 100,000 checks by the base rate first.",
+          "Applies sensitivity to outages and the false-positive rate to healthy checks.",
+          "Divides real alerts by all alerts."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "A rare condition is tested with a very accurate test. Why can most positive results still be false?",
+        "options": [
+          "Accurate tests are usually wrong",
+          "The many people without the condition produce more false positives than the few with it produce true positives",
+          "Bayes' theorem only applies to medicine"
+        ],
+        "correct": 1,
+        "explanation": "With a low base rate, a small false-positive rate applied to a large healthy group can outnumber the true positives."
+      },
+      "references": [
+        {
+          "title": "Wikipedia: Bayes' theorem",
+          "url": "https://en.wikipedia.org/wiki/Bayes%27_theorem",
+          "section": "Examples: drug testing",
+          "reviewed": "2026-11-08",
+          "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
+        }
+      ]
+    },
+    {
       "id": "sampling-and-selection",
-      "title": "12. Separate sampling noise from selection bias",
+      "title": "14. Separate sampling noise from selection bias",
       "stage": "intermediate",
       "takeaway": "A large sample can still miss the population you mean to describe.",
       "sections": [
@@ -750,7 +868,7 @@
     },
     {
       "id": "expected-value",
-      "title": "13. Weight outcomes by their probabilities",
+      "title": "15. Weight outcomes by their probabilities",
       "stage": "intermediate",
       "takeaway": "Expected value is a probability-weighted average, not a guaranteed outcome.",
       "sections": [
@@ -805,8 +923,74 @@
       ]
     },
     {
+      "id": "distributions",
+      "title": "16. Recognise binomial and normal distributions",
+      "stage": "intermediate",
+      "takeaway": "Counts of independent yes/no trials follow a binomial distribution; many sums and averages are close to normal, where 68%, 95% and 99.7% fall within 1, 2 and 3 standard deviations.",
+      "sections": [
+        {
+          "title": "How it works",
+          "paragraphs": [
+            "A distribution assigns probabilities to every possible value. The binomial distribution counts successes in n independent trials that each succeed with probability p, such as failed requests out of 20 when each fails 10% of the time: `P(k) = C(n, k) × p**k × (1 - p)**(n - k)`. Its mean is `n × p` and its variance `n × p × (1 - p)`.",
+            "The normal distribution is the symmetric bell curve described by a mean and a standard deviation (lesson 10). Sums and averages of many independent, similar contributions tend toward it, which is why sample means and measurement errors are often close to normal. About 68% of values lie within one standard deviation of the mean, 95% within two and 99.7% within three.",
+            "A z-score `(x - mean) / sd` says how many standard deviations a value lies from the mean. Python's `statistics.NormalDist` gives probabilities directly through `cdf`, the probability of a value at or below x."
+          ]
+        },
+        {
+          "title": "Worked example",
+          "paragraphs": [
+            "With 20 requests that each fail 10% of the time, there is about a 12% chance of no failures and a 96% chance of at most four. For response sizes with mean 200 KB and standard deviation 20 KB, the three intervals reproduce the 68-95-99.7 rule, and about 0.6% of responses exceed 250 KB."
+          ],
+          "example": "from math import comb\nfrom statistics import NormalDist\n\nn, p = 20, 0.1\npmf = [comb(n, k) * p**k * (1 - p)**(n - k) for k in range(n + 1)]\nprint(f'P(0 failures) = {pmf[0]:.4f}, P(at most 4) = {sum(pmf[:5]):.4f}, mean = {n * p}')\n\nsizes = NormalDist(mu=200, sigma=20)\nfor k in (1, 2, 3):\n    print(f'within {k} sd: {sizes.cdf(200 + 20 * k) - sizes.cdf(200 - 20 * k):.4f}')\nprint(f'above 250: {1 - sizes.cdf(250):.4f}')\n\n# Expected output:\n# P(0 failures) = 0.1216, P(at most 4) = 0.9568, mean = 2.0\n# within 1 sd: 0.6827\n# within 2 sd: 0.9545\n# within 3 sd: 0.9973\n# above 250: 0.0062"
+        },
+        {
+          "title": "Check the assumption",
+          "paragraphs": [
+            "The binomial model needs independent trials with the same probability. Requests that fail together during an outage are not independent, so the real chance of many failures is far higher than the binomial predicts.",
+            "Many real measurements are skewed or heavy-tailed: latency, file sizes, incomes. A mean and standard deviation then describe them poorly, and the 68-95-99.7 rule understates extreme values. Plot the data and compare percentiles before assuming a normal shape."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "A batch job retries each of 10 independent tasks that fail with probability 0.05. Find the probability that all 10 succeed and the probability that two or more fail. Then name a situation where this model would mislead.",
+        "solution": "P(all succeed) = 0.95**10 ≈ 0.5987.\nP(exactly 1 fails) = 10 × 0.05 × 0.95**9 ≈ 0.3151.\nP(2 or more) = 1 - 0.5987 - 0.3151 ≈ 0.0861.\nIt misleads when failures share a cause, such as a database outage that makes all tasks fail together.",
+        "checks": [
+          "Uses the complement for 'two or more'.",
+          "Applies the binomial formula for exactly one failure.",
+          "Names dependence between failures as the model's weakness."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "Values follow a normal distribution with mean 50 and standard deviation 5. Roughly what share lies between 40 and 60?",
+        "options": [
+          "68%",
+          "95%",
+          "99.7%"
+        ],
+        "correct": 1,
+        "explanation": "40 and 60 are two standard deviations from the mean, and about 95% of a normal distribution lies within two."
+      },
+      "references": [
+        {
+          "title": "Python 3.14 statistics documentation",
+          "url": "https://docs.python.org/3.14/library/statistics.html",
+          "section": "NormalDist",
+          "reviewed": "2026-11-08",
+          "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
+        },
+        {
+          "title": "Python 3.14 math documentation",
+          "url": "https://docs.python.org/3.14/library/math.html",
+          "section": "Power and logarithmic functions; comb",
+          "reviewed": "2026-11-08",
+          "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
+        }
+      ]
+    },
+    {
       "id": "uncertainty-and-intervals",
-      "title": "14. Interpret a confidence interval",
+      "title": "17. Interpret a confidence interval",
       "stage": "intermediate",
       "takeaway": "Across repeated samples, a 95% confidence-interval method captures the population mean about 95% of the time, under its assumptions.",
       "sections": [
@@ -861,8 +1045,67 @@
       ]
     },
     {
+      "id": "hypothesis-tests",
+      "title": "18. Test a claim and read a p-value correctly",
+      "stage": "intermediate",
+      "takeaway": "A p-value measures how surprising the data would be if there were no effect; it is not the probability the effect is real, and it says nothing about its size.",
+      "sections": [
+        {
+          "title": "How it works",
+          "paragraphs": [
+            "A hypothesis test starts from a null hypothesis, usually \"no difference\", and a test statistic that measures how far the data are from it. The p-value is the probability, if the null hypothesis were true, of a statistic at least as extreme as the one observed. A small p-value means the data would be unusual under the null.",
+            "Choose the significance level (often 0.05) before looking. If p is below it, reject the null; otherwise, say the data do not show a difference, not that there is none. With that rule, about 5% of tests of true null hypotheses still come out \"significant\": a false positive. Missing a real effect is a false negative, which small samples make likely.",
+            "A p-value is not the probability that the null hypothesis is true, and not the probability the result happened by chance. It also does not measure size: with enough data a trivial difference is significant. Report the estimated difference with a confidence interval (lesson 17) alongside the test."
+          ]
+        },
+        {
+          "title": "Worked example",
+          "paragraphs": [
+            "An A/B test shows 40 of 500 visitors converting with the old page and 58 of 500 with the new one. A two-proportion z-test gives z ≈ 1.92 and p ≈ 0.056: just above 0.05, so this test alone does not reject \"no difference\", though the estimate favours the new page. Running 20 independent tests on changes with no real effect gives a 64% chance that at least one looks significant."
+          ],
+          "example": "from math import sqrt\nfrom statistics import NormalDist\n\na_conv, a_n, b_conv, b_n = 40, 500, 58, 500\npooled = (a_conv + b_conv) / (a_n + b_n)\nse = sqrt(pooled * (1 - pooled) * (1 / a_n + 1 / b_n))\nz = (b_conv / b_n - a_conv / a_n) / se\np_value = 2 * (1 - NormalDist().cdf(abs(z)))\nprint(f'difference = {b_conv / b_n - a_conv / a_n:.3f}, z = {z:.3f}, p = {p_value:.4f}')\nprint(f'P(at least one false positive in 20 tests) = {1 - 0.95**20:.4f}')\n\n# Expected output:\n# difference = 0.036, z = 1.915, p = 0.0556\n# P(at least one false positive in 20 tests) = 0.6415"
+        },
+        {
+          "title": "Check the assumption",
+          "paragraphs": [
+            "Decide the sample size, metric and stopping rule before the test. Checking repeatedly and stopping as soon as p < 0.05, or testing many metrics and reporting the best, inflates false positives; correct for multiple comparisons or pre-register one primary metric.",
+            "The z-test assumes independent observations and large enough counts. Visitors who return several times, or rates computed per session instead of per user, break independence. A significant result also depends on random assignment (lesson 23) to support a causal claim."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "A colleague reports: \"p = 0.03, so there is a 97% chance the new checkout increases revenue.\" Rewrite the conclusion correctly, and list what else you would ask for.",
+        "solution": "Correct reading: if the new checkout made no difference, data at least this extreme would occur about 3% of the time. It is not a 97% probability that the change works. Ask for the estimated effect size with a confidence interval, whether the metric, sample size and stopping rule were fixed in advance, how many other metrics or variants were tested, and whether assignment was random and observations independent.",
+        "checks": [
+          "States the p-value as a probability of data given no effect.",
+          "Asks for effect size and an interval.",
+          "Asks about pre-registration, multiple comparisons and independence."
+        ],
+        "solutionFormat": "prose"
+      },
+      "quiz": {
+        "question": "A test gives p = 0.20. Which conclusion is justified?",
+        "options": [
+          "There is no effect",
+          "The data do not provide strong evidence of an effect",
+          "There is a 20% chance the effect is real"
+        ],
+        "correct": 1,
+        "explanation": "A large p-value means the data are not unusual under the null hypothesis. It does not prove the null; small samples often miss real effects."
+      },
+      "references": [
+        {
+          "title": "Python 3.14 statistics documentation",
+          "url": "https://docs.python.org/3.14/library/statistics.html",
+          "section": "NormalDist",
+          "reviewed": "2026-11-08",
+          "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
+        }
+      ]
+    },
+    {
       "id": "vectors-and-coordinates",
-      "title": "15. Represent a record as a vector",
+      "title": "19. Represent a record as a vector",
       "stage": "advanced",
       "takeaway": "Each coordinate needs a fixed meaning and unit.",
       "sections": [
@@ -918,7 +1161,7 @@
     },
     {
       "id": "dot-products-and-scores",
-      "title": "16. Calculate a weighted score",
+      "title": "20. Calculate a weighted score",
       "stage": "advanced",
       "takeaway": "A dot product multiplies matching coordinates and adds the products.",
       "sections": [
@@ -974,7 +1217,7 @@
     },
     {
       "id": "matrices-and-shapes",
-      "title": "17. Multiply a matrix by a vector",
+      "title": "21. Multiply a matrix by a vector",
       "stage": "advanced",
       "takeaway": "Each output is one row dotted with the input vector.",
       "sections": [
@@ -1030,7 +1273,7 @@
     },
     {
       "id": "correlation-and-causation",
-      "title": "18. Read association without claiming a cause",
+      "title": "22. Read association without claiming a cause",
       "stage": "advanced",
       "takeaway": "Correlation summarizes a pattern; it does not identify why the pattern occurs.",
       "sections": [
@@ -1086,7 +1329,7 @@
     },
     {
       "id": "experiments-and-confounding",
-      "title": "19. Plan a comparison that can answer a causal question",
+      "title": "23. Plan a comparison that can answer a causal question",
       "stage": "advanced",
       "takeaway": "Random assignment helps separate a treatment from pre-existing group differences.",
       "sections": [
@@ -1142,7 +1385,7 @@
     },
     {
       "id": "feature-scaling",
-      "title": "20. Choose a scale before measuring distance",
+      "title": "24. Choose a scale before measuring distance",
       "stage": "advanced",
       "takeaway": "A coordinate unit can change a distance-based comparison.",
       "sections": [
@@ -1198,7 +1441,7 @@
     },
     {
       "id": "decision-and-capstone",
-      "title": "21. Combine calculation with an honest conclusion",
+      "title": "25. Combine calculation with an honest conclusion",
       "stage": "advanced",
       "takeaway": "State the decision, the numerical result and what the comparison cannot establish.",
       "sections": [
