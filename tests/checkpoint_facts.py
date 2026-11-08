@@ -542,4 +542,28 @@ winner = lambda w: 'A' if score(w, a) > score(w, b) else 'B'
 assert (score((0.5, 0.5), a), score((0.5, 0.5), b)) == (6.5, 6.0)
 answer = f'{winner((0.5, 0.5))} with the first, {winner((0.2, 0.8))} with the second'
 ''',
+    # Python
+    'python/pythonic-idioms/2': '''
+def f(a, *, b):
+    return a + b
+try:
+    f(1, 2)
+    answer = 'As the second positional argument'
+except TypeError:
+    answer = 'By name, as b=...' if f(1, b=2) == 3 else 'It cannot be supplied'
+''',
+    'python/classes-in-depth/2': '''
+from enum import Enum
+class Status(Enum):
+    DONE = "done"
+answer = str(Status.DONE == "done")
+''',
+    'python/closures-and-decorators/2': '''
+funcs = [lambda: i for i in range(3)]
+answer = str([f() for f in funcs])
+''',
+    'python/standard-library/2': '''
+import re
+answer = 'None' if re.fullmatch(r"\\d+", "45m") is None else 'A match for 45'
+''',
 }
