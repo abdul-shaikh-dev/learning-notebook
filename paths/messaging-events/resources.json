@@ -174,11 +174,14 @@
     "schemas": "intermediate",
     "backpressure": "intermediate",
     "stream-replay": "intermediate",
+    "event-sourcing": "intermediate",
+    "cqrs": "intermediate",
     "sagas": "advanced",
     "security": "advanced",
     "observability": "advanced",
     "failure-tests": "advanced",
     "broker-choice": "advanced",
+    "azure-service-bus": "advanced",
     "launch-review": "advanced"
   },
   "bundle": {

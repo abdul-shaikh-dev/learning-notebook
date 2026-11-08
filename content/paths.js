@@ -70883,7 +70883,7 @@ const LEARNING_PATHS = [
     "title": "Messaging & Event-Driven Systems",
     "category": "Software engineering",
     "status": "ready",
-    "description": "22 lessons, three stage projects and a locally runnable practice kit covering reliable asynchronous workflows from messages to recovery.",
+    "description": "25 lessons, three stage projects and a locally runnable practice kit covering reliable asynchronous workflows from messages to recovery.",
     "level": "Foundations → intermediate practice with optional systems labs",
     "prerequisites": [
       "Basic Python and SQL transactions for the local exercises.",
@@ -72932,8 +72932,150 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "event-sourcing",
+        "title": "17. Store state as a sequence of events",
+        "stage": "intermediate",
+        "takeaway": "Event sourcing makes an append-only stream of domain events the source of truth; current state is derived by replaying them, and concurrent writers are serialised with an expected-version check.",
+        "sections": [
+          {
+            "title": "Events as the record",
+            "paragraphs": [
+              "A conventional table stores the latest balance and overwrites it. An event-sourced system stores what happened, such as `CreditsGranted` and `CreditsSpent`, in an append-only stream per entity, and computes the balance by folding over the events. History, audit and \"what was the state on 1 September?\" come for free, and new read models can be built later by replaying the stream (lesson 16).",
+              "Writes use optimistic concurrency. A command loads the stream, checks its invariant (a learner cannot spend more credits than they have) and appends new events with the version it read. If another writer appended first, the store rejects the append and the command reloads and decides again, so two concurrent spends cannot both pass a check made on stale state.",
+              "Events are facts in past tense and are never edited. A mistake is corrected with a compensating event. Event schemas must be versioned and old events upcast when read (lesson 14). Long streams are loaded from a snapshot plus later events. Personal data in immutable events needs a plan such as storing it separately or encrypting it per person and deleting the key."
+            ]
+          },
+          {
+            "title": "A stream with an expected version",
+            "paragraphs": [
+              "Two writers read the stream at version 1 with a balance of 10 and each tries to spend 8. The first append succeeds; the second is rejected because the stream has moved to version 2, so the balance never goes negative."
+            ],
+            "example": "class Conflict(Exception):\n    pass\n\nstreams = {}                                   # stream id -> list of events (append-only)\n\ndef append(stream, expected_version, *events):\n    history = streams.setdefault(stream, [])\n    if len(history) != expected_version:       # optimistic concurrency check\n        raise Conflict(f'expected version {expected_version}, stream is at {len(history)}')\n    history.extend(events)\n    return len(history)\n\ndef balance(stream):                           # current state = fold over the events\n    total = 0\n    for kind, amount in streams.get(stream, []):\n        total += amount if kind == 'granted' else -amount\n    return total\n\nappend('credits-learner-7', 0, ('granted', 10))\nversion = len(streams['credits-learner-7'])    # both writers read version 1, balance 10\nappend('credits-learner-7', version, ('spent', 8))\ntry:\n    append('credits-learner-7', version, ('spent', 8))   # second writer decided on stale state\nexcept Conflict as error:\n    print('rejected:', error)\nprint(balance('credits-learner-7'), streams['credits-learner-7'])\n\n# Expected output:\n# rejected: expected version 1, stream is at 2\n# 2 [('granted', 10), ('spent', 8)]"
+          }
+        ],
+        "exercise": {
+          "prompt": "The notebook wants a full history of each learner's credits, including corrections, and finance needs the balance at any past date. Design the event stream, the events and the concurrency rule, and say how a wrongly granted bonus is corrected.",
+          "solution": "One stream per learner account (credits-<learner>) with events CreditsGranted, CreditsSpent, CreditsExpired and CreditsCorrected, each with an event ID, timestamp, amount, reason and schema version. Commands load the stream, check that the balance stays non-negative and append with the expected version; on a conflict they reload and retry or report. The balance at a date is the fold of events up to that timestamp. A wrong bonus is not edited or deleted; append a CreditsCorrected (or reversing) event referencing the original, so history and audit remain intact. Keep snapshots for long streams and keep personal details outside the events.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Defines a stream per entity with past-tense, versioned events.",
+            "Uses an expected-version check to enforce the invariant under concurrency.",
+            "Corrects mistakes with a compensating event, not an edit."
+          ]
+        },
+        "quiz": {
+          "question": "In an event-sourced system, how is a wrongly recorded event corrected?",
+          "options": [
+            "Edit the stored event",
+            "Append a compensating event that reverses or corrects it",
+            "Delete the stream and rebuild it"
+          ],
+          "correct": 1,
+          "explanation": "Events are immutable facts. Corrections are new facts, which keeps the audit trail."
+        },
+        "references": [
+          {
+            "title": "Azure Architecture Center: Event Sourcing pattern",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing",
+            "section": "Solution; issues and considerations",
+            "reviewed": "2026-11-08",
+            "scope": "Azure Architecture Center pattern guidance; this course demonstrates the idea with in-memory Python, not an Azure service."
+          },
+          {
+            "title": "Martin Fowler: Event Sourcing",
+            "url": "https://martinfowler.com/eaaDev/EventSourcing.html",
+            "section": "Event Sourcing",
+            "reviewed": "2026-11-08",
+            "scope": "Author article; the credits example is original."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Two writers both read a stream at version 3 and each append with expected version 3. What happens?",
+            "options": [
+              "Both appends succeed",
+              "The first succeeds; the second is rejected as a concurrency conflict",
+              "Both are rejected"
+            ],
+            "correct": 1,
+            "explanation": "After the first append the stream is at version 4, so the second writer's expectation no longer holds."
+          }
+        ]
+      },
+      {
+        "id": "cqrs",
+        "title": "18. Separate commands from queries",
+        "stage": "intermediate",
+        "takeaway": "CQRS gives writes a model that enforces rules and reads one or more models shaped for queries; when read models are updated asynchronously, design for lag explicitly.",
+        "sections": [
+          {
+            "title": "Two models for two jobs",
+            "paragraphs": [
+              "Command Query Responsibility Segregation (CQRS) splits the code that changes state from the code that reads it. The write model validates commands and enforces invariants, perhaps on an event-sourced stream. Read models are projections built from the changes, each shaped for one screen or query: a learner's dashboard, a finance report, a search index. Each side can use different storage and scale independently.",
+              "CQRS adds moving parts, so use it where reads and writes genuinely differ, such as heavy, varied queries over data with strict write rules, not as a default for simple CRUD. It does not require event sourcing or separate databases; a separate read model in the same database is often enough."
+            ]
+          },
+          {
+            "title": "Projection lag and read-your-writes",
+            "paragraphs": [
+              "When projections update asynchronously from events (lessons 10 and 16), a user can save a change and then read the old value. Return the write's position or version from the command, and let the query wait for the projection to reach it, or show the result as pending. Projections must be idempotent and track their position so a restart resumes without double counting (lesson 9), and they can be rebuilt from the log.",
+              "The projector has processed only the grant when the first query runs: a plain query returns 10, while a query that requires the spend's position reports that the projection is stale. After catching up, the balance is 7."
+            ],
+            "example": "events = []                                    # write side: append-only log\nprojection = {'position': 0, 'balances': {}}   # read side: built asynchronously\n\ndef spend(learner, amount):                    # command: validates, appends, returns position\n    events.append((learner, -amount))\n    return len(events)\n\ndef grant(learner, amount):\n    events.append((learner, amount))\n    return len(events)\n\ndef project(limit):                            # the projector catches up some events at a time\n    for learner, delta in events[projection['position']:projection['position'] + limit]:\n        projection['balances'][learner] = projection['balances'].get(learner, 0) + delta\n        projection['position'] += 1\n\ndef query(learner, at_least=0):                # read-your-writes: wait for the command's position\n    if projection['position'] < at_least:\n        return f'stale (projection at {projection[\"position\"]}, need {at_least})'\n    return projection['balances'].get(learner, 0)\n\ngrant('learner-7', 10)\nposition = spend('learner-7', 3)\nproject(limit=1)\nprint(query('learner-7'), '|', query('learner-7', at_least=position))\nproject(limit=10)\nprint(query('learner-7', at_least=position))\n\n# Expected output:\n# 10 | stale (projection at 1, need 2)\n# 7"
+          }
+        ],
+        "exercise": {
+          "prompt": "After learners spend credits, the dashboard sometimes still shows the old balance for a few seconds and learners report the spend as lost. Using CQRS terms, explain the cause and propose two fixes with their costs.",
+          "solution": "The spend is committed on the write side, but the dashboard reads a projection updated asynchronously, so it lags. Fix 1: return the event position or version from the command and have the dashboard query wait until the projection reaches it (or poll briefly), at the cost of a little latency and a timeout path. Fix 2: update the UI optimistically from the command's response and mark the balance as pending until the projection confirms, at the cost of reconciling if the command later fails. Also monitor projection lag and alert when it exceeds the objective. Reading directly from the write model for this one screen is a further option if load allows.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Identifies asynchronous projection lag as the cause.",
+            "Proposes read-your-writes using the command's position or an optimistic UI.",
+            "States the cost of each fix and monitors lag."
+          ]
+        },
+        "quiz": {
+          "question": "When is CQRS most likely to be worth its extra complexity?",
+          "options": [
+            "For every CRUD form",
+            "When reads and writes differ strongly, such as varied heavy queries over data with strict write rules",
+            "When there is only one user"
+          ],
+          "correct": 1,
+          "explanation": "Separate models pay off when the two sides have different shapes and loads."
+        },
+        "references": [
+          {
+            "title": "Azure Architecture Center: CQRS pattern",
+            "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs",
+            "section": "Solution; issues and considerations; when to use this pattern",
+            "reviewed": "2026-11-08",
+            "scope": "Azure Architecture Center pattern guidance; this course demonstrates the idea with in-memory Python, not an Azure service."
+          },
+          {
+            "title": "Martin Fowler: CQRS",
+            "url": "https://martinfowler.com/bliki/CQRS.html",
+            "section": "CQRS",
+            "reviewed": "2026-11-08",
+            "scope": "Author article, including when not to use the pattern."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In the lesson's example, what does query('learner-7', at_least=position) return before the projector catches up?",
+            "options": [
+              "10",
+              "7",
+              "A stale result naming the projection's position"
+            ],
+            "correct": 2,
+            "explanation": "The projection is at position 1 and the spend is at position 2, so the query reports staleness instead of a wrong balance."
+          }
+        ]
+      },
+      {
         "id": "sagas",
-        "title": "17. Distributed workflow and compensation",
+        "title": "19. Distributed workflow and compensation",
         "takeaway": "A saga coordinates local transactions and recovery actions across a workflow.",
         "sections": [
           {
@@ -72993,7 +73135,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "security",
-        "title": "18. Messaging security and tenancy",
+        "title": "20. Messaging security and tenancy",
         "takeaway": "Authenticate identities and authorize each messaging responsibility.",
         "sections": [
           {
@@ -73067,7 +73209,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "observability",
-        "title": "19. Tracing an asynchronous workflow",
+        "title": "21. Tracing an asynchronous workflow",
         "takeaway": "Observe acceptance, attempts and business completion separately.",
         "sections": [
           {
@@ -73134,7 +73276,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "failure-tests",
-        "title": "20. Failure injection and concurrency evidence",
+        "title": "22. Failure injection and concurrency evidence",
         "takeaway": "Reproduce crashes at specific points and check that the required rules still hold.",
         "sections": [
           {
@@ -73208,7 +73350,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "broker-choice",
-        "title": "21. Selecting a broker and owning tradeoffs",
+        "title": "23. Selecting a broker and owning tradeoffs",
         "takeaway": "Choose from required semantics and operational responsibilities.",
         "sections": [
           {
@@ -73281,8 +73423,99 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "azure-service-bus",
+        "title": "24. Map the patterns onto Azure Service Bus",
+        "stage": "advanced",
+        "takeaway": "A managed broker provides the mechanisms this course built by hand (locks, redelivery counts, dead-letter queues, duplicate detection, sessions), but your consumers still need idempotency, bounded retries and an outbox.",
+        "sections": [
+          {
+            "title": "Service Bus concepts",
+            "paragraphs": [
+              "Azure Service Bus offers queues and topics with subscriptions; a subscription can filter on message properties (lesson 8). Receivers usually use peek-lock: the message is locked for a lock duration while the consumer works, then completed, abandoned for redelivery or dead-lettered. If the lock expires or the consumer crashes, the message becomes available again (lesson 6's commit-to-acknowledge gap still exists).",
+              "Each delivery increments a delivery count; at the queue's maximum delivery count the message moves to the dead-letter subqueue with a reason, which is the poison-message handling of lessons 11 and 12. Duplicate detection drops messages with a repeated `MessageId` within a configured window, which helps publishers that retry, but does not replace an idempotent consumer. Sessions group messages by `SessionId` and deliver each session in order to one receiver at a time (lesson 13). Scheduled messages and transactions within one namespace cover delayed retries and atomic receive-and-send."
+            ]
+          },
+          {
+            "title": "A consumer with explicit settlement",
+            "paragraphs": [
+              "The snippet uses Microsoft Entra authentication rather than a connection string (lesson 20). It sets `message_id` so duplicate detection can work, completes only after the idempotent handler succeeds, dead-letters permanent failures with a reason and abandons transient ones. It was checked against azure-servicebus 7.15.0 (names and parameters) but not run against a namespace. For per-learner ordering, enable sessions on the queue, set `session_id` when sending and receive with a session receiver."
+            ],
+            "example": "import json\nfrom azure.identity import DefaultAzureCredential\nfrom azure.servicebus import ServiceBusClient, ServiceBusMessage\n\nNAMESPACE = \"notebook-dev.servicebus.windows.net\"     # placeholder namespace\n\ndef publish_export(sender, export_id, learner_id):\n    sender.send_messages(ServiceBusMessage(\n        json.dumps({\"export_id\": export_id}),\n        message_id=export_id,            # duplicate detection key\n        application_properties={\"type\": \"export.requested\", \"schema\": 1},\n    ))\n\ndef handle(message):\n    print(\"exporting\", str(message))     # replace with the real export\n\ndef work(receiver):\n    for message in receiver:             # peek-lock: the message stays locked, not deleted\n        try:\n            handle(message)              # idempotent: an inbox keyed by message_id (lesson 9)\n            receiver.complete_message(message)\n        except ValueError as error:      # will never succeed: quarantine with a reason\n            receiver.dead_letter_message(message, reason=\"invalid-payload\", error_description=str(error))\n        except Exception:                # transient: release the lock for redelivery\n            receiver.abandon_message(message)\n\nwith ServiceBusClient(NAMESPACE, DefaultAzureCredential()) as client:\n    with client.get_queue_sender(\"exports\") as sender:\n        publish_export(sender, \"export-42\", \"learner-7\")\n    with client.get_queue_receiver(\"exports\", max_wait_time=5) as receiver:\n        work(receiver)"
+          }
+        ],
+        "exercise": {
+          "prompt": "Move the notebook's export jobs from the local SQLite lab to Azure Service Bus. For each lab mechanism (inbox, outbox relay, retry budget, dead-letter replay, ordering), say which Service Bus feature helps, what it does not cover and what you keep in your own code.",
+          "solution": "Inbox: duplicate detection drops repeated MessageIds within its window, but redelivery after a lock expiry or crash still repeats work, so keep the idempotent inbox keyed by message ID. Outbox relay: Service Bus cannot join a database transaction, so keep the transactional outbox and a relay that sends with a stable MessageId. Retry budget: max delivery count and abandon give bounded redelivery; scheduled messages give delayed retries; keep the classification of transient versus permanent errors. Dead-letter replay: the dead-letter subqueue stores failed messages with reasons; keep the owned replay tool that inspects, repairs and resubmits. Ordering: sessions order messages per SessionId; keep version checks for stale events because producers can still publish out of order.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Maps each mechanism to the matching Service Bus feature.",
+            "States what the broker does not guarantee for each.",
+            "Keeps idempotency, the outbox and error classification in application code."
+          ]
+        },
+        "quiz": {
+          "question": "A Service Bus message reaches the queue's maximum delivery count. What happens to it?",
+          "options": [
+            "It is deleted",
+            "It moves to the dead-letter subqueue with a reason",
+            "It is delivered again without limit"
+          ],
+          "correct": 1,
+          "explanation": "The broker quarantines it in the dead-letter queue, where an owner can inspect and replay it."
+        },
+        "references": [
+          {
+            "title": "Azure Service Bus: Queues, topics and subscriptions",
+            "url": "https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-queues-topics-subscriptions",
+            "section": "Receive modes; topics and subscriptions",
+            "reviewed": "2026-11-08",
+            "scope": "Azure Service Bus documentation; tier limits and defaults change, so confirm values for your namespace."
+          },
+          {
+            "title": "Azure Service Bus: Message transfers, locks and settlement",
+            "url": "https://learn.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement",
+            "section": "Settling receive operations; peek-lock",
+            "reviewed": "2026-11-08",
+            "scope": "Azure Service Bus documentation; behaviour verified from the docs, not a live namespace."
+          },
+          {
+            "title": "Azure Service Bus: Dead-letter queues",
+            "url": "https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues",
+            "section": "Maximum delivery count",
+            "reviewed": "2026-11-08",
+            "scope": "Azure Service Bus documentation."
+          },
+          {
+            "title": "Azure Service Bus: Duplicate detection",
+            "url": "https://learn.microsoft.com/en-us/azure/service-bus-messaging/duplicate-detection",
+            "section": "How it works; duplicate detection window",
+            "reviewed": "2026-11-08",
+            "scope": "Azure Service Bus documentation."
+          },
+          {
+            "title": "Azure Service Bus client library for Python",
+            "url": "https://learn.microsoft.com/en-us/python/api/overview/azure/servicebus-readme",
+            "section": "Send and receive messages; settle a message",
+            "reviewed": "2026-11-08",
+            "scope": "azure-servicebus 7.15.0; the snippet's names and parameters were checked against the installed package without connecting."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Service Bus duplicate detection is enabled. Why does the consumer still need an idempotent inbox?",
+            "options": [
+              "Duplicate detection only checks message bodies",
+              "A message can be redelivered after a lock expires or a consumer crashes, and detection only covers repeated sends within its window",
+              "Duplicate detection is disabled for queues"
+            ],
+            "correct": 1,
+            "explanation": "Detection drops repeated publications; it cannot stop the broker redelivering a message whose processing was not completed."
+          }
+        ]
+      },
+      {
         "id": "launch-review",
-        "title": "22. Messaging launch and recovery review",
+        "title": "25. Messaging launch and recovery review",
         "takeaway": "A complete workflow includes replay, retention and recovery ownership.",
         "sections": [
           {
@@ -73716,11 +73949,14 @@ const LEARNING_PATHS = [
         "schemas": "intermediate",
         "backpressure": "intermediate",
         "stream-replay": "intermediate",
+        "event-sourcing": "intermediate",
+        "cqrs": "intermediate",
         "sagas": "advanced",
         "security": "advanced",
         "observability": "advanced",
         "failure-tests": "advanced",
         "broker-choice": "advanced",
+        "azure-service-bus": "advanced",
         "launch-review": "advanced"
       },
       "bundle": {
