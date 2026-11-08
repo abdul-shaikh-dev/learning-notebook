@@ -1109,7 +1109,7 @@
         {
           "title": "Go deeper",
           "paragraphs": [
-            "A quoted price for an identical instrument in an active market generally has priority. Holding a large block does not automatically justify an accounting blockage discount to that Level 1 quote. Prudential concentration adjustments answer a different question. Keep the unit of account, the market-participant premise and the purpose of the adjustment separate."
+            "A quoted price for an identical instrument in an active market generally has priority. Holding a large block does not change that: IFRS 13 measures a Level 1 position as quoted price × quantity even when normal daily volume could not absorb it, and does not permit a blockage discount. Prudential concentration adjustments answer a different question. Keep the unit of account, the market-participant premise and the purpose of the adjustment separate."
           ]
         },
         {
@@ -1568,7 +1568,7 @@
         {
           "title": "Common trap",
           "paragraphs": [
-            "Do not apply a blanket accounting concentration discount to an unadjusted Level 1 price. Prudential concentration assessment is a separate exercise."
+            "Do not apply an accounting concentration (blockage) discount to a Level 1 price: IFRS 13 does not permit one, whatever the position size. Prudential concentration assessment is a separate exercise."
           ]
         },
         {
@@ -2298,7 +2298,7 @@
         {
           "title": "Go deeper",
           "paragraphs": [
-            "The referenced EU calculation is at least quarterly. A bank may run internal estimates more often. Exactly matching offsets, partial CET1 effects and consolidation rules make the eligible base more nuanced than a gross ledger total. Consultation proposals do not amend production rules until adopted and effective. The app stops before regulatory aggregation. Consult the source for the full conditions."
+            "The referenced EU RTS requires AVAs to be calculated quarterly. A bank may run internal estimates more often. Exactly matching offsets, partial CET1 effects and consolidation rules make the eligible base more nuanced than a gross ledger total. Consultation proposals do not amend production rules until adopted and effective. The app stops before regulatory aggregation. Consult the source for the full conditions."
           ]
         },
         {
