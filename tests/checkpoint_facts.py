@@ -454,6 +454,130 @@ for command in commands:
     command()
 answer = repr(log)
 ''',
+    'design-patterns/bridge-flyweight-prototype/2': '''import copy
+template = {"tags": ["draft"]}
+c = copy.copy(template)
+c["tags"].append("x")
+answer = str(template["tags"])
+''',
+    'design-patterns/memento-visitor-interpreter/2': '''from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Is:
+    field: str
+    value: object
+
+@dataclass(frozen=True)
+class AtLeast:
+    field: str
+    value: int
+
+@dataclass(frozen=True)
+class All:
+    rules: tuple
+
+@dataclass(frozen=True)
+class AnyOf:
+    rules: tuple
+
+def matches(rule, row):  # operation 1: interpret the rule for one row
+    match rule:
+        case Is(field, value):
+            return row.get(field) == value
+        case AtLeast(field, value):
+            return row.get(field, 0) >= value
+        case All(rules):
+            return all(matches(r, row) for r in rules)
+        case AnyOf(rules):
+            return any(matches(r, row) for r in rules)
+    raise TypeError(f"unknown rule {rule!r}")
+
+rule = All((Is("topic", "sql"), AnyOf((AtLeast("minutes", 30), Is("done", True)))))
+rows = [{"topic": "sql", "minutes": 45}, {"topic": "sql", "minutes": 10}, {"topic": "git", "minutes": 60}]
+hits = [row for row in rows if matches(rule, row)]
+answer = "Only sql with 45 minutes" if hits == rows[:1] else repr(hits)
+''',
+    'design-patterns/architectural-patterns/2': '''from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class LessonAdded:
+    lesson_id: str
+    title: str
+
+@dataclass(frozen=True)
+class LessonCompleted:
+    lesson_id: str
+    minutes: int
+
+class StudyPlan:  # write model: checks commands and records events
+    def __init__(self, events=()):
+        self.titles, self.done = {}, set()
+        for event in events:
+            self.apply(event)
+
+    def apply(self, event):
+        match event:
+            case LessonAdded(lesson_id, title):
+                self.titles[lesson_id] = title
+            case LessonCompleted(lesson_id, _):
+                self.done.add(lesson_id)
+
+    def complete(self, lesson_id, minutes):
+        if lesson_id not in self.titles:
+            raise ValueError("unknown lesson")
+        if lesson_id in self.done:
+            return []  # already complete: no new event
+        event = LessonCompleted(lesson_id, minutes)
+        self.apply(event)
+        return [event]
+
+plan = StudyPlan([LessonAdded("sql-1", "Joins")])
+events = plan.complete("sql-1", 40) + plan.complete("sql-1", 40)
+answer = str(sum(isinstance(e, LessonCompleted) for e in events))
+''',
+    'design-patterns/resilience-patterns/2': '''class CircuitOpen(Exception):
+    pass
+
+class CircuitBreaker:
+    def __init__(self, threshold, cooldown, clock):
+        self.threshold, self.cooldown, self.clock = threshold, cooldown, clock
+        self.failures, self.opened_at = 0, None
+
+    @property
+    def state(self):
+        if self.opened_at is None:
+            return "closed"
+        return "half-open" if self.clock() - self.opened_at >= self.cooldown else "open"
+
+    def call(self, operation):
+        if self.state == "open":
+            raise CircuitOpen("failing fast")
+        try:
+            result = operation()
+        except ConnectionError:
+            self.failures += 1
+            if self.state == "half-open" or self.failures >= self.threshold:
+                self.opened_at = self.clock()
+            raise
+        self.failures, self.opened_at = 0, None
+        return result
+
+now = [0.0]
+breaker = CircuitBreaker(threshold=2, cooldown=30, clock=lambda: now[0])
+calls = []
+def down():
+    calls.append(now[0])
+    raise ConnectionError("down")
+for t in [0, 1, 10]:
+    now[0] = t
+    try:
+        breaker.call(down)
+    except CircuitOpen:
+        outcome = "fast"
+    except ConnectionError:
+        outcome = "error"
+answer = "Fails fast without calling the dependency" if outcome == "fast" and calls == [0, 1] else outcome
+''',
     # Practical Maths & Statistics
     'practical-maths-statistics/logic-and-conditions/2': '''
 age, member, spend = 17, True, 200
