@@ -3,7 +3,7 @@
   "title": "Kubernetes",
   "category": "Software engineering",
   "status": "ready",
-  "description": "24 lessons progress from reconciliation and ready Services to scoped security, storage, jobs, scaling, templating, GitOps and recovery, with offline checks and a guarded dedicated local lab.",
+  "description": "27 lessons progress from reconciliation and ready Services to scoped security, storage, jobs, scaling, templating, GitOps and recovery, with offline checks and a guarded dedicated local lab.",
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
     "Complete Delivery & Operations (delivery-operations) containers/build/runtime exercises first; React (react), .NET (dotnet) and SQL Server (sql-server) retain their own application/data responsibilities.",
@@ -834,8 +834,75 @@
       "stage": "intermediate"
     },
     {
+      "id": "ingress-gateway",
+      "title": "15. Bring outside traffic in with Ingress and the Gateway API",
+      "stage": "intermediate",
+      "takeaway": "A controller implements HTTP routing into the cluster; Ingress is the older, simpler API, and the Gateway API separates infrastructure ownership from application routes.",
+      "sections": [
+        {
+          "title": "From the edge to a Service",
+          "paragraphs": [
+            "A ClusterIP Service (lesson 7) is reachable only inside the cluster. A `LoadBalancer` Service asks the cloud for an external layer 4 load balancer per Service, which is simple but costly and has no HTTP routing. For HTTP, one shared entry point routes by host name and path to many Services, and terminates TLS once.",
+            "An Ingress object declares those rules, and an ingress controller (a reverse proxy running in the cluster) implements them. Without a controller, an Ingress does nothing. Its API covers host, path and TLS; anything else, such as header matching, traffic splitting or timeouts, is expressed in controller-specific annotations, so manifests stop being portable.",
+            "The Gateway API is the newer, more expressive successor. A GatewayClass names an implementation, a Gateway declares listeners (ports, protocols, host names and certificates) and usually belongs to a platform team, and HTTPRoutes attached to it belong to application teams in their own namespaces. Matching on headers, weighted backends for canary releases and cross-namespace permissions are part of the standard API."
+          ],
+          "example": "apiVersion: gateway.networking.k8s.io/v1\nkind: Gateway\nmetadata:\n  name: public\n  namespace: edge                  # owned by the platform team\nspec:\n  gatewayClassName: example-lb\n  listeners:\n  - name: https\n    protocol: HTTPS\n    port: 443\n    hostname: \"*.example.test\"\n    tls:\n      mode: Terminate\n      certificateRefs: [{name: wildcard-example-test}]\n    allowedRoutes:\n      namespaces: {from: All}\n---\napiVersion: gateway.networking.k8s.io/v1\nkind: HTTPRoute\nmetadata:\n  name: notebook\n  namespace: notebook-lab          # owned by the application team\nspec:\n  parentRefs: [{name: public, namespace: edge}]\n  hostnames: [\"notebook.example.test\"]\n  rules:\n  - matches: [{path: {type: PathPrefix, value: /api}}]\n    backendRefs: [{name: release-demo, port: 8080}]\n  - backendRefs: [{name: web, port: 80}]"
+        },
+        {
+          "title": "TLS and ownership",
+          "paragraphs": [
+            "The Gateway terminates TLS with a certificate stored as a Secret (lesson 9), usually issued and renewed automatically by a tool such as cert-manager. Traffic from the Gateway to the Pods is then plain HTTP inside the cluster unless you add mutual TLS. The listener's `allowedRoutes` decides which namespaces may attach routes, so one team cannot take over another's host name.",
+            "The manifests were checked offline: the route's parent reference matches the Gateway's name and namespace, and its host name falls under the listener's wildcard. They were not applied to a cluster, and `example-lb` stands for whichever GatewayClass your cluster provides."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Two teams share a cluster. Team A serves shop.example.test, team B serves blog.example.test, and both need HTTPS. Describe how you would split the Gateway API objects between the platform team and the two application teams, and what stops team B from routing shop.example.test.",
+        "solution": "The platform team owns the GatewayClass and one Gateway in an edge namespace, with an HTTPS listener for each host name (or a wildcard) and the certificates. Each application team creates an HTTPRoute in its own namespace with a parentRef to that Gateway and its own host name. To stop team B claiming shop.example.test, give each host its own listener and restrict allowedRoutes for that listener to team A's namespace (with a namespace selector), so a route from team B's namespace cannot attach to it.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Platform team owns Gateway, listeners and certificates.",
+          "Application teams own their route objects in their own namespaces.",
+          "Uses allowedRoutes to restrict which namespaces attach to which listener."
+        ]
+      },
+      "quiz": {
+        "question": "An Ingress object is created in a cluster that has no ingress controller installed. What happens?",
+        "options": [
+          "Kubernetes creates a default load balancer",
+          "Nothing routes traffic; the object is stored but not implemented",
+          "The API server rejects the object"
+        ],
+        "correct": 1,
+        "explanation": "Ingress and Gateway objects are declarations. A controller must watch them and configure a proxy."
+      },
+      "references": [
+        {
+          "title": "Kubernetes: Ingress",
+          "url": "https://kubernetes.io/docs/concepts/services-networking/ingress/",
+          "section": "Ingress controllers and TLS",
+          "reviewed": "2026-11-08",
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
+        },
+        {
+          "title": "Kubernetes: Gateway API",
+          "url": "https://kubernetes.io/docs/concepts/services-networking/gateway/",
+          "section": "Resource model",
+          "reviewed": "2026-11-08",
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
+        },
+        {
+          "title": "Gateway API: HTTPRoute",
+          "url": "https://gateway-api.sigs.k8s.io/api-types/httproute/",
+          "section": "Spec: parentRefs, hostnames and rules",
+          "reviewed": "2026-11-08",
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
+        }
+      ]
+    },
+    {
       "id": "rbac",
-      "title": "15. Separate identities and scope RBAC permissions",
+      "title": "16. Separate identities and scope RBAC permissions",
       "takeaway": "Authentication establishes an API identity; RBAC authorization permits verbs on resources within scope.",
       "sections": [
         {
@@ -884,7 +951,7 @@
     },
     {
       "id": "pod-security",
-      "title": "16. Harden a workload and distinguish admission from runtime",
+      "title": "17. Harden a workload and distinguish admission from runtime",
       "takeaway": "Pod security settings restrict process privileges and filesystem capabilities.",
       "sections": [
         {
@@ -933,7 +1000,7 @@
     },
     {
       "id": "persistent-storage",
-      "title": "17. Connect PVC lifecycle, access mode and recovery",
+      "title": "18. Connect PVC lifecycle, access mode and recovery",
       "takeaway": "A PersistentVolumeClaim requests storage supplied by a matching volume or StorageClass.",
       "sections": [
         {
@@ -982,7 +1049,7 @@
     },
     {
       "id": "jobs",
-      "title": "18. Run finite Jobs with bounded retries and idempotent work",
+      "title": "19. Run finite Jobs with bounded retries and idempotent work",
       "takeaway": "A Job manages work intended to finish, unlike a continuously serving Deployment.",
       "sections": [
         {
@@ -1030,8 +1097,75 @@
       "stage": "advanced"
     },
     {
+      "id": "workload-types",
+      "title": "20. Choose StatefulSet, DaemonSet or CronJob for the workload",
+      "stage": "advanced",
+      "takeaway": "Deployments suit interchangeable Pods; StatefulSets give stable identity and storage, DaemonSets run one Pod per node, and CronJobs start Jobs on a schedule.",
+      "sections": [
+        {
+          "title": "Identity, placement and time",
+          "paragraphs": [
+            "A Deployment (lesson 6) treats Pods as interchangeable: any replica can be replaced by a new one with a new name and empty scratch space. Some workloads need more. A StatefulSet gives each Pod a stable ordinal name (`queue-0`, `queue-1`), a stable DNS name through a headless Service, and its own PersistentVolumeClaim from `volumeClaimTemplates` that follows that name when the Pod is rescheduled. Pods start, update and stop in order by default. Use it for clustered databases, brokers and anything whose members must find each other by name.",
+            "A DaemonSet runs one Pod on every node, or every node that matches a selector, and adds one when a node joins. Node agents fit here: log shippers, metrics collectors, network and storage plugins. They often need host access, so review their privileges carefully (lesson 17).",
+            "A CronJob creates a Job (lesson 19) on a cron schedule. Set `timeZone` explicitly, `concurrencyPolicy: Forbid` or `Replace` when overlapping runs would conflict, `startingDeadlineSeconds` so a missed schedule is skipped instead of run late, and history limits so finished Jobs are cleaned up. The Job itself must still be idempotent, because a run can be retried or, rarely, started twice."
+          ],
+          "example": "apiVersion: v1\nkind: Service\nmetadata:\n  name: queue\nspec:\n  clusterIP: None              # headless: DNS returns each Pod, not one virtual IP\n  selector: {app: queue}\n  ports: [{name: amqp, port: 5672}]\n---\napiVersion: apps/v1\nkind: StatefulSet\nmetadata:\n  name: queue\nspec:\n  serviceName: queue           # Pods get stable names: queue-0.queue, queue-1.queue, ...\n  replicas: 3\n  selector:\n    matchLabels: {app: queue}\n  template:\n    metadata:\n      labels: {app: queue}\n    spec:\n      containers:\n      - name: broker\n        image: registry.example.test/queue:3.13.2\n        ports: [{name: amqp, containerPort: 5672}]\n        volumeMounts: [{name: data, mountPath: /var/lib/queue}]\n  volumeClaimTemplates:        # one PersistentVolumeClaim per Pod: data-queue-0, data-queue-1, ...\n  - metadata: {name: data}\n    spec:\n      accessModes: [ReadWriteOnce]\n      resources: {requests: {storage: 10Gi}}\n---\napiVersion: apps/v1\nkind: DaemonSet\nmetadata:\n  name: log-agent\nspec:\n  selector:\n    matchLabels: {app: log-agent}\n  template:\n    metadata:\n      labels: {app: log-agent}\n    spec:\n      tolerations: [{operator: Exists}]       # also run on tainted nodes\n      containers:\n      - name: agent\n        image: registry.example.test/log-agent:1.4.2\n        volumeMounts: [{name: logs, mountPath: /var/log, readOnly: true}]\n      volumes: [{name: logs, hostPath: {path: /var/log}}]\n---\napiVersion: batch/v1\nkind: CronJob\nmetadata:\n  name: nightly-report\nspec:\n  schedule: \"30 2 * * *\"       # 02:30 every day\n  timeZone: Europe/London\n  concurrencyPolicy: Forbid    # skip a run while the previous one is still going\n  startingDeadlineSeconds: 600\n  successfulJobsHistoryLimit: 3\n  failedJobsHistoryLimit: 3\n  jobTemplate:\n    spec:\n      backoffLimit: 2\n      template:\n        spec:\n          restartPolicy: Never\n          containers:\n          - name: report\n            image: registry.example.test/report:2.0.1\n            args: [\"--date\", \"yesterday\"]"
+        },
+        {
+          "title": "What a StatefulSet does not do",
+          "paragraphs": [
+            "A StatefulSet keeps names and volumes stable; it does not replicate data, elect leaders or back anything up. The application inside must handle clustering, and deleting or scaling down a StatefulSet does not delete its claims by default, so storage and its cost remain until you remove them on purpose (lesson 18). Managed database services are often a better choice than running stateful systems yourself.",
+            "These manifests were checked offline for consistent selectors, the headless Service name, volume names and a five-field schedule. They were not applied to a cluster."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "For each workload, choose Deployment, StatefulSet, DaemonSet, Job or CronJob and give the deciding property: a stateless web API, a three-member etcd cluster, a node-level metrics exporter, a one-off database migration, a weekly cleanup of expired sessions.",
+        "solution": "Web API: Deployment, because replicas are interchangeable. etcd cluster: StatefulSet, because members need stable names and their own persistent volumes. Metrics exporter: DaemonSet, because one Pod must run on every node. Database migration: Job, because it runs once to completion with bounded retries. Weekly cleanup: CronJob with concurrencyPolicy Forbid, an explicit time zone and an idempotent cleanup.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Matches interchangeable replicas to a Deployment.",
+          "Uses a StatefulSet for stable identity and storage.",
+          "Uses a DaemonSet for per-node agents and Job/CronJob for finite and scheduled work."
+        ]
+      },
+      "quiz": {
+        "question": "Which object gives each Pod its own PersistentVolumeClaim that follows the Pod's name?",
+        "options": [
+          "Deployment",
+          "StatefulSet with volumeClaimTemplates",
+          "DaemonSet"
+        ],
+        "correct": 1,
+        "explanation": "volumeClaimTemplates create one claim per StatefulSet ordinal, reattached when that Pod is recreated."
+      },
+      "references": [
+        {
+          "title": "Kubernetes: StatefulSets",
+          "url": "https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/",
+          "section": "Stable network ID and stable storage",
+          "reviewed": "2026-11-08",
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
+        },
+        {
+          "title": "Kubernetes: DaemonSet",
+          "url": "https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/",
+          "section": "Writing a DaemonSet spec",
+          "reviewed": "2026-11-08",
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
+        },
+        {
+          "title": "Kubernetes: CronJob",
+          "url": "https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/",
+          "section": "Concurrency policy, time zones and deadlines",
+          "reviewed": "2026-11-08",
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
+        }
+      ]
+    },
+    {
       "id": "autoscaling",
-      "title": "19. Scale from useful metrics and retain overload controls",
+      "title": "21. Scale from useful metrics and retain overload controls",
       "takeaway": "HorizontalPodAutoscaler changes replica count based on configured metrics.",
       "sections": [
         {
@@ -1080,7 +1214,7 @@
     },
     {
       "id": "disruptions",
-      "title": "20. Plan voluntary disruption without claiming universal availability",
+      "title": "22. Plan voluntary disruption without claiming universal availability",
       "takeaway": "PodDisruptionBudget limits certain voluntary evictions based on healthy availability.",
       "sections": [
         {
@@ -1129,7 +1263,7 @@
     },
     {
       "id": "helm",
-      "title": "21. Render Helm configuration before enabling installation",
+      "title": "23. Render Helm configuration before enabling installation",
       "takeaway": "Helm packages parameterized manifests as charts.",
       "sections": [
         {
@@ -1178,7 +1312,7 @@
     },
     {
       "id": "gitops",
-      "title": "22. Reconcile reviewed Git state and control drift",
+      "title": "24. Reconcile reviewed Git state and control drift",
       "takeaway": "GitOps controllers reconcile versioned desired state rather than treating a successful shell command as permanent truth.",
       "sections": [
         {
@@ -1226,8 +1360,83 @@
       "stage": "advanced"
     },
     {
+      "id": "quotas-and-extensions",
+      "title": "25. Set namespace guard rails and extend the API with custom resources",
+      "stage": "advanced",
+      "takeaway": "ResourceQuota caps a namespace's total use and LimitRange sets per-container defaults; custom resources plus a controller let you manage new kinds of things the Kubernetes way.",
+      "sections": [
+        {
+          "title": "Quotas and limit ranges",
+          "paragraphs": [
+            "When several teams share a cluster, one namespace can starve the others. A ResourceQuota caps the namespace's totals: requested CPU and memory, limits, number of Pods, claims or Services. Once a quota covers CPU or memory, every new Pod in the namespace must declare those requests, or admission rejects it.",
+            "A LimitRange sets defaults and bounds per container or Pod. It fills in a default request and limit when a manifest omits them, which lets quota-covered namespaces accept simple manifests, and it rejects containers asking for more than the maximum. Requests and limits themselves were covered in lesson 11.",
+            "Quotas are checked at admission, when objects are created; they do not stop a running process from using memory up to its limit. Combine them with RBAC (lesson 16) so teams cannot edit their own quotas."
+          ],
+          "example": "apiVersion: v1\nkind: ResourceQuota\nmetadata:\n  name: team-budget\n  namespace: notebook-lab\nspec:\n  hard:\n    requests.cpu: \"4\"\n    requests.memory: 8Gi\n    limits.memory: 12Gi\n    pods: \"30\"\n    persistentvolumeclaims: \"5\"\n---\napiVersion: v1\nkind: LimitRange\nmetadata:\n  name: container-defaults\n  namespace: notebook-lab\nspec:\n  limits:\n  - type: Container\n    defaultRequest: {cpu: 100m, memory: 128Mi}   # applied when a container sets no request\n    default: {memory: 256Mi}                     # applied when a container sets no limit\n    max: {memory: 2Gi}\n---\napiVersion: apiextensions.k8s.io/v1\nkind: CustomResourceDefinition\nmetadata:\n  name: backupschedules.ops.example.test\nspec:\n  group: ops.example.test\n  scope: Namespaced\n  names: {plural: backupschedules, singular: backupschedule, kind: BackupSchedule}\n  versions:\n  - name: v1\n    served: true\n    storage: true\n    schema:\n      openAPIV3Schema:\n        type: object\n        properties:\n          spec:\n            type: object\n            required: [database, schedule]\n            properties:\n              database: {type: string}\n              schedule: {type: string}\n              keepDays: {type: integer, minimum: 1, maximum: 90}\n---\napiVersion: ops.example.test/v1\nkind: BackupSchedule\nmetadata:\n  name: orders-nightly\n  namespace: notebook-lab\nspec:\n  database: orders\n  schedule: \"0 1 * * *\"\n  keepDays: 14"
+        },
+        {
+          "title": "Custom resources and operators",
+          "paragraphs": [
+            "A CustomResourceDefinition adds a new kind to the API: once applied, `kubectl get backupschedules` works, objects are validated against the OpenAPI schema, and RBAC applies as for built-in kinds. A custom resource is only data. Something has to act on it.",
+            "An operator is a controller that watches custom resources and reconciles the real world toward them, exactly as the Deployment controller does for Pods (lesson 1). A database operator can create StatefulSets, run backups and perform failover from a short custom resource. Operators concentrate operational knowledge, but they run with broad permissions, and a buggy one can act on every resource it watches, so review their RBAC and upgrade them carefully.",
+            "The manifests were checked offline: the CRD's name matches its plural and group, and the BackupSchedule matches the CRD's group, version, kind and required fields. They were not applied to a cluster."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "A namespace has a ResourceQuota on requests.cpu and requests.memory. A developer's Deployment with no resources section creates no Pods, and its ReplicaSet reports 'failed quota: must specify requests.cpu'. Explain the cause and two ways to fix it, saying which is better for the team.",
+        "solution": "Once a quota covers CPU and memory requests, admission rejects Pods that do not declare them, so the ReplicaSet cannot create any. Fix 1: add resources.requests (and limits) to the Deployment, which is the better long-term practice because the values reflect the workload. Fix 2: add a LimitRange with defaultRequest and default values so omitted requests are filled in automatically, which is a good safety net for the namespace. Use both: the LimitRange prevents surprise failures, and explicit requests keep scheduling accurate.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Explains that quota-covered resources must be declared.",
+          "Offers explicit requests and a LimitRange default.",
+          "Notes the ReplicaSet events as the evidence."
+        ]
+      },
+      "quiz": {
+        "question": "What happens when you apply a CustomResourceDefinition and create a custom resource, but no operator is installed?",
+        "options": [
+          "Kubernetes runs the resource with default behaviour",
+          "The resource is stored and validated, but nothing acts on it",
+          "The API server refuses to store it"
+        ],
+        "correct": 1,
+        "explanation": "A CRD only extends the API. Behaviour comes from a controller that watches and reconciles the custom resources."
+      },
+      "references": [
+        {
+          "title": "Kubernetes: Resource Quotas",
+          "url": "https://kubernetes.io/docs/concepts/policy/resource-quotas/",
+          "section": "Compute resource quota",
+          "reviewed": "2026-11-08",
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
+        },
+        {
+          "title": "Kubernetes: Limit Ranges",
+          "url": "https://kubernetes.io/docs/concepts/policy/limit-range/",
+          "section": "Constraints on resource limits and requests",
+          "reviewed": "2026-11-08",
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
+        },
+        {
+          "title": "Kubernetes: Custom Resources",
+          "url": "https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/",
+          "section": "CustomResourceDefinitions",
+          "reviewed": "2026-11-08",
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
+        },
+        {
+          "title": "Kubernetes: Operator pattern",
+          "url": "https://kubernetes.io/docs/concepts/extend-kubernetes/operator/",
+          "section": "Operators in Kubernetes",
+          "reviewed": "2026-11-08",
+          "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
+        }
+      ]
+    },
+    {
       "id": "troubleshooting",
-      "title": "23. Diagnose status, events, logs and network boundaries",
+      "title": "26. Diagnose status, events, logs and network boundaries",
       "takeaway": "Troubleshooting follows the failed boundary: API rejection, Pending scheduling, container startup, readiness, Service routing, policy or application/data behavior.",
       "sections": [
         {
@@ -1285,7 +1494,7 @@
     },
     {
       "id": "backup-production",
-      "title": "24. Separate cluster backup, application restore and production readiness",
+      "title": "27. Separate cluster backup, application restore and production readiness",
       "takeaway": "Cluster state backup preserves API objects and related control-plane state, while application data may live in volumes or external databases.",
       "sections": [
         {
