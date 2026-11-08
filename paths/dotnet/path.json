@@ -409,6 +409,81 @@
       ]
     },
     {
+      "id": "inheritance",
+      "stage": "foundation",
+      "title": "Inheritance, properties and value types",
+      "takeaway": "Overrides decide behaviour at run time, properties guard state, and struct values are copied while class instances are shared.",
+      "sections": [
+        {
+          "title": "Virtual, override and abstract",
+          "paragraphs": [
+            "A derived class inherits members from its base class. A `virtual` member has a default that derived classes may `override`; an `abstract` member has no body, so every concrete derived class must provide one, and the abstract class itself cannot be created. When code holds a `Shape` that is really a `Square`, calling `Area()` runs the `Square` override: this is polymorphism.",
+            "`base.Name` calls the base version from inside an override. `sealed` stops further derivation. A class can derive from one base class but implement many interfaces, so use an abstract class for shared state and code, and an interface for a capability. Prefer composition when a subclass would have to disable or contradict inherited behaviour."
+          ],
+          "example": "Shape[] shapes = [new Circle(1), new Square(2)];\nforeach (var shape in shapes)\n    Console.WriteLine($\"{shape.Name}: {shape.Area():F2}\");\n\nabstract class Shape\n{\n    public abstract double Area();\n    public virtual string Name => GetType().Name;\n}\n\nsealed class Circle(double radius) : Shape\n{\n    public override double Area() => Math.PI * radius * radius;\n}\n\nclass Square(double side) : Shape\n{\n    public override double Area() => side * side;\n    public override string Name => $\"Square {side}x{side} (base name {base.Name})\";\n}\n// Expected:\n// Circle: 3.14\n// Square 2x2 (base name Square): 4.00"
+        },
+        {
+          "title": "Properties and initialization",
+          "paragraphs": [
+            "An auto-property `{ get; init; }` can be set only in an object initializer, and `required` makes the compiler insist that callers set it. A computed property such as `WeeklyMinutes` has no storage and always reflects current state.",
+            "A property accessor can validate. In C# 14 the `field` keyword refers to the property's compiler-generated backing field, so a validating setter no longer needs a separately declared private field. Throwing from a setter leaves the previous value in place."
+          ],
+          "example": "var plan = new StudyPlan { Title = \"C#\", DailyMinutes = 30 };\nConsole.WriteLine($\"{plan.Title}: {plan.WeeklyMinutes} min/week\");\ntry\n{\n    plan.DailyMinutes = -5;\n}\ncatch (ArgumentOutOfRangeException)\n{\n    Console.WriteLine(\"Rejected -5\");\n}\nConsole.WriteLine(plan.DailyMinutes);\n\nclass StudyPlan\n{\n    public required string Title { get; init; }\n\n    public int DailyMinutes\n    {\n        get;\n        set => field = value >= 0 ? value : throw new ArgumentOutOfRangeException(nameof(value));\n    }\n\n    public int WeeklyMinutes => DailyMinutes * 7;\n}\n// Expected:\n// C#: 210 min/week\n// Rejected -5\n// 30"
+        },
+        {
+          "title": "Value types and reference types",
+          "paragraphs": [
+            "A `struct` is a value type: assignment copies the whole value, so changing `b` leaves `a` alone. A `class` is a reference type: assignment copies a reference, so both names see the same object. Records add value-based equality and `with` expressions to either kind; a `readonly record struct` is a small immutable value such as an amount of money.",
+            "Choose a struct for small, immutable values that are copied cheaply. Large or mutable structs cause confusing copies, and boxing a struct into `object` or an interface allocates. Most domain types should be classes or records."
+          ],
+          "example": "var a = new PointStruct(1, 2);\nvar b = a;          // copies the whole value\nb.X = 10;\nConsole.WriteLine($\"{a.X} {b.X}\");\n\nvar c = new PointClass { X = 1, Y = 2 };\nvar d = c;          // copies the reference: one object, two names\nd.X = 10;\nConsole.WriteLine($\"{c.X} {d.X}\");\n\nvar price = new Money(5m, \"EUR\");\nvar raised = price with { Amount = 7m };\nConsole.WriteLine($\"{price} | {raised} | {price == new Money(5m, \"EUR\")}\");\n\nstruct PointStruct(int x, int y)\n{\n    public int X = x;\n    public int Y = y;\n}\n\nclass PointClass\n{\n    public int X;\n    public int Y;\n}\n\nreadonly record struct Money(decimal Amount, string Currency);\n// Expected:\n// 1 10\n// 10 10\n// Money { Amount = 5, Currency = EUR } | Money { Amount = 7, Currency = EUR } | True"
+        }
+      ],
+      "exercise": {
+        "prompt": "Model study activities with an abstract Activity that validates nonnegative Minutes and declares abstract Points(). Reading earns 1 point per full 10 minutes; Practice earns 2 points per full 10 minutes plus a 3-point bonus at 30 minutes or more. Print each activity and the total for Reading(25), Practice(30) and Practice(10).",
+        "starter": "// Declare abstract class Activity, then sealed Reading and Practice classes that override Points().",
+        "solution": "Activity[] week = [new Reading(25), new Practice(30), new Practice(10)];\nforeach (var activity in week)\n    Console.WriteLine(activity);\nConsole.WriteLine($\"Total: {week.Sum(a => a.Points())}\");\n\nabstract class Activity(int minutes)\n{\n    public int Minutes { get; } = minutes >= 0 ? minutes : throw new ArgumentOutOfRangeException(nameof(minutes));\n    public abstract int Points();\n    public override string ToString() => $\"{GetType().Name} {Minutes} min = {Points()} pts\";\n}\n\nsealed class Reading(int minutes) : Activity(minutes)\n{\n    public override int Points() => Minutes / 10;\n}\n\nsealed class Practice(int minutes) : Activity(minutes)\n{\n    public override int Points() => Minutes / 10 * 2 + (Minutes >= 30 ? 3 : 0);\n}\n// Expected:\n// Reading 25 min = 2 pts\n// Practice 30 min = 9 pts\n// Practice 10 min = 2 pts\n// Total: 13",
+        "checks": [
+          "The total is 13 points.",
+          "new Reading(-1) throws ArgumentOutOfRangeException.",
+          "Activity itself cannot be instantiated."
+        ]
+      },
+      "quiz": {
+        "question": "A Shape variable holds a Square that overrides Area(). Which Area runs when you call shape.Area()?",
+        "options": [
+          "The Square override",
+          "The Shape version",
+          "Whichever class was declared first"
+        ],
+        "correct": 0,
+        "explanation": "Virtual and abstract members are dispatched by the object's runtime type, not the variable's declared type."
+      },
+      "references": [
+        {
+          "title": "Inheritance",
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/inheritance",
+          "section": "Abstract and virtual members",
+          "reviewed": "2026-11-08",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        },
+        {
+          "title": "The field keyword",
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/field",
+          "section": "Field-backed properties",
+          "reviewed": "2026-11-08",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        },
+        {
+          "title": "Value types",
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types",
+          "section": "Structure types",
+          "reviewed": "2026-11-08",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
+    },
+    {
       "id": "exceptions",
       "title": "Exceptions and resource cleanup",
       "takeaway": "Handle failures at a boundary and release resources reliably.",
@@ -510,6 +585,81 @@
           "url": "https://learn.microsoft.com/en-us/dotnet/csharp/linq/",
           "section": "Query execution",
           "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
+    },
+    {
+      "id": "dates-json",
+      "stage": "foundation",
+      "title": "Dates, time and JSON",
+      "takeaway": "Store instants as DateTimeOffset in UTC, inject time through TimeProvider, and serialize with System.Text.Json options that reject unexpected input.",
+      "sections": [
+        {
+          "title": "Instants and calendar dates",
+          "paragraphs": [
+            "`DateTimeOffset` identifies one instant together with its offset from UTC, so it compares correctly across zones. `DateTime` has a `Kind` that is easy to lose, which makes it a common source of off-by-hours bugs. `DateOnly` is a calendar day with no time, suitable for a due date or a birthday; `TimeSpan` is a duration.",
+            "Store and compare UTC instants, and convert to a person's zone only for display with `TimeZoneInfo`. The example crosses the start of British Summer Time: 02:15 UTC is 03:15 in London. Calendar arithmetic clamps, so 31 January plus one month is 28 February. Use the round-trip format `O` for machine-readable text."
+          ],
+          "example": "var start = new DateTimeOffset(2026, 3, 29, 0, 30, 0, TimeSpan.Zero);\nvar end = start.AddMinutes(105);\nConsole.WriteLine(end.ToString(\"O\"));\nConsole.WriteLine((end - start).TotalMinutes);\n\nvar london = TimeZoneInfo.FindSystemTimeZoneById(\"Europe/London\");\nConsole.WriteLine(TimeZoneInfo.ConvertTime(end, london).ToString(\"yyyy-MM-dd HH:mm zzz\"));\n\nvar due = new DateOnly(2026, 1, 31).AddMonths(1);\nConsole.WriteLine(due.ToString(\"yyyy-MM-dd\"));\n// Expected:\n// 2026-03-29T02:15:00.0000000+00:00\n// 105\n// 2026-03-29 03:15 +01:00\n// 2026-02-28"
+        },
+        {
+          "title": "Testable time with TimeProvider",
+          "paragraphs": [
+            "Code that calls `DateTimeOffset.UtcNow` directly cannot be tested at a chosen moment. Depend on `TimeProvider` instead: production registers `TimeProvider.System`, and tests supply a controllable clock. The `Microsoft.Extensions.TimeProvider.Testing` package includes `FakeTimeProvider`; the small subclass below shows the idea without a package.",
+            "Timers and `Task.Delay` overloads also accept a `TimeProvider`, so expiry and timeout logic can be tested without waiting in real time."
+          ],
+          "example": "var clock = new ManualClock(new DateTimeOffset(2026, 11, 8, 9, 0, 0, TimeSpan.Zero));\nvar issuer = new TokenIssuer(clock, TimeSpan.FromMinutes(15));\nvar expires = issuer.Issue();\nConsole.WriteLine(issuer.IsValid(expires));\nclock.Advance(TimeSpan.FromMinutes(16));\nConsole.WriteLine(issuer.IsValid(expires));\n\nsealed class ManualClock(DateTimeOffset start) : TimeProvider\n{\n    private DateTimeOffset now = start;\n    public override DateTimeOffset GetUtcNow() => now;\n    public void Advance(TimeSpan by) => now += by;\n}\n\nsealed class TokenIssuer(TimeProvider time, TimeSpan lifetime)\n{\n    public DateTimeOffset Issue() => time.GetUtcNow() + lifetime;\n    public bool IsValid(DateTimeOffset expires) => time.GetUtcNow() < expires;\n}\n// Expected:\n// True\n// False"
+        },
+        {
+          "title": "JSON with System.Text.Json",
+          "paragraphs": [
+            "`JsonSerializer` converts objects to and from JSON. `JsonSerializerDefaults.Web` uses camel-case property names and case-insensitive matching, as ASP.NET Core does. Records with positional parameters deserialize through their constructor, and `DateOnly` and `DateTimeOffset` use ISO 8601 text.",
+            "By default unknown JSON properties are ignored and missing ones get default values. `JsonUnmappedMemberHandling.Disallow` rejects unexpected fields, `required` members reject missing ones, and `JsonStringEnumConverter` writes enums as names rather than numbers. Deserialization checks shape, not business rules, so validate values afterwards."
+          ],
+          "example": "using System.Text.Json;\nusing System.Text.Json.Serialization;\n\nvar options = new JsonSerializerOptions(JsonSerializerDefaults.Web)\n{\n    UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,\n    Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }\n};\n\nvar session = new Session(\"SQL\", 45, Level.Review, new DateOnly(2026, 11, 8));\nstring json = JsonSerializer.Serialize(session, options);\nConsole.WriteLine(json);\nConsole.WriteLine(JsonSerializer.Deserialize<Session>(json, options) == session);\n\ntry\n{\n    JsonSerializer.Deserialize<Session>(\"\"\"{\"topic\":\"SQL\",\"minutes\":5,\"level\":\"new\",\"on\":\"2026-11-08\",\"extra\":1}\"\"\", options);\n}\ncatch (JsonException)\n{\n    Console.WriteLine(\"Unknown property rejected\");\n}\n\nenum Level { New, Review }\nrecord Session(string Topic, int Minutes, Level Level, DateOnly On);\n// Expected:\n// {\"topic\":\"SQL\",\"minutes\":45,\"level\":\"review\",\"on\":\"2026-11-08\"}\n// True\n// Unknown property rejected"
+        }
+      ],
+      "exercise": {
+        "prompt": "Deserialize a JSON array of study sessions with topic, minutes and on (a date). Reject negative minutes or a blank topic, then print the total minutes for each day in date order.",
+        "starter": "// Declare record Session(string Topic, int Minutes, DateOnly On); deserialize with JsonSerializerOptions.Web, validate, then group by On.",
+        "solution": "using System.Text.Json;\n\nstring body = \"\"\"\n[\n  {\"topic\": \"sql\", \"minutes\": 30, \"on\": \"2026-11-07\"},\n  {\"topic\": \"csharp\", \"minutes\": 45, \"on\": \"2026-11-08\"},\n  {\"topic\": \"sql\", \"minutes\": 15, \"on\": \"2026-11-08\"}\n]\n\"\"\";\n\nvar sessions = JsonSerializer.Deserialize<List<Session>>(body, JsonSerializerOptions.Web)\n    ?? throw new JsonException(\"Expected an array\");\nforeach (var s in sessions)\n    if (s.Minutes < 0 || string.IsNullOrWhiteSpace(s.Topic))\n        throw new JsonException($\"Invalid session on {s.On}\");\n\nforeach (var day in sessions.GroupBy(s => s.On).OrderBy(g => g.Key))\n    Console.WriteLine($\"{day.Key:yyyy-MM-dd}: {day.Sum(s => s.Minutes)} min\");\n\nrecord Session(string Topic, int Minutes, DateOnly On);\n// Expected:\n// 2026-11-07: 30 min\n// 2026-11-08: 60 min",
+        "checks": [
+          "Days print in ascending order with 30 and 60 minutes.",
+          "A null body or a negative minute value raises JsonException rather than printing a partial total.",
+          "No local time zone affects the grouping, because DateOnly has no time."
+        ]
+      },
+      "quiz": {
+        "question": "Which type represents one instant together with its offset from UTC?",
+        "options": [
+          "DateTimeOffset",
+          "DateOnly",
+          "TimeSpan"
+        ],
+        "correct": 0,
+        "explanation": "DateTimeOffset pairs a date and time with an offset, so it identifies a single instant. DateOnly has no time and TimeSpan is a duration."
+      },
+      "references": [
+        {
+          "title": "Choose between DateTime, DateOnly, DateTimeOffset, TimeSpan, TimeZoneInfo, and TimeZone",
+          "url": "https://learn.microsoft.com/en-us/dotnet/standard/datetime/choosing-between-datetime",
+          "section": "Choosing a date and time type",
+          "reviewed": "2026-11-08",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        },
+        {
+          "title": "What is TimeProvider?",
+          "url": "https://learn.microsoft.com/en-us/dotnet/standard/datetime/timeprovider-overview",
+          "section": "TimeProvider",
+          "reviewed": "2026-11-08",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        },
+        {
+          "title": "How to handle overflow JSON or use JsonElement",
+          "url": "https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/missing-members",
+          "section": "Handle unmapped members",
+          "reviewed": "2026-11-08",
           "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
         }
       ]
@@ -840,6 +990,14 @@
             "Do not inject a scoped database context into a singleton store. The following complete file validates titles and protects its list with a lock; it is intentionally small enough to replace with a persistent store later."
           ],
           "example": "var builder = WebApplication.CreateBuilder(args);\nbuilder.Services.AddSingleton<TaskStore>();\nvar app = builder.Build();\napp.MapGet(\"/tasks\", (TaskStore store) => store.All());\napp.MapPost(\"/tasks\", (TaskRequest request, TaskStore store) =>\n{\n    if (string.IsNullOrWhiteSpace(request.Title)) return Results.BadRequest(\"Title required\");\n    var item = store.Add(request.Title.Trim());\n    return Results.Created($\"/tasks/{item.Id}\", item);\n});\napp.MapGet(\"/tasks/{id:int}\", (int id, TaskStore store) =>\n    store.All().FirstOrDefault(t => t.Id == id) is { } item\n        ? Results.Ok(item) : Results.NotFound());\napp.Run();\nrecord TaskRequest(string Title);\nrecord TaskItem(int Id, string Title);\nclass TaskStore\n{\n    private readonly List<TaskItem> items = new();\n    private readonly object gate = new();\n    private int nextId = 1;\n    public TaskItem[] All() { lock (gate) return items.ToArray(); }\n    public TaskItem Add(string title)\n    {\n        lock (gate) { var item = new TaskItem(nextId++, title); items.Add(item); return item; }\n    }\n}\n// POST /tasks with {\"title\":\"Read\"} => 201, {\"id\":1,\"title\":\"Read\"}"
+        },
+        {
+          "title": "The middleware pipeline",
+          "paragraphs": [
+            "Each request passes through middleware in the order it was added, and the response passes back out in reverse. A middleware can work before and after calling `next`, or short-circuit by writing a response without calling it. Endpoints run at the innermost point.",
+            "Order is behaviour: the exception handler must come first to catch failures from everything after it, and authentication must come before authorization. A size check placed after an expensive step does not protect it. The fragment below logs every request's status and time, and rejects large bodies before they reach an endpoint."
+          ],
+          "example": "// Program.cs fragment: middleware runs in the order it is added, wrapping everything added after it.\nvar builder = WebApplication.CreateBuilder(args);\nvar app = builder.Build();\n\napp.UseExceptionHandler(\"/error\");          // outermost: turns failures below into a problem response\napp.Use(async (context, next) =>\n{\n    long started = TimeProvider.System.GetTimestamp();\n    await next(context);                      // run the rest of the pipeline\n    var elapsed = TimeProvider.System.GetElapsedTime(started);\n    app.Logger.LogInformation(\"{Method} {Path} -> {Status} in {Ms:F1} ms\",\n        context.Request.Method, context.Request.Path, context.Response.StatusCode, elapsed.TotalMilliseconds);\n});\napp.Use(async (context, next) =>\n{\n    if (context.Request.ContentLength > 64_000)\n    {\n        context.Response.StatusCode = StatusCodes.Status413PayloadTooLarge;\n        return;                               // short-circuit: next is never called\n    }\n    await next(context);\n});\n\napp.Map(\"/error\", () => Results.Problem());\napp.MapGet(\"/tasks\", () => Results.Ok(Array.Empty<string>()));\napp.Run();"
         }
       ],
       "exercise": {
@@ -870,6 +1028,13 @@
           "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-10.0",
           "section": "Service lifetimes",
           "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        },
+        {
+          "title": "ASP.NET Core Middleware",
+          "url": "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/",
+          "section": "Middleware order",
+          "reviewed": "2026-11-08",
           "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
         }
       ]
@@ -1564,6 +1729,14 @@
             "Do not cache private task data under a global key or cache a mutable entity tracked by a context. A fast unauthorized response is still a defect. Compare before and after with the same workload and rerun correctness and ownership tests."
           ],
           "example": "// Cache design exercise, not a complete implementation:\n// key = (tenant, owner, normalizedQuery, pageCursor, pageSize)\n// value = immutable response DTO plus explicit freshness lifetime\n// mutation -> invalidate affected owner's entries or use versioned keys\n// Never use only '/tasks' as the cache key for personalized results."
+        },
+        {
+          "title": "Slices without copying: Span<T>",
+          "paragraphs": [
+            "`Span<T>` and `ReadOnlySpan<T>` are views over existing memory, such as part of a string or array. Slicing a span with a range creates another view instead of a new string, and many parsing methods accept spans, so a line can be split and parsed with no intermediate strings.",
+            "A span can live only on the stack: it cannot be stored in a field, captured by a lambda or held across `await`; use `Memory<T>` for those cases. Reach for spans after a profiler or BenchmarkDotNet's memory diagnoser shows allocation is the problem, not as a default style."
+          ],
+          "example": "using System.Globalization;\n\nstring line = \"2026-11-08,sql,45\";\nReadOnlySpan<char> rest = line;              // a view of the string; nothing is copied\n\nint comma = rest.IndexOf(',');\nvar day = DateOnly.ParseExact(rest[..comma], \"yyyy-MM-dd\", CultureInfo.InvariantCulture);\nrest = rest[(comma + 1)..];\n\ncomma = rest.IndexOf(',');\nstring topic = rest[..comma].ToString();    // allocate only the part you keep\nint minutes = int.Parse(rest[(comma + 1)..], CultureInfo.InvariantCulture);\n\nConsole.WriteLine($\"{day:yyyy-MM-dd} {topic} {minutes}\");\n// Expected: 2026-11-08 sql 45"
         }
       ],
       "exercise": {
@@ -1594,6 +1767,13 @@
           "url": "https://learn.microsoft.com/en-us/ef/core/performance/efficient-querying",
           "section": "Limit the resultset size",
           "reviewed": "2026-09-27",
+          "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        },
+        {
+          "title": "Memory and span usage guidelines",
+          "url": "https://learn.microsoft.com/en-us/dotnet/standard/memory-and-spans/memory-t-usage-guidelines",
+          "section": "Span<T> and Memory<T>",
+          "reviewed": "2026-11-08",
           "scope": "C# / .NET 10; ASP.NET Core / EF Core 10 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
         }
       ]

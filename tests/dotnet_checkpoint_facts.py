@@ -35,7 +35,10 @@ FRAMEWORK = 'net10.0'
 WORK = None
 
 # Answers that follow from the lesson text rather than lab behaviour.
-SOURCED = {}
+SOURCED = {
+    'inheritance/2': 'Assigning a struct copies the value; the lesson example prints 1 10 for a and b',
+    'dates-json/2': 'Unmapped JSON members are ignored unless UnmappedMemberHandling is Disallow, Microsoft docs',
+}
 
 PROJECT = """<Project Sdk="{sdk}">
   <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>{framework}</TargetFramework>

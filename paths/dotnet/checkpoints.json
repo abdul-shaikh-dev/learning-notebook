@@ -15,11 +15,17 @@
     "objects": [
       {"question": "new Session(7, 0) == new Session(7, 0) is evaluated. What is the result?", "options": ["True: records compare by value", "False: they are different objects", "It does not compile"], "correct": 0, "explanation": "A record generates value equality, which is why the boundary check can compare a decoded session with an expected one."}
     ],
+    "inheritance": [
+      {"question": "a is a struct whose X is 1. After var b = a; b.X = 10;, what is a.X?", "options": ["1", "10"], "correct": 0, "explanation": "Assigning a struct copies the value, so b is independent of a. With a class, both names would refer to one object."}
+    ],
     "exceptions": [
       {"question": "SessionClient.Get receives a 500 response. What does it throw?", "options": ["HttpRequestException with status code 500", "FormatException", "Nothing: it returns null"], "correct": 0, "explanation": "EnsureSuccessStatusCode turns a server error into an exception that carries the status. Only 404 is mapped to a missing result."}
     ],
     "linq": [
       {"question": "A TaskStore holds tasks 1 to 5. Which IDs does Page(2, 2) return?", "options": ["3 and 4", "1 and 2", "2 and 3"], "correct": 0, "explanation": "Where keeps IDs above the cursor, OrderBy sorts them and Take limits the page, so the cursor itself is excluded."}
+    ],
+    "dates-json": [
+      {"question": "By default, what does System.Text.Json do with a JSON property that has no matching C# property?", "options": ["Ignores it", "Throws JsonException", "Stores it in a hidden field"], "correct": 0, "explanation": "Unmapped properties are skipped unless you set UnmappedMemberHandling to Disallow, so silent extra input is the default."}
     ],
     "async": [
       {"question": "The caller's token is cancelled while the scripted handler is still waiting. What does SessionClient.Get throw?", "options": ["TaskCanceledException, with no TimeoutException inside", "TimeoutException", "Nothing: it returns null"], "correct": 0, "explanation": "The handler awaits with the token, so cancelling it ends the wait. A caller's cancellation, unlike a timeout, has no inner TimeoutException."}
