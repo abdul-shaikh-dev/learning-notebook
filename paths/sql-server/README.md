@@ -1,6 +1,6 @@
 # SQL Server & T-SQL practice
 
-Read the twenty-four lessons in Learning Notebook. The browser is a reader, not a SQL engine.
+Read the twenty-eight lessons in Learning Notebook. The browser is a reader, not a SQL engine.
 
 1. Connect SSMS to a local/training SQL Server instance.
 2. Read and run `setup.sql`. It creates LearningNotebook only if absent, then populates session-local temporary tables. No permanent table or existing database is dropped.
@@ -18,7 +18,7 @@ Verification: the foundation and import fixtures were executed on SQL Server 202
 
 ## Three assessed stages
 
-The first twelve lesson IDs are preserved as Foundations. Six Intermediate and six Advanced lessons add modelling, APPLY/set comparison, precise window frames, indexing/statistics, procedure ownership, incremental loads, Query Store, optimistic concurrency, deadlocks, permissions, migrations and the import capstone.
+The first twelve lesson IDs are preserved as Foundations. Nine Intermediate and seven Advanced lessons add modelling, APPLY/set comparison, views/functions/triggers, precise window frames, reshaping/recursive queries/text and dates, indexing/statistics, procedure ownership, incremental loads, JSON/MERGE/temporal tables, Query Store, optimistic concurrency, deadlocks, permissions, migrations, backup and restore, and the import capstone.
 
 Each stage includes exit criteria and a project with requirements, rubric and a worked solution. Completing a lesson is not proof of independent competence: produce the required outputs and explain your choices.
 

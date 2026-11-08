@@ -43,3 +43,16 @@ Reference: [Microsoft sys.query_store_query — object_id and parameterization](
 Crash recovery, real least-privilege roles, migrations, rowversion write races and
 all optional lesson extensions were not tested here. This run used an administrative
 training connection; it does not establish a production permissions model.
+
+## Added lessons — 8 November 2026
+
+Executed against local SQL Server 2025 Express, build 17.0.1145.4, with sqlcmd and the
+temporary-table fixture in tempdb. Every example and exercise solution in the four added
+lessons ran; the result comments in the reader are the observed results.
+
+| Lesson | Observed result |
+| --- | --- |
+| Views, functions and triggers | View totals 150/200/40; inline function returned 101, 103, 104; objects were gone after ROLLBACK. One UPDATE of two rows fired the trigger once and wrote two audit rows. |
+| Reshaping, recursion, text and dates | PIVOT and conditional aggregation matched. UNPIVOT raised error 8167 until the name was cast, then dropped the NULL email; CROSS APPLY (VALUES) kept it. Calendar CTE showed 4 and 5 January with no orders. |
+| JSON, MERGE and temporal tables | OPENJSON shredded two rows; a strict path raised 13608. MERGE updated 102, deleted 103, inserted 106; a duplicate source key raised 8672. AS OF read the earlier price; versioning was switched off and both tables dropped. |
+| Backup and restore | In a disposable database under FULL recovery, full plus log restore returned three rows and full-only returned two. The database was dropped afterwards. |

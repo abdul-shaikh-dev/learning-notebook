@@ -25,8 +25,9 @@ COURSE = ROOT / 'paths' / 'sql-server'
 # Answers that follow from the lesson text rather than engine behaviour.
 SOURCED = {
     'indexes-and-plans/2': 'Concept, lesson 11',
-    'index-selectivity-statistics/2': 'Model, lesson 16',
-    'plan-regressions-query-store/2': 'Example, lesson 19',
+    'index-selectivity-statistics/2': 'Model, lesson 18',
+    'plan-regressions-query-store/2': 'Example, lesson 22',
+    'backup-restore-recovery/2': 'Model, lesson 27',
 }
 
 # key: (T-SQL that sets @a, {printed result: option text}). A table of None means the result is the option text.
@@ -102,6 +103,23 @@ BEGIN TRY ALTER TABLE #FMigrate ALTER COLUMN Note nvarchar(20) NOT NULL; END TRY
 BEGIN CATCH SET @error = ERROR_NUMBER(); END CATCH;
 SET @a = CONCAT(N'error ', @error, N', nullable ', COLUMNPROPERTY(OBJECT_ID('tempdb..#FMigrate'), 'Note', 'AllowsNull'));
 DROP TABLE #FMigrate;""", {'error 515, nullable 1': 'Fails with error 515, leaving the column nullable', 'error 0, nullable 0': 'Succeeds and fills the NULL with an empty string'}),
+    'views-functions-triggers/2': ("""BEGIN TRAN;
+CREATE TABLE dbo.FTrigOrders (OrderId int PRIMARY KEY, CustomerId int NOT NULL);
+CREATE TABLE dbo.FTrigLog (RowsSeen int NOT NULL);
+INSERT dbo.FTrigOrders SELECT OrderId, CustomerId FROM #LNOrders;
+EXEC(N'CREATE TRIGGER dbo.FTrig ON dbo.FTrigOrders AFTER UPDATE AS INSERT dbo.FTrigLog SELECT COUNT(*) FROM inserted;');
+UPDATE dbo.FTrigOrders SET CustomerId = CustomerId WHERE CustomerId = 1;
+SET @a = CONCAT((SELECT COUNT(*) FROM dbo.FTrigLog), N'|', (SELECT MAX(RowsSeen) FROM dbo.FTrigLog));
+ROLLBACK;""", {'1|2': 'One entry that saw 2 rows', '2|1': 'Two entries that each saw 1 row', '0|': 'No entries: triggers skip multi-row statements'}),
+    'reshape-recursive-text-dates/2': ("SET @a = DATEDIFF(month, '20260131', '20260201');", None),
+    'json-merge-temporal/2': ("""SELECT OrderId, Amount INTO #FMerge FROM #LNOrders WHERE OrderId = 102;
+BEGIN TRY
+ MERGE #FMerge AS t USING (VALUES (102, 55.00), (102, 60.00)) AS s(OrderId, Amount) ON t.OrderId = s.OrderId
+ WHEN MATCHED THEN UPDATE SET Amount = s.Amount;
+ SET @a = (SELECT CONVERT(nvarchar(20), Amount) FROM #FMerge);
+END TRY
+BEGIN CATCH SET @a = CONCAT(N'error ', ERROR_NUMBER()); END CATCH;
+DROP TABLE #FMerge;""", {'error 8672': 'The statement fails with error 8672', '60.00': 'The last source row wins'}),
     'stage/foundation/1': ("SET @a = CONCAT((SELECT COUNT(*) FROM #LNCustomers), N' and ', (SELECT COUNT(Email) FROM #LNCustomers));", None),
     'stage/foundation/2': ("SET @a = (SELECT COUNT(*) FROM (SELECT CustomerId FROM #LNOrders GROUP BY CustomerId HAVING COUNT(*) > 1) g);", None),
     'stage/foundation/3': ("""SET @a = (SELECT COUNT(*) FROM #LNCustomers c WHERE EXISTS (
