@@ -80193,7 +80193,7 @@ const LEARNING_PATHS = [
       "Confirm python --version (Windows may use py; macOS/Linux may use python3).",
       "Create an empty practice folder. Save each example as a .py file and run it from that folder.",
       "Examples show expected output as comments; the exercise starter and solution are separate snippets. Predict the result, attempt the exercise, then compare the solution.",
-      "In lesson 10 create an optional project virtual environment; no third-party packages or live API credentials are required.",
+      "In lesson 11 create an optional project virtual environment; no third-party packages or live API credentials are required.",
       "Intermediate and advanced practice require Python 3.14+. Download the three project scripts and test_projects.py into one folder, then run python -m unittest -v test_projects.py there. No external packages are required."
     ],
     "nextSteps": [
@@ -80530,7 +80530,7 @@ const LEARNING_PATHS = [
           {
             "title": "Pitfalls",
             "paragraphs": [
-              "Strings do not change in place: `name.strip()` returns a value you must use or assign. `int(\"twenty\")` raises `ValueError`; we handle this in lesson 8. Never use `eval` to interpret user input. Indexing an empty string fails, so inspect length before reading its first character."
+              "Strings do not change in place: `name.strip()` returns a value you must use or assign. `int(\"twenty\")` raises `ValueError`; we handle this in lesson 9. Never use `eval` to interpret user input. Indexing an empty string fails, so inspect length before reading its first character."
             ]
           }
         ],
@@ -81601,7 +81601,7 @@ const LEARNING_PATHS = [
           }
         ],
         "exercise": {
-          "prompt": "Extend the log with totals_by_topic(log), returning a dictionary of accumulated minutes per topic. Use Python 25, Reading 10, and Python 15 as the sample. Then integrate it with lesson 9 storage and lesson 11 tests.",
+          "prompt": "Extend the log with totals_by_topic(log), returning a dictionary of accumulated minutes per topic. Use Python 25, Reading 10, and Python 15 as the sample. Then integrate it with lesson 10 storage and lesson 12 tests.",
           "starter": "def totals_by_topic(log):\n    pass\n# Accumulate each topic",
           "solution": "def totals_by_topic(log):\n    totals = {}\n    for session in log:\n        topic = session[\"topic\"]\n        totals[topic] = totals.get(topic, 0) + session[\"minutes\"]\n    return totals\n\nlog = [{\"topic\": \"Python\", \"minutes\": 25}, {\"topic\": \"Reading\", \"minutes\": 10}, {\"topic\": \"Python\", \"minutes\": 15}]\nprint(totals_by_topic(log))",
           "checks": [
@@ -81741,7 +81741,7 @@ const LEARNING_PATHS = [
             "title": "Inheritance and super()",
             "paragraphs": [
               "A subclass inherits its base class's methods and can override them. `super()` calls the next class's version, which is how a subclass extends behaviour instead of copying it. `isinstance(obj, Base)` is true for every subclass instance.",
-              "Inheritance is a promise: code written for the base class must keep working with any subclass. A subclass that rejects inputs the base accepts, or returns a different kind of result, breaks callers. An abstract base class from `abc` marks methods with `@abstractmethod`; Python refuses to create an instance until a subclass implements them. When you only want to reuse code, composition from lesson 13 is usually simpler."
+              "Inheritance is a promise: code written for the base class must keep working with any subclass. A subclass that rejects inputs the base accepts, or returns a different kind of result, breaks callers. An abstract base class from `abc` marks methods with `@abstractmethod`; Python refuses to create an instance until a subclass implements them. When you only want to reuse code, composition from lesson 14 is usually simpler."
             ],
             "example": "from abc import ABC, abstractmethod\n\nclass Exporter(ABC):\n    def __init__(self, rows):\n        self.rows = list(rows)\n\n    def export(self):\n        return \"\\n\".join(self.format_row(row) for row in self.rows)\n\n    @abstractmethod\n    def format_row(self, row): ...\n\nclass CsvExporter(Exporter):\n    def format_row(self, row):\n        return \",\".join(str(value) for value in row)\n\nclass LabelledCsvExporter(CsvExporter):\n    def __init__(self, rows, label):\n        super().__init__(rows)\n        self.label = label\n\n    def export(self):\n        return f\"# {self.label}\\n\" + super().export()\n\nrows = [(\"Python\", 25), (\"SQL\", 40)]\nprint(LabelledCsvExporter(rows, \"week 1\").export())\nprint(isinstance(LabelledCsvExporter(rows, \"x\"), Exporter))\ntry:\n    Exporter(rows)\nexcept TypeError:\n    print(\"Exporter is abstract\")\n\n# Expected output:\n# # week 1\n# Python,25\n# SQL,40\n# True\n# Exporter is abstract"
           },
