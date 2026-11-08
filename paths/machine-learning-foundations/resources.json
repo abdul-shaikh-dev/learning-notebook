@@ -117,7 +117,7 @@
     {
       "id": "advanced",
       "title": "Review a breach prediction experiment",
-      "goal": "Freeze the model settings and threshold rule, then run python ml_lab.py --final once for the report. Independently calculate the threshold example in lesson 18. Change the group held out in the standard-library exercise and explain why this answers a different question from later-date testing.",
+      "goal": "Freeze the model settings and threshold rule, then run python ml_lab.py --final once for the report. Independently calculate the threshold example in lesson 21. Change the group held out in the standard-library exercise and explain why this answers a different question from later-date testing.",
       "fileIds": [
         "README-md",
         "metrics_lab-py",
@@ -173,14 +173,18 @@
     "pipeline-training": "intermediate",
     "cross-validation": "intermediate",
     "overfitting-regularization": "intermediate",
+    "trees-and-ensembles": "intermediate",
     "learning-curves": "intermediate",
+    "distance-and-clustering": "intermediate",
     "leakage-audit": "advanced",
     "time-and-group-splits": "advanced",
     "error-analysis": "advanced",
+    "explain-a-model": "advanced",
     "threshold-policy": "advanced",
     "reproduce-an-experiment": "advanced",
     "model-review-capstone": "advanced",
-    "distribution-change": "advanced"
+    "distribution-change": "advanced",
+    "neural-networks": "advanced"
   },
   "bundle": {
     "href": "paths/machine-learning-foundations/practice-bundle.zip"

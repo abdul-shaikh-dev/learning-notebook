@@ -1,7 +1,9 @@
 """Fact checks for the Machine learning foundations checkpoint answers.
 
 Each fact runs the course's lab in paths/machine-learning-foundations/practice: metrics_lab.py's metrics,
-generator and splitters, and ml_lab.py's pipeline and run, in development and final mode. Each returns the
+generator and splitters, and ml_lab.py's pipeline and run, in development and final mode. The answers for the
+trees, clustering, explanation and neural-network lessons rerun those lessons' scikit-learn examples on the
+same synthetic data. Each returns the
 text of the option the result supports, and the script fails if that differs from the authored correct
 option. Needs the course's pinned packages (practice/requirements.txt), as in the data-science CI job.
 Run with Python 3.14+: python tests/machine_learning_checkpoint_facts.py
@@ -24,7 +26,7 @@ import ml_lab  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
-    'learning-curves/2': 'Refit preprocessing and the estimator on each training subset, lesson 14',
+    'learning-curves/2': 'Refit preprocessing and the estimator on each training subset, lesson 15',
 }
 
 
@@ -238,7 +240,61 @@ def advanced_slices():
     return f"About {percent(slices['email']['precision'])} for email and {percent(slices['chat']['precision'])} for chat"
 
 
+@cache
+def moons():
+    from sklearn.datasets import make_moons
+    from sklearn.model_selection import train_test_split
+    X, y = make_moons(n_samples=600, noise=0.3, random_state=0)
+    return train_test_split(X, y, test_size=0.3, random_state=0, stratify=y)
+
+
+def trees_and_ensembles():
+    from sklearn.tree import DecisionTreeClassifier
+    X_train, _, y_train, _ = moons()
+    score = DecisionTreeClassifier(random_state=0).fit(X_train, y_train).score(X_train, y_train)
+    return pick(score, {1.0: '1.000: it keeps splitting until every leaf is pure'})
+
+
+def distance_and_clustering():
+    from sklearn.cluster import KMeans
+    from sklearn.datasets import make_blobs
+    from sklearn.metrics import adjusted_rand_score
+    X, _ = make_blobs(n_samples=300, centers=3, cluster_std=1.0, random_state=4)
+    a = KMeans(n_clusters=3, n_init=10, random_state=0).fit_predict(X)
+    b = KMeans(n_clusters=3, n_init=10, random_state=1).fit_predict(X)
+    return pick((bool((a != b).any()), adjusted_rand_score(a, b) == 1.0),
+                {(True, True): 'Not necessarily: the same groups can carry different numbers'})
+
+
+def explain_a_model():
+    from sklearn.datasets import make_classification
+    from sklearn.ensemble import RandomForestClassifier
+    from sklearn.inspection import permutation_importance
+    from sklearn.model_selection import train_test_split
+    X, y = make_classification(n_samples=1000, n_features=3, n_informative=2, n_redundant=0,
+                               n_clusters_per_class=1, random_state=0)
+    X = np.column_stack([X[:, :2], np.random.default_rng(0).normal(size=len(X))])
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0, stratify=y)
+    model = RandomForestClassifier(n_estimators=200, random_state=0).fit(X_train, y_train)
+    noise = permutation_importance(model, X_test, y_test, n_repeats=20, random_state=0).importances_mean[2]
+    return pick(abs(noise) < 0.02, {True: 'Close to 0'})
+
+
+def neural_networks():
+    import warnings
+    from sklearn.exceptions import ConvergenceWarning
+    from sklearn.neural_network import MLPClassifier
+    X_train, _, y_train, _ = moons()
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter('always')
+        MLPClassifier(hidden_layer_sizes=(16, 16), max_iter=5, random_state=0).fit(X_train, y_train)
+    return pick(any(issubclass(w.category, ConvergenceWarning) for w in caught),
+                {True: 'A ConvergenceWarning: the optimiser stopped before converging'})
+
+
 FACTS = {
+    'trees-and-ensembles/2': trees_and_ensembles, 'distance-and-clustering/2': distance_and_clustering,
+    'explain-a-model/2': explain_a_model, 'neural-networks/2': neural_networks,
     'prediction-question/2': prediction_question, 'features-and-targets/2': features_and_targets,
     'simple-baselines/2': simple_baselines, 'holdout-splits/2': holdout_splits,
     'classification-metrics/2': classification_metrics, 'regression-metrics/2': regression_metrics,
