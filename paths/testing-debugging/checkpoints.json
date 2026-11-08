@@ -15,6 +15,9 @@
     "fixtures": [
       {"question": "Setup creates a temporary directory, then a later setup step fails. When should cleanup for the directory be registered?", "options": ["Immediately after the directory is created", "At the end of setup, once everything succeeded", "In the next test's setup"], "correct": 0, "explanation": "Registering cleanup as soon as a resource exists means a later setup failure cannot leak it into other tests."}
     ],
+    "test-driven-development": [
+      {"question": "A first test calls a function that only raises NotImplementedError. How does unittest report it?", "options": ["As an error (E), because an exception other than an assertion failure was raised", "As a failure (F)", "As a skipped test"], "correct": 0, "explanation": "unittest counts AssertionError as a failure and any other exception as an error; both make the run fail."}
+    ],
     "tracebacks": [
       {"question": "parse_record('{bad') raises ValueError: invalid JSON. What is its __cause__?", "options": ["A json.JSONDecodeError", "None", "A TypeError"], "correct": 0, "explanation": "raise ... from error keeps the original decoder exception, so the traceback shows both the contract error and where parsing failed."}
     ],
@@ -23,6 +26,9 @@
     ],
     "hypotheses": [
       {"question": "Hypothesis: buggy_minutes admits booleans. What does buggy_minutes(True) return?", "options": ["True, without raising", "ValueError: minutes required", "1"], "correct": 0, "explanation": "bool is a subclass of int, so isinstance accepts True. One call falsifies or confirms the hypothesis before any code changes."}
+    ],
+    "debugger": [
+      {"question": "In pdb, what is the difference between next and step on a line that calls a function?", "options": ["They are identical", "next runs the call and stops at the following line; step stops at the first line inside the called function", "step skips the call entirely"], "correct": 1, "explanation": "Use step to enter a call you suspect, and next to stay at the current level."}
     ],
     "strategy": [
       {"question": "Which test would catch the importer's command returning the wrong exit status?", "options": ["A test that runs the command as a real subprocess", "Parser unit tests", "A filesystem integration test"], "correct": 0, "explanation": "Exit status and argument parsing live at the command boundary. Parser and file tests never cross it."}
@@ -53,6 +59,9 @@
     ],
     "flaky-tests": [
       {"question": "In the concurrency test, what does the join timeout do?", "options": ["Lets the test detect an unfinished worker; it does not stop the thread", "Terminates a thread that runs too long", "Orders the workers"], "correct": 0, "explanation": "The barrier orders the workers. A join timeout only bounds the wait, after which is_alive() reports a stuck worker."}
+    ],
+    "end-to-end-tests": [
+      {"question": "An end-to-end test passes on retry after failing. What should the team do with that result?", "options": ["Count it as a pass and move on", "Report the retried pass as flaky, investigate with the failure trace and fix or quarantine with an owner", "Delete the test"], "correct": 1, "explanation": "A retried pass hides a real timing or isolation problem. Visible flake tracking keeps the suite trustworthy."}
     ],
     "async-debugging": [
       {"question": "collect_once is cancelled after it signals started. What does events hold?", "options": ["['acquired', 'released']", "['acquired']", "['acquired', 'committed', 'released']"], "correct": 0, "explanation": "The finally block runs on cancellation, so the resource is released. Nothing was committed."}
