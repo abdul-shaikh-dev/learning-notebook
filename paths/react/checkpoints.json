@@ -12,11 +12,17 @@
     "functions": [
       {"question": "transition(rows, {type: 'complete', id: 'a'}) is called. What happens to rows?", "options": ["Nothing: a new array is returned and rows is unchanged", "rows is updated in place", "rows becomes empty"], "correct": 0, "explanation": "The function depends only on its inputs and returns a new value, which makes it easy to test and safe to call repeatedly."}
     ],
+    "language-core": [
+      {"question": "What do 0 || 25 and 0 ?? 25 evaluate to?", "options": ["25 and 0", "0 and 25", "25 and 25"], "correct": 0, "explanation": "|| replaces every falsy value, including 0. ?? replaces only null and undefined, so it keeps the 0."}
+    ],
     "async": [
       {"question": "makeHttpLoader's fetcher returns a 404 response. What does the loader do?", "options": ["Throws Error: HTTP 404", "Returns the 404 body as a lesson", "Returns undefined"], "correct": 0, "explanation": "fetch resolves for HTTP errors, so the loader checks response.ok itself before reading the body."}
     ],
     "typescript": [
       {"question": "parseSession receives a valid session with an extra field, source. What does it return?", "options": ["ok false, with the error exact fields required", "ok true, ignoring source", "ok true, keeping source"], "correct": 0, "explanation": "The runtime check compares the exact field names. A TypeScript type alone would never see the extra field."}
+    ],
+    "generics-utility-types": [
+      {"question": "Lesson has no owner property. What happens with pluck(lessons, \"owner\") when pluck is declared with K extends keyof T?", "options": ["It returns an array of undefined", "It is a compile-time error", "It throws at runtime"], "correct": 1, "explanation": "\"owner\" is not in keyof Lesson, so the call does not type-check. Without the constraint the mistake would only appear at runtime."}
     ],
     "components": [
       {"question": "Which key does App.tsx give each lesson in its list?", "options": ["row.id, the stable record ID", "The array index", "row.title"], "correct": 0, "explanation": "A stable ID keeps React's link between each record and its rendered item when the list is filtered or reordered."}
@@ -45,6 +51,9 @@
     "context-hooks": [
       {"question": "AdvancedApp receives a title that is too short. Where does it put focus?", "options": ["Back on the title input, through titleRef", "On the error message", "Nowhere: focus stays on the button"], "correct": 0, "explanation": "useRef gives the component a handle on its own input, so it can return focus there without querying the document."}
     ],
+    "refs-memo": [
+      {"question": "A memo child receives style={{ padding: 8 }} written inline. Why does it re-render on every parent render?", "options": ["memo ignores style props", "A new object is created on each render, so the shallow comparison fails", "React always re-renders children that have styles"], "correct": 1, "explanation": "Two object literals with the same contents are different objects, and memo compares props with Object.is."}
+    ],
     "identity": [
       {"question": "Which ID does AdvancedApp give a new lesson?", "options": ["One from crypto.randomUUID(), created when the lesson is added", "Its position in the list", "Its title"], "correct": 0, "explanation": "An ID created once and stored with the record keeps the item's identity stable when titles change or rows are removed."}
     ],
@@ -53,6 +62,9 @@
     ],
     "routing": [
       {"question": "RemoteLesson opens with no lesson parameter in the URL. Which lesson does it load?", "options": ["types", "state", "None: it shows an error"], "correct": 0, "explanation": "selected() falls back to types, so a plain link still opens a valid screen while ?lesson=state can be shared."}
+    ],
+    "where-react-runs": [
+      {"question": "A Server Function marked \"use server\" updates a lesson. What must it do?", "options": ["Nothing extra: only your own UI can call it", "Authenticate and validate every call, because it is a public endpoint", "Run only at build time"], "correct": 1, "explanation": "Anyone can send a request to a Server Function, so treat its arguments as untrusted input and check who is calling."}
     ],
     "testing": [
       {"question": "What does node --experimental-strip-types tracker-core.test.ts print when it passes?", "options": ["All tracker domain tests passed.", "PASS: 5 component tests", "Nothing"], "correct": 0, "explanation": "The domain tests run without React or a browser, so reducer and backup rules can be checked in milliseconds."}

@@ -394,8 +394,89 @@
       ]
     },
     {
+      "id": "language-core",
+      "stage": "foundation",
+      "title": "5. Scope, classes and built-in collections",
+      "takeaway": "Declarations decide where a name exists, the call site decides this, and Map, Set and destructuring express common data shapes directly.",
+      "sections": [
+        {
+          "title": "Declarations and scope",
+          "paragraphs": [
+            "`const` and `let` are block-scoped: a name declared inside `{ }` does not exist outside it. Reading a `let` or `const` name before its declaration line throws `ReferenceError`; this gap is the temporal dead zone. `const` stops reassignment of the name, but the array or object it refers to can still change.",
+            "`var` is function-scoped and hoisted with the value `undefined`, so early reads silently succeed. A `var` loop counter is one shared variable, which is why the callbacks below all see 3; `let` creates a fresh binding per iteration. Prefer `const`, use `let` when you reassign, and avoid `var` in new code."
+          ],
+          "example": "console.log(typeof early); // var is hoisted and starts as undefined\nvar early = 1;\ntry {\n  console.log(later);\n} catch (error) {\n  console.log(error.name); // let is in its temporal dead zone until this line runs\n}\nlet later = 2;\n\nconst totals = [];\ntotals.push(5); // const stops reassignment, not mutation\nconsole.log(totals);\n\nfor (var i = 0; i < 3; i++) setTimeout(() => console.log(\"var\", i));\nfor (let j = 0; j < 3; j++) setTimeout(() => console.log(\"let\", j));\n// Output:\n// undefined\n// ReferenceError\n// [ 5 ]\n// var 3\n// var 3\n// var 3\n// let 0\n// let 1\n// let 2"
+        },
+        {
+          "title": "Classes, prototypes and this",
+          "paragraphs": [
+            "A `class` creates a constructor function whose methods live on a shared prototype object, not on each instance. `#seconds` is a private field that code outside the class cannot read, `static` methods belong to the class itself, and a `get` accessor is read like a property.",
+            "`this` is set by how a function is called, not where it was written. `timer.add(30)` passes `timer`; a detached `add(10)` passes `undefined`, so the method throws. `bind` fixes `this`, and arrow functions take `this` from the surrounding code, which is why they are common as callbacks. `extends` and `super` work as in other class-based languages."
+          ],
+          "example": "class Timer {\n  #seconds = 0;\n  static fromMinutes(minutes) {\n    return new Timer().add(minutes * 60);\n  }\n  add(seconds) {\n    this.#seconds += seconds;\n    return this;\n  }\n  get minutes() {\n    return this.#seconds / 60;\n  }\n}\n\nconst timer = Timer.fromMinutes(2).add(30);\nconsole.log(timer.minutes);\nconsole.log(Object.getPrototypeOf(timer) === Timer.prototype, Object.hasOwn(timer, \"add\"));\n\nconst detached = timer.add;\ntry {\n  detached(10); // called without an object, so this is undefined\n} catch (error) {\n  console.log(error.name);\n}\nconst bound = timer.add.bind(timer);\nbound(30);\nconsole.log(timer.minutes);\n// Output:\n// 2.5\n// true false\n// TypeError\n// 3"
+        },
+        {
+          "title": "Destructuring, spread, Map and Set",
+          "paragraphs": [
+            "Destructuring pulls fields into names and can supply defaults for missing values. Object spread `{ ...session, minutes: 30 }` builds a shallow copy with overrides; nested arrays are still shared. Template literals use backticks and `${}` to insert values.",
+            "`||` falls back for every falsy value, including 0 and the empty string; `??` falls back only for `null` and `undefined`, so it keeps a real 0. Optional chaining `?.` stops at a missing value instead of throwing. A `Set` keeps unique values, and a `Map` accepts keys of any type in insertion order, where an object would turn every key into a string."
+          ],
+          "example": "const session = { topic: \"TypeScript\", minutes: 0, tags: [\"types\"] };\nconst { topic, minutes = 25, notes = \"none\" } = session;\nconsole.log(`${topic}: ${minutes} min, notes ${notes}`);\n\nconst copy = { ...session, minutes: 30 };\nconsole.log(session.minutes, copy.minutes, copy.tags === session.tags);\n\nconsole.log(session.minutes || 25, session.minutes ?? 25);\nconsole.log(session.owner?.name ?? \"unassigned\");\n\nconst seen = new Set([\"sql\", \"react\", \"sql\"]);\nconsole.log(seen.size, [...seen]);\nconst byId = new Map([[1, \"number key\"]]);\nbyId.set(\"1\", \"string key\");\nconsole.log(byId.get(1), \"|\", byId.get(\"1\"), \"|\", byId.size);\n// Output:\n// TypeScript: 0 min, notes none\n// 0 30 true\n// 25 0\n// unassigned\n// 2 [ 'sql', 'react' ]\n// number key | string key | 2"
+        },
+        {
+          "title": "Dates and errors",
+          "paragraphs": [
+            "A `Date` holds one instant in UTC milliseconds. Months count from 0, so `Date.UTC(2026, 0, 31)` is 31 January. Use the UTC methods and ISO strings for storage and comparison; format for a person's time zone only when displaying, for example with `Intl.DateTimeFormat`.",
+            "Throw `Error` objects, not strings, so a stack trace and `name` travel with them. `finally` runs whether or not an error occurred. When you catch and rethrow with more context, pass the original as `cause` so the root problem is not lost."
+          ],
+          "example": "const due = new Date(Date.UTC(2026, 0, 31, 9, 0)); // month 0 is January\nconsole.log(due.toISOString());\nconst next = new Date(due);\nnext.setUTCDate(due.getUTCDate() + 1);              // rolls over into February\nconsole.log(next.toISOString().slice(0, 10));\n\nfunction parseMinutes(text) {\n  const value = Number(text);\n  if (!Number.isInteger(value) || value < 0) throw new RangeError(`invalid minutes: ${text}`);\n  return value;\n}\ntry {\n  parseMinutes(\"ten\");\n} catch (error) {\n  const wrapped = new Error(\"import failed\", { cause: error });\n  console.log(wrapped.message, \"-\", wrapped.cause.message);\n} finally {\n  console.log(\"finally runs either way\");\n}\n// Output:\n// 2026-01-31T09:00:00.000Z\n// 2026-02-01\n// import failed - invalid minutes: ten\n// finally runs either way"
+        }
+      ],
+      "exercise": {
+        "prompt": "Write a StudyLog class with a private Map of minutes per topic. add(topic, minutes) rejects anything but a nonnegative integer and returns this for chaining; a total getter sums the minutes; topics() returns the sorted unique topics. Show that a rejected add leaves the total unchanged.",
+        "solution": "class StudyLog {\n  #minutes = new Map();\n  add(topic, minutes) {\n    if (!Number.isInteger(minutes) || minutes < 0) {\n      throw new RangeError(\"minutes must be a nonnegative integer\");\n    }\n    this.#minutes.set(topic, (this.#minutes.get(topic) ?? 0) + minutes);\n    return this;\n  }\n  get total() {\n    let sum = 0;\n    for (const value of this.#minutes.values()) sum += value;\n    return sum;\n  }\n  topics() {\n    return [...this.#minutes.keys()].sort();\n  }\n}\n\nconst log = new StudyLog().add(\"sql\", 30).add(\"react\", 20).add(\"sql\", 15);\nconsole.log(log.total, log.topics());\ntry {\n  log.add(\"git\", -5);\n} catch (error) {\n  console.log(error.message);\n}\nconsole.log(log.total);\n// Output:\n// 65 [ 'react', 'sql' ]\n// minutes must be a nonnegative integer\n// 65",
+        "checks": [
+          "Repeated topics accumulate in one Map entry.",
+          "The rejected call throws RangeError and the total stays 65.",
+          "Code outside the class cannot read #minutes."
+        ]
+      },
+      "quiz": {
+        "question": "What does const items = []; items.push(1); do?",
+        "options": [
+          "Throws, because items is const",
+          "Adds 1; const only prevents reassigning the name"
+        ],
+        "correct": 1,
+        "explanation": "const fixes which array the name refers to. The array itself can still be changed; Object.freeze would prevent that."
+      },
+      "references": [
+        {
+          "title": "let",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let",
+          "section": "Temporal dead zone",
+          "reviewed": "2026-11-08",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        },
+        {
+          "title": "Classes",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes",
+          "section": "Private properties and static methods",
+          "reviewed": "2026-11-08",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        },
+        {
+          "title": "Keyed collections",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Keyed_collections",
+          "section": "Map and Set",
+          "reviewed": "2026-11-08",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
+    },
+    {
       "id": "async",
-      "title": "5. Promises and API boundaries",
+      "title": "6. Promises and API boundaries",
       "takeaway": "An asynchronous result needs success, failure and loading behavior.",
       "sections": [
         {
@@ -451,7 +532,7 @@
     },
     {
       "id": "typescript",
-      "title": "6. TypeScript and narrowing",
+      "title": "7. TypeScript and narrowing",
       "takeaway": "Types check assumptions during development; validate external data at runtime.",
       "sections": [
         {
@@ -514,8 +595,88 @@
       ]
     },
     {
+      "id": "generics-utility-types",
+      "stage": "foundation",
+      "title": "8. Generics, utility types and compiler settings",
+      "takeaway": "A generic keeps the relationship between input and output types; utility types derive new shapes from one source type instead of copying it.",
+      "sections": [
+        {
+          "title": "Generic functions",
+          "paragraphs": [
+            "A type parameter such as `<T>` lets one function work with many types while remembering which one it received: `first(lessons)` returns `Lesson | undefined`, not `any`. TypeScript usually infers `T` from the arguments.",
+            "A constraint limits what `T` can be: `T extends { id: string }` lets the body read `item.id`. `K extends keyof T` restricts a key to the actual property names, and `T[K]` is the type of that property, so `pluck(lessons, \"minutes\")` is `number[]` and a misspelt key fails to compile."
+          ],
+          "example": "function first<T>(items: readonly T[]): T | undefined {\n  return items[0];\n}\nfunction byId<T extends { id: string }>(items: readonly T[]): Map<string, T> {\n  return new Map(items.map(item => [item.id, item]));\n}\nfunction pluck<T, K extends keyof T>(items: readonly T[], key: K): T[K][] {\n  return items.map(item => item[key]);\n}\n\ntype Lesson = { id: string; title: string; minutes: number };\nconst lessons: Lesson[] = [\n  { id: \"a\", title: \"Types\", minutes: 20 },\n  { id: \"b\", title: \"Generics\", minutes: 35 },\n];\nconsole.log(first(lessons)?.title);          // first returns Lesson | undefined\nconsole.log(byId(lessons).get(\"b\")?.minutes);\nconst minutes = pluck(lessons, \"minutes\");   // number[]\nconsole.log(minutes);\n// pluck(lessons, \"owner\"); // compile error: \"owner\" is not a key of Lesson\n// Output:\n// Types\n// 35\n// [ 20, 35 ]"
+        },
+        {
+          "title": "Utility types",
+          "paragraphs": [
+            "Utility types build a new type from an existing one. `Partial<T>` makes every property optional, `Required<T>` the reverse, `Pick<T, K>` keeps some properties and `Omit<T, K>` drops them. `Record<K, V>` describes an object with exactly the keys `K`, and `Readonly<T>` blocks assignment through that reference.",
+            "`ReturnType<typeof fn>` and `Awaited<T>` read types back out of functions and promises. Deriving from one source type means a renamed field shows up as compile errors everywhere it is used, instead of drifting between hand-written copies."
+          ],
+          "example": "type Lesson = { id: string; title: string; minutes: number; done: boolean };\ntype LessonPatch = Partial<Omit<Lesson, \"id\">>;   // any field except id, all optional\ntype Summary = Pick<Lesson, \"id\" | \"title\">;\ntype Status = \"todo\" | \"doing\" | \"done\";\n\nfunction update(lesson: Readonly<Lesson>, patch: LessonPatch): Lesson {\n  return { ...lesson, ...patch };\n}\ntype Updated = ReturnType<typeof update>;         // Lesson\n\nconst counts: Record<Status, number> = { todo: 2, doing: 1, done: 4 };\nconst lesson: Lesson = { id: \"a\", title: \"Types\", minutes: 20, done: false };\nconst changed: Updated = update(lesson, { done: true });\nconst summary: Summary = { id: changed.id, title: changed.title };\nconsole.log(changed.done, lesson.done, summary, counts.done);\n// Output:\n// true false { id: 'a', title: 'Types' } 4"
+        },
+        {
+          "title": "as const and satisfies",
+          "paragraphs": [
+            "`as const` keeps literal values (`\"/\"` rather than `string`) and makes the object readonly. `satisfies` checks a value against a type without widening it, so `routes` is validated as a map of paths while `keyof typeof routes` is still the exact union of its names."
+          ],
+          "example": "const routes = {\n  home: \"/\",\n  lesson: \"/lessons/:id\",\n} as const satisfies Record<string, `/${string}`>;\n\ntype RouteName = keyof typeof routes;  // \"home\" | \"lesson\"\nconst path = (name: RouteName) => routes[name];\nconsole.log(path(\"lesson\"));\n// path(\"settings\");              // compile error: not a RouteName\n// routes.home = \"/start\";        // compile error: as const makes it readonly\n// Output:\n// /lessons/:id"
+        },
+        {
+          "title": "Compiler settings and limits",
+          "paragraphs": [
+            "`strict: true` turns on the checks this course relies on, including `strictNullChecks` and `noImplicitAny`. `noUncheckedIndexedAccess` makes `items[i]` include `undefined`, matching what JavaScript does for a missing index. Run `tsc --noEmit` in CI: bundlers and Node's type stripping remove types without checking them.",
+            "Types disappear at runtime. A generic `parse<T>(text)` that casts its result proves nothing about the data; validate unknown input as in the narrowing lesson, then let the types describe what you have checked."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "Write groupBy<T, K extends PropertyKey>(items, keyOf) returning Partial<Record<K, T[]>>. Group three lessons by their \"todo\" | \"done\" status and print the done IDs and the number of todo lessons.",
+        "solution": "function groupBy<T, K extends PropertyKey>(\n  items: readonly T[],\n  keyOf: (item: T) => K\n): Partial<Record<K, T[]>> {\n  const groups: Partial<Record<K, T[]>> = {};\n  for (const item of items) {\n    (groups[keyOf(item)] ??= []).push(item);\n  }\n  return groups;\n}\n\ntype Lesson = { id: string; status: \"todo\" | \"done\" };\nconst lessons: Lesson[] = [\n  { id: \"a\", status: \"done\" },\n  { id: \"b\", status: \"todo\" },\n  { id: \"c\", status: \"done\" },\n];\nconst groups = groupBy(lessons, lesson => lesson.status);\nconsole.log(groups.done?.map(lesson => lesson.id), groups.todo?.length);\n// Output:\n// [ 'a', 'c' ] 1",
+        "checks": [
+          "groups.done has type Lesson[] | undefined, so reading it needs ?. or a check.",
+          "Passing a keyOf that returns an object fails to compile, because K must be a property key.",
+          "tsc --noEmit reports no errors with strict enabled."
+        ]
+      },
+      "quiz": {
+        "question": "What does Partial<Lesson> describe?",
+        "options": [
+          "The Lesson shape with every property optional",
+          "Lesson without its id property",
+          "A Lesson that is validated at runtime"
+        ],
+        "correct": 0,
+        "explanation": "Partial maps every property to optional. Omit removes properties, and no utility type adds runtime validation."
+      },
+      "references": [
+        {
+          "title": "TypeScript Handbook: Generics",
+          "url": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+          "section": "Generic constraints and keyof",
+          "reviewed": "2026-11-08",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        },
+        {
+          "title": "TypeScript: Utility types",
+          "url": "https://www.typescriptlang.org/docs/handbook/utility-types.html",
+          "section": "Partial, Pick, Omit, Record, ReturnType",
+          "reviewed": "2026-11-08",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        },
+        {
+          "title": "TypeScript 4.9 release notes",
+          "url": "https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html",
+          "section": "The satisfies operator",
+          "reviewed": "2026-11-08",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
+    },
+    {
       "id": "components",
-      "title": "7. Components, props and lists",
+      "title": "9. Components, props and lists",
       "takeaway": "Pass data down and keep each component's responsibility clear.",
       "sections": [
         {
@@ -565,7 +726,7 @@
     },
     {
       "id": "state",
-      "title": "8. Events, state and immutable updates",
+      "title": "10. Events, state and immutable updates",
       "takeaway": "State is a snapshot; request the next state instead of mutating the current one.",
       "sections": [
         {
@@ -650,7 +811,7 @@
     },
     {
       "id": "forms",
-      "title": "9. Forms, validation and derived views",
+      "title": "11. Forms, validation and derived views",
       "takeaway": "Store user input; derive filtered output from it.",
       "sections": [
         {
@@ -700,7 +861,7 @@
     },
     {
       "id": "effects",
-      "title": "10. Effects and external systems",
+      "title": "12. Effects and external systems",
       "takeaway": "Use Effects to synchronize external systems, not to calculate ordinary derived values.",
       "sections": [
         {
@@ -749,7 +910,7 @@
     },
     {
       "id": "capstone",
-      "title": "11. Build and test a learning tracker",
+      "title": "13. Build and test a learning tracker",
       "takeaway": "Finish a small complete feature before adding a larger architecture.",
       "sections": [
         {
@@ -1013,6 +1174,85 @@
       ]
     },
     {
+      "id": "refs-memo",
+      "stage": "intermediate",
+      "title": "Refs, context providers and memoization",
+      "takeaway": "Refs hold values that should not trigger rendering, a context provider needs a stable value, and memoization is a measured optimization rather than a correctness tool.",
+      "sections": [
+        {
+          "title": "Refs",
+          "paragraphs": [
+            "`useRef` returns an object whose `current` property survives re-renders. Changing `current` does not re-render, which suits values the screen does not display: a DOM node to focus or measure, a timer ID, or the latest value for a long-lived callback.",
+            "Attach a ref to an element with the `ref` prop; React sets `current` after the element mounts and back to `null` when it unmounts. In React 19 a function component receives `ref` as an ordinary prop, so `forwardRef` is no longer required. Do not read or write `ref.current` during rendering, and clear timers in an effect cleanup when the component unmounts."
+          ],
+          "example": "// Component fragment; import { useRef, useState } from \"react\".\n// In React 19 a function component receives ref as an ordinary prop.\nfunction SearchBox({ ref }: { ref?: React.Ref<HTMLInputElement> }) {\n  return <input ref={ref} aria-label=\"Search lessons\" />;\n}\n\nfunction Toolbar() {\n  const searchRef = useRef<HTMLInputElement>(null);\n  const timer = useRef<number | undefined>(undefined);\n  const [saved, setSaved] = useState(false);\n\n  function saveSoon() {\n    window.clearTimeout(timer.current);\n    timer.current = window.setTimeout(() => setSaved(true), 500);\n  }\n\n  return (\n    <>\n      <SearchBox ref={searchRef} />\n      <button onClick={() => searchRef.current?.focus()}>Find</button>\n      <button onClick={saveSoon}>{saved ? \"Saved\" : \"Save\"}</button>\n    </>\n  );\n}"
+        },
+        {
+          "title": "Providing context",
+          "paragraphs": [
+            "`createContext` defines a channel, a provider element supplies its value to everything below it, and `useContext` reads the nearest provider's value. React 19 lets you render the context itself as the provider, `<SettingsContext value={...}>`; older code writes `SettingsContext.Provider`.",
+            "Every consumer re-renders when the provided value changes identity. Creating `{ dailyGoal, setDailyGoal }` inline makes a new object on each render, so wrap it in `useMemo`. A custom Hook that throws outside its provider turns a silent default into a clear error."
+          ],
+          "example": "// Module fragment; import { createContext, useContext, useMemo, useState, type ReactNode } from \"react\".\ntype Settings = { dailyGoal: number; setDailyGoal: (minutes: number) => void };\nconst SettingsContext = createContext<Settings | null>(null);\n\nexport function SettingsProvider({ children }: { children: ReactNode }) {\n  const [dailyGoal, setDailyGoal] = useState(30);\n  const value = useMemo(() => ({ dailyGoal, setDailyGoal }), [dailyGoal]);\n  return <SettingsContext value={value}>{children}</SettingsContext>;\n}\n\nexport function useSettings(): Settings {\n  const settings = useContext(SettingsContext);\n  if (!settings) throw new Error(\"useSettings must be used inside SettingsProvider\");\n  return settings;\n}"
+        },
+        {
+          "title": "memo, useMemo and useCallback",
+          "paragraphs": [
+            "`memo` skips re-rendering a component when every prop is equal to last time by `Object.is`. `useCallback` keeps a function's identity across renders and `useMemo` caches a calculated value; both recompute only when a listed dependency changes.",
+            "They only help together: a `memo` child still re-renders if the parent passes a new inline object or arrow function each time. A missing dependency produces a stale value, which is a bug, not an optimization. Measure with the React Profiler first; projects using the React Compiler get much of this automatically."
+          ],
+          "example": "// Component fragment; import { memo, useCallback, useMemo, useState } from \"react\".\ntype Row = { id: string; title: string };\n\nconst LessonRow = memo(function LessonRow(\n  { row, done, onToggle }: { row: Row; done: boolean; onToggle: (id: string) => void }\n) {\n  return (\n    <li>\n      <label>\n        <input type=\"checkbox\" checked={done} onChange={() => onToggle(row.id)} /> {row.title}\n      </label>\n    </li>\n  );\n});\n\nfunction LessonList({ rows, query }: { rows: Row[]; query: string }) {\n  const [done, setDone] = useState<ReadonlySet<string>>(new Set());\n  const onToggle = useCallback((id: string) => {\n    setDone(previous => {\n      const next = new Set(previous);\n      if (!next.delete(id)) next.add(id);\n      return next;\n    });\n  }, []);\n  const visible = useMemo(\n    () => rows.filter(row => row.title.toLowerCase().includes(query.toLowerCase())),\n    [rows, query]\n  );\n  return (\n    <ul>\n      {visible.map(row => (\n        <LessonRow key={row.id} row={row} done={done.has(row.id)} onToggle={onToggle} />\n      ))}\n    </ul>\n  );\n}"
+        },
+        {
+          "title": "Pitfalls",
+          "paragraphs": [
+            "Storing displayed data in a ref leaves the screen out of date because nothing re-renders. Using `useMemo` to keep something correct, such as an ID that must not change, breaks when React discards the cache; use state or a ref for that. Splitting one large context into a settings context and a frequently changing data context limits how much re-renders."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "ExpensiveList is wrapped in memo, yet the Profiler shows it rendering on every keystroke in a sibling search box. The parent passes options={{ compact: true }} and onSelect={id => setSelected(id)}. Fix the parent and explain why the change works.",
+        "solution": "// Component fragment; import { memo, useCallback, useState } from \"react\".\nconst OPTIONS = { compact: true } as const; // module constant: the same object on every render\n\nfunction Parent() {\n  const [query, setQuery] = useState(\"\");\n  const [selected, setSelected] = useState<string | null>(null);\n  const onSelect = useCallback((id: string) => setSelected(id), []);\n  return (\n    <>\n      <input value={query} onChange={event => setQuery(event.target.value)} aria-label=\"Search\" />\n      <ExpensiveList options={OPTIONS} onSelect={onSelect} />\n      <p>Selected: {selected ?? \"none\"}</p>\n    </>\n  );\n}\n// Before: options={{ compact: true }} and onSelect={id => setSelected(id)} were new on every render,\n// so memo's shallow comparison always failed. Confirm the fix with the React Profiler.",
+        "checks": [
+          "options has the same identity on every render.",
+          "onSelect is wrapped in useCallback with a correct dependency list.",
+          "The Profiler shows ExpensiveList skipped while typing; selecting an item still works."
+        ]
+      },
+      "quiz": {
+        "question": "Does changing ref.current cause a re-render?",
+        "options": [
+          "Yes",
+          "No; a ref keeps a value without triggering rendering"
+        ],
+        "correct": 1,
+        "explanation": "Refs are for values the screen does not depend on. Use state for anything that should update what is displayed."
+      },
+      "references": [
+        {
+          "title": "useRef",
+          "url": "https://react.dev/reference/react/useRef",
+          "section": "Referencing a value with a ref",
+          "reviewed": "2026-11-08",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        },
+        {
+          "title": "createContext",
+          "url": "https://react.dev/reference/react/createContext",
+          "section": "Provider",
+          "reviewed": "2026-11-08",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        },
+        {
+          "title": "memo",
+          "url": "https://react.dev/reference/react/memo",
+          "section": "Minimizing props changes",
+          "reviewed": "2026-11-08",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
+    },
+    {
       "id": "identity",
       "title": "Component identity and form resets",
       "stage": "intermediate",
@@ -1174,6 +1414,94 @@
           "url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/popstate_event",
           "section": "When popstate is sent",
           "reviewed": "2026-09-27",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        }
+      ]
+    },
+    {
+      "id": "where-react-runs",
+      "stage": "advanced",
+      "title": "Suspense, code splitting and server rendering",
+      "takeaway": "Suspense shows a fallback while code or data loads, transitions keep input responsive, and frameworks move some rendering to the server with explicit client boundaries.",
+      "sections": [
+        {
+          "title": "Code splitting with lazy and Suspense",
+          "paragraphs": [
+            "`lazy(() => import(\"./Reports\"))` loads a component's code the first time it renders, so rarely used screens do not slow the first page. While that code loads, the nearest `Suspense` boundary shows its `fallback`.",
+            "A chunk can fail to download, so place an error boundary around the Suspense boundary and offer a retry. Choose boundaries around whole regions, such as a route; a fallback for every small component makes the page flicker."
+          ],
+          "example": "// Module fragment; import { lazy, Suspense } from \"react\".\nconst Reports = lazy(() => import(\"./Reports\"));\n\nfunction ReportsRoute() {\n  return (\n    <ErrorBoundary fallback={<p role=\"alert\">Reports could not load. Check your connection and retry.</p>}>\n      <Suspense fallback={<p aria-busy=\"true\">Loading reports…</p>}>\n        <Reports />\n      </Suspense>\n    </ErrorBoundary>\n  );\n}\n// ErrorBoundary is the class component from the error-boundary lesson; Reports.tsx has a default export."
+        },
+        {
+          "title": "Transitions and deferred values",
+          "paragraphs": [
+            "Typing must feel instant even when the results list is slow to render. `useDeferredValue(query)` gives the list a value that may lag behind; React renders the urgent input first and the slow list when it can, discarding stale work. `useTransition` does the same for a state update you start yourself, and reports `isPending`.",
+            "Neither makes the work faster. They decide what renders first; if a list is too slow even in the background, reduce the work with filtering, pagination or virtualization."
+          ],
+          "example": "// Component fragment; import { useDeferredValue, useState } from \"react\".\nfunction SearchPage({ rows }: { rows: Row[] }) {\n  const [query, setQuery] = useState(\"\");\n  const deferredQuery = useDeferredValue(query);\n  const stale = query !== deferredQuery;\n  return (\n    <>\n      <input value={query} onChange={event => setQuery(event.target.value)} aria-label=\"Search lessons\" />\n      <div style={{ opacity: stale ? 0.6 : 1 }} aria-busy={stale}>\n        <SlowResults rows={rows} query={deferredQuery} />\n      </div>\n    </>\n  );\n}"
+        },
+        {
+          "title": "Where rendering happens",
+          "paragraphs": [
+            "This course builds a client-rendered app: the browser downloads JavaScript and renders everything. Server-side rendering produces HTML for each request so content appears before JavaScript loads, then hydration attaches event handlers. Static generation renders at build time for pages that rarely change.",
+            "Hydration requires the server and browser to produce the same markup. Reading `Date.now()`, `Math.random()` or `window` during rendering causes mismatches; move such values into effects or pass them from the server. Server rendering improves first paint and search indexing but adds a server to operate and secure."
+          ]
+        },
+        {
+          "title": "Frameworks and Server Components",
+          "paragraphs": [
+            "Frameworks such as Next.js and React Router's framework mode provide server rendering, routing, data loading and bundling. They also support Server Components, which run only on the server, can read a database directly and send no component code to the browser.",
+            "A file marked `\"use client\"` starts a Client Component boundary for state and event handlers; props crossing that boundary must be serializable. A Server Function marked `\"use server\"` can be called from the browser, which makes it a public endpoint: authenticate and validate every call."
+          ],
+          "example": "// Framework-only fragment (React Server Components); it does not run in this course's Vite lab.\n\n// LessonPage.tsx: a Server Component. No \"use client\"; it may be async and its code never ships to the browser.\nexport default async function LessonPage({ id }: { id: string }) {\n  const lesson = await db.lessons.find(id); // runs on the server only\n  if (!lesson) return <p>Lesson not found.</p>;\n  return (\n    <article>\n      <h1>{lesson.title}</h1>\n      <DoneToggle id={lesson.id} done={lesson.done} />\n    </article>\n  );\n}\n\n// DoneToggle.tsx: state and event handlers need a Client Component.\n\"use client\";\nexport function DoneToggle({ id, done }: { id: string; done: boolean }) {\n  const [checked, setChecked] = useState(done);\n  return <input type=\"checkbox\" checked={checked} onChange={() => setChecked(!checked)} aria-label={`Mark ${id} done`} />;\n}"
+        }
+      ],
+      "exercise": {
+        "prompt": "Choose a rendering approach for three screens and justify each: a public course catalogue that changes weekly and should appear in search results; a signed-in progress dashboard; a rarely used, heavy chart editor.",
+        "solution": "Course catalogue: static generation, rebuilt or revalidated when the catalogue changes. HTML arrives immediately and search engines can index it.\nProgress dashboard: per-request server rendering or client rendering behind sign-in. It is personal, so it must not be cached as shared HTML; search indexing does not matter.\nChart editor: client-rendered and loaded with lazy() inside a Suspense boundary and an error boundary, so its code is downloaded only by people who open it.",
+        "checks": [
+          "Personal data is never placed in a shared cache.",
+          "The lazily loaded editor has both a loading fallback and a failure message with retry.",
+          "Each choice names what it improves and what it costs."
+        ]
+      },
+      "quiz": {
+        "question": "What does a Suspense boundary show while a lazy component's code is loading?",
+        "options": [
+          "Its fallback",
+          "An empty page until all code has loaded",
+          "An error message"
+        ],
+        "correct": 0,
+        "explanation": "The nearest Suspense boundary renders its fallback until the code is ready. Errors go to an error boundary."
+      },
+      "references": [
+        {
+          "title": "lazy",
+          "url": "https://react.dev/reference/react/lazy",
+          "section": "Showing a loading indicator",
+          "reviewed": "2026-11-08",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        },
+        {
+          "title": "useDeferredValue",
+          "url": "https://react.dev/reference/react/useDeferredValue",
+          "section": "Showing stale content while fresh content is loading",
+          "reviewed": "2026-11-08",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        },
+        {
+          "title": "Server Components",
+          "url": "https://react.dev/reference/rsc/server-components",
+          "section": "Server Components and 'use client'",
+          "reviewed": "2026-11-08",
+          "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
+        },
+        {
+          "title": "'use server'",
+          "url": "https://react.dev/reference/rsc/use-server",
+          "section": "Security considerations",
+          "reviewed": "2026-11-08",
           "scope": "JavaScript/Web APIs; React 19.3 / TypeScript 5.9 where applicable; lesson-to-source applicability reviewed, not an exhaustive source refetch or execution claim."
         }
       ]

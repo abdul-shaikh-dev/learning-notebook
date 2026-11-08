@@ -6,6 +6,7 @@
  "p.m",
  "llama.cpp",
  "ASP.NET",
+ "Next.js",
  "practical-maths-statistics: /(cost|ceil|bytes|seconds|count|len|sqrt|sum)\\(.*\\)",
  "practical-maths-statistics: x_i",
  "practical-maths-statistics: w_i",
