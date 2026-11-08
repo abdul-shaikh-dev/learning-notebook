@@ -21,6 +21,9 @@
     "functions": [
       {"question": "def add(item, items=[]): items.append(item); return items. After add(1), what does add(2) return?", "options": ["[2]", "[1, 2]", "None"], "correct": 1, "explanation": "The default list is created once, when the function is defined, so both calls append to the same list. Use None as the default and create a list inside the function."}
     ],
+    "pythonic-idioms": [
+      {"question": "In def f(a, *, b): ..., how must b be supplied?", "options": ["As the second positional argument", "By name, as b=...", "It cannot be supplied"], "correct": 1, "explanation": "Parameters after a bare * are keyword-only. f(1, 2) raises TypeError; f(1, b=2) works."}
+    ],
     "errors": [
       {"question": "Why avoid a bare except: around a calculation?", "options": ["It can hide programming errors and interrupt signals", "Python refuses to run a bare except", "It makes every call noticeably slower"], "correct": 0, "explanation": "A bare except catches everything, including mistakes you need to see and KeyboardInterrupt. Catch the narrow exception you know how to handle."}
     ],
@@ -39,14 +42,23 @@
     "classes-and-dataclasses": [
       {"question": "Why write items: list = field(default_factory=list) in a dataclass?", "options": ["Each instance gets its own new list", "It checks that the list holds only integers", "It freezes the list after construction"], "correct": 0, "explanation": "default_factory calls list() for every new instance. A plain = [] default is rejected because one list would be shared."}
     ],
+    "classes-in-depth": [
+      {"question": "class Status(Enum): DONE = \"done\". What is Status.DONE == \"done\"?", "options": ["True", "False", "It raises TypeError"], "correct": 1, "explanation": "A plain Enum member is not equal to its value. Compare Status.DONE.value, convert input with Status(\"done\"), or use StrEnum."}
+    ],
     "typing-and-protocols": [
       {"question": "A class has every method a Protocol requires but does not inherit from it. Does a static checker accept it where the Protocol is expected?", "options": ["No; it must subclass the Protocol", "Yes; protocols are matched by structure", "Only when the Protocol is runtime_checkable"], "correct": 1, "explanation": "Protocols describe required operations, so any object that provides them fits. runtime_checkable only affects isinstance checks."}
     ],
     "iterators-and-generators": [
       {"question": "When does the body of a generator function start running?", "options": ["When the function is called", "When the module is imported", "When iteration asks for the first value"], "correct": 2, "explanation": "Calling a generator function only creates the generator object. Its body runs when next() or a for loop asks for a value, so its errors and effects can be delayed."}
     ],
+    "closures-and-decorators": [
+      {"question": "funcs = [lambda: i for i in range(3)]. What does [f() for f in funcs] give?", "options": ["[0, 1, 2]", "[2, 2, 2]", "[3, 3, 3]"], "correct": 1, "explanation": "Each lambda looks up i when it is called, after the loop has finished with i = 2. Bind the value with lambda i=i: i to keep 0, 1, 2."}
+    ],
     "context-managers": [
       {"question": "How many times should a @contextmanager function yield?", "options": ["Exactly once", "Once per exception it handles", "Twice: once for setup and once for cleanup"], "correct": 0, "explanation": "Code before the single yield acquires the resource; code after it, in finally, cleans up."}
+    ],
+    "standard-library": [
+      {"question": "What does re.fullmatch(r\"\\d+\", \"45m\") return?", "options": ["A match for 45", "None", "The string \"45\""], "correct": 1, "explanation": "fullmatch must consume the whole string. The trailing m is not a digit, so there is no match; re.search would find 45."}
     ],
     "packaging-and-cli": [
       {"question": "argparse reads --minutes with type=int. Which value is accepted by argparse but still needs a domain check?", "options": ["12", "-5", "abc"], "correct": 1, "explanation": "int(\"-5\") succeeds, so argparse accepts it; the rule that minutes are nonnegative is yours to check. argparse already rejects abc."}

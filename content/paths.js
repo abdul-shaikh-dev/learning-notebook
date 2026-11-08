@@ -80170,7 +80170,7 @@ const LEARNING_PATHS = [
     "title": "Python",
     "category": "Programming",
     "status": "ready",
-    "description": "Learn Python through 23 lessons and three projects. Write scripts, model validated records, build a CLI, manage resources, and test concurrent imports and file replacement.",
+    "description": "Learn Python through 27 lessons and three projects. Write scripts, model validated records, build a CLI, manage resources, and test concurrent imports and file replacement.",
     "level": "Foundations → intermediate → selected advanced topics",
     "prerequisites": [
       "Comfort creating files and opening a terminal; no programming experience required.",
@@ -81088,8 +81088,88 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "pythonic-idioms",
+        "stage": "foundation",
+        "title": "8. Slicing, comprehensions and flexible arguments",
+        "takeaway": "Slices, unpacking and comprehensions build new values in one readable step; argument markers decide how a caller must pass values.",
+        "sections": [
+          {
+            "title": "Concept",
+            "paragraphs": [
+              "A slice `values[start:stop:step]` builds a new sequence from `start` up to, but not including, `stop`. Missing bounds mean the beginning or the end, negative positions count from the end, and a step of 2 takes every second item. Slicing never raises for out-of-range bounds; it simply returns fewer items.",
+              "Unpacking assigns several names at once: `first, last = pair`. A starred name collects the rest into a list, so `head, *tail = values` works for any length of at least one. Swapping is `a, b = b, a`.",
+              "A comprehension builds a list, set or dictionary from a loop and an optional condition: `[m for m in minutes if m >= 30]`. Write it when the result is the point; write an ordinary loop when the body has side effects or needs several statements. A generator expression such as `sum(m for m in minutes)` produces values one at a time without building a list."
+            ],
+            "example": "minutes = [25, 40, 15, 50, 30]\nprint(minutes[1:3])\nprint(minutes[-2:])\nprint(minutes[::2])\nfirst, *middle, last = minutes\nprint(first, middle, last)\nlong_sessions = [m for m in minutes if m >= 30]\nprint(long_sessions)\nlabels = {m: \"long\" if m >= 30 else \"short\" for m in minutes[:3]}\nprint(labels)\nprint(sum(m for m in minutes if m < 30))\n\n# Expected output:\n# [40, 15]\n# [50, 30]\n# [25, 15, 30]\n# 25 [40, 15, 50] 30\n# [40, 50, 30]\n# {25: 'short', 40: 'long', 15: 'short'}\n# 40"
+          },
+          {
+            "title": "Flexible arguments",
+            "paragraphs": [
+              "`*args` collects extra positional arguments into a tuple and `**kwargs` collects extra named arguments into a dictionary. The names are conventions; the stars do the work.",
+              "Every parameter after `*` or `*args` is keyword-only: callers must write its name. Use this for options such as `unit=\"hours\"` so a later positional value cannot be mistaken for one. At the call site, `*items` spreads a sequence into positional arguments and `**options` spreads a dictionary into named ones."
+            ],
+            "example": "def total(*minutes):\n    return sum(minutes)\n\ndef describe(topic, *, unit=\"min\", **tags):\n    extra = \", \".join(f\"{key}={value}\" for key, value in sorted(tags.items()))\n    return f\"{topic} ({unit}) {extra}\".rstrip()\n\nprint(total(25, 15, 10))\nweek = [30, 45]\nprint(total(*week))\nprint(describe(\"SQL\", room=\"B\", mode=\"review\"))\nsettings = {\"unit\": \"hours\", \"mode\": \"exam\"}\nprint(describe(\"Python\", **settings))\ntry:\n    describe(\"Git\", \"hours\")\nexcept TypeError:\n    print(\"unit must be passed by name\")\n\n# Expected output:\n# 50\n# 75\n# SQL (min) mode=review, room=B\n# Python (hours) mode=exam\n# unit must be passed by name"
+          },
+          {
+            "title": "Pitfalls",
+            "paragraphs": [
+              "A slice copy is shallow: `rows[:]` is a new list, but the dictionaries inside it are the same objects. Nested comprehensions with two `for` clauses read left to right like nested loops; if you have to pause to decode one, use a loop.",
+              "Do not use a comprehension only for its side effects, such as `[print(x) for x in rows]`; it builds a throwaway list of `None`. A starred target cannot be empty-proofed: `first, *rest = []` still raises `ValueError` because `first` has nothing to bind."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "sessions = [(\"Python\", 25), (\"SQL\", 40), (\"Python\", 35), (\"Git\", 10), (\"SQL\", 20)]. Use a comprehension to list the topics of sessions lasting at least 30 minutes, a slice to take the last three sessions, and write summary(*minutes, unit=\"min\") returning text such as \"65 min\". Print the topics, the recent sessions and the summary of the recent minutes.",
+          "starter": "sessions = [(\"Python\", 25), (\"SQL\", 40), (\"Python\", 35), (\"Git\", 10), (\"SQL\", 20)]\n# TODO: long_topics with a comprehension\n# TODO: recent with a slice\ndef summary(*minutes, unit=\"min\"):\n    raise NotImplementedError\n# Print three results",
+          "solution": "sessions = [(\"Python\", 25), (\"SQL\", 40), (\"Python\", 35), (\"Git\", 10), (\"SQL\", 20)]\nlong_topics = [topic for topic, minutes in sessions if minutes >= 30]\nrecent = sessions[-3:]\n\ndef summary(*minutes, unit=\"min\"):\n    return f\"{sum(minutes)} {unit}\"\n\nprint(long_topics)\nprint(recent)\nprint(summary(*[minutes for _, minutes in recent]))",
+          "checks": [
+            "Output is ['SQL', 'Python'], then the last three tuples, then 65 min.",
+            "summary(10, 20, unit=\"hours\") returns 30 hours, and unit cannot be passed positionally.",
+            "The original sessions list is unchanged."
+          ]
+        },
+        "quiz": {
+          "question": "What does [1, 2, 3, 4][1:3] produce?",
+          "options": [
+            "[2, 3]",
+            "[1, 2, 3]",
+            "[2, 3, 4]"
+          ],
+          "correct": 0,
+          "explanation": "A slice starts at index 1 and stops before index 3, so it contains the items at positions 1 and 2."
+        },
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/tutorial/datastructures.html",
+            "section": "Sequence slicing and comprehensions",
+            "reviewed": "2026-11-08",
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          },
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/tutorial/controlflow.html#special-parameters",
+            "section": "Special parameters and argument unpacking",
+            "reviewed": "2026-11-08",
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "In def f(a, *, b): ..., how must b be supplied?",
+            "options": [
+              "As the second positional argument",
+              "By name, as b=...",
+              "It cannot be supplied"
+            ],
+            "correct": 1,
+            "explanation": "Parameters after a bare * are keyword-only. f(1, 2) raises TypeError; f(1, b=2) works."
+          }
+        ]
+      },
+      {
         "id": "errors",
-        "title": "8. Read errors and validate input",
+        "title": "9. Read errors and validate input",
         "takeaway": "Handle expected failures specifically and let unexpected bugs remain visible.",
         "sections": [
           {
@@ -81165,7 +81245,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "files-and-json",
-        "title": "9. Save files and structured data",
+        "title": "10. Save files and structured data",
         "takeaway": "Use explicit encoding and JSON to persist ordinary records.",
         "sections": [
           {
@@ -81340,7 +81420,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "modules-and-environments",
-        "title": "10. Modules and project environments",
+        "title": "11. Modules and project environments",
         "takeaway": "Separate reusable code and select the interpreter intentionally.",
         "sections": [
           {
@@ -81411,7 +81491,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "testing-and-api-boundaries",
-        "title": "11. Test behavior and understand APIs",
+        "title": "12. Test behavior and understand APIs",
         "takeaway": "Separate data processing from external I/O so it can be checked offline.",
         "sections": [
           {
@@ -81489,7 +81569,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "study-log-capstone",
-        "title": "12. Capstone: a persistent study log",
+        "title": "13. Capstone: a persistent study log",
         "takeaway": "Combine validation, functions, storage, and checks into a useful small program.",
         "sections": [
           {
@@ -81569,7 +81649,7 @@ const LEARNING_PATHS = [
       {
         "id": "classes-and-dataclasses",
         "stage": "intermediate",
-        "title": "13. Classes, invariants and dataclasses",
+        "title": "14. Classes, invariants and dataclasses",
         "takeaway": "Classes group state and behavior; dataclasses generate common methods without enforcing types.",
         "sections": [
           {
@@ -81636,9 +81716,97 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "classes-in-depth",
+        "stage": "intermediate",
+        "title": "15. Special methods, properties, inheritance and enums",
+        "takeaway": "Special methods connect a class to Python's operators, properties guard attributes, inheritance must keep the base class's promises, and enums name a fixed set of choices.",
+        "sections": [
+          {
+            "title": "Special methods",
+            "paragraphs": [
+              "Python's syntax calls methods with double underscores: `repr(x)` calls `__repr__`, `==` calls `__eq__`, `<` calls `__lt__`, `+` calls `__add__`, `len(x)` calls `__len__` and a `for` loop calls `__iter__`. Defining them lets your objects work with built-ins such as `sorted`, `sum` and `print`.",
+              "When the other operand is a type you do not support, return `NotImplemented` rather than `False` or raising. Python then tries the other operand's method and raises `TypeError` only if both decline. Defining `__eq__` sets `__hash__` to `None`, so the objects cannot go in a set or be dictionary keys unless you also define a consistent `__hash__`."
+            ],
+            "example": "class Duration:\n    def __init__(self, minutes):\n        if type(minutes) is not int or minutes < 0:\n            raise ValueError(\"minutes must be a nonnegative integer\")\n        self.minutes = minutes\n\n    def __repr__(self):\n        return f\"Duration({self.minutes})\"\n\n    def __eq__(self, other):\n        if not isinstance(other, Duration):\n            return NotImplemented\n        return self.minutes == other.minutes\n\n    def __lt__(self, other):\n        if not isinstance(other, Duration):\n            return NotImplemented\n        return self.minutes < other.minutes\n\n    def __add__(self, other):\n        if not isinstance(other, Duration):\n            return NotImplemented\n        return Duration(self.minutes + other.minutes)\n\na, b = Duration(25), Duration(40)\nprint(a + b)\nprint(a == Duration(25), a < b)\nprint(sorted([b, a]))\ntry:\n    a + 5\nexcept TypeError:\n    print(\"cannot add an int\")\nprint(Duration.__hash__ is None)\n\n# Expected output:\n# Duration(65)\n# True True\n# [Duration(25), Duration(40)]\n# cannot add an int\n# True"
+          },
+          {
+            "title": "Properties",
+            "paragraphs": [
+              "`@property` turns a method into an attribute that is computed on access, written without parentheses. A matching `@name.setter` runs validation on assignment, so callers keep writing `goal.target = 60` while the class enforces its rule. Assigning in `__init__` goes through the setter too.",
+              "A property without a setter is read-only, and assignment raises `AttributeError`. Keep properties cheap and free of surprising side effects; a slow network call that looks like an attribute read misleads the caller."
+            ],
+            "example": "class Goal:\n    def __init__(self, target):\n        self.target = target\n        self.done = 0\n\n    @property\n    def target(self):\n        return self._target\n\n    @target.setter\n    def target(self, value):\n        if type(value) is not int or value <= 0:\n            raise ValueError(\"target must be a positive integer\")\n        self._target = value\n\n    @property\n    def remaining(self):\n        return max(self.target - self.done, 0)\n\ngoal = Goal(120)\ngoal.done = 45\nprint(goal.remaining)\ngoal.target = 60\nprint(goal.remaining)\ntry:\n    goal.target = 0\nexcept ValueError as error:\n    print(error)\nprint(goal.target)\n\n# Expected output:\n# 75\n# 15\n# target must be a positive integer\n# 60"
+          },
+          {
+            "title": "Inheritance and super()",
+            "paragraphs": [
+              "A subclass inherits its base class's methods and can override them. `super()` calls the next class's version, which is how a subclass extends behaviour instead of copying it. `isinstance(obj, Base)` is true for every subclass instance.",
+              "Inheritance is a promise: code written for the base class must keep working with any subclass. A subclass that rejects inputs the base accepts, or returns a different kind of result, breaks callers. An abstract base class from `abc` marks methods with `@abstractmethod`; Python refuses to create an instance until a subclass implements them. When you only want to reuse code, composition from lesson 13 is usually simpler."
+            ],
+            "example": "from abc import ABC, abstractmethod\n\nclass Exporter(ABC):\n    def __init__(self, rows):\n        self.rows = list(rows)\n\n    def export(self):\n        return \"\\n\".join(self.format_row(row) for row in self.rows)\n\n    @abstractmethod\n    def format_row(self, row): ...\n\nclass CsvExporter(Exporter):\n    def format_row(self, row):\n        return \",\".join(str(value) for value in row)\n\nclass LabelledCsvExporter(CsvExporter):\n    def __init__(self, rows, label):\n        super().__init__(rows)\n        self.label = label\n\n    def export(self):\n        return f\"# {self.label}\\n\" + super().export()\n\nrows = [(\"Python\", 25), (\"SQL\", 40)]\nprint(LabelledCsvExporter(rows, \"week 1\").export())\nprint(isinstance(LabelledCsvExporter(rows, \"x\"), Exporter))\ntry:\n    Exporter(rows)\nexcept TypeError:\n    print(\"Exporter is abstract\")\n\n# Expected output:\n# # week 1\n# Python,25\n# SQL,40\n# True\n# Exporter is abstract"
+          },
+          {
+            "title": "Enums for fixed choices",
+            "paragraphs": [
+              "An `Enum` names a closed set of values. `Status(\"active\")` looks a member up by value and raises `ValueError` for anything else, so invalid input is rejected at the boundary instead of travelling as a misspelt string. Members are singletons: compare them with `is` or `==`, and iterate over the class to list them.",
+              "A plain `Enum` member is not equal to its value: `Status.DONE == \"done\"` is `False`. Compare `.value`, convert input with `Status(text)`, or use `StrEnum` when members must behave as strings."
+            ],
+            "example": "from enum import Enum\n\nclass Status(Enum):\n    PLANNED = \"planned\"\n    ACTIVE = \"active\"\n    DONE = \"done\"\n\nstatus = Status(\"active\")\nprint(status, status.value, status.name)\nprint(status is Status.ACTIVE)\nprint([s.value for s in Status])\nprint(Status.DONE == \"done\")\ntry:\n    Status(\"finished\")\nexcept ValueError:\n    print(\"unknown status rejected\")\n\n# Expected output:\n# Status.ACTIVE active ACTIVE\n# True\n# ['planned', 'active', 'done']\n# False\n# unknown status rejected"
+          }
+        ],
+        "exercise": {
+          "prompt": "Build a Money class holding integer cents and a currency code. Give it a read-only cents property, __repr__, __eq__ and __add__. Adding a different currency raises ValueError; adding a non-Money returns NotImplemented. Show a sum, an equality check, the currency error and that cents cannot be assigned.",
+          "starter": "class Money:\n    def __init__(self, cents, currency):\n        # TODO: reject non-integer cents; store _cents and currency\n        raise NotImplementedError\n\n    # TODO: cents property (no setter), __repr__, __eq__, __add__\n\ntotal = Money(250, \"EUR\") + Money(125, \"EUR\")\nprint(total)",
+          "solution": "class Money:\n    def __init__(self, cents, currency):\n        if type(cents) is not int:\n            raise ValueError(\"cents must be an integer\")\n        self._cents = cents\n        self.currency = currency\n\n    @property\n    def cents(self):\n        return self._cents\n\n    def __repr__(self):\n        return f\"Money({self._cents}, {self.currency!r})\"\n\n    def __eq__(self, other):\n        if not isinstance(other, Money):\n            return NotImplemented\n        return (self._cents, self.currency) == (other._cents, other.currency)\n\n    def __add__(self, other):\n        if not isinstance(other, Money):\n            return NotImplemented\n        if other.currency != self.currency:\n            raise ValueError(\"currency mismatch\")\n        return Money(self._cents + other._cents, self.currency)\n\ntotal = Money(250, \"EUR\") + Money(125, \"EUR\")\nprint(total)\nprint(total == Money(375, \"EUR\"))\ntry:\n    Money(1, \"EUR\") + Money(1, \"USD\")\nexcept ValueError as error:\n    print(error)\ntry:\n    total.cents = 0\nexcept AttributeError:\n    print(\"cents is read-only\")",
+          "checks": [
+            "Output is Money(375, 'EUR'), True, currency mismatch, cents is read-only.",
+            "Money(1, \"EUR\") + 1 raises TypeError because __add__ returns NotImplemented.",
+            "Money(1, \"EUR\") == \"EUR\" is False rather than an error."
+          ]
+        },
+        "quiz": {
+          "question": "What should __eq__ return when the other object is a type it does not support?",
+          "options": [
+            "False",
+            "NotImplemented",
+            "It should raise TypeError"
+          ],
+          "correct": 1,
+          "explanation": "NotImplemented lets Python try the other operand's method. For == Python then falls back to identity, so the comparison is False without your class guessing."
+        },
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/reference/datamodel.html#special-method-names",
+            "section": "Special method names",
+            "reviewed": "2026-11-08",
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          },
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/enum.html",
+            "section": "Property, abc and enum",
+            "reviewed": "2026-11-08",
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "class Status(Enum): DONE = \"done\". What is Status.DONE == \"done\"?",
+            "options": [
+              "True",
+              "False",
+              "It raises TypeError"
+            ],
+            "correct": 1,
+            "explanation": "A plain Enum member is not equal to its value. Compare Status.DONE.value, convert input with Status(\"done\"), or use StrEnum."
+          }
+        ]
+      },
+      {
         "id": "typing-and-protocols",
         "stage": "intermediate",
-        "title": "14. Type contracts and protocols",
+        "title": "16. Type contracts and protocols",
         "takeaway": "Annotations express static contracts; runtime validation still checks external data.",
         "sections": [
           {
@@ -81707,7 +81875,7 @@ const LEARNING_PATHS = [
       {
         "id": "iterators-and-generators",
         "stage": "intermediate",
-        "title": "15. Iterators and lazy pipelines",
+        "title": "17. Iterators and lazy pipelines",
         "takeaway": "Iterators yield values until exhausted; generators support lazy, usually one-pass processing.",
         "sections": [
           {
@@ -82237,9 +82405,103 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "closures-and-decorators",
+        "stage": "intermediate",
+        "title": "18. Scope, closures and decorators",
+        "takeaway": "A function remembers the variables it closes over, and a decorator is a function that wraps another function at definition time.",
+        "sections": [
+          {
+            "title": "Scope",
+            "paragraphs": [
+              "Python looks names up in four scopes, in order: Local, Enclosing function, Global (the module) and Built-in. Assigning to a name anywhere in a function makes it local for the whole function, so `count += 1` on a module-level `count` raises `UnboundLocalError`.",
+              "`global` and `nonlocal` declare that an assignment targets the module or the enclosing function instead. Use `nonlocal` for small pieces of private state; prefer passing values in and returning them out over `global`."
+            ],
+            "example": "count = 0\n\ndef broken():\n    try:\n        count += 1\n    except UnboundLocalError:\n        return \"count is local here, and unassigned\"\n\nprint(broken())\n\ndef make_counter():\n    count = 0\n    def step():\n        nonlocal count\n        count += 1\n        return count\n    return step\n\ntick = make_counter()\ntick()\ntick()\nprint(tick())\nother = make_counter()\nprint(other())\n\n# Expected output:\n# count is local here, and unassigned\n# 3\n# 1"
+          },
+          {
+            "title": "Closures",
+            "paragraphs": [
+              "A nested function that uses a variable from its enclosing function keeps that variable alive after the outer call returns. Each call of the outer function creates fresh variables, so `threshold(30)` and `threshold(60)` give independent checks.",
+              "Closures capture variables, not values. Functions created in a loop all see the loop variable's final value. Bind the current value with a default argument (`lambda i=i: i`) or create each function with a factory call."
+            ],
+            "example": "def threshold(limit):\n    def check(minutes):\n        return minutes >= limit\n    return check\n\nis_long = threshold(30)\nprint([m for m in [10, 30, 45] if is_long(m)])\n\nlate = [lambda: i for i in range(3)]\nprint([f() for f in late])\nbound = [lambda i=i: i for i in range(3)]\nprint([f() for f in bound])\n\n# Expected output:\n# [30, 45]\n# [2, 2, 2]\n# [0, 1, 2]"
+          },
+          {
+            "title": "Decorators",
+            "paragraphs": [
+              "`@retry(times=3)` above `def fetch` means `fetch = retry(times=3)(fetch)`. A decorator receives a function and returns a replacement, usually a wrapper that accepts `*args, **kwargs`, does something around the call and returns the original result. `functools.wraps` copies the name and docstring so tracebacks and help still describe the real function.",
+              "A decorator that takes arguments is a factory: it returns the actual decorator. Stacked decorators apply bottom-up, so below `fetch.calls` counts calls to the retrying wrapper, not individual attempts. Retrying is only safe for operations that can be repeated without duplicating an effect."
+            ],
+            "example": "import functools\n\ndef counted(func):\n    @functools.wraps(func)\n    def wrapper(*args, **kwargs):\n        wrapper.calls += 1\n        return func(*args, **kwargs)\n    wrapper.calls = 0\n    return wrapper\n\ndef retry(times):\n    def decorate(func):\n        @functools.wraps(func)\n        def wrapper(*args, **kwargs):\n            for attempt in range(1, times + 1):\n                try:\n                    return func(*args, **kwargs)\n                except ConnectionError:\n                    if attempt == times:\n                        raise\n        return wrapper\n    return decorate\n\nfailures = [ConnectionError(), ConnectionError()]\n\n@counted\n@retry(times=3)\ndef fetch(name):\n    \"\"\"Return a record, failing while failures remain.\"\"\"\n    if failures:\n        raise failures.pop()\n    return {\"name\": name}\n\nprint(fetch(\"ada\"))\nprint(fetch.calls, fetch.__name__, fetch.__doc__)\n\n# Expected output:\n# {'name': 'ada'}\n# 1 fetch Return a record, failing while failures remain."
+          },
+          {
+            "title": "Decorators from the standard library",
+            "paragraphs": [
+              "`functools.lru_cache` stores results by argument, which turns repeated recursive work into lookups. Use it only for functions whose result depends on their hashable arguments alone; caching a function that reads a file or the clock returns stale answers. `functools.partial` fixes some arguments of a function to make a simpler one.",
+              "You have already met `@property` and `@dataclass`. `@staticmethod` and `@classmethod` are decorators too; a class method receives the class, which makes it a natural place for alternative constructors such as `Session.from_row(row)`."
+            ],
+            "example": "import functools\n\n@functools.lru_cache(maxsize=None)\ndef paths(rows, cols):\n    if rows == 1 or cols == 1:\n        return 1\n    return paths(rows - 1, cols) + paths(rows, cols - 1)\n\nprint(paths(10, 10))\nprint(paths.cache_info().hits > 0)\n\ndef scaled(value, factor):\n    return value * factor\n\nto_hours = functools.partial(scaled, factor=1 / 60)\nprint(to_hours(90))\n\n# Expected output:\n# 48620\n# True\n# 1.5"
+          },
+          {
+            "title": "Pitfalls",
+            "paragraphs": [
+              "Decorator code outside the wrapper runs once, when the `def` statement executes, usually at import time. Forgetting `functools.wraps` makes every decorated function report the name `wrapper`. `lru_cache` on a method keeps every `self` it has seen alive for as long as the cache exists."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Write a decorator validate_minutes that raises ValueError unless the first argument is a nonnegative int, and otherwise calls the function. Preserve the wrapped function's name. Apply it to to_hours(minutes), then print to_hours(90), to_hours.__name__ and the error message for -5.",
+          "starter": "import functools\n\ndef validate_minutes(func):\n    # TODO: return a wrapper that checks the first argument\n    raise NotImplementedError\n\n@validate_minutes\ndef to_hours(minutes):\n    return minutes / 60",
+          "solution": "import functools\n\ndef validate_minutes(func):\n    @functools.wraps(func)\n    def wrapper(minutes, *args, **kwargs):\n        if type(minutes) is not int or minutes < 0:\n            raise ValueError(\"minutes must be a nonnegative integer\")\n        return func(minutes, *args, **kwargs)\n    return wrapper\n\n@validate_minutes\ndef to_hours(minutes):\n    return minutes / 60\n\nprint(to_hours(90))\nprint(to_hours.__name__)\ntry:\n    to_hours(-5)\nexcept ValueError as error:\n    print(error)",
+          "checks": [
+            "Output is 1.5, to_hours, then minutes must be a nonnegative integer.",
+            "to_hours(True) is rejected because bool is not accepted as minutes.",
+            "Removing functools.wraps changes the printed name to wrapper."
+          ]
+        },
+        "quiz": {
+          "question": "What is @timer above def run(): ... equivalent to?",
+          "options": [
+            "run = timer(run)",
+            "run = timer()",
+            "timer = run(timer)"
+          ],
+          "correct": 0,
+          "explanation": "The decorator is called once with the newly defined function, and the name run is bound to whatever it returns."
+        },
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/reference/compound_stmts.html#function-definitions",
+            "section": "Function definitions and decorators",
+            "reviewed": "2026-11-08",
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          },
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/functools.html",
+            "section": "functools.wraps, lru_cache and partial",
+            "reviewed": "2026-11-08",
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "funcs = [lambda: i for i in range(3)]. What does [f() for f in funcs] give?",
+            "options": [
+              "[0, 1, 2]",
+              "[2, 2, 2]",
+              "[3, 3, 3]"
+            ],
+            "correct": 1,
+            "explanation": "Each lambda looks up i when it is called, after the loop has finished with i = 2. Bind the value with lambda i=i: i to keep 0, 1, 2."
+          }
+        ]
+      },
+      {
         "id": "context-managers",
         "stage": "intermediate",
-        "title": "16. Resource lifetimes and cleanup",
+        "title": "19. Resource lifetimes and cleanup",
         "takeaway": "Context managers bound resource lifetimes and run cleanup even when the body fails.",
         "sections": [
           {
@@ -82405,9 +82667,117 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "standard-library",
+        "stage": "intermediate",
+        "title": "20. Dates, text patterns and the standard library",
+        "takeaway": "Reach for the standard library first: aware datetimes, re for patterns, collections and itertools for counting and grouping, csv for quoted files and match for structured input.",
+        "sections": [
+          {
+            "title": "Dates and times",
+            "paragraphs": [
+              "A `datetime` with `tzinfo` is aware and represents one instant; one without is naive and means whatever the reader assumes. Store and compare aware UTC values, created with `datetime.now(timezone.utc)`, and convert to a local zone such as `ZoneInfo(\"Europe/London\")` only for display. `zoneinfo` needs the time zone database, which Windows provides through the `tzdata` package.",
+              "Subtracting datetimes gives a `timedelta`; adding one moves an instant. Comparing an aware and a naive value raises `TypeError` rather than guessing. `isoformat()` and `fromisoformat()` round-trip text without a custom format; use `strftime` only for display."
+            ],
+            "example": "from datetime import datetime, timedelta, timezone\n\nstart = datetime(2026, 3, 29, 0, 30, tzinfo=timezone.utc)\nend = start + timedelta(hours=1, minutes=45)\nprint(end.isoformat())\nprint((end - start).total_seconds() / 60)\nparsed = datetime.fromisoformat(\"2026-03-29T02:15:00+00:00\")\nprint(parsed == end)\ntry:\n    print(end > datetime(2026, 3, 29))\nexcept TypeError:\n    print(\"cannot compare aware and naive\")\nprint(end.strftime(\"%d %b %Y\"))\n\n# Expected output:\n# 2026-03-29T02:15:00+00:00\n# 105.0\n# True\n# cannot compare aware and naive\n# 29 Mar 2026"
+          },
+          {
+            "title": "Text patterns with re",
+            "paragraphs": [
+              "Write patterns as raw strings, `r\"\\d+\"`, so backslashes reach the regex engine. `re.fullmatch` checks the whole string, which is what validation needs; `re.search` finds a match anywhere, and `re.findall` returns every match. Named groups such as `(?P<minutes>\\d+)` make the extracted parts readable.",
+              "Compile a pattern you use repeatedly. Prefer string methods for simple tests such as `startswith`, and use a real parser for nested formats like JSON or HTML rather than a regular expression."
+            ],
+            "example": "import re\n\nLINE = re.compile(r\"(?P<topic>[A-Za-z ]+?)\\s*:\\s*(?P<minutes>\\d+)m\")\nmatch = LINE.fullmatch(\"Data structures: 45m\")\nprint(match[\"topic\"], int(match[\"minutes\"]))\nprint(LINE.fullmatch(\"Python: 45m extra\"))\nprint(re.search(r\"\\d+\", \"Python: 45m extra\").group())\nprint(re.findall(r\"#(\\w+)\", \"Read #python then #sql\"))\nprint(re.sub(r\"\\s+\", \" \", \"too   many    spaces\"))\n\n# Expected output:\n# Data structures 45\n# None\n# 45\n# ['python', 'sql']\n# too many spaces"
+          },
+          {
+            "title": "collections and itertools",
+            "paragraphs": [
+              "`Counter` counts hashable items and reports `most_common`; a missing key counts as 0. `defaultdict(list)` creates an empty list the first time a key is used, which makes grouping a one-line loop. `deque(maxlen=3)` keeps only the newest three items and appends or pops at either end in constant time.",
+              "`itertools` composes iterators lazily. `groupby` groups consecutive equal keys only, so sort by the same key first. `islice` takes part of any iterator, `chain` joins several, and `pairwise` yields neighbouring pairs."
+            ],
+            "example": "from collections import Counter, defaultdict, deque\nfrom itertools import groupby, islice, pairwise\n\ntopics = [\"sql\", \"python\", \"sql\", \"git\", \"python\", \"sql\"]\nprint(Counter(topics).most_common(2))\n\nby_letter = defaultdict(list)\nfor topic in topics:\n    by_letter[topic[0]].append(topic)\nprint(dict(by_letter))\n\nrecent = deque(maxlen=3)\nfor minutes in [10, 20, 30, 40]:\n    recent.append(minutes)\nprint(list(recent))\n\nprint([(key, len(list(group))) for key, group in groupby(sorted(topics))])\nprint(list(islice(pairwise([1, 4, 9, 16]), 2)))\n\n# Expected output:\n# [('sql', 3), ('python', 2)]\n# {'s': ['sql', 'sql', 'sql'], 'p': ['python', 'python'], 'g': ['git']}\n# [20, 30, 40]\n# [('git', 1), ('python', 2), ('sql', 3)]\n# [(1, 4), (4, 9)]"
+          },
+          {
+            "title": "CSV files and structural matching",
+            "paragraphs": [
+              "The `csv` module handles quoted fields that contain commas or newlines, which `line.split(\",\")` gets wrong. Open files with `newline=\"\"` and an explicit encoding. Every value a reader returns is a string, so convert and validate numbers yourself.",
+              "A `match` statement compares the structure of a value against patterns, binds names from it and can add an `if` guard. `case _` handles everything else. A bare name in a pattern always captures, so `case DONE:` matches anything; refer to constants with a dotted name such as `Status.DONE`."
+            ],
+            "example": "import csv\nimport io\n\ndata = io.StringIO('topic,minutes\\n\"Data, structures\",45\\nSQL,30\\n')\nrows = [{\"topic\": r[\"topic\"], \"minutes\": int(r[\"minutes\"])} for r in csv.DictReader(data)]\nprint(rows[0])\n\ndef handle(command):\n    match command.split():\n        case [\"add\", topic, minutes] if minutes.isdigit():\n            return f\"add {topic} for {int(minutes)} min\"\n        case [\"list\"]:\n            return \"list sessions\"\n        case [\"remove\", *topics] if topics:\n            return f\"remove {len(topics)} topic(s)\"\n        case _:\n            return \"unknown command\"\n\nfor text in [\"add sql 30\", \"list\", \"remove git sql\", \"add sql many\"]:\n    print(handle(text))\n\n# Expected output:\n# {'topic': 'Data, structures', 'minutes': 45}\n# add sql for 30 min\n# list sessions\n# remove 2 topic(s)\n# unknown command"
+          },
+          {
+            "title": "Pitfalls",
+            "paragraphs": [
+              "`datetime.utcnow()` returns a naive value and is deprecated; use `datetime.now(timezone.utc)`. `groupby` on unsorted input produces several groups for the same key. A greedy `.*` in a pattern can swallow more than you expect; anchor with `fullmatch` and use specific character classes."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Parse lines = [\"2026-03-02 sql 30\", \"2026-03-04 python 45\", \"bad line\", \"2026-03-09 sql 20\"]. Use re.fullmatch with groups to reject malformed lines, date.fromisoformat for the date and a Counter for minutes per topic. Print the totals from most_common(), the number of rejected lines and the days between the first and last date.",
+          "starter": "import re\nfrom collections import Counter\nfrom datetime import date\n\nlines = [\"2026-03-02 sql 30\", \"2026-03-04 python 45\", \"bad line\", \"2026-03-09 sql 20\"]\n# TODO: pattern, totals, dates, rejected count",
+          "solution": "import re\nfrom collections import Counter\nfrom datetime import date\n\nLINE = re.compile(r\"(\\d{4}-\\d{2}-\\d{2}) (\\w+) (\\d+)\")\nlines = [\"2026-03-02 sql 30\", \"2026-03-04 python 45\", \"bad line\", \"2026-03-09 sql 20\"]\ntotals, dates, rejected = Counter(), [], 0\nfor line in lines:\n    match = LINE.fullmatch(line)\n    if not match:\n        rejected += 1\n        continue\n    day, topic, minutes = match.groups()\n    dates.append(date.fromisoformat(day))\n    totals[topic] += int(minutes)\nprint(totals.most_common())\nprint(rejected)\nprint((max(dates) - min(dates)).days)",
+          "checks": [
+            "Output is [('sql', 50), ('python', 45)], then 1, then 7.",
+            "A line with trailing text such as \"2026-03-02 sql 30 extra\" is rejected because fullmatch checks the whole line.",
+            "Minutes are converted with int before they are added."
+          ]
+        },
+        "quiz": {
+          "question": "Why does itertools.groupby usually need sorted input?",
+          "options": [
+            "It only groups consecutive equal keys",
+            "It sorts the input itself, but slowly",
+            "It requires keys to be strings"
+          ],
+          "correct": 0,
+          "explanation": "groupby starts a new group whenever the key changes, so equal keys that are not adjacent end up in separate groups."
+        },
+        "references": [
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/datetime.html#aware-and-naive-objects",
+            "section": "Aware and naive objects",
+            "reviewed": "2026-11-08",
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          },
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/re.html",
+            "section": "Regular expression syntax and functions",
+            "reviewed": "2026-11-08",
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          },
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/library/collections.html",
+            "section": "Counter, defaultdict and deque",
+            "reviewed": "2026-11-08",
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          },
+          {
+            "title": "Python documentation",
+            "url": "https://docs.python.org/3/tutorial/controlflow.html#match-statements",
+            "section": "The match statement",
+            "reviewed": "2026-11-08",
+            "scope": "Python 3.14+ teaching contract; reference section inspected; only downloadable test results establish execution evidence."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "What does re.fullmatch(r\"\\d+\", \"45m\") return?",
+            "options": [
+              "A match for 45",
+              "None",
+              "The string \"45\""
+            ],
+            "correct": 1,
+            "explanation": "fullmatch must consume the whole string. The trailing m is not a digit, so there is no match; re.search would find 45."
+          }
+        ]
+      },
+      {
         "id": "packaging-and-cli",
         "stage": "intermediate",
-        "title": "17. Packages and command interfaces",
+        "title": "21. Packages and command interfaces",
         "takeaway": "Keep domain logic importable and argument parsing at a deliberate entry point.",
         "sections": [
           {
@@ -82587,7 +82957,7 @@ const LEARNING_PATHS = [
       {
         "id": "logging-and-test-design",
         "stage": "intermediate",
-        "title": "18. Logging and test design",
+        "title": "22. Logging and test design",
         "takeaway": "Test contracts and failure behavior, then log useful operational facts.",
         "sections": [
           {
@@ -82663,7 +83033,7 @@ const LEARNING_PATHS = [
       {
         "id": "concurrency-models",
         "stage": "advanced",
-        "title": "19. Threads, futures and async tasks",
+        "title": "23. Threads, futures and async tasks",
         "takeaway": "Choose concurrency by workload and keep shared state controlled.",
         "sections": [
           {
@@ -82747,7 +83117,7 @@ const LEARNING_PATHS = [
       {
         "id": "profiling-and-complexity",
         "stage": "advanced",
-        "title": "20. Profiling and complexity",
+        "title": "24. Profiling and complexity",
         "takeaway": "Check correctness, then measure representative workloads before optimizing.",
         "sections": [
           {
@@ -82815,7 +83185,7 @@ const LEARNING_PATHS = [
       {
         "id": "security-and-input-boundaries",
         "stage": "advanced",
-        "title": "21. External input and security boundaries",
+        "title": "25. External input and security boundaries",
         "takeaway": "Parsing, schema validation and authorization are separate steps.",
         "sections": [
           {
@@ -82883,7 +83253,7 @@ const LEARNING_PATHS = [
       {
         "id": "robust-storage",
         "stage": "advanced",
-        "title": "22. Safe replacement and failure recovery",
+        "title": "26. Safe replacement and failure recovery",
         "takeaway": "Prepare a complete new file before replacing previous output.",
         "sections": [
           {
@@ -83060,7 +83430,7 @@ const LEARNING_PATHS = [
       {
         "id": "robust-import-capstone",
         "stage": "advanced",
-        "title": "23. Capstone: a bounded import pipeline",
+        "title": "27. Capstone: a bounded import pipeline",
         "takeaway": "Validate a complete batch before one deliberate commit.",
         "sections": [
           {
@@ -83699,15 +84069,19 @@ const LEARNING_PATHS = [
         "collections": "foundation",
         "loops": "foundation",
         "functions": "foundation",
+        "pythonic-idioms": "foundation",
         "errors": "foundation",
         "files-and-json": "foundation",
         "modules-and-environments": "foundation",
         "testing-and-api-boundaries": "foundation",
         "study-log-capstone": "foundation",
         "classes-and-dataclasses": "intermediate",
+        "classes-in-depth": "intermediate",
         "typing-and-protocols": "intermediate",
         "iterators-and-generators": "intermediate",
+        "closures-and-decorators": "intermediate",
         "context-managers": "intermediate",
+        "standard-library": "intermediate",
         "packaging-and-cli": "intermediate",
         "logging-and-test-design": "intermediate",
         "concurrency-models": "advanced",
