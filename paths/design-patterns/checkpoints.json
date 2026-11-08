@@ -36,6 +36,9 @@
     "proxy": [
       {"question": "A lazy proxy calls its loader on first access and caches the result. Its value is read three times. How many times does the loader run?", "options": ["1", "3", "0"], "correct": 0, "explanation": "The first read loads and stores the value; later reads return the cached copy. The proxy delays work and then avoids repeating it."}
     ],
+    "bridge-flyweight-prototype": [
+      {"question": "template = {\"tags\": [\"draft\"]}; c = copy.copy(template); c[\"tags\"].append(\"x\"). What is template[\"tags\"]?", "options": ["['draft']", "['draft', 'x']", "It raises TypeError"], "correct": 1, "explanation": "A shallow copy shares nested objects, so both dictionaries refer to the same list. copy.deepcopy would keep them separate."}
+    ],
     "observer": [
       {"question": "publish calls three subscribers in order with no error handling: the first appends 'a' to log, the second raises, the third appends 'c'. After catching the error, what is log?", "options": ["['a']", "['a', 'c']", "[]"], "correct": 0, "explanation": "Synchronous delivery stops at the exception, so the third subscriber never runs. Whether one failure stops the rest is a policy the publisher must state."}
     ],
@@ -57,6 +60,9 @@
     "iterator": [
       {"question": "it = iter([1, 2, 3]). What is list(zip(it, it))?", "options": ["[(1, 2)]", "[(1, 1), (2, 2), (3, 3)]", "[(1, 2), (3, None)]"], "correct": 0, "explanation": "Both arguments are the same iterator, so zip takes 1 and 2 for the first pair, then finds only 3 left and stops."}
     ],
+    "memento-visitor-interpreter": [
+      {"question": "With rule = All((Is(\"topic\", \"sql\"), AnyOf((AtLeast(\"minutes\", 30), Is(\"done\", True))))), which of these rows match: sql/45 minutes, sql/10 minutes, git/60 minutes?", "options": ["Only sql with 45 minutes", "Both sql rows", "All three rows"], "correct": 0, "explanation": "Both parts of All must hold: the topic must be sql and either at least 30 minutes or done. Only the first row satisfies both."}
+    ],
     "dependency-injection": [
       {"question": "With dependency injection and no framework, where should concrete collaborators be created?", "options": ["In the composition root, such as main()", "Inside each class that uses them", "In a global variable each module imports"], "correct": 0, "explanation": "One place builds the real objects and passes them in. Components then receive collaborators instead of finding or constructing them."}
     ],
@@ -65,6 +71,12 @@
     ],
     "unit-of-work": [
       {"question": "A Unit of Work stages three changes, and the third fails validation before commit. With correct rollback, how many of the changes are stored?", "options": ["None of them", "The first two", "All three"], "correct": 0, "explanation": "The changes belong to one business operation, so they commit together or not at all."}
+    ],
+    "architectural-patterns": [
+      {"question": "plan.complete(\"sql-1\", 40) is called twice on a plan where sql-1 exists. How many LessonCompleted events are recorded?", "options": ["0", "1", "2"], "correct": 1, "explanation": "The second call sees sql-1 in done and returns no event, so the command is idempotent."}
+    ],
+    "resilience-patterns": [
+      {"question": "A breaker has threshold 2 and cooldown 30 seconds. Calls fail at t = 0 and t = 1. What does a call at t = 10 do?", "options": ["Fails fast without calling the dependency", "Calls the dependency again", "Resets the breaker to closed"], "correct": 0, "explanation": "Two failures open the circuit at t = 1, and it stays open until t = 31, so the call at t = 10 is rejected immediately."}
     ],
     "refactoring": [
       {"question": "Before extracting a Strategy from a pricing function, what should be in place?", "options": ["Tests that pin the current outputs, including edge cases", "A diagram of the new classes", "A decision to change the prices"], "correct": 0, "explanation": "A refactoring must preserve behavior, and tests that capture today's results are how you show it did."}
