@@ -24,7 +24,10 @@ import report  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
-    'change-history/2': 'A build failure unrelated to the target behavior cannot be treated as evidence, lesson 16',
+    'stories-and-priorities/2': 'Should have, lesson 3',
+    'non-functional-requirements/2': 'Ask which matters more, record the decision and its trigger for revisiting, lesson 4',
+    'refactoring-and-debt/2': 'Preserve the behaviour and fix it in a separate tested commit, lesson 21',
+    'change-history/2': 'A build failure unrelated to the target behavior cannot be treated as evidence, lesson 18',
 }
 
 HEADER = 'id,status,minutes\n'

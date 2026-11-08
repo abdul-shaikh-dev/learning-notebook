@@ -161,6 +161,8 @@
   "lessonTasks": {
     "request-outcome": "foundation",
     "acceptance-examples": "foundation",
+    "stories-and-priorities": "foundation",
+    "non-functional-requirements": "foundation",
     "scope-decisions": "foundation",
     "reproduce-environment": "foundation",
     "trace-code": "foundation",
@@ -179,6 +181,7 @@
     "operational-check": "advanced",
     "rollback-plan": "advanced",
     "maintenance-capstone": "advanced",
-    "dependency-change": "advanced"
+    "dependency-change": "advanced",
+    "refactoring-and-debt": "advanced"
   }
 }

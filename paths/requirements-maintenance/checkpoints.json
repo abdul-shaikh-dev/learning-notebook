@@ -6,6 +6,12 @@
     "acceptance-examples": [
       {"question": "A valid file has only open tickets. What does report.py return with --status closed?", "options": ["{\"count\": 0, \"total_minutes\": 0}", "An error: no matching rows", "Empty output"], "correct": 0, "explanation": "The contract makes a valid selection with no matches an explicit example: both values are zero and the command succeeds."}
     ],
+    "stories-and-priorities": [
+      {"question": "A feature has a manual workaround that takes the user a few minutes. Under MoSCoW, which priority fits best?", "options": ["Must have", "Should have", "Won't have"], "correct": 1, "explanation": "A Must is something the release cannot do without; a painful but workable gap is a Should."}
+    ],
+    "non-functional-requirements": [
+      {"question": "Strict whole-file validation conflicts with a goal of streaming huge files quickly. What should happen?", "options": ["Pick the faster option silently", "Ask which matters more, record the decision and its trigger for revisiting", "Implement both behind a flag"], "correct": 1, "explanation": "Quality requirements trade against each other. The stakeholder decides, and the record says when to revisit."}
+    ],
     "scope-decisions": [
       {"question": "The changed-requirements list mentions an archived status. What does the current reference do with a row whose status is archived?", "options": ["Raises ValueError: row 2: unknown status", "Counts it with the open tickets", "Skips the row"], "correct": 0, "explanation": "Archived is a deferred idea, not part of the agreed change. The reference rejects it until someone writes its expectations first."}
     ],
@@ -53,6 +59,9 @@
     ],
     "dependency-change": [
       {"question": "Which third-party packages does report.py import?", "options": ["None: it uses only the standard library", "pandas", "click"], "correct": 0, "explanation": "With no third-party imports, a dependency update cannot change its behaviour, though a Python version change still can."}
+    ],
+    "refactoring-and-debt": [
+      {"question": "While refactoring you notice the legacy code skips zero-minute tickets. What should the refactoring commit do?", "options": ["Fix it in the same commit", "Preserve the behaviour and fix it in a separate tested commit", "Delete the zero-minute rows"], "correct": 1, "explanation": "A refactoring must not change behaviour; mixing a fix in hides it from review and history."}
     ],
     "operational-check": [
       {"question": "report.py runs with --output report.json and succeeds. What does it print to stdout?", "options": ["Nothing: the JSON goes to the file", "The JSON, and it also writes the file", "The output path"], "correct": 0, "explanation": "The contract keeps stdout empty when exporting, so a check should read the written file rather than the terminal."}
