@@ -39,8 +39,14 @@
     "overfitting-regularization": [
       {"question": "pipeline(C=0.01) is fitted on the training rows. How do its coefficients compare with C=1?", "options": ["Much smaller in total size, because regularization is stronger", "Larger, because C scales them up", "The same: C changes only the threshold"], "correct": 0, "explanation": "C is the inverse of the penalty strength, so a small C shrinks the coefficients towards zero."}
     ],
+    "trees-and-ensembles": [
+      {"question": "A DecisionTreeClassifier with no depth limit is fitted on 420 noisy training rows with distinct feature values. What training accuracy does it reach?", "options": ["1.000: it keeps splitting until every leaf is pure", "About the same as its test accuracy", "0.5, because noise cancels out"], "correct": 0, "explanation": "Without a limit the tree splits until each leaf holds one class, so it memorises the training rows, noise included."}
+    ],
     "learning-curves": [
       {"question": "A learning curve compares models trained on 50% and 100% of the training rows. What must be refitted for each size?", "options": ["The preprocessing and the estimator, on that subset", "Only the estimator", "Nothing: reuse the full-data pipeline"], "correct": 0, "explanation": "Reusing preprocessing fitted on more rows would leak information into the smaller experiment."}
+    ],
+    "distance-and-clustering": [
+      {"question": "k-means is run twice on the same data with different random_state values and finds identical groups. Do the cluster numbers match?", "options": ["Not necessarily: the same groups can carry different numbers", "Yes: k-means numbers clusters by size", "Yes, whenever n_init is 10"], "correct": 0, "explanation": "Cluster labels are arbitrary. Compare partitions with a label-free measure such as the adjusted Rand index, which is 1.0 for identical groupings."}
     ],
     "leakage-audit": [
       {"question": "A logistic regression is given resolution_hours alone and scored on validation. What accuracy does it reach?", "options": ["100%, because the feature reconstructs the label", "About 56%, like the real model", "About 50%"], "correct": 0, "explanation": "A perfect score from an outcome field is a warning: the label is a threshold on that value, which is unknown at intake."}
@@ -51,6 +57,9 @@
     "error-analysis": [
       {"question": "How many validation mistakes does run() list, and what does each carry?", "options": ["21, each with its ticket ID and actual and predicted labels", "21 counts with no IDs", "48, one per validation row"], "correct": 0, "explanation": "The 12 false positives and 9 false negatives are kept with their IDs, so each can be traced to the original case."}
     ],
+    "explain-a-model": [
+      {"question": "A column of pure random noise is added before fitting a random forest. What permutation importance does it get on held-out rows?", "options": ["Close to 0", "About the same as the strongest feature", "Exactly 1"], "correct": 0, "explanation": "Shuffling a feature the model cannot usefully rely on leaves held-out accuracy almost unchanged, so its importance is near zero, sometimes slightly negative by chance."}
+    ],
     "threshold-policy": [
       {"question": "Which threshold does run() choose on validation, and at what cost?", "options": ["0.3, at cost 48 with 4 per missed breach and 1 per false alarm", "0.5, at cost 21", "0.7, at cost 48"], "correct": 0, "explanation": "The cost weights are declared before choosing, and only validation rows are used, so the test set stays untouched."}
     ],
@@ -59,6 +68,9 @@
     ],
     "distribution-change": [
       {"question": "What breach rates do the training, validation and test partitions have?", "options": ["37.5%, 50% and about 35.4%", "39.6% in all three", "50%, 37.5% and about 35.4%"], "correct": 0, "explanation": "The class mix differs between periods even in a single generated dataset, so a metric from one period needs care when compared with another."}
+    ],
+    "neural-networks": [
+      {"question": "MLPClassifier(hidden_layer_sizes=(16, 16), max_iter=5) is fitted on 420 rows. What does scikit-learn report?", "options": ["A ConvergenceWarning: the optimiser stopped before converging", "Nothing: five epochs are enough for small data", "A ValueError: max_iter must be at least 100"], "correct": 0, "explanation": "max_iter caps the epochs. Stopping before the loss settles raises a ConvergenceWarning, which signals an under-trained model."}
     ],
     "model-review-capstone": [
       {"question": "On the test rows, what cost do the model and the baseline reach?", "options": ["34 for the model and 68 for the baseline", "68 for the model and 34 for the baseline", "34 for both"], "correct": 0, "explanation": "The model halves the declared cost on this fictional fixture. That supports the evaluation method, not a claim about real support performance."}

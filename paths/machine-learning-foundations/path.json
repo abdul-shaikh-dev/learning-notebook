@@ -3,7 +3,7 @@
   "title": "Machine learning foundations",
   "category": "Data and databases",
   "status": "ready",
-  "description": "21 lessons on prediction questions, baselines, regression and classification, preprocessing, evaluation, leakage and reproducible experiments. Includes a CPU-only support-ticket lab.",
+  "description": "25 lessons on prediction questions, baselines, regression and classification, preprocessing, evaluation, leakage and reproducible experiments. Includes a CPU-only support-ticket lab.",
   "level": "Foundations through a supervised-learning capstone",
   "prerequisites": [
     "Python functions, lists, dictionaries and basic tests.",
@@ -805,8 +805,75 @@
       ]
     },
     {
+      "id": "trees-and-ensembles",
+      "title": "14. Split on features with trees and ensembles",
+      "stage": "intermediate",
+      "takeaway": "One deep tree memorises; averaging many trees or adding small trees step by step generalises better, if you limit their capacity.",
+      "sections": [
+        {
+          "title": "How it works",
+          "paragraphs": [
+            "A decision tree asks a sequence of yes/no questions about single features, such as `priority = high` or `customer_messages > 3`. Each split is chosen to make the two groups purer in the target. Prediction follows the questions to a leaf and returns that leaf's majority class or mean value. Trees need no scaling, handle mixed feature types and capture interactions and non-linear boundaries that a linear model cannot.",
+            "A tree grown until every leaf is pure fits the training rows perfectly, including their noise. Depth limits (`max_depth`), a minimum leaf size (`min_samples_leaf`) and pruning control that capacity, just as `C` did for logistic regression in lesson 13.",
+            "A random forest trains many deep trees, each on a bootstrap sample of rows and considering a random subset of features at each split, then averages their votes. Averaging reduces variance. Gradient boosting instead adds small trees one at a time, each fitted to the errors the current ensemble still makes, scaled down by a learning rate. Boosting is often the strongest choice for tabular data, but it can overfit if it runs too many steps, so use early stopping or choose the number of steps by cross-validation."
+          ]
+        },
+        {
+          "title": "Worked example",
+          "paragraphs": [
+            "The data are two interleaved, noisy half-circles, so a straight boundary cannot separate them. All models use the same 420 training and 180 test rows. The unlimited tree and default boosting reach 1.000 on training rows but not on test rows. The depth-4 tree, the forest and boosting with early stopping keep a smaller gap.",
+            "On 180 test rows one prediction is about 0.006 of accuracy, so the differences between 0.844 and 0.883 are a handful of rows. Choose among such candidates with cross-validation on training data (lesson 12), not by picking the best test score."
+          ],
+          "example": "from sklearn.datasets import make_moons\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.tree import DecisionTreeClassifier\nfrom sklearn.ensemble import RandomForestClassifier, HistGradientBoostingClassifier\n\nX, y = make_moons(n_samples=600, noise=0.3, random_state=0)   # two interleaved, noisy half-circles\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0, stratify=y)\nmodels = {\n    'logistic regression': LogisticRegression(),\n    'tree, no depth limit': DecisionTreeClassifier(random_state=0),\n    'tree, max_depth=4': DecisionTreeClassifier(max_depth=4, random_state=0),\n    'random forest': RandomForestClassifier(n_estimators=200, min_samples_leaf=3, random_state=0),\n    'boosting, defaults': HistGradientBoostingClassifier(random_state=0),\n    'boosting, early stop': HistGradientBoostingClassifier(max_leaf_nodes=8, learning_rate=0.05, max_iter=200,\n                                                           early_stopping=True, random_state=0),\n}\nfor name, model in models.items():\n    model.fit(X_train, y_train)\n    print(f'{name:21} train {model.score(X_train, y_train):.3f}  test {model.score(X_test, y_test):.3f}')\n\n# Output:\n# logistic regression   train 0.879  test 0.844\n# tree, no depth limit  train 1.000  test 0.839\n# tree, max_depth=4     train 0.905  test 0.883\n# random forest         train 0.964  test 0.867\n# boosting, defaults    train 1.000  test 0.839\n# boosting, early stop  train 0.945  test 0.861"
+        },
+        {
+          "title": "Check the assumption",
+          "paragraphs": [
+            "Trees split on thresholds, so they cannot extrapolate: a regression tree never predicts beyond the range of training targets. If future values may exceed anything seen, check that limit before choosing one.",
+            "Ensembles cost more to train, store and explain than one linear model. Start with the simple baseline and a regularised linear model, and adopt an ensemble when validation evidence shows a gain that matters for the decision. Tree-based models still need the same leakage and time-split discipline as any other model."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "A random forest scores 1.00 accuracy on training rows and 0.81 on validation rows. A depth-limited tree scores 0.84 and 0.82. Which do you prefer, and what would you check before deciding?",
+        "solution": "The training score of a forest of deep trees is expected to be near 1.00 and is not by itself evidence of harmful overfitting; compare validation results. The two validation scores differ by 0.01, which may be within the noise of the validation set. Compare them with cross-validation on training data, look at the confusion counts and costs that matter, and prefer the simpler tree if the evidence does not separate them, because it is cheaper and easier to explain.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Judges the models on validation or cross-validated results, not training accuracy.",
+          "Treats a 0.01 difference as possibly noise and asks for repeated or cross-validated evidence.",
+          "Weighs cost and explainability when performance is similar."
+        ]
+      },
+      "quiz": {
+        "question": "How does gradient boosting build its ensemble?",
+        "options": [
+          "It averages deep trees trained independently on bootstrap samples",
+          "It adds small trees one at a time, each fitted to the remaining errors",
+          "It fits one tree and prunes it"
+        ],
+        "correct": 1,
+        "explanation": "Boosting is sequential: each new tree corrects what the current ensemble still gets wrong, scaled by the learning rate. Random forests average independent trees."
+      },
+      "references": [
+        {
+          "title": "scikit-learn: Decision trees",
+          "url": "https://scikit-learn.org/stable/modules/tree.html",
+          "section": "Tips on practical use",
+          "reviewed": "2026-11-08",
+          "scope": "scikit-learn 1.9.1 with NumPy 2.5.3 on CPU. Synthetic examples illustrate behaviour; they do not establish real-service performance."
+        },
+        {
+          "title": "scikit-learn: Ensembles",
+          "url": "https://scikit-learn.org/stable/modules/ensemble.html",
+          "section": "Random forests and histogram-based gradient boosting",
+          "reviewed": "2026-11-08",
+          "scope": "scikit-learn 1.9.1 with NumPy 2.5.3 on CPU. Synthetic examples illustrate behaviour; they do not establish real-service performance."
+        }
+      ]
+    },
+    {
       "id": "learning-curves",
-      "title": "14. Compare more training data fairly",
+      "title": "15. Compare more training data fairly",
       "stage": "intermediate",
       "takeaway": "Vary training size while keeping the evaluation question fixed.",
       "sections": [
@@ -868,8 +935,76 @@
       ]
     },
     {
+      "id": "distance-and-clustering",
+      "title": "16. Predict from neighbours and find groups without labels",
+      "stage": "intermediate",
+      "takeaway": "Distance-based methods depend on feature scale; clusters are a description to check, not a discovered truth.",
+      "sections": [
+        {
+          "title": "How it works",
+          "paragraphs": [
+            "k-nearest neighbours stores the training rows. To predict, it finds the k rows closest to the new one and takes their majority class or mean value. There is no fitted formula, so prediction cost grows with the training set. Small k follows noise; large k smooths the boundary.",
+            "Every distance-based method compares features in their own units. A column measured in thousands dominates one measured in units, whatever its predictive value. Scale features inside the pipeline (lesson 11), so the scaler learns its means and spreads from training rows only. Distances also become less informative as the number of features grows.",
+            "Clustering is unsupervised: there is no target. k-means chooses k centres and assigns each row to its nearest centre, then moves each centre to the mean of its rows, repeating until assignments stop changing. It favours compact, similarly sized, round groups. Because it starts from random centres, run several starts (`n_init`) and fix `random_state` for reproducibility."
+          ]
+        },
+        {
+          "title": "Worked example",
+          "paragraphs": [
+            "The classification data have two informative columns and one uninformative column multiplied by 1000. Unscaled k-NN mostly measures that column and scores 0.564 in cross-validation, close to guessing. Scaling inside the pipeline restores 0.924.",
+            "The clustering data were generated as three groups, yet the silhouette score, which rewards tight, well-separated clusters, prefers two. Two of the generated groups sit close together. Two k-means runs with different seeds give the same grouping with different label numbers: the adjusted Rand index of 1.0 shows the partitions match exactly."
+          ],
+          "example": "from sklearn.datasets import make_classification\nfrom sklearn.model_selection import cross_val_score\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\n\nX, y = make_classification(n_samples=500, n_features=4, n_informative=2, n_redundant=0, random_state=1)\nX[:, 2] *= 1000          # an uninformative column recorded in much larger units\nfor name, model in [('k-NN, raw units', KNeighborsClassifier(n_neighbors=15)),\n                    ('k-NN, scaled', make_pipeline(StandardScaler(), KNeighborsClassifier(n_neighbors=15)))]:\n    print(f'{name:16} CV accuracy {cross_val_score(model, X, y, cv=5).mean():.3f}')\n\n# Output:\n# k-NN, raw units  CV accuracy 0.564\n# k-NN, scaled     CV accuracy 0.924\n\nfrom sklearn.datasets import make_blobs\nfrom sklearn.cluster import KMeans\nfrom sklearn.metrics import silhouette_score, adjusted_rand_score\n\nX, _ = make_blobs(n_samples=300, centers=3, cluster_std=1.0, random_state=4)   # generated as 3 groups\nfor k in range(2, 6):\n    labels = KMeans(n_clusters=k, n_init=10, random_state=0).fit_predict(X)\n    print(f'k={k} silhouette {silhouette_score(X, labels):.3f}')\na = KMeans(n_clusters=3, n_init=10, random_state=0).fit_predict(X)\nb = KMeans(n_clusters=3, n_init=10, random_state=1).fit_predict(X)\nprint('first labels', a[:6], b[:6])\nprint('same grouping (adjusted Rand index):', round(adjusted_rand_score(a, b), 3))\n\n# Output:\n# k=2 silhouette 0.749\n# k=3 silhouette 0.631\n# k=4 silhouette 0.538\n# k=5 silhouette 0.387\n# first labels [0 1 1 2 2 1] [1 0 0 2 2 0]\n# same grouping (adjusted Rand index): 1.0"
+        },
+        {
+          "title": "Check the assumption",
+          "paragraphs": [
+            "Cluster numbers are arbitrary names. Compare clusterings with a label-free measure such as the adjusted Rand index, and describe each cluster by its feature averages before giving it a business meaning.",
+            "There is no ground truth to score against, so judge a clustering by stability (do the groups survive a different seed or sample?) and usefulness (does treating the groups differently help a decision?). A silhouette score is a guide to compactness, not proof that the groups are real. Density-based methods such as DBSCAN suit irregular shapes and can label rows as noise; k-means cannot."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "A colleague clusters customers with k-means on annual spend (in currency units, up to 50,000) and number of support tickets (0 to 20), and reports that tickets do not matter to the clusters. What went wrong, and how would you redo the analysis?",
+        "solution": "Spend is on a scale thousands of times larger, so Euclidean distance is almost entirely spend and the ticket count barely moves any row between clusters. Scale both features (for example with StandardScaler in a pipeline), rerun k-means with several starts and a fixed seed, compare several values of k with silhouette and stability across seeds or resamples, and describe each cluster by its average spend and tickets before interpreting it.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Identifies feature scale as the cause.",
+          "Scales features before clustering.",
+          "Checks k and stability instead of trusting one run.",
+          "Describes clusters by feature averages before naming them."
+        ]
+      },
+      "quiz": {
+        "question": "Why scale features before k-nearest neighbours?",
+        "options": [
+          "Scaling makes the model train faster but does not change predictions",
+          "Distances otherwise depend mostly on the features with the largest units",
+          "k-NN cannot read negative numbers"
+        ],
+        "correct": 1,
+        "explanation": "k-NN compares rows by distance. Without scaling, a column in large units dominates the distance regardless of how informative it is."
+      },
+      "references": [
+        {
+          "title": "scikit-learn: Nearest neighbors",
+          "url": "https://scikit-learn.org/stable/modules/neighbors.html",
+          "section": "Nearest neighbors classification",
+          "reviewed": "2026-11-08",
+          "scope": "scikit-learn 1.9.1 with NumPy 2.5.3 on CPU. Synthetic examples illustrate behaviour; they do not establish real-service performance."
+        },
+        {
+          "title": "scikit-learn: Clustering",
+          "url": "https://scikit-learn.org/stable/modules/clustering.html",
+          "section": "K-means and clustering performance evaluation",
+          "reviewed": "2026-11-08",
+          "scope": "scikit-learn 1.9.1 with NumPy 2.5.3 on CPU. Synthetic examples illustrate behaviour; they do not establish real-service performance."
+        }
+      ]
+    },
+    {
       "id": "leakage-audit",
-      "title": "15. Audit shortcuts that reveal the answer",
+      "title": "17. Audit shortcuts that reveal the answer",
       "stage": "advanced",
       "takeaway": "Look for future information in features and in the way examples are split.",
       "sections": [
@@ -925,7 +1060,7 @@
     },
     {
       "id": "time-and-group-splits",
-      "title": "16. Separate future time from unseen customers",
+      "title": "18. Separate future time from unseen customers",
       "stage": "advanced",
       "takeaway": "Choose a split that answers the deployment question you actually have.",
       "sections": [
@@ -981,7 +1116,7 @@
     },
     {
       "id": "error-analysis",
-      "title": "17. Read the mistakes by case and subgroup",
+      "title": "19. Read the mistakes by case and subgroup",
       "stage": "advanced",
       "takeaway": "Use development errors to investigate a failure, not to invent a flattering average.",
       "sections": [
@@ -1036,8 +1171,76 @@
       ]
     },
     {
+      "id": "explain-a-model",
+      "title": "20. Explain which features a model relies on",
+      "stage": "advanced",
+      "takeaway": "Permutation importance on held-out rows shows what a fitted model uses; it does not show cause, and correlated features share or hide credit.",
+      "sections": [
+        {
+          "title": "How it works",
+          "paragraphs": [
+            "Permutation importance asks: how much worse does the fitted model score if one feature's values are shuffled among the rows? Shuffling breaks that feature's relationship with the target while keeping its distribution. A large drop means the model relies on the feature; a drop near zero means it does not. Repeat the shuffle several times and report the spread.",
+            "Compute it on held-out rows with the metric you care about. On training rows it can reward features the model merely memorised. It works for any model, including pipelines, because it only needs predictions.",
+            "Tree ensembles also report impurity-based importance (`feature_importances_`), computed from training splits. It is fast but biased toward continuous or many-valued features, and it can credit a feature that only helped the model fit noise. Coefficients of a linear model are another view, meaningful only when features share a scale."
+          ]
+        },
+        {
+          "title": "Worked example",
+          "paragraphs": [
+            "The forest sees two informative features and one column of random noise. Impurity importance gives the noise 0.098, close to the weaker real signal at 0.129, because the trees split on it to fit training rows. Permutation importance on test rows gives the noise -0.008 ± 0.008: shuffling it changes nothing, and the small negative value is chance.",
+            "Adding a near-copy of `signal_a` splits its credit: 0.403 for one column falls to about 0.19 and 0.21 for the pair, because when one is shuffled the model can use the other. A reader who saw only one of the pair would underrate that information."
+          ],
+          "example": "import numpy as np\nfrom sklearn.datasets import make_classification\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.inspection import permutation_importance\n\nX, y = make_classification(n_samples=1000, n_features=3, n_informative=2, n_redundant=0,\n                           n_clusters_per_class=1, random_state=0)\nnoise = np.random.default_rng(0).normal(size=len(X))\nX = np.column_stack([X[:, :2], noise])                     # signal_a, signal_b, pure noise\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0, stratify=y)\nmodel = RandomForestClassifier(n_estimators=200, random_state=0).fit(X_train, y_train)\nresult = permutation_importance(model, X_test, y_test, n_repeats=20, random_state=0)\nfor name, impurity, mean, std in zip(['signal_a', 'signal_b', 'noise'], model.feature_importances_,\n                                     result.importances_mean, result.importances_std):\n    print(f'{name:9} impurity {impurity:.3f}  permutation {mean:.3f} ± {std:.3f}')\n\ncopy = X[:, 0] + np.random.default_rng(1).normal(scale=0.05, size=len(X))   # a near-copy of signal_a\nX2_train, X2_test, _, _ = train_test_split(np.column_stack([X[:, :2], copy]), y, test_size=0.3, random_state=0, stratify=y)\nmodel2 = RandomForestClassifier(n_estimators=200, random_state=0).fit(X2_train, y_train)\nprint('with a near-copy of signal_a:',\n      np.round(permutation_importance(model2, X2_test, y_test, n_repeats=20, random_state=0).importances_mean, 3))\n\n# Output:\n# signal_a  impurity 0.772  permutation 0.403 ± 0.028\n# signal_b  impurity 0.129  permutation 0.011 ± 0.008\n# noise     impurity 0.098  permutation -0.008 ± 0.008\n# with a near-copy of signal_a: [0.186 0.027 0.209]"
+        },
+        {
+          "title": "Check the assumption",
+          "paragraphs": [
+            "Importance describes the model, not the world. A feature can matter to the model because it leaks the answer (lesson 17) or because of a data-collection quirk, and a feature the model ignores may still cause the outcome. Do not present importance as an effect of changing the feature; that needs an experiment or causal analysis.",
+            "Group correlated features and permute them together, or report them as a block, so their shared contribution is visible. Pair global importance with case-level error analysis (lesson 19) and, where needed, partial dependence plots that show how predictions change across a feature's values."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "In the ticket-breach model, permutation importance on validation rows ranks `customer_messages` highest. A manager concludes that asking customers to send fewer messages would reduce breaches. Write a response.",
+        "solution": "Permutation importance shows that the fitted model relies on customer_messages to predict breaches on these validation rows. It does not show that messages cause breaches: difficult tickets may both attract more messages and take longer to resolve, so reducing messages could leave resolution time unchanged. Check whether the count is known at prediction time (it may grow while the ticket is open, which would be leakage), whether correlated features share its credit, and treat any intervention as a hypothesis to test with an experiment.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Separates model reliance from cause and effect.",
+          "Names a plausible confounder such as ticket difficulty.",
+          "Checks whether the feature is available at prediction time.",
+          "Proposes an experiment before acting on the conclusion."
+        ]
+      },
+      "quiz": {
+        "question": "Why compute permutation importance on held-out rows rather than training rows?",
+        "options": [
+          "Training rows are too few",
+          "It measures reliance that generalises, not features the model used to memorise training noise",
+          "The method needs labels that only test rows have"
+        ],
+        "correct": 1,
+        "explanation": "On training rows a model can depend on features that only helped it fit noise. Held-out rows show what it relies on for new data."
+      },
+      "references": [
+        {
+          "title": "scikit-learn: Permutation feature importance",
+          "url": "https://scikit-learn.org/stable/modules/permutation_importance.html",
+          "section": "Relation to impurity-based importance; misleading values on strongly correlated features",
+          "reviewed": "2026-11-08",
+          "scope": "scikit-learn 1.9.1 with NumPy 2.5.3 on CPU. Synthetic examples illustrate behaviour; they do not establish real-service performance."
+        },
+        {
+          "title": "scikit-learn: Partial dependence and individual conditional expectation",
+          "url": "https://scikit-learn.org/stable/modules/partial_dependence.html",
+          "section": "Partial dependence plots",
+          "reviewed": "2026-11-08",
+          "scope": "scikit-learn 1.9.1 with NumPy 2.5.3 on CPU. Synthetic examples illustrate behaviour; they do not establish real-service performance."
+        }
+      ]
+    },
+    {
       "id": "threshold-policy",
-      "title": "18. Choose a threshold with explicit costs",
+      "title": "21. Choose a threshold with explicit costs",
       "stage": "advanced",
       "takeaway": "Pick the decision rule on validation data before evaluating the final test.",
       "sections": [
@@ -1093,7 +1296,7 @@
     },
     {
       "id": "reproduce-an-experiment",
-      "title": "19. Record enough to rerun the result",
+      "title": "22. Record enough to rerun the result",
       "stage": "advanced",
       "takeaway": "Save the data identity, partitions, versions and decision rules.",
       "sections": [
@@ -1149,7 +1352,7 @@
     },
     {
       "id": "distribution-change",
-      "title": "20. Plan for data and outcome changes",
+      "title": "23. Plan for data and outcome changes",
       "stage": "advanced",
       "takeaway": "Monitor inputs immediately and outcome errors when labels become available.",
       "sections": [
@@ -1211,8 +1414,75 @@
       ]
     },
     {
+      "id": "neural-networks",
+      "title": "24. Know what a neural network adds and what it costs",
+      "stage": "advanced",
+      "takeaway": "Neural networks learn their own features from raw signals; on modest tabular data they rarely beat simpler models and cost more to run and explain.",
+      "sections": [
+        {
+          "title": "How it works",
+          "paragraphs": [
+            "A neural network is a chain of layers. Each unit computes a weighted sum of its inputs plus a bias, then applies a non-linear activation such as ReLU, which replaces negative values with zero. Without the activation, stacked layers would collapse into one linear model. The last layer turns the result into a prediction, such as a probability through the logistic function used in lesson 9.",
+            "Training starts from random weights. For a batch of rows, the network predicts, a loss measures the error, backpropagation computes how each weight affects the loss, and gradient descent moves every weight a small step (the learning rate) downhill. One pass over the training data is an epoch. Regularisation uses weight penalties (`alpha` in scikit-learn), dropout or early stopping on a validation split.",
+            "Specialised architectures build in knowledge about the data: convolutional networks for images, and transformers for text and other sequences. Their strength is learning useful features from raw pixels, audio or tokens, which hand-made features struggle to match. Large pretrained models can be adapted with little labelled data, which is often the practical route."
+          ]
+        },
+        {
+          "title": "Worked example",
+          "paragraphs": [
+            "On the same half-moons data as lesson 14, a small network with two hidden layers of 16 units has 337 parameters and needed 663 epochs. Its test accuracy, 0.856, is within a row or two of logistic regression's 0.850 on these two features. Capping training at 5 epochs triggered a `ConvergenceWarning`: the optimiser stopped before the loss settled, and that warning should not be ignored.",
+            "With `early_stopping=True` the same network held back 10% of the 420 training rows, stopped after 12 epochs and scored 0.500. Small datasets give early stopping a noisy signal, which is one reason networks need more data and more tuning than the models before them."
+          ],
+          "example": "import warnings\nfrom sklearn.datasets import make_moons\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.neural_network import MLPClassifier\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\n\nX, y = make_moons(n_samples=600, noise=0.3, random_state=0)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0, stratify=y)\nlinear = make_pipeline(StandardScaler(), LogisticRegression()).fit(X_train, y_train)\nnetwork = make_pipeline(StandardScaler(),\n    MLPClassifier(hidden_layer_sizes=(16, 16), max_iter=2000, random_state=0)).fit(X_train, y_train)\nmlp = network[-1]\nweights = sum(w.size for w in mlp.coefs_) + sum(b.size for b in mlp.intercepts_)\nprint(f'logistic regression  test {linear.score(X_test, y_test):.3f}')\nprint(f'network 2-16-16-1    test {network.score(X_test, y_test):.3f}, {weights} parameters, {mlp.n_iter_} epochs')\nwith warnings.catch_warnings(record=True) as caught:\n    warnings.simplefilter('always')\n    MLPClassifier(hidden_layer_sizes=(16, 16), max_iter=5, random_state=0).fit(X_train, y_train)\nprint('max_iter=5:', caught[-1].category.__name__)\n\n# Output:\n# logistic regression  test 0.850\n# network 2-16-16-1    test 0.856, 337 parameters, 663 epochs\n# max_iter=5: ConvergenceWarning"
+        },
+        {
+          "title": "Check the assumption",
+          "paragraphs": [
+            "Consider a neural network when the inputs are images, audio, free text or other raw signals, when there is a lot of labelled data or a suitable pretrained model, and when the accuracy gain is worth the cost. For tabular business data of modest size, gradient-boosted trees (lesson 14) are usually as accurate, faster to train and easier to inspect.",
+            "Networks are sensitive to feature scaling, random initialisation and learning-rate choices, so fix seeds, scale inside the pipeline, and compare against the simple baseline and a regularised linear model under the same splits. They also need more compute, and their decisions are harder to explain, which matters for reviews such as the one in lesson 25."
+          ]
+        }
+      ],
+      "exercise": {
+        "prompt": "A team proposes replacing the ticket-breach logistic regression with a deep neural network. The data has 4 features and 2,400 labelled rows. Write the evidence you would require before agreeing.",
+        "solution": "Require a comparison on the same time-based splits and threshold policy: the dummy baseline, the current logistic regression, a gradient-boosted tree model and the network, each tuned only on training data with cross-validation. Report validation confusion counts and the cost measure, with variation across folds or seeds. Ask for training and inference cost, how failures will be explained to reviewers, and how the model will be monitored. With four tabular features and a few thousand rows, expect little gain; adopt the network only if its validated improvement is larger than the noise and worth those costs.",
+        "solutionFormat": "prose",
+        "checks": [
+          "Compares against the baseline, the current model and a tree ensemble on identical splits.",
+          "Asks for variation across folds or seeds, not one score.",
+          "Weighs cost, explainability and monitoring alongside accuracy."
+        ]
+      },
+      "quiz": {
+        "question": "Why does a neural network need non-linear activations between layers?",
+        "options": [
+          "To make training faster",
+          "Without them, stacked layers are equivalent to one linear model",
+          "To keep the weights positive"
+        ],
+        "correct": 1,
+        "explanation": "A composition of linear maps is linear. Activations such as ReLU let the network represent curved boundaries."
+      },
+      "references": [
+        {
+          "title": "scikit-learn: Neural network models (supervised)",
+          "url": "https://scikit-learn.org/stable/modules/neural_networks_supervised.html",
+          "section": "Multi-layer perceptron and tips on practical use",
+          "reviewed": "2026-11-08",
+          "scope": "scikit-learn 1.9.1 with NumPy 2.5.3 on CPU. Synthetic examples illustrate behaviour; they do not establish real-service performance."
+        },
+        {
+          "title": "scikit-learn: MLPClassifier",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html",
+          "section": "Parameters",
+          "reviewed": "2026-11-08",
+          "scope": "scikit-learn 1.9.1 with NumPy 2.5.3 on CPU. Synthetic examples illustrate behaviour; they do not establish real-service performance."
+        }
+      ]
+    },
+    {
       "id": "model-review-capstone",
-      "title": "21. Decide what the evidence supports",
+      "title": "25. Decide what the evidence supports",
       "stage": "advanced",
       "takeaway": "A reproducible toy score demonstrates the experiment, not readiness for real users.",
       "sections": [
@@ -1344,7 +1614,7 @@
       ],
       "project": {
         "title": "Review a breach prediction experiment",
-        "brief": "Freeze the model settings and threshold rule, then run python ml_lab.py --final once for the report. Independently calculate the threshold example in lesson 18. Change the group held out in the standard-library exercise and explain why this answers a different question from later-date testing.",
+        "brief": "Freeze the model settings and threshold rule, then run python ml_lab.py --final once for the report. Independently calculate the threshold example in lesson 21. Change the group held out in the standard-library exercise and explain why this answers a different question from later-date testing.",
         "requirements": [
           "Record data hash, package versions and partition sizes.",
           "Choose a threshold using validation cost 4*FN+FP.",
