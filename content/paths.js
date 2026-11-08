@@ -3904,7 +3904,7 @@ const LEARNING_PATHS = [
     "title": "AI Agents",
     "category": "AI engineering",
     "status": "ready",
-    "description": "Learn how agents use tools, state, retrieved sources and permissions in 24 lessons. Three projects start with an offline scripted workshop, then examine what changes when a real model chooses actions.",
+    "description": "Learn how agents use tools, state, retrieved sources and permissions in 28 lessons. Three projects start with an offline scripted workshop, then examine what changes when a real model chooses actions.",
     "level": "Foundations → intermediate agents → local framework practice",
     "prerequisites": [
       "No prior AI knowledge required; begin with the vocabulary lessons.",
@@ -4224,8 +4224,92 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "generation",
+        "title": "2. How a language model produces text",
+        "stage": "foundation",
+        "takeaway": "A model repeatedly predicts a probability for every possible next token and samples one; fluent output is not evidence of truth.",
+        "sections": [
+          {
+            "title": "Concept",
+            "paragraphs": [
+              "Text is split into tokens: whole words, word pieces, punctuation or bytes, depending on the tokenizer. A model reads the tokens so far and produces a score for every token in its vocabulary. Softmax turns the scores into probabilities, one token is chosen, appended, and the process repeats until a stop token or a length limit. Costs and context limits (lesson 4) are counted in these tokens.",
+              "Sampling settings shape the choice. Temperature divides the scores before softmax: low values sharpen the distribution toward the most likely token, high values flatten it. Top-p keeps only the smallest set of tokens whose probabilities add up to p. A temperature near zero is close to always picking the top token, but many providers still do not guarantee identical output for identical input."
+            ]
+          },
+          {
+            "title": "Why models hallucinate",
+            "paragraphs": [
+              "Training rewards continuations that look like the training text, not statements checked against the world. When the context lacks the answer, the most plausible continuation can be a confident, specific and wrong one: an invented citation, function name or policy. This is called hallucination. It is a property of the method, not a rare bug, and more fluent models do not stop doing it.",
+              "Controls live outside the model: retrieve the evidence and require answers to cite it (lesson 9), let the model say it does not know, verify tool results and identifiers in code, and evaluate on cases with known answers (lesson 23)."
+            ]
+          },
+          {
+            "title": "Example",
+            "paragraphs": [
+              "Four candidate next tokens have scores 5, 3, 2 and 0. At temperature 0.5 the top token takes almost all the probability; at 2.0 the unlikely tokens gain a real chance. With top-p 0.9 at temperature 1, only the first two tokens remain eligible."
+            ],
+            "example": "import math\n\ntokens, scores = ['Paris', 'Lyon', 'Berlin', 'banana'], [5.0, 3.0, 2.0, 0.0]\n\ndef softmax(values, temperature):\n    exps = [math.exp(v / temperature) for v in values]\n    return [e / sum(exps) for e in exps]\n\nfor t in (0.5, 1.0, 2.0):\n    print(f'T={t}:', ', '.join(f'{w} {p:.3f}' for w, p in zip(tokens, softmax(scores, t))))\n\nkept, total = [], 0.0\nfor w, p in sorted(zip(tokens, softmax(scores, 1.0)), key=lambda pair: -pair[1]):\n    if total >= 0.9:\n        break\n    kept.append(w); total += p\nprint('top-p 0.9 keeps', kept)\n\n# Expected output:\n# T=0.5: Paris 0.980, Lyon 0.018, Berlin 0.002, banana 0.000\n# T=1.0: Paris 0.839, Lyon 0.114, Berlin 0.042, banana 0.006\n# T=2.0: Paris 0.598, Lyon 0.220, Berlin 0.133, banana 0.049\n# top-p 0.9 keeps ['Paris', 'Lyon']"
+          },
+          {
+            "title": "Tradeoffs",
+            "paragraphs": [
+              "Low temperature suits extraction, classification and code, where one right answer exists. Higher temperature suits brainstorming, where variety helps. Neither setting makes the content true, and lowering temperature can make a model repeat the same wrong answer more consistently."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "A support assistant invents a refund policy clause that does not exist. List three changes to the application, not the temperature, that reduce this risk, and how you would measure the effect.",
+          "solution": "Retrieve the actual policy text and pass it as labelled evidence; require the answer to quote or cite a retrieved passage, and have code check that the cited passage exists. Allow and encourage an explicit 'I could not find this in the policy' answer, and route it to a human. Measure with an evaluation set of questions that include policies that do not exist, scoring unsupported claims and correct refusals before and after the change.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Grounds answers in retrieved policy text.",
+            "Checks citations or claims in code.",
+            "Allows an explicit not-found answer.",
+            "Measures with cases whose answer is known, including absent policies."
+          ]
+        },
+        "quiz": {
+          "question": "Why can a model state a false fact fluently?",
+          "options": [
+            "It looks up facts in a database that may be stale",
+            "It generates likely continuations of text and has no built-in check against the world",
+            "Temperature is set too low"
+          ],
+          "correct": 1,
+          "explanation": "Generation predicts plausible tokens. Without evidence in context and external checks, plausible and true can diverge."
+        },
+        "references": [
+          {
+            "title": "Hugging Face Transformers: Generation strategies",
+            "url": "https://huggingface.co/docs/transformers/generation_strategies",
+            "section": "Decoding strategies and sampling",
+            "reviewed": "2026-11-08",
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          },
+          {
+            "title": "Anthropic: Reduce hallucinations",
+            "url": "https://docs.claude.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations",
+            "section": "Basic hallucination minimization strategies",
+            "reviewed": "2026-11-08",
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "As temperature approaches 0, what does sampling do with scores 5, 3, 2 and 0?",
+            "options": [
+              "Almost always picks the highest-scoring token",
+              "Picks each token with equal probability",
+              "Picks the lowest-scoring token"
+            ],
+            "correct": 0,
+            "explanation": "Dividing scores by a tiny temperature makes the top token's probability approach 1."
+          }
+        ]
+      },
+      {
         "id": "workflow",
-        "title": "2. A workflow or an agent?",
+        "title": "3. A workflow or an agent?",
         "stage": "foundation",
         "takeaway": "Use deterministic code when the sequence and rules are known.",
         "sections": [
@@ -4431,7 +4515,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "context",
-        "title": "3. Context windows and token budgets",
+        "title": "4. Context windows and token budgets",
         "stage": "foundation",
         "takeaway": "Context is the information available for a model decision.",
         "sections": [
@@ -4507,7 +4591,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "instructions",
-        "title": "4. Instructions, task data and authority",
+        "title": "5. Instructions, task data and authority",
         "stage": "foundation",
         "takeaway": "Separate trusted application instructions from user requests and untrusted content.",
         "sections": [
@@ -4669,7 +4753,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "tools",
-        "title": "5. Tool contracts and capability design",
+        "title": "6. Tool contracts and capability design",
         "stage": "foundation",
         "takeaway": "A tool contract describes what an operation does, its inputs, output shape, failures and side effects.",
         "sections": [
@@ -4745,7 +4829,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "loop",
-        "title": "6. Follow one bounded agent loop",
+        "title": "7. Follow one bounded agent loop",
         "stage": "foundation",
         "takeaway": "An agent loop repeatedly obtains a proposal, validates it, executes an allowed action and supplies the observation for the next decision.",
         "sections": [
@@ -5525,7 +5609,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "state",
-        "title": "7. Explicit task state and progress",
+        "title": "8. Explicit task state and progress",
         "stage": "foundation",
         "takeaway": "State records what the application knows about a task: validated inputs, observed results, pending work and terminal status.",
         "sections": [
@@ -5553,7 +5637,7 @@ const LEARNING_PATHS = [
             "title": "Follow one state field across a graph",
             "paragraphs": [
               "The research graph stores question, evidence, draft and attempts separately. Retrieval replaces evidence; drafting replaces the current draft and increases attempts; checking chooses either an exit or one bounded revision. A node returns an update for the fields it changes. If a draft field accumulates strings instead of replacing its value, the next check may inspect old text alongside the new answer.",
-              "For now, trace the state updates on paper: empty evidence, retrieved evidence, first draft, checked outcome. The optional executable graph is introduced in lesson 24 with its own dependency setup. You do not need LangGraph installed to complete this state lesson."
+              "For now, trace the state updates on paper: empty evidence, retrieved evidence, first draft, checked outcome. The optional executable graph is introduced in lesson 28 with its own dependency setup. You do not need LangGraph installed to complete this state lesson."
             ]
           }
         ],
@@ -5601,7 +5685,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "grounding",
-        "title": "8. Grounding answers in evidence",
+        "title": "9. Grounding answers in evidence",
         "stage": "foundation",
         "takeaway": "Grounding connects an answer to available evidence. A citation helps the reader inspect support; it does not automatically make a claim correct.",
         "sections": [
@@ -5670,7 +5754,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "arguments",
-        "title": "9. Validate arguments before execution",
+        "title": "10. Validate arguments before execution",
         "stage": "intermediate",
         "takeaway": "Treat tool arguments as untrusted input even when a model generated them in a structured format.",
         "sections": [
@@ -5740,7 +5824,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "outputs",
-        "title": "10. Validate and bound tool observations",
+        "title": "11. Validate and bound tool observations",
         "stage": "intermediate",
         "takeaway": "Tool output is also input to the agent. Check its shape, size and provenance before exposing it as an observation.",
         "sections": [
@@ -5808,8 +5892,85 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "structured-output",
+        "title": "12. Structured output and schema-checked responses",
+        "stage": "intermediate",
+        "takeaway": "Ask for a schema, prefer provider-enforced schemas or tool calls, and still validate every field in code before acting.",
+        "sections": [
+          {
+            "title": "Concept",
+            "paragraphs": [
+              "Applications need fields, not prose: an intent, an identifier, a confidence. Asking for JSON in the prompt usually works but sometimes yields extra text, missing fields or invalid JSON. Many providers offer a stronger mode where you supply a JSON Schema and decoding is constrained so the output parses and matches the schema's structure. A tool call (lesson 6) is the same idea: the model fills arguments that match a declared schema.",
+              "Syntactic validity is not correctness. A schema can require `lesson_id` to be a string, but only your code can check that the lesson exists and the user may see it. Responses can also be cut off at the maximum output length, refused, or arrive in streamed pieces, so handle incomplete output as a normal failure (lesson 11)."
+            ]
+          },
+          {
+            "title": "Example",
+            "paragraphs": [
+              "The validator accepts the first response, rejects an unexpected field and an out-of-range confidence, and reports invalid JSON for a response cut off mid-object. Each rejection becomes a recorded failure or a bounded retry, never a guessed value."
+            ],
+            "example": "import json\n\nSCHEMA = {'intent': {'search', 'explain', 'unknown'}, 'lesson_id': str, 'confidence': float}\n\ndef parse(text):\n    try:\n        data = json.loads(text)\n    except json.JSONDecodeError as error:\n        return f'invalid JSON at character {error.pos}'\n    if set(data) != set(SCHEMA):\n        return f'unexpected or missing fields: {sorted(set(data) ^ set(SCHEMA))}'\n    if data['intent'] not in SCHEMA['intent']:\n        return 'unknown intent'\n    if not isinstance(data['lesson_id'], str) or not 0 <= data['confidence'] <= 1:\n        return 'field out of range'\n    return data\n\nfor reply in ['{\"intent\": \"explain\", \"lesson_id\": \"joins\", \"confidence\": 0.82}',\n              '{\"intent\": \"explain\", \"lesson_id\": \"joins\", \"confidence\": 0.82, \"sql\": \"DROP TABLE\"}',\n              '{\"intent\": \"search\", \"lesson_id\": \"joins\", \"confidence\": 1.7}',\n              '{\"intent\": \"explain\", \"lesson_id\": \"jo']:\n    print(parse(reply))\n\n# Expected output:\n# {'intent': 'explain', 'lesson_id': 'joins', 'confidence': 0.82}\n# unexpected or missing fields: ['sql']\n# field out of range\n# invalid JSON at character 35"
+          },
+          {
+            "title": "Tradeoffs",
+            "paragraphs": [
+              "Constrained decoding removes parsing failures but can push the model to fill a required field with a guess. Include an explicit `unknown` value or a nullable field so the model has an honest option. Keep schemas small and flat; deeply nested schemas with many optional parts are harder for both the model and reviewers. Version the schema with the prompt, because changing either changes behaviour (lesson 27)."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Design a schema for classifying an incoming support email into a queue. Include how the model expresses uncertainty, and list the checks your code performs after parsing.",
+          "solution": "Schema: {queue: one of billing, technical, account, unknown; customer_id: string or null; summary: string up to 200 characters; confidence: number 0 to 1}. The unknown queue and null customer_id give honest options. After parsing: reject extra fields; confirm the queue is in the enum; look up customer_id and treat a missing customer as null rather than trusting the text; truncate or reject an over-long summary; route low confidence or unknown to a human queue; log the raw response and validation result for evaluation.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Uses an enum with an explicit unknown option.",
+            "Allows null where data may be absent.",
+            "Validates identifiers against real records in code.",
+            "Routes low confidence to a person."
+          ]
+        },
+        "quiz": {
+          "question": "A provider guarantees responses match your JSON Schema. What must your code still do?",
+          "options": [
+            "Nothing; the schema guarantees correctness",
+            "Check values against business rules and real records, and handle refusals or cut-off responses",
+            "Re-parse the JSON with a stricter parser"
+          ],
+          "correct": 1,
+          "explanation": "A schema constrains shape. Whether an identifier exists, a value is permitted, or the response is complete still needs checking."
+        },
+        "references": [
+          {
+            "title": "Anthropic: Structured outputs",
+            "url": "https://docs.claude.com/en/docs/build-with-claude/structured-outputs",
+            "section": "JSON outputs and strict tool use",
+            "reviewed": "2026-11-08",
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          },
+          {
+            "title": "JSON Schema: Getting started",
+            "url": "https://json-schema.org/learn/getting-started-step-by-step",
+            "section": "Defining properties and required fields",
+            "reviewed": "2026-11-08",
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "A model's JSON reply is cut off at the output token limit: {\"intent\": \"explain\", \"lesson_id\": \"jo. What does json.loads do?",
+            "options": [
+              "Raises JSONDecodeError",
+              "Returns the fields received so far",
+              "Returns None"
+            ],
+            "correct": 0,
+            "explanation": "The text is not complete JSON, so parsing raises JSONDecodeError. Treat it as a failed response, not partial data."
+          }
+        ]
+      },
+      {
         "id": "retrieval",
-        "title": "11. Retrieval: finding useful context",
+        "title": "13. Retrieval: finding useful context",
         "stage": "intermediate",
         "takeaway": "Retrieval selects evidence from a collection before answering.",
         "sections": [
@@ -6012,7 +6173,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "memory",
-        "title": "12. Memory with scope and expiry",
+        "title": "14. Memory with scope and expiry",
         "stage": "intermediate",
         "takeaway": "Memory is stored information reused across steps or tasks. Distinguish working task state, conversation history and longer-lived user preferences.",
         "sections": [
@@ -6081,7 +6242,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "planning",
-        "title": "13. Planning as a revisable proposal",
+        "title": "15. Planning as a revisable proposal",
         "stage": "intermediate",
         "takeaway": "A plan is a sequence of intended steps, not proof those steps ran. Keep plans short enough to revise when evidence changes.",
         "sections": [
@@ -6250,7 +6411,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "clarification",
-        "title": "14. Clarify material ambiguity",
+        "title": "16. Clarify material ambiguity",
         "stage": "intermediate",
         "takeaway": "Ask a focused question when missing intent materially changes the correct result or authorized action.",
         "sections": [
@@ -6319,7 +6480,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "approval",
-        "title": "15. Human approval is an external control",
+        "title": "17. Human approval is an external control",
         "stage": "intermediate",
         "takeaway": "Approval for a consequential action must come through a trusted application channel and be checked against the concrete action.",
         "sections": [
@@ -6510,7 +6671,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "failures",
-        "title": "16. Failures, retries and uncertain effects",
+        "title": "18. Failures, retries and uncertain effects",
         "stage": "intermediate",
         "takeaway": "Classify failures before retrying.",
         "sections": [
@@ -6579,7 +6740,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "budgets",
-        "title": "17. Stopping rules, latency and cost",
+        "title": "19. Stopping rules, latency and cost",
         "stage": "advanced",
         "takeaway": "Define budgets for proposals, tool calls, elapsed time and provider usage.",
         "sections": [
@@ -6647,8 +6808,85 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "cost-latency",
+        "title": "20. Reduce cost and latency without hiding quality",
+        "stage": "advanced",
+        "takeaway": "Measure tokens and time per step, then cache stable prefixes, stream, choose the smallest model that passes evaluation, and fine-tune only for proven, stable gaps.",
+        "sections": [
+          {
+            "title": "Concept",
+            "paragraphs": [
+              "Cost grows with input tokens, output tokens and the number of model calls an agent makes. Latency has two parts users notice: time to first token and time to finish. Lesson 19 set budgets; this lesson covers the levers.",
+              "Prompt caching lets a provider reuse the processed form of a prompt prefix it has seen recently. A request whose beginning matches a cached prefix exactly is cheaper and faster to start. Put stable content first (instructions, tool definitions, reference documents) and variable content last, and do not insert timestamps or request IDs early in the prompt. Streaming sends tokens as they are generated, which shortens time to first token but not total time.",
+              "Model choice is the largest lever: route simple, well-evaluated steps such as classification to a smaller, faster model and keep the larger one for hard reasoning. Batch interfaces trade latency for lower price on work that can wait. Fine-tuning adapts a model to a stable format or style with many examples; it does not keep knowledge current, so retrieval remains the tool for changing facts."
+            ]
+          },
+          {
+            "title": "Example",
+            "paragraphs": [
+              "The calculation uses fictional prices to compare 1,000 requests that share a 20,000-token prefix. With caching, the prefix is written once at a premium and read cheaply afterwards. Real prices, cache lifetimes and minimum prefix sizes differ by provider and change over time."
+            ],
+            "example": "requests, prefix, fresh, output = 1000, 20_000, 500, 300\nprice = {'input': 3.00, 'cache_write': 3.75, 'cache_read': 0.30, 'output': 15.00}   # fictional, per million tokens\n\ndef cost(tokens, kind):\n    return tokens / 1_000_000 * price[kind]\n\nuncached = requests * (cost(prefix + fresh, 'input') + cost(output, 'output'))\ncached = (cost(prefix, 'cache_write') + (requests - 1) * cost(prefix, 'cache_read')\n          + requests * (cost(fresh, 'input') + cost(output, 'output')))\nprint(f'without caching ${uncached:.2f}, with caching ${cached:.2f}, saving {1 - cached / uncached:.0%}')\n\n# Expected output:\n# without caching $66.00, with caching $12.07, saving 82%"
+          },
+          {
+            "title": "Tradeoffs",
+            "paragraphs": [
+              "Every lever can lower quality silently: a smaller model, a shorter context or fewer agent steps may fail cases the old setup passed. Re-run the evaluation set (lesson 23) after each change and compare traces (lesson 24), not just the bill. Caching changes nothing about the output, so it is usually the safest first step."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "An agent's every request starts with the current time, then 15,000 tokens of instructions and tool definitions, then the user's question. Cache hit rates are near zero. Explain why and fix the prompt layout, then name one other lever to try and how you would check it is safe.",
+          "solution": "Caching matches an exact prefix, and the timestamp at the start makes every prefix different. Move the stable instructions and tool definitions to the beginning and put the timestamp with the user's question at the end. Another lever: route the first classification step to a smaller model; run the evaluation set on both setups, compare pass rates and traces, and keep the change only if quality holds within the agreed tolerance.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Identifies the varying prefix as the cause.",
+            "Moves stable content first and variable content last.",
+            "Validates any quality-affecting lever with the evaluation set."
+          ]
+        },
+        "quiz": {
+          "question": "Streaming a response improves which measure?",
+          "options": [
+            "Total generation time",
+            "Time until the first tokens reach the user",
+            "The number of tokens billed"
+          ],
+          "correct": 1,
+          "explanation": "Streaming sends tokens as they are produced. The user sees output sooner, but the full response takes as long and costs the same."
+        },
+        "references": [
+          {
+            "title": "Anthropic: Prompt caching",
+            "url": "https://docs.claude.com/en/docs/build-with-claude/prompt-caching",
+            "section": "How prompt caching works",
+            "reviewed": "2026-11-08",
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          },
+          {
+            "title": "Anthropic: Reducing latency",
+            "url": "https://docs.claude.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-latency",
+            "section": "How to reduce latency",
+            "reviewed": "2026-11-08",
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "Two requests share 15,000 tokens of instructions, but the first line of each is a different request ID. Why does prompt caching not help?",
+            "options": [
+              "Caching only works for output tokens",
+              "Caching reuses an exact prefix, and the differing first line makes every prefix unique",
+              "The instructions are too long to cache"
+            ],
+            "correct": 1,
+            "explanation": "Cache lookups match the prompt from its start. Put stable content first and per-request values last."
+          }
+        ]
+      },
+      {
         "id": "injection",
-        "title": "18. Prompt injection and least privilege",
+        "title": "21. Prompt injection and least privilege",
         "stage": "advanced",
         "takeaway": "Prompt injection is untrusted content attempting to redirect agent behavior.",
         "sections": [
@@ -6744,8 +6982,86 @@ const LEARNING_PATHS = [
         ]
       },
       {
+        "id": "model-context-protocol",
+        "title": "22. Connect tools and data with the Model Context Protocol",
+        "stage": "advanced",
+        "takeaway": "MCP standardises how applications discover and call external tools and data; every server is still code you must trust, scope and review.",
+        "sections": [
+          {
+            "title": "Concept",
+            "paragraphs": [
+              "The Model Context Protocol (MCP) is an open protocol for connecting AI applications to external capabilities. A host application (such as an IDE or chat app) runs an MCP client for each server it connects to. Servers expose tools (actions the model may request), resources (data the application can read and include as context) and prompts (reusable templates). Messages are JSON-RPC 2.0, sent over standard input and output for a local server or over HTTP for a remote one.",
+              "A session starts with `initialize`, where both sides state their protocol version and capabilities. The client then calls `tools/list` to learn each tool's name, description and input schema, and `tools/call` to run one. A tool result reports errors inside the result with `isError`, so the model can see and react to a failed call. Because the shape is standard, one server works with many hosts."
+            ]
+          },
+          {
+            "title": "Example",
+            "paragraphs": [
+              "The client lists tools, and the model requests a search. The application, not the model, sends the call after checking it against policy, and passes the result back as untrusted observation (lesson 11)."
+            ],
+            "example": "→ {\"jsonrpc\": \"2.0\", \"id\": 1, \"method\": \"tools/list\"}\n← {\"jsonrpc\": \"2.0\", \"id\": 1, \"result\": {\"tools\": [{\n     \"name\": \"search_lessons\",\n     \"description\": \"Search public lesson snippets by keyword.\",\n     \"inputSchema\": {\"type\": \"object\", \"properties\": {\"query\": {\"type\": \"string\"}}, \"required\": [\"query\"]}}]}}\n\n→ {\"jsonrpc\": \"2.0\", \"id\": 2, \"method\": \"tools/call\",\n   \"params\": {\"name\": \"search_lessons\", \"arguments\": {\"query\": \"joins\"}}}\n← {\"jsonrpc\": \"2.0\", \"id\": 2, \"result\": {\n     \"content\": [{\"type\": \"text\", \"text\": \"SQL Server: Join without losing or multiplying records\"}],\n     \"isError\": false}}"
+          },
+          {
+            "title": "Tradeoffs",
+            "paragraphs": [
+              "An MCP server runs with whatever access it is given: a local server is a program on your machine, and a remote one receives your data. Install servers only from sources you trust, pin versions, and give each the narrowest credentials. Remote servers should use the protocol's OAuth-based authorization rather than shared static keys.",
+              "Tool descriptions and results are text the model reads, so a malicious or compromised server can attempt prompt injection (lesson 21), and a changed description can quietly alter behaviour. Keep allowlists of tools per task, require approval for actions with side effects (lesson 17), and log every call with its server and arguments."
+            ]
+          }
+        ],
+        "exercise": {
+          "prompt": "Your team wants to add a third-party MCP server that can read and write the company wiki. List the checks before enabling it and the controls while it runs.",
+          "solution": "Before: review the source or vendor, pin a version, read every tool's description and schema, confirm what data leaves the network, and create a dedicated account or token scoped to the needed spaces with read-only access unless writing is required. While running: allow only the needed tools per task, require human approval for writes, treat tool results as untrusted content, log calls with arguments and results, set rate and size limits, and re-review when the server's tool list or descriptions change.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Reviews and pins the server.",
+            "Uses a dedicated, least-privilege credential.",
+            "Requires approval for writes and logs calls.",
+            "Watches for changed tool descriptions."
+          ]
+        },
+        "quiz": {
+          "question": "In MCP, which primitive lets the model request an action with side effects?",
+          "options": [
+            "A resource",
+            "A tool",
+            "A prompt"
+          ],
+          "correct": 1,
+          "explanation": "Tools are invocable actions with input schemas. Resources provide data for context, and prompts are reusable templates."
+        },
+        "references": [
+          {
+            "title": "Model Context Protocol specification",
+            "url": "https://modelcontextprotocol.io/specification/2025-06-18",
+            "section": "Architecture, server features and transports",
+            "reviewed": "2026-11-08",
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          },
+          {
+            "title": "Model Context Protocol: Security best practices",
+            "url": "https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices",
+            "section": "Attacks and mitigations",
+            "reviewed": "2026-11-08",
+            "scope": "Agent application design with an offline scripted model. The practice guide records live-integration limits."
+          }
+        ],
+        "extraQuiz": [
+          {
+            "question": "An MCP tool call fails because the wiki page does not exist. How does a well-behaved server report it?",
+            "options": [
+              "It closes the connection",
+              "In the tool result with isError set to true, so the model can see the failure",
+              "It returns an empty successful result"
+            ],
+            "correct": 1,
+            "explanation": "MCP reports tool execution errors inside the result with isError: true; protocol-level errors are for malformed requests."
+          }
+        ]
+      },
+      {
         "id": "datasets",
-        "title": "19. Evaluation datasets and success criteria",
+        "title": "23. Evaluation datasets and success criteria",
         "stage": "advanced",
         "takeaway": "An evaluation dataset is a collection of tasks with expected properties and scoring rules.",
         "sections": [
@@ -6859,7 +7175,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "traces",
-        "title": "20. Outcome checks and trace diagnosis",
+        "title": "24. Outcome checks and trace diagnosis",
         "stage": "advanced",
         "takeaway": "Outcome evaluation asks whether the task result was correct. Trace inspection explains how the system reached that result and where failures occurred.",
         "sections": [
@@ -6928,7 +7244,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "judges",
-        "title": "21. Human and model judges need calibration",
+        "title": "25. Human and model judges need calibration",
         "stage": "advanced",
         "takeaway": "Some qualities need judgment rather than exact string matching.",
         "sections": [
@@ -7094,7 +7410,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "multiagent",
-        "title": "22. Multiple agents: useful separation or extra overhead?",
+        "title": "26. Multiple agents: useful separation or extra overhead?",
         "stage": "advanced",
         "takeaway": "Multiple agents can separate independent responsibilities, but they add coordination, context transfer, latency and failure modes.",
         "sections": [
@@ -7275,7 +7591,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "deployment",
-        "title": "23. Versioning and incremental release",
+        "title": "27. Versioning and incremental release",
         "stage": "advanced",
         "takeaway": "Model configuration, tool schemas, policy, retrieved data and application code can all change an agent's behavior. Version them with the prompt when you release it.",
         "sections": [
@@ -7344,7 +7660,7 @@ const LEARNING_PATHS = [
       },
       {
         "id": "live-integration",
-        "title": "24. From the offline workshop to a live integration",
+        "title": "28. From the offline workshop to a live integration",
         "stage": "advanced",
         "takeaway": "The workshop is an offline teaching harness with a scripted decision source.",
         "sections": [
@@ -7686,6 +8002,7 @@ const LEARNING_PATHS = [
       ],
       "lessonTasks": {
         "vocabulary": "foundation",
+        "generation": "foundation",
         "workflow": "foundation",
         "context": "foundation",
         "instructions": "foundation",
@@ -7695,6 +8012,7 @@ const LEARNING_PATHS = [
         "grounding": "foundation",
         "arguments": "intermediate",
         "outputs": "intermediate",
+        "structured-output": "intermediate",
         "retrieval": "intermediate",
         "memory": "intermediate",
         "planning": "intermediate",
@@ -7702,7 +8020,9 @@ const LEARNING_PATHS = [
         "approval": "intermediate",
         "failures": "intermediate",
         "budgets": "advanced",
+        "cost-latency": "advanced",
         "injection": "advanced",
+        "model-context-protocol": "advanced",
         "datasets": "advanced",
         "traces": "advanced",
         "judges": "advanced",
