@@ -1,7 +1,7 @@
 {
   "id": "ui-accessibility",
   "title": "UI Design & Accessibility",
-  "category": "Product design",
+  "category": "Design & accessibility",
   "status": "ready",
   "description": "Build responsive interfaces, test their keyboard access and error recovery, and record the results of semantic and contrast checks.",
   "level": "Foundations → applied interaction practice → scoped release review",

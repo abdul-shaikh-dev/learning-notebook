@@ -1,7 +1,7 @@
 {
   "id": "react",
   "title": "JavaScript → TypeScript → React",
-  "category": "Web development",
+  "category": "Programming",
   "status": "ready",
   "description": "Learn JavaScript and TypeScript, then build React features with tested state updates, asynchronous loading and local persistence.",
   "level": "Foundations → intermediate → selected advanced topics",

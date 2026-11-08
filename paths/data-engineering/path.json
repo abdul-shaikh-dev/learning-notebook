@@ -1,7 +1,7 @@
 {
   "id": "data-engineering",
   "title": "Data Engineering",
-  "category": "Data and databases",
+  "category": "Data & AI",
   "status": "ready",
   "description": "Follow 24 lessons from data grain, CSV contracts, UTC time and exact amounts to transactional imports, replay, watermarks, CDC, dimensional models, dbt transformation layers and recovery. Includes a tested SQLite pipeline and an optional SQL Server integration brief.",
   "level": "Foundations → intermediate batch pipelines → selected extensions",

@@ -1,7 +1,7 @@
 {
   "id": "git-team-workflows",
   "title": "Git & Team Workflows",
-  "category": "Engineering practice",
+  "category": "Software engineering",
   "status": "ready",
   "description": "Learn Git state, team review, history integration and recovery in 24 lessons. Three executable projects create local workspaces you can inspect after each run.",
   "level": "Foundations → intermediate → selected advanced topics",

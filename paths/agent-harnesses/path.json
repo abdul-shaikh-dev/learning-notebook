@@ -1,7 +1,7 @@
 {
   "id": "agent-harnesses",
   "title": "Agent Harnesses",
-  "category": "AI engineering",
+  "category": "Data & AI",
   "status": "ready",
   "description": "Build an agent runtime with controlled tool dispatch, scoped approvals, bounded loops and state recovery. Follow 24 lessons and three projects in an offline Python workshop.",
   "level": "Intermediate runtime engineering → selected recovery extensions",

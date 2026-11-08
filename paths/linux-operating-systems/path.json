@@ -1,7 +1,7 @@
 {
   "id": "linux-operating-systems",
   "title": "Linux & Operating Systems",
-  "category": "Systems and operations",
+  "category": "Infrastructure & operations",
   "status": "ready",
   "description": "Follow 25 lessons from Linux paths, shell arguments and permission bits to process lifetimes, memory, resource limits, containers and incident diagnosis. Includes portable child-process tests and an optional Windows-to-WSL observation guide.",
   "level": "Foundations → intermediate practice with optional systems labs",

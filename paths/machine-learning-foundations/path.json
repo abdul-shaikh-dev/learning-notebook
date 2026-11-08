@@ -1,7 +1,7 @@
 {
   "id": "machine-learning-foundations",
   "title": "Machine learning foundations",
-  "category": "Data and databases",
+  "category": "Data & AI",
   "status": "ready",
   "description": "25 lessons on prediction questions, baselines, regression and classification, preprocessing, evaluation, leakage and reproducible experiments. Includes a CPU-only support-ticket lab.",
   "level": "Foundations through a supervised-learning capstone",

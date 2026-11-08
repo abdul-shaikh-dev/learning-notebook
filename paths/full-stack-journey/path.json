@@ -1,7 +1,7 @@
 {
   "id": "full-stack-journey",
   "title": "Full-Stack Project Journey",
-  "category": "Applied projects",
+  "category": "Software engineering",
   "status": "ready",
   "description": "Build one study planner through 20 connected milestones: React UI, .NET API, SQL Server persistence, conflict handling, verification, identity design and release/recovery decisions. Includes a working local reference and complete task files.",
   "level": "Intermediate full-stack project → deployment extensions",

@@ -1,7 +1,7 @@
 {
   "id": "data-structures-algorithms",
   "title": "Data Structures & Algorithms",
-  "category": "Computer science",
+  "category": "Programming",
   "status": "ready",
   "description": "Choose data structures and algorithms using their preconditions, invariants and costs. Practise graph traversal, greedy reasoning and dynamic programming in tested projects.",
   "level": "Foundations → intermediate → selected advanced topics",

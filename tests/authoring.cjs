@@ -1,7 +1,9 @@
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),assert=require('node:assert/strict'),cp=require('node:child_process');
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'notebook-authoring-'));
 fs.mkdirSync(path.join(temp,'scripts'));fs.mkdirSync(path.join(temp,'paths'));fs.mkdirSync(path.join(temp,'content'));
-for(const name of ['manifest.cjs','lazy-catalog.cjs','search-index.cjs','sync-catalog.cjs','new-path.cjs'])fs.copyFileSync(path.join(__dirname,'../scripts',name),path.join(temp,'scripts',name));
+for(const name of ['manifest.cjs','lazy-catalog.cjs','search-index.cjs','sync-catalog.cjs','new-path.cjs','readme-catalog.cjs'])fs.copyFileSync(path.join(__dirname,'../scripts',name),path.join(temp,'scripts',name));
+// sync-catalog also maintains the README course table and count.
+fs.copyFileSync(path.join(__dirname,'../README.md'),path.join(temp,'README.md'));
 // The search index uses the reader's own tokenizer.
 fs.mkdirSync(path.join(temp,'assets/js'),{recursive:true});fs.copyFileSync(path.join(__dirname,'../assets/js/notebook-search.js'),path.join(temp,'assets/js/notebook-search.js'));
 function run(...args){return cp.spawnSync(process.execPath,args,{encoding:'utf8',cwd:temp});}

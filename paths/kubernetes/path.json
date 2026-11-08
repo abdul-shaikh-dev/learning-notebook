@@ -1,7 +1,7 @@
 {
   "id": "kubernetes",
   "title": "Kubernetes",
-  "category": "Software engineering",
+  "category": "Infrastructure & operations",
   "status": "ready",
   "description": "27 lessons progress from reconciliation and ready Services to scoped security, storage, jobs, scaling, templating, GitOps and recovery, with offline checks and a guarded dedicated local lab.",
   "level": "Foundations → intermediate practice with optional systems labs",

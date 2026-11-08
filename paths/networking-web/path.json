@@ -1,7 +1,7 @@
 {
   "id": "networking-web",
   "title": "Networking & the Web",
-  "category": "Software engineering",
+  "category": "Infrastructure & operations",
   "status": "ready",
   "description": "Follow requests from names to validated bodies through 28 lessons, offline protocol models, an ephemeral loopback HTTP server and bounded diagnostic-client projects.",
   "level": "Foundations → intermediate practice with optional systems labs",
