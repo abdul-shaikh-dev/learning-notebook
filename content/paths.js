@@ -103303,6 +103303,15 @@ const LEARNING_PATHS = [
             "Define stale-data tolerance per field.",
             "Simulate complete cache loss.",
             "Keep authorization scope in private cache keys."
+          ],
+          "hints": [
+            "Treat the two reads separately: ask what goes wrong for the learner if each value is five minutes old.",
+            "A cached seat count can be shown, but something else has to decide whether a booking succeeds. Where does that decision live?"
+          ],
+          "pitfalls": [
+            "Using one TTL for every field instead of a stale-data tolerance per field.",
+            "Letting the cached seat count authorize a booking.",
+            "Forgetting what happens to the origin when the whole cache is lost."
           ]
         },
         "quiz": {
@@ -103363,6 +103372,69 @@ const LEARNING_PATHS = [
             "section": "Solution; issues and considerations",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "The lesson's model has 1,000 reads/s at a 90% hit ratio. Finish the same model for 2,000 reads/s at a 95% hit ratio: work out origin reads with a healthy cache and during a complete cache outage.",
+            "hints": [
+              "Only misses reach the origin.",
+              "In an outage, what is the hit ratio?"
+            ],
+            "solution": "Origin reads = 2,000 × (1 − 0.95) = 100/s with a healthy cache. During a complete outage every read misses, so the origin can receive up to 2,000/s, twenty times its normal load. The higher hit ratio makes normal operation cheaper and the outage gap wider, so the origin still needs protection such as admission control or a warm standby cache.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Uses the miss ratio, 1 − hit ratio, not the hit ratio.",
+              "Gives the outage load as the full incoming rate.",
+              "Notices that a better hit ratio widens the gap between normal and outage load."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "A deploy changes the cache key format, so the hit ratio falls from 90% to 80% while traffic stays at 1,000 reads/s. By what factor does origin load change, and what would you watch during that deploy?",
+            "hints": [
+              "Write both miss ratios down before comparing.",
+              "Which number does the origin actually experience?"
+            ],
+            "solution": "Misses go from 10% to 20%, so origin reads double from 100/s to 200/s. A ten-point fall in hit ratio looks small, but the origin sees the miss ratio. Watch origin request rate, latency and error rate alongside the hit ratio, and roll the key change out gradually or pre-warm the new keys.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Compares miss ratios, not hit ratios.",
+              "Names origin metrics to watch, not only the hit ratio."
+            ],
+            "pitfalls": [
+              "Reading 90% to 80% as an 11% change in origin load."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "A popular lesson's cache entry expires and 500 requests miss within the same 50 ms. Without any change, how many origin loads can that cause? Describe two techniques that reduce it and what each costs.",
+            "hints": [
+              "Every request that misses tries to load the value itself.",
+              "Could one caller load on behalf of the others?"
+            ],
+            "solution": "Up to 500 origin loads for one key, a cache stampede. Request coalescing (single flight) lets one caller load while the others wait for its result, so one origin read serves all 500; the waiters inherit its latency and failure. Refreshing early with a randomised expiry, or serving the stale value while one caller refreshes, avoids synchronised expiry; it requires the product to accept briefly stale content.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Identifies one origin load per concurrent miss without coordination.",
+              "Describes coalescing and early or stale-while-refresh expiry.",
+              "States a cost for each technique."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "A team proposes caching each learner's 'may edit this workshop' permission for 10 minutes to cut database load. Should they? If so, under what conditions?",
+            "hints": [
+              "What happens between a permission being revoked and the entry expiring?"
+            ],
+            "solution": "Not as proposed. A permission check is an authorization decision; a revoked editor could keep editing for up to 10 minutes. Cache it only if the product explicitly accepts that window, the key includes the user and resource, and revocation actively invalidates or versions the entry. Often the better answer is to make the authoritative check cheap, for example with an index, rather than to cache it.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Identifies what kind of data is being cached.",
+              "Names the revocation window as the risk.",
+              "Gives conditions or an alternative, not just yes or no."
+            ]
           }
         ],
         "diagram": {
@@ -103931,6 +104003,15 @@ const LEARNING_PATHS = [
             "Document the required consistency for each operation.",
             "Distinguish backup from replication.",
             "Test acknowledged writes through failover."
+          ],
+          "hints": [
+            "Start from the timeline in the lesson: where does the read go, and which version does that copy hold?",
+            "One remedy changes where the read goes; the other changes what the read is willing to accept."
+          ],
+          "pitfalls": [
+            "Calling an optimistic UI update a fix for durability.",
+            "Sending every read to the leader without counting the load and availability cost.",
+            "Treating replication as a backup."
           ]
         },
         "quiz": {
@@ -103957,6 +104038,67 @@ const LEARNING_PATHS = [
             "section": "PostgreSQL standby replication",
             "reviewed": "2026-10-02",
             "scope": "Asynchronous lag and configured synchronous acknowledgments; no PostgreSQL failover drill."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "The learner's save returns a version token of 9. The next read is routed to a follower that is at version 8. Finish the read path: what must the router do, and what should the learner see if the follower is still behind after 200 ms?",
+            "hints": [
+              "The token states the minimum version the read must reflect.",
+              "What is the fallback if no follower catches up in time?"
+            ],
+            "solution": "The router compares the follower's applied version with the token. At 8 it is not good enough, so the router waits briefly for the follower to reach 9 or sends the read to the leader or another replica that has 9. If no copy satisfies the token within the 200 ms budget, read from the leader or return a clear 'still saving' status. It must never show version 8 as the current state.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Compares the replica version with the token.",
+              "Offers waiting or rerouting as the action.",
+              "Defines the behaviour when the budget runs out."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "Same system, different failure: the leader acknowledges version 9 asynchronously, then crashes before any follower receives it. A follower at version 8 is promoted. What happened to the learner's save, and what would have prevented it?",
+            "hints": [
+              "Which copies held version 9 when the leader crashed?"
+            ],
+            "solution": "The acknowledged write is lost: the new leader never had version 9. Asynchronous replication accepts this window in exchange for lower latency. To close it, require at least one follower to confirm before acknowledging (synchronous or semi-synchronous replication), accepting higher latency and rejected writes when no follower is available. Test the acknowledged-write guarantee through failover.",
+            "solutionFormat": "prose",
+            "checks": [
+              "States that an acknowledged write was lost.",
+              "Names synchronous acknowledgment by at least one replica as the fix.",
+              "States the latency and availability cost."
+            ],
+            "pitfalls": [
+              "Assuming an acknowledgment always means the write survives failover."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "A learner saves progress on their phone, then opens the notebook on a laptop a second later. The token from the phone's save is stored only on the phone. Does read-your-writes hold? How would you extend it across devices?",
+            "hints": [
+              "Where does the laptop learn about the phone's write?"
+            ],
+            "solution": "No. The laptop has no token, so it can read a lagging follower. To cover devices, store the latest version per user on the server side, for example in the session store or user record, and have every device's read consult it, or route a user's reads to the leader for a short period after any write. Both cost an extra lookup or leader load; choose based on how often users switch devices.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Explains why a device-local token does not help another device.",
+              "Proposes server-side per-user version tracking or time-bounded leader reads.",
+              "Names the cost."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "After an accidental deletion of a learner's notes, someone suggests adding a third replica so it cannot happen again. Does replication address this risk?",
+            "hints": [
+              "What does a replica do when the leader applies a delete?"
+            ],
+            "solution": "No. The deletion is a valid write, so it replicates to every copy. Protection from accidental deletion needs backups or point-in-time recovery, soft deletes, or delayed replicas, along with a tested restore procedure. Extra replicas help availability and read capacity, not recovery from bad writes.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Explains what replicas do with a delete.",
+              "Names backup, point-in-time recovery or soft delete as the remedy."
+            ]
           }
         ],
         "diagram": {
@@ -104086,6 +104228,15 @@ const LEARNING_PATHS = [
             "Use CAP consistency in its technical sense.",
             "Explain the sacrificed behavior during partition.",
             "Do not equate CAP availability with the SLO percentage."
+          ],
+          "hints": [
+            "Ask the question per operation, not for the whole product.",
+            "In CAP, availability means every request to a non-failing node gets a valid result. Which operation gives that up here?"
+          ],
+          "pitfalls": [
+            "Labelling the whole system CP or AP.",
+            "Treating an error response as available in the CAP sense.",
+            "Equating CAP availability with an uptime percentage."
           ]
         },
         "quiz": {
@@ -104105,6 +104256,63 @@ const LEARNING_PATHS = [
             "section": "Definitions and impossibility theorem",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "During a partition, side A holds the booking authority for workshop 42 and side B does not. Finish Policy 1 from the lesson: what does each side do with a booking request, and with a request to read the workshop description?",
+            "hints": [
+              "Which side can see every booking for workshop 42?"
+            ],
+            "solution": "Side A accepts or rejects bookings normally, because it can enforce the seat invariant. Side B rejects bookings, or queues them as pending, with a clear 'try again later' response; it gives up CAP availability for that operation. Both sides can serve the workshop description from their local copy, possibly an older version, because the product tolerates stale text.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Lets only the authoritative side commit bookings.",
+              "Has side B reject or hold bookings rather than commit them.",
+              "Serves descriptions on both sides."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "Now the operation is 'like this lesson', a counter shown beside each lesson. During a partition, should a side without authority reject likes too?",
+            "hints": [
+              "What conflict can two concurrent likes cause?"
+            ],
+            "solution": "No. Likes have no invariant like 'only one seat'. Each side can count its own likes and the counts can be merged by adding them after the partition heals, a conflict-free counter. The cost is that the displayed count is temporarily lower than the true total. Accepting writes on both sides is fine because concurrent updates merge without losing any.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Asks whether the operation has an invariant to protect.",
+              "Describes a merge that loses no updates, such as summing per-side counts.",
+              "Names the temporary undercount as the cost."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "CAP says nothing about normal operation. Without any partition, the booking database replicates synchronously to a second region 80 ms away. What does that cost each booking, and when would you accept it?",
+            "hints": [
+              "How many network round trips must finish before the commit is acknowledged?"
+            ],
+            "solution": "Every booking commit waits for at least one cross-region round trip, adding roughly 80 ms or more to its latency. This is the latency-consistency tradeoff that PACELC names for the no-partition case. Accept it for bookings, where losing an acknowledged seat is worse than slower commits; avoid it for lesson reads, which can come from the nearest copy.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Adds the cross-region round trip to commit latency.",
+              "Separates normal-operation latency from partition behaviour.",
+              "Chooses differently for bookings and lesson reads."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "A vendor says their database is 'AP because it has 99.99% uptime'. Is that a meaningful CAP claim?",
+            "hints": [
+              "What does 99.99% measure, and over which events?"
+            ],
+            "solution": "No. CAP availability is a property under partition: every request to a non-failing node returns a valid result. An uptime percentage measures operations over time and says nothing about which requests succeed or what they return during a partition. Ask what each operation does when replicas cannot communicate, and how conflicting writes are reconciled.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Distinguishes CAP availability from uptime.",
+              "Asks for per-operation partition behaviour."
+            ]
           }
         ],
         "extraQuiz": [
@@ -104153,6 +104361,14 @@ const LEARNING_PATHS = [
             "Analyze the hottest key, not only the average.",
             "Name cross-partition queries.",
             "Plan migration, routing and rollback."
+          ],
+          "hints": [
+            "Hashing decides which partition a key lives on. Where do all the requests for one key go?",
+            "Spreading keys is different from spreading the work inside one key."
+          ],
+          "pitfalls": [
+            "Judging a partition scheme by average load instead of the hottest key.",
+            "Assuming a different hash function fixes a single hot key."
           ]
         },
         "quiz": {
@@ -104172,6 +104388,67 @@ const LEARNING_PATHS = [
             "section": "Solution; issues and considerations",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "Progress is sharded by `user_id`. A report needs average lesson completion across all learners. Shard A returns an average of 50% over 10 learners; shard B returns 90% over 90 learners. Finish the scatter/gather step: what is the overall average?",
+            "hints": [
+              "Is a 10-learner shard worth as much as a 90-learner shard?"
+            ],
+            "solution": "Combine sums and counts, not averages: (50 × 10 + 90 × 90) / (10 + 90) = (500 + 8,100) / 100 = 86%. Averaging the two shard averages gives 70%, which is wrong because the shards hold different numbers of learners. Each shard should return a sum and a count so the gather step can combine them.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Weights by learner count.",
+              "Shows the weighted calculation.",
+              "Has shards return sums and counts."
+            ],
+            "pitfalls": [
+              "Averaging the shard averages."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "Bookings are range-partitioned by month of `created_at`. Which partition takes new writes, and what problem does that cause?",
+            "hints": [
+              "Which range does a booking created right now fall into?"
+            ],
+            "solution": "Every new booking lands in the current month's partition, so one partition takes all the write load while older ones sit idle: a hot partition caused by time order rather than a popular key. Range partitioning helps 'bookings in March' queries but concentrates current writes. Partition writes by a hashed key, or by a compound key that spreads current activity, and keep time ranges for archival or a separate projection.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Identifies the current month as the write hot spot.",
+              "Explains why ranges concentrate monotonic keys.",
+              "Offers a way to spread current writes."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "One workshop page is read 50,000 times per second and its cache key lives on a single cache node. How can you spread the reads, and what does it cost?",
+            "hints": [
+              "Reads can go to any copy. What must happen to every copy when the page changes?"
+            ],
+            "solution": "Copy the hot entry under several keys, for example `workshop:42#0` to `workshop:42#7`, and have readers pick one at random, spreading reads over up to eight nodes. Writes or invalidations must update every copy, and the copies can briefly disagree. A small in-process cache in each application server is another option, with the same staleness cost.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Replicates the hot entry under several keys or caches it locally.",
+              "States the write or invalidation cost.",
+              "Notes the copies can briefly disagree."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "The progress database is 200 GB and one dashboard query is slow because it scans a large table. Someone proposes sharding. Is sharding the right first move?",
+            "hints": [
+              "Is the bottleneck data volume, or how this one query reads the data?"
+            ],
+            "solution": "No. A slow query from a full scan is usually fixed with an index or a changed query; check the query plan first. 200 GB fits comfortably on one database server. Sharding adds routing, cross-shard queries and migration work. Consider it when write throughput, storage or a single machine's limits are the measured bottleneck, after query tuning, retention and read replicas.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Checks whether the slow query has a cheaper fix.",
+              "Names sharding's costs.",
+              "States when sharding would be justified."
+            ]
           }
         ],
         "extraQuiz": [
@@ -104224,6 +104501,15 @@ const LEARNING_PATHS = [
             "Explains that changing N remaps most keys.",
             "Uses consistent or rendezvous hashing to limit movement to the failed node's share.",
             "Adds protection for the database during misses."
+          ],
+          "hints": [
+            "With `hash(key) % N`, what happens to a key's node when N changes from 10 to 9?",
+            "Estimate the share of keys that stay on the same node. The rest are cache misses.",
+            "The fix limits movement; something else has to protect the database during the misses that remain."
+          ],
+          "pitfalls": [
+            "Thinking consistent hashing moves data; it only decides where data should be.",
+            "Fixing the remapping but leaving the database unprotected from the remaining misses."
           ]
         },
         "quiz": {
@@ -104250,6 +104536,63 @@ const LEARNING_PATHS = [
             "section": "Section 4.2, partitioning; virtual nodes",
             "reviewed": "2026-11-08",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "In the lesson's code, going from four nodes to five with modulo hashing moves 79.7% of the 10,000 keys. Change `modulo` to compare 10 nodes with 9 and predict the result before running it.",
+            "hints": [
+              "What share of keys give the same remainder for both moduli?"
+            ],
+            "solution": "About 89.7% of keys move: 8,973 of 10,000. Going from N to N − 1 nodes, a key keeps its node only when its hash gives the same remainder for both, which happens for roughly 1/N of keys, so about 90% move for N = 10. The larger the cluster, the worse modulo hashing behaves when one node leaves.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Writes a prediction before running the code.",
+              "Explains the 1/N share of keys that stay."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "Now remove a node from the ring instead: node `e` leaves the five-node ring with 100 virtual nodes each. Which keys move, how many, and where do they go?",
+            "hints": [
+              "Removing a node deletes its points from the ring. Which keys pointed at those points?"
+            ],
+            "solution": "Only the keys `e` owned move: 1,743 of 10,000, or 17.4%. Each of them goes to the next point clockwise, which belongs to one of `a`, `b`, `c` or `d`; with 100 virtual nodes those neighbours are spread across all four survivors. No key owned by `a`, `b`, `c` or `d` changes node. This is the mirror of adding `e`.",
+            "solutionFormat": "prose",
+            "checks": [
+              "States that only the removed node's keys move.",
+              "Relates the number that move to the removed node's share.",
+              "Explains that virtual nodes spread them across the remaining nodes."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "Rendezvous hashing gives every key a score for each node, `h(node + ':' + key)`, and assigns the key to the highest-scoring node. Without running it, predict which keys move when node `e` joins four nodes, and roughly how many.",
+            "hints": [
+              "Adding `e` adds one more score per key. When does that change the winner?"
+            ],
+            "solution": "Only keys for which `e` now has the highest score move, and they all move to `e`. Scores between the existing nodes do not change, so no key moves between `a` to `d`. With random scores `e` wins about 1/5 of keys, about 2,000 of 10,000; the computed result is 19.97%, all to `e`, and each node ends with roughly 2,000 keys. It needs no ring or virtual nodes, but each lookup scores every node.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Explains that keys move only to the new node.",
+              "Estimates the share from the number of nodes.",
+              "Names the per-lookup cost of scoring every node."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "Your managed database already splits data into 256 logical partitions and assigns them to nodes through a directory. A teammate wants to add a consistent-hashing ring in the application. Should you?",
+            "hints": [
+              "What does the database do when a node is added?"
+            ],
+            "solution": "No. Fixed logical partitions with a directory already limit movement: adding a node moves whole partitions, which the database copies, throttles and routes for you. A second, application-level ring would fight that placement and duplicate routing. Use consistent hashing where you control placement yourself, for example a client-side cache cluster.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Explains what the database already does when a node is added.",
+              "Names the risk of a second placement layer.",
+              "Says where a ring does fit."
+            ]
           }
         ],
         "extraQuiz": [
@@ -104304,6 +104647,16 @@ const LEARNING_PATHS = [
             "Use real concurrent connections when validating an implementation.",
             "Test rollback between dependent writes.",
             "Include cancellation and duplicate requests."
+          ],
+          "hints": [
+            "List every possible outcome for the two callers, then cross out the ones that break the invariant.",
+            "A test of 'exactly one succeeds' needs callers that truly run at the same time. How would you arrange that?",
+            "What else could go wrong between the decrement and the booking insert?"
+          ],
+          "pitfalls": [
+            "Testing the race with sequential calls on one connection.",
+            "Checking only the winner and not the loser's documented response.",
+            "Forgetting to assert that `remaining` never goes negative."
           ]
         },
         "quiz": {
@@ -104330,6 +104683,64 @@ const LEARNING_PATHS = [
             "section": "SQLite transaction control",
             "reviewed": "2026-10-02",
             "scope": "BEGIN IMMEDIATE and local transaction boundaries used by booking_lab.py; no distributed transaction claim."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "This version has a race: `SELECT remaining`; if it is above 0, `UPDATE Workshop SET remaining = remaining - 1`. Supply the missing change that makes the decrement safe without a separate read.",
+            "hints": [
+              "Can the database check the condition and change the row in one statement?"
+            ],
+            "solution": "Put the check inside the update: `UPDATE Workshop SET remaining = remaining - 1 WHERE workshop_id = @id AND remaining > 0`, then require exactly one affected row and roll back with a sold-out response otherwise. The database evaluates the condition and the decrement atomically for that row, so two callers cannot both see 1 and both decrement.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Moves the condition into the WHERE clause.",
+              "Checks the affected-row count.",
+              "Explains why a separate read races."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "Same code, two seats and three learners booking at once. What exact outcome should the test assert?",
+            "hints": [
+              "Is the winner deterministic? What should the test therefore compare?"
+            ],
+            "solution": "Exactly two confirmed bookings, one documented sold-out response and `remaining` equal to 0, never negative. Which two learners win is not specified, so assert counts rather than names. Run the three calls on separate connections that start together, and repeat the test enough times to catch rare orderings.",
+            "solutionFormat": "prose",
+            "checks": [
+              "States the expected number of bookings, rejections and remaining seats.",
+              "Avoids asserting which learners win.",
+              "Uses separate concurrent connections."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "Design cancellation: it must free the seat and must not free it twice if the learner clicks Cancel twice. What does the transaction look like?",
+            "hints": [
+              "Which row change can tell you whether this is the first cancel?"
+            ],
+            "solution": "In one transaction, `UPDATE Booking SET status = 'cancelled' WHERE booking_id = @b AND status = 'confirmed'`; only if that affects one row, increment `remaining`. A second cancel finds the status already cancelled, affects no rows and leaves `remaining` unchanged; return the earlier cancellation as the result. Test the two cancels concurrently, as with booking.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Makes the status change conditional.",
+              "Increments the seat count only when the status changed.",
+              "Keeps both writes in one transaction."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "Should the booking transaction send the confirmation email before `COMMIT`, so that a failed email rolls the booking back?",
+            "hints": [
+              "If the email succeeds and the commit then fails, what has the learner been told?"
+            ],
+            "solution": "No. The email is an external effect that cannot roll back with the database: it can be sent and then the commit can fail, and while the network stalls the transaction holds locks. Commit the booking with an outbox record in the same transaction, and send the email afterwards from the outbox with retries and deduplication.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Notes that the email cannot be rolled back.",
+              "Names lock holding during network calls.",
+              "Proposes the outbox instead."
+            ]
           }
         ],
         "diagram": {
@@ -104455,6 +104866,15 @@ const LEARNING_PATHS = [
             "Test simultaneous same-key calls.",
             "Reject same-key different intent.",
             "Document retention and post-expiry behavior."
+          ],
+          "hints": [
+            "Run two copies of the handler at the same moment in your head. Can both pass the check?",
+            "Now crash the process right after the booking is created. What survives the restart?"
+          ],
+          "pitfalls": [
+            "Storing idempotency keys only in memory.",
+            "Recording the key after the effect, in a separate step.",
+            "Returning the old result for the same key with a different request."
           ]
         },
         "quiz": {
@@ -104515,6 +104935,62 @@ const LEARNING_PATHS = [
             "section": "Reducing client complexity with idempotent API design",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "Finish this protocol. In one transaction: insert the key row (learner, operation, key, request fingerprint) under a unique constraint, create the booking, store the booking ID on the key row, and commit. What does the handler do when the key insert hits the unique constraint?",
+            "hints": [
+              "The unique constraint is the coordination point. What does a violation mean?"
+            ],
+            "solution": "The key already exists, so this is a retry or a concurrent duplicate. Read the stored row. If its fingerprint matches and it has a booking ID, return that booking as a replay. If the fingerprint differs, reject with a conflict. If the original is still in progress, wait briefly or return a documented 'in progress' status. Never create a second booking.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Treats a unique violation as a duplicate, not an error.",
+              "Compares fingerprints.",
+              "Handles the in-progress case."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "A client bug reuses key `request-abc` for workshop 43 after it was used for workshop 42. What should happen, and why not just return booking B9?",
+            "hints": [
+              "What did the client intend with this request?"
+            ],
+            "solution": "Reject the request with a conflict, as the lab does with 'key reused for different workshop'. The key identifies one intent, booking workshop 42. Returning B9 would tell the client it holds a seat in workshop 43 when it does not; creating a new booking would make keys meaningless. The fingerprint check exists to catch this.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Rejects with a conflict.",
+              "Explains why returning B9 would mislead the client."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "After the booking, the service charges a card through a payment provider. The network times out after the request is sent. How do you retry without charging twice?",
+            "hints": [
+              "A timeout does not tell you whether the charge happened."
+            ],
+            "solution": "Send the provider your own idempotency key, derived from the booking, so a retry with the same key returns the original charge. If the provider has no such contract, do not blindly retry: query the payment status by your reference, and reconcile unknown outcomes before charging again. Your local key cannot undo a duplicate charge made elsewhere.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Passes an idempotency key to the provider.",
+              "Queries or reconciles when the provider lacks one.",
+              "Notes that a local key cannot protect an external effect on its own."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "Which of these need a client idempotency key: `GET /workshops`, `PUT /profile/display-name` with a full new value, `POST /bookings`?",
+            "hints": [
+              "What changes if each request is sent twice?"
+            ],
+            "solution": "Only `POST /bookings`. A GET is safe; repeating it has no effect. A PUT that sets a field to a given value is naturally idempotent: applying it twice leaves the same state. Creating a booking adds a new effect each time, so it needs a key to recognise retries.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Decides for each of the three requests.",
+              "Explains why the read and the set-to-value update are already idempotent."
+            ]
           }
         ],
         "diagram": {
@@ -105077,6 +105553,14 @@ const LEARNING_PATHS = [
             "Use spare capacity rather than total capacity.",
             "Handle arrival rate equal to service rate.",
             "State fairness and rejection behavior."
+          ],
+          "hints": [
+            "Only the capacity left over after new arrivals drains the backlog.",
+            "Subtract first, then divide."
+          ],
+          "pitfalls": [
+            "Dividing the backlog by total capacity instead of spare capacity.",
+            "Missing that the backlog never drains when arrivals equal capacity."
           ]
         },
         "quiz": {
@@ -105139,6 +105623,67 @@ const LEARNING_PATHS = [
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
           }
         ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "Arrivals are 150 jobs/s for 30 s and processing is 100 jobs/s, starting with an empty queue. Then arrivals fall to 70 jobs/s. The backlog is (150 − 100) × 30 = 1,500 jobs. Supply the missing step: how long does it take to drain?",
+            "hints": [
+              "How many jobs per second are left after serving new arrivals?"
+            ],
+            "solution": "Spare capacity is 100 − 70 = 30 jobs/s, so drain time is 1,500 / 30 = 50 seconds in the constant-rate model. Total time above normal is therefore 30 s of growth plus 50 s of draining. Real job durations vary, so treat this as a planning estimate and confirm with measurement.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Uses spare capacity, not total capacity.",
+              "Shows the division with units.",
+              "Treats the result as a model, not a guarantee."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "In the lesson's worker case, 120 jobs are queued, the worker completes 10 jobs/s and arrivals drop to 8 jobs/s. How long to drain? Then: arrivals return to 12 jobs/s and an optimisation makes each job 10% faster. Does the queue drain now?",
+            "hints": [
+              "Compare the new capacity with the arrival rate before computing anything else."
+            ],
+            "solution": "First case: spare capacity is 10 − 8 = 2 jobs/s, so 120 / 2 = 60 seconds. Second case: a 10% shorter job time gives 10 / 0.9 ≈ 11.1 jobs/s, still below 12 arrivals, so the queue keeps growing at about 0.9 jobs/s, about 53 more jobs per minute. The optimisation helps latency but does not make the system stable.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Computes spare capacity for the first case.",
+              "Computes the new capacity after the optimisation.",
+              "Compares the new capacity with the arrival rate."
+            ],
+            "pitfalls": [
+              "Treating 10% faster as 10% more capacity: 11 instead of about 11.1."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "A token bucket allows 10 requests/s with a burst of 20 and starts full. A client sends 50 requests at once and then nothing. How many are accepted immediately, and how many in total after one more second if the client retries the rest continuously?",
+            "hints": [
+              "The bucket's capacity is the burst; the refill rate is the steady limit."
+            ],
+            "solution": "20 are accepted immediately, draining the bucket. Over the next second it refills at 10 tokens/s, so about 10 more are accepted: about 30 after one second, with the remaining 20 rejected so far. A rate limit shapes arrivals over time; it does not limit how much work runs at once, so pair it with a concurrency limit for slow requests.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Accepts the burst size immediately.",
+              "Adds the refill rate over time.",
+              "Distinguishes a rate limit from a concurrency limit."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "When the service returns HTTP 429, a client library retries immediately in a loop until it succeeds. Is that acceptable?",
+            "hints": [
+              "What does the server see if 1,000 clients do this together?"
+            ],
+            "solution": "No. Immediate retries turn rejected work into extra arrivals and defeat the protection. Clients should honour a `Retry-After` header or back off exponentially with jitter, cap their attempts, and give up or degrade. The server should document its rejection response so clients can tell overload from a permanent error.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Explains that tight retries add load.",
+              "Names backoff with jitter or `Retry-After`.",
+              "Caps attempts."
+            ]
+          }
+        ],
         "extraQuiz": [
           {
             "question": "What does backlog_after(0, 120, 100, 60) return?",
@@ -105193,6 +105738,14 @@ const LEARNING_PATHS = [
             "Draw crash points between effects.",
             "Use stable event identifiers.",
             "Specify compensation and reconciliation ownership."
+          ],
+          "hints": [
+            "Mark each point where the system could crash, between publishing, sending the email and recording that it was sent.",
+            "The outbox fixes one gap. Which effect happens outside the database?"
+          ],
+          "pitfalls": [
+            "Assuming the outbox gives exactly-once delivery.",
+            "Making consumers non-idempotent because 'the outbox handles it'."
           ]
         },
         "quiz": {
@@ -105212,6 +105765,61 @@ const LEARNING_PATHS = [
             "section": "Intent; issues and considerations",
             "reviewed": "2026-09-27",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "Finish the crash table for the relay. (1) Crash before publishing E7. (2) Crash after publishing E7, before marking it sent. (3) Crash after marking it sent. For each, how many times will consumers receive E7?",
+            "hints": [
+              "After a restart the relay publishes every event not yet marked sent."
+            ],
+            "solution": "(1) Zero so far, then once after restart: the event is still pending. (2) Twice in total: published before the crash, then again after restart because it was never marked sent. (3) Once: it is marked sent and not republished. So the outbox gives at-least-once delivery; consumers must handle case 2.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Gives a delivery count for each crash point.",
+              "Names the delivery guarantee that results."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "The relay publishes E7 and E8 in a batch, then crashes before marking either. After restart it publishes both again. The consumer keeps a table of processed event IDs. How many deliveries and how many business effects happen?",
+            "hints": [
+              "Deduplication works only if the processed-ID record and the effect commit together."
+            ],
+            "solution": "Four deliveries: E7 and E8 twice each. Two business effects: the consumer records each event ID in the same transaction as its effect and skips IDs it has already processed. Without that table it would apply four effects. The relay's batch size changes how many duplicates a crash can cause, not whether duplicates happen.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Counts deliveries and business effects separately.",
+              "Records the event ID with the effect, atomically."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "Booking now also takes payment through an external provider. Sketch a saga: steps, and the compensating action if payment fails after the seat is reserved.",
+            "hints": [
+              "What should the learner see while payment is in progress?"
+            ],
+            "solution": "Step 1: reserve the seat in a pending state with an outbox event. Step 2: charge the payment with an idempotency key. Step 3: on success, confirm the booking. If payment fails, compensate by releasing the seat and marking the booking failed. If confirmation fails after payment, retry it or refund. Each step is a local transaction, and the learner sees pending until the saga finishes. Unknown payment outcomes go to reconciliation, not automatic compensation.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Uses a pending state.",
+              "Defines compensation for payment failure.",
+              "Handles unknown outcomes through reconciliation."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "A page-view analytics event is written after each lesson view. Losing one occasionally is acceptable. Should it go through the transactional outbox?",
+            "hints": [
+              "What breaks if this event is lost?"
+            ],
+            "solution": "Probably not. The outbox costs a database write per event inside the request's transaction and a relay to operate. Analytics that tolerate occasional loss can be sent best effort, buffered and batched, outside the business transaction. Use the outbox when a missing event breaks something, such as a booking confirmation or a search index update.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Weighs the outbox's cost against the value of each event.",
+              "Chooses best-effort delivery for loss-tolerant analytics."
+            ]
           }
         ],
         "diagram": {
@@ -105363,6 +105971,16 @@ const LEARNING_PATHS = [
             "Orders updates by version and handles deletes.",
             "Filters by permissions in the query and re-checks against the database.",
             "Provides a full rebuild path and monitors lag."
+          ],
+          "hints": [
+            "Split the design into the write path, how edits reach the index, and the read path, how a query is answered.",
+            "Search results come from a projection that can be out of date. What should be checked again before showing a result?",
+            "How would you recover if the index were lost or needed a new analyser?"
+          ],
+          "pitfalls": [
+            "Publishing index updates outside the transaction, so a committed edit can be missed.",
+            "Applying updates in arrival order instead of by version.",
+            "Filtering private workshops only in the user interface."
           ]
         },
         "quiz": {
@@ -105396,6 +106014,67 @@ const LEARNING_PATHS = [
             "section": "Solution",
             "reviewed": "2026-11-08",
             "scope": "System-design concepts applied to original notebook scenarios. The practice guide records verification limits."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "The lesson's index misses lesson 3 for `join` because it has no stemming. Add a crude stemmer that removes a trailing `s` from tokens longer than three characters, applied to documents and queries. What do `join` and `tables joins` return now, and which word does the stemmer mangle?",
+            "hints": [
+              "Apply the stemmer to both the indexed text and the query."
+            ],
+            "solution": "`join` returns [1, 3] because `joins` becomes `join`. `tables joins` also returns [1, 3]: lesson 1 has `table` and `join` after stemming. The stemmer turns `indexes` into `indexe`, so a search for `index` still finds nothing. Real analysers use language rules for this. Any analyser change needs the index rebuilt, because existing documents were indexed with the old rule.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Traces both queries through the stemmed index.",
+              "Checks every indexed word the stemmer changes.",
+              "Notes that analyser changes require a reindex."
+            ],
+            "pitfalls": [
+              "Changing the query analyser without reindexing the documents."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "Workshop 42's indexed document is at version 5. Events arrive in this order: update v4 (delayed), delete v6, update v5 (a duplicate). What should the index contain after each?",
+            "hints": [
+              "Compare each event's version with the last applied one, including deletes."
+            ],
+            "solution": "v4 is older than the indexed v5, so ignore it. Delete v6 is newer, so remove the document and remember version 6 as a deletion marker. The duplicate v5 is older than 6, so ignore it rather than recreate the deleted workshop. Without the marker, the late v5 would resurrect a deleted document.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Ignores older versions.",
+              "Applies the delete.",
+              "Keeps a deletion marker so a late update cannot resurrect it."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "You need to add stemming to a live index without downtime. Describe the steps.",
+            "hints": [
+              "Queries keep using the old index until you switch. What keeps the new one current meanwhile?"
+            ],
+            "solution": "Create a new index with the new analyser. Bulk-load it from the database, the source of truth, while change events continue to update the old index; also apply events to the new index from the moment the bulk load starts, ordered by version. When the new index has caught up, check counts and sample queries, then switch the alias to it. Keep the old index briefly for rollback, then delete it.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Builds a new index from the source of truth.",
+              "Applies concurrent changes to the new index.",
+              "Switches an alias and keeps a rollback path."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "An admin page searches 2,000 workshop titles by prefix, used a few times a day. Should you add a search engine?",
+            "hints": [
+              "Can an ordinary index answer a prefix query?"
+            ],
+            "solution": "No. A B-tree index supports `LIKE 'abc%'` prefix queries in most relational databases, and 2,000 rows is small. A search engine adds a second store, a sync pipeline and operations work. Add one when you need relevance ranking, stemming, typo tolerance or facets at scale.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Notes that prefix search can use an ordinary index.",
+              "Weighs the pipeline and operations cost.",
+              "Names when a search engine is justified."
+            ]
           }
         ],
         "extraQuiz": [
