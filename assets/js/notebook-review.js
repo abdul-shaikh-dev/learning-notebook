@@ -59,13 +59,18 @@ const NotebookReview = (() => {
     return timed === 3 && entry.rating !== undefined && valid({correct:entry.correct,streak:entry.streak,at:entry.at}) && entry.correct === (entry.rating === 'matched');
   }
   const scheduled = entry => entry.correct !== undefined;
+  // Exercise records are keyed by lesson id; practice-ladder steps by "<lesson>/practice/<1-4>".
+  function exerciseTarget(path, key) {
+    const match = /^(.+)\/practice\/([1-4])$/.exec(key), lesson = path.lessons.find(l => l.id === (match ? match[1] : key));
+    return lesson ? {lesson, step:match ? Number(match[2]) : 0} : null;
+  }
   function readExercises(id) {
     const path = courses().find(p => p.id === id), result = {};
     if (!path) return result;
     try {
       const data = JSON.parse(localStorage.getItem(exerciseKey(id)) || '{}');
       if (!data || typeof data !== 'object' || Array.isArray(data)) return result;
-      for (const [lesson, entry] of Object.entries(data)) if (path.lessons.some(l => l.id === lesson) && validExercise(entry)) result[lesson] = {...entry};
+      for (const [lesson, entry] of Object.entries(data)) if (exerciseTarget(path, lesson) && validExercise(entry)) result[lesson] = {...entry};
     } catch {}
     return result;
   }
@@ -191,8 +196,10 @@ const NotebookReview = (() => {
         if (due !== null) all.push({path,key:id,question:question(path, id),entry,due,ready:due <= now});
       }
       for (const [id, entry] of Object.entries(readExercises(path.id))) {
-        const lesson = path.lessons.find(l => l.id === id), due = scheduled(entry) ? dueAt(entry) : null;
-        if (due !== null) all.push({path,key:id,exercise:true,question:{lesson,exercise:lesson.exercise,title:plainTitle(lesson.title) + ' · Exercise',href:'#topic/' + path.id + '/' + id},entry,due,ready:due <= now});
+        const {lesson, step} = exerciseTarget(path, id), due = scheduled(entry) ? dueAt(entry) : null;
+        // A practice step's content is undefined until the course loads, or if the step was removed.
+        const exercise = step ? lesson.practice?.[step - 1] : lesson.exercise;
+        if (due !== null) all.push({path,key:id,exercise:true,question:{record:{id},exercise,title:plainTitle(lesson.title) + (step ? ' · Practice ' + step : ' · Exercise'),href:'#topic/' + path.id + '/' + lesson.id},entry,due,ready:due <= now});
       }
     }
     return all.sort((a,b) => Number(a.entry.correct) - Number(b.entry.correct) || a.due - b.due);
@@ -223,7 +230,7 @@ const NotebookReview = (() => {
     const e = item.question.exercise, solution = typeof workedSolution === 'function' ? workedSolution(e) + (typeof exerciseExplanation === 'function' ? exerciseExplanation(e) : '') : '';
     return '<li class="review-item review-exercise" data-review-exercise="' + i + '"><p class="review-source"><a href="' + esc(item.question.href) + '">' + esc(item.path.title) + ' · ' + esc(item.question.title) + '</a> <span class="review-missed">' + (item.entry.rating === 'partly' ? 'Partly' : item.entry.rating === 'missed' ? 'Missed' : 'Due') + '</span></p>' +
       '<h2 id="review-question-' + i + '">' + prose(item.path, e.prompt) + '</h2><h3>Check your result</h3><ul>' + (e.checks || []).map(c => '<li>' + esc(c) + '</li>').join('') + '</ul>' +
-      attemptView(item.path, item.question.lesson, 'review-exercise-' + i, solution, item.entry.answer) + '</li>';
+      attemptView(item.path, item.question.record, 'review-exercise-' + i, solution, item.entry.answer) + '</li>';
   }
   function view(now = Date.now()) {
     const due = dueItems(now), shown = ready(due);
@@ -241,7 +248,7 @@ const NotebookReview = (() => {
   }
   function bind(main, now = () => Date.now()) {
     const shown = ready(dueItems(now()));
-    shown.forEach((item, i) => { if (item.exercise) bindAttempt(main.querySelector('[data-review-exercise="' + i + '"]'), item.path, item.question.lesson, now); });
+    shown.forEach((item, i) => { if (item.exercise) bindAttempt(main.querySelector('[data-review-exercise="' + i + '"]'), item.path, item.question.record, now); });
     main.querySelectorAll('[data-review]').forEach(row => {
       const item = shown[Number(row.dataset.review)];
       if (!item) return;
@@ -255,5 +262,5 @@ const NotebookReview = (() => {
       }));
     });
   }
-  return {key,exerciseKey,known,question,valid,validExercise,read,readExercises,saveAnswer,rate,exerciseNote,attemptView,bindAttempt,record,undo,note,showNote,dueAt,items,dueCourses,card,view,bind,INTERVALS,ANSWER};
+  return {key,exerciseKey,exerciseTarget,known,question,valid,validExercise,read,readExercises,saveAnswer,rate,exerciseNote,attemptView,bindAttempt,record,undo,note,showNote,dueAt,items,dueCourses,card,view,bind,INTERVALS,ANSWER};
 })();

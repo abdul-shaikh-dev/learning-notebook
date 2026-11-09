@@ -63,7 +63,7 @@ const NotebookBackup = (() => {
     object(value, 'Exercise answers');
     const result = {};
     for (const [id, entry] of Object.entries(value)) {
-      if (!path.lessons.some(l => l.id === id)) fail('Exercise answers contain an unknown lesson.');
+      if (!path.lessons.some(l => l.id === id.replace(/\/practice\/[1-4]$/, ''))) fail('Exercise answers contain an unknown lesson.');
       fields(entry, ['answer','saved','rating','correct','streak','at'], 'Exercise answer');
       if (typeof entry.answer !== 'string' || entry.answer.length > 5000) fail('An exercise answer must be text of at most 5,000 characters.');
       if (!Number.isInteger(entry.saved) || entry.saved <= 0 || entry.saved > Date.now() + 864e5) fail('Exercise answer date is invalid.');

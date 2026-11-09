@@ -138,6 +138,25 @@ The separate next-lesson link navigates without recording completion. Opening a 
 never counts as completing it. Keep reading, quiz and project assessment independent.
 
 
+## Practice ladders
+
+A lesson may add an optional `practice` array after its `exercise`: two to four
+graded steps that rely on the lesson less each time. Each step has a `kind`, a
+`prompt`, a `solution` and `checks`, plus optional `starter`, `hints`,
+`solutionFormat` (`prose` or `code`), `reasoning` and `pitfalls`.
+
+| `kind` | Label shown | Use it for |
+| --- | --- | --- |
+| `completion` | Finish the worked step | The lesson's example with one step left out |
+| `variation` | Same idea, new case | The same technique with changed inputs or constraints |
+| `transfer` | A related problem | A neighbouring problem where the idea still applies |
+| `decide` | Does it apply? | A scenario where the learner judges whether the technique fits |
+
+Each step has its own answer box and self-rating. Attempts are stored with the
+lesson's exercise answers under `<lesson>/practice/<n>`, so they join review and
+backups. Do not reorder or remove steps once published, because a saved attempt
+follows its step number. `scripts/manifest.cjs` rejects unknown kinds and fields.
+
 ## Problem-solving challenges
 
 `paths/python-problem-solving/challenges.json` owns the 30 original problems,
