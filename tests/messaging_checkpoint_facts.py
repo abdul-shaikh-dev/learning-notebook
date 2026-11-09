@@ -241,6 +241,128 @@ FACTS = {
 }
 
 
+# Practice ladder answers that are numbers or program output: each fact computes values that the
+# step's solution must state. Steps not listed here are judged against their checks only.
+def practice_inbox_crash():
+    with memory() as db:
+        crashed = outcome(lambda: consume(db, 'audit', event(), crash=True))
+        assert crashed.startswith('RuntimeError'), crashed
+        again = consume(db, 'audit', event())
+        return [f'returns `{again}`', f'{rows(db, "inbox")} inbox row and a total of {total(db, "audit", "j-4")}']
+
+
+def practice_inbox_pruned():
+    with memory() as db:
+        consume(db, 'audit', event())
+        with db:
+            db.execute("DELETE FROM inbox WHERE consumer='audit' AND id='e-17'")  # retention pruned the key
+        assert consume(db, 'audit', event()) is True
+        return [f'the total becomes {total(db, "audit", "j-4")}']
+
+
+def practice_last_value():
+    stored = 3
+    for version in (5, 4):
+        stored = max(stored, version)
+    return [f'ends at version {stored}']
+
+
+def practice_ledger():
+    amounts, arrivals = {1: 2, 2: 5, 3: 3}, (1, 3, 2)
+    applied, buffered, balance = 0, {}, 0
+    for version in arrivals:
+        buffered[version] = amounts[version]
+        while applied + 1 in buffered:
+            applied += 1
+            balance += buffered.pop(applied)
+    dropped = sum(amounts[v] for v in (1, 3))
+    return [f'2 + 5 + 3 = {balance}', f'2 + 3 = {dropped}']
+
+
+def _credit_stream():
+    return [('2026-09-01', 10), ('2026-09-05', -4), ('2026-09-10', 5), ('2026-09-12', -3)]
+
+
+def practice_fold():
+    events = _credit_stream()
+    on = sum(amount for day, amount in events if day <= '2026-09-07')
+    return [f'10 − 4 = {on}', f'10 − 4 + 5 − 3 = {sum(a for _, a in events)}']
+
+
+def practice_three_writers():
+    stream = [10]
+    for spend in (8, 3, 1):
+        expected = 1                        # every writer read version 1
+        while True:
+            if len(stream) != expected:     # conflict: reload and decide again
+                expected = len(stream)
+                continue
+            if sum(stream) - spend < 0:
+                break                       # rejected by the invariant
+            stream.append(-spend)
+            break
+    return [f'the final balance is {sum(stream)}, at version {len(stream)}']
+
+
+def practice_snapshot():
+    events, every = 12_345, 1_000
+    latest = events // every * every
+    return [f'at event {latest:,}', f'the {events - latest} events after it']
+
+
+def _cqrs(crash_before_position=False):
+    events, state = [('learner-7', 10), ('learner-7', -3), ('learner-7', 5)], {'position': 0, 'balance': 0}
+    saved = 0
+    while saved < len(events):
+        state['balance'] += events[saved][1]
+        if crash_before_position and saved == 1:
+            crash_before_position = False   # crash: the balance kept the update, the position did not
+            continue
+        saved += 1
+    return state['balance'], len(events)
+
+
+def practice_cqrs_query():
+    events = [10, -3, 5]
+    position = len(events)
+    projected = sum(events[:2])
+    return [f'returns position {position}', f'position 2 with a balance of 10 − 3 = {projected}',
+            f"'stale (projection at 2, need {position})'", f'the balance is {sum(events)}']
+
+
+def practice_cqrs_crash():
+    wrong, _ = _cqrs(crash_before_position=True)
+    right, _ = _cqrs()
+    return [f'10 − 3 − 3 + 5 = {wrong} instead of {right}']
+
+
+PRACTICE_FACTS = {
+    'idempotent-consumers/1': practice_inbox_crash, 'idempotent-consumers/2': practice_inbox_pruned,
+    'ordering/1': practice_last_value, 'ordering/2': practice_ledger,
+    'event-sourcing/1': practice_fold, 'event-sourcing/2': practice_three_writers, 'event-sourcing/3': practice_snapshot,
+    'cqrs/1': practice_cqrs_query, 'cqrs/2': practice_cqrs_crash,
+}
+
+
+def practice_failures():
+    lessons = {l['id']: l for l in json.loads((COURSE / 'path.json').read_text(encoding='utf-8'))['lessons']}
+    failures = []
+    for key, fact in PRACTICE_FACTS.items():
+        lesson, n = key.split('/')
+        steps = lessons[lesson].get('practice', [])
+        if int(n) > len(steps):
+            failures.append(f'practice {key}: no such step')
+            continue
+        solution = steps[int(n) - 1]['solution']
+        try:
+            expected = fact()
+        except Exception as error:
+            failures.append(f'practice {key}: {error}')
+            continue
+        failures += [f'practice {key}: solution should state {text!r}' for text in expected if text not in solution]
+    return failures
+
+
 def questions():
     data = json.loads((COURSE / 'checkpoints.json').read_text(encoding='utf-8'))
     for lesson, items in data['lessons'].items():
@@ -265,10 +387,12 @@ def main():
             failures.append(f'{key}: {error}'); continue
         if answer != q['options'][q['correct']]:
             failures.append(f'{key}: the lab supports {answer!r}, the question marks {q["options"][q["correct"]]!r}')
+    failures += practice_failures()
     failures += [f'{key}: fact has no question' for key in set(FACTS) | set(SOURCED) if key not in seen]
     if failures:
         sys.exit('Messaging checkpoint facts failed:\n' + '\n'.join(failures))
-    print(f'PASS: {len(FACTS)} Messaging checkpoint answers checked against the course lab; {len(SOURCED)} cited from the lessons.')
+    print(f'PASS: {len(FACTS)} Messaging checkpoint answers checked against the course lab; {len(SOURCED)} cited from the lessons; '
+          f'{len(PRACTICE_FACTS)} practice ladder answers computed.')
 
 
 if __name__ == '__main__':

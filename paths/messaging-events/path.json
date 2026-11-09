@@ -597,8 +597,74 @@
           "State what can happen after a deduplication key is pruned."
         ],
         "solution": "The unique inbox key combines consumer and event identity and commits with its effect. Separate consumers can each process the same fact. Retain keys for at least the promised redelivery/replay window plus an explicit margin; after expiry a replay may apply again. Identity collisions with changed content fail rather than masquerading as duplicates.",
-        "solutionFormat": "prose"
-      }
+        "solutionFormat": "prose",
+        "hints": [
+          "Run the duplicate test first, then close and reopen the connection and deliver the same event again.",
+          "Pick a day when a replay arrives after its key was pruned. What does the consumer do with it?"
+        ],
+        "pitfalls": [
+          "Pruning inbox keys sooner than the longest promised replay window.",
+          "Treating a changed payload under a known ID as a harmless duplicate."
+        ]
+      },
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "`consume(db, 'audit', event, crash=True)` inserts the inbox row and then crashes before the projection update. The broker redelivers the event. Finish the trace: what does the second `consume` return, and what are the inbox row count and the audit total for `j-4`?",
+          "hints": [
+            "What does a rolled-back transaction leave behind?"
+          ],
+          "solution": "The crash happens inside the transaction, so the inbox insert rolls back with it. On redelivery the consumer finds no inbox row, returns `True`, and commits the inbox row and the effect together: 1 inbox row and a total of 7. If the inbox row had committed on its own, the redelivery would be skipped and the effect lost forever.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Uses the transaction boundary to decide what survived the crash.",
+            "Gives the return value, row count and total.",
+            "Explains why the key and effect must commit together."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Now inbox keys are pruned after 7 days, but the broker can replay up to 30 days. A replay of `e-17` arrives on day 10. What happens, and what retention rule fixes it?",
+          "hints": [
+            "Compare the replay's age with the key's lifetime."
+          ],
+          "solution": "The key is gone, so the consumer treats the replay as new and applies the effect a second time: the total becomes 14. Retain keys for at least the 30-day replay window plus a margin, say 35 days, and alert if replays older than the retention are requested. If storage is a concern, keep compact keys rather than full payloads.",
+          "solutionFormat": "prose",
+          "checks": [
+            "States that the effect applies twice.",
+            "Sets retention at or above the replay window with a margin.",
+            "Names a way to detect replays beyond retention."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "A notification consumer's effect is sending an email through a provider, not a database update. Can the inbox row and the email commit together? How would you limit duplicates?",
+          "hints": [
+            "Which part of the effect happens outside your database?"
+          ],
+          "solution": "No. The email leaves the system; a database transaction cannot include it. Record a 'sending' row first, send with the provider's idempotency key derived from the event ID, then mark it sent. A crash between send and mark may cause one resend, which the provider's key can absorb; without such a key, accept the rare duplicate or reconcile against the provider's message log.",
+          "solutionFormat": "prose",
+          "checks": [
+            "States that the external effect cannot join the transaction.",
+            "Uses the event ID as the provider's idempotency key.",
+            "Names the remaining duplicate window."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "A consumer handles `OrderShipped` by setting `status = 'shipped'` on the order row. A teammate says it needs an inbox. Does it?",
+          "hints": [
+            "What changes if this event is applied twice in a row? What if it arrives after a later event?"
+          ],
+          "solution": "Not for duplicates: setting the same value twice leaves the same state, so the effect is naturally idempotent. It does need protection from stale events, for example a `ReturnRequested` that is processed before a redelivered `OrderShipped`. A version check on the row handles that more simply than an inbox. Use an inbox when the effect accumulates, such as adding to a total.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Checks what happens when the effect is applied twice.",
+            "Raises out-of-order delivery as the real risk.",
+            "Says when an inbox is needed."
+          ]
+        }
+      ]
     },
     {
       "id": "transactional-outbox",
@@ -662,8 +728,73 @@
           "A correct consumer ends with one inbox row and balance=7, not 14."
         ],
         "solution": "This is the expected uncertainty window. The outbox preserves publication intent, not unique delivery. Retrying the same ID and atomically deduplicating the consumer effect yields one inbox row and balance 7. Generating a new event ID for each relay attempt defeats that protection.",
-        "solutionFormat": "prose"
-      }
+        "solutionFormat": "prose",
+        "hints": [
+          "Start from what the relay can prove after it restarts: is the row marked sent or not?",
+          "The consumer sees the same event ID twice. What does its inbox do the second time?"
+        ],
+        "pitfalls": [
+          "Generating a new event ID on each relay attempt.",
+          "Calling a duplicate publication an outbox failure."
+        ]
+      },
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "The relay loop reads pending rows, publishes each and marks it sent. A teammate reorders it to mark the row sent first and publish afterwards, 'to avoid duplicates'. Supply the missing analysis: what happens if the relay crashes between the two steps in the new order?",
+          "hints": [
+            "After the crash, which rows does the restarted relay consider pending?"
+          ],
+          "solution": "The row is marked sent but the event was never published, so it is lost: no restart will pick it up again. The original order risks a duplicate, which consumers can deduplicate; the new order risks a loss, which nothing downstream can detect. Keep publish, then mark sent, and rely on consumer inboxes.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Identifies a lost event in the new order.",
+            "Compares duplicate risk with loss risk.",
+            "Keeps publish-then-mark."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Two relay instances run for availability and both read the same pending row before either marks it. What happens, and how do you reduce it?",
+          "hints": [
+            "Nothing stops two readers from seeing the same unsent row."
+          ],
+          "solution": "Both publish the event, so consumers receive it twice even without a crash. Reduce it by letting each relay claim rows, for example `SELECT … FOR UPDATE SKIP LOCKED` or a claimed-by column with a lease, or by electing one active relay. Duplicates can still happen on crashes, so consumers still need their inbox.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Explains concurrent relays as a duplicate source.",
+            "Proposes row claiming or a single active relay.",
+            "Keeps consumer deduplication."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "Instead of polling an outbox table, a team proposes capturing changes from the database log (change data capture). What does that change, and what stays the same?",
+          "hints": [
+            "Where does the connector remember how far it has read?"
+          ],
+          "solution": "The relay reads committed changes from the database log, so there is no polling query and no sent column; a connector tracks its log position instead. It can capture the business row directly or an outbox table written in the same transaction. Delivery is still at least once, because the connector can resend after a restart from its last saved position, so consumers still deduplicate. It adds a connector to operate and couples consumers to the table layout unless you still capture an outbox table.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Replaces polling with log position tracking.",
+            "Keeps at-least-once delivery and consumer deduplication.",
+            "Names coupling to the table layout as a risk."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "A service publishes `ButtonClicked` analytics events and writes nothing to its database for them. Does it need a transactional outbox?",
+          "hints": [
+            "Which two effects could disagree here?"
+          ],
+          "solution": "No. There is no database change to keep in step with, so there is no dual write. An outbox would add a database write for every click. Publish directly, with a client-side buffer and retries if losing some events is costly. Use an outbox when a business change and its event must not disagree.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Checks whether there is a dual write to protect.",
+            "Weighs the outbox's write cost."
+          ]
+        }
+      ]
     },
     {
       "id": "retry-budget",
@@ -821,8 +952,73 @@
           "Explain a gap/stale policy appropriate to a state projection versus a ledger."
         ],
         "solution": "A1 before A2 and B1 before B2 are per-aggregate constraints; A and B can usually process concurrently. Arrival and completion ordering differ under retry or multiple workers. Version checks can detect gaps/stale state, but increment ledgers cannot arbitrarily discard an earlier operation. Partition changes require reviewing how keys remain consistently ordered.",
-        "solutionFormat": "prose"
-      }
+        "solutionFormat": "prose",
+        "hints": [
+          "Draw two timelines, one per aggregate, and mark which pairs must stay in order.",
+          "Changing the partition count changes where a key's events land. What about events already in flight?"
+        ],
+        "pitfalls": [
+          "Assuming one partition's FIFO order survives retries and parallel workers.",
+          "Dropping an out-of-order increment as 'stale'."
+        ]
+      },
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "A last-value progress projection stores version 3 for learner 7. Then version 5 arrives, followed by version 4. Finish the rule: what does the projection do with each, and what does it hold at the end?",
+          "hints": [
+            "For a last-value projection, does a skipped version matter?"
+          ],
+          "solution": "Version 5 is newer than 3, so apply it; the contract of a last-value projection allows skipping version 4, though the gap can be logged. Version 4 is older than the stored 5, so ignore it. The projection ends at version 5. Applying events in arrival order would have ended at version 4, which is stale.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Compares each version with the stored one.",
+            "Ignores the older event.",
+            "States the final stored version."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Same arrival pattern, but the projection is a credit ledger: version 1 adds 2, version 2 adds 5 and version 3 adds 3, arriving as 1, 3, 2. What should the projection do, and what is the correct total? What total results if it drops version 2 as stale?",
+          "hints": [
+            "Every increment changes the total, so none can be skipped."
+          ],
+          "solution": "A ledger cannot skip an increment. When version 3 arrives after 1, the projection detects the gap and buffers 3, or fetches version 2 from the source. When 2 arrives it applies 2 and then 3: 2 + 5 + 3 = 10. Dropping version 2 as stale would give 2 + 3 = 5, and the missing 5 credits would never appear.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Buffers or fetches to fill the gap.",
+            "Gets the correct total.",
+            "Shows the result of wrongly dropping version 2."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "A topic grows from 4 to 6 partitions, and keys are placed by `hash(key) % partitions`. Learner A's earlier events sit unprocessed on partition 1; new events for A now go to partition 3. What can go wrong, and how do you avoid it?",
+          "hints": [
+            "Which partition does each of A's events sit on before and after the change?"
+          ],
+          "solution": "Different consumers read partitions 1 and 3 in parallel, so A's newer events can be processed before its older ones. Avoid it by draining or pausing producers until the old partitions are consumed before switching, by keeping version checks in consumers so stale events are detected, or by choosing a broker feature that preserves key ownership during scaling. Plan partition counts generously to change them rarely.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Explains that a key's events can split across partitions.",
+            "Proposes draining, version checks or ownership-preserving scaling."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "Product asks for one strict global order of all learners' events so the activity feed is 'perfectly ordered'. Should the system use a single partition?",
+          "hints": [
+            "Which decision would actually be wrong if two learners' events swapped?"
+          ],
+          "solution": "Usually not. A single partition limits throughput to one consumer and makes it a single point of contention. Learners do not observe each other's events at millisecond precision; per-learner order plus a timestamp for display is enough for a feed. Pay for global order only when an invariant spans all entities, and consider a separate sequencer for that one stream.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Names the throughput cost of a single partition.",
+            "Separates display order from correctness order.",
+            "Says when global order is justified."
+          ]
+        }
+      ]
     },
     {
       "id": "schemas",
@@ -1014,6 +1210,16 @@
           "Defines a stream per entity with past-tense, versioned events.",
           "Uses an expected-version check to enforce the invariant under concurrency.",
           "Corrects mistakes with a compensating event, not an edit."
+        ],
+        "hints": [
+          "List the event types in the past tense first, then decide what each must carry.",
+          "Two writers decide on the same balance. What stops both appends from succeeding?",
+          "You cannot edit history. How do you record that a grant was wrong?"
+        ],
+        "pitfalls": [
+          "Editing or deleting an event to fix a mistake.",
+          "Checking the invariant without an expected-version append.",
+          "Putting personal data directly in immutable events."
         ]
       },
       "quiz": {
@@ -1040,6 +1246,63 @@
           "section": "Event Sourcing",
           "reviewed": "2026-11-08",
           "scope": "Author article; the credits example is original."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "A learner's stream has: granted 10 on 1 September, spent 4 on 5 September, granted 5 on 10 September and spent 3 on 12 September. Finish the fold: what was the balance on 7 September, and what is it now?",
+          "hints": [
+            "Which events had happened by 7 September?"
+          ],
+          "solution": "Fold only events on or before the date. On 7 September: 10 − 4 = 6. Now: 10 − 4 + 5 − 3 = 8. The same fold answers both questions; the only difference is where it stops. That is the 'state at any past date' that a table holding only the latest balance cannot give.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Stops the fold at the requested date.",
+            "Gives both balances.",
+            "Explains why a latest-balance table cannot answer the first question."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Three writers read the stream at version 1 with a balance of 10. They try to spend 8, 3 and 1, appending in that order with expected version 1. On a conflict each reloads and decides again. What happens to each spend, and what is the final balance?",
+          "hints": [
+            "After a conflict, the writer decides again with the new balance."
+          ],
+          "solution": "The 8 succeeds and the stream moves to version 2 with a balance of 2. The 3 conflicts, reloads at version 2, sees a balance of 2 and is rejected by the invariant. The 1 conflicts, reloads at version 2, still sees 2, and succeeds at expected version 2: the final balance is 1, at version 3. The expected-version check forces each decision to use current state.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Traces each writer through conflict and reload.",
+            "Rejects the spend that would go negative.",
+            "Gives the final balance and version."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "A learner's stream has 12,345 events and takes too long to load. You add a snapshot every 1,000 events. How many events does a load now read after the snapshot, and what must a snapshot record?",
+          "hints": [
+            "Which snapshot is the most recent one?"
+          ],
+          "solution": "The latest snapshot is at event 12,000, so the load reads the snapshot and the 345 events after it, instead of all 12,345. The snapshot must record the folded state, the stream version it reflects and the snapshot schema version, so it can be discarded and rebuilt when the fold logic changes. Snapshots are a cache; the events remain the record.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Computes the events read after the snapshot.",
+            "Records the state, its version and a schema version.",
+            "Treats snapshots as rebuildable."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "Should a learner's display-name setting be event-sourced so its history is kept?",
+          "hints": [
+            "What would folding this stream ever be used for?"
+          ],
+          "solution": "Probably not. Nobody needs to fold display-name history to make a decision, and there is no invariant enforced over it. A normal row with an audit log of changes gives history at a fraction of the cost. Event sourcing earns its cost when the history itself is the business record, as with credits or bookings.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Asks whether decisions depend on the history.",
+            "Offers an audit log as the cheaper alternative."
+          ]
         }
       ]
     },
@@ -1073,6 +1336,14 @@
           "Identifies asynchronous projection lag as the cause.",
           "Proposes read-your-writes using the command's position or an optimistic UI.",
           "States the cost of each fix and monitors lag."
+        ],
+        "hints": [
+          "The spend was committed. Which side of the system does the dashboard read from?",
+          "One fix makes the read wait; the other makes the screen honest while it waits."
+        ],
+        "pitfalls": [
+          "Treating projection lag as lost data.",
+          "Fixing lag by reading the write model everywhere, which removes the reason for CQRS."
         ]
       },
       "quiz": {
@@ -1099,6 +1370,63 @@
           "section": "CQRS",
           "reviewed": "2026-11-08",
           "scope": "Author article, including when not to use the pattern."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Using the lesson's code: grant 10, spend 3, then grant 5, keeping the position returned by the last grant. Run `project(limit=2)`. What do `query('learner-7')` and `query('learner-7', at_least=position)` return?",
+          "hints": [
+            "Count how many events the projector has applied."
+          ],
+          "solution": "The last grant returns position 3. After projecting two events the projection is at position 2 with a balance of 10 − 3 = 7. The plain query returns 7; the read-your-writes query returns 'stale (projection at 2, need 3)'. After the projector catches up, the balance is 12.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Tracks the returned position.",
+            "Gives both query results.",
+            "States the caught-up balance."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "The projector stores balances in one store and its position in another. It applies event 2 (spend 3), then crashes before saving the new position. On restart it resumes from the saved position. What balance does it end with after all three events, and how do you fix it?",
+          "hints": [
+            "Which saved position does the restarted projector read?"
+          ],
+          "solution": "The saved position is still 1, so event 2 is applied again: 10 − 3 − 3 + 5 = 9 instead of 12. Save the position in the same transaction as the balance update, or make each update idempotent by recording applied event IDs. Then a restart resumes exactly once from where it committed.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Shows the event applied twice.",
+            "Gives the wrong balance.",
+            "Commits position and update together, or deduplicates by event ID."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "Finance wants a new 'credits spent per week' report covering all history. How do you build it in a CQRS system without disturbing the dashboard?",
+          "hints": [
+            "Projections are disposable; the log is the source."
+          ],
+          "solution": "Add a new projection that starts at position 0 and replays the whole log into its own table, then keeps up with new events. The dashboard projection is unaffected. Once the new projection has caught up, expose it to finance. This works only while the log keeps all events; if retention has removed old ones, rebuild from an archive or snapshot.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Builds a separate projection from position 0.",
+            "Leaves the existing read model alone.",
+            "Notes the dependence on log retention."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "An admin screen edits workshop titles and lists them in a table. A teammate proposes CQRS with a separate read model. Is it worth it?",
+          "hints": [
+            "What would the read model do differently from the write model here?"
+          ],
+          "solution": "No. Reads and writes use the same shape, there is no complex invariant and the load is small. CQRS would add a projection, lag and a second model to maintain. Use one table with ordinary queries. Consider CQRS when read needs diverge strongly from write rules or scale.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Compares read and write shapes.",
+            "Names the cost of lag and extra models."
+          ]
         }
       ]
     },
@@ -1147,8 +1475,74 @@
           "Identify manual intervention and distinguish compensation from rollback."
         ],
         "solution": "Track reservation, payment pending/uncertain, confirmed, release pending and manual-intervention states durably. Reconcile uncertain charges before charging again or releasing as failed. A permanent charge failure can trigger reservation release; failed release/refund requires an owner and retry/reconciliation. An email has no true transactional inverse.",
-        "solutionFormat": "prose"
-      }
+        "solutionFormat": "prose",
+        "hints": [
+          "List the states first, then the events that move between them. Every external call needs an 'uncertain' outcome.",
+          "What should happen when the compensation itself fails?"
+        ],
+        "pitfalls": [
+          "Releasing the seat when the payment outcome is unknown.",
+          "Treating a refund as erasing the charge.",
+          "Having no owner for the manual-intervention state."
+        ]
+      },
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Fill in the missing transitions from `payment-uncertain`. The saga queries the provider by its reference. What are the possible results, and which state does each lead to?",
+          "hints": [
+            "A query can return three answers, not two."
+          ],
+          "solution": "If the provider confirms the charge, move to `confirmed` and finish the booking. If it confirms no charge was made, move to `release-pending` and free the seat, or retry the charge with the same idempotency key if the product allows. If it still cannot tell, stay in `payment-uncertain`, retry the query with backoff, and move to `manual-intervention` after a deadline. Never charge again with a new key while uncertain.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Covers charged, not charged and still unknown.",
+            "Keeps the same idempotency key on any retry.",
+            "Escalates to manual intervention after a deadline."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "The seat is held for 15 minutes. Payment stays uncertain for 20 minutes, the hold expires and another learner takes the seat. Then the provider confirms the first charge. What now, and how would you prevent it?",
+          "hints": [
+            "Which timer fired while the saga was still waiting?"
+          ],
+          "solution": "The learner has paid for a seat that is gone. Compensate by refunding, or offer a place if capacity can grow, and tell the learner. Prevent it by extending the hold while payment is uncertain, by never expiring a hold in `payment-uncertain` without first reconciling, and by alerting on long uncertainty. Expiry is a timer event in the state machine, not a background cleanup.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Recognises a paid booking without a seat.",
+            "Compensates with a refund and notifies the learner.",
+            "Ties expiry to the payment state."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "Should this workflow use an orchestrator, a service that drives the steps, or choreography, where services react to each other's events? Justify the choice for reserve, charge and confirm.",
+          "hints": [
+            "Who can answer 'what state is this booking in?' in each design?"
+          ],
+          "solution": "Use an orchestrator. The flow has timeouts, an uncertain state and compensation that must be decided in one place, and support staff need to see where each booking is. Choreography suits short flows with few branches; here it would spread the state across three services and make 'where is booking B9?' hard to answer. The orchestrator must persist its state durably.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Chooses based on branching, timeouts and visibility.",
+            "Requires durable orchestrator state.",
+            "States when choreography would fit."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "Booking and an internal credits ledger live in the same database. A teammate proposes a saga with compensation between them. Is that needed?",
+          "hints": [
+            "Can one transaction cover both writes?"
+          ],
+          "solution": "No. Both writes are in one database, so one local transaction keeps them consistent with real rollback, which is simpler and stronger than compensation. Use a saga only when steps span systems that cannot share a transaction.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Checks where the two writes live.",
+            "Prefers a local transaction."
+          ]
+        }
+      ]
     },
     {
       "id": "security",
