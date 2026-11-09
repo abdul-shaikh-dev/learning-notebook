@@ -47,7 +47,7 @@ function practiceView(l,print=false,p=null){
  const item=(s,i)=>{const n=i+1,id='practice-'+n,label=PRACTICE_KINDS[s.kind]||'Practice';
   const hints=(s.hints||[]).map((hint,j)=>print?'<h5>Hint '+(j+1)+'</h5><p>'+escapeText(hint)+'</p>':'<details class="challenge-hint"><summary>Hint '+(j+1)+'</summary><p>'+escapeText(hint)+'</p></details>').join('');
   const solution=workedSolution(s)+exerciseExplanation(s);
-  return '<li class="practice-step" data-practice-step="'+n+'"><h3 id="'+id+'-title"><span class="practice-step-number">Step '+n+'</span> '+escapeText(label)+'</h3><p>'+(p?lessonText(p,s.prompt):proseText(s.prompt))+'</p>'+
+  return '<li class="practice-step" data-practice-step="'+n+'"><h3><span class="practice-step-number">Step '+n+'</span> '+escapeText(label)+'</h3><p>'+(p?lessonText(p,s.prompt):proseText(s.prompt))+'</p>'+
    (s.starter?'<pre class="example"><code>'+escapeText(s.starter)+'</code></pre>':'')+
    '<h4>Check your result</h4>'+learningList(s.checks)+
    (hints?'<section aria-label="Optional hints for step '+n+'">'+hints+'</section>':'')+

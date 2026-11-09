@@ -39,6 +39,7 @@ context.location.hash='#topic/fixture-ladders/plain';vm.runInNewContext('renderC
 assert.ok(!element('main').innerHTML.includes('lesson-ladder'));
 // Print packs show every step's solution without attempt boxes.
 const printed=vm.runInNewContext('practiceView',context)(lesson,true);
+assert.equal((printed.match(/\sid="/g)||[]).length,0,'Printed ladders carry no IDs, since a pack repeats them per lesson');
 assert.ok(printed.includes('<h4>Worked solution</h4>')&&printed.includes('Answer 2 &lt;i&gt;.')&&!printed.includes('data-attempt')&&!printed.includes('id="lesson-ladder"'));
 
 // Search: step prompts are indexed with the lesson.
