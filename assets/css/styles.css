@@ -102,3 +102,4 @@ footer{border-top:1px solid var(--line);background:var(--surface);padding:20px;t
 /* Inline code in lesson prose: sized with the sentence, wraps long identifiers, readable in both themes and print. */
 :is(p,li,dd,td,figcaption)>code{font-size:.88em;line-height:inherit;padding:.08em .32em;border:1px solid var(--line);border-radius:4px;background:var(--code-bg);color:var(--text);overflow-wrap:anywhere;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 :is(p,li,dd,td,figcaption) a>code{color:inherit}
+.practice-steps{list-style:none;padding:0;margin:0}.practice-step{border-top:1px solid var(--line);padding-top:20px;margin-top:20px}.practice-step h3{margin-top:0}.practice-step-number{display:block;font-size:var(--size-meta);font-weight:650;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}.practice-step summary{cursor:pointer;font-weight:650;min-height:44px;padding:10px 0}

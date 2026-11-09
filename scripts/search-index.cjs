@@ -6,7 +6,7 @@ function searchEntries(){
  const result=[];const add=(p,kind,title,href,text,summary)=>result.push({path:p.id,course:p.title,kind,title,href,text:plain(text),summary:plain(summary)});
  for(const p of readPaths().filter(p=>p.status==='ready')){
   add(p,'Course',p.title,p.href||'#path/'+p.id,[p.description,p.prerequisites,p.outcomes],p.description);
-  if(Array.isArray(p.lessons))for(const l of p.lessons)add(p,'Lesson',l.title,'#topic/'+p.id+'/'+l.id,[l.takeaway,l.sections,l.exercise?.prompt,l.diagram?.summary,l.visual],l.takeaway);
+  if(Array.isArray(p.lessons))for(const l of p.lessons)add(p,'Lesson',l.title,'#topic/'+p.id+'/'+l.id,[l.takeaway,l.sections,l.exercise?.prompt,(l.practice||[]).map(step=>step.prompt),l.diagram?.summary,l.visual],l.takeaway);
   for(const t of p.glossary?.terms||[])add(p,'Glossary',t.term,'#glossary/'+p.id,[t.term,t.definition],t.definition);
   for(const t of p.resources?.tasks||[])add(p,'Task',t.title,'#resources/'+p.id+'/'+t.id,[t.goal,t.steps,t.notes],t.goal);
   for(const f of p.resources?.files||[]){const source=path.resolve(root,f.href);if(!source.startsWith(root+path.sep))throw Error('Unsafe search source');add(p,'File',path.basename(f.href),f.href,[f.description,fs.readFileSync(source,'utf8')],f.description);}

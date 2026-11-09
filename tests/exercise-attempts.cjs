@@ -4,7 +4,7 @@ process.chdir(process.env.LEARNING_REPO||path.resolve(__dirname,'..'));
 const DAY=864e5,T0=Date.UTC(2026,9,1);
 const exercise=n=>({prompt:'Write `step '+n+'`.',checks:['Names the step.','Gives a reason.'],solution:'Step '+n+' because <it> matters.',solutionFormat:'prose'});
 const quiz={question:'Q?',options:['A','B'],correct:0,explanation:'A.'};
-const paths=[{id:'git',title:'Git',status:'ready',stages:[],lessons:[{id:'commit',title:'1. Commit',quiz,exercise:exercise(1)},{id:'branch',title:'2. Branch',quiz,exercise:exercise(2)}]},
+const paths=[{id:'git',title:'Git',status:'ready',stages:[],lessons:[{id:'commit',title:'1. Commit',quiz,exercise:exercise(1),practice:[{kind:'completion',...exercise(4)},{kind:'variation',...exercise(5)}]},{id:'branch',title:'2. Branch',quiz,exercise:exercise(2)}]},
  {id:'sql',title:'SQL',status:'ready',stages:[],lessons:[{id:'joins',title:'1. Joins',quiz,exercise:exercise(3)}]}];
 const key=id=>'learning-notebook:path:'+id+':exercises:v1';
 // A small DOM: enough elements for one attempt box, with click and input handlers.
@@ -116,4 +116,21 @@ function make(initial={}){
  const s=P.summary(T0),c=s.started.find(c=>c.p.id==='git');
  assert.equal(c.review.attempted,1);assert.equal(s.attempted,1);assert.equal(s.review.dueExercises,1);
  const html=P.view(T0);assert(html.includes('Exercises attempted')&&html.includes('1 exercise attempted')&&html.includes('1 exercise due for review')&&html.includes('Review 1 exercise'));}
-console.log('PASS: exercise attempts: saving, capped and cleared answers, solution after an attempt or on request, ratings and re-rating, review scheduling and page, backups with merge and validation, and progress counts.');
+// Practice ladder steps share the exercise store under "<lesson>/practice/<n>", with review and backups.
+{const {B,R,saved,flush,path}=make({[key('git')]:JSON.stringify({'commit/practice/2':{answer:'Step two',saved:T0},'commit/practice/5':{answer:'x',saved:T0},'gone/practice/1':{answer:'x',saved:T0},'commit/practice/':{answer:'x',saved:T0}})}),git=path('git');
+ assert.deepEqual(Object.keys(R.readExercises('git')),['commit/practice/2'],'Only steps 1-4 of a known lesson are kept');
+ const record={id:'commit/practice/1'},html=R.attemptView(git,record,'practice-1','<p>SOLUTION</p>');
+ assert(html.includes('data-attempt="commit/practice/1"')&&html.includes('for="practice-1-answer"'));
+ const {parts,container}=box('commit/practice/1','practice-1');R.bindAttempt(container,git,record,()=>T0);
+ parts.textarea.value='Ladder try';parts.textarea.events.input();flush();parts.compare.click();parts.ratings[2].click();
+ assert.deepEqual([saved('git')['commit/practice/1'].answer,saved('git')['commit/practice/1'].rating,saved('git').commit],['Ladder try','missed',undefined],'A step never touches the lesson exercise');
+ const item=R.items(T0).find(i=>i.key==='commit/practice/1');
+ assert(item&&item.question.title==='Commit · Practice 1'&&item.question.href==='#topic/git/commit'&&item.question.exercise.prompt==='Write `step 4`.');
+ const view=R.view(T0);assert(view.includes('Git · Commit · Practice 1')&&view.includes('data-attempt="commit/practice/1"'));
+ // A step removed from the course stays scheduled but is not shown until its content exists.
+ R.rate(git,'commit/practice/4','missed',null,T0);assert(!R.view(T0).includes('Practice 4'));
+ const env=answers=>JSON.stringify({app:'learning-notebook',version:1,progress:{paths:{git:{read:[],assessed:[],exercises:answers}},financial:null,lastLesson:null}});
+ assert.doesNotThrow(()=>B.parse(env({'commit/practice/3':{answer:'x',saved:T0}})));
+ for(const bad of ['commit/practice/9','gone/practice/1','commit/practice/0'])assert.throws(()=>B.parse(env({[bad]:{answer:'x',saved:T0}})),/unknown lesson/,bad);
+ assert.equal(JSON.parse(B.create()).progress.paths.git.exercises['commit/practice/1'].answer,'Ladder try');}
+console.log('PASS: exercise attempts: saving, capped and cleared answers, solution after an attempt or on request, ratings and re-rating, review scheduling and page, backups with merge and validation, progress counts, and practice-ladder steps.');
