@@ -729,7 +729,15 @@
           "Count all 45 alerts in the second denominator.",
           "Do not interpret 75% detection as 75% alert precision."
         ],
-        "solutionFormat": "prose"
+        "solutionFormat": "prose",
+        "hints": [
+          "Write the two denominators before dividing: all failures, then all alerts.",
+          "Alerts include failures and successes."
+        ],
+        "pitfalls": [
+          "Using the 20 failures as the denominator for both questions.",
+          "Reading a detection rate as the share of alerts that are real."
+        ]
       },
       "quiz": {
         "question": "A condition B has probability zero in your model. Can you use P(A and B)/P(B)?",
@@ -748,6 +756,61 @@
           "section": "3.3, multiplication rule and addition rule",
           "reviewed": "2026-10-02",
           "scope": "Introductory probability. Counts in lessons are fictional and probabilities depend on the stated sampling model."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "In the lesson's 100 files, 10 are corrupted, and the checker flags 8 corrupted and 9 clean files. Supply the two missing conditional probabilities: P(flagged | clean) and P(clean | not flagged).",
+          "hints": [
+            "Fill in all four cells of the flagged/not-flagged by corrupted/clean table first."
+          ],
+          "solution": "Clean files: 90, of which 9 are flagged, so P(flagged | clean) = 9 / 90 = 0.1. Files not flagged: 100 − 17 = 83, of which 90 − 9 = 81 are clean, so P(clean | not flagged) = 81 / 83 ≈ 0.976. Each question has its own denominator: clean files, then unflagged files.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Uses clean files as the first denominator.",
+            "Uses unflagged files as the second.",
+            "Computes both values."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Same checker, which flags 80% of corrupted files and 10% of clean ones, but now 10 of 1,000 files are corrupted. What is P(corrupted | flagged)?",
+          "hints": [
+            "Count flagged corrupted and flagged clean files separately."
+          ],
+          "solution": "Flagged corrupted files: 10 × 0.8 = 8. Flagged clean files: 990 × 0.1 = 99. P(corrupted | flagged) = 8 / (8 + 99) = 8 / 107 ≈ 0.075, down from about 0.471 in the lesson. The checker did not change; the rarer corruption made most flags false.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Applies each rate to its own group.",
+            "Computes the new conditional probability.",
+            "Explains the change through the base rate."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "P(A) = 0.3 and P(B) = 0.5. Are A and B independent if P(A and B) = 0.15? If P(A and B) = 0.2? And if A and B are disjoint?",
+          "hints": [
+            "Compute P(A | B) in each case and compare it with P(A)."
+          ],
+          "solution": "Independence means P(A and B) = P(A) × P(B) = 0.15. With 0.15 they are independent: P(A | B) = 0.15 / 0.5 = 0.3 = P(A). With 0.2, P(A | B) = 0.4, so learning B changes A: dependent. If they are disjoint, P(A and B) = 0, so P(A | B) = 0 ≠ 0.3: disjoint events with positive probabilities are always dependent.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Uses the product rule as the test.",
+            "Decides each of the three cases."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "A vendor says its fraud detector 'catches 99% of fraud'. Is that enough to decide whether its alerts are worth investigating?",
+          "hints": [
+            "Which conditional probability does the 99% describe?"
+          ],
+          "solution": "No. 99% is P(alert | fraud). To know what share of alerts are fraud you also need the false alert rate on legitimate payments and the fraud base rate in your traffic. Ask for both, or run the detector on a labelled sample of your own payments.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Names the missing false alert rate and base rate."
+          ]
         }
       ]
     },
@@ -788,7 +851,15 @@
           "Applies sensitivity to outages and the false-positive rate to healthy checks.",
           "Divides real alerts by all alerts."
         ],
-        "solutionFormat": "prose"
+        "solutionFormat": "prose",
+        "hints": [
+          "Split the 100,000 checks into outage and healthy checks first.",
+          "Apply 90% to one group and 2% to the other."
+        ],
+        "pitfalls": [
+          "Applying the false-positive rate to all checks instead of healthy ones.",
+          "Reporting 90% as the share of alerts that are real."
+        ]
       },
       "quiz": {
         "question": "A rare condition is tested with a very accurate test. Why can most positive results still be false?",
@@ -807,6 +878,60 @@
           "section": "Examples: drug testing",
           "reviewed": "2026-11-08",
           "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "In the lesson's fraud rule (95% sensitivity, 5% false positive rate), the base rate rises to 10%. Supply P(flagged) and P(fraud | flagged).",
+          "hints": [
+            "Positives come from fraud cases and from false alarms."
+          ],
+          "solution": "P(flagged) = 0.95 × 0.10 + 0.05 × 0.90 = 0.095 + 0.045 = 0.140. P(fraud | flagged) = 0.095 / 0.140 ≈ 0.679. With ten times more fraud, about two thirds of flags are real instead of about 16%.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Uses total probability for P(flagged).",
+            "Divides the true-flag share by it."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Back to a 1% base rate, but the false positive rate is halved to 2.5%. What fraction of flags are fraud now?",
+          "hints": [
+            "Which term in the denominator is larger?"
+          ],
+          "solution": "P(flagged) = 0.95 × 0.01 + 0.025 × 0.99 = 0.0095 + 0.02475 = 0.03425. P(fraud | flagged) = 0.0095 / 0.03425 ≈ 0.277. Halving false alarms raised precision from about 16% to about 28%; with rare fraud, the false positive rate matters more than sensitivity.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Recomputes P(flagged).",
+            "Compares with the original posterior."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "A payment is flagged by the rule, giving P(fraud) ≈ 0.161. A second, independent rule with the same rates also flags it. Use 0.161 as the new prior: what is P(fraud) now?",
+          "hints": [
+            "Replace the 1% base rate with 0.161."
+          ],
+          "solution": "P(fraud | both) = 0.95 × 0.161 / (0.95 × 0.161 + 0.05 × 0.839) ≈ 0.153 / 0.195 ≈ 0.785. Each independent flag is evidence that updates the previous posterior. If the rules share inputs, their flags are not independent and this overstates the evidence.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Uses the first posterior as the prior.",
+            "Computes the updated probability.",
+            "Notes the independence assumption."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "The rule is moved to run only on payments that another system has already flagged, where 20% are fraud. Can you keep quoting '16% of flags are fraud'?",
+          "hints": [
+            "Which input changed?"
+          ],
+          "solution": "No. The base rate is now 20%: P(fraud | flagged) = 0.95 × 0.2 / (0.95 × 0.2 + 0.05 × 0.8) = 0.19 / 0.23 ≈ 0.826. Recompute the posterior for each population the rule is applied to, and check that the rates still hold there.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Recomputes with the new base rate."
+          ]
         }
       ]
     },
@@ -900,7 +1025,15 @@
           "Do not average 2 and 10 without weights.",
           "Do not claim every batch costs exactly 80."
         ],
-        "solutionFormat": "prose"
+        "solutionFormat": "prose",
+        "hints": [
+          "Multiply each cost by its probability, then add.",
+          "For 20 operations, linearity lets you add expected costs."
+        ],
+        "pitfalls": [
+          "Averaging 2 and 10 without weights.",
+          "Claiming every batch of 20 costs exactly 80."
+        ]
       },
       "quiz": {
         "question": "Expected cost is 4, but outcomes are 2 or 10. Is the calculation necessarily wrong?",
@@ -919,6 +1052,60 @@
           "section": "4.2, mean of a discrete probability distribution",
           "reviewed": "2026-10-02",
           "scope": "Finite distributions with stated probabilities; fictional job-cost examples are original."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "The lesson's job takes 1 second with probability 0.9 and 11 seconds with probability 0.1, with mean 2. Supply the variance and standard deviation, using Var = E[X²] − (E[X])².",
+          "hints": [
+            "Square each outcome before weighting."
+          ],
+          "solution": "E[X²] = 0.9 × 1 + 0.1 × 121 = 13. Var = 13 − 2² = 9, so the standard deviation is 3 seconds. A spread larger than the mean signals that the mean alone hides the slow runs.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Computes E[X²].",
+            "Subtracts the squared mean."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "A request fails with probability 0.2, independently each time, and is retried until it succeeds. What is the expected number of attempts, and what share of requests need more than 3?",
+          "hints": [
+            "The chance that the first k attempts all fail is 0.2 to the power k."
+          ],
+          "solution": "Attempts follow a geometric distribution with success probability 0.8, so the mean is 1 / 0.8 = 1.25 attempts. More than 3 attempts means the first 3 fail: 0.2³ = 0.008, or 0.8% of requests. The mean is small, but the tail decides how long to wait.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Uses 1 / p for the mean.",
+            "Computes the tail probability."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "You can pay 5 units for insurance against a 1% chance of losing 400 units. What is the expected loss without insurance, and does expected value settle the decision?",
+          "hints": [
+            "Compare the premium with probability times loss."
+          ],
+          "solution": "Expected loss = 0.01 × 400 = 4 units, less than the 5-unit premium, so on expected value alone you would not insure. Expected value ignores how much one loss of 400 would hurt. If that loss is unaffordable, paying 1 unit more than its expected cost can be the right choice.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Computes the expected loss.",
+            "Explains what expected value leaves out."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "Someone proposes setting the job's timeout to its expected duration, 2 seconds. What happens?",
+          "hints": [
+            "Which runs take longer than 2 seconds?"
+          ],
+          "solution": "Every 11-second run times out: 10% of runs fail, although nothing is wrong with them. Set timeouts from the distribution's tail, such as a high percentile plus margin, not from the mean.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Computes the share of runs that time out.",
+            "Recommends a percentile-based timeout."
+          ]
         }
       ]
     },
@@ -1022,7 +1209,15 @@
           "Keep the assumptions explicit.",
           "Do not say the observations became less variable."
         ],
-        "solutionFormat": "prose"
+        "solutionFormat": "prose",
+        "hints": [
+          "Standard error is sigma divided by the square root of n.",
+          "The margin is 1.96 standard errors."
+        ],
+        "pitfalls": [
+          "Saying the observations became less variable.",
+          "Dividing by n instead of the square root of n."
+        ]
       },
       "quiz": {
         "question": "A 95% interval for mean latency is [48,52] ms. Which claim follows?",
@@ -1041,6 +1236,60 @@
           "section": "8.1, confidence level and margin of error for known population standard deviation",
           "reviewed": "2026-10-02",
           "scope": "Known-sigma normal interval only. The course does not apply this formula to an unknown-sigma small sample."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Same model, sigma = 10 ms, but only 25 measurements, with mean 50 ms. Supply the standard error, the margin and the 95% interval.",
+          "hints": [
+            "The square root of 25 is 5."
+          ],
+          "solution": "Standard error = 10 / √25 = 2 ms. Margin = 1.96 × 2 = 3.92 ms. The interval is 50 ± 3.92, about [46.08, 53.92] ms, four times wider than with 400 measurements.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Computes the standard error.",
+            "Computes the margin and the interval."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "How many measurements would make the 95% margin 0.5 ms with sigma = 10 ms?",
+          "hints": [
+            "Square both sides after isolating √n."
+          ],
+          "solution": "Solve 1.96 × 10 / √n = 0.5: √n = 39.2, so n = 1,536.64. Round up to 1,537 measurements. Halving a margin needs four times as many observations, so precision gets expensive quickly.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Rearranges the margin formula for n.",
+            "Rounds up."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "Use a 99% interval instead, with z ≈ 2.576, for the lesson's 100 measurements. What is the interval, and why is it wider?",
+          "hints": [
+            "Only the multiplier changes."
+          ],
+          "solution": "Standard error is still 1 ms, so the margin is 2.576 ms and the interval is about [47.424, 52.576] ms. To cover the true mean in 99% of repeated samples instead of 95%, the procedure must use wider intervals.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Uses the new z value.",
+            "Explains the wider interval through coverage."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "The team wants to promise that individual requests finish within the 95% interval for the mean latency, [48.04, 51.96] ms. Is that a valid promise?",
+          "hints": [
+            "What does sigma = 10 ms say about individual requests?"
+          ],
+          "solution": "No. The interval describes uncertainty about the mean, not where individual requests fall; with sigma = 10 ms, many requests are far outside it. For individual requests, use percentiles of the observed latencies, such as p95 or p99.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Distinguishes the mean's interval from individual spread.",
+            "Proposes percentiles."
+          ]
         }
       ]
     },
@@ -1081,7 +1330,15 @@
           "Asks for effect size and an interval.",
           "Asks about pre-registration, multiple comparisons and independence."
         ],
-        "solutionFormat": "prose"
+        "solutionFormat": "prose",
+        "hints": [
+          "A p-value assumes the null hypothesis is true and asks how surprising the data are.",
+          "Which numbers would tell you how large the effect is?"
+        ],
+        "pitfalls": [
+          "Reading p as the probability that the null hypothesis is true.",
+          "Reporting significance without an effect size."
+        ]
       },
       "quiz": {
         "question": "A test gives p = 0.20. Which conclusion is justified?",
@@ -1100,6 +1357,61 @@
           "section": "NormalDist",
           "reviewed": "2026-11-08",
           "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Repeat the lesson's A/B test with twice the traffic and the same rates: 80 of 1,000 and 116 of 1,000 convert. Supply z and the two-sided p-value using the lesson's code.",
+          "hints": [
+            "Change only the four counts in the example."
+          ],
+          "solution": "The difference is still 0.036, but the standard error shrinks, so z ≈ 2.708 and p ≈ 0.0068, now below 0.05. The effect estimate is unchanged; more data made the same difference distinguishable from noise.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Runs the same calculation with the new counts.",
+            "Notes that the estimated difference did not change."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Twenty independent tests of changes with no real effect gave a 64% chance of at least one false positive. With a Bonferroni correction, each test uses 0.05 / 20. What is the chance now?",
+          "hints": [
+            "Compute the chance that all 20 tests stay non-significant first."
+          ],
+          "solution": "Each test uses α = 0.0025. The chance of at least one false positive is 1 − (1 − 0.0025)²⁰ ≈ 0.0488, just under 5% for the whole family. The cost is lower power: real effects need stronger evidence to be detected.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Divides alpha by the number of tests.",
+            "Computes the family-wide rate.",
+            "Names the loss of power."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "For the lesson's z ≈ 1.915, what is the one-sided p-value for 'the new page is better', and when is a one-sided test legitimate?",
+          "hints": [
+            "The two-sided p-value counts both tails."
+          ],
+          "solution": "One-sided p = 1 − Φ(1.915) ≈ 0.0278, half the two-sided value. It is legitimate only if the direction was declared before the data were seen and a result in the other direction would lead to the same decision as no difference. Switching to one-sided after seeing p = 0.056 is p-hacking.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Halves the two-sided p-value.",
+            "Requires the direction to be declared in advance."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "With 10 million users per arm, the new page improves conversion by 0.01 percentage points, p = 0.001. Should you ship it?",
+          "hints": [
+            "What does a large sample do to the p-value of a tiny effect?"
+          ],
+          "solution": "Significance only says the difference is unlikely to be noise; with 10 million users even tiny effects are significant. Look at the effect size and its interval: 0.01 points may not cover the cost of building and maintaining the change. Decide on the practical value, not the p-value.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Separates statistical significance from practical size.",
+            "Weighs effect against cost."
+          ]
         }
       ]
     },
@@ -1305,7 +1617,15 @@
           "Identify reverse causation.",
           "Do not infer intervention effects from an observed correlation."
         ],
-        "solutionFormat": "prose"
+        "solutionFormat": "prose",
+        "hints": [
+          "Which comes first in time, the incident or its report?",
+          "What would deleting reports change: the incidents, or what you can see of them?"
+        ],
+        "pitfalls": [
+          "Inferring that changing one variable changes the other from a correlation.",
+          "Ignoring reverse causation."
+        ]
       },
       "quiz": {
         "question": "Pearson correlation is zero. Which conclusion is justified?",
@@ -1324,6 +1644,61 @@
           "section": "mean, median, pvariance, variance and correlation",
           "reviewed": "2026-11-07",
           "scope": "Python 3.14 APIs; descriptions distinguish population summaries from sample estimates."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Compute the Pearson correlation for x = [1, 2, 3, 4, 5] and y = [2, 4, 5, 4, 5] with `statistics.correlation`, and describe the pattern.",
+          "hints": [
+            "Use `statistics.correlation(x, y)`."
+          ],
+          "solution": "The correlation is about 0.775: a fairly strong positive linear association, though y does not rise at every step. With only five points, one changed value would move it a lot, so report the data alongside the number.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Computes the coefficient.",
+            "Comments on the small sample."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Now y = x² for x = [−2, −1, 0, 1, 2]. What is the correlation, and what does it miss?",
+          "hints": [
+            "Positive and negative x values give the same y."
+          ],
+          "solution": "The correlation is 0. y is completely determined by x, but the relationship is a U shape, and Pearson correlation measures only straight-line association. Plot the data before concluding there is no relationship.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Computes the coefficient.",
+            "Explains that the relationship is not linear."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "Across cities, ice-cream sales and swimming accidents are correlated. Name the likely third variable and describe how you would check it with the data you have.",
+          "hints": [
+            "What drives both variables up in summer?"
+          ],
+          "solution": "Hot weather increases both ice-cream sales and swimming, and so accidents. Compare the association within groups of similar temperature, or include temperature in a regression. If the association largely disappears within those groups, temperature explains it. This removes only the confounders you measure.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Names the confounder.",
+            "Proposes stratifying or adjusting.",
+            "Notes the limit to measured confounders."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "Teams that attended a reliability course have fewer incidents. A manager wants to make the course mandatory to cut incidents. Does the data support that?",
+          "hints": [
+            "Who decided which teams attended?"
+          ],
+          "solution": "Not on its own. Teams that chose to attend may already care more about reliability, or have simpler systems: selection and confounding. To estimate the course's effect, randomise which teams attend first, or compare incident trends before and after attendance against similar teams that have not yet attended.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Names selection or confounding.",
+            "Proposes a randomised or comparative design."
+          ]
         }
       ]
     },

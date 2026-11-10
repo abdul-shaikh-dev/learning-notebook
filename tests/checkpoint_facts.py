@@ -953,4 +953,81 @@ for c in range(2, 5):  # ascending: the same item can be reused
     dp[c] = max(dp[c], dp[c - 2] + 3)
 expected = [f'It returns {dp[4]}']
 ''',
+    'practical-maths-statistics/conditional-probability/1': '''
+expected = [f'9 / 90 = {9 / 90:g}', f'81 / 83 ≈ {81 / 83:.3f}']
+''',
+    'practical-maths-statistics/conditional-probability/2': '''
+flagged_bad, flagged_good = 10 * 0.8, 990 * 0.1
+expected = [f'8 / 107 ≈ {flagged_bad / (flagged_bad + flagged_good):.3f}', f'about {8 / 17:.3f} in the lesson']
+''',
+    'practical-maths-statistics/conditional-probability/3': '''
+expected = [f'0.15 / 0.5 = {0.15 / 0.5:g}', f'P(A | B) = {0.2 / 0.5:g}']
+''',
+    'practical-maths-statistics/bayes-and-base-rates/1': '''
+flagged = 0.95 * 0.10 + 0.05 * 0.90
+expected = [f'= {flagged:.3f}', f'≈ {0.095 / flagged:.3f}']
+''',
+    'practical-maths-statistics/bayes-and-base-rates/2': '''
+flagged = 0.95 * 0.01 + 0.025 * 0.99
+expected = [f'= {flagged:.5f}', f'≈ {0.0095 / flagged:.3f}']
+''',
+    'practical-maths-statistics/bayes-and-base-rates/3': '''
+prior = round(0.95 * 0.01 / (0.95 * 0.01 + 0.05 * 0.99), 3)
+true, false = 0.95 * prior, 0.05 * (1 - prior)
+expected = [f'{true:.3f} / {true + false:.3f} ≈ {true / (true + false):.3f}']
+''',
+    'practical-maths-statistics/bayes-and-base-rates/4': '''
+expected = [f'0.19 / 0.23 ≈ {0.19 / 0.23:.3f}']
+''',
+    'practical-maths-statistics/expected-value/1': '''
+mean = 0.9 * 1 + 0.1 * 11
+square = 0.9 * 1 + 0.1 * 121
+expected = [f'0.1 × 121 = {square:g}', f'Var = {square:g} − 2² = {square - mean ** 2:g}', f'is {(square - mean ** 2) ** 0.5:g} seconds']
+''',
+    'practical-maths-statistics/expected-value/2': '''
+expected = [f'1 / 0.8 = {1 / 0.8:g} attempts', f'0.2³ = {0.2 ** 3:.3f}']
+''',
+    'practical-maths-statistics/expected-value/3': '''
+expected = [f'0.01 × 400 = {0.01 * 400:g} units']
+''',
+    'practical-maths-statistics/uncertainty-and-intervals/1': '''
+se = 10 / 25 ** 0.5
+expected = [f'= {se:g} ms', f'1.96 × 2 = {1.96 * se:.2f} ms', f'[{50 - 1.96 * se:.2f}, {50 + 1.96 * se:.2f}]']
+''',
+    'practical-maths-statistics/uncertainty-and-intervals/2': '''
+import math
+root = 1.96 * 10 / 0.5
+expected = [f'√n = {root:g}', f'n = {root ** 2:,.2f}', f'{math.ceil(root ** 2):,} measurements']
+''',
+    'practical-maths-statistics/uncertainty-and-intervals/3': '''
+expected = [f'[{50 - 2.576:.3f}, {50 + 2.576:.3f}]']
+''',
+    'practical-maths-statistics/hypothesis-tests/1': '''
+from math import sqrt
+from statistics import NormalDist
+a_conv, a_n, b_conv, b_n = 80, 1000, 116, 1000
+pooled = (a_conv + b_conv) / (a_n + b_n)
+z = (b_conv / b_n - a_conv / a_n) / sqrt(pooled * (1 - pooled) * (1 / a_n + 1 / b_n))
+expected = [f'z ≈ {z:.3f}', f'p ≈ {2 * (1 - NormalDist().cdf(z)):.4f}']
+''',
+    'practical-maths-statistics/hypothesis-tests/2': '''
+expected = [f'≈ {1 - (1 - 0.05 / 20) ** 20:.4f}']
+''',
+    'practical-maths-statistics/hypothesis-tests/3': '''
+from statistics import NormalDist
+from math import sqrt
+pooled = 98 / 1000
+z = (58 / 500 - 40 / 500) / sqrt(pooled * (1 - pooled) * (2 / 500))
+expected = [f'≈ {1 - NormalDist().cdf(z):.4f}']
+''',
+    'practical-maths-statistics/correlation-and-causation/1': '''
+from statistics import correlation
+expected = [f'about {correlation([1, 2, 3, 4, 5], [2, 4, 5, 4, 5]):.3f}']
+''',
+    'practical-maths-statistics/correlation-and-causation/2': '''
+from statistics import correlation
+xs = [-2, -1, 0, 1, 2]
+assert correlation(xs, [x * x for x in xs]) == 0
+expected = ['The correlation is 0.']
+''',
 }
