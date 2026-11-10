@@ -30,6 +30,8 @@ sys.path.insert(0, str(PRACTICE))
 import release_app  # noqa: E402
 import readiness_drill  # noqa: E402
 import check_manifests  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from practice_facts import practice_failures  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
@@ -369,6 +371,80 @@ def questions():
             yield f'stage/{stage}/{i + 1}', q
 
 
+# Practice ladder answers that are numbers or follow from the manifests (see tests/practice_facts.py).
+def practice_fit():
+    free = 2000 - 1400
+    fit = min(3, free // millicores('250m'))
+    return [f'2,000m − 1,400m = {free}m', f'so {fit} fit, using {fit * 250}m']
+
+
+def practice_hpa():
+    import math
+    usage, request, target, replicas = 140, 100, 70, 2
+    desired = math.ceil(replicas * (usage / request * 100) / target)
+    return [f'140 / 100 = {usage * 100 // request}%', f'ceil(2 × 140 / 70) = {desired}', f'stays at {replicas}']
+
+
+def _bounds(replicas, surge=0.25, unavailable=0.25):
+    import math
+    return replicas + math.ceil(replicas * surge), replicas - math.floor(replicas * unavailable)
+
+
+def practice_rollout_four():
+    most, least = _bounds(4)
+    return [f'at most {most} Pods exist', f'at least {least} must stay available']
+
+
+def practice_rollout_ten():
+    most, least = _bounds(10)
+    return [f'at most {most} Pods exist', f'at least {least} stay available']
+
+
+def practice_spread():
+    counts = {'a': 0, 'b': 0}
+    for _ in range(3):  # place each replica in the emptiest zone, which keeps skew at most 1
+        counts[min(counts, key=counts.get)] += 1
+    assert max(counts.values()) - min(counts.values()) <= 1
+    return [f'the spread is {max(counts.values())} and {min(counts.values())}']
+
+
+def practice_anti_affinity():
+    nodes, replicas = 2, 3
+    placed = min(nodes, replicas)  # required anti-affinity allows one replica per node
+    assert (placed, replicas - placed) == (2, 1)
+    return ['Two replicas run on separate nodes and the third stays Pending']
+
+
+def practice_peers():
+    pods = [('monitoring', 'prometheus'), ('monitoring', 'grafana'), ('notebook-lab', 'prometheus')]
+    combined = [p for p in pods if p == ('monitoring', 'prometheus')]
+    separate = [p for p in pods if p[0] == 'monitoring' or (p[0] == 'notebook-lab' and p[1] == 'prometheus')]
+    assert combined == [('monitoring', 'prometheus')] and len(separate) == 3
+    return ['allows only the `prometheus` Pod in `monitoring`', 'including `grafana`', 'including the debug Pod']
+
+
+def practice_canary():
+    return [f'About {1000 * 10 // (90 + 10)}, a tenth']
+
+
+def practice_rbac_table():
+    role = kind('rbac.json', 'Role')
+
+    def can(verb, resource):
+        return any(verb in r['verbs'] and resource in r['resources'] for r in role['rules'])
+    word = lambda allowed: 'yes' if allowed else 'no'
+    return [f'`get pods/log`: {word(can("get", "pods/log"))}', f'`delete pods`: {word(can("delete", "pods"))}',
+            f'`get secrets`: {word(can("get", "secrets"))}']
+
+
+PRACTICE_FACTS = {
+    'resources/1': practice_fit, 'resources/3': practice_hpa,
+    'rolling-updates/1': practice_rollout_four, 'rolling-updates/2': practice_rollout_ten,
+    'scheduling/2': practice_spread, 'scheduling/3': practice_anti_affinity,
+    'network-policy/1': practice_peers, 'ingress-gateway/2': practice_canary, 'rbac/1': practice_rbac_table,
+}
+
+
 def main():
     seen, failures = set(), []
     for key, q in questions():
@@ -386,11 +462,12 @@ def main():
             continue
         if answer != q['options'][q['correct']]:
             failures.append(f'{key}: the lab supports {answer!r}, the question marks {q["options"][q["correct"]]!r}')
+    failures += practice_failures(COURSE, PRACTICE_FACTS)
     failures += [f'{key}: fact has no question' for key in set(FACTS) | set(SOURCED) if key not in seen]
     if failures:
         sys.exit('Kubernetes checkpoint facts failed:\n' + '\n'.join(failures))
     print(f'PASS: {len(FACTS)} Kubernetes checkpoint answers checked against the course labs and manifests; '
-          f'{len(SOURCED)} cited from the lessons.')
+          f'{len(SOURCED)} cited from the lessons; {len(PRACTICE_FACTS)} practice ladder answers computed.')
 
 
 if __name__ == '__main__':

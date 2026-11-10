@@ -60458,7 +60458,15 @@ const LEARNING_PATHS = [
             "Use correct units.",
             "Separate requested capacity from observed use."
           ],
-          "solutionFormat": "prose"
+          "solutionFormat": "prose",
+          "hints": [
+            "The scheduler places a Pod by its request, before it has used anything.",
+            "Compare the request with what the node still has unrequested, not with what it is using."
+          ],
+          "pitfalls": [
+            "Reading node CPU usage instead of requested totals.",
+            "Mixing millicores and cores."
+          ]
         },
         "quiz": {
           "question": "What is 100m CPU?",
@@ -60480,6 +60488,64 @@ const LEARNING_PATHS = [
           }
         ],
         "stage": "intermediate",
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "A node has 2,000m allocatable CPU, and Pods already on it request 1,400m. A Deployment of 3 replicas requests 250m each. Finish the fit calculation: how many replicas can the scheduler place there, and what happens to the rest?",
+            "hints": [
+              "Work in millicores throughout."
+            ],
+            "solution": "Unrequested capacity is 2,000m − 1,400m = 600m. Each replica needs 250m, so 2 fit, using 500m; the third would need 750m in total and stays Pending with a FailedScheduling event, even if the node's measured CPU is mostly idle. Fix it with another node or a justified smaller request, not by guessing.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Subtracts requested, not used, CPU.",
+              "Shows how many replicas fit and why.",
+              "Names the Pending state and the event to check."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "One container has a 500m CPU limit and needs 700m during a burst. Another has a 128Mi memory limit and grows to 150Mi. What happens to each?",
+            "hints": [
+              "Can the kernel take memory back from a process the way it can delay CPU time?"
+            ],
+            "solution": "The CPU-bound container is throttled to 500m, half a core: it slows down but keeps running. The memory-bound container is killed for exceeding its limit (OOMKilled, exit code 137) and restarted by the kubelet. CPU is compressible and memory is not, so a memory limit set too low shows up as restarts, not slowness.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Throttles CPU.",
+              "Kills the container on memory overrun.",
+              "Explains compressible versus incompressible resources."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "An HPA targets 70% average CPU utilization. Each Pod requests 100m and 2 replicas average 140m. How many replicas does the HPA ask for, and what would change if the request were 200m?",
+            "hints": [
+              "The HPA scales by current utilization divided by target utilization."
+            ],
+            "solution": "Utilization is usage over request: 140 / 100 = 140%. Desired replicas = ceil(2 × 140 / 70) = 4. With a 200m request the same usage is 70%, exactly on target, so it stays at 2. The request is the denominator of the scaling signal, so an arbitrary request distorts scaling.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Computes utilization against the request.",
+              "Applies the HPA formula with rounding up.",
+              "Shows how the request changes the outcome."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "For a latency-sensitive API, a teammate proposes setting requests equal to limits for CPU and memory. When is that the right call?",
+            "hints": [
+              "What does the node reserve, and what happens during a spike above it?"
+            ],
+            "solution": "It gives the Pod the Guaranteed QoS class, so it is evicted last under node pressure and gets predictable resources. The cost is reserved capacity that sits idle between bursts, and CPU throttling at the limit during spikes. It suits critical, steady services; bursty or batch workloads usually do better with requests below limits.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Names the Guaranteed QoS class.",
+              "States the idle-capacity and throttling cost.",
+              "Says which workloads it suits."
+            ]
+          }
+        ],
         "extraQuiz": [
           {
             "question": "What CPU do the two release-demo replicas request in total?",
@@ -60519,7 +60585,15 @@ const LEARNING_PATHS = [
             "Explain spare capacity.",
             "Keep readiness as a real gate."
           ],
-          "solutionFormat": "prose"
+          "solutionFormat": "prose",
+          "hints": [
+            "With `maxUnavailable: 0`, an old Pod is removed only after a new one is Ready.",
+            "Where would the extra, surge Pod run?"
+          ],
+          "pitfalls": [
+            "Disabling readiness to make a stuck rollout look healthy.",
+            "Expecting a progress deadline to roll back automatically."
+          ]
         },
         "quiz": {
           "question": "Does progressDeadlineSeconds automatically perform rollback?",
@@ -60541,6 +60615,65 @@ const LEARNING_PATHS = [
           }
         ],
         "stage": "intermediate",
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "A Deployment has 4 replicas with `maxSurge: 25%` and `maxUnavailable: 25%`. Kubernetes rounds surge up and unavailable down. Finish the bounds: the most Pods that can exist and the fewest that must stay available during the rollout.",
+            "hints": [
+              "Compute both percentages of 4 first, then round."
+            ],
+            "solution": "Surge is 25% of 4 = 1, so at most 5 Pods exist. Unavailable is 25% of 4 = 1, so at least 3 must stay available. The rollout can start a new Pod and stop an old one at the same time, so it needs room for one extra Pod.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Applies the percentages to the replica count.",
+              "Gives the upper and lower bounds."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "Same percentages, 10 replicas. What are the bounds now?",
+            "hints": [
+              "Which direction does each value round?"
+            ],
+            "solution": "25% of 10 is 2.5. Surge rounds up to 3, so at most 13 Pods exist. Unavailable rounds down to 2, so at least 8 stay available. Rounding favours availability in both directions: more room to add, less allowed to remove.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Rounds surge up and unavailable down.",
+              "Gives both bounds."
+            ],
+            "pitfalls": [
+              "Rounding both values the same way."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "Version 2 reads a new database column, and version 1 crashes if that column contains NULL. During the rollout both versions run at once. How do you release the schema and code safely?",
+            "hints": [
+              "Which Pods are reading the database halfway through the rollout?"
+            ],
+            "solution": "Expand, then contract. First add the column so that version 1 still works, for example with a default and no NULLs it cannot handle. Then roll out version 2. Only when no version 1 Pods remain, and rollback to it is no longer needed, tighten or remove what version 1 depended on. A rolling update guarantees mixed versions, so every step must work with both.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Recognises that both versions run together.",
+              "Orders the schema and code changes as expand and contract.",
+              "Keeps rollback possible."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "A rollout passed its `progressDeadlineSeconds` and the Deployment reports `ProgressDeadlineExceeded`. Should you wait for Kubernetes to roll it back?",
+            "hints": [
+              "What does the condition change on its own?"
+            ],
+            "solution": "No. The condition only reports the stall; Kubernetes does not undo the rollout. Diagnose first: events, the new Pods' readiness and logs, and scheduling. Then run `kubectl rollout undo` or fix forward. Automated rollback needs a separate tool or pipeline step that watches this condition.",
+            "solutionFormat": "prose",
+            "checks": [
+              "States what Kubernetes does on its own.",
+              "Diagnoses before undoing.",
+              "Names `kubectl rollout undo`."
+            ]
+          }
+        ],
         "visual": {
           "title": "Roll out without deleting healthy capacity",
           "intro": "Compare a ready candidate with a rollout stalled by failed readiness.",
@@ -60945,7 +61078,15 @@ const LEARNING_PATHS = [
             "Distinguish permission from preference/requirement.",
             "Explain single-node limitations."
           ],
-          "solutionFormat": "prose"
+          "solutionFormat": "prose",
+          "hints": [
+            "A taint keeps Pods away; a toleration only removes that barrier.",
+            "Which constraint actually says 'this node'?"
+          ],
+          "pitfalls": [
+            "Assuming a toleration attracts a Pod to a node.",
+            "Pinning workloads to one node and losing resilience."
+          ]
         },
         "quiz": {
           "question": "A toleration alone does what?",
@@ -60967,6 +61108,62 @@ const LEARNING_PATHS = [
           }
         ],
         "stage": "intermediate",
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "Node A has label `workload=demo` and taint `dedicated=ops:NoSchedule`. Node B has label `workload=demo` and no taint. A Pod has required affinity `workload=demo` and a toleration for `dedicated=ops`. Finish the table: which nodes may the Pod land on, and what would make it land only on node A?",
+            "hints": [
+              "Check each node against the affinity, then against the taint."
+            ],
+            "solution": "Both nodes match the affinity, and the toleration allows node A, so the Pod may land on either; scoring decides. To require node A, give A a label that B lacks, such as `dedicated=ops`, and require it in node affinity alongside the toleration. The taint keeps other Pods off A; the affinity keeps this Pod on it.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Checks each node against both constraints.",
+              "Combines a unique label in affinity with the toleration."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "A Deployment of 3 replicas uses topology spread with `maxSkew: 1` across zones `a` and `b`, with `whenUnsatisfiable: DoNotSchedule`. How can the replicas be spread, and what happens if zone `b` has no capacity?",
+            "hints": [
+              "Skew is the largest count minus the smallest count."
+            ],
+            "solution": "The difference between zones may be at most 1, so the spread is 2 and 1, in either zone. If zone `b` is full, putting all three in `a` would make the skew 3, so the third replica that cannot keep the skew stays Pending. With `ScheduleAnyway` it would be placed anyway, trading even spread for availability.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Gives the possible spread.",
+              "States that the unsatisfiable replica stays Pending.",
+              "Contrasts `ScheduleAnyway`."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "Three replicas use required pod anti-affinity on `kubernetes.io/hostname`, so no two share a node. The cluster has 2 nodes. What happens, and what softer option exists?",
+            "hints": [
+              "How many nodes have no replica yet when the third is scheduled?"
+            ],
+            "solution": "Two replicas run on separate nodes and the third stays Pending, because every node already holds one. Preferred anti-affinity, or topology spread with `ScheduleAnyway`, would place the third on a node that already has one while still spreading when possible. Use required anti-affinity only when sharing a node is truly unacceptable.",
+            "solutionFormat": "prose",
+            "checks": [
+              "States what happens to each replica.",
+              "Offers preferred anti-affinity or a soft spread."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "To make a database Pod 'stable', a teammate sets `nodeName` to one specific node. Is that a good idea?",
+            "hints": [
+              "What happens to this Pod if that node is drained?"
+            ],
+            "solution": "No. `nodeName` bypasses the scheduler, so resource checks and constraints are skipped, and if that node fails the Pod cannot move. Express the real need instead: node affinity for the storage or hardware it requires, and a StatefulSet with persistent volumes for stable identity and data.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Explains that `nodeName` bypasses the scheduler.",
+              "Names the loss of failover.",
+              "Proposes affinity and a StatefulSet."
+            ]
+          }
+        ],
         "extraQuiz": [
           {
             "question": "Why does the course omit hard multi-zone spread rules from the baseline?",
@@ -61006,7 +61203,15 @@ const LEARNING_PATHS = [
             "Verify enforcement prerequisites.",
             "Run allowed and denied probes."
           ],
-          "solutionFormat": "prose"
+          "solutionFormat": "prose",
+          "hints": [
+            "Check three things separately: the labels, the policy's meaning and whether the network plugin enforces policies at all.",
+            "A single successful probe proves nothing; you need an allowed one and a denied one."
+          ],
+          "pitfalls": [
+            "Calling isolation tested because `kubectl apply` succeeded.",
+            "Confusing a Service with no endpoints with a denied connection."
+          ]
         },
         "quiz": {
           "question": "Which claim is valid after apply alone?",
@@ -61028,6 +61233,61 @@ const LEARNING_PATHS = [
           }
         ],
         "stage": "intermediate",
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "The policy for `release-demo` must also allow Prometheus in namespace `monitoring`. Two drafts: (1) one `from` entry with both `namespaceSelector: monitoring` and `podSelector: app=prometheus`; (2) two separate entries, one with each selector. Pods: `prometheus` and `grafana` in `monitoring`, and a `prometheus`-labelled debug Pod in `notebook-lab`. Which Pods does each draft allow?",
+            "hints": [
+              "A `podSelector` alone selects Pods in the policy's own namespace."
+            ],
+            "solution": "Draft 1 combines the selectors, so it allows only the `prometheus` Pod in `monitoring`. Draft 2 lists alternatives: every Pod in `monitoring`, including `grafana`, plus any Pod in the policy's own namespace labelled `app=prometheus`, including the debug Pod. Draft 1 is what was intended; one extra dash turns AND into OR.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Treats selectors in one entry as AND.",
+              "Treats separate entries as OR.",
+              "Lists the allowed Pods for each draft."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "You add an Egress policy type with no egress rules to `release-demo`, to block outbound traffic. Its calls to an in-cluster service by name now fail. Why, and what rule do you add?",
+            "hints": [
+              "What does the Pod do before it can connect to a service name?"
+            ],
+            "solution": "Declaring Egress with no rules denies all outbound traffic, including DNS lookups to the cluster DNS service, so names no longer resolve. Add an egress rule allowing UDP and TCP port 53 to the DNS Pods in `kube-system`, then rules for each service it must reach.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Identifies DNS as the first thing blocked.",
+              "Allows port 53 to the cluster DNS Pods."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "A team asks whether NetworkPolicy can ensure that only the `orders` service may call `POST /refunds` on `payments`. Can it?",
+            "hints": [
+              "What does a NetworkPolicy rule match on?"
+            ],
+            "solution": "Only partly. NetworkPolicy works at layers 3 and 4: it can allow traffic from `orders` Pods to the `payments` port, but it cannot see HTTP methods or paths, or verify who is calling. Combine it with authentication between services, for example mTLS identities from a service mesh, and authorization in `payments` for the specific operation.",
+            "solutionFormat": "prose",
+            "checks": [
+              "States that NetworkPolicy cannot see HTTP methods or paths.",
+              "Adds service identity and application authorization."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "On a default kind cluster, the denied client still connects after you apply the policy. A teammate wants to mark the isolation test as passed because 'the policy is correct'. Should you?",
+            "hints": [
+              "Which component is responsible for enforcing the policy?"
+            ],
+            "solution": "No. The test shows that nothing enforced the policy; the default kind network plugin does not implement NetworkPolicy. Record the result as not enforced, and either install an enforcing plugin for the optional track or state that isolation is untested. A policy that is not enforced protects nothing.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Records the actual result.",
+              "Names plugin enforcement as the missing piece."
+            ]
+          }
+        ],
         "extraQuiz": [
           {
             "question": "Which of the two policy-client Pods does the app-ingress rule allow?",
@@ -61072,6 +61332,14 @@ const LEARNING_PATHS = [
             "Platform team owns Gateway, listeners and certificates.",
             "Application teams own their route objects in their own namespaces.",
             "Uses allowedRoutes to restrict which namespaces attach to which listener."
+          ],
+          "hints": [
+            "Separate the shared parts, entry point and certificates, from what each team changes.",
+            "Which object decides which namespaces may attach routes to a listener?"
+          ],
+          "pitfalls": [
+            "Letting every namespace attach routes to every listener.",
+            "Assuming traffic behind the Gateway is encrypted."
           ]
         },
         "quiz": {
@@ -61105,6 +61373,61 @@ const LEARNING_PATHS = [
             "section": "Spec: parentRefs, hostnames and rules",
             "reviewed": "2026-11-08",
             "scope": "Stable Kubernetes API concepts. Optional cluster execution and its recorded results are described in the practice guide."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "Using the lesson's `notebook` HTTPRoute, finish the routing table: where do requests for `notebook.example.test/api/orders`, `notebook.example.test/about` and `blog.example.test/api` go?",
+            "hints": [
+              "Host names are checked before paths."
+            ],
+            "solution": "`/api/orders` matches the `/api` prefix rule and goes to `release-demo` on port 8080. `/about` matches no path rule, so it falls to the rule with no match and goes to `web` on port 80. `blog.example.test` is not in the route's host names, so this route does not handle it; unless another route claims it, the Gateway returns 404.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Matches the path prefix.",
+              "Uses the fallback rule.",
+              "Checks the host name first."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "For a canary, the `/api` rule gets two backends: `release-demo` with weight 90 and `release-demo-v2` with weight 10. About how many of 1,000 API requests reach v2, and what should you watch?",
+            "hints": [
+              "The share is one weight divided by the sum of the weights."
+            ],
+            "solution": "About 100, a tenth of the requests: 10 / (90 + 10). Each request is assigned independently, so the actual number varies a little. Compare v2's error rate and latency with v1's over the same period before raising its weight, and keep the change reversible by editing the weights back.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Computes the share from the weights.",
+              "Compares v2 with v1 before increasing the weight."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "A cluster exposes 12 HTTP services, each as a `LoadBalancer` Service. What does that cost compared with one Gateway, and when is a `LoadBalancer` Service still the right choice?",
+            "hints": [
+              "What does each `LoadBalancer` Service ask the cloud provider to create?"
+            ],
+            "solution": "Twelve cloud load balancers, each billed and each with its own address and certificate handling, and no host or path routing. One Gateway gives a single entry point, TLS terminated once and routing to all twelve. A `LoadBalancer` Service still fits non-HTTP protocols or a single service that needs its own layer 4 entry point.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Counts the load balancers and their costs.",
+              "Says when layer 4 exposure still fits."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "A team needs to expose an MQTT broker on TCP port 8883. Should they write an Ingress for it?",
+            "hints": [
+              "Which protocols does the Ingress API describe?"
+            ],
+            "solution": "No. Ingress routes HTTP and HTTPS only. Use a `LoadBalancer` Service, or a Gateway with a TCP or TLS listener and a TCPRoute or TLSRoute if the chosen implementation supports them. Check which route types your GatewayClass implements.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Recognises that Ingress is HTTP only.",
+              "Names a layer 4 option."
+            ]
           }
         ],
         "extraQuiz": [
@@ -61146,7 +61469,15 @@ const LEARNING_PATHS = [
             "Include subresource and namespace scope.",
             "Explain indirect escalation."
           ],
-          "solutionFormat": "prose"
+          "solutionFormat": "prose",
+          "hints": [
+            "Creating a Pod lets you choose what that Pod mounts and which service account it runs as.",
+            "Think about what you could read from inside a Pod you created."
+          ],
+          "pitfalls": [
+            "Judging a Role only by the resources it names directly.",
+            "Granting wildcards for convenience."
+          ]
         },
         "quiz": {
           "question": "What does a namespaced RoleBinding determine?",
@@ -61168,6 +61499,61 @@ const LEARNING_PATHS = [
           }
         ],
         "stage": "intermediate",
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "Using the lesson's `pod-viewer` Role, finish the table for the `viewer` service account: can it `get pods/log`, `delete pods` and `get secrets` in `notebook-lab`?",
+            "hints": [
+              "Read the Role's rules: resources and verbs."
+            ],
+            "solution": "`get pods/log`: yes, so `kubectl logs` works. `delete pods`: no, the Role grants only get, list and watch. `get secrets`: no, Secrets are not listed. Subresources such as `pods/log` must be named explicitly; granting `pods` alone would not allow reading logs.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Checks each verb against each resource.",
+              "Notes that subresources are granted separately."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "The rules are moved into a ClusterRole. What can `viewer` read if it is bound with a RoleBinding in `notebook-lab`, and what if it is bound with a ClusterRoleBinding?",
+            "hints": [
+              "Which object decides where the rules apply?"
+            ],
+            "solution": "With a RoleBinding the permissions apply only in `notebook-lab`, even though the rules live in a ClusterRole; this is how one ClusterRole is reused across namespaces. With a ClusterRoleBinding, `viewer` can read Pods and logs in every namespace. The binding, not the role, sets the scope.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Scopes a RoleBinding to its namespace.",
+              "Scopes a ClusterRoleBinding to the whole cluster."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "A CI service account may `create` and `update` Deployments in `notebook-lab`, but nothing about Secrets. What can it indirectly access, and how would you limit that?",
+            "hints": [
+              "What can a Pod template mount?"
+            ],
+            "solution": "A Deployment creates Pods, and a Pod template can mount any Secret in the namespace or run as any service account there, so the CI account can read Secrets and borrow other accounts' permissions. Limit it with Pod Security admission, a policy engine that restricts mounts and service accounts, a namespace containing only what the workload needs, and reviewed manifests.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Explains escalation through Pod templates.",
+              "Proposes admission controls or namespace isolation."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "The deploy pipeline fails with 'forbidden' and someone proposes binding it to `cluster-admin` to unblock the release. Should you?",
+            "hints": [
+              "The error message names the exact verb and resource."
+            ],
+            "solution": "No. `cluster-admin` grants everything in every namespace, so a leaked pipeline token would control the whole cluster. Read the denied verb and resource from the error, grant that in a namespaced Role, and check it with `kubectl auth can-i`. Fix the permission, not the symptom.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Weighs the blast radius of the proposed binding.",
+              "Grants the specific denied permission in a namespace.",
+              "Verifies with `kubectl auth can-i`."
+            ]
+          }
+        ],
         "diagram": {
           "title": "Bindings connect an API identity to scoped rules",
           "summary": "The optional viewer grants observations, not secret reads or workload creation.",
