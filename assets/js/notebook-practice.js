@@ -7,7 +7,7 @@ const NotebookPractice=(()=>{
  function entry(p,l){const value=read(p.id)[l.id];return value&&typeof value.code==='string'&&value.code.length<=20000&&statuses.includes(value.status)?value:{code:l.exercise.starter,status:'not-started'};}
  function view(p,l){const value=entry(p,l);return `<div class="browser-practice"><label for="challenge-code">Your Python code</label><textarea id="challenge-code" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="20000" aria-describedby="challenge-editor-help">${escapeText(value.code)}</textarea><p id="challenge-editor-help">Ctrl+Enter runs the tests. Tab moves to the next control. Code runs in your browser; the first run loads about 14 MB of Python files.</p><div class="practice-actions"><button type="button" class="primary" id="challenge-run">Run tests</button><button type="button" id="challenge-stop" disabled>Stop</button><button type="button" id="challenge-download">Download my code</button></div><div id="challenge-result" role="status" aria-live="polite">Ready when you are.</div><div class="practice-progress"><label for="challenge-status">Practice status</label><select id="challenge-status">${statuses.map(s=>`<option value="${s}"${s===value.status?' selected':''}>${s==='not-started'?'Not started':s==='attempted'?'Attempted':'Solved'}</option>`).join('')}</select></div><p class="practice-note">Passing tests marks this solved. You can also update the status after working locally. Editing a solution marks it attempted. Reading progress stays separate.</p><p id="challenge-save" role="status">Drafts and practice status stay in this browser and are included in progress backups.</p><p class="practice-note">For offline tests, save this course from <a href="offline.html?course=python-problem-solving">Offline &amp; install</a>. Only the bundled Python standard library is available. Printed output is suppressed; return your answer.</p></div>`;}
  function overview(p){if(!p.lessons?.some(l=>l.exercise?.challenge))return '';const saved=read(p.id),lessons=p.lessons.filter(l=>l.exercise?.challenge);const solved=lessons.filter(l=>saved[l.id]?.status==='solved').length,attempted=lessons.filter(l=>saved[l.id]?.status==='attempted').length;return `<p class="practice-overview">Practice: ${solved} solved · ${attempted} attempted · ${lessons.length-solved-attempted} not started. Reading is tracked separately.</p>`;}
- function bind(p,l){dispose();dispose=()=>{};if(runnable(p,l)||l?.exercise?.challenge||(l?.sections||[]).some(s=>exampleRunnable(p,s)))prepare();else drop();bindExamples(p,l);if(runnable(p,l)){bindRunner(p,l);return;}if(!p||!l?.exercise?.challenge)return;
+ function bind(p,l){dispose();dispose=()=>{};if(runnable(p,l)||l?.exercise?.challenge||(l?.sections||[]).some(s=>exampleRunnable(p,s,l)))prepare();else drop();bindExamples(p,l);if(runnable(p,l)){bindRunner(p,l);return;}if(!p||!l?.exercise?.challenge)return;
   const code=document.getElementById('challenge-code');if(!code)return;
   const run=document.getElementById('challenge-run'),stop=document.getElementById('challenge-stop'),status=document.getElementById('challenge-status'),result=document.getElementById('challenge-result'),saved=document.getElementById('challenge-save');
   let worker=null,timer=null,controller=null,active=true;
@@ -99,11 +99,13 @@ const NotebookPractice=(()=>{
   });
   code.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key==='Enter'){event.preventDefault();if(!run.disabled)run.click();}});
  }
- // Lesson examples in courses marked runExamples run unchanged, with any practice modules they import.
+ // Lesson examples run unchanged, with any practice modules they import, in courses marked runExamples
+ // and in single lessons marked runExamples (labs in courses whose other examples are not Python).
  // exampleFormat marks an example that is not runnable Python, such as a text diagram; exampleRunLocally gives the reason a Python example cannot run in the browser.
- const exampleRunnable=(p,s)=>!!p?.runExamples&&!!s?.example&&!s.exampleFormat&&!s.exampleRunLocally;
- function exampleControls(p,s,i){
-  if(!exampleRunnable(p,s))return '';
+ const runsExamples=(p,l)=>!!(p?.runExamples||l?.runExamples);
+ const exampleRunnable=(p,s,l)=>runsExamples(p,l)&&!!s?.example&&!s.exampleFormat&&!s.exampleRunLocally;
+ function exampleControls(p,s,i,l){
+  if(!exampleRunnable(p,s,l))return '';
   const rows=Math.min(Math.max(s.example.split('\n').length+1,4),24);
   return `<div class="browser-practice example-runner no-print"><div class="practice-actions example-actions"><button type="button" class="primary" id="example-run-${i}">Run</button><button type="button" id="example-edit-${i}" aria-controls="example-editor-${i}">Edit</button><button type="button" id="example-reset-${i}" hidden>Reset</button></div><div id="example-editing-${i}" hidden><label for="example-editor-${i}">Your version of this example</label><textarea id="example-editor-${i}" rows="${rows}" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="20000" aria-describedby="example-help-${i}">${escapeText(s.example)}</textarea><p id="example-help-${i}">Ctrl+Enter runs. Edits last until you leave this lesson.</p></div><div id="example-output-${i}" class="example-output" role="status" aria-live="polite" tabindex="0" aria-label="Output of this example" hidden></div></div>`;
  }
@@ -112,7 +114,7 @@ const NotebookPractice=(()=>{
  function bindExamples(p,l){
   stopExamples();const stops=[];stopExamples=()=>{for(const stop of stops)stop();};
   (l?.sections||[]).forEach((s,i)=>{
-   const run=exampleRunnable(p,s)&&document.getElementById('example-run-'+i);if(!run)return;
+   const run=exampleRunnable(p,s,l)&&document.getElementById('example-run-'+i);if(!run)return;
    const edit=document.getElementById('example-edit-'+i),reset=document.getElementById('example-reset-'+i),editing=document.getElementById('example-editing-'+i),editor=document.getElementById('example-editor-'+i),output=document.getElementById('example-output-'+i);
    const pre=document.getElementById('example-code-'+i),panel=pre?.closest?.('.code-panel')||pre;
    let halt=null,attempt=0;

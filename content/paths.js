@@ -19089,16 +19089,18 @@ const LEARNING_PATHS = [
             "title": "Scaling rules",
             "paragraphs": [
               "Autoscaling changes the number of instances (horizontal) rather than their size (vertical, which usually needs a restart). A rule needs a signal that tracks load: CPU, request rate, queue length or a custom metric. Target tracking computes the instance count that would bring the metric back to its target. Set a minimum for availability and cold starts, and a maximum that protects your budget (lesson 19) and the database behind the service.",
-              "Scale out fast and scale in slowly. New instances take time to start and warm up, and removing capacity on a brief dip causes flapping. Instances must be stateless and handle shutdown signals, finishing in-flight work, because the platform removes them without notice to users. Queue-based scaling (Container Apps and KEDA rules, for example) scales on backlog rather than CPU, which suits workers."
+              "Scale out fast and scale in slowly. New instances take time to start and warm up, and removing capacity on a brief dip causes flapping. Instances must be stateless and handle shutdown signals, finishing in-flight work, because the platform removes them without notice to users. Queue-based scaling (Container Apps and KEDA rules, for example) scales on backlog rather than CPU, which suits workers.",
+              "Try it: run the lab, then select Edit. The lab works from demand, so CPU falls as replicas are added; while every replica is at 100% the true demand is hidden and scale-out takes several steps. Lower `TARGET_CPU`, shorten `SCALE_IN_WAIT` or add a spike to `DEMAND` and watch replicas over time."
             ],
-            "example": "import math\n\nMIN, MAX, TARGET_CPU = 2, 10, 60          # replicas and the target average CPU percentage\nSCALE_IN_WAIT = 3                         # intervals of low load before removing replicas\n\ndef desired(replicas, cpu):\n    return max(MIN, min(MAX, math.ceil(replicas * cpu / TARGET_CPU)))\n\nreplicas, calm = 2, 0\nfor minute, cpu in enumerate([55, 95, 90, 70, 40, 30, 30, 30, 30]):\n    want = desired(replicas, cpu)\n    if want > replicas:                   # scale out at once\n        replicas, calm = want, 0\n    elif want < replicas:                 # scale in only after sustained low load\n        calm += 1\n        if calm >= SCALE_IN_WAIT:\n            replicas, calm = want, 0\n    else:\n        calm = 0\n    print(f'minute {minute}: cpu {cpu}% -> {replicas} replicas')\n\n# Expected output:\n# minute 0: cpu 55% -> 2 replicas\n# minute 1: cpu 95% -> 4 replicas\n# minute 2: cpu 90% -> 6 replicas\n# minute 3: cpu 70% -> 7 replicas\n# minute 4: cpu 40% -> 7 replicas\n# minute 5: cpu 30% -> 7 replicas\n# minute 6: cpu 30% -> 4 replicas\n# minute 7: cpu 30% -> 4 replicas\n# minute 8: cpu 30% -> 4 replicas"
+            "example": "import math\n\n# Try it: change these, then run again.\nMIN, MAX, TARGET_CPU = 2, 10, 60          # replicas and the target average CPU percentage\nSCALE_IN_WAIT = 3                         # intervals of low load before removing replicas\nDEMAND = [110, 190, 330, 420, 240, 170, 170, 170, 170]   # total work per minute, in % of one replica's CPU\n\ndef desired(replicas, cpu):\n    return max(MIN, min(MAX, math.ceil(replicas * cpu / TARGET_CPU)))\n\nreplicas, calm = MIN, 0\nfor minute, demand in enumerate(DEMAND):\n    cpu = min(100, demand / replicas)     # a saturated replica reports 100% and hides the rest\n    want = desired(replicas, cpu)\n    if want > replicas:                   # scale out at once\n        replicas, calm = want, 0\n    elif want < replicas:                 # scale in only after sustained low load\n        calm += 1\n        if calm >= SCALE_IN_WAIT:\n            replicas, calm = want, 0\n    else:\n        calm = 0\n    print(f'minute {minute}: cpu {cpu:.0f}% -> {replicas} replicas')\n\n# Expected output:\n# minute 0: cpu 55% -> 2 replicas\n# minute 1: cpu 95% -> 4 replicas\n# minute 2: cpu 82% -> 6 replicas\n# minute 3: cpu 70% -> 7 replicas\n# minute 4: cpu 34% -> 7 replicas\n# minute 5: cpu 24% -> 7 replicas\n# minute 6: cpu 24% -> 3 replicas\n# minute 7: cpu 57% -> 3 replicas\n# minute 8: cpu 57% -> 3 replicas"
           },
           {
             "title": "The same concepts on AWS and Google Cloud",
             "paragraphs": [
               "The building blocks recur across providers, with different names and defaults. Learn the concept, then check the provider's limits, pricing and identity model before assuming behaviour carries over."
             ],
-            "example": "Concept                      Azure                      AWS                           Google Cloud\nVirtual machines             Virtual Machines           EC2                           Compute Engine\nAutoscaled VM group          VM Scale Sets              EC2 Auto Scaling groups       Managed instance groups\nManaged web platform         App Service                Elastic Beanstalk             App Engine\nServerless containers        Container Apps             App Runner, ECS on Fargate    Cloud Run\nFunctions                    Azure Functions            Lambda                        Cloud Run functions\nManaged Kubernetes           AKS                        EKS                           GKE\nObject storage               Blob Storage               S3                            Cloud Storage\nManaged relational database  Azure SQL Database         RDS, Aurora                   Cloud SQL\nWorkload identity            Managed identities         IAM roles                     Service accounts\nHierarchy for governance     Management groups,         Organizations, OUs,           Organization, folders,\n                             subscriptions              accounts                      projects"
+            "example": "Concept                      Azure                      AWS                           Google Cloud\nVirtual machines             Virtual Machines           EC2                           Compute Engine\nAutoscaled VM group          VM Scale Sets              EC2 Auto Scaling groups       Managed instance groups\nManaged web platform         App Service                Elastic Beanstalk             App Engine\nServerless containers        Container Apps             App Runner, ECS on Fargate    Cloud Run\nFunctions                    Azure Functions            Lambda                        Cloud Run functions\nManaged Kubernetes           AKS                        EKS                           GKE\nObject storage               Blob Storage               S3                            Cloud Storage\nManaged relational database  Azure SQL Database         RDS, Aurora                   Cloud SQL\nWorkload identity            Managed identities         IAM roles                     Service accounts\nHierarchy for governance     Management groups,         Organizations, OUs,           Organization, folders,\n                             subscriptions              accounts                      projects",
+            "exampleFormat": "text"
           }
         ],
         "exercise": {
@@ -19158,6 +19160,7 @@ const LEARNING_PATHS = [
             "scope": "Azure service documentation; features, limits and prices change, so confirm current values before deciding. Mappings are approximate equivalents, not identical services."
           }
         ],
+        "runExamples": true,
         "extraQuiz": [
           {
             "question": "In the lesson's simulation (target 60% CPU, minimum 2, maximum 10), the service has 2 replicas when CPU reaches 95%. How many replicas does it scale to?",
@@ -74371,7 +74374,18 @@ const LEARNING_PATHS = [
             "paragraphs": [
               "With attempt delays of 1, 2 and 4 seconds, three retry waits total 7 seconds before considering handler time. If a job expires after 5 seconds, that schedule already exceeds its usefulness. The lab models retry classification deterministically rather than sleeping or invoking a real broker."
             ],
-            "example": "from event_lab import retry_decision\n\nfor attempt in (1, 2, 3):\n    print(retry_decision(attempt, True))\n# retry delay 1; retry delay 2; quarantine delay 0\nprint(retry_decision(1, False))  # permanent: quarantine"
+            "example": "from event_lab import retry_decision\n\nfor attempt in (1, 2, 3):\n    print(retry_decision(attempt, True))\n# retry delay 1; retry delay 2; quarantine delay 0\nprint(retry_decision(1, False))  # permanent: quarantine",
+            "exampleFiles": [
+              "practice/event_lab.py"
+            ]
+          },
+          {
+            "title": "Lab: a retry schedule against job expiry",
+            "paragraphs": [
+              "The lab lays out exponential backoff on a clock: each attempt takes half a second, and the waits double from 1 second. With a 5-second expiry the fourth attempt starts long after the job stopped mattering.",
+              "Try it: run the lab, then select Edit. Lower `MAX_ATTEMPTS` until every attempt is in time, change `FACTOR` to 1 for a fixed delay, or set `JITTER` to True to see how random waits shift the schedule."
+            ],
+            "example": "import random\n\n# Try it: change these, then run again.\nBASE, FACTOR, CAP = 1, 2, 30   # backoff: first wait, multiplier and longest wait, in seconds\nMAX_ATTEMPTS = 4               # including the first attempt\nHANDLER = 0.5                  # seconds each attempt takes\nEXPIRY = 5                     # the job is useless after this many seconds\nJITTER = False                 # True: wait a random time between 0 and the backoff (seeded, so repeatable)\n\nrng = random.Random(7)\nclock, useful = 0.0, 0\nfor attempt in range(1, MAX_ATTEMPTS + 1):\n    end = clock + HANDLER\n    in_time = end <= EXPIRY\n    useful += in_time\n    print(f'attempt {attempt}: {clock:4.1f}s to {end:4.1f}s  {\"in time\" if in_time else \"after expiry\"}')\n    clock = end\n    if attempt < MAX_ATTEMPTS:\n        wait = min(CAP, BASE * FACTOR ** (attempt - 1))\n        clock += rng.uniform(0, wait) if JITTER else wait\nprint(f'{useful} of {MAX_ATTEMPTS} attempts can finish before the {EXPIRY}s expiry')\n\n# Expected output:\n# attempt 1:  0.0s to  0.5s  in time\n# attempt 2:  1.5s to  2.0s  in time\n# attempt 3:  4.0s to  4.5s  in time\n# attempt 4:  8.5s to  9.0s  after expiry\n# 3 of 4 attempts can finish before the 5s expiry"
           }
         ],
         "quiz": {
@@ -74410,6 +74424,7 @@ const LEARNING_PATHS = [
           "solution": "An invalid required field will not become valid if the payload stays unchanged. Quarantine the message immediately. A transient dependency failure gets bounded attempts and usefulness deadlines; the reference returns retry delays 1 and 2 for attempts 1 and 2, then quarantine at attempt 3. Timed execution and persistence are not implemented by this classifier.",
           "solutionFormat": "prose"
         },
+        "runExamples": true,
         "extraQuiz": [
           {
             "question": "What does retry_decision(1, False) return?",
@@ -74930,9 +74945,10 @@ const LEARNING_PATHS = [
           {
             "title": "A stream with an expected version",
             "paragraphs": [
-              "Two writers read the stream at version 1 with a balance of 10 and each tries to spend 8. The first append succeeds; the second is rejected because the stream has moved to version 2, so the balance never goes negative."
+              "Two writers read the stream at version 1 with a balance of 10 and each tries to spend 8. The first append succeeds; the second is rejected because the stream has moved to version 2, so the balance never goes negative.",
+              "Try it: run the lab, then select Edit. Set `RETRY` to True and the second writer reloads, finds only 2 credits and is refused. Try `SPENDS = [3, 4]`: the second spend is affordable, so the retry succeeds at the next version."
             ],
-            "example": "class Conflict(Exception):\n    pass\n\nstreams = {}                                   # stream id -> list of events (append-only)\n\ndef append(stream, expected_version, *events):\n    history = streams.setdefault(stream, [])\n    if len(history) != expected_version:       # optimistic concurrency check\n        raise Conflict(f'expected version {expected_version}, stream is at {len(history)}')\n    history.extend(events)\n    return len(history)\n\ndef balance(stream):                           # current state = fold over the events\n    total = 0\n    for kind, amount in streams.get(stream, []):\n        total += amount if kind == 'granted' else -amount\n    return total\n\nappend('credits-learner-7', 0, ('granted', 10))\nversion = len(streams['credits-learner-7'])    # both writers read version 1, balance 10\nappend('credits-learner-7', version, ('spent', 8))\ntry:\n    append('credits-learner-7', version, ('spent', 8))   # second writer decided on stale state\nexcept Conflict as error:\n    print('rejected:', error)\nprint(balance('credits-learner-7'), streams['credits-learner-7'])\n\n# Expected output:\n# rejected: expected version 1, stream is at 2\n# 2 [('granted', 10), ('spent', 8)]"
+            "example": "class Conflict(Exception):\n    pass\n\n# Try it: change these, then run again.\nGRANTED = 10            # credits granted before the writers start\nSPENDS = [8, 8]         # each writer reads the same version, checks its balance, then appends: try [3, 4] or [8, 8, 1]\nRETRY = False           # True: a rejected writer reloads the stream, checks again and retries once\n\nstreams = {}                                   # stream id -> list of events (append-only)\n\ndef append(stream, expected_version, *events):\n    history = streams.setdefault(stream, [])\n    if len(history) != expected_version:       # optimistic concurrency check\n        raise Conflict(f'expected version {expected_version}, stream is at {len(history)}')\n    history.extend(events)\n    return len(history)\n\ndef balance(stream):                           # current state = fold over the events\n    total = 0\n    for kind, amount in streams.get(stream, []):\n        total += amount if kind == 'granted' else -amount\n    return total\n\nstream = 'credits-learner-7'\nappend(stream, 0, ('granted', GRANTED))\nversion, seen = len(streams[stream]), balance(stream)   # every writer reads this version and balance\nfor amount in SPENDS:\n    if amount > seen:\n        print(f'refused {amount}: only {seen} credits')\n        continue\n    try:\n        append(stream, version, ('spent', amount))\n    except Conflict as error:                  # this writer decided on stale state\n        print('rejected:', error)\n        if RETRY:\n            current = len(streams[stream])\n            if amount > balance(stream):\n                print(f'retry refused {amount}: only {balance(stream)} credits')\n            else:\n                append(stream, current, ('spent', amount))\n                print(f'retry appended {amount} at version {current}')\nprint(balance(stream), streams[stream])\n\n# Expected output:\n# rejected: expected version 1, stream is at 2\n# 2 [('granted', 10), ('spent', 8)]"
           }
         ],
         "exercise": {
@@ -75038,6 +75054,7 @@ const LEARNING_PATHS = [
             ]
           }
         ],
+        "runExamples": true,
         "extraQuiz": [
           {
             "question": "Two writers both read a stream at version 3 and each append with expected version 3. What happens?",
@@ -75068,9 +75085,10 @@ const LEARNING_PATHS = [
             "title": "Projection lag and read-your-writes",
             "paragraphs": [
               "When projections update asynchronously from events (lessons 10 and 16), a user can save a change and then read the old value. Return the write's position or version from the command, and let the query wait for the projection to reach it, or show the result as pending. Projections must be idempotent and track their position so a restart resumes without double counting (lesson 9), and they can be rebuilt from the log.",
-              "The projector has processed only the grant when the first query runs: a plain query returns 10, while a query that requires the spend's position reports that the projection is stale. After catching up, the balance is 7."
+              "The projector has processed only the grant when the first query runs: a plain query returns 10, while a query that requires the spend's position reports that the projection is stale. After catching up, the balance is 7.",
+              "Try it: run the lab, then select Edit. With `FIRST_BATCH = 0` even the plain query misses the grant; with 2 both queries already see the spend."
             ],
-            "example": "events = []                                    # write side: append-only log\nprojection = {'position': 0, 'balances': {}}   # read side: built asynchronously\n\ndef spend(learner, amount):                    # command: validates, appends, returns position\n    events.append((learner, -amount))\n    return len(events)\n\ndef grant(learner, amount):\n    events.append((learner, amount))\n    return len(events)\n\ndef project(limit):                            # the projector catches up some events at a time\n    for learner, delta in events[projection['position']:projection['position'] + limit]:\n        projection['balances'][learner] = projection['balances'].get(learner, 0) + delta\n        projection['position'] += 1\n\ndef query(learner, at_least=0):                # read-your-writes: wait for the command's position\n    if projection['position'] < at_least:\n        return f'stale (projection at {projection[\"position\"]}, need {at_least})'\n    return projection['balances'].get(learner, 0)\n\ngrant('learner-7', 10)\nposition = spend('learner-7', 3)\nproject(limit=1)\nprint(query('learner-7'), '|', query('learner-7', at_least=position))\nproject(limit=10)\nprint(query('learner-7', at_least=position))\n\n# Expected output:\n# 10 | stale (projection at 1, need 2)\n# 7"
+            "example": "# Try it: change this, then run again.\nFIRST_BATCH = 1      # events the projector handles before the first queries: try 0 or 2\n\nevents = []                                    # write side: append-only log\nprojection = {'position': 0, 'balances': {}}   # read side: built asynchronously\n\ndef spend(learner, amount):                    # command: validates, appends, returns position\n    events.append((learner, -amount))\n    return len(events)\n\ndef grant(learner, amount):\n    events.append((learner, amount))\n    return len(events)\n\ndef project(limit):                            # the projector catches up some events at a time\n    for learner, delta in events[projection['position']:projection['position'] + limit]:\n        projection['balances'][learner] = projection['balances'].get(learner, 0) + delta\n        projection['position'] += 1\n\ndef query(learner, at_least=0):                # read-your-writes: wait for the command's position\n    if projection['position'] < at_least:\n        return f'stale (projection at {projection[\"position\"]}, need {at_least})'\n    return projection['balances'].get(learner, 0)\n\ngrant('learner-7', 10)\nposition = spend('learner-7', 3)\nproject(limit=FIRST_BATCH)\nprint(query('learner-7'), '|', query('learner-7', at_least=position))\nproject(limit=10)\nprint(query('learner-7', at_least=position))\n\n# Expected output:\n# 10 | stale (projection at 1, need 2)\n# 7"
           }
         ],
         "exercise": {
@@ -75174,6 +75192,7 @@ const LEARNING_PATHS = [
             ]
           }
         ],
+        "runExamples": true,
         "extraQuiz": [
           {
             "question": "In the lesson's example, what does query('learner-7', at_least=position) return before the projector catches up?",
@@ -107409,9 +107428,10 @@ const LEARNING_PATHS = [
           {
             "title": "Design",
             "paragraphs": [
-              "Ten thousand learner keys are assigned to four nodes and then five. With modulo hashing about 80% move; with a ring of 100 virtual nodes per server about a fifth move, close to the ideal 1/5, and the five nodes hold similar shares."
+              "Ten thousand learner keys are assigned to four nodes and then five. With modulo hashing about 80% move; with a ring of 100 virtual nodes per server about a fifth move, close to the ideal 1/5, and the five nodes hold similar shares.",
+              "Try it: run the lab, then select Edit. Set `VNODES` to 1 and the busiest node holds about twice its fair share, and more keys move; at 100 it is within about 10%. Remove a node from `NODES_AFTER` to see how many keys move when one fails."
             ],
-            "example": "import bisect, hashlib\n\ndef h(text):\n    return int(hashlib.sha256(text.encode()).hexdigest()[:8], 16)\n\nkeys = [f'learner-{i}' for i in range(10_000)]\n\ndef modulo(nodes):\n    return {k: nodes[h(k) % len(nodes)] for k in keys}\n\ndef ring(nodes, vnodes=100):\n    points = sorted((h(f'{n}#{v}'), n) for n in nodes for v in range(vnodes))\n    hashes = [p for p, _ in points]\n    return {k: points[bisect.bisect(hashes, h(k)) % len(points)][1] for k in keys}\n\ndef moved(before, after):\n    return sum(before[k] != after[k] for k in keys) / len(keys)\n\nfour, five = ['a', 'b', 'c', 'd'], ['a', 'b', 'c', 'd', 'e']\nprint(f'modulo:           {moved(modulo(four), modulo(five)):.1%} of keys move')\nprint(f'consistent (100): {moved(ring(four), ring(five)):.1%} of keys move')\ncounts = {n: 0 for n in five}\nfor node in ring(five).values():\n    counts[node] += 1\nprint('keys per node:', counts)\n\n# Expected output:\n# modulo:           79.7% of keys move\n# consistent (100): 17.4% of keys move\n# keys per node: {'a': 2140, 'b': 1758, 'c': 2174, 'd': 2185, 'e': 1743}"
+            "example": "import bisect, hashlib\n\n# Try it: change these, then run again.\nNODES_BEFORE = ['a', 'b', 'c', 'd']\nNODES_AFTER = ['a', 'b', 'c', 'd', 'e']   # add or remove nodes\nVNODES = 100                               # points per node on the ring: try 1, 10 or 1000\nKEYS = 10_000\n\ndef h(text):\n    return int(hashlib.sha256(text.encode()).hexdigest()[:8], 16)\n\nkeys = [f'learner-{i}' for i in range(KEYS)]\n\ndef modulo(nodes):\n    return {k: nodes[h(k) % len(nodes)] for k in keys}\n\ndef ring(nodes, vnodes):\n    points = sorted((h(f'{n}#{v}'), n) for n in nodes for v in range(vnodes))\n    hashes = [p for p, _ in points]\n    return {k: points[bisect.bisect(hashes, h(k)) % len(points)][1] for k in keys}\n\ndef moved(before, after):\n    return sum(before[k] != after[k] for k in keys) / len(keys)\n\nafter = ring(NODES_AFTER, VNODES)\nprint(f'modulo:           {moved(modulo(NODES_BEFORE), modulo(NODES_AFTER)):.1%} of keys move')\nprint(f'consistent ({VNODES}): {moved(ring(NODES_BEFORE, VNODES), after):.1%} of keys move')\ncounts = {n: 0 for n in NODES_AFTER}\nfor node in after.values():\n    counts[node] += 1\nprint('keys per node:', counts)\nprint(f'busiest node: {max(counts.values()) / (KEYS / len(NODES_AFTER)):.2f}x its fair share')\n\n# Expected output:\n# modulo:           79.7% of keys move\n# consistent (100): 17.4% of keys move\n# keys per node: {'a': 2140, 'b': 1758, 'c': 2174, 'd': 2185, 'e': 1743}\n# busiest node: 1.09x its fair share"
           },
           {
             "title": "Tradeoffs",
@@ -107523,6 +107543,7 @@ const LEARNING_PATHS = [
             ]
           }
         ],
+        "runExamples": true,
         "extraQuiz": [
           {
             "question": "Keys are spread with hash(key) % N across 4 nodes. A fifth node is added. Roughly what share of keys changes node?",

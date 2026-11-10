@@ -812,7 +812,18 @@
           "paragraphs": [
             "With attempt delays of 1, 2 and 4 seconds, three retry waits total 7 seconds before considering handler time. If a job expires after 5 seconds, that schedule already exceeds its usefulness. The lab models retry classification deterministically rather than sleeping or invoking a real broker."
           ],
-          "example": "from event_lab import retry_decision\n\nfor attempt in (1, 2, 3):\n    print(retry_decision(attempt, True))\n# retry delay 1; retry delay 2; quarantine delay 0\nprint(retry_decision(1, False))  # permanent: quarantine"
+          "example": "from event_lab import retry_decision\n\nfor attempt in (1, 2, 3):\n    print(retry_decision(attempt, True))\n# retry delay 1; retry delay 2; quarantine delay 0\nprint(retry_decision(1, False))  # permanent: quarantine",
+          "exampleFiles": [
+            "practice/event_lab.py"
+          ]
+        },
+        {
+          "title": "Lab: a retry schedule against job expiry",
+          "paragraphs": [
+            "The lab lays out exponential backoff on a clock: each attempt takes half a second, and the waits double from 1 second. With a 5-second expiry the fourth attempt starts long after the job stopped mattering.",
+            "Try it: run the lab, then select Edit. Lower `MAX_ATTEMPTS` until every attempt is in time, change `FACTOR` to 1 for a fixed delay, or set `JITTER` to True to see how random waits shift the schedule."
+          ],
+          "example": "import random\n\n# Try it: change these, then run again.\nBASE, FACTOR, CAP = 1, 2, 30   # backoff: first wait, multiplier and longest wait, in seconds\nMAX_ATTEMPTS = 4               # including the first attempt\nHANDLER = 0.5                  # seconds each attempt takes\nEXPIRY = 5                     # the job is useless after this many seconds\nJITTER = False                 # True: wait a random time between 0 and the backoff (seeded, so repeatable)\n\nrng = random.Random(7)\nclock, useful = 0.0, 0\nfor attempt in range(1, MAX_ATTEMPTS + 1):\n    end = clock + HANDLER\n    in_time = end <= EXPIRY\n    useful += in_time\n    print(f'attempt {attempt}: {clock:4.1f}s to {end:4.1f}s  {\"in time\" if in_time else \"after expiry\"}')\n    clock = end\n    if attempt < MAX_ATTEMPTS:\n        wait = min(CAP, BASE * FACTOR ** (attempt - 1))\n        clock += rng.uniform(0, wait) if JITTER else wait\nprint(f'{useful} of {MAX_ATTEMPTS} attempts can finish before the {EXPIRY}s expiry')\n\n# Expected output:\n# attempt 1:  0.0s to  0.5s  in time\n# attempt 2:  1.5s to  2.0s  in time\n# attempt 3:  4.0s to  4.5s  in time\n# attempt 4:  8.5s to  9.0s  after expiry\n# 3 of 4 attempts can finish before the 5s expiry"
         }
       ],
       "quiz": {
@@ -850,7 +861,8 @@
         ],
         "solution": "An invalid required field will not become valid if the payload stays unchanged. Quarantine the message immediately. A transient dependency failure gets bounded attempts and usefulness deadlines; the reference returns retry delays 1 and 2 for attempts 1 and 2, then quarantine at attempt 3. Timed execution and persistence are not implemented by this classifier.",
         "solutionFormat": "prose"
-      }
+      },
+      "runExamples": true
     },
     {
       "id": "dead-letter-replay",
@@ -1197,9 +1209,10 @@
         {
           "title": "A stream with an expected version",
           "paragraphs": [
-            "Two writers read the stream at version 1 with a balance of 10 and each tries to spend 8. The first append succeeds; the second is rejected because the stream has moved to version 2, so the balance never goes negative."
+            "Two writers read the stream at version 1 with a balance of 10 and each tries to spend 8. The first append succeeds; the second is rejected because the stream has moved to version 2, so the balance never goes negative.",
+            "Try it: run the lab, then select Edit. Set `RETRY` to True and the second writer reloads, finds only 2 credits and is refused. Try `SPENDS = [3, 4]`: the second spend is affordable, so the retry succeeds at the next version."
           ],
-          "example": "class Conflict(Exception):\n    pass\n\nstreams = {}                                   # stream id -> list of events (append-only)\n\ndef append(stream, expected_version, *events):\n    history = streams.setdefault(stream, [])\n    if len(history) != expected_version:       # optimistic concurrency check\n        raise Conflict(f'expected version {expected_version}, stream is at {len(history)}')\n    history.extend(events)\n    return len(history)\n\ndef balance(stream):                           # current state = fold over the events\n    total = 0\n    for kind, amount in streams.get(stream, []):\n        total += amount if kind == 'granted' else -amount\n    return total\n\nappend('credits-learner-7', 0, ('granted', 10))\nversion = len(streams['credits-learner-7'])    # both writers read version 1, balance 10\nappend('credits-learner-7', version, ('spent', 8))\ntry:\n    append('credits-learner-7', version, ('spent', 8))   # second writer decided on stale state\nexcept Conflict as error:\n    print('rejected:', error)\nprint(balance('credits-learner-7'), streams['credits-learner-7'])\n\n# Expected output:\n# rejected: expected version 1, stream is at 2\n# 2 [('granted', 10), ('spent', 8)]"
+          "example": "class Conflict(Exception):\n    pass\n\n# Try it: change these, then run again.\nGRANTED = 10            # credits granted before the writers start\nSPENDS = [8, 8]         # each writer reads the same version, checks its balance, then appends: try [3, 4] or [8, 8, 1]\nRETRY = False           # True: a rejected writer reloads the stream, checks again and retries once\n\nstreams = {}                                   # stream id -> list of events (append-only)\n\ndef append(stream, expected_version, *events):\n    history = streams.setdefault(stream, [])\n    if len(history) != expected_version:       # optimistic concurrency check\n        raise Conflict(f'expected version {expected_version}, stream is at {len(history)}')\n    history.extend(events)\n    return len(history)\n\ndef balance(stream):                           # current state = fold over the events\n    total = 0\n    for kind, amount in streams.get(stream, []):\n        total += amount if kind == 'granted' else -amount\n    return total\n\nstream = 'credits-learner-7'\nappend(stream, 0, ('granted', GRANTED))\nversion, seen = len(streams[stream]), balance(stream)   # every writer reads this version and balance\nfor amount in SPENDS:\n    if amount > seen:\n        print(f'refused {amount}: only {seen} credits')\n        continue\n    try:\n        append(stream, version, ('spent', amount))\n    except Conflict as error:                  # this writer decided on stale state\n        print('rejected:', error)\n        if RETRY:\n            current = len(streams[stream])\n            if amount > balance(stream):\n                print(f'retry refused {amount}: only {balance(stream)} credits')\n            else:\n                append(stream, current, ('spent', amount))\n                print(f'retry appended {amount} at version {current}')\nprint(balance(stream), streams[stream])\n\n# Expected output:\n# rejected: expected version 1, stream is at 2\n# 2 [('granted', 10), ('spent', 8)]"
         }
       ],
       "exercise": {
@@ -1304,7 +1317,8 @@
             "Offers an audit log as the cheaper alternative."
           ]
         }
-      ]
+      ],
+      "runExamples": true
     },
     {
       "id": "cqrs",
@@ -1323,9 +1337,10 @@
           "title": "Projection lag and read-your-writes",
           "paragraphs": [
             "When projections update asynchronously from events (lessons 10 and 16), a user can save a change and then read the old value. Return the write's position or version from the command, and let the query wait for the projection to reach it, or show the result as pending. Projections must be idempotent and track their position so a restart resumes without double counting (lesson 9), and they can be rebuilt from the log.",
-            "The projector has processed only the grant when the first query runs: a plain query returns 10, while a query that requires the spend's position reports that the projection is stale. After catching up, the balance is 7."
+            "The projector has processed only the grant when the first query runs: a plain query returns 10, while a query that requires the spend's position reports that the projection is stale. After catching up, the balance is 7.",
+            "Try it: run the lab, then select Edit. With `FIRST_BATCH = 0` even the plain query misses the grant; with 2 both queries already see the spend."
           ],
-          "example": "events = []                                    # write side: append-only log\nprojection = {'position': 0, 'balances': {}}   # read side: built asynchronously\n\ndef spend(learner, amount):                    # command: validates, appends, returns position\n    events.append((learner, -amount))\n    return len(events)\n\ndef grant(learner, amount):\n    events.append((learner, amount))\n    return len(events)\n\ndef project(limit):                            # the projector catches up some events at a time\n    for learner, delta in events[projection['position']:projection['position'] + limit]:\n        projection['balances'][learner] = projection['balances'].get(learner, 0) + delta\n        projection['position'] += 1\n\ndef query(learner, at_least=0):                # read-your-writes: wait for the command's position\n    if projection['position'] < at_least:\n        return f'stale (projection at {projection[\"position\"]}, need {at_least})'\n    return projection['balances'].get(learner, 0)\n\ngrant('learner-7', 10)\nposition = spend('learner-7', 3)\nproject(limit=1)\nprint(query('learner-7'), '|', query('learner-7', at_least=position))\nproject(limit=10)\nprint(query('learner-7', at_least=position))\n\n# Expected output:\n# 10 | stale (projection at 1, need 2)\n# 7"
+          "example": "# Try it: change this, then run again.\nFIRST_BATCH = 1      # events the projector handles before the first queries: try 0 or 2\n\nevents = []                                    # write side: append-only log\nprojection = {'position': 0, 'balances': {}}   # read side: built asynchronously\n\ndef spend(learner, amount):                    # command: validates, appends, returns position\n    events.append((learner, -amount))\n    return len(events)\n\ndef grant(learner, amount):\n    events.append((learner, amount))\n    return len(events)\n\ndef project(limit):                            # the projector catches up some events at a time\n    for learner, delta in events[projection['position']:projection['position'] + limit]:\n        projection['balances'][learner] = projection['balances'].get(learner, 0) + delta\n        projection['position'] += 1\n\ndef query(learner, at_least=0):                # read-your-writes: wait for the command's position\n    if projection['position'] < at_least:\n        return f'stale (projection at {projection[\"position\"]}, need {at_least})'\n    return projection['balances'].get(learner, 0)\n\ngrant('learner-7', 10)\nposition = spend('learner-7', 3)\nproject(limit=FIRST_BATCH)\nprint(query('learner-7'), '|', query('learner-7', at_least=position))\nproject(limit=10)\nprint(query('learner-7', at_least=position))\n\n# Expected output:\n# 10 | stale (projection at 1, need 2)\n# 7"
         }
       ],
       "exercise": {
@@ -1428,7 +1443,8 @@
             "Names the cost of lag and extra models."
           ]
         }
-      ]
+      ],
+      "runExamples": true
     },
     {
       "id": "sagas",
