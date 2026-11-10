@@ -20,6 +20,8 @@ from network_foundation import DnsCache, origin, retry_allowed  # noqa: E402
 from network_http import BODY, fetch, local_server  # noqa: E402
 from network_resilience import ProtocolError, SharedCache, bounded_get, decode_observation  # noqa: E402
 from tcp_framing import exchange  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from practice_facts import practice_failures  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
@@ -277,6 +279,100 @@ def questions():
             yield f'stage/{stage}/{i + 1}', q
 
 
+def practice_framing():
+    import struct
+    frames = [struct.pack('>I', len(m)) + m for m in (b'hello', b'world')]
+    return [f'`hello` is sent as `{frames[0]!r}`', f'Both messages take {sum(map(len, frames))} bytes']
+
+
+def practice_dns_loss():
+    attempt_fails = 1 - 0.9 * 0.9
+    return [f'0.9 × 0.9 = {0.9 * 0.9:.2f}', f'probability {attempt_fails:.2f}',
+            f'0.19³ ≈ {attempt_fails ** 3:.4f}, about {attempt_fails ** 3:.2%}']
+
+
+def practice_newest_wins():
+    applied, last = [], 0
+    for seq in (1, 2, 4, 3, 5):
+        if seq > last:
+            applied.append(seq)
+            last = seq
+    return [f'It applies {", ".join(map(str, applied[:-1]))} and {applied[-1]}']
+
+
+def practice_tls_defaults():
+    context = ssl.create_default_context()
+    return [f'`check_hostname` is `{context.check_hostname}`',
+            f'`verify_mode` is `ssl.{ssl.VerifyMode(context.verify_mode).name}`']
+
+
+def practice_cache_expiry():
+    shared = SharedCache()
+    shared.store_public('lesson', BODY, 30, 100)
+    hits = [now for now in range(100, 140) if shared.get('lesson', now) is not None]
+    return [f'The last hit is at {hits[-1]} and the first miss is at {hits[-1] + 1}']
+
+
+def practice_cache_zero():
+    shared = SharedCache()
+    stored = shared.store_public('lesson', BODY, 0, 100)
+    return [f'`store_public` returns `{stored}`', f'`get` at time 100 returns `{shared.get("lesson", 100)}`']
+
+
+def practice_conditional():
+    results = []
+    with local_server() as server:
+        for etag in ('"lesson-v1"', '"lesson-v2"'):
+            code, headers, body = fetch(server, '/lesson', headers={'If-None-Match': etag})
+            results.append((code, headers.get('ETag'), body))
+    (first, _, empty), (second, etag, body) = results
+    assert empty == b'' and body == BODY
+    return [f'The first returns {first} with an empty body', f'The second returns {second} with the full body and ETag `{etag}`']
+
+
+def practice_budget():
+    second = round(2.0 - 0.9 - 0.3, 3)
+    return [f'2.0 − 0.9 − 0.3 = {second} seconds']
+
+
+def practice_trickle():
+    return [f'50 × 80 ms = {50 * 80 / 1000:g} seconds', f'after about {round(2 / 0.08)} bytes']
+
+
+def practice_propagation():
+    return [f'2.0 − 0.5 − 0.3 = {round(2.0 - 0.5 - 0.3, 3)} seconds']
+
+
+def practice_bounded_get():
+    out = []
+    for max_attempts in (3, 2):
+        responses, calls = iter([503, 503, 200]), []
+
+        def call():
+            calls.append(1)
+            return next(responses)
+        status, _ = bounded_get(call, lambda: 0, deadline=1, max_attempts=max_attempts)
+        out.append(f'`max_attempts={max_attempts}` it returns {status} after {len(calls)} calls')
+    return out
+
+
+def practice_layers():
+    return [f'4 × 4 = {4 ** 2} deepest calls', f'2 × 2 × 2 = {2 ** 3}']
+
+
+def practice_retry_ratio():
+    return [f'receives {1000 * 3:,} calls per second', f'1,000 + 100 = {1000 + 1000 // 10:,} calls']
+
+
+PRACTICE_FACTS = {
+    'udp-and-tcp/1': practice_framing, 'udp-and-tcp/2': practice_dns_loss, 'udp-and-tcp/3': practice_newest_wins,
+    'tls/1': practice_tls_defaults, 'cache/1': practice_cache_expiry, 'cache/2': practice_cache_zero,
+    'validators/1': practice_conditional, 'timeouts/1': practice_budget, 'timeouts/2': practice_trickle,
+    'timeouts/3': practice_propagation, 'retry-budgets/1': practice_bounded_get,
+    'retry-budgets/2': practice_layers, 'retry-budgets/3': practice_retry_ratio,
+}
+
+
 def main():
     seen, failures = set(), []
     for key, q in questions():
@@ -291,10 +387,11 @@ def main():
             failures.append(f'{key}: {error}'); continue
         if answer != q['options'][q['correct']]:
             failures.append(f'{key}: the lab supports {answer!r}, the question marks {q["options"][q["correct"]]!r}')
+    failures += practice_failures(COURSE, PRACTICE_FACTS)
     failures += [f'{key}: fact has no question' for key in set(FACTS) | set(SOURCED) if key not in seen]
     if failures:
         sys.exit('Networking checkpoint facts failed:\n' + '\n'.join(failures))
-    print(f'PASS: {len(FACTS)} Networking checkpoint answers checked against the course labs; {len(SOURCED)} cited from the lessons.')
+    print(f'PASS: {len(FACTS)} Networking checkpoint answers checked against the course labs; {len(SOURCED)} cited from the lessons; {len(PRACTICE_FACTS)} practice ladder answers computed.')
 
 
 if __name__ == '__main__':
