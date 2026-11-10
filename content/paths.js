@@ -77399,6 +77399,14 @@ const LEARNING_PATHS = [
             "Uses reliability and ordering needs to pick TCP for transfers and downloads.",
             "Uses timeliness to pick UDP for game updates and calls.",
             "Notes DNS uses UDP with TCP fallback, and QUIC is reliable over UDP."
+          ],
+          "hints": [
+            "For each case, ask what happens if one message is lost, and if one arrives late.",
+            "Where a late message is useless, resending it only adds delay."
+          ],
+          "pitfalls": [
+            "Choosing UDP because it is faster without saying what replaces lost data.",
+            "Treating QUIC as unreliable because it runs over UDP."
           ]
         },
         "quiz": {
@@ -77439,6 +77447,62 @@ const LEARNING_PATHS = [
             "section": "socket.SOCK_DGRAM, sendto and recvfrom",
             "reviewed": "2026-11-08",
             "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "Over TCP, the lesson's two messages `b'hello'` and `b'world'` may arrive from one read as `b'helloworld'`. Supply a framing that keeps them apart: each message is preceded by a 4-byte big-endian length. Which bytes are sent for `hello`, and how many bytes in total for both messages?",
+            "hints": [
+              "`struct.pack('>I', 5)` produces the prefix."
+            ],
+            "solution": "`hello` is sent as `b'\\x00\\x00\\x00\\x05hello'`: 4 length bytes then 5 payload bytes. Both messages take 18 bytes. The receiver reads exactly 4 bytes, decodes the length, then reads exactly that many bytes, looping because one `recv` may return fewer.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Writes the length prefix for the first message.",
+              "Counts the total bytes.",
+              "Describes how the receiver reads one message."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "A resolver sends a DNS query over UDP and waits 1 second, making 3 attempts in all. Each datagram is lost independently with probability 10%. What is the chance the lookup fails, and how long does the caller wait in that case?",
+            "hints": [
+              "An attempt needs two datagrams to arrive."
+            ],
+            "solution": "An attempt succeeds only if the query and the answer both arrive: 0.9 × 0.9 = 0.81, so an attempt fails with probability 0.19. All three fail with probability 0.19³ ≈ 0.0069, about 0.69%, and the caller waits 3 seconds before learning it. UDP leaves loss handling to the application, here the resolver's timeout and retries.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Computes the per-attempt failure probability.",
+              "Computes the failure chance for all attempts.",
+              "States the worst-case wait."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "A game client receives position updates over UDP with sequence numbers in the order 1, 2, 4, 3, 5. It applies only updates newer than the last one applied. Which updates are applied, and why is this safe for positions but not for chat messages?",
+            "hints": [
+              "Track the highest sequence number applied so far."
+            ],
+            "solution": "It applies 1, 2, 4 and 5, and drops 3 because 4 was already applied. A position update replaces the previous one, so a stale one is worthless. Chat messages each carry content that must not be lost or reordered, so they need reliable, ordered delivery: TCP, or acknowledgements and resends built on UDP.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Lists the applied updates.",
+              "Contrasts replaceable state with messages that must all arrive."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "To cut latency, a team proposes moving an internal order-placement API from HTTP over TCP to a custom protocol over raw UDP. Should they?",
+            "hints": [
+              "Is a late order worse than a lost one?"
+            ],
+            "solution": "No. Orders must arrive exactly once and in order, so they would have to rebuild acknowledgements, resends, ordering, duplicate detection and congestion control. Measure first: if the cost is connection setup, reuse connections with keep-alive, or use HTTP/3, which already provides reliable streams over UDP.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Names what UDP would make them rebuild.",
+              "Proposes a lower-risk alternative."
+            ]
           }
         ],
         "extraQuiz": [
@@ -77799,6 +77863,14 @@ const LEARNING_PATHS = [
           "checks": [
             "List setup and runtime observations required for a TLS experiment.",
             "Separate certificate configuration from verified client behavior."
+          ],
+          "hints": [
+            "Who has to trust whom, and what does the client check against the server's certificate?",
+            "List both the cases that should connect and the cases that should fail."
+          ],
+          "pitfalls": [
+            "Disabling verification to make the experiment connect.",
+            "Treating results from the plain-HTTP loopback lab as encrypted-network evidence."
           ]
         },
         "quiz": {
@@ -77818,6 +77890,60 @@ const LEARNING_PATHS = [
             "section": "Sections 4.4 and 7: authentication and cryptographic computation",
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "The lab inspects Python's default client context from `ssl.create_default_context()`. Supply the values of its `check_hostname` and `verify_mode` settings, and say what each one enforces.",
+            "hints": [
+              "Print the two attributes of the context."
+            ],
+            "solution": "`check_hostname` is `True` and `verify_mode` is `ssl.CERT_REQUIRED`. CERT_REQUIRED makes the client reject a server without a certificate chaining to a trusted CA. `check_hostname` makes it reject a trusted certificate issued for a different name.",
+            "solutionFormat": "prose",
+            "checks": [
+              "States both values.",
+              "Explains what each setting rejects."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "A certificate lists `lessons.example` and `*.lessons.example`. Which of these names does it cover: `api.lessons.example`, `lessons.example`, `a.b.lessons.example`, `lessons.example.net`?",
+            "hints": [
+              "A wildcard stands for one whole leftmost label."
+            ],
+            "solution": "It covers `api.lessons.example` (through the wildcard) and `lessons.example` (listed exactly). It does not cover `a.b.lessons.example`, because a wildcard matches exactly one label, or `lessons.example.net`, which is a different domain.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Decides all four names.",
+              "Applies the one-label wildcard rule."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "TLS ends at a load balancer, which forwards plain HTTP to the backend over the internal network. What does TLS protect here, and what must the backend be careful about?",
+            "hints": [
+              "Follow the request hop by hop."
+            ],
+            "solution": "TLS protects only the hop from the client to the load balancer. The internal hop is unencrypted and unauthenticated unless it is re-encrypted, for example with mutual TLS. The backend learns the client's address and protocol only from headers such as `X-Forwarded-For`, which it should trust only when the request came from the load balancer.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Identifies the protected hop.",
+              "Names the unprotected hop and forwarded-header trust."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "A production client fails with a certificate error when calling an internal service. A developer proposes setting `verify_mode = ssl.CERT_NONE` to unblock the release. What do you do?",
+            "hints": [
+              "What does the client stop checking?"
+            ],
+            "solution": "Reject it: without verification anyone on the path can impersonate the service and read or change the traffic. Find the cause instead. Add the internal CA to the client's trust store, fix a hostname that does not match the certificate, or have the server send its full chain.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Explains the impersonation risk.",
+              "Names fixes for the likely causes."
+            ]
           }
         ],
         "extraQuiz": [
@@ -78203,6 +78329,14 @@ const LEARNING_PATHS = [
           "checks": [
             "Provide two requests whose outputs differ under the same URL.",
             "Evaluate whether the proposed cache key keeps their results separate."
+          ],
+          "hints": [
+            "Two signed-in users request the same URL. What does each one get back?",
+            "What does the cache key contain, and what does it leave out?"
+          ],
+          "pitfalls": [
+            "Assuming the key includes the user because the response does.",
+            "Trying to fix leaks with a shorter max-age."
           ]
         },
         "quiz": {
@@ -78222,6 +78356,60 @@ const LEARNING_PATHS = [
             "section": "Sections 3 and 5.2.2: storing responses and response directives",
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "In `SharedCache`, a public lesson is stored at time 100 with `max_age` 30. Supply the last time `get` returns the body and the first time it misses.",
+            "hints": [
+              "Look at the comparison in `get`."
+            ],
+            "solution": "The entry expires at 100 + 30 = 130, and `get` returns the body only while now < 130. The last hit is at 129 and the first miss is at 130.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Computes the expiry time.",
+              "Applies the strict comparison."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "The same lesson is stored at time 100 with `max_age` 0. What does `store_public` return, and what does `get` return at time 100?",
+            "hints": [
+              "Compute the expiry first."
+            ],
+            "solution": "`store_public` returns `True`: the entry is stored. `get` at time 100 returns `None`, because the expiry is 100 and 100 < 100 is false. It is stored but never fresh; a real cache would revalidate it before each reuse.",
+            "solutionFormat": "prose",
+            "checks": [
+              "States the return values of both calls.",
+              "Explains stored versus fresh."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "`/lesson` returns English or French depending on the `Accept-Language` header, at the same URL. A shared cache keyed on the URL alone stores the French response. What happens next, and how does HTTP prevent it?",
+            "hints": [
+              "What else, beyond the URL, chose the representation?"
+            ],
+            "solution": "The next English reader is served the French copy. The server should send `Vary: Accept-Language`, which tells caches to include that header in the key, or use separate URLs per language. The lesson's offline model ignores Vary, so it cannot cache this resource safely.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Describes the wrong response.",
+              "Names the HTTP mechanism that prevents it."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "To cut load, a team wants to put a CDN in front of `/me/progress`, which returns each user's progress as JSON, with `Cache-Control: max-age=60`. Do you approve?",
+            "hints": [
+              "Who else requests the same URL?"
+            ],
+            "solution": "No. A shared cache would store one user's progress and serve it to others at the same URL. Mark the response `private` so only the user's browser caches it, or `no-store`, and reduce load on the server side. Shared caching would need the CDN to key on the user explicitly.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Names the leak.",
+              "Proposes a safe Cache-Control setting."
+            ]
           }
         ],
         "extraQuiz": [
@@ -78264,6 +78452,14 @@ const LEARNING_PATHS = [
           "checks": [
             "Specify the client state before receiving the response.",
             "Define the next request and the conditions for publishing a result."
+          ],
+          "hints": [
+            "What does a 304 assume the client already holds?",
+            "Which request does not depend on the client's stored copy?"
+          ],
+          "pitfalls": [
+            "Parsing the empty 304 body as a lesson.",
+            "Sending the same conditional request again."
           ]
         },
         "quiz": {
@@ -78283,6 +78479,60 @@ const LEARNING_PATHS = [
             "section": "Sections 8.8.3, 13.1.2 and 15.4.5: ETag, If-None-Match, 304",
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "Against the lab, a client sends `GET /lesson` with `If-None-Match: \"lesson-v1\"`, then again with `If-None-Match: \"lesson-v2\"`. Supply the status code and body for each response.",
+            "hints": [
+              "Compare each header value with the lab's ETag."
+            ],
+            "solution": "The first returns 304 with an empty body: the validator matches, so the client reuses its stored copy. The second returns 200 with the full body and ETag `\"lesson-v1\"`, because the client's validator does not match the current representation.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Gives both status codes.",
+              "Says which response carries a body."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "A server uses `Last-Modified` instead of an ETag, with one-second resolution. A lesson is edited twice within the same second, and a client fetched it between the two edits. What does its `If-Modified-Since` request get?",
+            "hints": [
+              "Compare the timestamps the client and server hold."
+            ],
+            "solution": "A 304: both edits have the same Last-Modified second as the copy the client holds, so the server cannot tell the copies apart, and the client keeps the outdated version. An ETag derived from the content changes with each edit, so it does not have this problem.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Predicts the response and whether it is correct.",
+              "Explains the one-second resolution."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "Two editors both `GET` a lesson with ETag `\"v7\"`. The first sends `PUT` with `If-Match: \"v7\"` and the lesson becomes `\"v8\"`. The second then sends `PUT` with `If-Match: \"v7\"`. What happens, and what should the second editor's client do?",
+            "hints": [
+              "If-Match succeeds only when the validator matches."
+            ],
+            "solution": "The second `PUT` gets 412 Precondition Failed, because the current ETag is `\"v8\"`. Its change is not applied, so the first edit is not overwritten. The client should fetch the current version, merge or show the conflict, and resend with `If-Match: \"v8\"`.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Predicts the status of the second `PUT`.",
+              "Describes the fetch, merge and resend."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "A team proposes deriving each lesson's ETag from the time of the latest deploy. Accept or reject?",
+            "hints": [
+              "When can the content change without a deploy?"
+            ],
+            "solution": "Reject. Every deploy changes all ETags, so unchanged lessons are downloaded again. Worse, lesson data changed without a deploy keeps the old ETag, and clients get 304s for outdated content. Derive the ETag from the content, such as a hash, or from a version stored with the data.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Names both failure modes.",
+              "Proposes a better ETag source."
+            ]
           }
         ],
         "diagram": {
@@ -78885,7 +79135,15 @@ const LEARNING_PATHS = [
             "The next attempt has at most 0.2 seconds, and an uncertain earlier write must not be blindly repeated."
           ],
           "solution": "The timeout bounds an individual blocking read, not the full exchange. Use one monotonic deadline across reads, backoff and attempts. Only 0.2 seconds remains; skip a retry that cannot usefully finish or cap its waits accordingly. For a mutating request also resolve idempotency/outcome uncertainty.",
-          "solutionFormat": "prose"
+          "solutionFormat": "prose",
+          "hints": [
+            "Which timer resets every time a byte arrives?",
+            "Subtract everything already spent, including backoff, from the budget."
+          ],
+          "pitfalls": [
+            "Giving each attempt a fresh two-second budget.",
+            "Repeating a timed-out write without resolving whether it succeeded."
+          ]
         },
         "quiz": {
           "question": "What does client timeout establish?",
@@ -78904,6 +79162,60 @@ const LEARNING_PATHS = [
             "section": "Timeout notes; socket.settimeout",
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "A 2-second overall budget. The first attempt fails after 0.9 seconds, and the backoff is 0.3 seconds. Supply the longest wait allowed for the second attempt, and how much time a third attempt has if the second uses its whole wait.",
+            "hints": [
+              "Subtract the spent time from one monotonic deadline."
+            ],
+            "solution": "2.0 − 0.9 − 0.3 = 0.8 seconds for the second attempt. If it uses all of it, the remaining budget is 0 seconds, so there is no third attempt.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Subtracts the attempt and the backoff.",
+              "Decides whether a third attempt fits."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "The peer sends a 50-byte response one byte every 80 ms, under a 100 ms read timeout. How long does the full response take, and how many bytes have arrived when a 2-second deadline expires?",
+            "hints": [
+              "Each read waits only 80 ms."
+            ],
+            "solution": "50 × 80 ms = 4 seconds, twice the goal, and no read ever times out because each byte arrives within 100 ms. With a deadline checked before each read, the client stops at 2 seconds after about 25 bytes and must discard the incomplete response.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Computes the total time.",
+              "Computes the bytes received at the deadline."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "A frontend has a 2-second budget. It spends 0.5 seconds before calling service A, and A spends 0.3 seconds before calling service B. How much time is left for B, and how should A pass it on?",
+            "hints": [
+              "Subtract every step taken before the call to B."
+            ],
+            "solution": "2.0 − 0.5 − 0.3 = 1.2 seconds, minus a margin for A to respond. Pass the deadline along with the request, as an absolute time or remaining duration, so each service bounds its own waits by it. If each service applied its own fixed timeout, B could still be working after the frontend has given up.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Computes the remaining time.",
+              "Explains how A passes the budget on."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "A `POST /payments` timed out in the client after 2 seconds. The product team wants the client to retry it automatically. What do you require first?",
+            "hints": [
+              "Did the server receive the first request?"
+            ],
+            "solution": "The timeout does not tell you whether the payment was made. Before any automatic retry, require an idempotency key so the server performs a repeated request only once, or a way to look up the outcome by the client's request ID. Without either, a retry can charge twice.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Explains the uncertain outcome.",
+              "Names what must exist before a retry is safe."
+            ]
           }
         ],
         "diagram": {
@@ -79038,7 +79350,15 @@ const LEARNING_PATHS = [
             "Count attempts including the original explicitly.",
             "Explain why the shared deadline can reduce the maximum."
           ],
-          "solutionFormat": "prose"
+          "solutionFormat": "prose",
+          "hints": [
+            "Count the original call as one of the three attempts.",
+            "Each layer repeats everything below it."
+          ],
+          "pitfalls": [
+            "Counting retries instead of attempts, giving 2 × 2 × 2.",
+            "Assuming a shared deadline cannot reduce the maximum."
+          ]
         },
         "quiz": {
           "question": "Which prevents a new call after time is exhausted?",
@@ -79057,6 +79377,59 @@ const LEARNING_PATHS = [
             "section": "Section 9.2.2: retrying idempotent requests",
             "reviewed": "2026-09-27",
             "scope": "Network and HTTP concepts with Python 3.14+ examples. The practice guide separates local tests from browser and live-network checks."
+          }
+        ],
+        "practice": [
+          {
+            "kind": "completion",
+            "prompt": "`bounded_get` gets responses 503, 503, 200 in that order, with a deadline that is never reached. Supply its result and the number of calls with `max_attempts=3`, then with `max_attempts=2`.",
+            "hints": [
+              "Trace the loop one attempt at a time."
+            ],
+            "solution": "With `max_attempts=3` it returns 200 after 3 calls. With `max_attempts=2` it returns 503 after 2 calls: the second 503 is the last allowed attempt, so it is returned instead of retried.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Gives the status and call count for both settings."
+            ]
+          },
+          {
+            "kind": "variation",
+            "prompt": "Two layers each allow 4 attempts; compare with three layers each allowing 2 attempts. What is the maximum number of deepest calls in each case?",
+            "hints": [
+              "Multiply the attempts per layer."
+            ],
+            "solution": "Two layers of 4: 4 × 4 = 16 deepest calls. Three layers of 2: 2 × 2 × 2 = 8. Adding a layer multiplies the count, so the number of retrying layers matters as much as each layer's limit.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Multiplies attempts per layer.",
+              "Compares the two totals."
+            ]
+          },
+          {
+            "kind": "transfer",
+            "prompt": "A client sends 1,000 requests per second and allows up to 3 attempts per request. The backend starts failing every request. Compare the load with a retry budget that allows retries for at most 10% of requests.",
+            "hints": [
+              "Every failing request uses all of its attempts."
+            ],
+            "solution": "With 3 attempts each, the backend receives 3,000 calls per second while it is failing, tripling its load. With the 10% budget it receives at most 1,000 + 100 = 1,100 calls per second. A budget still lets a few failures recover, but it stops retries from amplifying an outage.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Computes both loads.",
+              "Explains why the budget limits amplification."
+            ]
+          },
+          {
+            "kind": "decide",
+            "prompt": "During database overload, a middle service sees 503s and the team wants to add 5 retries there, on top of the client's retries. What do you recommend?",
+            "hints": [
+              "How many layers already retry?"
+            ],
+            "solution": "Don't add them: retries in both layers multiply calls to the overloaded database. Keep one retry owner, with backoff, jitter and a retry budget. The middle service should fail fast, returning 503, with `Retry-After` if useful.",
+            "solutionFormat": "prose",
+            "checks": [
+              "Explains the multiplication.",
+              "Recommends where retries live and how they are limited."
+            ]
           }
         ],
         "diagram": {
