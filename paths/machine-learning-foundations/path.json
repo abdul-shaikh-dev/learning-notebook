@@ -264,6 +264,14 @@
         "checks": [
           "Explain test-set selection bias.",
           "Require fresh evaluation after freezing choices."
+        ],
+        "hints": [
+          "Ask what each partition was used for. Did the test rows influence a choice?",
+          "Once a set has been used to choose, what is it really?"
+        ],
+        "pitfalls": [
+          "Choosing between models on the test set and then reporting its score as final.",
+          "Splitting randomly when the model will predict later or unseen cases."
         ]
       },
       "quiz": {
@@ -283,6 +291,61 @@
           "section": "Computing cross-validated metrics; grouped data; time series split",
           "reviewed": "2026-10-02",
           "scope": "scikit-learn 1.9.1. Training, validation and test separation. Fictional examples do not establish real-service performance."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "The lab's chronological splitter cuts at 60% and 80%. Finish the split for 500 rows: how many rows go to training, validation and test, and which rows are in the test set?",
+          "hints": [
+            "Multiply 500 by 0.6 and by 0.8 to find the cut points."
+          ],
+          "solution": "Training takes the first 300 rows, validation the next 100 (rows 301 to 400) and test the last 100 (rows 401 to 500). Because the rows are in date order, the test set is the most recent 100 rows, which matches predicting later tickets.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Computes the three sizes.",
+            "Says which rows form the test set."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "You try 20 model settings and pick the one with the best validation score, 0.86. What does 0.86 tell you about future performance, and where does an honest estimate come from?",
+          "hints": [
+            "The more options you compare, the more one of them can win by luck."
+          ],
+          "solution": "0.86 is optimistic: picking the best of 20 noisy scores favours settings that got lucky on those validation rows. It is evidence for the choice, not an estimate of future performance. Freeze the chosen setting and evaluate it once on the untouched test set; that score estimates the whole procedure.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Explains selection bias from choosing the maximum.",
+            "Uses the test set once, after freezing the choice."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "Instead of one validation set, you run 4-fold cross-validation on the 144 training rows. How many rows train and validate in each fold, and what do you gain?",
+          "hints": [
+            "Each fold holds out one quarter of the rows."
+          ],
+          "solution": "Each fold validates on 144 / 4 = 36 rows and trains on the other 108. Every training row is used for validation once, so the average score uses all 144 rows and the spread across folds shows how noisy it is. Shuffled folds still assume exchangeable rows; with dated tickets, use forward-chaining folds instead.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Computes the fold sizes.",
+            "Names the gain in data use and the visible spread.",
+            "Notes the time-order caveat."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "You have only 60 labelled examples. Should you still carve out separate validation and test sets?",
+          "hints": [
+            "How much does one row change a score on 12 rows?"
+          ],
+          "solution": "A 60/20/20 split leaves 12 test rows, where one row moves accuracy by about 8 percentage points, too noisy to trust. Use cross-validation for choices, ideally nested cross-validation for the final estimate, report the spread across folds, and collect more labelled data before making strong claims.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Notes how few rows each partition would get.",
+            "Proposes cross-validation and reporting spread."
+          ]
         }
       ]
     },
@@ -320,6 +383,14 @@
         "checks": [
           "Find one of each confusion count.",
           "Calculate precision and recall as 0.5."
+        ],
+        "hints": [
+          "Compare each prediction with its truth and put it in one of four boxes.",
+          "Precision looks along the predicted positives; recall looks along the actual positives."
+        ],
+        "pitfalls": [
+          "Swapping the denominators of precision and recall.",
+          "Reporting ratios without the counts behind them."
         ]
       },
       "quiz": {
@@ -339,6 +410,61 @@
           "section": "Classification metrics; regression metrics; dummy estimators",
           "reviewed": "2026-10-02",
           "scope": "scikit-learn 1.9.1. Confusion counts, precision and recall. Fictional examples do not establish real-service performance."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "The lesson's model has TP = 6, FP = 2, FN = 3 and TN = 9, with precision 0.75. Supply the missing recall and F1, where F1 = 2 × precision × recall / (precision + recall).",
+          "hints": [
+            "Recall's denominator is TP + FN."
+          ],
+          "solution": "Recall = 6 / (6 + 3) = 0.667. F1 = 2 × 0.75 × 0.667 / (0.75 + 0.667) = 0.706. F1 sits between precision and recall, closer to the lower one, so it punishes a model that is good at only one of them.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Uses actual positives for recall.",
+            "Applies the F1 formula."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Out of 1,000 tickets only 20 breach. A model predicts 'no breach' for every ticket. What are its accuracy, recall and precision?",
+          "hints": [
+            "How many positive predictions did the model make?"
+          ],
+          "solution": "TP = 0, FP = 0, FN = 20 and TN = 980. Accuracy is 980 / 1,000 = 0.98, which looks excellent. Recall is 0 / 20 = 0: it never finds a breach. Precision is undefined, because the model made no positive predictions, and the lab returns `None` rather than inventing a value. With rare positives, accuracy hides a useless model.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Gives all four counts.",
+            "Computes accuracy and recall.",
+            "Handles precision's denominator."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "Operations care about how many non-breaching tickets get flagged. Using the lesson's counts, compute the false positive rate, FP / (FP + TN), and say what it adds to precision.",
+          "hints": [
+            "Which tickets form the denominator?"
+          ],
+          "solution": "False positive rate = 2 / (2 + 9) = 0.182: about 18% of non-breaching tickets are flagged. Precision says how many flags are right; the false positive rate says how much of the normal workload gets disturbed. With the same model, a rise in the number of normal tickets raises false alarms even if precision on a fixed sample looked fine.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Uses actual negatives as the denominator.",
+            "Contrasts the rate with precision."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "A stakeholder report will show one number for the breach model. Should it be accuracy?",
+          "hints": [
+            "What would a model that predicts nothing score?"
+          ],
+          "solution": "No, not on its own. With rare breaches, accuracy rewards ignoring them. Show the confusion counts, recall on breaches and precision of the flags, or the agreed cost, so readers see what the model misses and what it costs to review.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Explains why accuracy misleads with rare positives.",
+            "Proposes counts or cost-based reporting."
+          ]
         }
       ]
     },
@@ -842,6 +968,14 @@
           "Judges the models on validation or cross-validated results, not training accuracy.",
           "Treats a 0.01 difference as possibly noise and asks for repeated or cross-validated evidence.",
           "Weighs cost and explainability when performance is similar."
+        ],
+        "hints": [
+          "Training accuracy near 1.00 is normal for a forest of deep trees. Which score should you compare instead?",
+          "How large is a 0.01 difference on your validation set, in rows?"
+        ],
+        "pitfalls": [
+          "Choosing a model on training accuracy.",
+          "Treating a small validation difference as decisive."
         ]
       },
       "quiz": {
@@ -868,6 +1002,60 @@
           "section": "Random forests and histogram-based gradient boosting",
           "reviewed": "2026-11-08",
           "scope": "scikit-learn 1.9.1 with NumPy 2.5.3 on CPU. Synthetic examples illustrate behaviour; they do not establish real-service performance."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "On the lesson's 180 test rows, the depth-4 tree scores 0.883 and logistic regression 0.844. Supply the missing step: how many test rows does that difference represent?",
+          "hints": [
+            "Divide the difference by the value of one row."
+          ],
+          "solution": "One row is 1 / 180 = 0.0056 of accuracy. The difference 0.883 − 0.844 = 0.039 is about 7 rows. That is a handful of predictions, so confirm the ranking with cross-validation on training data before choosing; do not pick the winner on test score.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Converts accuracy differences to rows.",
+            "Recommends cross-validation for the choice."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "A regression tree is trained on delivery times between 10 and 50 minutes. A new order is far larger than any seen. What can the tree predict for it, and why?",
+          "hints": [
+            "What does a leaf return?"
+          ],
+          "solution": "At most 50 minutes. A tree's prediction is the mean of the training targets in a leaf, so it can never exceed the largest training target, however extreme the input. A linear model would extrapolate, rightly or wrongly. Check whether future inputs leave the training range before choosing trees.",
+          "solutionFormat": "prose",
+          "checks": [
+            "States the largest possible prediction.",
+            "Explains it through leaf averages."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "Gradient boosting with learning rate 0.1 reaches its best validation score after about 100 trees. You halve the learning rate to 0.05. About how many trees do you expect, and how should you set the count?",
+          "hints": [
+            "Each tree takes a step scaled by the learning rate."
+          ],
+          "solution": "Roughly twice as many, about 200, because each tree corrects half as much. Do not guess: use early stopping on a validation split or choose the number of iterations by cross-validation. Smaller rates often generalise slightly better at the cost of training time.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Relates learning rate to iteration count.",
+            "Uses early stopping or cross-validation."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "You have 300 rows, a relationship that looks roughly linear and a requirement to explain each prediction to auditors. Should you start with gradient boosting?",
+          "hints": [
+            "What does each option cost to explain?"
+          ],
+          "solution": "No. Start with a regularised logistic or linear regression: it suits a linear relationship and small data, and its coefficients explain predictions directly. Try an ensemble only if cross-validation shows a gain that matters for the decision, and then budget for explaining it.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Matches model complexity to data size and shape.",
+            "Weighs the explanation requirement."
+          ]
         }
       ]
     },
@@ -1036,6 +1224,14 @@
         "checks": [
           "Check timestamp and target proxy.",
           "Check duplicate leakage independently."
+        ],
+        "hints": [
+          "For each new feature, ask when its value is written compared with when you predict.",
+          "Perfect scores have two common causes: a proxy for the label, and the same case on both sides of the split."
+        ],
+        "pitfalls": [
+          "Trusting a perfect score without checking feature timing.",
+          "Checking exact ID overlap and missing near duplicates."
         ]
       },
       "quiz": {
@@ -1055,6 +1251,62 @@
           "section": "Inconsistent preprocessing; data leakage; controlling randomness",
           "reviewed": "2026-10-02",
           "scope": "scikit-learn 1.9.1. Target leakage and split contamination. Fictional examples do not establish real-service performance."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Predictions happen at ticket intake. Finish the audit table: for `priority`, `assigned_team`, `resolution_hours` and `last_updated_status`, say whether each is known at intake and may be used.",
+          "hints": [
+            "Write down when each value is first written."
+          ],
+          "solution": "`priority` and `assigned_team` are set at intake, so they may be used if their stored values are the intake values, not later edits. `resolution_hours` is known only after resolution and defines the label, so it must be excluded. `last_updated_status` holds the latest status, which can encode closure or breach, so exclude it unless you can reconstruct its value as of intake.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Classifies each feature by availability time.",
+            "Notes that later edits can overwrite intake values."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Training uses ticket IDs 1 to 100 and testing uses IDs 95 to 120. How many tickets appear in both, and what does that do to the test score?",
+          "hints": [
+            "Which IDs fall in both ranges?"
+          ],
+          "solution": "IDs 95 to 100 overlap, 6 tickets. The model has seen their labels during training, so it can score well on them by memory, which inflates the test score. Remove them from one side, then also check for near duplicates and the same customer under different IDs, which an ID check misses.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Counts the overlap.",
+            "Explains the inflation.",
+            "Looks beyond exact IDs."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "A feature replaces each customer with their average breach rate, computed over the whole dataset before splitting. Why is that leakage, and how do you compute it safely?",
+          "hints": [
+            "Which rows' labels went into the average?"
+          ],
+          "solution": "The average includes the test rows' own labels, so test predictions contain information from the answers. Compute the encoding from training rows only and apply it to validation and test rows; inside cross-validation, recompute it within each training fold. For customers with few rows, shrink towards the overall rate.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Explains that test labels enter the feature.",
+            "Fits the encoding on training data only.",
+            "Recomputes it per fold."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "A colleague wants to add 'number of agent replies so far' to a model that predicts breach at intake. Should you?",
+          "hints": [
+            "What is its value at the moment of intake?"
+          ],
+          "solution": "Not as described. At intake there are no replies yet, so the historical values of this feature come from later in the ticket's life and leak the outcome. Use it only if the model runs again later in the ticket's life and the feature is computed as of that prediction time.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Checks the feature's value at prediction time.",
+            "Allows it only for a later prediction point."
+          ]
         }
       ]
     },
@@ -1092,6 +1344,14 @@
         "checks": [
           "Use company-level grouping.",
           "Keep timing as a separate requirement."
+        ],
+        "hints": [
+          "There are two separate requirements: unseen companies and later dates.",
+          "Check each split against each requirement in turn."
+        ],
+        "pitfalls": [
+          "Assuming a time split also separates customers.",
+          "Ignoring labels that were not yet known at the cutoff."
         ]
       },
       "quiz": {
@@ -1111,6 +1371,62 @@
           "section": "Computing cross-validated metrics; grouped data; time series split",
           "reviewed": "2026-10-02",
           "scope": "scikit-learn 1.9.1. Grouped and chronological splitting. Fictional examples do not establish real-service performance."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Customer A has tickets in January and March; customer B has tickets in February and April. With a cutoff after February, finish the split: which tickets train and evaluate, and which customers appear on both sides?",
+          "hints": [
+            "Sort the four tickets by month first."
+          ],
+          "solution": "Training holds A's January ticket and B's February ticket; evaluation holds A's March and B's April tickets. Both A and B appear on both sides, so the split answers 'how do we do on later tickets from known customers', not 'on new customers'.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Places each ticket by date.",
+            "Identifies the customers on both sides."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Now hold out customer B instead. Which tickets train and evaluate, and what time problem appears?",
+          "hints": [
+            "Compare the evaluation dates with the latest training date."
+          ],
+          "solution": "Training holds A's January and March tickets; evaluation holds B's February and April tickets. B's February ticket is earlier than A's March training ticket, so the model was fitted on data from after one of its test cases. For a deployment that predicts new customers in the future, you need both: hold out customers and evaluate only on dates after the training period.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Places each ticket by customer.",
+            "Compares evaluation dates with training dates.",
+            "Combines both constraints."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "The cutoff is 1 March and tickets take up to 10 days to resolve. A ticket created on 27 February resolves on 9 March. May it be in the training set?",
+          "hints": [
+            "When was this ticket's label first available?"
+          ],
+          "solution": "Its label was not known on 1 March, so a model trained 'as of 1 March' could not have had it. Either drop tickets created in the 10 days before the cutoff, from 19 February, or train at a later date when their labels exist. Using it anyway makes the evaluation see a future that the real system would not.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Compares the label date with the cutoff.",
+            "Computes the gap start.",
+            "Explains the effect of using immature labels."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "A spam model will score emails from senders who already have many emails in the training data. Is a random email-level split acceptable?",
+          "hints": [
+            "Will production emails come from senders the model has seen?"
+          ],
+          "solution": "Mostly yes for that question: the model will see known senders in production, so having the same sender on both sides matches use. If it must also handle new senders, add a group split by sender to measure that separately, and in any case check for near-identical emails across the split, which inflate scores.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Matches the split to the deployment question.",
+            "Adds a group split for new senders if needed."
+          ]
         }
       ]
     },
@@ -1272,6 +1588,14 @@
         "checks": [
           "Calculate cost 4 at 0.7.",
           "Select 0.3 using validation only."
+        ],
+        "hints": [
+          "At 0.7, which probabilities are at or above the threshold?",
+          "Count TP, FP and FN, then apply 4 × FN + FP."
+        ],
+        "pitfalls": [
+          "Choosing the threshold on the test set.",
+          "Forgetting the predeclared tie-break."
         ]
       },
       "quiz": {
@@ -1291,6 +1615,62 @@
           "section": "Classification metrics; regression metrics; dummy estimators",
           "reviewed": "2026-10-02",
           "scope": "scikit-learn 1.9.1. Decision threshold selection on validation data. Fictional examples do not establish real-service performance."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Same validation data: truth [1, 0, 1, 0] and probabilities [0.8, 0.6, 0.4, 0.2]. The cost changes to FN + FP, with ties going to the higher threshold. Finish the table for 0.3, 0.5 and 0.7 and choose a threshold.",
+          "hints": [
+            "Classify with probability ≥ threshold."
+          ],
+          "solution": "At 0.3: TP = 2, FP = 1, FN = 0, cost 1. At 0.5: TP = 1, FP = 1, FN = 1, cost 2. At 0.7: TP = 1, FP = 0, FN = 1, cost 1. Thresholds 0.3 and 0.7 tie at 1, and the tie-break picks 0.7. Changing the costs changed the answer from 0.3 to 0.7 without touching the model.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Counts each threshold correctly.",
+            "Applies the tie-break.",
+            "Notes that the cost rule drove the change."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Back to the original cost, but reviewers can check at most one flagged ticket per four tickets. Which thresholds respect that capacity, and which do you choose?",
+          "hints": [
+            "Count the flagged tickets at each threshold."
+          ],
+          "solution": "At 0.3 three tickets are flagged, at 0.5 two and at 0.7 one. Only 0.7 stays within one flag per four tickets, so it is chosen even though its cost, 4, is higher than 0.3's cost of 1. A capacity limit is a constraint that rules options out before costs are compared.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Counts flags per threshold.",
+            "Applies capacity before cost."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "On validation data half the tickets breach. A threshold gives recall 0.8 and a false positive rate of 0.2. In production only 10% breach. What happens to precision?",
+          "hints": [
+            "Work out flagged breaches and flagged non-breaches per 100 tickets."
+          ],
+          "solution": "Precision = recall × prevalence / (recall × prevalence + FPR × (1 − prevalence)). At 50%: 0.4 / (0.4 + 0.1) = 0.8. At 10%: 0.08 / (0.08 + 0.18) = 0.308. The same threshold now produces mostly false alarms, so re-evaluate the threshold on data with realistic prevalence.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Uses prevalence in the precision calculation.",
+            "Computes both precisions.",
+            "Recommends re-evaluating on realistic data."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "After evaluating on the test set, a teammate notices 0.45 would have scored better than the chosen 0.5 and proposes switching. Should you?",
+          "hints": [
+            "What is the test set for?"
+          ],
+          "solution": "No. Changing the threshold because of the test score turns the test set into validation, and the reported score becomes optimistic. Keep 0.5 for this evaluation and record the observation; if you want to revisit the threshold, do it with new validation data and then a fresh test.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Recognises test-set reuse.",
+            "Keeps the frozen choice for this evaluation."
+          ]
         }
       ]
     },

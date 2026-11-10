@@ -23,6 +23,8 @@ import numpy as np  # noqa: E402
 from sklearn.linear_model import LogisticRegression  # noqa: E402
 import metrics_lab as metrics  # noqa: E402
 import ml_lab  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from practice_facts import practice_failures  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
@@ -323,6 +325,84 @@ def questions():
             yield f'stage/{stage}/{i + 1}', q
 
 
+# Practice ladder answers computed with the course's metrics lab (see tests/practice_facts.py).
+TRUTH, PROBABILITIES = [1, 0, 1, 0], [0.8, 0.6, 0.4, 0.2]
+
+
+def practice_split_sizes():
+    rows = [{'ticket_id': i, 'created_date': f'{i:04}'} for i in range(500)]
+    train, validation, test = metrics.time_split(rows)
+    return [f'first {len(train)} rows', f'next {len(validation)}', f'last {len(test)}']
+
+
+def practice_fold_sizes():
+    return [f'144 / 4 = {144 // 4} rows', f'trains on the other {144 - 144 // 4}']
+
+
+def practice_f1():
+    precision, recall = 6 / 8, 6 / 9
+    f1 = 2 * precision * recall / (precision + recall)
+    return [f'Recall = 6 / (6 + 3) = {recall:.3f}', f'= {f1:.3f}']
+
+
+def practice_all_negative():
+    r = metrics.confusion([1] * 20 + [0] * 980, [0] * 1000)
+    assert r['precision'] is None and r['recall'] == 0
+    return [f"TP = {r['tp']}, FP = {r['fp']}, FN = {r['fn']} and TN = {r['tn']}", f"= {r['accuracy']:.2f}"]
+
+
+def practice_fpr():
+    return [f'2 / (2 + 9) = {2 / 11:.3f}']
+
+
+def practice_cost_change():
+    rows = []
+    for t in (0.3, 0.5, 0.7):
+        r = metrics.confusion(TRUTH, metrics.classify(PROBABILITIES, t))
+        rows.append(f"At {t}: TP = {r['tp']}, FP = {r['fp']}, FN = {r['fn']}, cost {r['fn'] + r['fp']}")
+    best = min((0.3, 0.5, 0.7), key=lambda t: (sum(metrics.confusion(TRUTH, metrics.classify(PROBABILITIES, t))[k] for k in ('fn', 'fp')), -t))
+    return rows + [f'the tie-break picks {best}']
+
+
+def practice_capacity():
+    flags = {t: sum(metrics.classify(PROBABILITIES, t)) for t in (0.3, 0.5, 0.7)}
+    within = [t for t, n in flags.items() if n <= len(TRUTH) // 4]
+    cost = lambda t: metrics.cost(metrics.confusion(TRUTH, metrics.classify(PROBABILITIES, t)))
+    assert within == [0.7]
+    return [f'At 0.3 {["", "one", "two", "three"][flags[0.3]]} tickets are flagged', f'its cost, {cost(0.7)}',
+            f"0.3's cost of {cost(0.3)}"]
+
+
+def practice_prevalence():
+    precision = lambda p: 0.8 * p / (0.8 * p + 0.2 * (1 - p))
+    return [f'= {precision(0.5):.1f}', f'= {precision(0.1):.3f}']
+
+
+def practice_id_overlap():
+    overlap = set(range(1, 101)) & set(range(95, 121))
+    return [f'IDs {min(overlap)} to {max(overlap)} overlap, {len(overlap)} tickets']
+
+
+def practice_label_gap():
+    from datetime import date, timedelta
+    return [f'from {(date(2026, 3, 1) - timedelta(days=10)):%d} February']
+
+
+def practice_rows_per_point():
+    return [f'1 / 180 = {1 / 180:.4f}', f'= {0.883 - 0.844:.3f} is about {round((0.883 - 0.844) * 180)} rows']
+
+
+PRACTICE_FACTS = {
+    'holdout-splits/1': practice_split_sizes, 'holdout-splits/3': practice_fold_sizes,
+    'classification-metrics/1': practice_f1, 'classification-metrics/2': practice_all_negative,
+    'classification-metrics/3': practice_fpr,
+    'threshold-policy/1': practice_cost_change, 'threshold-policy/2': practice_capacity,
+    'threshold-policy/3': practice_prevalence,
+    'leakage-audit/2': practice_id_overlap, 'time-and-group-splits/3': practice_label_gap,
+    'trees-and-ensembles/1': practice_rows_per_point,
+}
+
+
 def main():
     seen, failures = set(), []
     for key, q in questions():
@@ -339,11 +419,12 @@ def main():
             continue
         if answer != q['options'][q['correct']]:
             failures.append(f'{key}: the lab supports {answer!r}, the question marks {q["options"][q["correct"]]!r}')
+    failures += practice_failures(COURSE, PRACTICE_FACTS)
     failures += [f'{key}: fact has no question' for key in set(FACTS) | set(SOURCED) if key not in seen]
     if failures:
         sys.exit('Machine learning foundations checkpoint facts failed:\n' + '\n'.join(failures))
     print(f'PASS: {len(FACTS)} Machine learning foundations checkpoint answers checked against the course labs; '
-          f'{len(SOURCED)} cited from the lessons.')
+          f'{len(SOURCED)} cited from the lessons; {len(PRACTICE_FACTS)} practice ladder answers computed.')
 
 
 if __name__ == '__main__':
