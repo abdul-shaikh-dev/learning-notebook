@@ -644,7 +644,15 @@
           "Keep the previous committed watermark when target writes fail halfway.",
           "Roll back or reconcile partial effects and retry with deduplication."
         ],
-        "solutionFormat": "prose"
+        "solutionFormat": "prose",
+        "hints": [
+          "Ask what the target holds after the failure: half a batch, or nothing?",
+          "The watermark is a promise that everything before it is safely loaded. Is that true yet?"
+        ],
+        "pitfalls": [
+          "Saving the watermark before the target transaction commits.",
+          "Retrying from the new watermark and skipping the rows that failed."
+        ]
       },
       "quiz": {
         "question": "Target writes fail halfway through an extracted batch. What should happen to its watermark?",
@@ -670,6 +678,64 @@
           "section": "Commit and rollback",
           "reviewed": "2026-09-30",
           "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "The cursor is `last = ('10:00', 'o1')`. The source now holds `('10:00', 'o1')`, `('10:00', 'o2')` and `('10:01', 'o0')`. Finish the comparison: which rows does `row > last` return with the composite cursor, and which with a timestamp-only cursor `updated_at > '10:00'`?",
+          "hints": [
+            "Python compares tuples element by element, left to right."
+          ],
+          "solution": "With the composite cursor, tuples compare by time and then by ID, so `('10:00', 'o2')` and `('10:01', 'o0')` are both greater than `('10:00', 'o1')`: 2 rows. The timestamp-only cursor returns just `('10:01', 'o0')`, 1 row, and `o2` is lost because it shares the boundary timestamp. The tie-breaker makes the order total, so no row sits exactly on the boundary undecided.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Compares tuples by time, then ID.",
+            "Lists the rows for both cursors.",
+            "Names the row the timestamp-only cursor loses."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "A source change sequence is used instead. The cursor is at 41, the batch holds 42 to 45, and applying 44 fails. What should the target and the cursor hold afterwards, and what happens on the retry?",
+          "hints": [
+            "The cursor and the rows must commit together."
+          ],
+          "solution": "The target transaction rolls back, so 42 and 43 are undone too and the cursor stays at 41. The retry reads 42 to 45 again. If the failure is permanent, the batch stops at 44 for investigation rather than skipping it. If the target had committed 42 and 43 separately, the retry would apply them twice unless the writes are idempotent upserts keyed by the source ID.",
+          "solutionFormat": "prose",
+          "checks": [
+            "States where the cursor stays.",
+            "Rolls back or makes the reapplied changes idempotent.",
+            "Stops rather than skips on a permanent failure."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "An extractor uses `occurred_at` with a 10-minute lookback and idempotent upserts. The cursor is 10:05. A row with `occurred_at` 09:59 arrives at 10:08, and another with `occurred_at` 09:40 arrives at 10:09. Which does the next run pick up?",
+          "hints": [
+            "Subtract the window from the cursor first."
+          ],
+          "solution": "The next run reads from 10:05 minus 10 minutes, 09:55, so it picks up the 09:59 row; the upsert makes the overlap with already loaded rows harmless. The 09:40 row is 25 minutes before the cursor, outside the 10-minute window, and is missed. A lookback covers only lateness within its window; rows later than that need a change sequence or periodic reconciliation, and the window should be sized from measured lateness.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Computes the lookback start.",
+            "Identifies which row falls outside the window.",
+            "Names reconciliation or a change sequence for later arrivals."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "A 50,000-row reference table has no `updated_at` column and is updated in place a few times a day. Should you build an incremental extractor for it?",
+          "hints": [
+            "What could a watermark be based on here?"
+          ],
+          "solution": "No. There is no reliable change column to drive a watermark, and 50,000 rows is cheap to reload. Take a full snapshot on each run and either replace the target or compare it with the previous snapshot to derive inserts, updates and deletes. Incremental extraction earns its complexity when tables are too large to reload in the time available.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Notes the missing change column.",
+            "Weighs the table size against reload cost.",
+            "Proposes a full snapshot with comparison."
+          ]
         }
       ]
     },
@@ -706,7 +772,15 @@
           "Identify the gap between the checkpoint and retained changes as missing completeness evidence.",
           "Rebaseline with a consistent snapshot and reconcile using the source protocol."
         ],
-        "solutionFormat": "prose"
+        "solutionFormat": "prose",
+        "hints": [
+          "Changes between the checkpoint and the start of the retained range are gone. Can you prove nothing important happened in that gap?",
+          "What would let you start again from a known, complete state?"
+        ],
+        "pitfalls": [
+          "Silently resuming from the oldest retained change.",
+          "Treating CDC as exactly-once business processing."
+        ]
       },
       "quiz": {
         "question": "A CDC checkpoint is older than the earliest retained change. What should the consumer do?",
@@ -725,6 +799,62 @@
           "section": "SQL Server CDC overview",
           "reviewed": "2026-09-30",
           "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "A consumer reads changes 1040 to 1045, including a delete of `o1` at 1042. Supply the missing rule: where and when should it store the checkpoint 1045?",
+          "hints": [
+            "What happens to each order of writes if the process crashes between them?"
+          ],
+          "solution": "In the same target transaction as the applied changes, including the delete. If the process crashes before that commit, neither the changes nor the checkpoint survive, and the consumer re-reads from 1039. If the checkpoint were stored first, a crash would skip changes; if it were stored after a separate commit, a crash would reapply them, which is safe only with idempotent writes.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Commits the checkpoint with the changes.",
+            "Explains both wrong orders."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Without CDC, a nightly import compares snapshots. Yesterday's snapshot held orders `o1`, `o2` and `o3`; today's holds `o1` and `o3`. What can the importer conclude, and what must be true for that conclusion to hold?",
+          "hints": [
+            "A missing row can mean deleted or not extracted."
+          ],
+          "solution": "Order `o2` is missing from today's snapshot, so it was deleted, provided the snapshot is complete. If the extract was partial or filtered, for example it timed out or used a date range, a missing row means nothing. A snapshot comparison needs a completeness check such as a row count or a control total from the source before it may infer deletes.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Compares the two snapshots.",
+            "Requires the snapshot to be complete.",
+            "Names a completeness check."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "One source soft-deletes rows by setting `is_deleted = 1` and updating `updated_at`; another hard-deletes them. Which deletions can a watermark extractor see?",
+          "hints": [
+            "What row does the extractor read after each kind of delete?"
+          ],
+          "solution": "Soft deletes, because the row still exists and its `updated_at` moves, so the extractor reads it like any update and can mark it deleted in the target. Hard deletes leave nothing to read, so a watermark extractor never sees them. For a hard-deleting source you need CDC, a deletion log table, or periodic snapshot comparison.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Explains why soft deletes are visible.",
+            "Explains why hard deletes are invisible.",
+            "Proposes a mechanism for hard deletes."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "Change retention is 3 days. A consumer was down for 2.5 days over a weekend and has now restarted. Should you rebaseline, and should anything change?",
+          "hints": [
+            "Is the checkpoint still inside the retained range?"
+          ],
+          "solution": "No rebaseline is needed: the checkpoint is still within the retained range, so the consumer can catch up. The margin was only half a day, though. Alert when consumer lag approaches the retention window, for example at 50%, and consider longer retention if outages of that length are expected. A missed alert is cheaper than a full rebaseline.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Compares the outage with retention.",
+            "Recommends a lag alert below retention."
+          ]
         }
       ]
     },
@@ -831,7 +961,15 @@
           "Make an event exactly on September 10 match only the new version.",
           "Reject overlapping intervals and require one matching version per fact."
         ],
-        "solutionFormat": "prose"
+        "solutionFormat": "prose",
+        "hints": [
+          "With half-open intervals `[start, end)`, which version contains the exact change instant?",
+          "An overlap gives one fact two matches. How would a test notice that?"
+        ],
+        "pitfalls": [
+          "Using closed intervals so a boundary event matches two versions.",
+          "Joining facts to the current dimension row for a historical question."
+        ]
       },
       "quiz": {
         "question": "A customer version ends exactly when the next begins on September 10. How should an event at that boundary join?",
@@ -857,6 +995,62 @@
           "section": "SQL Server table constraints",
           "reviewed": "2026-09-30",
           "scope": "Python 3.14+ CSV/SQLite lab. SQL Server 17 and Airflow integrations were not executed locally."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Customer C is North for `[.., 1 April)` and South for `[1 April, ∞)`. Orders: A on 31 March for 100, B on 1 April for 50 and C2 on 2 April for 70. Finish the region-at-order-time report: what are the North and South totals?",
+          "hints": [
+            "Check each order date against `valid_from <= date < valid_to`."
+          ],
+          "solution": "Order A falls in the North interval, B and C2 in the South interval, because 1 April belongs to `[1 April, ∞)`. North is 100 and South is 50 + 70 = 120. Joining to the current row would put all 220 in South.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Decides which interval holds the boundary order.",
+            "Gives both totals.",
+            "Contrasts with a current-row join."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "The region change is corrected from 1 April to 30 March. Which orders are affected, and what are the new totals?",
+          "hints": [
+            "Which order dates fall between the old and corrected change dates?"
+          ],
+          "solution": "Only order A, dated 31 March, changes interval: it moves from North to South. North becomes 0 and South becomes 100 + 50 + 70 = 220. Find the affected orders first, those dated between the old and new change dates, and rebuild only their matches, then compare counts and totals before and after.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Identifies the affected order.",
+            "Recomputes both totals.",
+            "Limits the rebuild to the affected range."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "A bug writes the North version as `[1 March, 2 April)` while South starts on 1 April. What does an inner join produce for the three orders, and what test catches it?",
+          "hints": [
+            "How many versions does a 1 April order match now?"
+          ],
+          "solution": "Orders dated 1 April match both versions, so order B is counted twice: the joined total is 100 + 50 + 50 + 70 = 270 instead of 220. A test that counts matches per fact and fails when any fact has more or fewer than one catches it, as does a test that intervals for one customer do not overlap.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Shows the duplicated fact and the inflated total.",
+            "Proposes a one-match-per-fact test or an overlap test."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "A product category's name had a typo, 'Elecronics', which is now fixed. Should the dimension keep the old name as a Type 2 version?",
+          "hints": [
+            "Would anyone ask for sales grouped by the misspelled name?"
+          ],
+          "solution": "No. The typo carries no business meaning, so nobody needs reports 'as it was named at the time'. Overwrite it as Type 1. Use Type 2 when the attribute's historical value changes the meaning of a fact, such as a customer's region when the sale happened.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Asks whether the old value has business meaning.",
+            "Chooses Type 1 for a correction."
+          ]
         }
       ]
     },
@@ -1011,6 +1205,15 @@
           "Explains why a strict greater-than filter skips late corrections.",
           "Adds unique_key and a look-back window or a change timestamp.",
           "Adds tests and a one-off full refresh to repair past rows."
+        ],
+        "hints": [
+          "A refund keeps its original timestamp. Compare it with the maximum already loaded.",
+          "Two parts to the fix: how changed rows are merged, and which rows are selected.",
+          "What repairs the rows that were already missed?"
+        ],
+        "pitfalls": [
+          "Filtering incremental runs strictly on newer timestamps.",
+          "Fixing the filter but forgetting a one-off full refresh for past rows."
         ]
       },
       "quiz": {
@@ -1051,6 +1254,61 @@
           "section": "Snapshot meta-fields",
           "reviewed": "2026-11-08",
           "scope": "dbt Core 1.12 with the dbt-duckdb adapter, run on a scratch project on 2026-11-09; the course's SQLite lab does not use dbt."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "The lesson's model reprocesses from the latest loaded day. The latest `order_date` in `fct_orders` is 2026-09-03, and refunds can be recorded up to three days later on the original order date. Supply the missing filter date so the run also merges those refunds.",
+          "hints": [
+            "How far back can a refund's order date be from the newest row?"
+          ],
+          "solution": "Reprocess from the latest loaded day minus three days: `order_date >= max(order_date) - 3 days`, here 2026-08-31. Together with `unique_key='order_id'`, corrected rows on those days replace their earlier versions instead of being missed or duplicated. Size the window from the longest observed correction delay and monitor it.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Subtracts the correction delay from the latest loaded date.",
+            "Keeps `unique_key` so reprocessed rows merge."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "On run 3, staging contains order 3 twice and the `unique` test on `stg_orders` fails. What happens to `fct_orders` and the revenue mart, and what do consumers see?",
+          "hints": [
+            "Which models depend on the failing one?"
+          ],
+          "solution": "`dbt build` runs tests in dependency order, so the failing test skips every model downstream of `stg_orders`: `fct_orders` and the revenue mart are not rebuilt. Consumers keep reading the last good tables from run 2. The run is reported as failed, so the duplicate is investigated before anything is published.",
+          "solutionFormat": "prose",
+          "checks": [
+            "States that downstream models are skipped.",
+            "States that consumers keep the last good tables."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "Finance needs each customer's region as it was on any past date, while staging holds only the current customer row. Which dbt feature records that history, and what columns does it add?",
+          "hints": [
+            "Lesson 13's history needs validity intervals. Which dbt feature writes them?"
+          ],
+          "solution": "A dbt snapshot. On each run it compares the source rows with the snapshot table and, when a row changes, closes the old version and inserts a new one. It adds `dbt_valid_from` and `dbt_valid_to`, with `dbt_valid_to` null for the current version, which is the Type 2 history of lesson 13. Use the timestamp strategy if the source has a reliable `updated_at`, otherwise the check strategy on chosen columns. History starts only when snapshots start running.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Names snapshots.",
+            "Names the validity columns.",
+            "Notes that history begins with the first snapshot run."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "A 5,000-row model rebuilds in 2 seconds as a table. A teammate wants to make it incremental. Is it worth it?",
+          "hints": [
+            "What does incremental add, and what does it save here?"
+          ],
+          "solution": "No. An incremental model adds a filter, a unique key, late-data handling and the need for full refreshes when logic changes, all to save 2 seconds. Keep it as a table. Make models incremental when full rebuilds are too slow or too costly.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Weighs the complexity against the saving.",
+            "Says when incremental models are justified."
+          ]
         }
       ]
     },
@@ -1094,7 +1352,15 @@
           "Assign the late sale to the chosen event-day correction policy.",
           "Show a revision or updated timestamp and count accepted late events."
         ],
-        "solutionFormat": "prose"
+        "solutionFormat": "prose",
+        "hints": [
+          "Decide first whether a late sale changes the day it happened or the day it arrived.",
+          "Users need to tell a revised number from an original one. What would show that?"
+        ],
+        "pitfalls": [
+          "Changing published history without a revision number or timestamp.",
+          "Adding a corrected amount to an aggregate instead of replacing the old contribution."
+        ]
       },
       "quiz": {
         "question": "A September 1 sale arrives after that day has been published. Under the lesson correction policy, what should users see?",
@@ -1120,6 +1386,63 @@
           "section": "Beam watermarks and late data",
           "reviewed": "2026-10-02",
           "scope": "Concept and type behavior checked against primary documentation; the local lab does not execute the external platform."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "The revision lab applies these events to order A in turn: revision 1 at 100 cents, revision 2 at 150, revision 1 again, revision 3 as a tombstone, and revision 2 again. Finish the trace: what does `apply` return for each, and what are the day totals at the end?",
+          "hints": [
+            "Each event is compared with the stored revision for order A."
+          ],
+          "solution": "applied, applied, stale, applied, stale. The totals go from 100 to 150, stay at 150 after the stale revision 1, and become empty after the tombstone; the late revision 2 is rejected as stale, so it cannot bring the deleted order back. The final totals are `{}`. The tombstone keeps revision 3, which is what lets the projection reject revision 2.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Gives each return value.",
+            "Gives the final totals.",
+            "Explains why the tombstone keeps its revision."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Change the order: revision 1 at 100 cents on 2026-09-28, revision 2 at 150 on 2026-09-28, then revision 3 at 150 moved to 2026-09-29, then revision 2 again. What are the totals after each event?",
+          "hints": [
+            "When a revision changes the day, two totals are affected."
+          ],
+          "solution": "After revision 1: `{'2026-09-28': 100}`. After revision 2: `{'2026-09-28': 150}`. After revision 3 the order moves days: `{'2026-09-29': 150}`, with nothing left on 2026-09-28. The late revision 2 is stale, so the totals stay `{'2026-09-29': 150}`. An additive pipeline would instead leave 150 on Monday and add 150 on Tuesday.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Moves the whole contribution to the new day.",
+            "Handles the late revision 2.",
+            "Contrasts with an additive pipeline."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "Daily totals are published with an allowed lateness of 2 days. A 1 September order arrives on 5 September. What should happen to it, and what should finance see?",
+          "hints": [
+            "Compare the arrival delay with the allowed lateness."
+          ],
+          "solution": "It is beyond the allowed lateness, so the 1 September total is not silently revised. Record the order in a corrections report, or a later revision explicitly labelled as a correction, with its event date and arrival date. Finance sees the original total plus a dated correction, and the late count per day shows whether the 2-day policy is still right.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Applies the lateness policy.",
+            "Records event and arrival dates.",
+            "Monitors late counts to review the policy."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "An operations dashboard shows orders per minute for the last hour to spot outages. Should it revise past minutes when late events arrive?",
+          "hints": [
+            "What decision does someone make from this chart?"
+          ],
+          "solution": "Not necessarily. Its purpose is to spot sudden drops quickly, so counting by arrival minute is acceptable and simpler, as long as the chart says so. Finance reporting needs event-time accounting and revisions; an operational signal often does not. Choose per use, and label which time the chart uses.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Ties the choice to the dashboard's purpose.",
+            "Labels arrival time versus event time."
+          ]
         }
       ]
     },

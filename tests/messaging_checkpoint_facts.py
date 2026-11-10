@@ -14,6 +14,8 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[1]
 COURSE = ROOT / 'paths' / 'messaging-events'
 sys.path.insert(0, str(COURSE / 'practice'))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from practice_facts import practice_failures  # noqa: E402
 from event_lab import connect, consume, create_job, mark_sent, pending, retry_decision, total, validate  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
@@ -344,23 +346,6 @@ PRACTICE_FACTS = {
 }
 
 
-def practice_failures():
-    lessons = {l['id']: l for l in json.loads((COURSE / 'path.json').read_text(encoding='utf-8'))['lessons']}
-    failures = []
-    for key, fact in PRACTICE_FACTS.items():
-        lesson, n = key.split('/')
-        steps = lessons[lesson].get('practice', [])
-        if int(n) > len(steps):
-            failures.append(f'practice {key}: no such step')
-            continue
-        solution = steps[int(n) - 1]['solution']
-        try:
-            expected = fact()
-        except Exception as error:
-            failures.append(f'practice {key}: {error}')
-            continue
-        failures += [f'practice {key}: solution should state {text!r}' for text in expected if text not in solution]
-    return failures
 
 
 def questions():
@@ -387,7 +372,7 @@ def main():
             failures.append(f'{key}: {error}'); continue
         if answer != q['options'][q['correct']]:
             failures.append(f'{key}: the lab supports {answer!r}, the question marks {q["options"][q["correct"]]!r}')
-    failures += practice_failures()
+    failures += practice_failures(COURSE, PRACTICE_FACTS)
     failures += [f'{key}: fact has no question' for key in set(FACTS) | set(SOURCED) if key not in seen]
     if failures:
         sys.exit('Messaging checkpoint facts failed:\n' + '\n'.join(failures))

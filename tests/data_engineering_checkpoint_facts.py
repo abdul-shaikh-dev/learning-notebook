@@ -21,6 +21,8 @@ sys.path.insert(0, str(PRACTICE))
 import pipeline_lab  # noqa: E402
 from pipeline_lab import import_csv, read_batch, reconcile  # noqa: E402
 import revision_lab  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from practice_facts import practice_failures  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
@@ -295,6 +297,90 @@ def questions():
             yield f'stage/{stage}/{i + 1}', q
 
 
+# Practice ladder answers that are numbers or program output (see tests/practice_facts.py).
+def practice_cursor():
+    last = ('10:00', 'o1')
+    rows = [('10:00', 'o1'), ('10:00', 'o2'), ('10:01', 'o0')]
+    composite = [r for r in rows if r > last]
+    timestamp_only = [r for r in rows if r[0] > last[0]]
+    assert composite == [('10:00', 'o2'), ('10:01', 'o0')] and timestamp_only == [('10:01', 'o0')]
+    return [f'{len(composite)} rows', f'{len(timestamp_only)} row']
+
+
+def practice_lookback():
+    minutes = lambda t: int(t[:2]) * 60 + int(t[3:])
+    start = minutes('10:05') - 10
+    picked = [t for t in ('09:59', '09:40') if minutes(t) >= start]
+    assert picked == ['09:59']
+    return [f'{start // 60:02}:{start % 60:02}', f'{minutes("10:05") - minutes("09:40")} minutes before the cursor']
+
+
+def practice_snapshot_delete():
+    return [f'Order `{sorted({"o1", "o2", "o3"} - {"o1", "o3"})[0]}` is missing']
+
+
+def _region_totals(change, intervals=None):
+    orders = [('A', '2026-03-31', 100), ('B', '2026-04-01', 50), ('C2', '2026-04-02', 70)]
+    intervals = intervals or [('North', '0000-01-01', change), ('South', change, '9999-12-31')]
+    totals, matches = {}, {}
+    for order, day, amount in orders:
+        for region, start, end in intervals:
+            if start <= day < end:
+                totals[region] = totals.get(region, 0) + amount
+                matches[order] = matches.get(order, 0) + 1
+    return totals, matches
+
+
+def practice_scd_report():
+    totals, _ = _region_totals('2026-04-01')
+    return [f'North is {totals["North"]} and South is 50 + 70 = {totals["South"]}']
+
+
+def practice_scd_correction():
+    totals, _ = _region_totals('2026-03-30')
+    return [f'North becomes {totals.get("North", 0)} and South becomes 100 + 50 + 70 = {totals["South"]}']
+
+
+def practice_scd_overlap():
+    totals, matches = _region_totals(None, [('North', '2026-03-01', '2026-04-02'), ('South', '2026-04-01', '9999-12-31')])
+    assert matches['B'] == 2
+    return [f'100 + 50 + 50 + 70 = {sum(totals.values())} instead of 220']
+
+
+def practice_dbt_window():
+    latest = datetime(2026, 9, 3)
+    return [f'here {(latest - timedelta(days=3)).date().isoformat()}']
+
+
+def _revisions(events):
+    with closing(sqlite3.connect(':memory:')) as db:
+        revision_lab.initialize(db)
+        return [(revision_lab.apply(db, e), revision_lab.totals(db)) for e in events]
+
+
+def practice_revision_trace():
+    e = revision_lab.event
+    trace = _revisions([e(1), e(2, 150), e(1), e(3, 0, deleted=True), e(2, 150)])
+    return [', '.join(r for r, _ in trace) + '.', f'The final totals are `{trace[-1][1]}`']
+
+
+def practice_revision_move():
+    e = revision_lab.event
+    trace = _revisions([e(1, 100), e(2, 150), e(3, 150, day='2026-09-29'), e(2, 150)])
+    assert trace[-1][0] == 'stale'
+    return [f'After revision {i + 1}: `{totals}`' for i, (_, totals) in enumerate(trace[:2])] + [f'`{trace[2][1]}`']
+
+
+PRACTICE_FACTS = {
+    'incremental-watermarks/1': practice_cursor, 'incremental-watermarks/3': practice_lookback,
+    'cdc-and-deletions/2': practice_snapshot_delete,
+    'slowly-changing-dimensions/1': practice_scd_report, 'slowly-changing-dimensions/2': practice_scd_correction,
+    'slowly-changing-dimensions/3': practice_scd_overlap,
+    'dbt-tests-and-incremental-models/1': practice_dbt_window,
+    'late-data-and-windows/1': practice_revision_trace, 'late-data-and-windows/2': practice_revision_move,
+}
+
+
 def main():
     if pipeline_lab.MAX_BYTES != 262144:
         sys.exit('pipeline_lab.MAX_BYTES changed; review the byte-limit question')
@@ -311,10 +397,12 @@ def main():
             failures.append(f'{key}: {error}'); continue
         if answer != q['options'][q['correct']]:
             failures.append(f'{key}: the lab supports {answer!r}, the question marks {q["options"][q["correct"]]!r}')
+    failures += practice_failures(COURSE, PRACTICE_FACTS)
     failures += [f'{key}: fact has no question' for key in set(FACTS) | set(SOURCED) if key not in seen]
     if failures:
         sys.exit('Data Engineering checkpoint facts failed:\n' + '\n'.join(failures))
-    print(f'PASS: {len(FACTS)} Data Engineering checkpoint answers checked against the course labs; {len(SOURCED)} cited from the lessons.')
+    print(f'PASS: {len(FACTS)} Data Engineering checkpoint answers checked against the course labs; {len(SOURCED)} cited from the lessons; '
+          f'{len(PRACTICE_FACTS)} practice ladder answers computed.')
 
 
 if __name__ == '__main__':
