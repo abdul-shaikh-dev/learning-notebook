@@ -1401,9 +1401,10 @@
         {
           "title": "Design",
           "paragraphs": [
-            "Ten thousand learner keys are assigned to four nodes and then five. With modulo hashing about 80% move; with a ring of 100 virtual nodes per server about a fifth move, close to the ideal 1/5, and the five nodes hold similar shares."
+            "Ten thousand learner keys are assigned to four nodes and then five. With modulo hashing about 80% move; with a ring of 100 virtual nodes per server about a fifth move, close to the ideal 1/5, and the five nodes hold similar shares.",
+            "Try it: run the lab, then select Edit. Set `VNODES` to 1 and the busiest node holds about twice its fair share, and more keys move; at 100 it is within about 10%. Remove a node from `NODES_AFTER` to see how many keys move when one fails."
           ],
-          "example": "import bisect, hashlib\n\ndef h(text):\n    return int(hashlib.sha256(text.encode()).hexdigest()[:8], 16)\n\nkeys = [f'learner-{i}' for i in range(10_000)]\n\ndef modulo(nodes):\n    return {k: nodes[h(k) % len(nodes)] for k in keys}\n\ndef ring(nodes, vnodes=100):\n    points = sorted((h(f'{n}#{v}'), n) for n in nodes for v in range(vnodes))\n    hashes = [p for p, _ in points]\n    return {k: points[bisect.bisect(hashes, h(k)) % len(points)][1] for k in keys}\n\ndef moved(before, after):\n    return sum(before[k] != after[k] for k in keys) / len(keys)\n\nfour, five = ['a', 'b', 'c', 'd'], ['a', 'b', 'c', 'd', 'e']\nprint(f'modulo:           {moved(modulo(four), modulo(five)):.1%} of keys move')\nprint(f'consistent (100): {moved(ring(four), ring(five)):.1%} of keys move')\ncounts = {n: 0 for n in five}\nfor node in ring(five).values():\n    counts[node] += 1\nprint('keys per node:', counts)\n\n# Expected output:\n# modulo:           79.7% of keys move\n# consistent (100): 17.4% of keys move\n# keys per node: {'a': 2140, 'b': 1758, 'c': 2174, 'd': 2185, 'e': 1743}"
+          "example": "import bisect, hashlib\n\n# Try it: change these, then run again.\nNODES_BEFORE = ['a', 'b', 'c', 'd']\nNODES_AFTER = ['a', 'b', 'c', 'd', 'e']   # add or remove nodes\nVNODES = 100                               # points per node on the ring: try 1, 10 or 1000\nKEYS = 10_000\n\ndef h(text):\n    return int(hashlib.sha256(text.encode()).hexdigest()[:8], 16)\n\nkeys = [f'learner-{i}' for i in range(KEYS)]\n\ndef modulo(nodes):\n    return {k: nodes[h(k) % len(nodes)] for k in keys}\n\ndef ring(nodes, vnodes):\n    points = sorted((h(f'{n}#{v}'), n) for n in nodes for v in range(vnodes))\n    hashes = [p for p, _ in points]\n    return {k: points[bisect.bisect(hashes, h(k)) % len(points)][1] for k in keys}\n\ndef moved(before, after):\n    return sum(before[k] != after[k] for k in keys) / len(keys)\n\nafter = ring(NODES_AFTER, VNODES)\nprint(f'modulo:           {moved(modulo(NODES_BEFORE), modulo(NODES_AFTER)):.1%} of keys move')\nprint(f'consistent ({VNODES}): {moved(ring(NODES_BEFORE, VNODES), after):.1%} of keys move')\ncounts = {n: 0 for n in NODES_AFTER}\nfor node in after.values():\n    counts[node] += 1\nprint('keys per node:', counts)\nprint(f'busiest node: {max(counts.values()) / (KEYS / len(NODES_AFTER)):.2f}x its fair share')\n\n# Expected output:\n# modulo:           79.7% of keys move\n# consistent (100): 17.4% of keys move\n# keys per node: {'a': 2140, 'b': 1758, 'c': 2174, 'd': 2185, 'e': 1743}\n# busiest node: 1.09x its fair share"
         },
         {
           "title": "Tradeoffs",
@@ -1514,7 +1515,8 @@
             "Says where a ring does fit."
           ]
         }
-      ]
+      ],
+      "runExamples": true
     },
     {
       "id": "transactions",

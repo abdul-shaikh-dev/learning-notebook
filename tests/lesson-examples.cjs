@@ -30,6 +30,8 @@ const tick=()=>new Promise(resolve=>setImmediate(resolve));
  assert.equal(f.api.exampleControls(course,lesson.sections[1],1),'','A text diagram is not run');
  assert.equal(f.api.exampleControls(course,lesson.sections[2],2),'','A section without an example has no controls');
  assert.equal(f.api.exampleControls({id:'sql-server'},lesson.sections[3],3),'','Only courses marked runExamples run their examples');
+ assert(f.api.exampleControls({id:'system-design'},lesson.sections[3],3,{id:'lab',runExamples:true}).includes('id="example-run-3"'),'A lesson marked runExamples runs its examples in any course');
+ assert.equal(f.api.exampleControls({id:'system-design'},lesson.sections[3],3,{id:'other'}),'','Other lessons in that course do not');
  const local={example:'print(1)',exampleRunLocally:'Runs locally: <threads>.'};
  assert.equal(f.api.exampleControls(course,local,5),'','An example marked to run locally gets no controls');
  assert(!e('example-run-1').click,'No handlers are bound for the diagram');
@@ -71,7 +73,10 @@ const tick=()=>new Promise(resolve=>setImmediate(resolve));
  // Data: the four Python-based courses run their examples, and every named module is a published course file.
  const paths=require(path.resolve('scripts/manifest.cjs')).readPaths();
  assert.deepEqual(paths.filter(p=>p.runExamples).map(p=>p.id).sort(),['data-structures-algorithms','design-patterns','practical-maths-statistics','python']);
- for(const p of paths)for(const l of Array.isArray(p.lessons)?p.lessons:[])for(const s of l.sections||[])if(s.exampleRunLocally)assert.ok(p.runExamples&&s.example&&!s.exampleFormat&&/^Runs locally: .{20,}/.test(s.exampleRunLocally),p.id+'/'+l.id+': a local-only example gives its reason');
- for(const p of paths)for(const l of Array.isArray(p.lessons)?p.lessons:[])for(const s of l.sections||[])for(const file of s.exampleFiles||[]){assert.ok(p.runExamples&&p.publicFiles.includes(file),p.id+'/'+l.id+': '+file);assert.match(s.example,new RegExp('^(from|import) '+file.split('/').pop().replace('.py','')+'\\b','m'));}
- console.log('PASS: lesson example runner: runnable examples only, local-only reasons, run mode, practice modules, assert-only results, edit, Ctrl+Enter, stop, 5-second limit, load failures, cleanup and rendering.');
+ for(const p of paths)for(const l of Array.isArray(p.lessons)?p.lessons:[])for(const s of l.sections||[])if(s.exampleRunLocally)assert.ok((p.runExamples||l.runExamples)&&s.example&&!s.exampleFormat&&/^Runs locally: .{20,}/.test(s.exampleRunLocally),p.id+'/'+l.id+': a local-only example gives its reason');
+ for(const p of paths)for(const l of Array.isArray(p.lessons)?p.lessons:[])for(const s of l.sections||[])for(const file of s.exampleFiles||[]){assert.ok((p.runExamples||l.runExamples)&&p.publicFiles.includes(file),p.id+'/'+l.id+': '+file);assert.match(s.example,new RegExp('^(from|import) '+file.split('/').pop().replace('.py','')+'\\b','m'));}
+ // Labs (#134): single lessons opt in where their course's other examples are not Python.
+ assert.deepEqual(paths.flatMap(p=>(Array.isArray(p.lessons)?p.lessons:[]).filter(l=>l.runExamples).map(l=>p.id+'/'+l.id)).sort(),['cloud-infrastructure/autoscaling-across-clouds','messaging-events/cqrs','messaging-events/event-sourcing','messaging-events/retry-budget','system-design/consistent-hashing']);
+ for(const p of paths)for(const l of Array.isArray(p.lessons)?p.lessons:[])if(l.runExamples)assert.ok(l.sections.some(s=>s.example&&!s.exampleFormat&&/^# Try it: change/m.test(s.example)),p.id+'/'+l.id+': the lab marks what to change');
+ console.log('PASS: lesson example runner: course and lesson opt-in, runnable examples only, local-only reasons, run mode, practice modules, assert-only results, edit, Ctrl+Enter, stop, 5-second limit, load failures, cleanup and rendering.');
 })().catch(e=>{console.error(e);process.exitCode=1;});
