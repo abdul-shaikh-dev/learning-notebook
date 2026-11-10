@@ -359,7 +359,15 @@
           "Include the permitted read so always-deny code would fail.",
           "Apply tenant matching before owner or reader permission."
         ],
-        "solutionFormat": "prose"
+        "solutionFormat": "prose",
+        "hints": [
+          "Check the tenant first, then whether the principal owns the document, then the role.",
+          "One of the three principals is allowed something. Make sure your answer includes it."
+        ],
+        "pitfalls": [
+          "Matching the owner's name without matching the tenant.",
+          "Denying everything, which passes negative tests but breaks the product."
+        ]
       },
       "quiz": {
         "question": "Alice owns a blue-tenant document but has a red-tenant principal. Should ownership alone grant access?",
@@ -385,6 +393,61 @@
           "section": "Deny by default; validate permissions on every request",
           "reviewed": "2026-09-27",
           "scope": "Selected server-side object-authorization guidance, not a complete enterprise entitlement model."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Finish the matrix for document `a` (tenant red, owner alice): may Alice in red, the red reader and Alice in blue each read and update it?",
+          "hints": [
+            "Evaluate the policy's conditions in order for each principal."
+          ],
+          "solution": "Alice in red owns `a`, so read: yes, update: yes. The red reader is in the right tenant and has the reader role, so read: yes, update: no. Alice in blue has the owner's name but the wrong tenant, so read: no, update: no. The tenant check comes before ownership.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Gives read and update for all three principals.",
+            "Applies the tenant check before the owner check."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "A new action, `share`, should let the owner grant read access to another member of the same tenant. A teammate adds `share` to the allowed actions and changes nothing else. Who can share now, and what is missing?",
+          "hints": [
+            "The policy now has a second subject: the person receiving access."
+          ],
+          "solution": "Under the existing rule, owners get every allowed action, so only owners can share; readers still get only `read`. What is missing is a policy for the target of the share: the recipient must be in the same tenant, and sharing must not let a reader re-share. Add tests for owner shares to a same-tenant member (allowed), owner shares across tenants (denied) and a reader trying to share (denied).",
+          "solutionFormat": "prose",
+          "checks": [
+            "Traces the new action through the existing rule.",
+            "Adds a rule for the share recipient's tenant.",
+            "Lists an allowed case and denied cases."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "A list endpoint returns `SELECT * FROM documents WHERE id IN (...)` for IDs the client sends, then filters the results in application code by tenant. What can go wrong, and where should the check live?",
+          "hints": [
+            "Which rows does the database read before the filter runs?"
+          ],
+          "solution": "If any code path skips or alters the filter, rows from other tenants leak, and the query still reads them. Counts, timings or error messages can also reveal what exists. Put the tenant condition in the query itself, `WHERE tenant = :tenant AND id IN (...)`, so other tenants' rows are never selected, then apply per-object action checks to what remains.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Moves the tenant condition into the query.",
+            "Names leakage through skipped filters or side channels."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "Document IDs are random UUIDs that are hard to guess. Can the object authorization check be dropped?",
+          "hints": [
+            "How might another user come to know an ID?"
+          ],
+          "solution": "No. IDs leak through shared links, logs, browser history and referrer headers, and anyone who has one would then have access. Unguessable IDs reduce enumeration; they do not decide who may act. Keep the tenant, owner and action check on every request.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Lists ways an ID can leak.",
+            "Decides what controls access when an ID leaks."
+          ]
         }
       ]
     },
@@ -646,6 +709,14 @@
           "Missing and cross-session tokens fail.",
           "Expired sessions cannot use a CSRF token.",
           "Same-origin XSS remains a separate risk."
+        ],
+        "hints": [
+          "Order the checks so that cheap identity checks come first and the mutation comes last.",
+          "What must the database look like after any denial?"
+        ],
+        "pitfalls": [
+          "Mutating state before a later check rejects the request.",
+          "Assuming CSRF protection also stops XSS."
         ]
       },
       "quiz": {
@@ -672,6 +743,60 @@
           "section": "Synchronizer token pattern and defense in depth",
           "reviewed": "2026-09-27",
           "scope": "Cookie-authenticated web mutations; bearer-only APIs and browser integrations require separate threat analysis."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Alice is logged in with session A and Bob with session B. A request arrives with Alice's session cookie and Bob's CSRF token. Finish the trace through `Sessions.csrf`: what happens, and why does the token have to belong to the same session?",
+          "hints": [
+            "Which stored token is the submitted one compared with?"
+          ],
+          "solution": "It raises `PermissionError: csrf verification failed`. The session is valid, but the token is compared with the one stored for session A, and Bob's token does not match. If any valid token were accepted, an attacker could log in, take their own token and place it in a forged request for the victim's session.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Gives the outcome.",
+            "Explains why tokens are bound to a session."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "The endpoint is changed to accept `GET /documents/b/rename?title=...` for convenience. Does the CSRF token check still protect it?",
+          "hints": [
+            "Which requests can another site make without running script?"
+          ],
+          "solution": "Not reliably. Browsers send GET requests cross-site from links and images without any script, and a GET puts the token in the URL, where it leaks into logs, history and referrer headers. Safe methods must not change state. Keep renames on PATCH or POST with the token in a header or body.",
+          "solutionFormat": "prose",
+          "checks": [
+            "States that GET must not change state.",
+            "Names how tokens leak in URLs."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "An API is called only by a mobile app that sends `Authorization: Bearer <token>` and never uses cookies. Does it need CSRF tokens?",
+          "hints": [
+            "Who adds the credential to the request in each case?"
+          ],
+          "solution": "No. CSRF exploits credentials that the browser attaches automatically. A bearer token in a header is attached only by code that has the token, which a cross-site page does not. If the API ever also accepts a cookie session, for example for a web client, those cookie-authenticated mutations need CSRF protection again.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Ties CSRF to automatically attached credentials.",
+            "Notes the risk returns if cookies are added."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "Session cookies are now `SameSite=Lax`. A teammate proposes removing CSRF tokens. Should you?",
+          "hints": [
+            "Which requests still carry a `Lax` cookie?"
+          ],
+          "solution": "Not entirely. `Lax` stops cookies on most cross-site POSTs, which covers the common attack, but it still sends them on top-level GET navigations and does not cover same-site subdomains you do not control or older clients. Keep tokens or an origin check for state-changing requests as defence in depth, and make sure GET never mutates.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Describes what `Lax` does and does not cover.",
+            "Keeps a second control for mutations."
+          ]
         }
       ]
     },
@@ -897,6 +1022,15 @@
           "Checks every resolved address and connects to the checked one.",
           "Handles redirects, timeouts and size limits.",
           "Adds an egress or metadata-service control and adversarial tests."
+        ],
+        "hints": [
+          "Follow one request from the pasted URL to the bytes you store. Each hop is a place to check something.",
+          "The address you check must be the address you connect to.",
+          "What could a redirect or a second DNS answer change?"
+        ],
+        "pitfalls": [
+          "Blocking strings such as 'localhost' instead of checking resolved addresses.",
+          "Checking the first URL and then following redirects blindly."
         ]
       },
       "quiz": {
@@ -930,6 +1064,62 @@
           "section": "List of mapped CWEs (CWE-918)",
           "reviewed": "2026-11-08",
           "scope": "Current OWASP guidance reviewed 2026-11-08; production mechanisms remain framework- and platform-specific."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "The lesson's checker allows only `images.example.org`. Finish the trace for `https://images.example.org@169.254.169.254/`: what host does `urlsplit` report, and what does `check` return?",
+          "hints": [
+            "What does the part before `@` mean in a URL?"
+          ],
+          "solution": "`urlsplit` treats `images.example.org` as user information before the `@`, so the hostname is `169.254.169.254`. That host is not allowlisted, so `check` returns 'blocked: host not allowlisted'. A string check such as 'starts with https://images.example.org' would have allowed it.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Identifies the parsed host.",
+            "Gives the checker's result.",
+            "Contrasts with a prefix string check."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Suppose the feature must accept arbitrary hosts, so it checks resolved addresses with `is_global`. Which of these resolved addresses are refused: `93.184.215.14`, `127.0.0.1`, `10.0.0.5`, `100.64.0.1`, `::ffff:169.254.169.254`?",
+          "hints": [
+            "Parse each address and ask whether it is globally routable."
+          ],
+          "solution": "Only `93.184.215.14` is global. Loopback `127.0.0.1`, private `10.0.0.5`, shared address space `100.64.0.1` and the IPv4-mapped metadata address `::ffff:169.254.169.254` are all refused. Checking the parsed address object, rather than matching strings like '127.' or 'localhost', catches the alternative spellings.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Classifies each address.",
+            "Prefers address checks over string matching."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "The checker resolves `cdn.example.net` to a public address and allows it, then the HTTP client resolves the name again and connects to `127.0.0.1`. What happened, and how do you close the gap?",
+          "hints": [
+            "How many times was the name resolved?"
+          ],
+          "solution": "DNS rebinding: the name returned a public address for the check and a private one for the connection. Resolve once, check that address, and connect to it directly while sending the original Host header and TLS server name. Repeat the check for every redirect, or disable redirects, and keep egress filtering as a second layer.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Names DNS rebinding.",
+            "Connects to the checked address.",
+            "Re-checks redirects and adds egress filtering."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "A feature fetches exchange rates from one fixed provider URL set in configuration, never from user input. Does it need the full SSRF defence?",
+          "hints": [
+            "Who chooses where this request goes?"
+          ],
+          "solution": "Not the full one. The user does not choose the destination, so there is no request forgery. Still pin the URL in configuration, use TLS, set a timeout and response size limit, and do not follow redirects to other hosts. Apply the full SSRF controls when any part of the destination comes from a user.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Asks whether the user controls the destination.",
+            "Keeps basic outbound hygiene."
+          ]
         }
       ]
     },
@@ -1164,6 +1354,14 @@
           "Code redemption and callback correlation are distinct.",
           "Per-flow proof is not a stored public client secret.",
           "Negative evidence comes from the actual provider integration."
+        ],
+        "hints": [
+          "Three values, three different checks: which one does the provider check, and which does your client check?",
+          "Replaying a code and replaying a callback are different attacks."
+        ],
+        "pitfalls": [
+          "Keeping one global 'current login' instead of one record per flow.",
+          "Writing a fake token exchange that bypasses issuer, audience and nonce checks."
         ]
       },
       "quiz": {
@@ -1190,6 +1388,61 @@
           "section": "Sections 4.1–4.6: verifier, challenge and verification",
           "reviewed": "2026-09-27",
           "scope": "RFC 7636 plus OAuth Security BCP RFC 9700; no custom verifier protocol supplied."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Using `login_flow_lab.py`: begin flow A at time 0 and flow B at time 1, each with a 60-second lifetime. Consume B at 2, then A at 3, then A again at 4. Supply the missing results.",
+          "hints": [
+            "Each state maps to its own stored verifier."
+          ],
+          "solution": "Consuming B at 2 returns 'verifier-B'. Consuming A at 3 returns 'verifier-A', so out-of-order completion works because each flow is stored by its own state. Consuming A again at 4 raises `ValueError: unknown, expired or consumed`, because consumption removes the record. A single global verifier would have given A the wrong verifier.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Returns each flow's own verifier.",
+            "Handles the second consumption of A.",
+            "Explains why one global value fails."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Same lab: flow A begins at time 0 with a 60-second lifetime. Is it accepted at 59, at 60 and at 61?",
+          "hints": [
+            "Compare each time with the stored expiry, 60."
+          ],
+          "solution": "At 59 it is accepted. At 60 it is rejected: the record expires at `now + lifetime` = 60 and the lab treats `now >= expiry` as expired. At 61 it is rejected too, and so would any later attempt. Tests should cover the exact boundary, because off-by-one expiry is a common bug.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Decides each of the three times.",
+            "Tests the exact expiry instant."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "A single-page app uses PKCE but stores the code verifier in `localStorage` so it survives a page reload. What does that expose, and what would you do instead?",
+          "hints": [
+            "Who else can read `localStorage` on this origin?"
+          ],
+          "solution": "Any script running on the origin, including injected XSS, can read the verifier and complete the code exchange. Keep it in memory or `sessionStorage` for the short life of the flow, delete it once used, or move the token exchange to a backend-for-frontend so the browser never holds tokens. PKCE protects against interception of the code, not against script on your own page.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Names script access to `localStorage`.",
+            "Proposes short-lived storage or a backend exchange."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "A confidential server-side web app already authenticates to the token endpoint with a client secret. Should it also use PKCE?",
+          "hints": [
+            "What does the client secret prove, and what does the verifier prove?"
+          ],
+          "solution": "Yes. Current OAuth guidance recommends PKCE for all clients. The secret proves which client redeems the code; PKCE proves that the redeemer is the same flow that started the login, which also stops authorization code injection. It costs one extra parameter on each request.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Distinguishes client authentication from flow binding.",
+            "Notes the low cost."
+          ]
         }
       ]
     },
@@ -1223,6 +1476,14 @@
           "Wrong audience/issuer fail despite valid syntax.",
           "Allowed algorithms and key sources are configured.",
           "Policy checks remain after validation."
+        ],
+        "hints": [
+          "A signature answers 'who issued this?'. Which question does the audience answer?",
+          "Key rotation has an old key, a new key and a cache in between. Test each."
+        ],
+        "pitfalls": [
+          "Trusting the algorithm or key URL named inside the token.",
+          "Decoding the payload and treating that as validation."
         ]
       },
       "quiz": {
@@ -1249,6 +1510,61 @@
           "section": "Section 3: algorithm, issuer, audience and explicit typing",
           "reviewed": "2026-09-27",
           "scope": "JWT BCP; use maintained validators, not the synthetic Principal constructor."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Supply the missing checks, in order, that a resource server applies to a JWT before using any claim: the validator is configured with allowed algorithms and the issuer's key set. What comes after the signature?",
+          "hints": [
+            "A valid signature from the right issuer can still be meant for another API."
+          ],
+          "solution": "After verifying the signature with a key from the trusted issuer and an allowed algorithm, check the issuer equals the expected one, the audience includes this API, the token is within its lifetime (expiry, and not-before if present, with a small clock-skew allowance), and the token type or purpose is an access token. Only then map the claims to a principal and run object authorization.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Lists issuer, audience, lifetime and purpose.",
+            "Keeps authorization after validation."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "An attacker takes a valid token, changes its header to `alg: none` and removes the signature. What does a correctly configured validator do, and what does a naive one do?",
+          "hints": [
+            "Who decides which algorithm is acceptable?"
+          ],
+          "solution": "A validator with an explicit allowed-algorithm list rejects it, because `none` is not allowed. A naive validator that reads the algorithm from the token may skip verification entirely and accept any claims the attacker wrote. Always configure algorithms on the server; never take them from the token.",
+          "solutionFormat": "prose",
+          "checks": [
+            "States what each validator does.",
+            "Explains the danger of trusting the header."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "Your API receives opaque access tokens: random strings with no readable claims. How do you validate them?",
+          "hints": [
+            "Where is the token's meaning stored?"
+          ],
+          "solution": "You cannot validate them locally. Use the provider's introspection endpoint, authenticating your API to it, and check that the response says the token is active and lists the right audience, scope and expiry. Cache results briefly, no longer than the token's remaining life, to limit load, and accept that revocation can lag by that cache period.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Uses introspection.",
+            "Checks active, audience and scope.",
+            "States the caching tradeoff."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "To debug a login problem, a teammate wants to log full bearer tokens for a week. Should you allow it?",
+          "hints": [
+            "What can someone do with a token copied from a log?"
+          ],
+          "solution": "No. A logged bearer token is a working credential for anyone who can read the logs until it expires. Log a sanitized case ID, the validator's outcome and non-sensitive claims such as issuer and audience, or a hash of the token if you must correlate requests.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Considers what a logged token allows.",
+            "Proposes sanitized logging."
+          ]
         }
       ]
     },

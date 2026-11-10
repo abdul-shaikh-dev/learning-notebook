@@ -23,6 +23,8 @@ import security_lab as lab  # noqa: E402
 from security_lab import FixedWindowLimiter, Principal, Sessions  # noqa: E402
 import security_http  # noqa: E402
 from login_flow_lab import Pending  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from practice_facts import practice_failures  # noqa: E402
 
 # Answers that follow from the lesson text rather than lab behaviour.
 SOURCED = {
@@ -278,6 +280,62 @@ FACTS = {
 }
 
 
+# Practice ladder answers that follow from the course labs (see tests/practice_facts.py).
+def practice_matrix():
+    yes = lambda allowed: 'yes' if allowed else 'no'
+    rows = []
+    for label, who in (('Alice in red owns `a`, so', Principal('alice', 'red')),
+                       ('so', Principal('reviewer', 'red', 'reader')),
+                       ('wrong tenant, so', Principal('alice', 'blue'))):
+        a = lab.DOCUMENTS['a']
+        rows.append(f'{label} read: {yes(lab.authorized(who, a, "read"))}, update: {yes(lab.authorized(who, a, "update"))}')
+    return rows
+
+
+def practice_cross_session_token():
+    sessions = Sessions()
+    alice, bob = sessions.login(Principal('alice', 'red'), 0), sessions.login(Principal('bob', 'red'), 0)
+    return [f'raises `{outcome(lambda: sessions.csrf(alice, sessions.records[bob][2], 1))}`']
+
+
+def practice_userinfo_host():
+    from urllib.parse import urlsplit
+    return [f"the hostname is `{urlsplit('https://images.example.org@169.254.169.254/').hostname}`"]
+
+
+def practice_global_addresses():
+    import ipaddress
+    addresses = ['93.184.215.14', '127.0.0.1', '10.0.0.5', '100.64.0.1', '::ffff:169.254.169.254']
+    allowed = [a for a in addresses if ipaddress.ip_address(a).is_global]
+    assert allowed == ['93.184.215.14'], allowed
+    return [f'Only `{allowed[0]}` is global']
+
+
+def practice_flows():
+    flows = Pending()
+    flows.begin('A', 'verifier-A', 0)
+    flows.begin('B', 'verifier-B', 1)
+    b, a = flows.consume('B', 2), flows.consume('A', 3)
+    return [f"returns '{b}'", f"returns '{a}'", f'raises `{outcome(lambda: flows.consume("A", 4))}`']
+
+
+def practice_expiry():
+    results = []
+    for now in (59, 60, 61):
+        flows = Pending()
+        flows.begin('A', 'v', 0)
+        results.append(outcome(lambda: flows.consume('A', now)) == 'v')
+    assert results == [True, False, False], results
+    return ['At 59 it is accepted. At 60 it is rejected']
+
+
+PRACTICE_FACTS = {
+    'authorization-ownership/1': practice_matrix, 'csrf/1': practice_cross_session_token,
+    'ssrf/1': practice_userinfo_host, 'ssrf/2': practice_global_addresses,
+    'pkce-state/1': practice_flows, 'pkce-state/2': practice_expiry,
+}
+
+
 def questions():
     data = json.loads((COURSE / 'checkpoints.json').read_text(encoding='utf-8'))
     for lesson, items in data['lessons'].items():
@@ -304,11 +362,12 @@ def main():
             continue
         if answer != q['options'][q['correct']]:
             failures.append(f'{key}: the lab supports {answer!r}, the question marks {q["options"][q["correct"]]!r}')
+    failures += practice_failures(COURSE, PRACTICE_FACTS)
     failures += [f'{key}: fact has no question' for key in set(FACTS) | set(SOURCED) if key not in seen]
     if failures:
         sys.exit('Application Security checkpoint facts failed:\n' + '\n'.join(failures))
     print(f'PASS: {len(FACTS)} Application Security checkpoint answers checked against the course labs; '
-          f'{len(SOURCED)} cited from the lessons.')
+          f'{len(SOURCED)} cited from the lessons; {len(PRACTICE_FACTS)} practice ladder answers computed.')
 
 
 if __name__ == '__main__':
