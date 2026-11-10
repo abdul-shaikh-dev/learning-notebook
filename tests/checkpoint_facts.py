@@ -761,3 +761,196 @@ import re
 answer = 'None' if re.fullmatch(r"\\d+", "45m") is None else 'A match for 45'
 ''',
 }
+
+# Practice ladder answers that depend on code behaviour. Each entry is keyed "<course>/<lesson>/<step>"
+# and sets `expected` to strings the step's worked solution must contain; tests/browser-python.cjs runs
+# them in the bundled Python runtime.
+PRACTICE = {
+    'data-structures-algorithms/dynamic-programming/1': '''
+coins, best = (1, 3, 4), [0]
+for a in range(1, 7):
+    best.append(min(best[a - c] + 1 for c in coins if c <= a))
+greedy, left = 0, 6
+for c in sorted(coins, reverse=True):
+    greedy, left = greedy + left // c, left % c
+assert (best[5], best[6], greedy) == (2, 2, 3)
+expected = [f'so `best[5] = {best[5]}`', f'so `best[6] = {best[6]}`', '4 + 1 + 1, three coins']
+''',
+    'data-structures-algorithms/dynamic-programming/2': '''
+ways = [1]
+for n in range(1, 5):
+    ways.append(sum(ways[n - k] for k in (1, 2, 3) if n - k >= 0))
+expected = [', '.join(map(str, ways)) + f', so there are {ways[4]} ways']
+''',
+    'data-structures-algorithms/dynamic-programming/3': '''
+def paths(blocked=()):
+    grid = [[0] * 3 for _ in range(3)]
+    for r in range(3):
+        for c in range(3):
+            if (r, c) in blocked:
+                continue
+            grid[r][c] = 1 if r == c == 0 else (grid[r - 1][c] if r else 0) + (grid[r][c - 1] if c else 0)
+    return grid[2][2]
+expected = [f'The table gives {paths()} paths', f'leaves {paths({(1, 1)})} paths']
+''',
+    'data-structures-algorithms/sliding-window/1': '''
+last, left, best, lefts = {}, 0, 0, []
+for right, char in enumerate('abcabcbb'):
+    left = max(left, last.get(char, -1) + 1)
+    last[char] = right
+    best = max(best, right - left + 1)
+    lefts.append(left)
+expected = [f'`left` becomes 0 + 1 = {lefts[3]}', f'The result is {best}']
+''',
+    'data-structures-algorithms/sliding-window/2': '''
+last, left, best, lefts = {}, 0, 0, []
+for right, char in enumerate('tmmzuxt'):
+    left = max(left, last.get(char, -1) + 1)
+    last[char] = right
+    best = max(best, right - left + 1)
+    lefts.append(left)
+assert lefts[2] == 2 and lefts[6] == 2
+expected = [f'gives the result {best}']
+''',
+    'data-structures-algorithms/sliding-window/3': '''
+values, k = [2, 1, 5, 1, 3, 2], 3
+sums = [sum(values[:k])]
+for i in range(k, len(values)):
+    sums.append(sums[-1] - values[i - k] + values[i])
+assert sums == [8, 7, 9, 6]
+expected = [f'The largest is {max(sums)}']
+''',
+    'data-structures-algorithms/dijkstra/1': '''
+import heapq
+graph = {'A': [('B', 8), ('C', 2)], 'C': [('B', 1), ('D', 7)], 'B': [('D', 1)]}
+distance, heap = {'A': 0}, [(0, 'A')]
+while heap:
+    cost, node = heapq.heappop(heap)
+    if cost != distance[node]:
+        continue
+    for neighbor, weight in graph.get(node, []):
+        if cost + weight < distance.get(neighbor, float('inf')):
+            distance[neighbor] = cost + weight
+            heapq.heappush(heap, (cost + weight, neighbor))
+expected = [f'The result is `{dict(sorted(distance.items()))}`']
+''',
+    'data-structures-algorithms/dijkstra/2': '''
+import heapq
+graph = {'A': [('B', 8), ('C', 2)], 'C': [('B', 1), ('D', 7)], 'B': [('D', 1)]}
+distance, heap, pushes, stale = {'A': 0}, [(0, 'A')], 1, 0
+while heap:
+    cost, node = heapq.heappop(heap)
+    if cost != distance[node]:
+        stale += 1
+        continue
+    for neighbor, weight in graph.get(node, []):
+        if cost + weight < distance.get(neighbor, float('inf')):
+            distance[neighbor] = cost + weight
+            heapq.heappush(heap, (cost + weight, neighbor))
+            pushes += 1
+expected = [f'{pushes} pushes', f'so {stale} entries are skipped']
+''',
+    'data-structures-algorithms/dijkstra/3': '''
+edges = [('A', 'B', 2), ('A', 'C', 3), ('C', 'B', -2)]
+distance = {'A': 0, 'B': float('inf'), 'C': float('inf')}
+for _ in range(2):  # Bellman-Ford: V - 1 rounds
+    for a, b, w in edges:
+        distance[b] = min(distance[b], distance[a] + w)
+expected = [f'3 + (−2) = {distance["B"]}']
+''',
+    'data-structures-algorithms/union-find-mst/1': '''
+parent = {x: x for x in 'ABCDE'}
+def find(x):
+    while parent[x] != x:
+        x = parent[x]
+    return x
+edges = [(4, 'A', 'B'), (1, 'A', 'C'), (3, 'B', 'C'), (2, 'B', 'D'), (5, 'C', 'D'), (7, 'D', 'E'), (6, 'C', 'E')]
+rejected = []
+for w, a, b in sorted(edges):
+    if find(a) == find(b):
+        rejected.append((w, a, b))
+    else:
+        parent[find(b)] = find(a)
+assert rejected == [(4, 'A', 'B'), (5, 'C', 'D'), (7, 'D', 'E')]
+expected = ['Rejected: (4, A, B)', '(5, C, D)', 'and (7, D, E)']
+''',
+    'data-structures-algorithms/union-find-mst/2': '''
+parent = {x: x for x in 'ABCDE'}
+def find(x):
+    while parent[x] != x:
+        x = parent[x]
+    return x
+edges = [(4, 'A', 'B'), (1, 'A', 'C'), (3, 'B', 'C'), (2, 'B', 'D'), (5, 'C', 'D'), (7, 'D', 'E')]
+total = 0
+for w, a, b in sorted(edges):
+    if find(a) != find(b):
+        parent[find(b)] = find(a)
+        total += w
+expected = [f'1 + 2 + 3 + 7 = {total}']
+''',
+    'data-structures-algorithms/union-find-mst/3': '''
+parent = {x: x for x in 'ABCDEF'}
+def find(x):
+    while parent[x] != x:
+        x = parent[x]
+    return x
+for a, b in [('A', 'B'), ('C', 'D'), ('D', 'E')]:
+    parent[find(b)] = find(a)
+groups = len({find(x) for x in 'ABCDEF'})
+expected = [f'so there are {groups} groups', f'here {groups - 1}']
+''',
+    'data-structures-algorithms/backtracking/1': '''
+def subsets(items):
+    output, selected = [], []
+    def visit(index):
+        if index == len(items):
+            output.append(selected.copy())
+            return
+        visit(index + 1)
+        selected.append(items[index])
+        visit(index + 1)
+        selected.pop()
+    visit(0)
+    return output
+expected = [f'the output is `{subsets([1, 2])}`']
+''',
+    'data-structures-algorithms/backtracking/2': '''
+found = []
+def visit(index, chosen, total, items=(1, 2, 3, 4), target=5):
+    if total > target:
+        return
+    if index == len(items):
+        if total == target:
+            found.append(chosen)
+        return
+    visit(index + 1, chosen, total)
+    visit(index + 1, chosen + [items[index]], total + items[index])
+visit(0, [], 0)
+assert sorted(found) == [[1, 4], [2, 3]]
+expected = ['`[1, 4]` and `[2, 3]`']
+''',
+    'data-structures-algorithms/backtracking/3': '''
+from itertools import permutations
+expected = [f'3! = {len(set(permutations("abc")))} orderings', f'3! / 2! = {len(set(permutations("aab")))} distinct ones']
+''',
+    'data-structures-algorithms/backtracking/4': '''
+count = 2 ** 40
+hours = count / 100_000_000 / 3600
+assert 2.5 < hours < 3.5
+expected = [f'about {count / 1e12:.1f} trillion', 'about 3 hours']
+''',
+    'data-structures-algorithms/knapsack/1': '''
+dp, rows = [0] * 6, []
+for weight, value in [(2, 3), (3, 4), (4, 5)]:
+    for c in range(5, weight - 1, -1):
+        dp[c] = max(dp[c], dp[c - weight] + value)
+    rows.append(f'`{dp}`')
+expected = rows + [f'The answer is {dp[5]}']
+''',
+    'data-structures-algorithms/knapsack/2': '''
+dp = [0] * 5
+for c in range(2, 5):  # ascending: the same item can be reused
+    dp[c] = max(dp[c], dp[c - 2] + 3)
+expected = [f'It returns {dp[4]}']
+''',
+}

@@ -700,6 +700,14 @@
         "checks": [
           "For n=0 through n=6, the results are 1, 1, 1, 2, 3, 4, 6; n=4 counts 1+3 and 3+1 separately.",
           "Negative numbers, booleans and non-integers raise ValueError; no negative table index is used to handle the first two steps."
+        ],
+        "hints": [
+          "Write `counts[0]`, `counts[1]` and `counts[2]` by hand before coding the loop.",
+          "A three-step move is only possible from step `i - 3`, so guard it with `i >= 3`."
+        ],
+        "pitfalls": [
+          "Starting `counts[0]` at 0, which makes every count 0.",
+          "Copying the one-or-two recurrence without changing the second term."
         ]
       },
       "quiz": {
@@ -720,6 +728,64 @@
           "section": "Dynamic programming lectures 19–22",
           "reviewed": "2026-09-27",
           "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "For coins 1, 3 and 4, `best` starts `[0, 1, 2, 1, 1]` for amounts 0 to 4. Supply `best[5]` and `best[6]` using `best[a] = min(best[a - c] + 1)` over the coins.",
+          "hints": [
+            "Each candidate is a smaller amount's best plus one coin."
+          ],
+          "solution": "For 5: `best[4] + 1 = 2`, `best[2] + 1 = 3` and `best[1] + 1 = 2`, so `best[5] = 2`, for example 4 + 1. For 6: `best[5] + 1 = 3`, `best[3] + 1 = 2` and `best[2] + 1 = 3`, so `best[6] = 2`, using 3 + 3. Greedy takes 4 first and needs 4 + 1 + 1, three coins.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Considers every coin as the last one.",
+            "Fills both amounts.",
+            "Compares with the greedy result for 6."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Moves may now be 1, 2 or 3 steps. Write the recurrence and compute the number of ways to climb 4 steps.",
+          "hints": [
+            "The last move can be 1, 2 or 3 steps."
+          ],
+          "solution": "`ways(n) = ways(n - 1) + ways(n - 2) + ways(n - 3)`, with `ways(0) = 1` and negative indices counting 0. The table for 0 to 4 is 1, 1, 2, 4, 7, so there are 7 ways. Check by listing them for small n: for 3 they are 1+1+1, 1+2, 2+1 and 3.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Adds a third term.",
+            "Builds the table from the base case.",
+            "Checks a small case by listing."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "A robot moves only right or down on a 3 × 3 grid of cells, from the top-left to the bottom-right cell. How many paths are there, and how many if the centre cell is blocked?",
+          "hints": [
+            "Each cell can be entered only from above or from the left."
+          ],
+          "solution": "Let `paths[r][c] = paths[r - 1][c] + paths[r][c - 1]`, with the first row and column all 1. The table gives 6 paths, the same as choosing 2 of 4 moves to be right. Setting the centre to 0 and recomputing leaves 2 paths: around the top-right edge or around the bottom-left edge.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Defines the state as paths to a cell.",
+            "Computes both counts.",
+            "Handles the blocked cell as zero."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "With coins 1, 5, 10 and 25, should you use dynamic programming or the greedy 'largest coin first' rule?",
+          "hints": [
+            "Try 6 with coins 1, 3 and 4 under the greedy rule."
+          ],
+          "solution": "For this coin system, greedy is optimal for every amount: it is a canonical system, and it is O(number of coins). For an arbitrary system such as 1, 3 and 4, greedy fails at 6, so use dynamic programming. If the coins can change, use dynamic programming or prove the system canonical first.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Decides for this coin system with a reason.",
+            "Gives a counterexample system.",
+            "Requires proof before relying on greedy."
+          ]
         }
       ]
     },
@@ -1051,6 +1117,14 @@
           "Empty string returns zero.",
           "abba catches backward-moving-left mistakes.",
           "State the hashing and character assumptions."
+        ],
+        "hints": [
+          "The oracle checks every substring; it is slow but obviously correct.",
+          "`itertools.product('ab', repeat=size)` gives every string of that length."
+        ],
+        "pitfalls": [
+          "Moving `left` backwards when the repeated character is outside the window.",
+          "Testing only random strings and missing `abba`."
         ]
       },
       "quiz": {
@@ -1069,6 +1143,61 @@
           "section": "Dictionary operations supporting maintained state",
           "reviewed": "2026-11-07",
           "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Trace `longest_unique('abcabcbb')`. Supply the value of `left` after processing `right = 3` and the final result.",
+          "hints": [
+            "`left = max(left, last[char] + 1)`."
+          ],
+          "solution": "At `right = 3` the character `a` was last seen at index 0, inside the window, so `left` becomes 0 + 1 = 1. The window keeps sliding the same way, and the longest window without repeats has length 3, for example `abc`. The result is 3.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Computes `left` from the last position.",
+            "Gives the result."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Now trace `longest_unique('tmmzuxt')`. What is the result, and at which step does `max` stop `left` from moving backwards?",
+          "hints": [
+            "Find a repeated character whose earlier position is left of the window."
+          ],
+          "solution": "At index 2 the second `m` moves `left` to 2. At index 6 the `t` was last seen at index 0, outside the window, so `left` stays at 2 instead of moving back to 1. The window `mzuxt` gives the result 5. Without `max`, the window would include the repeated `m`s.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Gives the result.",
+            "Identifies the step where `max` matters."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "Find the largest sum of 3 consecutive numbers in `[2, 1, 5, 1, 3, 2]` with a fixed-size window: add the new number and subtract the one that leaves.",
+          "hints": [
+            "Start with the sum of the first three numbers."
+          ],
+          "solution": "The first window sums 2 + 1 + 5 = 8. Sliding gives 8 − 2 + 1 = 7, then 7 − 1 + 3 = 9, then 9 − 5 + 2 = 6. The largest is 9, from `5, 1, 3`. Each step is O(1), so the whole scan is O(n) instead of O(n × k).",
+          "solutionFormat": "prose",
+          "checks": [
+            "Updates the sum in constant time.",
+            "Gives the largest sum and its window."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "Can a shrinking window find the longest subarray with sum at most k when the array contains negative numbers?",
+          "hints": [
+            "What does adding a negative number do to the window's sum?"
+          ],
+          "solution": "Not reliably. The window method assumes that adding an element never decreases the sum, so once the sum is too large, moving `left` is the only fix. With negatives, a later element can bring the sum back down, so shrinking may discard the best answer. Use prefix sums with a sorted structure, or an O(n²) scan for small inputs.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Names the monotonic assumption.",
+            "Explains how negatives break it.",
+            "Proposes an alternative."
+          ]
         }
       ]
     },
@@ -1241,6 +1370,14 @@
           "An expensive direct route can lose to a cheaper two-edge route.",
           "Unreachable nodes remain absent.",
           "Explain when BFS is sufficient and when negative weights require another algorithm."
+        ],
+        "hints": [
+          "A zero-cost edge is allowed. What distance does its target get?",
+          "Use `try`, `except ValueError` and `else` so that a missing error fails the test."
+        ],
+        "pitfalls": [
+          "Treating a disconnected vertex as distance 0 instead of absent.",
+          "Writing a negative-weight test that passes even when nothing is raised."
         ]
       },
       "quiz": {
@@ -1259,6 +1396,62 @@
           "section": "Dijkstra algorithm and nonnegative weights",
           "reviewed": "2026-09-27",
           "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Run the lesson's `dijkstra` on A→B 8, A→C 2, C→B 1, B→D 1 and C→D 7, starting from A. Supply the final distances.",
+          "hints": [
+            "Pop the cheapest candidate each time and relax its edges."
+          ],
+          "solution": "A is 0. C is 2. B improves from 8 to 2 + 1 = 3. D is first proposed as 2 + 7 = 9, then improved through B to 3 + 1 = 4. The result is `{'A': 0, 'B': 3, 'C': 2, 'D': 4}`.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Relaxes each edge from the cheapest settled vertex.",
+            "Updates D when a cheaper path appears."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "In the same run, count the heap pushes, including the start, and how many popped entries are skipped as stale.",
+          "hints": [
+            "An entry is stale when its cost differs from the current best distance."
+          ],
+          "solution": "Pushes: A at 0, B at 8, C at 2, B at 3, D at 9, then D at 4: 6 pushes. When B at 8 and D at 9 are popped, their costs no longer match the recorded distances, so 2 entries are skipped. This lazy approach trades extra heap entries for simpler code than decrease-key.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Counts every push.",
+            "Counts the stale pops.",
+            "Explains the lazy-deletion tradeoff."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "With edges A→B 2, A→C 3 and C→B −2, what is the true shortest distance to B, and what would Dijkstra report without its negative-weight check?",
+          "hints": [
+            "Which vertex is popped first, B or C?"
+          ],
+          "solution": "The true distance is 3 + (−2) = 1, through C. Dijkstra pops B at 2 before C at 3 and treats B as settled, so it reports 2: the 'later detours never help' assumption fails with negative edges. Bellman-Ford, which relaxes all edges repeatedly, finds 1 and can detect negative cycles.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Computes the true distance.",
+            "Explains why Dijkstra settles too early.",
+            "Names Bellman-Ford."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "Every edge in a road graph has the same weight of 1. Should you use Dijkstra?",
+          "hints": [
+            "With equal weights, what order does BFS visit vertices in?"
+          ],
+          "solution": "You can, but breadth-first search gives the same distances in O(V + E) without a heap, because with equal weights the order of discovery is the order of distance. Use Dijkstra when weights differ and are nonnegative, and 0-1 BFS when weights are only 0 or 1.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Considers what equal weights allow.",
+            "Compares the costs."
+          ]
         }
       ]
     },
@@ -1299,6 +1492,14 @@
           "Output is ('C', 'A') then None.",
           "Each cable costs one union call, so the whole check is near-linear.",
           "A self-loop such as (\"A\", \"A\") is reported as redundant."
+        ],
+        "hints": [
+          "`union` returns `False` when both ends already share a root. That is exactly the redundant cable.",
+          "Return the cable itself, not its index."
+        ],
+        "pitfalls": [
+          "Checking `find(a) == find(b)` after calling `union`, when it is always true.",
+          "Forgetting the no-redundancy case returns `None`."
         ]
       },
       "quiz": {
@@ -1325,6 +1526,60 @@
           "section": "Minimum spanning trees",
           "reviewed": "2026-11-08",
           "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Kruskal processes the lesson's edges in weight order. Supply which edges it rejects, and why.",
+          "hints": [
+            "Before each edge, ask whether its ends already share a root."
+          ],
+          "solution": "Accepted: (1, A, C), (2, B, D), (3, B, C) and (6, C, E). Rejected: (4, A, B), because A and B are already joined through C; (5, C, D), because C and D are already joined through B; and (7, D, E), because E joined at weight 6. Each rejected edge would close a cycle.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Lists the rejected edges.",
+            "Explains each rejection by existing connection."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Remove edge (6, C, E) and run Kruskal again. Which edges are chosen and what is the total?",
+          "hints": [
+            "Which edges can still connect E?"
+          ],
+          "solution": "E is now reachable only through (7, D, E), so the tree is (1, A, C), (2, B, D), (3, B, C) and (7, D, E), with total 1 + 2 + 3 + 7 = 13. A minimum spanning tree must include every node's only connection, whatever its weight.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Lists the new tree.",
+            "Computes the total."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "Nodes A to F have cables A–B, C–D and D–E. How many separate groups are there, and how many extra cables are needed to connect everything?",
+          "hints": [
+            "After all unions, how many different roots remain?"
+          ],
+          "solution": "Union the three cables: the groups are {A, B}, {C, D, E} and {F}, so there are 3 groups. Connecting g groups needs g − 1 cables, here 2. Count groups as the number of distinct roots after all unions.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Counts groups as distinct roots.",
+            "Uses groups minus one."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "You need the cheapest route between two specific cities in a road network. Should you build a minimum spanning tree and follow it?",
+          "hints": [
+            "What does a minimum spanning tree minimise?"
+          ],
+          "solution": "No. A minimum spanning tree minimises the total weight of connecting every city, not the distance between a particular pair; the tree path between two cities can be much longer than the shortest route. Use Dijkstra from the start city.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Distinguishes total network weight from a pair's distance.",
+            "Chooses Dijkstra."
+          ]
         }
       ]
     },
@@ -1423,6 +1678,14 @@
           "Each result owns an independent list.",
           "Empty input returns one empty subset.",
           "Explain exponential output size rather than promising a polynomial implementation."
+        ],
+        "hints": [
+          "If every result is the same list object, changing one changes all of them.",
+          "After appending `selected`, call `subsets` and then mutate one result."
+        ],
+        "pitfalls": [
+          "Appending `selected` instead of `selected.copy()`.",
+          "Forgetting to pop after the include branch."
         ]
       },
       "quiz": {
@@ -1441,6 +1704,61 @@
           "section": "Recursive backtracking",
           "reviewed": "2026-09-27",
           "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "In what order does the lesson's `subsets([1, 2])` produce its results? Supply the list.",
+          "hints": [
+            "Draw the recursion tree with exclude on the left."
+          ],
+          "solution": "The exclude branch runs first at each level, so the output is `[[], [2], [1], [1, 2]]`. Index 0 excludes 1 and then excludes 2, giving `[]`; then includes 2, giving `[2]`; then the include-1 branch repeats the pattern, giving `[1]` and `[1, 2]`.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Follows the exclude-first order.",
+            "Gives all four subsets in order."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Change the search to return subsets of `[1, 2, 3, 4]` that sum to exactly 5, and stop exploring a branch once its sum exceeds 5. Which subsets are returned?",
+          "hints": [
+            "Track the running sum as an argument."
+          ],
+          "solution": "`[1, 4]` and `[2, 3]`. Pruning is valid because all numbers are positive, so a branch whose sum is already above 5 can never come back down. With negative numbers the same pruning rule would discard valid answers.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Finds both subsets.",
+            "Justifies the pruning rule."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "How many distinct orderings does `'abc'` have, and how many does `'aab'` have? How would a backtracking permutation generator avoid duplicates for `'aab'`?",
+          "hints": [
+            "Equal letters swapped with each other give the same string."
+          ],
+          "solution": "`'abc'` has 3! = 6 orderings. `'aab'` has 3! / 2! = 3 distinct ones: `aab`, `aba` and `baa`. Sort the characters, and at each position skip a character equal to the previous one when that previous one is not in use, so equal letters are always used in a fixed order.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Computes both counts.",
+            "Describes a duplicate-skipping rule."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "A team wants to check every subset of 40 items to find the best selection. Is that feasible?",
+          "hints": [
+            "How many subsets does each extra item multiply by?"
+          ],
+          "solution": "There are 2^40, about 1.1 trillion, subsets. Even at 100 million subsets a second that takes about 3 hours, before copying results. Look for structure: dynamic programming if a capacity or sum is small, meet-in-the-middle, which needs about 2 × 2^20 work, or pruning with a valid bound.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Computes the subset count.",
+            "Estimates the running time.",
+            "Proposes a structured alternative."
+          ]
         }
       ]
     },
@@ -1484,6 +1802,14 @@
           "Single item is used at most once.",
           "Negative-value items can be skipped.",
           "Distinguish state definition, recurrence, order and reconstruction."
+        ],
+        "hints": [
+          "Run the loop by hand for capacity 4: which `dp` cells change?",
+          "With descending capacities, does `dp[c - weight]` already include this item?"
+        ],
+        "pitfalls": [
+          "Looping capacities upwards for 0/1 knapsack.",
+          "Confusing the best value with the list of chosen items."
         ]
       },
       "quiz": {
@@ -1502,6 +1828,61 @@
           "section": "Dynamic programming and knapsack",
           "reviewed": "2026-09-27",
           "scope": "Stable algorithm concepts; Python 3.14+ teaching translations. Local exercises are original examples, not source quotations; executable checks listed in task kit."
+        }
+      ],
+      "practice": [
+        {
+          "kind": "completion",
+          "prompt": "Run `knapsack([(2, 3), (3, 4), (4, 5)], 5)` and supply the `dp` array after each item.",
+          "hints": [
+            "For each capacity, compare keeping `dp[c]` with `dp[c - weight] + value`."
+          ],
+          "solution": "After (2, 3): `[0, 0, 3, 3, 3, 3]`. After (3, 4): `[0, 0, 3, 4, 4, 7]`, because capacity 5 combines both items. After (4, 5): `[0, 0, 3, 4, 5, 7]`: the last item improves capacity 4 but not 5. The answer is 7.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Updates capacities from high to low.",
+            "Gives each array.",
+            "Explains the change at capacity 5."
+          ]
+        },
+        {
+          "kind": "variation",
+          "prompt": "Loop capacities upwards instead for the single item (2, 3) at capacity 4. What is returned, and which problem does that loop actually solve?",
+          "hints": [
+            "When capacity 4 is processed, has `dp[2]` already used this item?"
+          ],
+          "solution": "It returns 6: at capacity 4, `dp[2]` was already updated to 3 by this same item, so the item is counted twice. Ascending order solves the unbounded knapsack, where each item may be used any number of times. The direction of the loop is part of the state definition.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Gives the wrong value.",
+            "Names the problem the ascending loop solves."
+          ]
+        },
+        {
+          "kind": "transfer",
+          "prompt": "The best value 7 is known, but the team needs the chosen items. How do you reconstruct them?",
+          "hints": [
+            "The one-row array loses which item caused each improvement."
+          ],
+          "solution": "Keep the full table `dp[i][c]` for the first i items, or record a 'taken' flag for each item and capacity. Walk back from the last item: if `dp[i][c]` differs from `dp[i - 1][c]`, item i was taken, so subtract its weight. For capacity 5 that finds the items with weights 3 and 2. The one-row version saves memory but cannot reconstruct the choice.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Keeps per-item information.",
+            "Walks backwards through the table."
+          ]
+        },
+        {
+          "kind": "decide",
+          "prompt": "Fifty items have weights up to a billion and the capacity is 10^9. Is the O(nW) dynamic programme practical?",
+          "hints": [
+            "How big is the `dp` array?"
+          ],
+          "solution": "No. It would need a billion-cell array and 50 billion updates. Switch the state to value, if values are small, finding the least weight for each total value; or use branch and bound, or meet-in-the-middle on 25 + 25 items. O(nW) is pseudo-polynomial: fast only when W itself is small.",
+          "solutionFormat": "prose",
+          "checks": [
+            "Estimates the table size.",
+            "Proposes a different state or search."
+          ]
         }
       ]
     },

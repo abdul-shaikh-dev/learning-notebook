@@ -38,6 +38,16 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
   assert.equal(scope.get('answer'),q.options[q.correct],name+': the marked answer matches the code');scope.destroy();
  }
  assert.equal(facts.length,88,'Code-based checkpoint answers checked');
+ // Practice ladder answers that depend on code behaviour: each worked solution states what the code computes.
+ const practice=py.globals.get('PRACTICE').toJs({dict_converter:Array.from});
+ for(const [name,code] of practice){
+  const [course,lesson,n]=name.split('/'),step=manifest.find(x=>x.id===course)?.lessons.find(l=>l.id===lesson)?.practice?.[n-1];
+  assert.ok(step,name+': names a practice step');
+  const scope=py.globals.get('dict')();py.runPython(code,{globals:scope});
+  for(const text of scope.get('expected').toJs())assert.ok(step.solution.includes(text),name+': the solution states '+JSON.stringify(text));
+  scope.destroy();
+ }
+ assert.equal(practice.length,18,'Code-based practice answers checked');
  // Lesson examples in runExamples courses run unchanged, with the practice modules they name, and show a result.
  // An "# Expected output:" block at the end of an example must match what it prints.
  const runExample=async(code,files)=>{const messages=[],self={postMessage:data=>messages.push(data),importRuntime:async()=>({loadPyodide:async()=>py})};vm.runInNewContext(source,{self,JSON,String});await self.onmessage({data:{mode:'run',runtime,code,files}});return messages.at(-1);};
@@ -70,5 +80,5 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
   ['def broken(',r=>!r.ok&&/SyntaxError/.test(r.error)],
   ['import sys; print("oops", file=sys.stderr)',r=>r.ok&&r.output==='oops\n']
  ]){const r=await runCode(code);assert.ok(check(r),code+' -> '+JSON.stringify(r));}
- console.log('PASS: real browser Python runtime executes all 37 references / 240 cases and rejects wrong answers, types, mutation, syntax, missing functions and SystemExit; checks 88 code-based checkpoint answers; runs 25 Python course references and 129 lesson examples (4 with their practice modules; '+stated+' matching their stated output), confirms 2 thread examples cannot run in the browser, as scripts with bounded output, exit codes, no stdin and learner-only tracebacks.');
+ console.log('PASS: real browser Python runtime executes all 37 references / 240 cases and rejects wrong answers, types, mutation, syntax, missing functions and SystemExit; checks 88 code-based checkpoint answers and 18 practice ladder answers; runs 25 Python course references and 129 lesson examples (4 with their practice modules; '+stated+' matching their stated output), confirms 2 thread examples cannot run in the browser, as scripts with bounded output, exit codes, no stdin and learner-only tracebacks.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
