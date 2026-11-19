@@ -41,7 +41,7 @@ const NotebookBackup = (() => {
     }
     return result;
   }
-  // Checkpoint review: the first answer, its streak (0 after a miss, 1-4 correct in a row) and when it was given.
+  // Checkpoint review: the first answer, its streak (0 after a miss, 1-6 correct in a row: five review intervals, then retired) and when it was given.
   // Keys are "<lesson>", "<lesson>/<n>" (n 2-9) for extra lesson questions and "stage/<stage>/<n>" (n 1-9) for stage checks.
   function checkpointKnown(id, path) {
     const parts = id.split('/'), lesson = path.lessons.some(l => l.id === parts[0]);
@@ -55,7 +55,7 @@ const NotebookBackup = (() => {
     for (const [id, entry] of Object.entries(value)) {
       if (!checkpointKnown(id, path)) fail('Checkpoint answers contain an unknown question.');
       fields(entry, ['correct','streak','at'], 'Checkpoint answer');
-      if (typeof entry.correct !== 'boolean' || !Number.isInteger(entry.streak) || entry.streak < 0 || entry.streak > 4 || entry.correct !== entry.streak > 0) fail('Checkpoint answer streak is invalid.');
+      if (typeof entry.correct !== 'boolean' || !Number.isInteger(entry.streak) || entry.streak < 0 || entry.streak > 6 || entry.correct !== entry.streak > 0) fail('Checkpoint answer streak is invalid.');
       if (!Number.isInteger(entry.at) || entry.at <= 0 || entry.at > Date.now() + 864e5) fail('Checkpoint answer date is invalid.');
       result[id] = {correct:entry.correct,streak:entry.streak,at:entry.at};
     }
@@ -73,7 +73,7 @@ const NotebookBackup = (() => {
       if (own(entry,'rating') && !['matched','partly','missed'].includes(entry.rating)) fail('Exercise rating is invalid.');
       const timed = ['correct','streak','at'].filter(k => own(entry,k));
       if (timed.length && (timed.length < 3 || !own(entry,'rating') || entry.correct !== (entry.rating === 'matched'))) fail('Exercise review schedule is invalid.');
-      if (timed.length && (typeof entry.correct !== 'boolean' || !Number.isInteger(entry.streak) || entry.streak < 0 || entry.streak > 4 || entry.correct !== entry.streak > 0 || !Number.isInteger(entry.at) || entry.at <= 0 || entry.at > Date.now() + 864e5)) fail('Exercise review schedule is invalid.');
+      if (timed.length && (typeof entry.correct !== 'boolean' || !Number.isInteger(entry.streak) || entry.streak < 0 || entry.streak > 6 || entry.correct !== entry.streak > 0 || !Number.isInteger(entry.at) || entry.at <= 0 || entry.at > Date.now() + 864e5)) fail('Exercise review schedule is invalid.');
       result[id] = {answer:entry.answer,saved:entry.saved,...(own(entry,'rating') ? {rating:entry.rating} : {}),...(timed.length ? {correct:entry.correct,streak:entry.streak,at:entry.at} : {})};
     }
     return result;

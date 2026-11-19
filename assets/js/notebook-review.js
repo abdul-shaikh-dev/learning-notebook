@@ -1,7 +1,7 @@
 /* Checkpoint outcomes, exercise attempts and spaced review. Both stay in this browser and travel only in backups. */
 const NotebookReview = (() => {
   'use strict';
-  const DAY = 864e5, INTERVALS = [1,3,7], LIMIT = 10;
+  const DAY = 864e5, INTERVALS = [1,3,7,21,60], LIMIT = 10;
   const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const key = id => 'learning-notebook:path:' + id + ':checkpoints:v1';
   const exerciseKey = id => 'learning-notebook:path:' + id + ':exercises:v1';
@@ -28,7 +28,8 @@ const NotebookReview = (() => {
   }
   // The lesson checkpoint keeps its course-balanced order; other questions take a stable order from their key.
   const choices = (path, id, q) => id.includes('/') ? keyedQuizChoices(q.quiz, path.id + '/' + id) : quizChoices(path, q.lesson);
-  // A miss resets the streak; each correct answer waits 1, 3, then 7 days; a correct answer after 7 days retires it.
+  // A miss resets the streak; each correct answer waits 1, 3, 7, 21, then 60 days; a correct answer after 60 days retires it (#153).
+  // Entries saved under the old 1, 3, 7 schedule stay valid: a streak of 4, once retired, now returns three weeks after its answer.
   function valid(entry) {
     return !!entry && typeof entry === 'object' && !Array.isArray(entry) && Object.keys(entry).every(k => ['correct','streak','at'].includes(k)) &&
       typeof entry.correct === 'boolean' && Number.isInteger(entry.streak) && entry.streak >= 0 && entry.streak <= INTERVALS.length + 1 &&
@@ -59,6 +60,9 @@ const NotebookReview = (() => {
     return timed === 3 && entry.rating !== undefined && valid({correct:entry.correct,streak:entry.streak,at:entry.at}) && entry.correct === (entry.rating === 'matched');
   }
   const scheduled = entry => entry.correct !== undefined;
+  // "Matched it" with nothing written is not an attempt (#153): such first ratings, saved before this check, are ignored.
+  // A scheduled match keeps its schedule when its answer is later cleared.
+  const unanswered = entry => entry.rating === 'matched' && !entry.answer.trim() && !scheduled(entry);
   // Exercise records are keyed by lesson id; practice-ladder steps by "<lesson>/practice/<1-4>".
   function exerciseTarget(path, key) {
     const match = /^(.+)\/practice\/([1-4])$/.exec(key), lesson = path.lessons.find(l => l.id === (match ? match[1] : key));
@@ -70,7 +74,7 @@ const NotebookReview = (() => {
     try {
       const data = JSON.parse(localStorage.getItem(exerciseKey(id)) || '{}');
       if (!data || typeof data !== 'object' || Array.isArray(data)) return result;
-      for (const [lesson, entry] of Object.entries(data)) if (exerciseTarget(path, lesson) && validExercise(entry)) result[lesson] = {...entry};
+      for (const [lesson, entry] of Object.entries(data)) if (exerciseTarget(path, lesson) && validExercise(entry) && !unanswered(entry)) result[lesson] = {...entry};
     } catch {}
     return result;
   }
@@ -90,6 +94,7 @@ const NotebookReview = (() => {
   // base is the entry before this showing's first rating, so changing the rating replaces it rather than stacking.
   function rate(path, lesson, rating, base, now = Date.now()) {
     const current = readExercises(path.id)[lesson] || {answer:'',saved:now}, matched = rating === 'matched';
+    if (matched && !current.answer.trim()) return {saved:false,entry:null,unanswered:true};
     let timing = null;
     if (!matched) timing = {correct:false,streak:0,at:now};
     else if (base && scheduled(base)) timing = base.correct && (dueAt(base) === null || now < dueAt(base)) ? {correct:base.correct,streak:base.streak,at:base.at} : {correct:true,streak:base.correct ? base.streak + 1 : 1,at:now};
@@ -97,10 +102,11 @@ const NotebookReview = (() => {
     return {saved:writeExercise(path, lesson, entry),entry};
   }
   function exerciseNote(result, now = Date.now()) {
+    if (result.unanswered) return 'Write your answer first. A rating with no answer is not counted as matched.';
     if (!result.saved) return 'This browser could not save the rating.';
     if (!scheduled(result.entry)) return 'Rating saved. An attempt that matches first time is not scheduled for review.';
     const due = dueAt(result.entry);
-    if (due === null) return 'Matched again after a week. This exercise leaves your review.';
+    if (due === null) return 'Matched again after two months. This exercise leaves your review.';
     if (!result.entry.correct) return 'Saved for review. It stays there until an attempt matches the checklist.';
     const days = Math.max(1, Math.round((due - now) / DAY));
     return 'Saved for review. It returns in ' + days + (days === 1 ? ' day.' : ' days.');
@@ -143,6 +149,8 @@ const NotebookReview = (() => {
     box.querySelector('[data-attempt-skip]').addEventListener('click', open);
     box.querySelectorAll('[data-rating]').forEach(button => button.addEventListener('click', () => {
       if (timer) save();
+      // The box is checked, not the stored answer: in review it starts empty while the earlier answer is still saved.
+      if (button.dataset.rating === 'matched' && !answer.value.trim()) { box.querySelector('[data-rating-note]').textContent = exerciseNote({unanswered:true}); answer.focus(); return; }
       if (base === undefined) base = readExercises(path.id)[lesson.id] || null;
       const result = rate(path, lesson.id, button.dataset.rating, base, now());
       box.querySelectorAll('[data-rating]').forEach(b => b.setAttribute('aria-pressed', String(b === button && result.saved)));
@@ -183,7 +191,7 @@ const NotebookReview = (() => {
   function note(result, now = Date.now()) {
     if (!result.saved) return 'This browser could not save the answer for review.';
     const due = dueAt(result.entry);
-    if (due === null) return 'Answered correctly after a week. This question leaves your review.';
+    if (due === null) return 'Answered correctly after two months. This question leaves your review.';
     if (!result.entry.correct) return 'Saved for review. It stays there until you answer it correctly.';
     const days = Math.max(1, Math.round((due - now) / DAY));
     return 'Saved for review. It returns in ' + days + (days === 1 ? ' day.' : ' days.');

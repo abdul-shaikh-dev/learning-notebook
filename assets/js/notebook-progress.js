@@ -72,7 +72,7 @@ const NotebookProgress = (() => {
   function when(time, now) { const days = Math.ceil((time - now) / DAY); return days <= 1 ? 'tomorrow' : 'in ' + days + ' days'; }
   function reviewHtml(r, now) {
     const total = r.due + r.scheduled + r.retired;
-    const body = !total ? '<p>Answer a lesson checkpoint and it joins your review. A question you miss comes back the next day; one you get right returns after 1, 3 and then 7 days, and leaves once you answer it after a week. An exercise you rate partly or missed follows the same schedule.</p>'
+    const body = !total ? '<p>Answer a lesson checkpoint and it joins your review. A question you miss comes back the next day; one you get right returns after 1, 3, 7, 21 and then 60 days, and leaves once you answer it after two months. An exercise you rate partly or missed follows the same schedule.</p>'
       : '<dl class="progress-review-counts"><div><dt>Due now</dt><dd>' + r.due + '</dd></div><div><dt>Missed</dt><dd>' + r.missed + '</dd></div><div><dt>Scheduled</dt><dd>' + r.scheduled + '</dd></div><div><dt>Retired</dt><dd>' + r.retired + '</dd></div></dl>' +
         (r.due ? '<a class="progress-action" href="#review">Review ' + dueText(r) + ' <span aria-hidden="true">→</span></a>'
           : '<p>Nothing is due.' + (r.next ? ' The next question returns ' + when(r.next, now) + '.' : '') + (r.scheduled ? ' <a href="#review">See the schedule</a>' : '') + '</p>');

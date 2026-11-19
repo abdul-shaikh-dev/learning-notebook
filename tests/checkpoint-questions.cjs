@@ -59,6 +59,11 @@ for(const p of extended){
  let html=node('main').innerHTML;
  for(const s of p.stages){stages+=s.stageCheck.length;const at=html.indexOf('id="stage-'+s.id+'"');const check=html.indexOf('Check this stage',at);assert.ok(check>at,s.id+': the stage has a check');if(s.project)assert.ok(check<html.indexOf('class="stage-project"',at),s.id+': the check comes before the project');}
  assert.equal((html.match(/data-quiz-key="stage\//g)||[]).length,p.stages.length*3);
+ // #153: nothing read yet, so every stage check is collapsed behind a summary; reading one lesson in a stage opens its check.
+ const gated=html=>p.stages.map(s=>{const at=html.indexOf('id="stage-'+s.id+'"'),end=html.indexOf('class="curriculum-stage"',at+1);return html.slice(at,end<0?undefined:end).includes('<details class="stage-check-gate">');});
+ assert.ok(gated(html).every(Boolean),'Stage checks wait until a lesson in the stage is read');
+ const first=p.lessons.find(l=>l.stage===p.stages[0].id);stored.set(vm.runInContext('pathKey',context)(p.id),JSON.stringify([first.id]));vm.runInContext('renderCatalog()',context);
+ assert.deepEqual(gated(node('main').innerHTML),p.stages.map((s,i)=>i>0),'Only the stage with a read lesson shows its check');stored.clear();vm.runInContext('renderCatalog()',context);
  blocks[0].buttons[p.stages[0].stageCheck[0].correct].click();
  assert.deepEqual(Object.keys(saved(p.id)),['stage/'+p.stages[0].id+'/1']);assert.match(blocks[0].note.textContent,/returns in 1 day/);
  node('main').querySelectorAll=()=>[];

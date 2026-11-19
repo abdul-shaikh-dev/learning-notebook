@@ -139,4 +139,4 @@ html[data-theme=dark] .catalog :is(.map-node:not(.is-started),.catalog-item:not(
 /* Extra lesson questions and stage checks: each question sits apart from the one before, with its own feedback and review note. */
 .quiz-more{margin-top:22px;padding-top:18px;border-top:1px dashed var(--line)}.quiz-more>p:first-child{margin-top:0}
 .quiz-note{margin:6px 0 0;font-size:var(--size-small)}.quiz-note:empty,.quiz-feedback:empty{display:none}
-.stage-check{margin:28px 0}.stage-check h3{margin:0 0 6px}.stage-check>.muted{margin:0 0 4px;font-size:var(--size-small)}
+.stage-check-gate{margin:28px 0}.stage-check-gate>summary{cursor:pointer;font-weight:600}.stage-check-gate>.stage-check{margin-top:12px}.stage-check{margin:28px 0}.stage-check h3{margin:0 0 6px}.stage-check>.muted{margin:0 0 4px;font-size:var(--size-small)}

@@ -277,9 +277,13 @@ test('backups without checkpoint answers leave saved answers untouched',()=>{
 });
 test('invalid checkpoint answers are rejected before anything is written',()=>{
   const env=make();
-  for(const bad of [{unknown:{correct:true,streak:1,at:1}},{'first/1':{correct:true,streak:1,at:1}},{'first/10':{correct:true,streak:1,at:1}},{'stage/missing/1':{correct:true,streak:1,at:1}},{'stage/foundation/0':{correct:true,streak:1,at:1}},{'stage/foundation':{correct:true,streak:1,at:1}},{first:{correct:true,streak:0,at:1}},{first:{correct:false,streak:2,at:1}},{first:{correct:true,streak:5,at:1}},{first:{correct:true,streak:1,at:Date.now()+3*864e5}},{first:{correct:true,streak:1,at:1,extra:1}}])
+  for(const bad of [{unknown:{correct:true,streak:1,at:1}},{'first/1':{correct:true,streak:1,at:1}},{'first/10':{correct:true,streak:1,at:1}},{'stage/missing/1':{correct:true,streak:1,at:1}},{'stage/foundation/0':{correct:true,streak:1,at:1}},{'stage/foundation':{correct:true,streak:1,at:1}},{first:{correct:true,streak:0,at:1}},{first:{correct:false,streak:2,at:1}},{first:{correct:true,streak:7,at:1}},{first:{correct:true,streak:1,at:Date.now()+3*864e5}},{first:{correct:true,streak:1,at:1,extra:1}}])
     assert.throws(()=>env.api.parse(envelope(progress({paths:{python:{read:[],assessed:[],checkpoints:bad}}}))),/Checkpoint/);
   assert.equal(env.writes.length,0);
+});
+test('the longer review schedule fits in a backup: streaks up to 6 are accepted (#153)',()=>{
+  const env=make();
+  for(const streak of [4,5,6])assert.doesNotThrow(()=>env.api.parse(envelope(progress({paths:{python:{read:[],assessed:[],checkpoints:{first:{correct:true,streak,at:1}}}}}))),'streak '+streak);
 });
 test('backup safety: last backup, changes since, nudges and the home reminder (#148)',()=>{
   const day=864e5,now=Date.UTC(2026,10,20);
