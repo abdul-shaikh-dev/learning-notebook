@@ -508,6 +508,12 @@
       "takeaway": "A TypeScript assertion cannot validate unknown network data.",
       "sections": [
         {
+          "title": "Mental model",
+          "paragraphs": [
+            "Treat data from the network like text typed by a stranger: it has a shape only after you check it. TypeScript types describe your program, not the server, and they disappear when the code runs. A decoder is the gate where `unknown` becomes a typed value; everything past the gate can rely on the type."
+          ]
+        },
+        {
           "title": "Unknown data and decoding",
           "paragraphs": [
             "`request` returns `unknown`. `decodeTask` checks for a GUID-shaped ID, a title, integer minutes, boolean done and a positive integer version before returning a `StudyTask`. The list decoder also rejects duplicate IDs because React keys and update requests require unique task identities."
@@ -517,6 +523,19 @@
           "title": "Decoder contract tests",
           "paragraphs": [
             "The decoder extracts the allowed representation fields, so extra response metadata does not become mutable UI state. Network decoding and server request validation protect different boundaries. Run `planner-api.test.ts` to see boolean minutes, fractional duration, malformed identity and stale conflicts rejected independently."
+          ]
+        },
+        {
+          "title": "Worked example: a cast that lies",
+          "paragraphs": [
+            "Suppose the server, after a bad deploy, sends minutes as a string. A cast compiles and the bug travels into the UI: adding 5 minutes produces the string `\"255\"`, and the total shown to the learner is wrong without any error. The decoder rejects the same payload before it reaches state, so the learner sees one clear failure instead of silent nonsense."
+          ],
+          "example": "const payload: unknown = { id: crypto.randomUUID(), title: 'SQL', minutes: '25', done: false, version: 1 };\n\nconst cast = payload as StudyTask;\ncast.minutes + 5;    // \"255\": string concatenation, no compile error\n\ndecodeTask(payload); // throws 'Invalid task response' before any state changes"
+        },
+        {
+          "title": "Common misconception",
+          "paragraphs": [
+            "Checking `Array.isArray(data)` or `typeof data === 'object'` is not validation. It confirms the outer shape and leaves every field unchecked, which is exactly where the bugs are: a missing version, a boolean where a number belongs, or a fractional minute count."
           ]
         }
       ],
@@ -652,6 +671,12 @@
       "takeaway": "Bind title as data even when it contains SQL-looking text.",
       "sections": [
         {
+          "title": "Mental model",
+          "paragraphs": [
+            "With parameters the database receives two separate things: statement text with placeholders, which it parses as SQL, and a list of typed values, which it never parses. Concatenation merges them into one string before the database sees it, so the database can no longer tell your SQL from the learner's text."
+          ]
+        },
+        {
           "title": "Typed SQL parameters",
           "paragraphs": [
             "`SqlPlanner` uses fixed SQL statements and explicitly typed parameters. `@title` is `nvarchar(120)`, `@minutes` is `int` and `@id` is `uniqueidentifier`. A title containing an apostrophe is stored as a title; it cannot append a second statement because input never becomes SQL syntax."
@@ -661,6 +686,19 @@
           "title": "Sort keys and authorization",
           "paragraphs": [
             "Parameterization protects values, not arbitrary identifier choices. If learners add selectable sort columns, map the requested sort key to a small fixed allowlist instead of interpolating it. Connection access and authorization are independent controls; a parameterized query can still expose another user's records."
+          ]
+        },
+        {
+          "title": "Worked example: the same title, two ways",
+          "paragraphs": [
+            "Take the title `x'); DROP TABLE dbo.StudyTasks; --`. Concatenated into the statement, the apostrophe closes the string early, the rest becomes a second statement, and `--` comments out the leftover quote. Sent as a parameter, the same characters are stored as an ordinary title and nothing else runs."
+          ],
+          "example": "// Unsafe: the value becomes part of the SQL text\nvar sql = \"INSERT dbo.StudyTasks(Title) VALUES('\" + title + \"')\";\n// sends: INSERT dbo.StudyTasks(Title) VALUES('x'); DROP TABLE dbo.StudyTasks; --')\n\n// Safe: fixed text, typed value sent separately\nawait using var cmd = new SqlCommand(\"INSERT dbo.StudyTasks(Title) VALUES(@title)\", db);\ncmd.Parameters.Add(\"@title\", SqlDbType.NVarChar, 120).Value = title;"
+        },
+        {
+          "title": "Common misconception",
+          "paragraphs": [
+            "Escaping by hand, such as doubling each apostrophe, is not equivalent. It depends on the database's quoting rules and settings, and one forgotten code path reopens the hole. Parameters also help the plan cache: the statement text is identical for every title, so SQL Server can reuse one plan."
           ]
         }
       ],

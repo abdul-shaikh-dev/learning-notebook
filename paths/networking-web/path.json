@@ -168,6 +168,12 @@
       "takeaway": "A browser action becomes a request with a destination, transport, protocol and application meaning.",
       "sections": [
         {
+          "title": "Mental model",
+          "paragraphs": [
+            "Think of a request as a relay. Name lookup hands an address to the connection, the connection hands a channel to TLS, TLS hands a secure channel to HTTP, and HTTP hands bytes to your code. Each handoff can fail on its own, and each failure leaves different evidence."
+          ]
+        },
+        {
           "title": "Request layers",
           "paragraphs": [
             "A browser action becomes a request with a destination, transport, protocol and application meaning. Naming, connectivity, encryption, HTTP status and body validation can fail separately. Start with a lesson fetch: the user needs readable lesson data, not merely a socket that opened."
@@ -179,6 +185,21 @@
             "A successful lower layer does not prove higher-layer success. A 200 response may carry malformed JSON; a correct JSON object may belong to the wrong user. Keep the stages visible in a diagnostic note so 'the network is broken' becomes a testable claim."
           ],
           "example": "Name -> address -> connection -> TLS if HTTPS -> HTTP response -> validated lesson\nFailure after HTTP 200: malformed JSON is an application observation error"
+        },
+        {
+          "title": "Worked example: reading the failure",
+          "paragraphs": [
+            "The error tells you which handoff broke. `ECONNREFUSED` means the address answered but nothing listened on the port, so naming worked and HTTP was never reached. A `SyntaxError` from `JSON.parse` after a `200` means every network stage succeeded and the problem is the content.",
+            "Command-line tools and Node name the stage in the error. In a browser, `fetch` rejects with a generic `TypeError` for the first three stages, so open the developer tools' Network panel to see which one failed."
+          ],
+          "example": "fetch('https://notes.example/lessons/7.json')\n1 Name:  notes.example -> 203.0.113.10    fails as: ENOTFOUND\n2 TCP:   connect 203.0.113.10:443          fails as: ECONNREFUSED, timeout\n3 TLS:   certificate for notes.example     fails as: name mismatch, expired\n4 HTTP:  GET /lessons/7.json               fails as: 404, 500\n5 App:   JSON.parse and a shape check      fails as: SyntaxError, wrong fields",
+          "exampleFormat": "text"
+        },
+        {
+          "title": "Common misconception",
+          "paragraphs": [
+            "`fetch` does not reject on `404` or `500`. It resolves with `response.ok` set to false, so code that only catches exceptions treats an error page as success. Check `response.ok` or the status before reading the body."
+          ]
         }
       ],
       "exercise": {
@@ -1003,6 +1024,12 @@
       "takeaway": "Certificate trust is configured by a client's trust roots and verification policy.",
       "sections": [
         {
+          "title": "Mental model",
+          "paragraphs": [
+            "A certificate is a signed claim: this public key belongs to these names, for this period. A client accepts it only if three things hold: it can build a chain of signatures up to a root it already trusts, the current time falls inside every certificate's validity period, and one of the names matches the host it meant to reach."
+          ]
+        },
+        {
           "title": "Trust roots and hostname checks",
           "paragraphs": [
             "Certificate trust is configured by a client's trust roots and verification policy. Python's `create_default_context` enables certificate verification and hostname checking for a client-oriented context. Its supported protocol details also depend on the linked TLS library; record the runtime if testing real connections."
@@ -1014,6 +1041,21 @@
             "Never turn off checks to hide an unknown certificate error in a production-style recommendation. Diagnose name mismatch, trust-chain issues and time validity separately. This reference deliberately does not generate certificates or reach the public internet, so certificate-expiry and handshake-failure drills are design extensions."
           ],
           "example": "context = ssl.create_default_context()\ncontext.verify_mode == CERT_REQUIRED\ncontext.check_hostname is True\nNo network exchange has occurred"
+        },
+        {
+          "title": "Worked example: three failures, three fixes",
+          "paragraphs": [
+            "Each failure has its own fix. A name mismatch needs a certificate that names the host. A broken chain usually means the server is not sending its intermediate certificate, so configure the full chain. An expired certificate needs renewal, and a \"not yet valid\" one often means the client's clock is wrong. Turning verification off \"fixes\" all three by accepting any certificate, including an attacker's.",
+            "In Python the failure arrives as `ssl.SSLCertVerificationError`, and its `verify_message` says which check failed."
+          ],
+          "example": "Name mismatch:   certificate names api.example; client asked for www.example\nBroken chain:    server omits its intermediate; client cannot reach a trusted root\nExpired:         notAfter 2026-03-01; client clock 2026-03-05\nPython:          ssl.SSLCertVerificationError, e.verify_message names the check",
+          "exampleFormat": "text"
+        },
+        {
+          "title": "Common misconception",
+          "paragraphs": [
+            "A padlock in one browser does not prove that other clients will connect. Some browsers fill in a missing intermediate certificate on their own, while many command-line tools and libraries cannot. Test the chain the server actually sends, with the client that will really use it."
+          ]
         }
       ],
       "exercise": {
@@ -1939,6 +1981,12 @@
       "takeaway": "HTTP/1.1, HTTP/2 and HTTP/3 carry related HTTP semantics through different wire protocols and transports.",
       "sections": [
         {
+          "title": "Mental model",
+          "paragraphs": [
+            "Separate what is said from how it travels. The semantics, meaning the method, target, status, header fields and representation, are the letter. HTTP/1.1 writes the letter as text lines on a TCP connection. HTTP/2 cuts it into binary frames and interleaves many requests on one TCP connection. HTTP/3 uses similar frames over QUIC, which runs on UDP. The letter stays the same; only the envelope changes."
+          ]
+        },
+        {
           "title": "HTTP semantics and wire protocols",
           "paragraphs": [
             "HTTP/1.1, HTTP/2 and HTTP/3 carry related HTTP semantics through different wire protocols and transports. Applications should rely on the method, status and representation contract instead of assuming packet shape or one connection per request. The stdlib lab explicitly exercises HTTP/1.1 only."
@@ -1950,6 +1998,21 @@
             "Do not call a local HTTP/1.1 result evidence for multiplexing, QUIC or proxy compatibility. Compare repeated representation outcomes when extending to another client/server stack, while measuring protocol-specific behavior separately. Header normalization and framing decisions belong to the actual protocol implementation."
           ],
           "example": "Same application contract: GET lesson -> 200 JSON\nCurrent lab: HTTP/1.1 over loopback TCP\nUnexecuted extension: same contract over HTTP/2 or HTTP/3"
+        },
+        {
+          "title": "Worked example: ten lessons, three versions",
+          "paragraphs": [
+            "A page loads ten lessons. Over HTTP/1.1 a browser opens a few connections to the host, commonly up to six, and each carries one request at a time. Over HTTP/2 all ten share one connection as separate streams, but a single lost TCP packet holds up every stream until it is resent. HTTP/3 keeps streams independent in the transport, so a loss delays only the stream it belongs to.",
+            "In all three cases each lesson returns `200` with the same JSON. Only timing and the number of connections change. That is why the lab can check the contract but cannot support claims about performance."
+          ],
+          "example": "Contract (every version): GET /lessons/7 -> 200, application/json\nHTTP/1.1: text request line and headers; one request at a time per TCP connection\nHTTP/2:   binary HEADERS and DATA frames; many streams on one TCP connection\nHTTP/3:   frames on QUIC streams over UDP; a loss stalls only its own stream",
+          "exampleFormat": "text"
+        },
+        {
+          "title": "Common misconception",
+          "paragraphs": [
+            "Header names are case-insensitive in every version, but HTTP/2 and HTTP/3 require them in lowercase on the wire. Code that compares names with exact case can pass against one HTTP/1.1 server and fail behind a proxy that speaks HTTP/2. Normalize names, or use your library's case-insensitive header map."
+          ]
         }
       ],
       "exercise": {

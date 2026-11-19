@@ -309,6 +309,12 @@
       "takeaway": "A negative test needs an expected error and a postcondition.",
       "sections": [
         {
+          "title": "Mental model",
+          "paragraphs": [
+            "A failing call has two outputs: the error it raises and the world it leaves behind. A negative test checks both. The error shows that the boundary noticed the problem; the unchanged state shows that it noticed before doing any damage."
+          ]
+        },
+        {
           "title": "Errors and postconditions",
           "paragraphs": [
             "A negative test needs an expected error and a postcondition. Rejecting malformed input is only half the contract if the function already changed a file before raising. Use `assertRaises` around the smallest action and inspect unchanged state afterward."
@@ -320,6 +326,19 @@
             "Catching every exception in a test can accidentally accept an unrelated `NameError` as success. Assert the intended exception class, then verify that the error came from the boundary under study. Avoid depending on every word of a diagnostic unless the wording is part of the public interface."
           ],
           "example": "with assertRaises(ValueError): parse_record('[]')\nAfter failed import: target still contains 'old'; replacement callback has zero calls"
+        },
+        {
+          "title": "Worked example: a rejected batch leaves the file alone",
+          "paragraphs": [
+            "This test, for a hypothetical `import_batch`, expects a `ValueError` for a record without minutes, checks that the message names the field rather than matching it word for word, and then checks that the target file still holds its old content."
+          ],
+          "example": "def test_rejects_bad_batch_without_writing(self):\n    with TemporaryDirectory() as root:\n        target = Path(root) / 'log.json'\n        target.write_text('old')\n        with self.assertRaises(ValueError) as caught:\n            import_batch(target, '[{\"id\": \"a\"}]')   # minutes missing\n        self.assertIn('minutes', str(caught.exception))\n        self.assertEqual(target.read_text(), 'old')"
+        },
+        {
+          "title": "Common misconception",
+          "paragraphs": [
+            "Assertions placed inside the `assertRaises` block, after the call that raises, never run: the exception leaves the block at that call. A test written that way passes while checking nothing. Put postconditions after the block, as in the example."
+          ]
         }
       ],
       "exercise": {
@@ -358,6 +377,12 @@
       "takeaway": "A fixture is a known starting state, not a shared pile of leftovers.",
       "sections": [
         {
+          "title": "Mental model",
+          "paragraphs": [
+            "Each test should start in a clean room and leave it the way it found it. If a test passes only because an earlier test left something behind, it is testing the order of the suite, not the code."
+          ]
+        },
+        {
           "title": "Known starting state",
           "paragraphs": [
             "A fixture is a known starting state, not a shared pile of leftovers. A temporary directory gives each file test a fresh destination. Context-manager cleanup also runs when an assertion fails. This prevents one successful test from preparing the next test's hidden preconditions."
@@ -369,6 +394,19 @@
             "Avoid absolute home-directory files, shared fixed ports and suite-wide mutable records for beginner labs. A test must be runnable alone and in a different order. If setup can fail after acquiring a resource, register cleanup immediately instead of waiting for a later step."
           ],
           "example": "with TemporaryDirectory() as root:\n    target = Path(root) / 'report.json'\n    target.write_text('old')\nAfter context exit: root removed"
+        },
+        {
+          "title": "Worked example: setUp with addCleanup",
+          "paragraphs": [
+            "Register cleanup as soon as you acquire a resource. If writing the starting file raised, `tearDown` would not run, because it runs only after `setUp` succeeds, but callbacks registered with `addCleanup` still run. Each test gets its own directory, so tests can run alone or in any order."
+          ],
+          "example": "class ReportTests(unittest.TestCase):\n    def setUp(self):\n        tmp = TemporaryDirectory()\n        self.addCleanup(tmp.cleanup)        # registered before anything can fail\n        self.report = Path(tmp.name) / 'report.json'\n        self.report.write_text('{\"minutes\": 0}')\n\n    def test_add_minutes(self):\n        add_minutes(self.report, 25)\n        self.assertEqual(json.loads(self.report.read_text())['minutes'], 25)"
+        },
+        {
+          "title": "Common misconception",
+          "paragraphs": [
+            "A green full-suite run says little about isolation. Run one test on its own, for example with `python -m unittest -k test_add_minutes`, and run the suite in a different order. A test that fails alone was depending on another test's leftovers."
+          ]
         }
       ],
       "exercise": {
@@ -821,6 +859,12 @@
       "takeaway": "A boundary contract includes accepted shape, meaning, failures and effects.",
       "sections": [
         {
+          "title": "Mental model",
+          "paragraphs": [
+            "A contract is a promise in both directions: which inputs the adapter accepts, what it returns for them, and how it refuses everything else. Tests should cover each side of the promise, so a table of accepted and rejected inputs is often clearer than one long test."
+          ]
+        },
+        {
           "title": "Accepted shapes and effects",
           "paragraphs": [
             "A boundary contract includes accepted shape, meaning, failures and effects. The study-log parser requires exactly id and minutes, not merely any JSON object. Adapter tests should cover malformed observations too: valid transport is not the same as valid application data."
@@ -832,6 +876,19 @@
             "Unknown fields can indicate a caller-version mismatch or hidden ambiguity. Decide whether to reject or tolerate them before testing. The supplied strict parser rejects extra fields and duplicate JSON keys; that is a teaching policy, not a requirement for every API. Version contracts when policy changes."
           ],
           "example": "{\"id\":\"a\",\"minutes\":5,\"admin\":true} -> reject\n{\"id\":\"a\",\"minutes\":5,\"minutes\":9} -> reject\n{\"id\":\"a\",\"minutes\":5} -> accept"
+        },
+        {
+          "title": "Worked example: a table of cases",
+          "paragraphs": [
+            "This test runs `parse_record` over a small table. `subTest` reports each failing row separately, so one bad case does not hide the others. Note the row that is valid JSON but the wrong shape: the transport succeeded, and the contract still says no."
+          ],
+          "example": "def test_record_contract(self):\n    cases = [\n        ('{\"id\": \"a\", \"minutes\": 5}', {'id': 'a', 'minutes': 5}),\n        ('{\"id\": \"a\", \"minutes\": 5, \"admin\": true}', ValueError),  # unknown field\n        ('{\"id\": \"a\"}', ValueError),                                  # missing field\n        ('{\"id\": \"a\", \"minutes\": 1441}', ValueError),                 # out of range\n        ('[1, 2]', ValueError),                                        # valid JSON, wrong shape\n    ]\n    for text, expected in cases:\n        with self.subTest(text=text):\n            if expected is ValueError:\n                self.assertRaises(ValueError, parse_record, text)\n            else:\n                self.assertEqual(parse_record(text), expected)"
+        },
+        {
+          "title": "Common misconception",
+          "paragraphs": [
+            "Python's `json.loads` does not reject duplicate keys; it keeps the last value, so `{\"minutes\": 5, \"minutes\": 9}` quietly becomes 9 minutes. Rejecting duplicates needs an `object_pairs_hook`, which is what the supplied parser uses."
+          ]
         }
       ],
       "exercise": {
@@ -1521,6 +1578,12 @@
       "takeaway": "A useful diagnosis connects symptom, reproduction, cause, correction and evidence.",
       "sections": [
         {
+          "title": "Mental model",
+          "paragraphs": [
+            "Write the diagnosis for a reader who was not there. They should be able to rerun the failure with one command, see why the cause explains every symptom, check the evidence that the fix works, and know exactly what you did not test."
+          ]
+        },
+        {
           "title": "Symptom, cause and correction",
           "paragraphs": [
             "A useful diagnosis connects symptom, reproduction, cause, correction and evidence. Explain how a stale-version race allowed an overwritten report, which boundary now rejects the second writer and what remains untested. Another developer should be able to run the reproducer without reconstructing your session."
@@ -1532,6 +1595,20 @@
             "Separate observations from hypotheses. A local lock fixes the supplied single-process reference, while a persistent multi-worker service needs a transaction or appropriate coordination at its real storage boundary. Record the smallest next falsifying test rather than claiming mastery from one suite."
           ],
           "example": "Symptom: lost minutes under two stale edits\nCause: compare and write separated\nFix: locked compare/write\nEvidence: barrier test has one winner\nLimit: volatile one-process state"
+        },
+        {
+          "title": "Worked example: a missing Sunday",
+          "paragraphs": [
+            "Here is a complete diagnosis for a different bug: a weekly total that leaves out Sunday. Notice that the evidence includes a test that failed before the fix, and that the limits name concrete cases rather than saying \"more testing needed\"."
+          ],
+          "example": "Symptom:    weekly total omits Sunday sessions (expected 145 minutes, got 120)\nReproduce:  python -m unittest test_week.WeekTotals.test_includes_sunday\nCause:      the range check used `< sunday`, so Sunday itself was excluded\nFix:        compare with the start of the next Monday, an end that is exclusive on purpose\nEvidence:   the new test fails before the fix and passes after; full suite passes\nNot tested: sessions that cross midnight; time zones other than UTC",
+          "exampleFormat": "text"
+        },
+        {
+          "title": "Common misconception",
+          "paragraphs": [
+            "\"The tests pass now\" is not a diagnosis. A change that turns the suite green without a test that failed before it may hide the symptom instead of removing the cause. Show the failing test first, then the same test passing."
+          ]
         }
       ],
       "exercise": {

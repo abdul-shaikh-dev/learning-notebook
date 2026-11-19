@@ -66,7 +66,7 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
    if(expected){stated++;assert.equal(r.output.trimEnd(),expected[1].trimEnd().split('\n').map(x=>x.replace(/^# ?/,'')).join('\n'),where+': prints its stated output');}
   }
  }
- assert.deepEqual(examples,{'data-structures-algorithms':[34,2],'design-patterns':[31,2],'practical-maths-statistics':[25,0],python:[39,0],'system-design':[1,0],'messaging-events':[4,1],'cloud-infrastructure':[1,0]},'Enabled examples per course, and those that import practice modules');
+ assert.deepEqual(examples,{'data-structures-algorithms':[37,2],'design-patterns':[31,2],'practical-maths-statistics':[25,0],python:[39,0],'system-design':[1,0],'messaging-events':[4,1],'cloud-infrastructure':[1,0]},'Enabled examples per course, and those that import practice modules');
  assert.equal(local,2,'Python course examples kept for local running');
  const missing=await runExample('from practice_helpers import solve',[]);assert.ok(!missing.ok&&/ModuleNotFoundError: No module named 'practice_helpers'/.test(missing.error),'An import that is not supplied fails clearly');
  for(const [code,check] of [

@@ -1886,6 +1886,12 @@
       "takeaway": "A complete workflow includes replay, retention and recovery ownership.",
       "sections": [
         {
+          "title": "Mental model",
+          "paragraphs": [
+            "Treat every durable store as having its own clock. After a restore, the database, the broker and the outside world can each reflect a different point in time. Recovery is safe only when you can say, for each store, which moment it now reflects and which effects happened after that moment in systems you do not control, such as a payment provider or a mail server."
+          ]
+        },
+        {
           "title": "Recovery across durable stores",
           "paragraphs": [
             "Before release, enumerate durable stores: business database, outbox, inbox, broker and projections. Their backups and retention may differ. A restored database can regress an inbox and allow old effects again; a restored outbox can republish work. Recovery needs an epoch or reconciliation plan and an isolated replay mode before external effects resume."
@@ -1895,6 +1901,21 @@
           "title": "Retry and replay review",
           "paragraphs": [
             "The stage-three review package lists crash timelines, maximum retry budget, permitted replay effects and who owns dead-letter repair. It compares locally verified SQLite behavior with optional live broker experiments."
+          ]
+        },
+        {
+          "title": "Worked example: a restore that rewinds the inbox",
+          "paragraphs": [
+            "A backup is taken at 02:00. At 02:40 the consumer handles message m-41: it charges a deposit with the payment provider and records m-41 in the inbox table. At 03:00 a fault forces a restore to 02:00. The inbox no longer lists m-41, but the broker still retains it, so a plain replay would charge the deposit again.",
+            "The recovery plan starts consumers in replay mode with external effects paused. It compares the provider's records for 02:00 to 03:00 with the restored database, marks m-41 as already applied, and only then resumes effects. The go/no-go note records who approved the reconciliation and how many messages it covered."
+          ],
+          "example": "02:00  backup taken\n02:40  m-41 consumed: provider charged, inbox += m-41\n03:00  fault; database restored to 02:00 -> inbox has no m-41\nPlain replay -> second charge\nPlan: pause effects -> compare provider log 02:00-03:00 -> mark m-41 applied -> resume",
+          "exampleFormat": "text"
+        },
+        {
+          "title": "Common misconception",
+          "paragraphs": [
+            "Idempotency records kept in the restored database do not protect you after a restore, because the restore rewound them too. Deduplication that must survive a restore needs a record the restore does not touch, such as an idempotency key the provider itself checks, for as long as the provider keeps it, or a separate ledger with its own backup schedule."
           ]
         }
       ],
