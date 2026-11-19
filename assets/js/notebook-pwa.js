@@ -38,7 +38,7 @@
     try { await prompt.prompt(); const result = await prompt.userChoice; installState(result.outcome === 'accepted' ? 'Installation accepted. Your browser will finish installing the notebook.' : 'Installation cancelled. You can still use the notebook here.'); }
     catch (_) { installState('Installation is unavailable here. Try the browser menu instructions below.'); }
   });
-  window.addEventListener('online', () => { connection(); if (registration) refresh(); });
+  window.addEventListener('online', () => { connection(); if (registration) refresh().then(refreshOutdated); });
   window.addEventListener('offline', connection);
   installState(); connection();
   function unavailable(text) {
@@ -133,12 +133,37 @@
     catch (error) { unavailable(plain(error, 'Offline storage is unavailable right now. Reload this page to try again.')); if ($('pwa-refresh')) $('pwa-refresh').disabled = false; }
   }
   if ($('pwa-refresh')) $('pwa-refresh').addEventListener('click', refresh);
+  // A publication that changes a saved course makes its download outdated. Refresh those downloads in the
+  // background when online; until then the worker still serves the previous copy offline. With Data Saver on,
+  // or when a refresh fails, a notice says so instead.
+  function outdatedNotice(count) {
+    if (manager || $('pwa-outdated-notice')) return;
+    const box = element('section', '', 'pwa-notice'); box.id = 'pwa-outdated-notice'; box.setAttribute('aria-label', 'Offline courses'); box.setAttribute('role', 'status');
+    box.append(element('strong', count === 1 ? '1 offline course needs updating' : count + ' offline courses need updating'));
+    box.append(element('p', 'They still open offline from the copy you saved earlier. Update them to get the latest lessons.'));
+    const actions = element('div', '', 'pwa-notice-actions'), open = element('a', 'Open Offline & install', 'button primary'), later = element('button', 'Later', 'quiet');
+    open.href = new URL('offline.html', root).href; later.type = 'button'; later.addEventListener('click', () => box.remove());
+    actions.append(open, later); box.append(actions); document.body.append(box);
+  }
+  async function refreshOutdated() {
+    if (busy || !navigator.onLine || !registration || registration.waiting) return;
+    let data; try { data = await request('STATUS'); } catch (_) { return; }
+    const outdated = (data.courses || []).filter(c => c.outdated);
+    if (!outdated.length) return;
+    if (navigator.connection && navigator.connection.saveData) { outdatedNotice(outdated.length); return; }
+    busy = true; if (manager) { render(data); message('Updating ' + outdated.length + (outdated.length === 1 ? ' saved course' : ' saved courses') + ' to the latest version…'); }
+    let failed = 0;
+    for (const c of outdated) { try { data = await request('UPDATE_COURSE', c.id); } catch (_) { failed++; } }
+    busy = false;
+    if (manager) { render(data); message(failed ? failed + ' saved course' + (failed === 1 ? '' : 's') + ' could not be updated. They still open offline from the earlier copy; try Update download.' : 'Saved courses are up to date.', !!failed); }
+    else if (failed) outdatedNotice(failed);
+  }
   function updateNotice() {
     if (!registration.waiting || !registration.active || registration.active === registration.waiting || registration.active.state !== 'activated' || $('pwa-update-notice')) return;
     if ($('pwa-update-status')) $('pwa-update-status').textContent = 'An update is ready. Choose Update notebook to apply it.';
     const notice = element('section', '', 'pwa-notice'); notice.id = 'pwa-update-notice'; notice.setAttribute('aria-label', 'Notebook update'); notice.setAttribute('role', 'status');
     notice.append(element('strong', 'A notebook update is ready'));
-    notice.append(element('p', 'Apply the update and reload notebook tabs. Saved progress stays. Refresh offline course downloads afterward.'));
+    notice.append(element('p', 'Apply the update and reload notebook tabs. Saved progress stays, and saved offline courses update by themselves.'));
     const actions = element('div', '', 'pwa-notice-actions'), apply = element('button', 'Update notebook', 'primary'), later = element('button', 'Later', 'quiet'); apply.type = later.type = 'button';
     apply.addEventListener('click', () => { if (!registration.waiting) return; if (busy) { message('Let the current download finish before updating.', true); return; } requestedUpdate = true; apply.disabled = true; apply.textContent = 'Updating…'; registration.waiting.postMessage({type:'ACTIVATE_UPDATE'}); });
     later.addEventListener('click', () => notice.remove()); actions.append(apply, later); notice.append(actions); document.body.append(notice);
@@ -156,7 +181,7 @@
 
     const watch = worker => { if (!worker) return; if (worker.state === 'installed') updateNotice(); else worker.addEventListener('statechange', () => { if (worker.state === 'installed') updateNotice(); }); };
     reg.addEventListener('updatefound', () => watch(reg.installing)); watch(reg.installing);
-    await Promise.race([navigator.serviceWorker.ready, new Promise((_, reject) => setTimeout(() => reject(notice('Offline setup took too long.')), 45000))]); await refresh();
+    await Promise.race([navigator.serviceWorker.ready, new Promise((_, reject) => setTimeout(() => reject(notice('Offline setup took too long.')), 45000))]); await refresh(); await refreshOutdated();
   }).catch(error => unavailable('Offline setup could not finish. ' + (error?.friendly ? error.message + ' ' : (console.warn(error), '')) + 'Reconnect and reload this page.'));
 })();
 

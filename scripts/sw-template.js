@@ -35,9 +35,12 @@ async function status(){
  return {version:CONFIG.version,shellReady,courses};
 }
 function serial(id,work){const previous=locks.get(id)||Promise.resolve();const next=previous.catch(()=>{}).then(work);locks.set(id,next);return next.finally(()=>{if(locks.get(id)===next)locks.delete(id);});}
-async function save(id,progress){
+// onlyOutdated refreshes a course that is saved but no longer matches this publication, and leaves others alone,
+// so several tabs asking at once download it once.
+async function save(id,progress,onlyOutdated=false){
  const c=course(id);if(!c)throw say('Unknown learning path.');
  return serial(id,async()=>{
+  if(onlyOutdated){const saved=await record(id);if(!saved||saved.version===(c.version||CONFIG.version)&&await complete(saved.cache,c.files)&&await complete(SHELL,CONFIG.shell))return;}
   if(!await complete(SHELL,CONFIG.shell))await fill(SHELL,CONFIG.shell,progress);
   const revision=c.version||CONFIG.version;
   const name=PREFIX+'course:'+id+':'+revision+':'+crypto.randomUUID();let committed=false;
@@ -68,6 +71,7 @@ self.addEventListener('message',event=>{
  if(!port)return;
  event.waitUntil((async()=>{try{
   if(message.type==='SAVE_COURSE')await save(message.id,(done,total)=>port.postMessage({progress:{done,total}}));
+  else if(message.type==='UPDATE_COURSE')await save(message.id,(done,total)=>port.postMessage({progress:{done,total}}),true);
   else if(message.type==='REMOVE_COURSE')await remove(message.id);
   else if(message.type!=='STATUS')throw say('Unknown offline action.');
   port.postMessage({ok:true,data:await status()});
@@ -87,6 +91,15 @@ async function cached(file){
   const hit=await (await caches.open(r.cache)).match(url);if(hit)return hit;
  }
 }
+// After a publication changes a saved course, its previous download still serves offline until it is refreshed:
+// an older copy of a lesson is better than none. Online, the current files come from the network instead.
+async function previous(file){
+ const url=absolute(file),names=await caches.keys();
+ for(const owner of CONFIG.courses.filter(c=>c.files.includes(file))){
+  const r=await record(owner.id);if(!r?.cache||!names.includes(r.cache))continue;
+  const hit=await (await caches.open(r.cache)).match(url);if(hit)return hit;
+ }
+}
 self.addEventListener('fetch',event=>{
  const url=new URL(event.request.url);if(event.request.method!=='GET'||url.origin!==BASE.origin||!url.pathname.startsWith(BASE.pathname))return;
  let file;try{file=decodeURI(url.pathname.slice(BASE.pathname.length))||'index.html';}catch{return;}
@@ -98,6 +111,7 @@ self.addEventListener('fetch',event=>{
    if(runtimeFile(file)&&response.ok&&response.type!=='opaque')event.waitUntil(keep(file,response.clone()));
    return response;
   }catch{
+   const old=await previous(file);if(old)return old;
    if(event.request.mode==='navigate')return await cached('offline.html')||new Response('Open the notebook online once to prepare offline access.',{status:503});
    return new Response('This file is not saved offline. Open Offline & install to download its course.',{status:503,headers:{'Content-Type':'text/plain'}});
   }
