@@ -13,15 +13,19 @@ function make(initial={},failWrites=false){
  return {R:ctx.R,data,ctx,path:id=>ctx.LEARNING_PATHS.find(p=>p.id===id)};
 }
 const key=id=>'learning-notebook:path:'+id+':checkpoints:v1';
-// Schedule: a miss is due at once; correct answers return after 1, 3 and 7 days; a fourth retires the question.
+// Schedule: a miss is due at once; correct answers return after 1, 3, 7, 21 and 60 days; a sixth retires the question (#153).
 {const {R,data,path}=make(),p=path('python'),l=p.lessons[0],saved=()=>JSON.parse(data.get(key('python'))).loops;
  R.record(p,'loops',false,T0);assert.deepEqual({...saved()},{correct:false,streak:0,at:T0});assert.equal(R.dueAt(saved()),T0);
  R.record(p,'loops',true,T0+1);assert.equal(saved().streak,1);assert.equal(R.dueAt(saved()),T0+1+DAY);
  R.record(p,'loops',true,T0+DAY/2);assert.equal(saved().at,T0+1,'An early correct answer keeps the schedule');
- let t=T0+1;for(const [streak,days] of [[2,3],[3,7]]){t+=R.INTERVALS[streak-2]*DAY;R.record(p,'loops',true,t);assert.equal(saved().streak,streak);assert.equal(R.dueAt(saved()),t+days*DAY);}
- t+=7*DAY;R.record(p,'loops',true,t);assert.equal(saved().streak,4);assert.equal(R.dueAt(saved()),null,'Retired after a week-long gap');
- R.record(p,'loops',true,t+DAY);assert.equal(saved().streak,4,'Retired questions stay retired when answered correctly');
+ assert.deepEqual([...R.INTERVALS],[1,3,7,21,60]);
+ let t=T0+1;for(const [streak,days] of [[2,3],[3,7],[4,21],[5,60]]){t+=R.INTERVALS[streak-2]*DAY;R.record(p,'loops',true,t);assert.equal(saved().streak,streak);assert.equal(R.dueAt(saved()),t+days*DAY);}
+ t+=60*DAY;R.record(p,'loops',true,t);assert.equal(saved().streak,6);assert.equal(R.dueAt(saved()),null,'Retired after a two-month gap');
+ R.record(p,'loops',true,t+DAY);assert.equal(saved().streak,6,'Retired questions stay retired when answered correctly');
  R.record(p,'loops',false,t+2*DAY);assert.deepEqual({...saved()},{correct:false,streak:0,at:t+2*DAY},'A later miss returns it to review');}
+// Migration: a question retired under the old 1, 3, 7 schedule (streak 4) stays valid and returns three weeks after its answer.
+{const {R}=make({[key('python')]:JSON.stringify({loops:{correct:true,streak:4,at:T0}})});const old=R.read('python').loops;
+ assert.deepEqual({...old},{correct:true,streak:4,at:T0});assert.equal(R.dueAt(old),T0+21*DAY);}
 // Ordering, filtering and corrupt storage.
 {const {R}=make({[key('python')]:JSON.stringify({loops:{correct:true,streak:1,at:T0-5*DAY},dicts:{correct:false,streak:0,at:T0-DAY},plain:{correct:true,streak:1,at:T0},gone:{correct:false,streak:0,at:T0},bad:{correct:true,streak:0,at:T0}}),[key('sql')]:'{not json'});
  const items=R.items(T0).filter(i=>i.ready);

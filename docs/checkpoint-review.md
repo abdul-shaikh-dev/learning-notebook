@@ -15,7 +15,7 @@ Keys are checked against the catalog's lesson and stage IDs, so they can be vali
 The schedule is deliberately small:
 
 - A missed answer is due at once and stays due until it is answered correctly.
-- Correct answers return after 1, 3 and then 7 days. A correct answer given after the 7-day gap retires the question.
+- Correct answers return after 1, 3, 7, 21 and then 60 days. A correct answer given after the 60-day gap retires the question. Answers saved under the earlier 1, 3, 7 schedule stay valid; a question that schedule retired returns three weeks after its last answer.
 - A correct answer before the due date, or after retirement, keeps the current schedule. Any miss restarts it.
 
 The home page shows a Review card once any checkpoint has been answered: a count of due questions, or a one-line note of how many are scheduled and when the next returns, linking to the schedule. `#review` lists up to ten due questions, missed first, then oldest due. It loads only the course chunks those questions need. Below them, "Coming up" lists up to 20 scheduled questions, soonest first, from catalog titles alone (a stage question is labelled "Stage 2 check · Question 1"). Answers given there follow the same rules and link back to the lesson, or to the course page for stage questions.
@@ -39,7 +39,7 @@ Extra lesson questions and stage checks live in `paths/<id>/checkpoints.json`, b
 - Keep questions in order once published. A saved answer is keyed by position, so inserting a question in the middle would attach existing answers to a different question. Add new questions at the end.
 - Run `node scripts/sync-catalog.cjs` to regenerate the course chunk.
 
-Extra questions appear under the lesson's main checkpoint. Stage checks appear as "Check this stage" in each stage section of the course page, before the stage project. The print pack includes both, with answers.
+Extra questions appear under the lesson's main checkpoint. Stage checks appear as "Check this stage" in each stage section of the course page, before the stage project. Until a lesson in that stage is read, or one of its questions answered, the check stays collapsed behind a summary that says so; answering from memory before reading only measures guessing. The print pack includes both, with answers.
 
 ### Python course
 
@@ -250,7 +250,7 @@ Each lesson's "Practice this idea" exercise has an answer box. The answer is sav
 After comparing, the learner rates the attempt against the checklist: matched it, partly or missed it.
 
 - A first attempt that matches is saved but not scheduled.
-- Partly or missed puts the exercise into Review at once, on the checkpoint schedule: it stays due until an attempt matches, then returns after 1, 3 and 7 days and retires after a match following the 7-day gap.
+- Partly or missed puts the exercise into Review at once, on the checkpoint schedule: it stays due until an attempt matches, then returns after 1, 3, 7, 21 and 60 days and retires after a match following the 60-day gap. "Matched it" needs a written answer: with the box empty it is not saved, and a first match saved without an answer before this rule counts as not attempted.
 - Changing the rating on the same visit replaces the earlier choice instead of adding to the streak.
 
 Review lists due exercises beside due questions. An exercise in review starts with an empty box; the earlier answer appears beside the worked solution, and an empty box never erases it. Progress counts exercises attempted per course. Backups include a course's `exercises` only when it has some, and on import the more recent change to each exercise (answer or rating) wins, with this browser winning a tie. `tests/exercise-attempts.cjs` covers saving, rating, scheduling, the review page, backups and progress.

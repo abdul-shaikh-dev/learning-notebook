@@ -27,7 +27,7 @@ assert.ok(!('challenges' in python),'Courses without challenges carry no count')
 const [l1,l2,l3]=python.lessons;const fin0=paths.find(p=>p.id==='financial-foundations');
 e=env({
  [key('python')]:json([l1.id,l2.id,l1.id,'not-a-lesson']),[checks('python')]:json([python.stages[0].id,'nope']),
- [answers('python')]:json({[l1.id]:{correct:false,streak:0,at:NOW-DAY},[l2.id]:{correct:true,streak:1,at:NOW},[l3.id]:{correct:true,streak:4,at:NOW-30*DAY},[l3.id+'/2']:{correct:true,streak:2,at:NOW-4*DAY}}),
+ [answers('python')]:json({[l1.id]:{correct:false,streak:0,at:NOW-DAY},[l2.id]:{correct:true,streak:1,at:NOW},[l3.id]:{correct:true,streak:6,at:NOW-30*DAY},[l3.id+'/2']:{correct:true,streak:2,at:NOW-4*DAY}}),
  [key('sql-server')]:json(sql.lessons.map(l=>l.id)),
  'learning-notebook:challenges:python-problem-solving:v1':json({[pps.lessons[0].id]:{code:'x',status:'solved'},[pps.lessons[1].id]:{code:'y',status:'attempted'},[pps.lessons[2].id]:{code:'',status:'not-started'}}),
  [key('financial-foundations')]:json([fin0.lessons[0].id,fin0.lessons[1].id,fin0.lessons[1].id,fin0.lessons[14].id,'not-a-lesson']),'valuation-lab-v1':json({study:{foundations:{checked:true},revision:{checked:false}}}),

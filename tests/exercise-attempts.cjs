@@ -37,7 +37,7 @@ function make(initial={}){
  R.saveAnswer(git,'commit','x'.repeat(R.ANSWER+50),T0+1);assert.equal(saved('git').commit.answer.length,R.ANSWER,'Answers are capped');
  R.saveAnswer(git,'commit','   ',T0+2);assert.equal(saved('git').commit,undefined,'An empty unrated answer is removed');}
 
-// Rating: a first match is not scheduled; partly or missed is due at once; matching later follows 1, 3 and 7 days.
+// Rating: a first match is not scheduled; partly or missed is due at once; matching later follows 1, 3, 7, 21 and 60 days.
 {const {R,saved,path,ctx}=make(),git=path('git');
  R.saveAnswer(git,'commit','Attempt',T0);
  let r=R.rate(git,'commit','matched',null,T0+1);assert.deepEqual({...saved('git').commit},{answer:'Attempt',saved:T0,rating:'matched'});assert.match(R.exerciseNote(r,T0+1),/not scheduled/);
@@ -45,16 +45,22 @@ function make(initial={}){
  r=R.rate(git,'branch','partly',null,T0);assert.deepEqual({...saved('git').branch},{answer:'',saved:T0,rating:'partly',correct:false,streak:0,at:T0});
  assert.match(R.exerciseNote(r,T0),/until an attempt matches/);
  const base=saved('git').branch;
+ // #153: "Matched it" with nothing written is refused and changes nothing; partly and missed stay allowed.
+ r=R.rate(git,'branch','matched',base,T0+1);assert.equal(r.saved,false);assert.match(R.exerciseNote(r,T0+1),/not counted as matched/);assert.equal(saved('git').branch.rating,'partly');
+ R.saveAnswer(git,'branch','Second try',T0+1);
  R.rate(git,'branch','matched',base,T0+1);assert.equal(saved('git').branch.streak,1);assert.equal(R.dueAt(saved('git').branch),T0+1+DAY);
  R.rate(git,'branch','missed',base,T0+2);assert.deepEqual([saved('git').branch.rating,saved('git').branch.streak],['missed',0],'Changing the rating on one showing replaces it');
  R.rate(git,'branch','matched',base,T0+3);const once=saved('git').branch;
  R.rate(git,'branch','matched',once,T0+DAY/2);assert.equal(saved('git').branch.at,T0+3,'An early match keeps the schedule');
- let t=T0+3;for(const [streak,days] of [[2,3],[3,7]]){t+=R.INTERVALS[streak-2]*DAY;R.rate(git,'branch','matched',saved('git').branch,t);assert.equal(saved('git').branch.streak,streak);assert.equal(R.dueAt(saved('git').branch),t+days*DAY);}
- t+=7*DAY;r=R.rate(git,'branch','matched',saved('git').branch,t);assert.equal(R.dueAt(saved('git').branch),null);assert.match(R.exerciseNote(r,t),/leaves your review/);
+ let t=T0+3;for(const [streak,days] of [[2,3],[3,7],[4,21],[5,60]]){t+=R.INTERVALS[streak-2]*DAY;R.rate(git,'branch','matched',saved('git').branch,t);assert.equal(saved('git').branch.streak,streak);assert.equal(R.dueAt(saved('git').branch),t+days*DAY);}
+ t+=60*DAY;r=R.rate(git,'branch','matched',saved('git').branch,t);assert.equal(R.dueAt(saved('git').branch),null);assert.match(R.exerciseNote(r,t),/leaves your review/);
  R.saveAnswer(git,'branch','',t+1);assert.equal(saved('git').branch.rating,'matched','Clearing a rated answer keeps its rating');
  ctx.blocked=true;assert.equal(R.exerciseNote(R.rate(git,'commit','missed',null,t),t),'This browser could not save the rating.');}
 
 // Storage: unknown lessons, bad fields and inconsistent schedules are ignored.
+// #153: a first "Matched it" saved with no answer before this check counts as not attempted; a scheduled one keeps its schedule.
+{const {R}=make({[key('git')]:JSON.stringify({commit:{answer:'',saved:T0,rating:'matched'},branch:{answer:' ',saved:T0,rating:'matched',correct:true,streak:2,at:T0}})});
+ assert.deepEqual(Object.keys(R.readExercises('git')),['branch']);}
 {const {R}=make({[key('git')]:JSON.stringify({commit:{answer:'ok',saved:T0},gone:{answer:'x',saved:T0},branch:{answer:'x',saved:T0,rating:'matched',correct:false,streak:0,at:T0}}),[key('sql')]:'{bad json'});
  assert.deepEqual(Object.keys(R.readExercises('git')),['commit']);assert.equal(Object.keys(R.readExercises('sql')).length,0);
  for(const bad of [{answer:1,saved:T0},{answer:'x',saved:0},{answer:'x',saved:T0,rating:'great'},{answer:'x',saved:T0,correct:false,streak:0,at:T0},{answer:'x',saved:T0,rating:'missed',correct:false},{answer:'x',saved:T0,extra:1}])assert.equal(R.validExercise(bad),false,JSON.stringify(bad));}
@@ -74,6 +80,9 @@ function make(initial={}){
  const again=R.attemptView(git,lesson,'exercise','<p>SOLUTION</p>');assert(again.includes('>Because it records a snapshot</textarea>')&&!/data-attempt-solution[^>]*hidden/.test(again)&&again.includes('data-rating="matched" aria-pressed="true"'));
  // Showing the solution without an attempt is always possible.
  const other=box('branch','exercise');R.bindAttempt(other.container,git,git.lessons[1],()=>T0);other.parts.skip.click();assert(!other.parts.solution.hidden);
+ // #153: "Matched it" after skipping, with nothing written, is not saved and asks for an answer; "Missed it" is saved.
+ other.parts.ratings[0].click();assert.equal(saved('git').branch,undefined);assert.equal(other.parts.ratings[0].attrs['aria-pressed'],undefined);assert(other.parts.textarea.focused);
+ other.parts.ratings[2].click();assert.equal(saved('git').branch.rating,'missed');
  // Escaping: stored text cannot inject markup.
  R.saveAnswer(git,'branch','</textarea><script>x</script>',T0);assert(!R.attemptView(git,git.lessons[1],'e','').includes('<script>'));}
 
