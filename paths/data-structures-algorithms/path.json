@@ -199,6 +199,12 @@
       "takeaway": "Use a map for keyed information and a set for membership.",
       "sections": [
         {
+          "title": "Mental model",
+          "paragraphs": [
+            "A hash map works like a coat check. The key's hash picks a numbered hook, so finding a coat means walking to one hook instead of searching every coat. Two keys can land on the same hook, called a collision; the map then compares keys with `==` to find the right one. That is why a key must keep the same hash while it is stored, and why Python rejects mutable lists as keys."
+          ]
+        },
+        {
           "title": "Concept",
           "paragraphs": [
             "A dictionary associates keys with values; a set records unique membership. For well-behaved hashes, lookups have expected constant time, but collision behavior can worsen the cost. Hashing a long key itself may also cost time.",
@@ -210,6 +216,20 @@
           "title": "Tradeoffs",
           "paragraphs": [
             "A map can use more memory than a scan. Keys need valid hashing/equality behavior; Python lists are not dictionary keys."
+          ]
+        },
+        {
+          "title": "Worked example: a pair with a given sum",
+          "paragraphs": [
+            "To find two numbers that add up to a target, checking every pair takes about n²/2 comparisons. A map can remember each value already seen, with its position, so each new number asks a single question: has my partner appeared yet?",
+            "With `[4, 7, 1, 5]` and target 6: 4 needs 2, not seen; 7 needs -1, not seen; 1 needs 5, not seen. Then 5 needs 1, which the map has at index 2, so the answer is `(2, 3)`. One pass and one lookup per item."
+          ],
+          "example": "def pair_with_sum(nums, target):\n    seen = {}                      # value -> index where it appeared\n    for i, n in enumerate(nums):\n        if target - n in seen:\n            return seen[target - n], i\n        seen[n] = i\n    return None\n\nprint(pair_with_sum([4, 7, 1, 5], 6))\n# Expected output:\n# (2, 3)"
+        },
+        {
+          "title": "Common misconception",
+          "paragraphs": [
+            "Expected constant time is an average, not a promise. Many keys with the same hash make lookups degrade toward a scan. Order is a second trap: Python dictionaries keep insertion order, but sets do not. When the answer depends on order, such as the first repeated item, walk the original list and use the set only to answer \"have I seen this?\"."
           ]
         }
       ],
@@ -249,6 +269,12 @@
       "takeaway": "A stack removes the newest item; a queue removes the oldest.",
       "sections": [
         {
+          "title": "Mental model",
+          "paragraphs": [
+            "Picture a stack as a pile of plates: you add and remove at the top, so the next item you touch is the one you put down last. Picture a queue as a line at a counter: people join at the back and are served from the front, so whoever waited longest goes next. Both structures restrict access on purpose. The restriction is the point: it makes the order of work predictable without searching."
+          ]
+        },
+        {
           "title": "Concept",
           "paragraphs": [
             "A stack models last-in-first-out behavior such as undo. A queue models first-in-first-out behavior such as requests awaiting service. Name both ends explicitly when tracing operations.",
@@ -260,6 +286,20 @@
           "title": "Tradeoffs",
           "paragraphs": [
             "A structure's ordering policy affects correctness as well as performance. Replacing a queue with a stack changes graph traversal order."
+          ]
+        },
+        {
+          "title": "Worked example: undo and redo",
+          "paragraphs": [
+            "An editor's undo needs the most recent edit first, so edits go on a stack. Undoing pops an edit and pushes it onto a second stack, redo, so redo also returns the most recently undone edit first. Typing something new clears redo, because the undone future no longer applies.",
+            "Trace it: type three words, undo twice, redo once. After the two undos the document is `['heap']` and redo holds `['queue', 'stack']`. Redo pops `stack`, the newest undo, and the document becomes `['heap', 'stack']`."
+          ],
+          "example": "doc, undo, redo = [], [], []\nfor word in ['heap', 'stack', 'queue']:\n    doc.append(word)\n    undo.append(word)\n    redo.clear()\nfor _ in range(2):               # undo twice\n    redo.append(undo.pop())\n    doc.pop()\nword = redo.pop()                # redo once\ndoc.append(word)\nundo.append(word)\nprint(doc, redo)\n# Expected output:\n# ['heap', 'stack'] ['queue']"
+        },
+        {
+          "title": "Common misconception",
+          "paragraphs": [
+            "A Python list looks like a fine queue, but `list.pop(0)` shifts every remaining element one place left. Draining n items that way does work proportional to n squared overall, while `deque.popleft()` takes constant time per item. The opposite mistake is worse: using a queue where the problem needs the newest item first, such as matching brackets, gives wrong answers, not just slow ones."
           ]
         }
       ],
@@ -632,9 +672,30 @@
           "example": "import heapq\nheap = []\nheapq.heappush(heap, (2, 0, 'SQL'))\nheapq.heappush(heap, (1, 1, 'Python'))\nprint(heapq.heappop(heap)[2])  # Python"
         },
         {
+          "title": "The heap property and the array layout",
+          "paragraphs": [
+            "In a min-heap every parent is less than or equal to its children. Nothing is promised about siblings, so the list is only partly ordered. The tree is complete, filled level by level from the left, which lets it live in a plain list with no pointers: the children of index i sit at 2i + 1 and 2i + 2, and the parent of i sits at (i - 1) // 2.",
+            "Two repair moves keep the property. Sifting up moves a new item from the end toward the root while it is smaller than its parent. Sifting down moves an item from the root toward the leaves, swapping with the smaller child, while a child is smaller. Each move does at most one swap per level, and a complete tree of n items has about log₂ n levels."
+          ]
+        },
+        {
           "title": "Tradeoffs",
           "paragraphs": [
             "Iteration over the underlying heap list is not guaranteed sorted order. Repeated popping sorts the extracted sequence but consumes the heap."
+          ]
+        },
+        {
+          "title": "Worked example: one push, one pop",
+          "paragraphs": [
+            "Push 3 into `[2, 5, 4, 9, 6]`. It lands at index 5, whose parent is index 2, holding 4. Since 3 < 4 they swap, giving `[2, 5, 3, 9, 6, 4]`. Now 3 sits at index 2 with parent index 0, holding 2; 2 ≤ 3, so it stops.",
+            "Pop returns the root, 2. The last item, 4, moves to the root and sifts down past its smaller child, 3, leaving `[3, 5, 4, 9, 6]`. Both operations touched one path from root to leaf, never the whole list."
+          ],
+          "example": "import heapq\nheap = [2, 5, 4, 9, 6]\nheapq.heappush(heap, 3)\nprint(heap)\nprint(heapq.heappop(heap), heap)\n# Expected output:\n# [2, 5, 3, 9, 6, 4]\n# 2 [3, 5, 4, 9, 6]"
+        },
+        {
+          "title": "Common misconception",
+          "paragraphs": [
+            "A heap is not a good search structure. Finding an arbitrary item, or checking whether it is present, still means scanning the list, because only parent and child are ordered. Also note that `heapq` functions are min-heap functions; the usual way to get the largest first is to push negated priorities, such as `(-priority, sequence, task)`."
           ]
         }
       ],

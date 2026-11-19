@@ -117,6 +117,12 @@ Give each paragraph a distinct job. Replace repeated instructions such as “tra
 example and explain the boundary” with an explanation of what the example does.
 Keep takeaways short and write quiz feedback that explains the decision.
 
+Most lessons need more than a definition: a mental model, one worked example traced
+step by step, and the common misconception it prevents. `node scripts/depth-report.cjs`
+reports words of explanation per lesson (median and percentiles), the shortest lessons,
+and with `--missing` every lesson without a worked example (a section `example` or a
+`trace`); `--floor 150` sets the word count it reports against.
+
 Wrap inline code in lesson paragraphs in backticks: function and variable names,
 calls, file names, commands with their flags, settings and SQL keywords, for example
 ``Run `python -m unittest test_lab.py`, then inspect `parse_record` ``. Mark a whole

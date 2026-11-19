@@ -661,6 +661,12 @@
       "takeaway": "References describe dependency without requiring a universal sequence.",
       "sections": [
         {
+          "title": "Mental model",
+          "paragraphs": [
+            "Read a configuration as a set of resources with arrows between them, not as a script that runs from top to bottom. An arrow exists only where one resource reads a value from another, such as a name or an ID. Terraform creates resources along the arrows, destroys them in reverse, and works on anything without an arrow between them in parallel, up to its parallelism limit of 10 by default."
+          ]
+        },
+        {
           "title": "Expression-derived dependencies",
           "paragraphs": [
             "Terraform derives dependencies from expressions that reference other resources. A storage account reference to a resource-group name establishes that relationship; independent resources may execute concurrently. `depends_on` can represent hidden dependencies but excessive blanket dependencies slow plans and make unknown values spread."
@@ -670,6 +676,21 @@
           "title": "The resource-group relationship",
           "paragraphs": [
             "The template storage account uses the created resource-group name and location through references. The storage account depends on this resource group. Other resources may have different dependencies. A private endpoint would add further dependencies if intentionally designed."
+          ]
+        },
+        {
+          "title": "Worked example: two children of one group",
+          "paragraphs": [
+            "Suppose you add a log analytics workspace that also reads the resource group's name. Now two resources point at the group, but neither points at the other. The plan creates the group first, then the storage account and the workspace at the same time. Destroy runs the other way: both children go before the group.",
+            "Adding `depends_on` from the workspace to the storage account would be legal but false. It would make the two run one after the other, and any value of the storage account that is unknown until apply would delay the workspace for no reason. `terraform graph` prints the real edges if you want to check."
+          ],
+          "example": "azurerm_resource_group.main\n  ├─> azurerm_storage_account.notes       (reads name, location)\n  └─> azurerm_log_analytics_workspace.ops (reads name)\nCreate:  group, then notes and ops in parallel\nDestroy: notes and ops, then group",
+          "exampleFormat": "text"
+        },
+        {
+          "title": "Common misconception",
+          "paragraphs": [
+            "The order of blocks in the file does not matter. Moving the storage account above the resource group in `main.tf.json` changes nothing, because Terraform builds the graph from references, not from position. And a dependency edge only orders provisioning. It says nothing about whether the application can reach the storage endpoint at runtime; that depends on networking, firewall rules and credentials."
           ]
         }
       ],
@@ -1488,6 +1509,12 @@
       "takeaway": "Use an evidence portfolio to separate design confidence from production readiness.",
       "sections": [
         {
+          "title": "Mental model",
+          "paragraphs": [
+            "Keep two questions apart. Is the design reasonable? And has it been shown to work where it will actually run? Review and local checks answer the first. Only evidence from the real account, network and identity answers the second. A launch decision says which question each piece of evidence answers, and which questions are still open."
+          ]
+        },
+        {
           "title": "Infrastructure decisions and evidence",
           "paragraphs": [
             "Document the architecture decision, resource relationships, account scope and permissions. Include the proposed changes, restore procedure, expected costs and cleanup commands. List the local tests and provider checks you ran, with their results. Identify deployment questions those checks cannot answer."
@@ -1497,6 +1524,21 @@
           "title": "Optional private-notebook deployment",
           "paragraphs": [
             "The advanced project designs a private full-stack notebook and reviews public networking, state exposure, replacement and credentialed CI risks. It keeps the static notebook unchanged and does not provision cloud resources. Optional live work needs an explicit chosen account, cost limit, ownership and teardown."
+          ]
+        },
+        {
+          "title": "Worked example: one risk, one experiment",
+          "paragraphs": [
+            "Risk: the CI identity could delete the storage account that holds Terraform state. Evidence so far: the plan grants it Contributor on the resource group, which includes delete. What a local check cannot show: whether a delete lock or a policy in the real subscription would stop it.",
+            "Next experiment: in a disposable subscription with a small cost cap, apply the configuration, try the delete as the CI identity, and record whether it was denied. Until then the decision is no-go for credentialed CI and go for local plan review."
+          ],
+          "example": "Risk:        CI identity can delete the state storage account\nEvidence:    plan grants Contributor at resource-group scope\nUnknown:     does a lock or policy in the real subscription block delete?\nExperiment:  disposable subscription, cost cap, attempt delete as CI, record result\nDecision:    no-go for credentialed CI; go for local plan review",
+          "exampleFormat": "text"
+        },
+        {
+          "title": "Common misconception",
+          "paragraphs": [
+            "A clean `terraform plan` is not evidence of a working deployment. Plan compares configuration with state and what the provider reports; it does not prove that quotas, policy assignments, globally unique names or permissions will hold at apply time. Those can still fail during apply, or after it, when real traffic arrives."
           ]
         }
       ],

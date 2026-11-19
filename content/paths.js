@@ -17605,6 +17605,12 @@ const LEARNING_PATHS = [
         "takeaway": "References describe dependency without requiring a universal sequence.",
         "sections": [
           {
+            "title": "Mental model",
+            "paragraphs": [
+              "Read a configuration as a set of resources with arrows between them, not as a script that runs from top to bottom. An arrow exists only where one resource reads a value from another, such as a name or an ID. Terraform creates resources along the arrows, destroys them in reverse, and works on anything without an arrow between them in parallel, up to its parallelism limit of 10 by default."
+            ]
+          },
+          {
             "title": "Expression-derived dependencies",
             "paragraphs": [
               "Terraform derives dependencies from expressions that reference other resources. A storage account reference to a resource-group name establishes that relationship; independent resources may execute concurrently. `depends_on` can represent hidden dependencies but excessive blanket dependencies slow plans and make unknown values spread."
@@ -17614,6 +17620,21 @@ const LEARNING_PATHS = [
             "title": "The resource-group relationship",
             "paragraphs": [
               "The template storage account uses the created resource-group name and location through references. The storage account depends on this resource group. Other resources may have different dependencies. A private endpoint would add further dependencies if intentionally designed."
+            ]
+          },
+          {
+            "title": "Worked example: two children of one group",
+            "paragraphs": [
+              "Suppose you add a log analytics workspace that also reads the resource group's name. Now two resources point at the group, but neither points at the other. The plan creates the group first, then the storage account and the workspace at the same time. Destroy runs the other way: both children go before the group.",
+              "Adding `depends_on` from the workspace to the storage account would be legal but false. It would make the two run one after the other, and any value of the storage account that is unknown until apply would delay the workspace for no reason. `terraform graph` prints the real edges if you want to check."
+            ],
+            "example": "azurerm_resource_group.main\n  ├─> azurerm_storage_account.notes       (reads name, location)\n  └─> azurerm_log_analytics_workspace.ops (reads name)\nCreate:  group, then notes and ops in parallel\nDestroy: notes and ops, then group",
+            "exampleFormat": "text"
+          },
+          {
+            "title": "Common misconception",
+            "paragraphs": [
+              "The order of blocks in the file does not matter. Moving the storage account above the resource group in `main.tf.json` changes nothing, because Terraform builds the graph from references, not from position. And a dependency edge only orders provisioning. It says nothing about whether the application can reach the storage endpoint at runtime; that depends on networking, firewall rules and credentials."
             ]
           }
         ],
@@ -19549,6 +19570,12 @@ const LEARNING_PATHS = [
         "takeaway": "Use an evidence portfolio to separate design confidence from production readiness.",
         "sections": [
           {
+            "title": "Mental model",
+            "paragraphs": [
+              "Keep two questions apart. Is the design reasonable? And has it been shown to work where it will actually run? Review and local checks answer the first. Only evidence from the real account, network and identity answers the second. A launch decision says which question each piece of evidence answers, and which questions are still open."
+            ]
+          },
+          {
             "title": "Infrastructure decisions and evidence",
             "paragraphs": [
               "Document the architecture decision, resource relationships, account scope and permissions. Include the proposed changes, restore procedure, expected costs and cleanup commands. List the local tests and provider checks you ran, with their results. Identify deployment questions those checks cannot answer."
@@ -19558,6 +19585,21 @@ const LEARNING_PATHS = [
             "title": "Optional private-notebook deployment",
             "paragraphs": [
               "The advanced project designs a private full-stack notebook and reviews public networking, state exposure, replacement and credentialed CI risks. It keeps the static notebook unchanged and does not provision cloud resources. Optional live work needs an explicit chosen account, cost limit, ownership and teardown."
+            ]
+          },
+          {
+            "title": "Worked example: one risk, one experiment",
+            "paragraphs": [
+              "Risk: the CI identity could delete the storage account that holds Terraform state. Evidence so far: the plan grants it Contributor on the resource group, which includes delete. What a local check cannot show: whether a delete lock or a policy in the real subscription would stop it.",
+              "Next experiment: in a disposable subscription with a small cost cap, apply the configuration, try the delete as the CI identity, and record whether it was denied. Until then the decision is no-go for credentialed CI and go for local plan review."
+            ],
+            "example": "Risk:        CI identity can delete the state storage account\nEvidence:    plan grants Contributor at resource-group scope\nUnknown:     does a lock or policy in the real subscription block delete?\nExperiment:  disposable subscription, cost cap, attempt delete as CI, record result\nDecision:    no-go for credentialed CI; go for local plan review",
+            "exampleFormat": "text"
+          },
+          {
+            "title": "Common misconception",
+            "paragraphs": [
+              "A clean `terraform plan` is not evidence of a working deployment. Plan compares configuration with state and what the provider reports; it does not prove that quotas, policy assignments, globally unique names or permissions will hold at apply time. Those can still fail during apply, or after it, when real traffic arrives."
             ]
           }
         ],
@@ -26220,6 +26262,12 @@ const LEARNING_PATHS = [
         "takeaway": "Use a map for keyed information and a set for membership.",
         "sections": [
           {
+            "title": "Mental model",
+            "paragraphs": [
+              "A hash map works like a coat check. The key's hash picks a numbered hook, so finding a coat means walking to one hook instead of searching every coat. Two keys can land on the same hook, called a collision; the map then compares keys with `==` to find the right one. That is why a key must keep the same hash while it is stored, and why Python rejects mutable lists as keys."
+            ]
+          },
+          {
             "title": "Concept",
             "paragraphs": [
               "A dictionary associates keys with values; a set records unique membership. For well-behaved hashes, lookups have expected constant time, but collision behavior can worsen the cost. Hashing a long key itself may also cost time.",
@@ -26231,6 +26279,20 @@ const LEARNING_PATHS = [
             "title": "Tradeoffs",
             "paragraphs": [
               "A map can use more memory than a scan. Keys need valid hashing/equality behavior; Python lists are not dictionary keys."
+            ]
+          },
+          {
+            "title": "Worked example: a pair with a given sum",
+            "paragraphs": [
+              "To find two numbers that add up to a target, checking every pair takes about n²/2 comparisons. A map can remember each value already seen, with its position, so each new number asks a single question: has my partner appeared yet?",
+              "With `[4, 7, 1, 5]` and target 6: 4 needs 2, not seen; 7 needs -1, not seen; 1 needs 5, not seen. Then 5 needs 1, which the map has at index 2, so the answer is `(2, 3)`. One pass and one lookup per item."
+            ],
+            "example": "def pair_with_sum(nums, target):\n    seen = {}                      # value -> index where it appeared\n    for i, n in enumerate(nums):\n        if target - n in seen:\n            return seen[target - n], i\n        seen[n] = i\n    return None\n\nprint(pair_with_sum([4, 7, 1, 5], 6))\n# Expected output:\n# (2, 3)"
+          },
+          {
+            "title": "Common misconception",
+            "paragraphs": [
+              "Expected constant time is an average, not a promise. Many keys with the same hash make lookups degrade toward a scan. Order is a second trap: Python dictionaries keep insertion order, but sets do not. When the answer depends on order, such as the first repeated item, walk the original list and use the set only to answer \"have I seen this?\"."
             ]
           }
         ],
@@ -26282,6 +26344,12 @@ const LEARNING_PATHS = [
         "takeaway": "A stack removes the newest item; a queue removes the oldest.",
         "sections": [
           {
+            "title": "Mental model",
+            "paragraphs": [
+              "Picture a stack as a pile of plates: you add and remove at the top, so the next item you touch is the one you put down last. Picture a queue as a line at a counter: people join at the back and are served from the front, so whoever waited longest goes next. Both structures restrict access on purpose. The restriction is the point: it makes the order of work predictable without searching."
+            ]
+          },
+          {
             "title": "Concept",
             "paragraphs": [
               "A stack models last-in-first-out behavior such as undo. A queue models first-in-first-out behavior such as requests awaiting service. Name both ends explicitly when tracing operations.",
@@ -26293,6 +26361,20 @@ const LEARNING_PATHS = [
             "title": "Tradeoffs",
             "paragraphs": [
               "A structure's ordering policy affects correctness as well as performance. Replacing a queue with a stack changes graph traversal order."
+            ]
+          },
+          {
+            "title": "Worked example: undo and redo",
+            "paragraphs": [
+              "An editor's undo needs the most recent edit first, so edits go on a stack. Undoing pops an edit and pushes it onto a second stack, redo, so redo also returns the most recently undone edit first. Typing something new clears redo, because the undone future no longer applies.",
+              "Trace it: type three words, undo twice, redo once. After the two undos the document is `['heap']` and redo holds `['queue', 'stack']`. Redo pops `stack`, the newest undo, and the document becomes `['heap', 'stack']`."
+            ],
+            "example": "doc, undo, redo = [], [], []\nfor word in ['heap', 'stack', 'queue']:\n    doc.append(word)\n    undo.append(word)\n    redo.clear()\nfor _ in range(2):               # undo twice\n    redo.append(undo.pop())\n    doc.pop()\nword = redo.pop()                # redo once\ndoc.append(word)\nundo.append(word)\nprint(doc, redo)\n# Expected output:\n# ['heap', 'stack'] ['queue']"
+          },
+          {
+            "title": "Common misconception",
+            "paragraphs": [
+              "A Python list looks like a fine queue, but `list.pop(0)` shifts every remaining element one place left. Draining n items that way does work proportional to n squared overall, while `deque.popleft()` takes constant time per item. The opposite mistake is worse: using a queue where the problem needs the newest item first, such as matching brackets, gives wrong answers, not just slow ones."
             ]
           }
         ],
@@ -28575,9 +28657,30 @@ const LEARNING_PATHS = [
             "example": "import heapq\nheap = []\nheapq.heappush(heap, (2, 0, 'SQL'))\nheapq.heappush(heap, (1, 1, 'Python'))\nprint(heapq.heappop(heap)[2])  # Python"
           },
           {
+            "title": "The heap property and the array layout",
+            "paragraphs": [
+              "In a min-heap every parent is less than or equal to its children. Nothing is promised about siblings, so the list is only partly ordered. The tree is complete, filled level by level from the left, which lets it live in a plain list with no pointers: the children of index i sit at 2i + 1 and 2i + 2, and the parent of i sits at (i - 1) // 2.",
+              "Two repair moves keep the property. Sifting up moves a new item from the end toward the root while it is smaller than its parent. Sifting down moves an item from the root toward the leaves, swapping with the smaller child, while a child is smaller. Each move does at most one swap per level, and a complete tree of n items has about log₂ n levels."
+            ]
+          },
+          {
             "title": "Tradeoffs",
             "paragraphs": [
               "Iteration over the underlying heap list is not guaranteed sorted order. Repeated popping sorts the extracted sequence but consumes the heap."
+            ]
+          },
+          {
+            "title": "Worked example: one push, one pop",
+            "paragraphs": [
+              "Push 3 into `[2, 5, 4, 9, 6]`. It lands at index 5, whose parent is index 2, holding 4. Since 3 < 4 they swap, giving `[2, 5, 3, 9, 6, 4]`. Now 3 sits at index 2 with parent index 0, holding 2; 2 ≤ 3, so it stops.",
+              "Pop returns the root, 2. The last item, 4, moves to the root and sifts down past its smaller child, 3, leaving `[3, 5, 4, 9, 6]`. Both operations touched one path from root to leaf, never the whole list."
+            ],
+            "example": "import heapq\nheap = [2, 5, 4, 9, 6]\nheapq.heappush(heap, 3)\nprint(heap)\nprint(heapq.heappop(heap), heap)\n# Expected output:\n# [2, 5, 3, 9, 6, 4]\n# 2 [3, 5, 4, 9, 6]"
+          },
+          {
+            "title": "Common misconception",
+            "paragraphs": [
+              "A heap is not a good search structure. Finding an arbitrary item, or checking whether it is present, still means scanning the list, because only parent and child are ordered. Also note that `heapq` functions are min-heap functions; the usual way to get the largest first is to push negated priorities, such as `(-priority, sequence, task)`."
             ]
           }
         ],
@@ -46439,6 +46542,12 @@ const LEARNING_PATHS = [
         "takeaway": "A TypeScript assertion cannot validate unknown network data.",
         "sections": [
           {
+            "title": "Mental model",
+            "paragraphs": [
+              "Treat data from the network like text typed by a stranger: it has a shape only after you check it. TypeScript types describe your program, not the server, and they disappear when the code runs. A decoder is the gate where `unknown` becomes a typed value; everything past the gate can rely on the type."
+            ]
+          },
+          {
             "title": "Unknown data and decoding",
             "paragraphs": [
               "`request` returns `unknown`. `decodeTask` checks for a GUID-shaped ID, a title, integer minutes, boolean done and a positive integer version before returning a `StudyTask`. The list decoder also rejects duplicate IDs because React keys and update requests require unique task identities."
@@ -46448,6 +46557,19 @@ const LEARNING_PATHS = [
             "title": "Decoder contract tests",
             "paragraphs": [
               "The decoder extracts the allowed representation fields, so extra response metadata does not become mutable UI state. Network decoding and server request validation protect different boundaries. Run `planner-api.test.ts` to see boolean minutes, fractional duration, malformed identity and stale conflicts rejected independently."
+            ]
+          },
+          {
+            "title": "Worked example: a cast that lies",
+            "paragraphs": [
+              "Suppose the server, after a bad deploy, sends minutes as a string. A cast compiles and the bug travels into the UI: adding 5 minutes produces the string `\"255\"`, and the total shown to the learner is wrong without any error. The decoder rejects the same payload before it reaches state, so the learner sees one clear failure instead of silent nonsense."
+            ],
+            "example": "const payload: unknown = { id: crypto.randomUUID(), title: 'SQL', minutes: '25', done: false, version: 1 };\n\nconst cast = payload as StudyTask;\ncast.minutes + 5;    // \"255\": string concatenation, no compile error\n\ndecodeTask(payload); // throws 'Invalid task response' before any state changes"
+          },
+          {
+            "title": "Common misconception",
+            "paragraphs": [
+              "Checking `Array.isArray(data)` or `typeof data === 'object'` is not validation. It confirms the outer shape and leaves every field unchecked, which is exactly where the bugs are: a missing version, a boolean where a number belongs, or a fractional minute count."
             ]
           }
         ],
@@ -46619,6 +46741,12 @@ const LEARNING_PATHS = [
         "takeaway": "Bind title as data even when it contains SQL-looking text.",
         "sections": [
           {
+            "title": "Mental model",
+            "paragraphs": [
+              "With parameters the database receives two separate things: statement text with placeholders, which it parses as SQL, and a list of typed values, which it never parses. Concatenation merges them into one string before the database sees it, so the database can no longer tell your SQL from the learner's text."
+            ]
+          },
+          {
             "title": "Typed SQL parameters",
             "paragraphs": [
               "`SqlPlanner` uses fixed SQL statements and explicitly typed parameters. `@title` is `nvarchar(120)`, `@minutes` is `int` and `@id` is `uniqueidentifier`. A title containing an apostrophe is stored as a title; it cannot append a second statement because input never becomes SQL syntax."
@@ -46628,6 +46756,19 @@ const LEARNING_PATHS = [
             "title": "Sort keys and authorization",
             "paragraphs": [
               "Parameterization protects values, not arbitrary identifier choices. If learners add selectable sort columns, map the requested sort key to a small fixed allowlist instead of interpolating it. Connection access and authorization are independent controls; a parameterized query can still expose another user's records."
+            ]
+          },
+          {
+            "title": "Worked example: the same title, two ways",
+            "paragraphs": [
+              "Take the title `x'); DROP TABLE dbo.StudyTasks; --`. Concatenated into the statement, the apostrophe closes the string early, the rest becomes a second statement, and `--` comments out the leftover quote. Sent as a parameter, the same characters are stored as an ordinary title and nothing else runs."
+            ],
+            "example": "// Unsafe: the value becomes part of the SQL text\nvar sql = \"INSERT dbo.StudyTasks(Title) VALUES('\" + title + \"')\";\n// sends: INSERT dbo.StudyTasks(Title) VALUES('x'); DROP TABLE dbo.StudyTasks; --')\n\n// Safe: fixed text, typed value sent separately\nawait using var cmd = new SqlCommand(\"INSERT dbo.StudyTasks(Title) VALUES(@title)\", db);\ncmd.Parameters.Add(\"@title\", SqlDbType.NVarChar, 120).Value = title;"
+          },
+          {
+            "title": "Common misconception",
+            "paragraphs": [
+              "Escaping by hand, such as doubling each apostrophe, is not equivalent. It depends on the database's quoting rules and settings, and one forgotten code path reopens the hole. Parameters also help the plan cache: the statement text is identical for every title, so SQL Server can reuse one plan."
             ]
           }
         ],
@@ -75718,6 +75859,12 @@ const LEARNING_PATHS = [
         "takeaway": "A complete workflow includes replay, retention and recovery ownership.",
         "sections": [
           {
+            "title": "Mental model",
+            "paragraphs": [
+              "Treat every durable store as having its own clock. After a restore, the database, the broker and the outside world can each reflect a different point in time. Recovery is safe only when you can say, for each store, which moment it now reflects and which effects happened after that moment in systems you do not control, such as a payment provider or a mail server."
+            ]
+          },
+          {
             "title": "Recovery across durable stores",
             "paragraphs": [
               "Before release, enumerate durable stores: business database, outbox, inbox, broker and projections. Their backups and retention may differ. A restored database can regress an inbox and allow old effects again; a restored outbox can republish work. Recovery needs an epoch or reconciliation plan and an isolated replay mode before external effects resume."
@@ -75727,6 +75874,21 @@ const LEARNING_PATHS = [
             "title": "Retry and replay review",
             "paragraphs": [
               "The stage-three review package lists crash timelines, maximum retry budget, permitted replay effects and who owns dead-letter repair. It compares locally verified SQLite behavior with optional live broker experiments."
+            ]
+          },
+          {
+            "title": "Worked example: a restore that rewinds the inbox",
+            "paragraphs": [
+              "A backup is taken at 02:00. At 02:40 the consumer handles message m-41: it charges a deposit with the payment provider and records m-41 in the inbox table. At 03:00 a fault forces a restore to 02:00. The inbox no longer lists m-41, but the broker still retains it, so a plain replay would charge the deposit again.",
+              "The recovery plan starts consumers in replay mode with external effects paused. It compares the provider's records for 02:00 to 03:00 with the restored database, marks m-41 as already applied, and only then resumes effects. The go/no-go note records who approved the reconciliation and how many messages it covered."
+            ],
+            "example": "02:00  backup taken\n02:40  m-41 consumed: provider charged, inbox += m-41\n03:00  fault; database restored to 02:00 -> inbox has no m-41\nPlain replay -> second charge\nPlan: pause effects -> compare provider log 02:00-03:00 -> mark m-41 applied -> resume",
+            "exampleFormat": "text"
+          },
+          {
+            "title": "Common misconception",
+            "paragraphs": [
+              "Idempotency records kept in the restored database do not protect you after a restore, because the restore rewound them too. Deduplication that must survive a restore needs a record the restore does not touch, such as an idempotency key the provider itself checks, for as long as the provider keeps it, or a separate ledger with its own backup schedule."
             ]
           }
         ],
@@ -76429,6 +76591,12 @@ const LEARNING_PATHS = [
         "takeaway": "A browser action becomes a request with a destination, transport, protocol and application meaning.",
         "sections": [
           {
+            "title": "Mental model",
+            "paragraphs": [
+              "Think of a request as a relay. Name lookup hands an address to the connection, the connection hands a channel to TLS, TLS hands a secure channel to HTTP, and HTTP hands bytes to your code. Each handoff can fail on its own, and each failure leaves different evidence."
+            ]
+          },
+          {
             "title": "Request layers",
             "paragraphs": [
               "A browser action becomes a request with a destination, transport, protocol and application meaning. Naming, connectivity, encryption, HTTP status and body validation can fail separately. Start with a lesson fetch: the user needs readable lesson data, not merely a socket that opened."
@@ -76440,6 +76608,21 @@ const LEARNING_PATHS = [
               "A successful lower layer does not prove higher-layer success. A 200 response may carry malformed JSON; a correct JSON object may belong to the wrong user. Keep the stages visible in a diagnostic note so 'the network is broken' becomes a testable claim."
             ],
             "example": "Name -> address -> connection -> TLS if HTTPS -> HTTP response -> validated lesson\nFailure after HTTP 200: malformed JSON is an application observation error"
+          },
+          {
+            "title": "Worked example: reading the failure",
+            "paragraphs": [
+              "The error tells you which handoff broke. `ECONNREFUSED` means the address answered but nothing listened on the port, so naming worked and HTTP was never reached. A `SyntaxError` from `JSON.parse` after a `200` means every network stage succeeded and the problem is the content.",
+              "Command-line tools and Node name the stage in the error. In a browser, `fetch` rejects with a generic `TypeError` for the first three stages, so open the developer tools' Network panel to see which one failed."
+            ],
+            "example": "fetch('https://notes.example/lessons/7.json')\n1 Name:  notes.example -> 203.0.113.10    fails as: ENOTFOUND\n2 TCP:   connect 203.0.113.10:443          fails as: ECONNREFUSED, timeout\n3 TLS:   certificate for notes.example     fails as: name mismatch, expired\n4 HTTP:  GET /lessons/7.json               fails as: 404, 500\n5 App:   JSON.parse and a shape check      fails as: SyntaxError, wrong fields",
+            "exampleFormat": "text"
+          },
+          {
+            "title": "Common misconception",
+            "paragraphs": [
+              "`fetch` does not reject on `404` or `500`. It resolves with `response.ok` set to false, so code that only catches exceptions treats an error page as success. Check `response.ok` or the status before reading the body."
+            ]
           }
         ],
         "exercise": {
@@ -76569,7 +76752,7 @@ const LEARNING_PATHS = [
             }
           ],
           "textExampleSections": [
-            1
+            2
           ]
         },
         "extraQuiz": [
@@ -77985,6 +78168,12 @@ const LEARNING_PATHS = [
         "takeaway": "Certificate trust is configured by a client's trust roots and verification policy.",
         "sections": [
           {
+            "title": "Mental model",
+            "paragraphs": [
+              "A certificate is a signed claim: this public key belongs to these names, for this period. A client accepts it only if three things hold: it can build a chain of signatures up to a root it already trusts, the current time falls inside every certificate's validity period, and one of the names matches the host it meant to reach."
+            ]
+          },
+          {
             "title": "Trust roots and hostname checks",
             "paragraphs": [
               "Certificate trust is configured by a client's trust roots and verification policy. Python's `create_default_context` enables certificate verification and hostname checking for a client-oriented context. Its supported protocol details also depend on the linked TLS library; record the runtime if testing real connections."
@@ -77996,6 +78185,21 @@ const LEARNING_PATHS = [
               "Never turn off checks to hide an unknown certificate error in a production-style recommendation. Diagnose name mismatch, trust-chain issues and time validity separately. This reference deliberately does not generate certificates or reach the public internet, so certificate-expiry and handshake-failure drills are design extensions."
             ],
             "example": "context = ssl.create_default_context()\ncontext.verify_mode == CERT_REQUIRED\ncontext.check_hostname is True\nNo network exchange has occurred"
+          },
+          {
+            "title": "Worked example: three failures, three fixes",
+            "paragraphs": [
+              "Each failure has its own fix. A name mismatch needs a certificate that names the host. A broken chain usually means the server is not sending its intermediate certificate, so configure the full chain. An expired certificate needs renewal, and a \"not yet valid\" one often means the client's clock is wrong. Turning verification off \"fixes\" all three by accepting any certificate, including an attacker's.",
+              "In Python the failure arrives as `ssl.SSLCertVerificationError`, and its `verify_message` says which check failed."
+            ],
+            "example": "Name mismatch:   certificate names api.example; client asked for www.example\nBroken chain:    server omits its intermediate; client cannot reach a trusted root\nExpired:         notAfter 2026-03-01; client clock 2026-03-05\nPython:          ssl.SSLCertVerificationError, e.verify_message names the check",
+            "exampleFormat": "text"
+          },
+          {
+            "title": "Common misconception",
+            "paragraphs": [
+              "A padlock in one browser does not prove that other clients will connect. Some browsers fill in a missing intermediate certificate on their own, while many command-line tools and libraries cannot. Test the chain the server actually sends, with the client that will really use it."
+            ]
           }
         ],
         "exercise": {
@@ -79794,6 +79998,12 @@ const LEARNING_PATHS = [
         "takeaway": "HTTP/1.1, HTTP/2 and HTTP/3 carry related HTTP semantics through different wire protocols and transports.",
         "sections": [
           {
+            "title": "Mental model",
+            "paragraphs": [
+              "Separate what is said from how it travels. The semantics, meaning the method, target, status, header fields and representation, are the letter. HTTP/1.1 writes the letter as text lines on a TCP connection. HTTP/2 cuts it into binary frames and interleaves many requests on one TCP connection. HTTP/3 uses similar frames over QUIC, which runs on UDP. The letter stays the same; only the envelope changes."
+            ]
+          },
+          {
             "title": "HTTP semantics and wire protocols",
             "paragraphs": [
               "HTTP/1.1, HTTP/2 and HTTP/3 carry related HTTP semantics through different wire protocols and transports. Applications should rely on the method, status and representation contract instead of assuming packet shape or one connection per request. The stdlib lab explicitly exercises HTTP/1.1 only."
@@ -79805,6 +80015,21 @@ const LEARNING_PATHS = [
               "Do not call a local HTTP/1.1 result evidence for multiplexing, QUIC or proxy compatibility. Compare repeated representation outcomes when extending to another client/server stack, while measuring protocol-specific behavior separately. Header normalization and framing decisions belong to the actual protocol implementation."
             ],
             "example": "Same application contract: GET lesson -> 200 JSON\nCurrent lab: HTTP/1.1 over loopback TCP\nUnexecuted extension: same contract over HTTP/2 or HTTP/3"
+          },
+          {
+            "title": "Worked example: ten lessons, three versions",
+            "paragraphs": [
+              "A page loads ten lessons. Over HTTP/1.1 a browser opens a few connections to the host, commonly up to six, and each carries one request at a time. Over HTTP/2 all ten share one connection as separate streams, but a single lost TCP packet holds up every stream until it is resent. HTTP/3 keeps streams independent in the transport, so a loss delays only the stream it belongs to.",
+              "In all three cases each lesson returns `200` with the same JSON. Only timing and the number of connections change. That is why the lab can check the contract but cannot support claims about performance."
+            ],
+            "example": "Contract (every version): GET /lessons/7 -> 200, application/json\nHTTP/1.1: text request line and headers; one request at a time per TCP connection\nHTTP/2:   binary HEADERS and DATA frames; many streams on one TCP connection\nHTTP/3:   frames on QUIC streams over UDP; a loss stalls only its own stream",
+            "exampleFormat": "text"
+          },
+          {
+            "title": "Common misconception",
+            "paragraphs": [
+              "Header names are case-insensitive in every version, but HTTP/2 and HTTP/3 require them in lowercase on the wire. Code that compares names with exact case can pass against one HTTP/1.1 server and fail behind a proxy that speaks HTTP/2. Normalize names, or use your library's case-insensitive header map."
+            ]
           }
         ],
         "exercise": {
@@ -114030,6 +114255,12 @@ const LEARNING_PATHS = [
         "takeaway": "A negative test needs an expected error and a postcondition.",
         "sections": [
           {
+            "title": "Mental model",
+            "paragraphs": [
+              "A failing call has two outputs: the error it raises and the world it leaves behind. A negative test checks both. The error shows that the boundary noticed the problem; the unchanged state shows that it noticed before doing any damage."
+            ]
+          },
+          {
             "title": "Errors and postconditions",
             "paragraphs": [
               "A negative test needs an expected error and a postcondition. Rejecting malformed input is only half the contract if the function already changed a file before raising. Use `assertRaises` around the smallest action and inspect unchanged state afterward."
@@ -114041,6 +114272,19 @@ const LEARNING_PATHS = [
               "Catching every exception in a test can accidentally accept an unrelated `NameError` as success. Assert the intended exception class, then verify that the error came from the boundary under study. Avoid depending on every word of a diagnostic unless the wording is part of the public interface."
             ],
             "example": "with assertRaises(ValueError): parse_record('[]')\nAfter failed import: target still contains 'old'; replacement callback has zero calls"
+          },
+          {
+            "title": "Worked example: a rejected batch leaves the file alone",
+            "paragraphs": [
+              "This test, for a hypothetical `import_batch`, expects a `ValueError` for a record without minutes, checks that the message names the field rather than matching it word for word, and then checks that the target file still holds its old content."
+            ],
+            "example": "def test_rejects_bad_batch_without_writing(self):\n    with TemporaryDirectory() as root:\n        target = Path(root) / 'log.json'\n        target.write_text('old')\n        with self.assertRaises(ValueError) as caught:\n            import_batch(target, '[{\"id\": \"a\"}]')   # minutes missing\n        self.assertIn('minutes', str(caught.exception))\n        self.assertEqual(target.read_text(), 'old')"
+          },
+          {
+            "title": "Common misconception",
+            "paragraphs": [
+              "Assertions placed inside the `assertRaises` block, after the call that raises, never run: the exception leaves the block at that call. A test written that way passes while checking nothing. Put postconditions after the block, as in the example."
+            ]
           }
         ],
         "exercise": {
@@ -114091,6 +114335,12 @@ const LEARNING_PATHS = [
         "takeaway": "A fixture is a known starting state, not a shared pile of leftovers.",
         "sections": [
           {
+            "title": "Mental model",
+            "paragraphs": [
+              "Each test should start in a clean room and leave it the way it found it. If a test passes only because an earlier test left something behind, it is testing the order of the suite, not the code."
+            ]
+          },
+          {
             "title": "Known starting state",
             "paragraphs": [
               "A fixture is a known starting state, not a shared pile of leftovers. A temporary directory gives each file test a fresh destination. Context-manager cleanup also runs when an assertion fails. This prevents one successful test from preparing the next test's hidden preconditions."
@@ -114102,6 +114352,19 @@ const LEARNING_PATHS = [
               "Avoid absolute home-directory files, shared fixed ports and suite-wide mutable records for beginner labs. A test must be runnable alone and in a different order. If setup can fail after acquiring a resource, register cleanup immediately instead of waiting for a later step."
             ],
             "example": "with TemporaryDirectory() as root:\n    target = Path(root) / 'report.json'\n    target.write_text('old')\nAfter context exit: root removed"
+          },
+          {
+            "title": "Worked example: setUp with addCleanup",
+            "paragraphs": [
+              "Register cleanup as soon as you acquire a resource. If writing the starting file raised, `tearDown` would not run, because it runs only after `setUp` succeeds, but callbacks registered with `addCleanup` still run. Each test gets its own directory, so tests can run alone or in any order."
+            ],
+            "example": "class ReportTests(unittest.TestCase):\n    def setUp(self):\n        tmp = TemporaryDirectory()\n        self.addCleanup(tmp.cleanup)        # registered before anything can fail\n        self.report = Path(tmp.name) / 'report.json'\n        self.report.write_text('{\"minutes\": 0}')\n\n    def test_add_minutes(self):\n        add_minutes(self.report, 25)\n        self.assertEqual(json.loads(self.report.read_text())['minutes'], 25)"
+          },
+          {
+            "title": "Common misconception",
+            "paragraphs": [
+              "A green full-suite run says little about isolation. Run one test on its own, for example with `python -m unittest -k test_add_minutes`, and run the suite in a different order. A test that fails alone was depending on another test's leftovers."
+            ]
           }
         ],
         "exercise": {
@@ -114961,6 +115224,12 @@ const LEARNING_PATHS = [
         "takeaway": "A boundary contract includes accepted shape, meaning, failures and effects.",
         "sections": [
           {
+            "title": "Mental model",
+            "paragraphs": [
+              "A contract is a promise in both directions: which inputs the adapter accepts, what it returns for them, and how it refuses everything else. Tests should cover each side of the promise, so a table of accepted and rejected inputs is often clearer than one long test."
+            ]
+          },
+          {
             "title": "Accepted shapes and effects",
             "paragraphs": [
               "A boundary contract includes accepted shape, meaning, failures and effects. The study-log parser requires exactly id and minutes, not merely any JSON object. Adapter tests should cover malformed observations too: valid transport is not the same as valid application data."
@@ -114972,6 +115241,19 @@ const LEARNING_PATHS = [
               "Unknown fields can indicate a caller-version mismatch or hidden ambiguity. Decide whether to reject or tolerate them before testing. The supplied strict parser rejects extra fields and duplicate JSON keys; that is a teaching policy, not a requirement for every API. Version contracts when policy changes."
             ],
             "example": "{\"id\":\"a\",\"minutes\":5,\"admin\":true} -> reject\n{\"id\":\"a\",\"minutes\":5,\"minutes\":9} -> reject\n{\"id\":\"a\",\"minutes\":5} -> accept"
+          },
+          {
+            "title": "Worked example: a table of cases",
+            "paragraphs": [
+              "This test runs `parse_record` over a small table. `subTest` reports each failing row separately, so one bad case does not hide the others. Note the row that is valid JSON but the wrong shape: the transport succeeded, and the contract still says no."
+            ],
+            "example": "def test_record_contract(self):\n    cases = [\n        ('{\"id\": \"a\", \"minutes\": 5}', {'id': 'a', 'minutes': 5}),\n        ('{\"id\": \"a\", \"minutes\": 5, \"admin\": true}', ValueError),  # unknown field\n        ('{\"id\": \"a\"}', ValueError),                                  # missing field\n        ('{\"id\": \"a\", \"minutes\": 1441}', ValueError),                 # out of range\n        ('[1, 2]', ValueError),                                        # valid JSON, wrong shape\n    ]\n    for text, expected in cases:\n        with self.subTest(text=text):\n            if expected is ValueError:\n                self.assertRaises(ValueError, parse_record, text)\n            else:\n                self.assertEqual(parse_record(text), expected)"
+          },
+          {
+            "title": "Common misconception",
+            "paragraphs": [
+              "Python's `json.loads` does not reject duplicate keys; it keeps the last value, so `{\"minutes\": 5, \"minutes\": 9}` quietly becomes 9 minutes. Rejecting duplicates needs an `object_pairs_hook`, which is what the supplied parser uses."
+            ]
           }
         ],
         "exercise": {
@@ -116555,6 +116837,12 @@ const LEARNING_PATHS = [
         "takeaway": "A useful diagnosis connects symptom, reproduction, cause, correction and evidence.",
         "sections": [
           {
+            "title": "Mental model",
+            "paragraphs": [
+              "Write the diagnosis for a reader who was not there. They should be able to rerun the failure with one command, see why the cause explains every symptom, check the evidence that the fix works, and know exactly what you did not test."
+            ]
+          },
+          {
             "title": "Symptom, cause and correction",
             "paragraphs": [
               "A useful diagnosis connects symptom, reproduction, cause, correction and evidence. Explain how a stale-version race allowed an overwritten report, which boundary now rejects the second writer and what remains untested. Another developer should be able to run the reproducer without reconstructing your session."
@@ -116566,6 +116854,20 @@ const LEARNING_PATHS = [
               "Separate observations from hypotheses. A local lock fixes the supplied single-process reference, while a persistent multi-worker service needs a transaction or appropriate coordination at its real storage boundary. Record the smallest next falsifying test rather than claiming mastery from one suite."
             ],
             "example": "Symptom: lost minutes under two stale edits\nCause: compare and write separated\nFix: locked compare/write\nEvidence: barrier test has one winner\nLimit: volatile one-process state"
+          },
+          {
+            "title": "Worked example: a missing Sunday",
+            "paragraphs": [
+              "Here is a complete diagnosis for a different bug: a weekly total that leaves out Sunday. Notice that the evidence includes a test that failed before the fix, and that the limits name concrete cases rather than saying \"more testing needed\"."
+            ],
+            "example": "Symptom:    weekly total omits Sunday sessions (expected 145 minutes, got 120)\nReproduce:  python -m unittest test_week.WeekTotals.test_includes_sunday\nCause:      the range check used `< sunday`, so Sunday itself was excluded\nFix:        compare with the start of the next Monday, an end that is exclusive on purpose\nEvidence:   the new test fails before the fix and passes after; full suite passes\nNot tested: sessions that cross midnight; time zones other than UTC",
+            "exampleFormat": "text"
+          },
+          {
+            "title": "Common misconception",
+            "paragraphs": [
+              "\"The tests pass now\" is not a diagnosis. A change that turns the suite green without a test that failed before it may hide the symptom instead of removing the cause. Show the failing test first, then the same test passing."
+            ]
           }
         ],
         "exercise": {
