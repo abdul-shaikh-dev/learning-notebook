@@ -28,11 +28,19 @@ async function complete(name,files){
  const keys=new Set((await (await caches.open(name)).keys()).map(r=>r.url));
  return files.every(f=>keys.has(absolute(f)));
 }
+// A course marked `runtime` also needs the shared Python runtime, kept once in RUNTIME for every such course (#150).
+const needsRuntime=c=>!!c.runtime&&!!RUNTIME;
+const runtimeReady=async()=>!RUNTIME||await complete(RUNTIME,CONFIG.runtime.files);
+async function keepRuntime(progress){
+ const cache=await caches.open(RUNTIME),have=new Set((await cache.keys()).map(r=>r.url));
+ const missing=CONFIG.runtime.files.filter(f=>!have.has(absolute(f)));let done=0;
+ for(const file of missing){await cache.put(absolute(file),await verified(file));progress?.(++done,missing.length);}
+}
 async function record(id){const response=await (await caches.open(REGISTRY)).match(registryKey(id));return response?response.json():null;}
 async function status(){
- const courses=[],shellReady=await complete(SHELL,CONFIG.shell);
- for(const c of CONFIG.courses){const saved=await record(c.id);const current=shellReady&&saved?.version===(c.version||CONFIG.version)&&await complete(saved.cache,c.files);courses.push({id:c.id,title:c.title,bytes:c.bytes,saved:!!current,outdated:!!saved&&!current});}
- return {version:CONFIG.version,shellReady,courses};
+ const courses=[],shellReady=await complete(SHELL,CONFIG.shell),runtime=await runtimeReady();
+ for(const c of CONFIG.courses){const saved=await record(c.id);const current=shellReady&&saved?.version===(c.version||CONFIG.version)&&await complete(saved.cache,c.files)&&(!needsRuntime(c)||runtime);courses.push({id:c.id,title:c.title,bytes:c.bytes,runtime:needsRuntime(c),saved:!!current,outdated:!!saved&&!current});}
+ return {version:CONFIG.version,shellReady,runtime:RUNTIME?{bytes:CONFIG.runtime.bytes||0,ready:runtime}:null,courses};
 }
 function serial(id,work){const previous=locks.get(id)||Promise.resolve();const next=previous.catch(()=>{}).then(work);locks.set(id,next);return next.finally(()=>{if(locks.get(id)===next)locks.delete(id);});}
 // onlyOutdated refreshes a course that is saved but no longer matches this publication, and leaves others alone,
@@ -40,11 +48,12 @@ function serial(id,work){const previous=locks.get(id)||Promise.resolve();const n
 async function save(id,progress,onlyOutdated=false){
  const c=course(id);if(!c)throw say('Unknown learning path.');
  return serial(id,async()=>{
-  if(onlyOutdated){const saved=await record(id);if(!saved||saved.version===(c.version||CONFIG.version)&&await complete(saved.cache,c.files)&&await complete(SHELL,CONFIG.shell))return;}
+  if(onlyOutdated){const saved=await record(id);if(!saved||saved.version===(c.version||CONFIG.version)&&await complete(saved.cache,c.files)&&await complete(SHELL,CONFIG.shell)&&(!needsRuntime(c)||await runtimeReady()))return;}
   if(!await complete(SHELL,CONFIG.shell))await fill(SHELL,CONFIG.shell,progress);
   const revision=c.version||CONFIG.version;
   const name=PREFIX+'course:'+id+':'+revision+':'+crypto.randomUUID();let committed=false;
   try{
+   if(needsRuntime(c))await keepRuntime(progress);
    await fill(name,c.files,progress);
    if(!await complete(name,c.files))throw say('Download is incomplete. Please try again.');
    const previous=await record(id);

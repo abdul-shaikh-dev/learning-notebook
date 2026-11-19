@@ -104,7 +104,7 @@
     for (const course of courses) {
       const row = element('article', '', 'pwa-course-row'); row.id = 'offline-' + course.id;
       const info = element('div'); if (course.id === selectedCourse) info.append(element('p', 'Selected path', 'pwa-saved')); const heading = element('h3', course.title); info.append(heading);
-      info.append(element('p', course.outdated ? 'Update needed · download again for this notebook version' : course.saved ? 'Saved on this device' : 'Not saved · ' + size(course.bytes || 0) + ' estimated download', course.outdated ? 'pwa-outdated' : course.saved ? 'pwa-saved' : ''));
+      info.append(element('p', course.outdated ? 'Update needed · download again for this notebook version' : course.saved ? 'Saved on this device' : 'Not saved · ' + size(course.bytes || 0) + ' estimated download' + (course.runtime && data.runtime && !data.runtime.ready ? ', plus the shared Python runtime (' + size(data.runtime.bytes) + ', downloaded once for every Python course)' : ''), course.outdated ? 'pwa-outdated' : course.saved ? 'pwa-saved' : ''));
       const actions = element('div', '', 'pwa-course-actions');
       const save = element('button', course.outdated ? 'Update download' : course.saved ? 'Download again' : 'Save offline', 'secondary');
       save.type = 'button'; save.dataset.course = course.id; save.dataset.action = 'save'; save.setAttribute('aria-label', save.textContent + ': ' + course.title); save.disabled = busy || !navigator.onLine;
