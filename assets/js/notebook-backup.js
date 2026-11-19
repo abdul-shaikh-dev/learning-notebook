@@ -1,7 +1,10 @@
 /* Portable progress and challenge drafts. Imported code is stored as text, never executed here. */
 const NotebookBackup = (() => {
   'use strict';
-  const APP = 'learning-notebook', VERSION = 1, LIMIT = 1024 * 1024;
+  // The limit is above anything browser storage can hold (about 5 million characters per site), so a full
+  // backup does not fail in practice (#149); per-course files remain as a fallback if one ever does.
+  const APP = 'learning-notebook', VERSION = 1, LIMIT = 20 * 1024 * 1024, LIMIT_TEXT = '20 MB';
+  const bytes = n => n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB';
   const FINANCE = 'valuation-lab-v1', LAST = 'learning-notebook:last-lesson:v1';
   const STUDY = ['foundations','valuation-control','fair-value-hierarchy','prudent-valuation','working-knowledge','integrated-investigations','revision'];
   const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -115,7 +118,7 @@ const NotebookBackup = (() => {
             lastLesson:value.lastLesson == null ? null : lastLesson(value.lastLesson)};
   }
   function parse(raw) {
-    if (typeof raw !== 'string' || raw.length > LIMIT || new TextEncoder().encode(raw).length > LIMIT) fail('The backup is too large. Choose a JSON progress file smaller than 1 MB.');
+    if (typeof raw !== 'string' || raw.length > LIMIT || new TextEncoder().encode(raw).length > LIMIT) fail('The backup is too large. Choose a JSON progress file smaller than ' + LIMIT_TEXT + '.');
     let data;
     try { data = JSON.parse(raw); } catch { fail('This is not a valid JSON progress file.'); }
     object(data, 'Backup');
@@ -159,11 +162,17 @@ const NotebookBackup = (() => {
     if (last !== null) result.lastLesson = lastLesson(last);
     return {progress:result,raw};
   }
-  function create() {
-    const text = JSON.stringify({app:APP,version:VERSION,createdAt:new Date().toISOString(),progress:read().progress},null,2);
-    if (new TextEncoder().encode(text).length > LIMIT) fail('The backup exceeds 1 MB. Save copies of challenge code before removing drafts to reduce its size.');
+  // create(id) backs up one course. Imports merge and never reset, so a set of per-course files restores
+  // the same progress as one full backup.
+  function create(only, limit = LIMIT) {
+    const all = read().progress;
+    const progress = only ? {paths:{[only]:all.paths[only] || {read:[],assessed:[]}}, financial:only === 'financial-foundations' ? all.financial : null, lastLesson:null} : all;
+    const text = JSON.stringify({app:APP,version:VERSION,createdAt:new Date().toISOString(),progress},null,2);
+    if (new TextEncoder().encode(text).length > limit) throw Object.assign(new Error('The backup is larger than ' + LIMIT_TEXT + '. Download it course by course below instead.'), {tooLarge:true});
     return text;
   }
+  function backupSize() { try { return new TextEncoder().encode(create()).length; } catch { return null; } }
+  function sizeLine(n) { return n === null ? '' : 'Backup size: ' + bytes(n) + ' of the ' + LIMIT_TEXT + ' limit.' + (n > LIMIT * 0.8 ? ' It is close to the limit; back up course by course if it fails.' : ''); }
   const union = (a,b) => [...new Set([...a,...b])];
   function merge(current, imported) {
     const result = {paths:{},financial:null,lastLesson:current.lastLesson || imported.lastLesson};
@@ -332,9 +341,9 @@ const NotebookBackup = (() => {
       '<p>Progress belongs to this browser and site address. Move it between your phone and computer by downloading a backup, transferring the file yourself, then previewing and importing it here.</p>'+
       '<div class="backup-safety"><p id="nb-last-backup"'+(safety().nudge?' class="backup-due"':'')+'>'+esc(backupLine(safety()))+'</p><p id="nb-persist">Checking whether this browser will keep your progress…</p><button type="button" class="quiet" id="nb-persist-ask" hidden>Ask the browser to keep it</button></div>'+
       '<details class="backup-contents"'+(failed?' open':'')+'><summary>What a backup holds</summary><div id="nb-local">'+saved+'</div></details>'+
-      '<div class="backup-actions"><button type="button" class="primary" id="nb-export">Download notebook backup</button></div>'+
+      '<div class="backup-actions"><button type="button" class="primary" id="nb-export">Download notebook backup</button></div><p id="nb-size" class="muted">'+esc(sizeLine(backupSize()))+'</p><div id="nb-split"></div>'+
       '<h2>Restore from a file</h2><p>Import combines completed readings and self-checks with your current progress. Missing challenge drafts are added. Local code and challenge status win conflicts. Nothing is reset.</p>'+
-      '<label for="nb-file">Choose a Learning Notebook JSON backup (up to 1 MB)</label><input id="nb-file" type="file" accept=".json,application/json">'+
+      '<label for="nb-file">Choose a Learning Notebook JSON backup (up to '+LIMIT_TEXT+')</label><input id="nb-file" type="file" accept=".json,application/json">'+
       '<div id="nb-preview" aria-live="polite"></div><div class="backup-actions"><button type="button" class="primary" id="nb-apply" disabled>Merge reviewed progress</button></div>'+
       '<p id="nb-status" role="status" aria-live="polite"></p><p class="muted">Backups contain completion choices, checkpoint answers for review, exercise answers and ratings, and code and status saved in the challenge editor. They do not include course content or downloaded practice files. Journey/lab slider positions are temporary and are not stored as progress.</p></section>';
   }
@@ -346,21 +355,39 @@ const NotebookBackup = (() => {
     const showPersist = state => { if (persist) persist.textContent = persistText[state]; if (ask) ask.hidden = state !== 'not-persisted'; };
     if (persist) protect().then(showPersist);
     ask?.addEventListener('click', async () => { ask.disabled = true; showPersist(await protect(true)); ask.disabled = false; });
+    const download = (text, name) => {
+      const blob = new Blob([text],{type:'application/json'}), url = URL.createObjectURL(blob), anchor = document.createElement('a');
+      anchor.href = url; anchor.download = name; anchor.click();
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+    };
+    const backedUp = () => { remember(); const line = get('nb-last-backup'); if (line) { line.textContent = backupLine(safety()); line.className = ''; } };
+    // Fallback when the full backup is too large: one file per course with progress. Each imports on its own.
+    function split() {
+      const box = get('nb-split'); if (!box) return;
+      const active = rows(read().progress).filter(row => row.read || row.checks || row.answers || row.exercises || row.drafts), done = new Set();
+      box.innerHTML = '<p>Download each course’s progress as its own file. Import them one after another to restore everything.</p><div class="backup-actions">' +
+        active.map(row => '<button type="button" class="secondary" data-course="'+esc(row.id)+'">'+esc(row.title)+'</button>').join('') + '</div>';
+      for (const button of box.querySelectorAll('button[data-course]')) button.addEventListener('click', () => {
+        try {
+          download(create(button.dataset.course), 'learning-notebook-backup-' + button.dataset.course + '.json');
+          done.add(button.dataset.course); button.textContent += ' ✓';
+          if (done.size === active.length) { backedUp(); status.textContent = 'Every course is downloaded. Keep all the files together.'; }
+          else status.textContent = done.size + ' of ' + active.length + ' course files downloaded.';
+        } catch (error) { status.textContent = error.message || 'This course could not be downloaded.'; }
+      });
+    }
     get('nb-export')?.addEventListener('click',()=>{
       try {
-        const blob = new Blob([create()],{type:'application/json'}), url = URL.createObjectURL(blob), anchor = document.createElement('a');
-        anchor.href = url; anchor.download = 'learning-notebook-backup.json'; anchor.click();
-        setTimeout(()=>URL.revokeObjectURL(url),1000);
-        remember();
-        const line = get('nb-last-backup'); if (line) { line.textContent = backupLine(safety()); line.className = ''; }
+        download(create(), 'learning-notebook-backup.json');
+        backedUp();
         status.textContent = 'Backup download started. Save the file before changing browsers or clearing site data.';
-      } catch (error) { status.textContent = error.message || 'The backup could not be downloaded.'; }
+      } catch (error) { status.textContent = error.message || 'The backup could not be downloaded.'; if (error?.tooLarge) split(); }
     });
     input.addEventListener('change',async()=>{
       const token = ++request, file = input.files?.[0]; candidate = null; button.disabled = true; get('nb-preview').innerHTML = ''; status.textContent = '';
       if (!file) return;
       try {
-        if (file.size > LIMIT) fail('The backup is too large. Choose a JSON progress file smaller than 1 MB.');
+        if (file.size > LIMIT) fail('The backup is too large. Choose a JSON progress file smaller than ' + LIMIT_TEXT + '.');
         const imported = parse(await file.text());
         if (token !== request) return;
         const proposed = plan(imported.progress);
@@ -388,7 +415,7 @@ const NotebookBackup = (() => {
       } catch (error) { status.textContent = error.message || 'The import could not be saved.'; }
     });
   }
-  return Object.freeze({parse,read,create,plan,apply,view,bind,LIMIT,safety,reminder,protect,remember});
+  return Object.freeze({parse,read,create,plan,apply,view,bind,LIMIT,backupSize,safety,reminder,protect,remember});
 })();
 function notebookBackupView() { return NotebookBackup.view(); }
 function bindNotebookBackup(main) { NotebookBackup.bind(main); }

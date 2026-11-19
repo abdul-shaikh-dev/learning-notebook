@@ -100,7 +100,7 @@ test('deduplicates valid IDs and imports missing last location',()=>{
 test('byte size and malformed JSON limits run before writes',()=>{
   const env=make();
   assert.throws(()=>env.api.parse('{broken'));
-  assert.throws(()=>env.api.parse('Ã©'.repeat(600000)),/too large/);
+  assert.throws(()=>env.api.parse('Ã©'.repeat(6000000)),/too large/);
   assert.throws(()=>env.api.parse('x'.repeat(env.api.LIMIT+1)),/too large/);
   assert.equal(env.writes.length,0);
 });
@@ -229,14 +229,16 @@ test('challenge edits invalidate preview and malformed local drafts cannot be ex
   env.data.set(ck('problems'),JSON.stringify({one:{code:'bad status',status:'complete'}}));
   assert.throws(()=>env.api.create(),/status is invalid/);
 });
-test('export enforces the import byte limit for large Unicode code drafts',()=>{
+test('large Unicode code drafts export under the 20 MB limit (#149)',()=>{
   const large={id:'large',title:'Large challenge course',status:'ready',stages:[],
     lessons:Array.from({length:30},(_,i)=>({id:'lesson-'+i,exercise:{challenge:true}}))};
   paths.push(large);
   try {
     const state=Object.fromEntries(large.lessons.map(l=>[l.id,{code:'漢'.repeat(20000),status:'attempted'}]));
     const env=make({[ck('large')]:JSON.stringify(state)});
-    assert.throws(()=>env.api.create(),/backup exceeds 1 MB/);
+    const text=env.api.create();assert.ok(new TextEncoder().encode(text).length>1.5*1024*1024,'a 1.8 MB backup, refused before #149, now exports');
+    assert.equal(Object.keys(env.api.parse(text).progress.paths.large.challenges).length,30,'and imports back whole');
+    assert.throws(()=>env.api.create(undefined,1024*1024),/larger than 20 MB\. Download it course by course/,'over the limit, the message points to per-course files');
     assert.equal(env.writes.length,0);
   } finally { paths.pop(); }
 });
@@ -299,5 +301,13 @@ test('persistent storage: asked once after progress exists, and every answer is 
   env.context.navigator=nav(true,false);assert.equal(await env.api.protect(),'persisted');
   env.context.navigator={};assert.equal(await env.api.protect(),'unsupported');
   env.context.navigator=nav(false,true,true);assert.equal(await env.api.protect(true),'unsupported','a failing persist() is reported as unknown');
+});
+test('per-course backups hold one course and merge without touching the rest (#149)',()=>{
+  const env=make({[pk('python')]:'["first"]',[pk('sql-server')]:'["joins"]',[last]:JSON.stringify({path:'python',lesson:'first'})});
+  const one=env.api.parse(env.api.create('sql-server')).progress;
+  assert.deepEqual(Object.keys(one.paths),['sql-server']);assert.deepEqual(plain(one.paths['sql-server'].read),['joins']);assert.equal(one.lastLesson,null);assert.equal(one.financial,null);
+  const fresh=make({[pk('python')]:'["second"]'});const after=fresh.api.apply(fresh.api.plan(one));
+  assert.deepEqual(plain(after.paths.python.read),['second'],'other courses are left as they were');assert.deepEqual(plain(after.paths['sql-server'].read),['joins']);
+  assert.ok(env.api.backupSize()>0);assert.match(env.api.view(),/Backup size: 1 KB of the 20 MB limit\./);
 });
 (async()=>{for(const {name,run} of tests){await run();console.log('✓ '+name);}console.log(tests.length+' notebook backup checks passed.');})().catch(error=>{console.error(error);process.exitCode=1;});
