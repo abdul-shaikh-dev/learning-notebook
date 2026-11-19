@@ -18,7 +18,7 @@ const plain = value=>JSON.parse(JSON.stringify(value));
 function make(initial={}) {
   const data=new Map(Object.entries(initial)), writes=[], downloads=[];
   let writesUntilFailure=Infinity, persistentFailure=false;
-  const storage={getItem:k=>data.has(k)?data.get(k):null,
+  const storage={getItem:k=>data.has(k)?data.get(k):null,get length(){return data.size;},key:i=>[...data.keys()][i]??null,
     setItem(k,v){if(persistentFailure || --writesUntilFailure===0)throw Error('quota');writes.push(k);data.set(k,String(v));},
     removeItem(k){if(persistentFailure)throw Error('blocked');writes.push(k);data.delete(k);}};
   const context={LEARNING_PATHS:paths,localStorage:storage,TextEncoder,Blob,Date,console,
@@ -163,10 +163,10 @@ test('UI file-read races cannot restore an older preview',async()=>{
   await main.nodes['nb-file'].events.change();resolve(envelope(progress()));await older;
   assert.equal(main.nodes['nb-apply'].disabled,true);assert.equal(env.writes.length,0);
 });
-test('backup download uses a JSON Blob and makes no storage writes',async()=>{
+test('backup download uses a JSON Blob and records only when it happened',async()=>{
   const env=make(),main=dom();env.context.bindNotebookBackup(main);main.nodes['nb-export'].events.click();
   assert.equal(env.downloads.length,1);
-  assert.equal(JSON.parse(await env.downloads[0].text()).app,'learning-notebook');assert.equal(env.writes.length,0);
+  assert.equal(JSON.parse(await env.downloads[0].text()).app,'learning-notebook');assert.deepEqual(plain(env.writes),['learning-notebook:last-backup:v1'],'only the time of the backup is recorded');
 });
 test('challenge drafts and statuses round trip while ordinary course entries stay unchanged',()=>{
   const state={one:{code:'def one():\n    return "<script>"',status:'solved'},two:{code:'',status:'not-started'}};
@@ -278,5 +278,26 @@ test('invalid checkpoint answers are rejected before anything is written',()=>{
   for(const bad of [{unknown:{correct:true,streak:1,at:1}},{'first/1':{correct:true,streak:1,at:1}},{'first/10':{correct:true,streak:1,at:1}},{'stage/missing/1':{correct:true,streak:1,at:1}},{'stage/foundation/0':{correct:true,streak:1,at:1}},{'stage/foundation':{correct:true,streak:1,at:1}},{first:{correct:true,streak:0,at:1}},{first:{correct:false,streak:2,at:1}},{first:{correct:true,streak:5,at:1}},{first:{correct:true,streak:1,at:Date.now()+3*864e5}},{first:{correct:true,streak:1,at:1,extra:1}}])
     assert.throws(()=>env.api.parse(envelope(progress({paths:{python:{read:[],assessed:[],checkpoints:bad}}}))),/Checkpoint/);
   assert.equal(env.writes.length,0);
+});
+test('backup safety: last backup, changes since, nudges and the home reminder (#148)',()=>{
+  const day=864e5,now=Date.UTC(2026,10,20);
+  let env=make();assert.deepEqual(plain(env.api.safety(now)),{has:false,last:null,days:null,changed:false,nudge:false});assert.equal(env.api.reminder(now),'');
+  env=make({[pk('python')]:'["first"]'});let s=env.api.safety(now);assert.equal(s.has,true);assert.equal(s.nudge,true,'progress never backed up');assert.match(env.api.reminder(now),/Not backed up yet.*href="#backup"/);
+  env.api.remember(now);s=env.api.safety(now+20*day);assert.equal(s.changed,false);assert.equal(s.nudge,false,'nothing new since the backup');assert.equal(env.api.reminder(now+20*day),'');
+  env.data.set(last,JSON.stringify({path:'python',lesson:'second'}));assert.equal(env.api.safety(now+20*day).changed,false,'opening a lesson is not new progress');
+  env.data.set(pk('python'),'["first","second"]');s=env.api.safety(now+5*day);assert.equal(s.changed,true);assert.equal(s.nudge,false,'recent backup: no nudge yet');
+  s=env.api.safety(now+14*day);assert.equal(s.days,14);assert.equal(s.nudge,true);assert.match(env.api.reminder(now+14*day),/Last backup: 14 days ago, with new progress since\./);
+  env.data.set('learning-notebook:last-backup:v1','{bad');assert.equal(env.api.safety(now).last,null,'a corrupt record counts as no backup');
+  const page=env.api.view();assert.match(page,/id="nb-last-backup" class="backup-due">Not backed up yet/);assert.match(page,/id="nb-persist-ask" hidden/);
+});
+test('persistent storage: asked once after progress exists, and every answer is reported (#148)',async()=>{
+  const nav=(persisted,grant,throws)=>{const calls=[];return {calls,storage:{persisted:async()=>persisted,persist:async()=>{calls.push('persist');if(throws)throw Error('x');return grant;}}};};
+  let env=make(),n=nav(false,true);env.context.navigator=n;assert.equal(await env.api.protect(),'not-persisted');assert.deepEqual(n.calls,[],'no progress: not asked');
+  env=make({[pk('python')]:'["first"]'});n=nav(false,true);env.context.navigator=n;assert.equal(await env.api.protect(),'persisted');assert.equal(await env.api.protect(),'not-persisted');assert.deepEqual(n.calls,['persist'],'asked once only');
+  assert.equal(await env.api.protect(true),'persisted');assert.equal(n.calls.length,2,'the button asks again');
+  env=make({[pk('python')]:'["first"]'});env.context.navigator=nav(false,false);assert.equal(await env.api.protect(),'not-persisted');
+  env.context.navigator=nav(true,false);assert.equal(await env.api.protect(),'persisted');
+  env.context.navigator={};assert.equal(await env.api.protect(),'unsupported');
+  env.context.navigator=nav(false,true,true);assert.equal(await env.api.protect(true),'unsupported','a failing persist() is reported as unknown');
 });
 (async()=>{for(const {name,run} of tests){await run();console.log('✓ '+name);}console.log(tests.length+' notebook backup checks passed.');})().catch(error=>{console.error(error);process.exitCode=1;});

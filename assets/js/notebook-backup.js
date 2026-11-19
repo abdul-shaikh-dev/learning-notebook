@@ -270,6 +270,57 @@ const NotebookBackup = (() => {
       '<p>Conflicting challenge drafts kept from this browser: '+challengeConflicts+'.</p>'+
       '<p>Read lessons and self-checks are combined. Missing challenge drafts are imported. Existing local code, challenge status and last-opened locations win conflicts. For review checkpoints and exercise answers, the more recent one is kept. Nothing is marked unread or reset.</p>';
   }
+  // Safety (#148): ask the browser to keep this site's storage, and remember when a backup was last downloaded,
+  // so the notebook can say when progress has changed since. The fingerprint covers progress keys only, not the
+  // last-opened lesson, so opening lessons alone never makes a backup look out of date.
+  const BACKUP_KEY = 'learning-notebook:last-backup:v1', PERSIST_KEY = 'learning-notebook:persist-requested:v1', NUDGE_DAYS = 14;
+  const progressKey = name => name.startsWith('learning-notebook:path:') || name.startsWith('learning-notebook:challenges:') || name === FINANCE;
+  function progressEntries() {
+    let store; try { store = storage(); } catch { return []; }
+    const names = [];
+    try { for (let i = 0; i < store.length; i++) { const name = store.key(i); if (name && progressKey(name)) names.push(name); } } catch { return []; }
+    return names.sort().map(name => [name, store.getItem(name)]).filter(([, value]) => value !== null && value !== '[]' && value !== '{}');
+  }
+  function fingerprint(entries = progressEntries()) {
+    const text = JSON.stringify(entries); let hash = 2166136261;
+    for (let i = 0; i < text.length; i++) { hash ^= text.charCodeAt(i); hash = Math.imul(hash, 16777619); }
+    return (hash >>> 0).toString(36) + ':' + text.length;
+  }
+  function lastBackup() {
+    try { const value = JSON.parse(storage().getItem(BACKUP_KEY)); return value && Number.isFinite(value.at) && typeof value.fingerprint === 'string' ? value : null; }
+    catch { return null; }
+  }
+  function remember(now = Date.now()) { try { storage().setItem(BACKUP_KEY, JSON.stringify({at: now, fingerprint: fingerprint()})); } catch {} }
+  function safety(now = Date.now()) {
+    const entries = progressEntries(), last = lastBackup(), has = entries.length > 0;
+    const days = last ? Math.max(0, Math.floor((now - last.at) / 864e5)) : null, changed = has && (!last || last.fingerprint !== fingerprint(entries));
+    return {has, last, days, changed, nudge: has && (!last || changed && days >= NUDGE_DAYS)};
+  }
+  const ago = days => days === 0 ? 'today' : days === 1 ? 'yesterday' : days + ' days ago';
+  function backupLine(state) {
+    if (!state.has) return 'No progress to back up yet.';
+    if (!state.last) return 'Not backed up yet. Your progress exists only in this browser.';
+    return 'Last backup: ' + ago(state.days) + (state.changed ? ', with new progress since.' : '. Nothing has changed since.');
+  }
+  // A quiet home-page line, shown only when a backup is due.
+  function reminder(now = Date.now()) {
+    const state = safety(now);
+    if (!state.nudge) return '';
+    return '<section class="review-card is-quiet backup-reminder" aria-label="Backup"><p><strong>Backup</strong> · ' + esc(backupLine(state)) + ' <a href="#backup">Back up now</a></p></section>';
+  }
+  // Asked once, after progress exists; Chrome and Edge answer silently, Firefox may ask. The answer is shown on Progress & backups.
+  async function protect(force = false) {
+    const api = typeof navigator !== 'undefined' && navigator.storage;
+    if (!api || typeof api.persist !== 'function') return 'unsupported';
+    try {
+      if (await api.persisted()) return 'persisted';
+      if (!force) { if (!progressEntries().length || storage().getItem(PERSIST_KEY)) return 'not-persisted'; storage().setItem(PERSIST_KEY, String(Date.now())); }
+      return await api.persist() ? 'persisted' : 'not-persisted';
+    } catch { return 'unsupported'; }
+  }
+  const persistText = {persisted: 'Protected: this browser has agreed to keep the notebook’s storage, even when space runs low.',
+    'not-persisted': 'Not protected: the browser may clear the notebook’s storage when space runs low, or after weeks without a visit in Safari. Keep a recent backup.',
+    unsupported: 'This browser does not say whether it will keep the notebook’s storage. Keep a recent backup.'};
   function view() {
     let saved, failed = false;
     try { saved = summary(read().progress); }
@@ -279,6 +330,7 @@ const NotebookBackup = (() => {
       '<h2>Back up progress</h2>'+
       '<p class="intro">Keep all learning paths together in one JSON backup. Downloads and imports happen in this browser; nothing is uploaded.</p>'+
       '<p>Progress belongs to this browser and site address. Move it between your phone and computer by downloading a backup, transferring the file yourself, then previewing and importing it here.</p>'+
+      '<div class="backup-safety"><p id="nb-last-backup"'+(safety().nudge?' class="backup-due"':'')+'>'+esc(backupLine(safety()))+'</p><p id="nb-persist">Checking whether this browser will keep your progress…</p><button type="button" class="quiet" id="nb-persist-ask" hidden>Ask the browser to keep it</button></div>'+
       '<details class="backup-contents"'+(failed?' open':'')+'><summary>What a backup holds</summary><div id="nb-local">'+saved+'</div></details>'+
       '<div class="backup-actions"><button type="button" class="primary" id="nb-export">Download notebook backup</button></div>'+
       '<h2>Restore from a file</h2><p>Import combines completed readings and self-checks with your current progress. Missing challenge drafts are added. Local code and challenge status win conflicts. Nothing is reset.</p>'+
@@ -290,11 +342,17 @@ const NotebookBackup = (() => {
     const get = id => main.querySelector('#'+id), status = get('nb-status'), input = get('nb-file'), button = get('nb-apply');
     if (!status || !input || !button) return;
     let candidate = null, request = 0;
+    const persist = get('nb-persist'), ask = get('nb-persist-ask');
+    const showPersist = state => { if (persist) persist.textContent = persistText[state]; if (ask) ask.hidden = state !== 'not-persisted'; };
+    if (persist) protect().then(showPersist);
+    ask?.addEventListener('click', async () => { ask.disabled = true; showPersist(await protect(true)); ask.disabled = false; });
     get('nb-export')?.addEventListener('click',()=>{
       try {
         const blob = new Blob([create()],{type:'application/json'}), url = URL.createObjectURL(blob), anchor = document.createElement('a');
         anchor.href = url; anchor.download = 'learning-notebook-backup.json'; anchor.click();
         setTimeout(()=>URL.revokeObjectURL(url),1000);
+        remember();
+        const line = get('nb-last-backup'); if (line) { line.textContent = backupLine(safety()); line.className = ''; }
         status.textContent = 'Backup download started. Save the file before changing browsers or clearing site data.';
       } catch (error) { status.textContent = error.message || 'The backup could not be downloaded.'; }
     });
@@ -330,7 +388,9 @@ const NotebookBackup = (() => {
       } catch (error) { status.textContent = error.message || 'The import could not be saved.'; }
     });
   }
-  return Object.freeze({parse,read,create,plan,apply,view,bind,LIMIT});
+  return Object.freeze({parse,read,create,plan,apply,view,bind,LIMIT,safety,reminder,protect,remember});
 })();
 function notebookBackupView() { return NotebookBackup.view(); }
 function bindNotebookBackup(main) { NotebookBackup.bind(main); }
+// Once progress exists, ask the browser to keep it (asked once; see protect).
+if (typeof window !== 'undefined' && typeof document !== 'undefined') setTimeout(() => { NotebookBackup.protect(); }, 4000);

@@ -85,6 +85,12 @@
   }
   function size(bytes) { return bytes >= 1048576 ? (bytes / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(bytes / 1024)) + ' KB'; }
   function element(tag, text, className) { const el = document.createElement(tag); if (text) el.textContent = text; if (className) el.className = className; return el; }
+  // How much browser storage the notebook uses, and roughly how much the browser allows it (#148).
+  function storageUse() {
+    const el = $('pwa-storage');
+    if (!el || !navigator.storage || typeof navigator.storage.estimate !== 'function') return;
+    navigator.storage.estimate().then(e => { if (Number.isFinite(e.usage) && Number.isFinite(e.quota) && e.quota > 0) el.textContent = 'The notebook uses ' + size(e.usage) + ' of browser storage on this device, of about ' + size(e.quota) + ' the browser allows.'; }).catch(() => {});
+  }
   function render(data) {
     knownStatus = data;
     if ($('pwa-version')) $('pwa-version').textContent = 'Installed version: ' + data.version;
@@ -94,6 +100,7 @@
     const selectedCourse = new URL(location.href).searchParams.get('course');
     const courses = (data.courses || []).slice().sort((a, b) => Number(b.id === selectedCourse) - Number(a.id === selectedCourse)), saved = courses.filter(c => c.saved && !c.outdated);
     $('pwa-library-summary').textContent = saved.length + ' of ' + courses.length + ' paths ready offline' + (data.shellReady ? ' · notebook shell saved' : ' · notebook shell is still preparing');
+    storageUse();
     for (const course of courses) {
       const row = element('article', '', 'pwa-course-row'); row.id = 'offline-' + course.id;
       const info = element('div'); if (course.id === selectedCourse) info.append(element('p', 'Selected path', 'pwa-saved')); const heading = element('h3', course.title); info.append(heading);
