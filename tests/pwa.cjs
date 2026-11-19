@@ -33,11 +33,14 @@ function worker(version='one',storage=new Storage(),courseVersion,tweak){
  {const withRuntime=[...ready,{id:'python-problem-solving',title:'Problems',status:'ready',publicFiles:['runtime/pyodide.js','practice/cases.json']},{id:'design-patterns',title:'Patterns',status:'ready',runExamples:true,publicFiles:['collaboration.py']},{id:'system-design',title:'Design',status:'ready',lessons:[{id:'scaling'},{id:'consistent-hashing',runExamples:true}],publicFiles:[]},{id:'react',title:'React',status:'ready',lessons:[{id:'state'}],publicFiles:[]}],extra=['content/courses/system-design.js','content/courses/react.js','content/courses/python-problem-solving.js','paths/python-problem-solving/runtime/pyodide.js','paths/python-problem-solving/practice/cases.json','content/courses/design-patterns.js','paths/design-patterns/collaboration.py'];
   for(const x of extra)data.set(path.join(root,x),Buffer.from(x));
   const shared={exports:{}};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../scripts/pwa-build.cjs'),'utf8'),{module:shared,require:id=>id==='node:fs'?fakeFs:id==='./manifest.cjs'?{readPaths:()=>withRuntime}:require(id)});
-  const c=shared.exports.configFor(root,[...files,...extra]).courses,python=c.find(x=>x.id==='python').files;
-  assert.ok(python.includes('paths/python-problem-solving/runtime/pyodide.js')&&!python.includes('paths/python-problem-solving/practice/cases.json'),'Python course saves the runtime only');
-  const patterns=c.find(x=>x.id==='design-patterns').files;assert.ok(patterns.includes('paths/python-problem-solving/runtime/pyodide.js')&&patterns.includes('paths/design-patterns/collaboration.py')&&!patterns.includes('paths/python-problem-solving/practice/cases.json'),'A course that runs its examples saves the runtime and its practice modules');
-  assert.ok(c.find(x=>x.id==='system-design').files.includes('paths/python-problem-solving/runtime/pyodide.js'),'A course with one lab lesson saves the runtime');
-  assert.ok(!c.find(x=>x.id==='react').files.some(f=>f.includes('/runtime/')),'A course without runnable examples does not');}
+  const built=shared.exports.configFor(root,[...files,...extra]),c=built.courses,rt='paths/python-problem-solving/runtime/pyodide.js',files_=id=>c.find(x=>x.id===id).files,runs=id=>c.find(x=>x.id===id).runtime===true;
+  // #150: no course lists the runtime; courses that run Python are marked and the worker keeps one shared copy.
+  assert.ok(c.every(x=>!x.files.includes(rt)),'No course copies the Python runtime into its own files');
+  assert.deepEqual(c.filter(x=>x.runtime).map(x=>x.id).sort(),['design-patterns','python','python-problem-solving','system-design'],'Courses that run Python are marked: whole courses and one with a single lab lesson');
+  assert.ok(files_('python-problem-solving').includes('paths/python-problem-solving/practice/cases.json'),'The runtime publisher keeps its other files');
+  assert.ok(files_('design-patterns').includes('paths/design-patterns/collaboration.py'),'Practice modules are still saved with their course');
+  assert.ok(!runs('react'),'A course without runnable examples is not marked');
+  assert.deepEqual([...built.runtime.files],[rt]);assert.equal(built.runtime.bytes,Buffer.from(rt).length,'The runtime size is counted once, on its own');}
  mod.exports.buildPwa(root,'output',files);assert.ok(!writes.get(path.join('output','sw.js')).includes('__PWA_CONFIG__'));data.set(path.join(root,'assets/app.js'),Buffer.from('changed-ui'));const ui=mod.exports.configFor(root,files);assert.notEqual(ui.version,first.version);assert.equal(ui.runtime.version,first.runtime.version,'A publication that leaves the runtime alone keeps its cache name');assert.equal(ui.courses[0].version,first.courses[0].version);data.set(path.join(root,'paths/python/practice.zip'),Buffer.from('changed-course'));const changed=mod.exports.configFor(root,files);assert.notEqual(changed.courses[0].version,first.courses[0].version);
 }
 (async()=>{
@@ -91,6 +94,20 @@ function worker(version='one',storage=new Storage(),courseVersion,tweak){
   changed.state.bad=file;assert.equal(await (await changed.fetch(file)).text(),'corrupt');assert.equal(await (await changed.storage.open(prefix+'runtime:rt-two')).match(url),undefined,'Bytes that fail the hash are not kept');
   changed.state.bad=null;await changed.fetch(file);changed.state.offline=true;assert.equal(await (await changed.fetch(file)).text(),'wasm-bytes');
   const other=worker('pub-one',new Storage());await other.fetch('paths/python/practice.zip');assert.deepEqual((await other.storage.keys()).filter(k=>k.includes(':runtime:')),[],'Other files are not kept this way');
+  delete bodies[file];}
+ // #150: two courses that run Python share one kept runtime: saving both downloads it once, removing one keeps it,
+ // offline both serve it, and a course counts as saved only while the runtime is complete.
+ {const file='paths/python-problem-solving/runtime/pyodide.asm.wasm',url=base+file;bodies[file]='wasm-bytes';
+  const both=worker('rt-share',new Storage(),undefined,s=>{s.runtime={version:'rt-one',files:[file],bytes:10};s.courses.forEach(c=>c.runtime=true);});
+  await both.event('install');await both.event('activate');
+  const runtimeFetches=()=>both.state.requests.filter(u=>u===url).length;
+  assert.equal((await both.message('SAVE_COURSE','python')).at(-1).ok,true);assert.equal(runtimeFetches(),1);
+  assert.equal((await both.message('SAVE_COURSE','react')).at(-1).ok,true);assert.equal(runtimeFetches(),1,'the second course reuses the kept runtime');
+  const st=await both.status();assert.ok(st.courses.every(c=>c.saved&&c.runtime));assert.deepEqual({...st.runtime},{bytes:10,ready:true});
+  for(const k of (await both.storage.keys()).filter(k=>k.includes(':course:')))assert.equal(await (await both.storage.open(k)).match(url),undefined,'no course cache holds the runtime');
+  await both.message('REMOVE_COURSE','python');both.state.offline=true;assert.equal(await (await both.fetch(file)).text(),'wasm-bytes','removing one course keeps the runtime for the other');both.state.offline=false;
+  await (await both.storage.open(prefix+'runtime:rt-one')).delete(url);assert.equal((await both.status()).courses.find(c=>c.id==='react').outdated,true,'an evicted runtime makes its courses incomplete');
+  await both.message('UPDATE_COURSE','react');assert.equal(runtimeFetches(),2);assert.equal((await both.status()).courses.find(c=>c.id==='react').saved,true,'updating restores it');
   delete bodies[file];}
  // Learners see the worker's own sentences; a browser exception becomes one plain sentence.
  {const bad=worker();bad.state.bad='paths/python/practice.zip';const failed=(await bad.message('SAVE_COURSE','python')).at(-1);assert.equal(failed.ok,false);assert.match(failed.error,/changed during download/);
