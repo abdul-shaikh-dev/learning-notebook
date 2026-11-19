@@ -55,7 +55,12 @@ function worker(version='one',storage=new Storage(),courseVersion,tweak){
  w.state.offline=true;assert.equal(await (await w.fetch('index.html?v=new','navigate')).text(),'home');assert.equal(await (await w.fetch('content/courses/python.js')).text(),'python');assert.equal((await w.fetch('content/courses/react.js')).status,503);assert.equal(await (await w.fetch('unknown-page','navigate')).text(),'offline');assert.equal(await w.fetch('https://elsewhere.test/file'),null);assert.equal(await w.fetch('assets/app.js','cors','POST'),null);assert.equal(await w.fetch('not-in-inventory.txt'),null);
  // Update is explicit. Activation preserves selections, reports old downloads as outdated,
  // clears this scope's stale shell caches, and leaves other apps untouched.
- w.state.offline=false;await w.storage.open(prefix+'course:abandoned');await w.storage.open('other-app:cache');await w.storage.open('learning-notebook:%2Felsewhere%2F:shell:one');const update=worker('two',w.storage);await update.event('install');await update.message('ACTIVATE_UPDATE');assert.equal(update.state.activations,1);await update.event('activate');assert.equal(update.state.claims,1);assert.equal((await update.storage.keys()).includes(prefix+'shell:one'),false);assert.equal((await update.storage.keys()).includes(prefix+'course:abandoned'),true,'activation must not delete another worker staging download');assert.equal((await update.status()).courses[0].outdated,true);assert.equal((await update.status()).courses[0].saved,false);update.state.offline=true;assert.equal((await update.fetch('content/courses/python.js')).status,503,'old version course not mixed into new shell');update.state.offline=false;await update.message('SAVE_COURSE','python');assert.equal((await update.status()).courses[0].saved,true);
+ w.state.offline=false;await w.storage.open(prefix+'course:abandoned');await w.storage.open('other-app:cache');await w.storage.open('learning-notebook:%2Felsewhere%2F:shell:one');const update=worker('two',w.storage);await update.event('install');await update.message('ACTIVATE_UPDATE');assert.equal(update.state.activations,1);await update.event('activate');assert.equal(update.state.claims,1);assert.equal((await update.storage.keys()).includes(prefix+'shell:one'),false);assert.equal((await update.storage.keys()).includes(prefix+'course:abandoned'),true,'activation must not delete another worker staging download');assert.equal((await update.status()).courses[0].outdated,true);assert.equal((await update.status()).courses[0].saved,false);update.state.offline=true;assert.equal(await (await update.fetch('content/courses/python.js')).text(),'python','an outdated download still serves offline (#147)');assert.equal((await update.fetch('content/courses/react.js')).status,503,'a course never saved is still unavailable offline');update.state.offline=false;
+ {const before=update.state.requests.length;await update.fetch('content/courses/python.js');assert.equal(update.state.requests.length,before+1,'online, an outdated course is read from the network, not the old copy');}
+ // UPDATE_COURSE refreshes only a saved, outdated course, once, and never saves one the learner did not choose.
+ {let before=update.state.requests.length;assert.equal((await update.message('UPDATE_COURSE','react')).at(-1).ok,true);assert.equal(update.state.requests.length,before,'an unsaved course is not downloaded');assert.equal((await update.status()).courses.find(c=>c.id==='react').saved,false);
+  assert.equal((await update.message('UPDATE_COURSE','python')).at(-1).ok,true);assert.equal((await update.status()).courses[0].saved,true);assert.equal((await update.status()).courses[0].outdated,false);
+  before=update.state.requests.length;await update.message('UPDATE_COURSE','python');assert.equal(update.state.requests.length,before,'an up-to-date course is not downloaded again');}
  // Remove is confined to course cache/registry; the worker has no progress-storage API.
  await update.message('REMOVE_COURSE','python');assert.equal(await registry.match(key),undefined);assert.equal((await update.status()).courses[0].saved,false);assert.equal((await update.status()).shellReady,true);assert.ok((await update.storage.keys()).includes('other-app:cache'));assert.ok((await update.storage.keys()).includes('learning-notebook:%2Felsewhere%2F:shell:one'));assert.ok(!/localStorage|indexedDB/.test(template));
  assert.deepEqual(await update.message('SAVE_COURSE','react','https://evil.test/learning-notebook/'),[]);assert.deepEqual(await update.message('ACTIVATE_UPDATE',null,'https://example.test/other/'),[]);assert.equal(update.state.activations,1);assert.equal((await update.message('UNKNOWN')).at(-1).ok,false);assert.equal((await update.message('SAVE_COURSE','missing')).at(-1).ok,false);
@@ -112,3 +117,25 @@ function worker(version='one',storage=new Storage(),courseVersion,tweak){
  assert.equal(context.plain(new TypeError('Failed to fetch'),'Download unavailable.'),'Download unavailable.');assert.equal(warned.length,1);
  assert.equal(context.plain(undefined,'Download unavailable.'),'Download unavailable.');
 }
+// Outdated saved courses refresh in the background when online (#147); with Data Saver on, a failure,
+// or an update still waiting, nothing downloads unasked and a notice explains instead.
+(async()=>{
+ const ui=fs.readFileSync(require('node:path').join(__dirname,'../assets/js/notebook-pwa.js'),'utf8').replace(/\r\n/g,'\n');
+ const code=ui.slice(ui.indexOf('  function outdatedNotice('),ui.indexOf('  function updateNotice()'));
+ const run=async({saveData=false,fail=[],waiting=null,onLine=true}={})=>{
+  const calls=[],notices=[];
+  const context=vm.createContext({busy:false,manager:null,registration:{waiting},root:new URL('https://example.test/notebook/'),URL,
+   navigator:{onLine,connection:{saveData}},$:()=>null,render(){},message(){},
+   element:(tag,text)=>({tag,text,children:[],setAttribute(){},append(...c){this.children.push(...c);},addEventListener(){}}),
+   document:{body:{append:n=>notices.push(n)}},
+   request:async(type,id)=>{calls.push(type+(id?':'+id:''));if(type==='STATUS')return {courses:[{id:'a',outdated:true},{id:'b',outdated:true},{id:'c',outdated:false}]};if(fail.includes(id))throw Error('network');return {courses:[]};}});
+  vm.runInContext(code+';globalThis.go=refreshOutdated;',context);await context.go();
+  return {calls,notices:notices.map(n=>n.children[0].text),busy:context.busy};
+ };
+ let r=await run();assert.deepEqual(r.calls,['STATUS','UPDATE_COURSE:a','UPDATE_COURSE:b']);assert.deepEqual(r.notices,[]);assert.equal(r.busy,false);
+ r=await run({saveData:true});assert.deepEqual(r.calls,['STATUS']);assert.deepEqual(r.notices,['2 offline courses need updating']);
+ r=await run({fail:['b']});assert.deepEqual(r.notices,['1 offline course needs updating']);assert.equal(r.busy,false);
+ r=await run({waiting:{}});assert.deepEqual(r.calls,[],'with an update waiting, refresh after it is applied');
+ r=await run({onLine:false});assert.deepEqual(r.calls,[]);
+ console.log('PWA page: outdated saved courses refresh when online; Data Saver, failures and pending updates show a notice or wait.');
+})().catch(error=>{console.error(error);process.exitCode=1;});
