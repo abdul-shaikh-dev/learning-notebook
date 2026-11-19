@@ -29,6 +29,8 @@ function worker(version='one',storage=new Storage(),courseVersion,tweak){
  const writes=new Map(),fakeFs={readFileSync:(f,enc)=>{const b=data.get(f);if(!b)throw Error('Missing fixture '+f);return enc?b.toString():b;},writeFileSync:(f,s)=>writes.set(f,s)};
  const mod={exports:{}};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../scripts/pwa-build.cjs'),'utf8'),{module:mod,require:id=>id==='node:fs'?fakeFs:id==='./manifest.cjs'?{readPaths:()=>ready}:require(id)});
  const first=mod.exports.configFor(root,files),again=mod.exports.configFor(root,[...files].reverse());assert.equal(first.version,again.version);assert.equal(first.courses.length,2);assert.ok(first.shell.includes('assets/app.js'));assert.ok(!first.shell.includes('paths/python/practice.zip'));assert.ok(first.courses.find(c=>c.id==='financial-foundations').files.includes('handbook.html'));assert.throws(()=>mod.exports.configFor(root,files.filter(f=>f!=='paths/python/practice.zip')),/not published/);
+ // #151: the search index and Mermaid are not precached with the shell; they have their own hash-named entry.
+ assert.ok(!first.shell.includes('content/search.js'));assert.deepEqual([...first.extras.files],['content/search.js']);assert.equal(first.extras.bytes,Buffer.from('content/search.js').length);
  assert.equal(JSON.stringify(first.runtime.files),JSON.stringify(['paths/python-problem-solving/runtime/pyodide.js']),'The browser Python runtime is listed for keeping');assert.ok(!first.shell.includes('paths/python-problem-solving/runtime/pyodide.js'));
  {const withRuntime=[...ready,{id:'python-problem-solving',title:'Problems',status:'ready',publicFiles:['runtime/pyodide.js','practice/cases.json']},{id:'design-patterns',title:'Patterns',status:'ready',runExamples:true,publicFiles:['collaboration.py']},{id:'system-design',title:'Design',status:'ready',lessons:[{id:'scaling'},{id:'consistent-hashing',runExamples:true}],publicFiles:[]},{id:'react',title:'React',status:'ready',lessons:[{id:'state'}],publicFiles:[]}],extra=['content/courses/system-design.js','content/courses/react.js','content/courses/python-problem-solving.js','paths/python-problem-solving/runtime/pyodide.js','paths/python-problem-solving/practice/cases.json','content/courses/design-patterns.js','paths/design-patterns/collaboration.py'];
   for(const x of extra)data.set(path.join(root,x),Buffer.from(x));
@@ -41,7 +43,7 @@ function worker(version='one',storage=new Storage(),courseVersion,tweak){
   assert.ok(files_('design-patterns').includes('paths/design-patterns/collaboration.py'),'Practice modules are still saved with their course');
   assert.ok(!runs('react'),'A course without runnable examples is not marked');
   assert.deepEqual([...built.runtime.files],[rt]);assert.equal(built.runtime.bytes,Buffer.from(rt).length,'The runtime size is counted once, on its own');}
- mod.exports.buildPwa(root,'output',files);assert.ok(!writes.get(path.join('output','sw.js')).includes('__PWA_CONFIG__'));data.set(path.join(root,'assets/app.js'),Buffer.from('changed-ui'));const ui=mod.exports.configFor(root,files);assert.notEqual(ui.version,first.version);assert.equal(ui.runtime.version,first.runtime.version,'A publication that leaves the runtime alone keeps its cache name');assert.equal(ui.courses[0].version,first.courses[0].version);data.set(path.join(root,'paths/python/practice.zip'),Buffer.from('changed-course'));const changed=mod.exports.configFor(root,files);assert.notEqual(changed.courses[0].version,first.courses[0].version);
+ mod.exports.buildPwa(root,'output',files);assert.ok(!writes.get(path.join('output','sw.js')).includes('__PWA_CONFIG__'));data.set(path.join(root,'assets/app.js'),Buffer.from('changed-ui'));const ui=mod.exports.configFor(root,files);assert.notEqual(ui.version,first.version);assert.equal(ui.runtime.version,first.runtime.version,'A publication that leaves the runtime alone keeps its cache name');assert.equal(ui.extras.version,first.extras.version,'and the same for diagrams and search');assert.equal(ui.courses[0].version,first.courses[0].version);data.set(path.join(root,'paths/python/practice.zip'),Buffer.from('changed-course'));const changed=mod.exports.configFor(root,files);assert.notEqual(changed.courses[0].version,first.courses[0].version);
 }
 (async()=>{
  // Successful installation is byte-verified, and partial or corrupt shells roll back.
@@ -50,7 +52,12 @@ function worker(version='one',storage=new Storage(),courseVersion,tweak){
  const offlineInstall=worker();offlineInstall.state.offline=true;await assert.rejects(offlineInstall.event('install'));assert.equal((await offlineInstall.storage.keys()).includes(prefix+'shell:one'),false);
  // Course download publishes a record only after all files are present.
  let replies=await w.message('SAVE_COURSE','python');assert.equal(replies.at(-1).ok,true);assert.equal(replies.filter(r=>r.progress).length,2);assert.equal((await w.status()).courses[0].saved,true);
- const registry=await w.storage.open(prefix+'downloads'),key=base+'__offline-course/python';const prior=await (await registry.match(key)).json();
+ const registry=await w.storage.open(prefix+'downloads'),key=base+'__offline-course/python';
+ // #151: a second download copies unchanged files from the saved copy instead of fetching them again.
+ {const before=w.state.requests.length;assert.equal((await w.message('SAVE_COURSE','python')).at(-1).ok,true);assert.equal(w.state.requests.length,before,'unchanged files are reused, not downloaded');}
+ const reused=await (await w.storage.open(prefix+'downloads')).match(key).then(r=>r.json());const prior=reused;
+ // A copy whose bytes no longer match is not reused; the download then fails on corrupt network bytes and changes nothing.
+ await (await w.storage.open(prior.cache)).put(base+'paths/python/practice.zip',new Response('stale'));
  w.state.bad='paths/python/practice.zip';replies=await w.message('SAVE_COURSE','python');assert.equal(replies.at(-1).ok,false);assert.deepEqual(await (await registry.match(key)).json(),prior);assert.equal((await w.status()).courses[0].saved,true);assert.equal((await w.storage.keys()).filter(k=>k.startsWith(prefix+'course:')).length,1,'failed staging cache removed');w.state.bad=null;
  // Incomplete cache records are never advertised as saved.
  const savedCache=await w.storage.open(prior.cache);await savedCache.delete(base+'paths/python/practice.zip');assert.equal((await w.status()).courses[0].saved,false);assert.equal((await w.status()).courses[0].outdated,true);await w.message('SAVE_COURSE','python');
@@ -108,6 +115,24 @@ function worker(version='one',storage=new Storage(),courseVersion,tweak){
   await both.message('REMOVE_COURSE','python');both.state.offline=true;assert.equal(await (await both.fetch(file)).text(),'wasm-bytes','removing one course keeps the runtime for the other');both.state.offline=false;
   await (await both.storage.open(prefix+'runtime:rt-one')).delete(url);assert.equal((await both.status()).courses.find(c=>c.id==='react').outdated,true,'an evicted runtime makes its courses incomplete');
   await both.message('UPDATE_COURSE','react');assert.equal(runtimeFetches(),2);assert.equal((await both.status()).courses.find(c=>c.id==='react').saved,true,'updating restores it');
+  delete bodies[file];}
+ // #151: diagrams and search are not part of the shell. They are kept on first use or when a course is saved, a
+ // publication that leaves them alone carries them over, and a course counts as saved only with them.
+ {const file='assets/vendor/mermaid.tiny.js',url=base+file;bodies[file]='diagrams';
+  const a=worker('x-one',new Storage(),undefined,s=>{s.extras={version:'ex-one',files:[file],bytes:8};});await a.event('install');assert.ok(!a.state.requests.includes(url),'install does not fetch diagrams');
+  assert.equal(await (await a.fetch(file)).text(),'diagrams');assert.ok((await (await a.storage.open(prefix+'extras:ex-one')).match(url)),'kept on first use');
+  a.state.offline=true;assert.equal(await (await a.fetch(file)).text(),'diagrams','served offline after first use');a.state.offline=false;
+  const fresh=worker('x-one',new Storage(),undefined,s=>{s.extras={version:'ex-one',files:[file],bytes:8};});await fresh.event('install');
+  assert.deepEqual({...(await fresh.status()).extras},{bytes:8,ready:false});
+  await fresh.message('SAVE_COURSE','react');const st=await fresh.status();assert.equal(st.extras.ready,true,'saving a course keeps them');assert.equal(st.courses.find(c=>c.id==='react').saved,true);
+  await (await fresh.storage.open(prefix+'extras:ex-one')).delete(url);assert.equal((await fresh.status()).courses.find(c=>c.id==='react').outdated,true,'evicted extras make saved courses incomplete');
+  await fresh.message('UPDATE_COURSE','react');assert.equal((await fresh.status()).courses.find(c=>c.id==='react').saved,true);
+  // A UI-only publication: the shell is installed from unchanged copies and the extras cache is kept.
+  const next=worker('x-two',fresh.storage,undefined,s=>{s.extras={version:'ex-one',files:[file],bytes:8};});await next.event('install');await next.event('activate');
+  assert.equal(next.state.requests.length,0,'an unchanged shell is copied, not downloaded');assert.ok((await next.storage.keys()).includes(prefix+'extras:ex-one'));
+  // Changed extras get a new cache; unchanged bytes still carry over from the old one before it is removed.
+  const moved=worker('x-three',fresh.storage,undefined,s=>{s.extras={version:'ex-two',files:[file],bytes:8};});await moved.event('install');await moved.event('activate');
+  assert.ok(!(await moved.storage.keys()).includes(prefix+'extras:ex-one'));assert.ok(await (await moved.storage.open(prefix+'extras:ex-two')).match(url),'carried over on install');assert.equal(moved.state.requests.length,0);
   delete bodies[file];}
  // Learners see the worker's own sentences; a browser exception becomes one plain sentence.
  {const bad=worker();bad.state.bad='paths/python/practice.zip';const failed=(await bad.message('SAVE_COURSE','python')).at(-1);assert.equal(failed.ok,false);assert.match(failed.error,/changed during download/);
