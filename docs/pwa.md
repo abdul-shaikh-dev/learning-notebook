@@ -4,7 +4,7 @@ Open **Offline & install** from the notebook header, or **Save course offline** 
 
 Choose **Save offline** for the paths you want. A course becomes ready only after every listed lesson/runtime/practice asset has downloaded and passed its build-time SHA-256 check. The common notebook UI, diagram renderer, code highlighter, navigation metadata and search index are cached during service-worker installation. External sources, live APIs and workshop dependencies remain outside the offline bundle.
 
-**Remove** clears a course download and keeps progress. Progress remains local to the browser/site and is portable through the existing JSON backup. Browsers can evict storage: check readiness before travelling. A repeated course save repairs missing common files and incomplete course caches.
+**Remove** clears a course download and keeps progress. Progress remains local to the browser/site and is portable through the existing JSON backup. Browsers can evict storage: check readiness before travelling. Once progress exists, the notebook asks the browser once for persistent storage (`navigator.storage.persist()`); Progress & backups shows the answer, with a button to ask again, plus the date of the last backup. When progress has changed and the last backup is 14 or more days old, or there has never been one, the home page shows a quiet reminder. Offline & install shows how much storage the notebook uses (`navigator.storage.estimate()`). A repeated course save repairs missing common files and incomplete course caches.
 
 ## Updates
 
