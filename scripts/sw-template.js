@@ -7,6 +7,10 @@ const SHELL=PREFIX+'shell:'+CONFIG.version,REGISTRY=PREFIX+'downloads';
 // The Python runtime (about 14 MB) is kept after its first verified download, so later runs and publications do not fetch it again.
 const RUNTIME=CONFIG.runtime?.files?.length?PREFIX+'runtime:'+CONFIG.runtime.version:null;
 const runtimeFile=file=>!!RUNTIME&&CONFIG.runtime.files.includes(file);
+// Diagrams (Mermaid) and the search index are not precached with the shell (#151). They are kept after first use or when
+// a course is saved, in a cache named by their own hash, so a publication that does not change them keeps them.
+const EXTRAS=CONFIG.extras?.files?.length?PREFIX+'extras:'+CONFIG.extras.version:null;
+const extrasFile=file=>!!EXTRAS&&CONFIG.extras.files.includes(file);
 const locks=new Map();
 const absolute=file=>new URL(file,BASE).href;
 const registryKey=id=>absolute('__offline-course/'+id);
@@ -18,9 +22,21 @@ async function verified(file){
  if(await digest(await response.clone().arrayBuffer())!==CONFIG.files[file].hash)throw say('The notebook changed during download. Apply the available update, then try again.');
  return response;
 }
+// An unchanged file is copied from an older cache of this notebook (checked against its hash) instead of downloaded again.
+async function reuse(file,except){
+ const url=absolute(file);
+ for(const key of await caches.keys()){
+  if(!key.startsWith(PREFIX)||key===REGISTRY||key===except)continue;
+  const hit=await (await caches.open(key)).match(url);if(!hit)continue;
+  const bytes=await hit.arrayBuffer();
+  if(await digest(bytes)===CONFIG.files[file].hash)return new Response(bytes,{status:200,headers:{'Content-Type':hit.headers.get('Content-Type')||'application/octet-stream'}});
+ }
+}
+// Adds the files the cache does not hold yet.
 async function fill(name,files,progress){
- const cache=await caches.open(name);let done=0;
- for(const file of files){await cache.put(absolute(file),await verified(file));progress?.(++done,files.length);}
+ const cache=await caches.open(name),have=new Set((await cache.keys()).map(r=>r.url));
+ const missing=files.filter(f=>!have.has(absolute(f)));let done=0;
+ for(const file of missing){await cache.put(absolute(file),await reuse(file,name)||await verified(file));progress?.(++done,missing.length);}
  return cache;
 }
 async function complete(name,files){
@@ -31,16 +47,12 @@ async function complete(name,files){
 // A course marked `runtime` also needs the shared Python runtime, kept once in RUNTIME for every such course (#150).
 const needsRuntime=c=>!!c.runtime&&!!RUNTIME;
 const runtimeReady=async()=>!RUNTIME||await complete(RUNTIME,CONFIG.runtime.files);
-async function keepRuntime(progress){
- const cache=await caches.open(RUNTIME),have=new Set((await cache.keys()).map(r=>r.url));
- const missing=CONFIG.runtime.files.filter(f=>!have.has(absolute(f)));let done=0;
- for(const file of missing){await cache.put(absolute(file),await verified(file));progress?.(++done,missing.length);}
-}
+const extrasReady=async()=>!EXTRAS||await complete(EXTRAS,CONFIG.extras.files);
 async function record(id){const response=await (await caches.open(REGISTRY)).match(registryKey(id));return response?response.json():null;}
 async function status(){
- const courses=[],shellReady=await complete(SHELL,CONFIG.shell),runtime=await runtimeReady();
- for(const c of CONFIG.courses){const saved=await record(c.id);const current=shellReady&&saved?.version===(c.version||CONFIG.version)&&await complete(saved.cache,c.files)&&(!needsRuntime(c)||runtime);courses.push({id:c.id,title:c.title,bytes:c.bytes,runtime:needsRuntime(c),saved:!!current,outdated:!!saved&&!current});}
- return {version:CONFIG.version,shellReady,runtime:RUNTIME?{bytes:CONFIG.runtime.bytes||0,ready:runtime}:null,courses};
+ const courses=[],shellReady=await complete(SHELL,CONFIG.shell),runtime=await runtimeReady(),extras=await extrasReady();
+ for(const c of CONFIG.courses){const saved=await record(c.id);const current=shellReady&&saved?.version===(c.version||CONFIG.version)&&await complete(saved.cache,c.files)&&extras&&(!needsRuntime(c)||runtime);courses.push({id:c.id,title:c.title,bytes:c.bytes,runtime:needsRuntime(c),saved:!!current,outdated:!!saved&&!current});}
+ return {version:CONFIG.version,shellReady,runtime:RUNTIME?{bytes:CONFIG.runtime.bytes||0,ready:runtime}:null,extras:EXTRAS?{bytes:CONFIG.extras.bytes||0,ready:extras}:null,courses};
 }
 function serial(id,work){const previous=locks.get(id)||Promise.resolve();const next=previous.catch(()=>{}).then(work);locks.set(id,next);return next.finally(()=>{if(locks.get(id)===next)locks.delete(id);});}
 // onlyOutdated refreshes a course that is saved but no longer matches this publication, and leaves others alone,
@@ -48,12 +60,13 @@ function serial(id,work){const previous=locks.get(id)||Promise.resolve();const n
 async function save(id,progress,onlyOutdated=false){
  const c=course(id);if(!c)throw say('Unknown learning path.');
  return serial(id,async()=>{
-  if(onlyOutdated){const saved=await record(id);if(!saved||saved.version===(c.version||CONFIG.version)&&await complete(saved.cache,c.files)&&await complete(SHELL,CONFIG.shell)&&(!needsRuntime(c)||await runtimeReady()))return;}
+  if(onlyOutdated){const saved=await record(id);if(!saved||saved.version===(c.version||CONFIG.version)&&await complete(saved.cache,c.files)&&await complete(SHELL,CONFIG.shell)&&await extrasReady()&&(!needsRuntime(c)||await runtimeReady()))return;}
   if(!await complete(SHELL,CONFIG.shell))await fill(SHELL,CONFIG.shell,progress);
   const revision=c.version||CONFIG.version;
   const name=PREFIX+'course:'+id+':'+revision+':'+crypto.randomUUID();let committed=false;
   try{
-   if(needsRuntime(c))await keepRuntime(progress);
+   if(EXTRAS)await fill(EXTRAS,CONFIG.extras.files,progress);
+   if(needsRuntime(c))await fill(RUNTIME,CONFIG.runtime.files,progress);
    await fill(name,c.files,progress);
    if(!await complete(name,c.files))throw say('Download is incomplete. Please try again.');
    const previous=await record(id);
@@ -64,10 +77,15 @@ async function save(id,progress,onlyOutdated=false){
  });
 }
 async function remove(id){if(!course(id))throw say('Unknown learning path.');return serial(id,async()=>{const saved=await record(id);await (await caches.open(REGISTRY)).delete(registryKey(id));if(saved?.cache)await caches.delete(saved.cache);});}
-self.addEventListener('install',event=>event.waitUntil((async()=>{try{await fill(SHELL,CONFIG.shell);}catch(error){await caches.delete(SHELL);throw error;}})()));
+// Diagrams and search kept by the previous shell or extras cache carry over before activation deletes that cache.
+async function carryExtras(){
+ if(!EXTRAS)return;const cache=await caches.open(EXTRAS),have=new Set((await cache.keys()).map(r=>r.url));
+ for(const file of CONFIG.extras.files)if(!have.has(absolute(file))){const r=await reuse(file,EXTRAS);if(r)await cache.put(absolute(file),r);}
+}
+self.addEventListener('install',event=>event.waitUntil((async()=>{try{await fill(SHELL,CONFIG.shell);}catch(error){await caches.delete(SHELL);throw error;}await carryExtras().catch(()=>{});})()));
 self.addEventListener('activate',event=>event.waitUntil((async()=>{
- // Delete only this notebook's obsolete shell and runtime caches. Course selections survive updates.
- for(const key of await caches.keys())if(key.startsWith(PREFIX+'shell:')&&key!==SHELL||key.startsWith(PREFIX+'runtime:')&&key!==RUNTIME)await caches.delete(key);
+ // Delete only this notebook's obsolete shell, runtime and extras caches. Course selections survive updates.
+ for(const key of await caches.keys())if(key.startsWith(PREFIX+'shell:')&&key!==SHELL||key.startsWith(PREFIX+'runtime:')&&key!==RUNTIME||key.startsWith(PREFIX+'extras:')&&key!==EXTRAS)await caches.delete(key);
  // Incomplete downloads are removed by their save transaction, not by activation.
  // An older worker may still be finishing a download in another tab.
  await self.clients.claim();
@@ -87,13 +105,14 @@ self.addEventListener('message',event=>{
  }catch(error){port.postMessage({ok:false,error:error?.friendly?error.message:'Offline storage could not complete this request.'});}})());
 });
 // Only a complete, byte-verified copy is kept; any failure leaves the cache as it was.
-async function keep(file,response){try{
+async function keep(name,file,response){try{
  const bytes=await response.arrayBuffer();if(await digest(bytes)!==CONFIG.files[file].hash)return;
- await (await caches.open(RUNTIME)).put(absolute(file),new Response(bytes,{status:200,headers:{'Content-Type':response.headers.get('Content-Type')||'application/octet-stream'}}));
+ await (await caches.open(name)).put(absolute(file),new Response(bytes,{status:200,headers:{'Content-Type':response.headers.get('Content-Type')||'application/octet-stream'}}));
 }catch{}}
 async function cached(file){
  const url=absolute(file),shell=await (await caches.open(SHELL)).match(url);if(shell)return shell;
- if(runtimeFile(file)&&(await caches.keys()).includes(RUNTIME)){const kept=await (await caches.open(RUNTIME)).match(url);if(kept)return kept;}
+ const own=runtimeFile(file)?RUNTIME:extrasFile(file)?EXTRAS:null;
+ if(own&&(await caches.keys()).includes(own)){const kept=await (await caches.open(own)).match(url);if(kept)return kept;}
  // A file can belong to several courses (the Python runtime); any saved owner can serve it.
  for(const owner of CONFIG.courses.filter(c=>c.files.includes(file))){
   const r=await record(owner.id);if(r?.version!==(owner.version||CONFIG.version))continue;
@@ -117,7 +136,8 @@ self.addEventListener('fetch',event=>{
   const hit=await cached(file);if(hit)return hit;
   try{
    const response=await fetch(event.request);
-   if(runtimeFile(file)&&response.ok&&response.type!=='opaque')event.waitUntil(keep(file,response.clone()));
+   const own=runtimeFile(file)?RUNTIME:extrasFile(file)?EXTRAS:null;
+   if(own&&response.ok&&response.type!=='opaque')event.waitUntil(keep(own,file,response.clone()));
    return response;
   }catch{
    const old=await previous(file);if(old)return old;
