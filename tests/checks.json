@@ -1,0 +1,38 @@
+{
+  "about": "Every check, once (#157). scripts/check-all.cjs runs them locally and each CI job runs its group. tests/*_checkpoint_facts.py scripts are added automatically, in the group named under facts (python by default). Placeholders: {python} and {science-python} are interpreters, {sql} the SQL Server connection arguments.",
+  "groups": ["build", "python", "react", "dotnet", "fullstack", "data-science", "sql-server"],
+  "facts": {
+    "dotnet_": "dotnet",
+    "data_analysis_": "data-science",
+    "machine_learning_": "data-science",
+    "sql_": "sql-server"
+  },
+  "factsCommand": {
+    "data-science": "{science-python} tests/{file}",
+    "sql-server": "{python} -B tests/{file} {sql}",
+    "dotnet": "{python} tests/{file}",
+    "python": "{python} -B tests/{file}"
+  },
+  "factsNeeds": { "dotnet": ["dotnet"], "sql-server": ["sql"] },
+  "checks": [
+    { "name": "JavaScript formatting", "group": "build", "run": "npx --yes prettier@3.6.2 --check \"assets/js/*.js\" \"scripts/*.cjs\"" },
+    { "name": "Problem-solving sources in sync", "group": "build", "run": "{python} scripts/sync-problem-solving.py --check" },
+    { "name": "Practice bundles complete", "group": "build", "run": "{python} scripts/build-bundles.py --check" },
+    { "name": "Resource bundles", "group": "build", "run": "{python} tests/resource-bundles.py" },
+    { "name": "Catalog, course chunks, search and README in sync", "group": "build", "run": "node scripts/sync-catalog.cjs --check" },
+    { "name": "Lessons, pages, offline worker and calculations", "group": "build", "run": "node verify.cjs" },
+    { "name": "Browser Python runtime and lesson examples", "group": "build", "run": "node tests/browser-python.cjs", "slow": true },
+    { "name": "Contrast, target size and keyboard focus in Chrome", "group": "build", "run": "node tests/ui-audit.cjs", "slow": true },
+    { "name": "Kubernetes context guard without a cluster", "group": "build", "run": "pwsh -NoProfile -File ./paths/kubernetes/practice/test_lab_guard.ps1", "needs": ["pwsh"] },
+    { "name": "Portable static site build", "group": "build", "run": "node scripts/build-pages.cjs" },
+    { "name": "Downloadable Python workshops and algorithms", "group": "python", "run": "{python} scripts/verify-python.py", "slow": true },
+    { "name": "Concept explorer figures against the course labs", "group": "python", "run": "{python} -B tests/explorer_lab_facts.py" },
+    { "name": "React workshop dependencies", "group": "react", "run": "npm ci --prefix validation/react --ignore-scripts", "slow": true, "needs": ["npm"] },
+    { "name": "React workshops, domain and component tests", "group": "react", "run": "npm test --prefix validation/react", "slow": true, "needs": ["npm"] },
+    { "name": "C# downloads and HTTP acceptance checks", "group": "dotnet", "run": "{python} scripts/verify-dotnet.py", "slow": true, "needs": ["dotnet"] },
+    { "name": "Full-stack journey with real HTTP checks", "group": "fullstack", "run": "{python} scripts/verify-fullstack.py", "slow": true, "needs": ["dotnet"] },
+    { "name": "Data analysis and machine learning practice suites", "group": "data-science", "run": "{science-python} scripts/verify-data-science.py", "slow": true },
+    { "name": "Data analysis worked examples", "group": "data-science", "run": "{science-python} tests/data_analysis_examples.py" },
+    { "name": "SQL conflict classification", "group": "sql-server", "run": "{python} -B tests/sql-conflicts.py {sql}", "slow": true, "needs": ["sql"] }
+  ]
+}

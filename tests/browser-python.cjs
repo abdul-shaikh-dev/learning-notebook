@@ -24,7 +24,8 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
  const runCode=async code=>{const messages=[],self={postMessage:data=>messages.push(data),importRuntime:async()=>({loadPyodide:async()=>py})};vm.runInNewContext(source,{self,JSON,String});await self.onmessage({data:{mode:'run',runtime,code}});return messages.at(-1);};
  const course=require(path.resolve('scripts/manifest.cjs')).readPaths().find(p=>p.id==='python').lessons;
  const runnable=course.filter(l=>!l.exercise.runLocally&&l.exercise.solutionFormat!=='prose');
- assert.equal(runnable.length,25,'Two lessons are marked to run locally');
+ // #157: no fixed totals; every item is checked, with a floor so a filter that silently matches nothing fails.
+ assert.ok(runnable.length>=20,'Python course references run in the browser')
  for(const l of runnable){const r=await runCode(l.exercise.solution);assert.equal(r.ok,true,l.id+': '+r.error);assert.ok(r.output,l.id+': the reference prints its result');}
  // Checkpoint answers that depend on code behaviour are recomputed here and must equal the marked option.
  const manifest=require(path.resolve('scripts/manifest.cjs')).readPaths();
@@ -37,7 +38,7 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
   const scope=py.globals.get('dict')();py.runPython(code,{globals:scope});
   assert.equal(scope.get('answer'),q.options[q.correct],name+': the marked answer matches the code');scope.destroy();
  }
- assert.equal(facts.length,88,'Code-based checkpoint answers checked');
+ assert.ok(facts.length>=80,'Code-based checkpoint answers checked');
  // Practice ladder answers that depend on code behaviour: each worked solution states what the code computes.
  const practice=py.globals.get('PRACTICE').toJs({dict_converter:Array.from});
  for(const [name,code] of practice){
@@ -47,7 +48,7 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
   for(const text of scope.get('expected').toJs())assert.ok(step.solution.includes(text),name+': the solution states '+JSON.stringify(text));
   scope.destroy();
  }
- assert.equal(practice.length,36,'Code-based practice answers checked');
+ assert.ok(practice.length>=30,'Code-based practice answers checked');
  // Lesson examples in runExamples courses and lessons run unchanged, with the practice modules they name, and show a result.
  // An "# Expected output:" block at the end of an example must match what it prints.
  const runExample=async(code,files)=>{const messages=[],self={postMessage:data=>messages.push(data),importRuntime:async()=>({loadPyodide:async()=>py})};vm.runInNewContext(source,{self,JSON,String});await self.onmessage({data:{mode:'run',runtime,code,files}});return messages.at(-1);};
@@ -66,8 +67,9 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
    if(expected){stated++;assert.equal(r.output.trimEnd(),expected[1].trimEnd().split('\n').map(x=>x.replace(/^# ?/,'')).join('\n'),where+': prints its stated output');}
   }
  }
- assert.deepEqual(examples,{'data-structures-algorithms':[37,2],'design-patterns':[31,2],'practical-maths-statistics':[25,0],python:[39,0],'system-design':[1,0],'messaging-events':[4,1],'cloud-infrastructure':[1,0]},'Enabled examples per course, and those that import practice modules');
- assert.equal(local,2,'Python course examples kept for local running');
+ // Every course or lesson that opts in has at least one example that runs here.
+ for(const [id,[enabled]] of Object.entries(examples))assert.ok(enabled>0,id+': runExamples is set but no example runs');
+ 
  const missing=await runExample('from practice_helpers import solve',[]);assert.ok(!missing.ok&&/ModuleNotFoundError: No module named 'practice_helpers'/.test(missing.error),'An import that is not supplied fails clearly');
  for(const [code,check] of [
   ['print("a")\nprint("b")',r=>r.ok&&r.output==='a\nb\n'&&!r.error],
@@ -80,5 +82,6 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
   ['def broken(',r=>!r.ok&&/SyntaxError/.test(r.error)],
   ['import sys; print("oops", file=sys.stderr)',r=>r.ok&&r.output==='oops\n']
  ]){const r=await runCode(code);assert.ok(check(r),code+' -> '+JSON.stringify(r));}
- console.log('PASS: real browser Python runtime executes all 37 references / 240 cases and rejects wrong answers, types, mutation, syntax, missing functions and SystemExit; checks 88 code-based checkpoint answers and 36 practice ladder answers; runs 25 Python course references and 136 lesson examples (7 from lessons that opt in, including 5 labs; 5 with their practice modules; '+stated+' matching their stated output), confirms 2 thread examples cannot run in the browser, as scripts with bounded output, exit codes, no stdin and learner-only tracebacks.');
+ const total=Object.values(examples).reduce((n,[e])=>n+e,0),withModules=Object.values(examples).reduce((n,[,m])=>n+m,0),cases=original.reduce((n,c)=>n+(problems[c.id]?.cases?.length||0),0);
+ console.log('PASS: real browser Python runtime executes all '+original.length+' references'+(cases?' / '+cases+' cases':'')+' and rejects wrong answers, types, mutation, syntax, missing functions and SystemExit; checks '+facts.length+' code-based checkpoint answers and '+practice.length+' practice ladder answers; runs '+runnable.length+' Python course references and '+total+' lesson examples in '+Object.keys(examples).length+' courses ('+withModules+' with their practice modules; '+stated+' matching their stated output), confirms '+local+' thread examples cannot run in the browser, as scripts with bounded output, exit codes, no stdin and learner-only tracebacks.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

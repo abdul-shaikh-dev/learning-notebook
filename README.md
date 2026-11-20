@@ -110,7 +110,15 @@ node scripts/build-pages.cjs
 
 JavaScript in `assets/js` and `scripts/*.cjs` is formatted with Prettier (`.prettierrc.json`, width 120); CI fails on unformatted code. Format before committing with `npx prettier@3.6.2 --write "assets/js/*.js" "scripts/*.cjs"`. `assets/js/notebook-theme.js` is excluded because the personal studio labs carry a byte-for-byte copy.
 
-Checkpoint answers that can be computed, such as query results, command output or calculations, are checked by one `tests/<course>_checkpoint_facts.py` script per course. Each checks the stated answers against the course's practice files; CI runs every one as its own step, and some need the course's tools (SQL Server, Docker, a kind cluster). Run the ones for the course you changed, for example `python tests/network_checkpoint_facts.py`.
+Checkpoint answers that can be computed, such as query results, command output or calculations, are checked by one `tests/<course>_checkpoint_facts.py` script per course, against the course's practice files.
+
+To run every check, the same list CI uses ([`tests/checks.json`](tests/checks.json), plus every facts script, found automatically):
+
+```sh
+node scripts/check-all.cjs
+```
+
+`--fast` skips the slow checks (browser Python, the Chrome UI audit, the workshop suites, React, .NET and SQL Server); `--group build,python` runs chosen CI jobs; `--match network` runs only checks whose name or command contains the text; `--list` prints the commands. Checks whose tools are missing (`dotnet`, `npm`, `pwsh`) are skipped locally and fail in CI. Interpreters and the SQL Server connection come from `--python`, `--science-python` and `--sql` (or `NOTEBOOK_PYTHON`, `NOTEBOOK_SCIENCE_PYTHON`, `NOTEBOOK_SQL_ARGS`), for example `node scripts/check-all.cjs --group sql-server --sql "--server .\SQLEXPRESS"`. To add a check, add it to `tests/checks.json`; each CI job runs `node scripts/check-all.cjs --group <job>`.
 
 After changing page styles or markup, run `node tests/ui-audit.cjs`. It opens every page type in headless Chrome, in light and dark mode at desktop and phone widths, and fails on text below WCAG contrast, targets below 24px (with the WCAG spacing and in-text exceptions), and keyboard focus without a visible ring. Set `CHROME_PATH` if Chrome is not in its usual place.
 

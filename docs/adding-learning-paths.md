@@ -17,7 +17,7 @@ Everything a lesson can carry, where it lives, and what fails when it is wrong. 
 | References | `references[]` on the lesson | [Per-lesson references](#per-lesson-references-and-exercise-verification) | `tests/assessment-sources.cjs`, `tests/link-check.cjs` |
 | Extra checkpoint question | `paths/<id>/checkpoints.json`, keyed by lesson | [checkpoint-review.md](checkpoint-review.md#adding-questions) | `scripts/manifest.cjs`, `tests/checkpoint-questions.cjs` |
 | Stage check | `stageCheck` for the stage in `checkpoints.json` | [checkpoint-review.md](checkpoint-review.md#adding-questions) | `scripts/manifest.cjs`, `tests/checkpoint-questions.cjs` |
-| Facts test for answers that can be computed | `tests/<course>_checkpoint_facts.py` | [checkpoint-review.md](checkpoint-review.md) | its own run, as a step in the `python` job of `pages.yml`; `tests/docs-facts.cjs` fails when a facts script has no CI step |
+| Facts test for answers that can be computed | `tests/<course>_checkpoint_facts.py` | [checkpoint-review.md](checkpoint-review.md) | `node scripts/check-all.cjs --match <course>`; it is picked up automatically, so CI runs it with no workflow edit |
 | Practice ladder | `practice[]` after the exercise | [Practice ladders](#practice-ladders) | `scripts/manifest.cjs`, `tests/practice-ladders.cjs`, `tests/browser-python.cjs` (code answers) |
 | Concept explorer | `paths/<id>/visuals.json`, keyed by lesson | [concept-explorers.md](concept-explorers.md) | `scripts/manifest.cjs`, `tests/concept-explorers.cjs`, `tests/explorer-focus.cjs` |
 | Flow diagram | `paths/<id>/diagrams.json`, keyed by lesson | [mermaid-diagrams.md](mermaid-diagrams.md) | `tests/mermaid-diagrams.cjs`, `tests/flow-audit.cjs` |
