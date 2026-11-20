@@ -23,7 +23,7 @@
   ],
   "nextSteps": [
     "Connect one real broker and test reconnect, persistence and denied access with synthetic data.",
-    "Connect this work to the full-stack journey. Record which integration tests you ran and which still need a live environment."
+    "Connect this work to the {path:full-stack-journey|full-stack journey}. Record which integration tests you ran and which still need a live environment."
   ],
   "sources": [
     {

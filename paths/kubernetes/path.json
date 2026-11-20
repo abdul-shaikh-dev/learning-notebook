@@ -6,7 +6,7 @@
   "description": "27 lessons progress from reconciliation and ready Services to scoped security, storage, jobs, scaling, templating, GitOps and recovery, with offline checks and a guarded dedicated local lab.",
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
-    "Complete Delivery & Operations (delivery-operations) containers/build/runtime exercises first; React (react), .NET (dotnet) and SQL Server (sql-server) retain their own application/data responsibilities.",
+    "Complete the {path:delivery-operations|Delivery & Operations} containers/build/runtime exercises first; {path:react|React}, {path:dotnet|.NET} and {path:sql-server|SQL Server} retain their own application/data responsibilities.",
     "Python 3.14+ for offline checks. A dedicated local kind cluster is opt-in and requires compatible Docker/Linux containers, kind and kubectl; no cloud account required."
   ],
   "outcomes": [

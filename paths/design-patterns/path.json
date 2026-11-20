@@ -7,7 +7,7 @@
   "level": "Foundations → intermediate → selected advanced topics",
   "runExamples": true,
   "prerequisites": [
-    "Basic programming: functions, collections, exceptions and simple classes. Python learners should reach classes-and-dataclasses; the beginner foundation stage alone does not cover classes.",
+    "Basic programming: functions, collections, exceptions and simple classes. Learners of {path:python|Python} should reach classes-and-dataclasses; the beginner foundation stage alone does not cover classes.",
     "Examples use Python 3.14+ and only the standard library; ideas transfer to C#, TypeScript and other languages."
   ],
   "outcomes": [
@@ -26,7 +26,7 @@
   ],
   "nextSteps": [
     "Apply one justified pattern to a small existing application and compare change effort before and after.",
-    "Use the System Design path for service boundaries, capacity, reliability and distributed tradeoffs.",
+    "Use the {path:system-design|System Design} path for service boundaries, capacity, reliability and distributed tradeoffs.",
     "Add a real database adapter and run provider integration tests for constraints, rollback and concurrent conflicts.",
     "Study domain-driven design and enterprise integration patterns when your systems need them.",
     "These projects provide advanced practice, not exhaustive coverage or a professional certification."

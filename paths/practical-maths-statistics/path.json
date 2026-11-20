@@ -21,8 +21,8 @@
     "Report uncertainty and design a fair comparison without overstating a causal claim."
   ],
   "nextSteps": [
-    "Use these calculations in Data analysis with Python.",
-    "Continue to Machine learning foundations for model evaluation.",
+    "Use these calculations in {path:data-analysis-python|Data analysis with Python}.",
+    "Continue to {path:machine-learning-foundations|Machine learning foundations} for model evaluation.",
     "Study formal inference and linear algebra separately when a project requires deeper theory."
   ],
   "sources": [

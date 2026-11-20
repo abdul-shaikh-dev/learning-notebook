@@ -6,7 +6,7 @@
   "description": "25 lessons, three stage projects and a locally runnable practice kit covering Azure infrastructure decisions, Terraform concepts, policy and safe lifecycle review.",
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
-    "Basic application, network and terminal concepts; earlier delivery, security and system-design paths are helpful.",
+    "Basic application, network and terminal concepts; earlier {path:delivery-operations|delivery}, {path:application-security|security} and {path:system-design|system-design} paths are helpful.",
     "Python 3.14+ for the offline lab. No cloud account, payment method or broker is required."
   ],
   "outcomes": [
@@ -23,7 +23,7 @@
   ],
   "nextSteps": [
     "Choose a disposable subscription scope deliberately; review costs, identity and cleanup before optional real cloud work.",
-    "Connect this work to the full-stack journey. Record which integration tests you ran and which still need a live environment."
+    "Connect this work to the {path:full-stack-journey|full-stack journey}. Record which integration tests you ran and which still need a live environment."
   ],
   "sources": [
     {

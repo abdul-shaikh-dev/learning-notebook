@@ -39,6 +39,10 @@ pages link to lessons at `index.html#topic/financial-foundations/<id>`.
 
 Use a unique local-storage key and documented backup schema. Generic reader keys are `learning-notebook:path:<id>:v1`. The financial practice studio keeps only its `study` object (practised/checked flags by module) under `valuation-lab-v1`; this is an internal key, not website branding. Reading progress uses the generic key.
 
+## Linking other courses
+
+When a path's `prerequisites` or `nextSteps` name another course, write the name as a reference: `{path:<course-id>}` shows that course's title, and `{path:<course-id>|label}` shows your own words, for example `Complete the {path:delivery-operations|Delivery & Operations} exercises first`. Each reference becomes a link, and the course overview lists them as "Recommended before" and "Next" chips. Search shows the label. `tests/navigation-links.cjs` fails on an unknown course ID and on a course title written as plain text.
+
 ## Content ownership
 
 Keep a path's lessons, quizzes, sources, labs and practice material inside its own directory. Share design/reader utilities only when they are truly subject-independent. Preserve historical review documents; publish a new response/verification record rather than rewriting them.

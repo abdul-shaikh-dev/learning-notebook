@@ -7,7 +7,7 @@
   "level": "Foundations through a supervised-learning capstone",
   "prerequisites": [
     "Python functions, lists, dictionaries and basic tests.",
-    "Read the practical maths and statistics path for averages, probability and vectors.",
+    "Read the {path:practical-maths-statistics|practical maths and statistics} path for averages, probability and vectors.",
     "Basic data analysis helps with tables and missing values."
   ],
   "outcomes": [
@@ -22,7 +22,7 @@
   ],
   "nextSteps": [
     "Apply the experiment structure to a small, permissioned real dataset.",
-    "Use the AI agents path to evaluate applications that use model predictions."
+    "Use the {path:ai-agents|AI agents} path to evaluate applications that use model predictions."
   ],
   "sources": [
     {

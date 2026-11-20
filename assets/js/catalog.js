@@ -238,10 +238,57 @@ function learningSources(p) {
         '</section>'
     : '';
 }
+// Course references (#160): "{path:id|label}" in prerequisites and next steps links to that course; without a label
+// the link shows the course title. The same references give the overview its "Recommended before" and "Next" chips.
+const COURSE_REFERENCE = /\{path:([a-z0-9-]+)(?:\|([^}]+))?\}/;
+function courseTitle(id) {
+  return (LEARNING_PATHS.find(p => p.id === id) || { title: id }).title;
+}
+function courseText(text) {
+  const parts = String(text).split(new RegExp(COURSE_REFERENCE.source, 'g'));
+  let html = '';
+  for (let i = 0; i < parts.length; i += 3)
+    html +=
+      escapeText(parts[i]) +
+      (i + 1 < parts.length
+        ? '<a href="#path/' +
+          escapeText(parts[i + 1]) +
+          '">' +
+          escapeText(parts[i + 2] || courseTitle(parts[i + 1])) +
+          '</a>'
+        : '');
+  return html;
+}
+function courseList(items) {
+  return (items || []).length ? '<ul>' + items.map(x => '<li>' + courseText(x) + '</li>').join('') + '</ul>' : '';
+}
+function courseReferences(items) {
+  const ids = (items || []).flatMap(x =>
+    [...String(x).matchAll(new RegExp(COURSE_REFERENCE.source, 'g'))].map(m => m[1]),
+  );
+  return [...new Set(ids)];
+}
+function courseRelations(p) {
+  const row = (label, ids) =>
+    ids.length
+      ? '<p><span class="course-relations-label">' +
+        label +
+        '</span>' +
+        ids
+          .map(
+            id => '<a class="course-chip" href="#path/' + escapeText(id) + '">' + escapeText(courseTitle(id)) + '</a>',
+          )
+          .join('') +
+        '</p>'
+      : '';
+  const html =
+    row('Recommended before', courseReferences(p.prerequisites)) + row('Next', courseReferences(p.nextSteps));
+  return html ? '<nav class="course-relations" aria-label="Related courses">' + html + '</nav>' : '';
+}
 function pathExtras(p, print = false) {
   const content =
     '<div class="path-guide"><section><h2>Before you begin</h2>' +
-    learningList(p.prerequisites) +
+    courseList(p.prerequisites) +
     '</section><section><h2>What you will learn</h2>' +
     learningList(p.outcomes) +
     '</section></div><section class="practice-setup"><h2>Set up your practice environment</h2>' +
@@ -511,7 +558,7 @@ function coursePack(p) {
     activityLinks(p, p.activities, true) +
     glossaryPrint(p) +
     '<h2>Continue learning</h2>' +
-    learningList(p.nextSteps) +
+    courseList(p.nextSteps) +
     learningSources(p) +
     '</article>'
   );
@@ -589,7 +636,7 @@ function renderCatalog() {
     body = glossaryView(p);
   } else if (route === 'path' && p) {
     const done = completed(p.id);
-    body = `<a class="back-link" href="#">← All learning paths</a>${atlasCourseCover(p, done)}${courseTools(p, null, true)}${activityLinks(p, p.activities)}${pathExtras(p)}<p>${done.filter(id => lessons.some(l => l.id === id)).length} of ${lessons.length} read</p>${typeof NotebookPractice !== 'undefined' ? NotebookPractice.overview(p) : ''}${stagedCurriculum(p)}<h2>Next steps</h2>${learningList(p.nextSteps)}${learningSources(p)}`;
+    body = `<a class="back-link" href="#">← All learning paths</a>${atlasCourseCover(p, done)}${courseRelations(p)}${courseTools(p, null, true)}${activityLinks(p, p.activities)}${pathExtras(p)}<p>${done.filter(id => lessons.some(l => l.id === id)).length} of ${lessons.length} read</p>${typeof NotebookPractice !== 'undefined' ? NotebookPractice.overview(p) : ''}${stagedCurriculum(p)}<h2>Next steps</h2>${learningList(p.nextSteps)}${learningSources(p)}`;
   } else if (route === 'topic' && p && l) {
     const index = lessons.indexOf(l);
     body = `<div class="reading-progress" aria-hidden="true"><span></span></div><div class="atlas-lesson-layout">${atlasLessonRail(p, l)}<article class="reading"><div class="lesson-meta"><p class="muted"><a href="#path/${p.id}">${escapeText(p.title)}</a> · Lesson ${index + 1} of ${lessons.length}${l.minutes ? ` · ${l.minutes} min` : ''}</p>${lessonCourseMenu(p, l)}</div><h1>${escapeText(l.title)}</h1><div class="takeaway">${escapeText(l.takeaway)}</div>${wordHelp(p, l)}${l.sections.map((s, i) => `<section id="lesson-section-${i}"><h2>${escapeText(s.title)}</h2>${s.paragraphs.map(t => `<p>${lessonText(p, t)}</p>`).join('')}${lessonExample(l, s, i, p)}${s.exampleNote ? `<p>${lessonText(p, s.exampleNote)}</p>` : ''}${evidenceNotes(s)}</section>`).join('')}${visualExplorerView(l)}${diagramView(l)}${traceView(l)}${exerciseView(l, false, p)}${practiceView(l, false, p)}${activityLinks(p, l.activities)}${taskKit(p, taskForLesson(p, l), true)}${lessonReferences(l)}${

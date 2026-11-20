@@ -22,8 +22,24 @@ function searchEntries() {
   const result = [];
   const add = (p, kind, title, href, text, summary) =>
     result.push({ path: p.id, course: p.title, kind, title, href, text: plain(text), summary: plain(summary) });
-  for (const p of readPaths().filter(p => p.status === 'ready')) {
-    add(p, 'Course', p.title, p.href || '#path/' + p.id, [p.description, p.prerequisites, p.outcomes], p.description);
+  const paths = readPaths(),
+    // Course references (#160) are searched by the words they show.
+    references = items =>
+      (items || []).map(x =>
+        x.replace(
+          /\{path:([a-z0-9-]+)(?:\|([^}]+))?\}/g,
+          (m, id, label) => label || paths.find(c => c.id === id).title,
+        ),
+      );
+  for (const p of paths.filter(p => p.status === 'ready')) {
+    add(
+      p,
+      'Course',
+      p.title,
+      p.href || '#path/' + p.id,
+      [p.description, references(p.prerequisites), p.outcomes],
+      p.description,
+    );
     if (Array.isArray(p.lessons))
       for (const l of p.lessons)
         add(

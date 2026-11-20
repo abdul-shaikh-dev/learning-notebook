@@ -8,8 +8,8 @@ const LEARNING_PATHS = [
     "description": "Build an agent runtime with controlled tool dispatch, scoped approvals, bounded loops and state recovery. Follow 24 lessons and three projects in an offline Python workshop.",
     "level": "Intermediate runtime engineering → selected recovery extensions",
     "prerequisites": [
-      "Basic Python functions, dictionaries, classes, exceptions and tests; the Python path provides preparation.",
-      "The AI Agents path is a useful introduction to model/tool workflows. This path focuses on runtime implementation and operations.",
+      "Basic Python functions, dictionaries, classes, exceptions and tests; the {path:python|Python} path provides preparation.",
+      "The {path:ai-agents|AI Agents} path is a useful introduction to model/tool workflows. This path focuses on runtime implementation and operations.",
       "No API key, model account, cloud service or external tool is needed for the reference workshop."
     ],
     "outcomes": [
@@ -28,7 +28,7 @@ const LEARNING_PATHS = [
       "The runbook and ADR are design exercises, not production deployment instructions."
     ],
     "nextSteps": [
-      "Complete the AI Agents path for agent task design, retrieval, evaluation and tool-use concepts.",
+      "Complete the {path:ai-agents|AI Agents} path for agent task design, retrieval, evaluation and tool-use concepts.",
       "Implement one real adapter in a controlled environment only after defining authorization, timeouts, receipt recovery and data retention.",
       "Add authenticated durable approval/checkpoint storage and test concurrent workers before claiming multi-worker safety.",
       "Evaluate real model behavior separately; do not infer it from deterministic fixtures.",
@@ -3927,7 +3927,7 @@ const LEARNING_PATHS = [
       "The standard-library workshop needs no credentials, package installation or live requests. The optional local-framework guide installs pinned LangChain, LangGraph and Deep Agents packages and can call an explicitly selected loopback llama.cpp server; it does not require cloud provisioning."
     ],
     "nextSteps": [
-      "Complete the Agent Harnesses path to deepen executor, persistence, replay and operational design.",
+      "Complete the {path:agent-harnesses|Agent Harnesses} path to deepen executor, persistence, replay and operational design.",
       "Extend the offline cases before adding a real provider adapter.",
       "Choose a runtime by ownership requirements and consult its current official protocol, state and cleanup docs.",
       "Run real-model evaluations before claiming task quality or prompt-injection robustness.",
@@ -8043,7 +8043,7 @@ const LEARNING_PATHS = [
     "description": "Study trusted identity, object authorization, input validation, session controls and OAuth/OIDC in 24 lessons. Three offline projects test these controls with synthetic records.",
     "level": "Foundations → intermediate application controls → integration extensions",
     "prerequisites": [
-      "Basic programming and HTTP concepts; complete Python or web foundations if functions, dictionaries and requests are unfamiliar."
+      "Basic programming and HTTP concepts; complete the {path:python|Python} or {path:networking-web|web foundations} path if functions, dictionaries and requests are unfamiliar."
     ],
     "setup": [
       "Extract the practice bundle and keep all files together at its flat folder root.",
@@ -16728,7 +16728,7 @@ const LEARNING_PATHS = [
     "description": "25 lessons, three stage projects and a locally runnable practice kit covering Azure infrastructure decisions, Terraform concepts, policy and safe lifecycle review.",
     "level": "Foundations → intermediate practice with optional systems labs",
     "prerequisites": [
-      "Basic application, network and terminal concepts; earlier delivery, security and system-design paths are helpful.",
+      "Basic application, network and terminal concepts; earlier {path:delivery-operations|delivery}, {path:application-security|security} and {path:system-design|system-design} paths are helpful.",
       "Python 3.14+ for the offline lab. No cloud account, payment method or broker is required."
     ],
     "outcomes": [
@@ -16745,7 +16745,7 @@ const LEARNING_PATHS = [
     ],
     "nextSteps": [
       "Choose a disposable subscription scope deliberately; review costs, identity and cleanup before optional real cloud work.",
-      "Connect this work to the full-stack journey. Record which integration tests you ran and which still need a live environment."
+      "Connect this work to the {path:full-stack-journey|full-stack journey}. Record which integration tests you ran and which still need a live environment."
     ],
     "sources": [
       {
@@ -20078,7 +20078,7 @@ const LEARNING_PATHS = [
     "level": "Foundations to reproducible analysis",
     "prerequisites": [
       "Python functions, lists, dictionaries and basic tests.",
-      "Basic averages and percentages; study practical maths and statistics alongside this path."
+      "Basic averages and percentages; study {path:practical-maths-statistics|practical maths and statistics} alongside this path."
     ],
     "outcomes": [
       "Validate a tabular data contract.",
@@ -22689,7 +22689,7 @@ const LEARNING_PATHS = [
     ],
     "nextSteps": [
       "Complete the staged projects and explain failure evidence.",
-      "Cross-reference the existing Python, SQL Server, networking and Kubernetes paths where relevant.",
+      "Cross-reference the existing {path:python|Python}, {path:sql-server|SQL Server}, {path:networking-web|networking} and {path:kubernetes|Kubernetes} paths where relevant.",
       "Run optional platform integration separately and record actual versions and results."
     ],
     "sources": [
@@ -26057,7 +26057,7 @@ const LEARNING_PATHS = [
     "level": "Foundations → intermediate → selected advanced topics",
     "runExamples": true,
     "prerequisites": [
-      "Complete Python variables, loops, functions and collections first, or translate the examples into a language you know.",
+      "Complete the variables, loops, functions and collections lessons of {path:python|Python} first, or translate the examples into a language you know.",
       "You only need arithmetic and a willingness to trace a few steps on paper."
     ],
     "setup": [
@@ -31489,7 +31489,7 @@ const LEARNING_PATHS = [
     "description": "Practise releasing and recovering a service across 27 lessons. Use the local service to test health checks, schema compatibility and telemetry. The integration runbook applies those decisions to React, .NET and SQL Server.",
     "level": "Foundations → intermediate practice with optional systems labs",
     "prerequisites": [
-      "Basic HTTP, Python and terminal use for the local note-service track. React, C#/.NET and SQL Server are needed only for the optional full-stack integration runbook.",
+      "Basic HTTP, Python and terminal use for the local note-service track. {path:react|React}, {path:dotnet|C#/.NET} and {path:sql-server|SQL Server} are needed only for the optional full-stack integration runbook.",
       "Python 3.14+ and basic terminal use for the independent local lab; Docker is optional, no cloud account required."
     ],
     "outcomes": [
@@ -31509,7 +31509,7 @@ const LEARNING_PATHS = [
     "nextSteps": [
       "Implement and verify the integration runbook with your actual React adapter, persistent/authenticated .NET API and SQL Server database.",
       "Add real TLS, trusted proxy configuration, telemetry exporters and staging token/provider checks before exposure.",
-      "Study Kubernetes after understanding image, process, data and release boundaries.",
+      "Study {path:kubernetes|Kubernetes} after understanding image, process, data and release boundaries.",
       "Repeat a provider-specific restore and compatible deployment drill; keep recorded execution distinct from conceptual review."
     ],
     "sources": [
@@ -35083,7 +35083,7 @@ const LEARNING_PATHS = [
     "level": "Foundations → intermediate → selected advanced topics",
     "runExamples": true,
     "prerequisites": [
-      "Basic programming: functions, collections, exceptions and simple classes. Python learners should reach classes-and-dataclasses; the beginner foundation stage alone does not cover classes.",
+      "Basic programming: functions, collections, exceptions and simple classes. Learners of {path:python|Python} should reach classes-and-dataclasses; the beginner foundation stage alone does not cover classes.",
       "Examples use Python 3.14+ and only the standard library; ideas transfer to C#, TypeScript and other languages."
     ],
     "outcomes": [
@@ -35102,7 +35102,7 @@ const LEARNING_PATHS = [
     ],
     "nextSteps": [
       "Apply one justified pattern to a small existing application and compare change effort before and after.",
-      "Use the System Design path for service boundaries, capacity, reliability and distributed tradeoffs.",
+      "Use the {path:system-design|System Design} path for service boundaries, capacity, reliability and distributed tradeoffs.",
       "Add a real database adapter and run provider integration tests for constraints, rollback and concurrent conflicts.",
       "Study domain-driven design and enterprise integration patterns when your systems need them.",
       "These projects provide advanced practice, not exhaustive coverage or a professional certification."
@@ -45744,7 +45744,7 @@ const LEARNING_PATHS = [
     "description": "Build one study planner through 20 connected milestones: React UI, .NET API, SQL Server persistence, conflict handling, verification, identity design and release/recovery decisions. Includes a working local reference and complete task files.",
     "level": "Intermediate full-stack project → deployment extensions",
     "prerequisites": [
-      "Complete or consult the React, C# & .NET and SQL Server paths; this journey connects those skills rather than teaching each language from zero.",
+      "Complete or consult the {path:react|React}, {path:dotnet|C# & .NET} and {path:sql-server|SQL Server} paths; this journey connects those skills rather than teaching each language from zero.",
       "Install .NET 10 SDK, Node 24/npm and Python 3.14+; SQL Server/SSMS is required for the persistence milestone."
     ],
     "setup": [
@@ -45759,7 +45759,7 @@ const LEARNING_PATHS = [
     ],
     "nextSteps": [
       "Build the filtering, idempotency and verified ownership extensions in milestones.md with new tests.",
-      "Use the UI, observability, messaging and cloud paths to extend the same application after the baseline is understood."
+      "Use the {path:ui-accessibility|UI}, {path:observability-performance|observability}, {path:messaging-events|messaging} and {path:cloud-infrastructure|cloud} paths to extend the same application after the baseline is understood."
     ],
     "sources": [
       {
@@ -59302,7 +59302,7 @@ const LEARNING_PATHS = [
     "description": "27 lessons progress from reconciliation and ready Services to scoped security, storage, jobs, scaling, templating, GitOps and recovery, with offline checks and a guarded dedicated local lab.",
     "level": "Foundations → intermediate practice with optional systems labs",
     "prerequisites": [
-      "Complete Delivery & Operations (delivery-operations) containers/build/runtime exercises first; React (react), .NET (dotnet) and SQL Server (sql-server) retain their own application/data responsibilities.",
+      "Complete the {path:delivery-operations|Delivery & Operations} containers/build/runtime exercises first; {path:react|React}, {path:dotnet|.NET} and {path:sql-server|SQL Server} retain their own application/data responsibilities.",
       "Python 3.14+ for offline checks. A dedicated local kind cluster is opt-in and requires compatible Docker/Linux containers, kind and kubectl; no cloud account required."
     ],
     "outcomes": [
@@ -66355,7 +66355,7 @@ const LEARNING_PATHS = [
     ],
     "nextSteps": [
       "Complete the staged projects and explain failure evidence.",
-      "Cross-reference the existing Python, SQL Server, networking and Kubernetes paths where relevant.",
+      "Cross-reference the existing {path:python|Python}, {path:sql-server|SQL Server}, {path:networking-web|networking} and {path:kubernetes|Kubernetes} paths where relevant.",
       "Run optional platform integration separately and record actual versions and results."
     ],
     "sources": [
@@ -69404,7 +69404,7 @@ const LEARNING_PATHS = [
     "level": "Foundations through a supervised-learning capstone",
     "prerequisites": [
       "Python functions, lists, dictionaries and basic tests.",
-      "Read the practical maths and statistics path for averages, probability and vectors.",
+      "Read the {path:practical-maths-statistics|practical maths and statistics} path for averages, probability and vectors.",
       "Basic data analysis helps with tables and missing values."
     ],
     "outcomes": [
@@ -69419,7 +69419,7 @@ const LEARNING_PATHS = [
     ],
     "nextSteps": [
       "Apply the experiment structure to a small, permissioned real dataset.",
-      "Use the AI agents path to evaluate applications that use model predictions."
+      "Use the {path:ai-agents|AI agents} path to evaluate applications that use model predictions."
     ],
     "sources": [
       {
@@ -72833,7 +72833,7 @@ const LEARNING_PATHS = [
     ],
     "nextSteps": [
       "Connect one real broker and test reconnect, persistence and denied access with synthetic data.",
-      "Connect this work to the full-stack journey. Record which integration tests you ran and which still need a live environment."
+      "Connect this work to the {path:full-stack-journey|full-stack journey}. Record which integration tests you ran and which still need a live environment."
     ],
     "sources": [
       {
@@ -76350,7 +76350,7 @@ const LEARNING_PATHS = [
     "nextSteps": [
       "Implement one explicitly identified missing boundary and add a falsifying integration test.",
       "Record runtime, fixtures, changed contract, actual outcome and remaining limits in a review note.",
-      "Use the neighboring Python, System Design and security paths to extend the same small application without claiming professional certification."
+      "Use the neighboring {path:python|Python}, {path:system-design|System Design} and {path:application-security|security} paths to extend the same small application without claiming professional certification."
     ],
     "sources": [
       {
@@ -80429,7 +80429,7 @@ const LEARNING_PATHS = [
     ],
     "nextSteps": [
       "Instrument the full-stack project with a selected OpenTelemetry SDK and collector as a separately tested extension.",
-      "Use SQL Server query plans and React profiling for real cross-layer investigations.",
+      "Use {path:sql-server|SQL Server} query plans and {path:react|React} profiling for real cross-layer investigations.",
       "Evaluate real retention, data access, costs and alert delivery before production use."
     ],
     "sources": [
@@ -85164,8 +85164,8 @@ const LEARNING_PATHS = [
       "Report uncertainty and design a fair comparison without overstating a causal claim."
     ],
     "nextSteps": [
-      "Use these calculations in Data analysis with Python.",
-      "Continue to Machine learning foundations for model evaluation.",
+      "Use these calculations in {path:data-analysis-python|Data analysis with Python}.",
+      "Continue to {path:machine-learning-foundations|Machine learning foundations} for model evaluation.",
       "Study formal inference and linear algebra separately when a project requires deeper theory."
     ],
     "sources": [
@@ -92104,7 +92104,7 @@ const LEARNING_PATHS = [
     "description": "37 original coding challenges. Start with small functions, practise common patterns, then choose an approach for realistic tasks. Optional hints and local Python tests help you improve each attempt.",
     "level": "Guided foundations → common patterns → mixed practical problems",
     "prerequisites": [
-      "Comfort with basic Python values, loops and functions. Revisit the Python path whenever a construct is unfamiliar.",
+      "Comfort with basic Python values, loops and functions. Revisit the {path:python|Python} path whenever a construct is unfamiliar.",
       "Python 3.14 or newer and an editor; no prior algorithm interview experience required."
     ],
     "outcomes": [
@@ -92124,7 +92124,7 @@ const LEARNING_PATHS = [
     "nextSteps": [
       "Revisit a problem after a break without reopening its solution first.",
       "Attempt the optional variation and write cases for its changed requirements.",
-      "Continue to Data Structures & Algorithms for trees, graphs and more advanced algorithm analysis."
+      "Continue to {path:data-structures-algorithms|Data Structures & Algorithms} for trees, graphs and more advanced algorithm analysis."
     ],
     "sources": [
       {
@@ -94872,7 +94872,7 @@ const LEARNING_PATHS = [
     "level": "Foundations through a local maintenance capstone",
     "prerequisites": [
       "Python functions, exceptions, files and dictionaries.",
-      "Basic terminal use. Git & Team Workflows and Testing & Debugging provide useful background."
+      "Basic terminal use. {path:git-team-workflows|Git & Team Workflows} and {path:testing-debugging|Testing & Debugging} provide useful background."
     ],
     "outcomes": [
       "Write acceptance examples and a scoped change brief.",
@@ -94886,7 +94886,7 @@ const LEARNING_PATHS = [
     ],
     "nextSteps": [
       "Apply the method to a small issue in an existing project with permission.",
-      "Continue with Testing & Debugging, Git & Team Workflows and the Full-Stack Project Journey."
+      "Continue with {path:testing-debugging|Testing & Debugging}, {path:git-team-workflows|Git & Team Workflows} and the {path:full-stack-journey|Full-Stack Project Journey}."
     ],
     "sources": [
       {
@@ -113837,7 +113837,7 @@ const LEARNING_PATHS = [
     "nextSteps": [
       "Implement one explicitly identified missing boundary and add a falsifying integration test.",
       "Record runtime, fixtures, changed contract, actual outcome and remaining limits in a review note.",
-      "Use the neighboring Python, System Design and security paths to extend the same small application without claiming professional certification."
+      "Use the neighboring {path:python|Python}, {path:system-design|System Design} and {path:application-security|security} paths to extend the same small application without claiming professional certification."
     ],
     "sources": [
       {
@@ -120603,7 +120603,7 @@ const LEARNING_PATHS = [
       "Use audit-checklist.md for keyboard, zoom, motion and assistive-technology checks. Automated source checks do not establish conformance."
     ],
     "nextSteps": [
-      "Apply these checks to the React path and full-stack project.",
+      "Apply these checks to the {path:react|React} path and {path:full-stack-journey|full-stack project}.",
       "Evaluate with disabled users and real assistive technology.",
       "Build a small component system with regression evidence."
     ],

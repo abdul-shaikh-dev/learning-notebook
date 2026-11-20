@@ -26,7 +26,7 @@
     "The standard-library workshop needs no credentials, package installation or live requests. The optional local-framework guide installs pinned LangChain, LangGraph and Deep Agents packages and can call an explicitly selected loopback llama.cpp server; it does not require cloud provisioning."
   ],
   "nextSteps": [
-    "Complete the Agent Harnesses path to deepen executor, persistence, replay and operational design.",
+    "Complete the {path:agent-harnesses|Agent Harnesses} path to deepen executor, persistence, replay and operational design.",
     "Extend the offline cases before adding a real provider adapter.",
     "Choose a runtime by ownership requirements and consult its current official protocol, state and cleanup docs.",
     "Run real-model evaluations before claiming task quality or prompt-injection robustness.",

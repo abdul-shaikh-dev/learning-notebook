@@ -6,7 +6,7 @@
   "description": "Practise releasing and recovering a service across 27 lessons. Use the local service to test health checks, schema compatibility and telemetry. The integration runbook applies those decisions to React, .NET and SQL Server.",
   "level": "Foundations → intermediate practice with optional systems labs",
   "prerequisites": [
-    "Basic HTTP, Python and terminal use for the local note-service track. React, C#/.NET and SQL Server are needed only for the optional full-stack integration runbook.",
+    "Basic HTTP, Python and terminal use for the local note-service track. {path:react|React}, {path:dotnet|C#/.NET} and {path:sql-server|SQL Server} are needed only for the optional full-stack integration runbook.",
     "Python 3.14+ and basic terminal use for the independent local lab; Docker is optional, no cloud account required."
   ],
   "outcomes": [
@@ -26,7 +26,7 @@
   "nextSteps": [
     "Implement and verify the integration runbook with your actual React adapter, persistent/authenticated .NET API and SQL Server database.",
     "Add real TLS, trusted proxy configuration, telemetry exporters and staging token/provider checks before exposure.",
-    "Study Kubernetes after understanding image, process, data and release boundaries.",
+    "Study {path:kubernetes|Kubernetes} after understanding image, process, data and release boundaries.",
     "Repeat a provider-specific restore and compatible deployment drill; keep recorded execution distinct from conceptual review."
   ],
   "sources": [

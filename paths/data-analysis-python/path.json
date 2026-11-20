@@ -7,7 +7,7 @@
   "level": "Foundations to reproducible analysis",
   "prerequisites": [
     "Python functions, lists, dictionaries and basic tests.",
-    "Basic averages and percentages; study practical maths and statistics alongside this path."
+    "Basic averages and percentages; study {path:practical-maths-statistics|practical maths and statistics} alongside this path."
   ],
   "outcomes": [
     "Validate a tabular data contract.",

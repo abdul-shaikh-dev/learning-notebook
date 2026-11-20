@@ -6,7 +6,7 @@
   "description": "37 original coding challenges. Start with small functions, practise common patterns, then choose an approach for realistic tasks. Optional hints and local Python tests help you improve each attempt.",
   "level": "Guided foundations → common patterns → mixed practical problems",
   "prerequisites": [
-    "Comfort with basic Python values, loops and functions. Revisit the Python path whenever a construct is unfamiliar.",
+    "Comfort with basic Python values, loops and functions. Revisit the {path:python|Python} path whenever a construct is unfamiliar.",
     "Python 3.14 or newer and an editor; no prior algorithm interview experience required."
   ],
   "outcomes": [
@@ -26,7 +26,7 @@
   "nextSteps": [
     "Revisit a problem after a break without reopening its solution first.",
     "Attempt the optional variation and write cases for its changed requirements.",
-    "Continue to Data Structures & Algorithms for trees, graphs and more advanced algorithm analysis."
+    "Continue to {path:data-structures-algorithms|Data Structures & Algorithms} for trees, graphs and more advanced algorithm analysis."
   ],
   "sources": [
     {

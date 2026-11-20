@@ -23,7 +23,7 @@
     "Use audit-checklist.md for keyboard, zoom, motion and assistive-technology checks. Automated source checks do not establish conformance."
   ],
   "nextSteps": [
-    "Apply these checks to the React path and full-stack project.",
+    "Apply these checks to the {path:react|React} path and {path:full-stack-journey|full-stack project}.",
     "Evaluate with disabled users and real assistive technology.",
     "Build a small component system with regression evidence."
   ],

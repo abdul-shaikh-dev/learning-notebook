@@ -6,8 +6,8 @@
   "description": "Build an agent runtime with controlled tool dispatch, scoped approvals, bounded loops and state recovery. Follow 24 lessons and three projects in an offline Python workshop.",
   "level": "Intermediate runtime engineering → selected recovery extensions",
   "prerequisites": [
-    "Basic Python functions, dictionaries, classes, exceptions and tests; the Python path provides preparation.",
-    "The AI Agents path is a useful introduction to model/tool workflows. This path focuses on runtime implementation and operations.",
+    "Basic Python functions, dictionaries, classes, exceptions and tests; the {path:python|Python} path provides preparation.",
+    "The {path:ai-agents|AI Agents} path is a useful introduction to model/tool workflows. This path focuses on runtime implementation and operations.",
     "No API key, model account, cloud service or external tool is needed for the reference workshop."
   ],
   "outcomes": [
@@ -26,7 +26,7 @@
     "The runbook and ADR are design exercises, not production deployment instructions."
   ],
   "nextSteps": [
-    "Complete the AI Agents path for agent task design, retrieval, evaluation and tool-use concepts.",
+    "Complete the {path:ai-agents|AI Agents} path for agent task design, retrieval, evaluation and tool-use concepts.",
     "Implement one real adapter in a controlled environment only after defining authorization, timeouts, receipt recovery and data retention.",
     "Add authenticated durable approval/checkpoint storage and test concurrent workers before claiming multi-worker safety.",
     "Evaluate real model behavior separately; do not infer it from deterministic fixtures.",

@@ -24,7 +24,7 @@
   ],
   "nextSteps": [
     "Instrument the full-stack project with a selected OpenTelemetry SDK and collector as a separately tested extension.",
-    "Use SQL Server query plans and React profiling for real cross-layer investigations.",
+    "Use {path:sql-server|SQL Server} query plans and {path:react|React} profiling for real cross-layer investigations.",
     "Evaluate real retention, data access, costs and alert delivery before production use."
   ],
   "sources": [
