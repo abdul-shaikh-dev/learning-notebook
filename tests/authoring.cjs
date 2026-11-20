@@ -9,8 +9,9 @@ fs.mkdirSync(path.join(temp,'assets/js'),{recursive:true});fs.copyFileSync(path.
 function run(...args){return cp.spawnSync(process.execPath,args,{encoding:'utf8',cwd:temp});}
 let r=run('scripts/new-path.cjs','test-topic','Test topic');assert.equal(r.status,0,r.stderr);
 let p=JSON.parse(fs.readFileSync(path.join(temp,'paths/test-topic/path.json'),'utf8'));assert.equal(p.status,'planned');
-assert.ok(!fs.readFileSync(path.join(temp,'content/paths.js'),'utf8').includes('Replace this draft'));
-p.status='ready';fs.writeFileSync(path.join(temp,'paths/test-topic/path.json'),JSON.stringify(p));r=run('scripts/sync-catalog.cjs');assert.equal(r.status,0,r.stderr);assert.ok(fs.readFileSync(path.join(temp,'content/paths.js'),'utf8').includes('first-steps'));
+// #161: the editorial catalog is not written to disk; a planned path gets no public course chunk.
+assert.ok(!fs.existsSync(path.join(temp,'content/paths.js')));assert.ok(!fs.existsSync(path.join(temp,'content/courses/test-topic.js')));
+p.status='ready';fs.writeFileSync(path.join(temp,'paths/test-topic/path.json'),JSON.stringify(p));r=run('scripts/sync-catalog.cjs');assert.equal(r.status,0,r.stderr);assert.ok(fs.readFileSync(path.join(temp,'content/courses/test-topic.js'),'utf8').includes('first-steps'));
 assert.notEqual(run('scripts/new-path.cjs','test-topic','Duplicate').status,0);
 assert.notEqual(run('scripts/new-path.cjs','../outside','Invalid').status,0);
 // Remove only the resolved temporary test directory created above.

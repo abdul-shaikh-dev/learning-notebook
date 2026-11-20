@@ -16,3 +16,11 @@ _site/
 # Temporary executable-check copies
 validation/react/.check-*/
 __pycache__/
+
+# Local tool state; .claude/launch.json (the local preview server) is shared
+.impeccable/
+.claude/*
+!.claude/launch.json
+
+# No longer generated (#161); tests build the editorial catalog in memory
+content/paths.js
