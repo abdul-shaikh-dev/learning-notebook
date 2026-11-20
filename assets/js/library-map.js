@@ -18,159 +18,589 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 /* Visual routes are suggestions; every course remains directly accessible. */
 const LIBRARY_GRAPHS = [
- {id:'personal-foundations',name:'Planning & habits',description:'Plan work that fits your available time, track tasks and try a small routine.',height:156,nodes:[['time-attention-energy',0,0,'green'],['task-project-management',35,0,'green'],['habits-behaviour-change',70,0,'green']],edges:[['time-attention-energy','task-project-management'],['task-project-management','habits-behaviour-change']]},
- {id:'personal-practice',name:'Learning & communication',description:'Practise recall and clear communication, then use them to plan a week.',height:336,nodes:[['learning-how-to-learn',0,0,'violet'],['self-awareness-communication',0,180,'violet'],['weekly-planning-journey',70,90,'green']],edges:[['learning-how-to-learn','weekly-planning-journey','background'],['self-awareness-communication','weekly-planning-journey','background']]},
- {id:'programming',name:'Programming & AI',description:'After Python, choose problem solving, software design or AI agents. Design patterns does not require the algorithms path.',height:516,nodes:[['python',0,180,'green'],['python-problem-solving',35,0,'green'],['data-structures-algorithms',70,0,'green'],['design-patterns',35,180,'green'],['ai-agents',35,360,'violet'],['agent-harnesses',70,360,'violet']],edges:[['python','python-problem-solving','suggested'],['python-problem-solving','data-structures-algorithms','suggested'],['python','design-patterns','alternative'],['python','ai-agents','alternative'],['ai-agents','agent-harnesses','suggested']]},
- {id:'systems',name:'Application development',description:'Bring data, backend and frontend perspectives into system design.',nodes:[['sql-server',0,0,'blue'],['dotnet',35,0,'blue'],['react',70,0,'blue'],['system-design',35,210,'blue']],edges:[['sql-server','system-design','background'],['dotnet','system-design','background'],['react','system-design','background']]},
- {id:'team',name:'Testing, maintenance & security',description:'Use version control and testing to make safe changes to existing software. Study application security alongside these skills.',height:366,nodes:[['git-team-workflows',0,0,'green'],['testing-debugging',35,0,'green'],['application-security',70,0,'violet'],['requirements-maintenance',35,210,'green']],edges:[['git-team-workflows','requirements-maintenance','background'],['testing-debugging','requirements-maintenance','suggested']]},
- {id:'full-stack',name:'Build a full-stack project',description:'Design an accessible interface, build the complete study planner, then diagnose its behavior under a defined workload.',height:156,nodes:[['ui-accessibility',0,0,'green'],['full-stack-journey',35,0,'green'],['observability-performance',70,0,'blue']],edges:[['ui-accessibility','full-stack-journey','background'],['full-stack-journey','observability-performance']]},
- {id:'analysis-ml',name:'Maths, data analysis & machine learning',description:'Use practical maths to interpret data, then build and evaluate small predictive models. The Python path provides the coding background for analysis and machine learning.',height:156,nodes:[['practical-maths-statistics',0,0,'blue'],['data-analysis-python',35,0,'blue'],['machine-learning-foundations',70,0,'violet']],edges:[['practical-maths-statistics','data-analysis-python','background'],['data-analysis-python','machine-learning-foundations','suggested']]},
- {id:'data-flows',name:'Data & events',description:'Build replayable data pipelines, then reason about delivery, duplicates and durable event processing.',height:156,nodes:[['data-engineering',17,0,'blue'],['messaging-events',52,0,'blue']],edges:[['data-engineering','messaging-events']]},
- {id:'infrastructure',name:'Linux & cloud',description:'Explore Linux processes and permissions, then manage owned cloud resources through reviewed infrastructure plans.',height:156,nodes:[['linux-operating-systems',17,0,'blue'],['cloud-infrastructure',52,0,'blue']],edges:[['linux-operating-systems','cloud-infrastructure']]},
- {id:'delivery',name:'Networking & deployment',description:'Understand the network, learn containers and delivery, then manage workloads with Kubernetes.',height:156,nodes:[['networking-web',0,0,'blue'],['delivery-operations',35,0,'blue'],['kubernetes',70,0,'blue']],edges:[['networking-web','delivery-operations'],['delivery-operations','kubernetes']]}
-
+  {
+    id: 'personal-foundations',
+    name: 'Planning & habits',
+    description: 'Plan work that fits your available time, track tasks and try a small routine.',
+    height: 156,
+    nodes: [
+      ['time-attention-energy', 0, 0, 'green'],
+      ['task-project-management', 35, 0, 'green'],
+      ['habits-behaviour-change', 70, 0, 'green'],
+    ],
+    edges: [
+      ['time-attention-energy', 'task-project-management'],
+      ['task-project-management', 'habits-behaviour-change'],
+    ],
+  },
+  {
+    id: 'personal-practice',
+    name: 'Learning & communication',
+    description: 'Practise recall and clear communication, then use them to plan a week.',
+    height: 336,
+    nodes: [
+      ['learning-how-to-learn', 0, 0, 'violet'],
+      ['self-awareness-communication', 0, 180, 'violet'],
+      ['weekly-planning-journey', 70, 90, 'green'],
+    ],
+    edges: [
+      ['learning-how-to-learn', 'weekly-planning-journey', 'background'],
+      ['self-awareness-communication', 'weekly-planning-journey', 'background'],
+    ],
+  },
+  {
+    id: 'programming',
+    name: 'Programming & AI',
+    description:
+      'After Python, choose problem solving, software design or AI agents. Design patterns does not require the algorithms path.',
+    height: 516,
+    nodes: [
+      ['python', 0, 180, 'green'],
+      ['python-problem-solving', 35, 0, 'green'],
+      ['data-structures-algorithms', 70, 0, 'green'],
+      ['design-patterns', 35, 180, 'green'],
+      ['ai-agents', 35, 360, 'violet'],
+      ['agent-harnesses', 70, 360, 'violet'],
+    ],
+    edges: [
+      ['python', 'python-problem-solving', 'suggested'],
+      ['python-problem-solving', 'data-structures-algorithms', 'suggested'],
+      ['python', 'design-patterns', 'alternative'],
+      ['python', 'ai-agents', 'alternative'],
+      ['ai-agents', 'agent-harnesses', 'suggested'],
+    ],
+  },
+  {
+    id: 'systems',
+    name: 'Application development',
+    description: 'Bring data, backend and frontend perspectives into system design.',
+    nodes: [
+      ['sql-server', 0, 0, 'blue'],
+      ['dotnet', 35, 0, 'blue'],
+      ['react', 70, 0, 'blue'],
+      ['system-design', 35, 210, 'blue'],
+    ],
+    edges: [
+      ['sql-server', 'system-design', 'background'],
+      ['dotnet', 'system-design', 'background'],
+      ['react', 'system-design', 'background'],
+    ],
+  },
+  {
+    id: 'team',
+    name: 'Testing, maintenance & security',
+    description:
+      'Use version control and testing to make safe changes to existing software. Study application security alongside these skills.',
+    height: 366,
+    nodes: [
+      ['git-team-workflows', 0, 0, 'green'],
+      ['testing-debugging', 35, 0, 'green'],
+      ['application-security', 70, 0, 'violet'],
+      ['requirements-maintenance', 35, 210, 'green'],
+    ],
+    edges: [
+      ['git-team-workflows', 'requirements-maintenance', 'background'],
+      ['testing-debugging', 'requirements-maintenance', 'suggested'],
+    ],
+  },
+  {
+    id: 'full-stack',
+    name: 'Build a full-stack project',
+    description:
+      'Design an accessible interface, build the complete study planner, then diagnose its behavior under a defined workload.',
+    height: 156,
+    nodes: [
+      ['ui-accessibility', 0, 0, 'green'],
+      ['full-stack-journey', 35, 0, 'green'],
+      ['observability-performance', 70, 0, 'blue'],
+    ],
+    edges: [
+      ['ui-accessibility', 'full-stack-journey', 'background'],
+      ['full-stack-journey', 'observability-performance'],
+    ],
+  },
+  {
+    id: 'analysis-ml',
+    name: 'Maths, data analysis & machine learning',
+    description:
+      'Use practical maths to interpret data, then build and evaluate small predictive models. The Python path provides the coding background for analysis and machine learning.',
+    height: 156,
+    nodes: [
+      ['practical-maths-statistics', 0, 0, 'blue'],
+      ['data-analysis-python', 35, 0, 'blue'],
+      ['machine-learning-foundations', 70, 0, 'violet'],
+    ],
+    edges: [
+      ['practical-maths-statistics', 'data-analysis-python', 'background'],
+      ['data-analysis-python', 'machine-learning-foundations', 'suggested'],
+    ],
+  },
+  {
+    id: 'data-flows',
+    name: 'Data & events',
+    description:
+      'Build replayable data pipelines, then reason about delivery, duplicates and durable event processing.',
+    height: 156,
+    nodes: [
+      ['data-engineering', 17, 0, 'blue'],
+      ['messaging-events', 52, 0, 'blue'],
+    ],
+    edges: [['data-engineering', 'messaging-events']],
+  },
+  {
+    id: 'infrastructure',
+    name: 'Linux & cloud',
+    description:
+      'Explore Linux processes and permissions, then manage owned cloud resources through reviewed infrastructure plans.',
+    height: 156,
+    nodes: [
+      ['linux-operating-systems', 17, 0, 'blue'],
+      ['cloud-infrastructure', 52, 0, 'blue'],
+    ],
+    edges: [['linux-operating-systems', 'cloud-infrastructure']],
+  },
+  {
+    id: 'delivery',
+    name: 'Networking & deployment',
+    description: 'Understand the network, learn containers and delivery, then manage workloads with Kubernetes.',
+    height: 156,
+    nodes: [
+      ['networking-web', 0, 0, 'blue'],
+      ['delivery-operations', 35, 0, 'blue'],
+      ['kubernetes', 70, 0, 'blue'],
+    ],
+    edges: [
+      ['networking-web', 'delivery-operations'],
+      ['delivery-operations', 'kubernetes'],
+    ],
+  },
 ];
-LIBRARY_GRAPHS.sort((a,b)=>(a.id==='programming'?-1:b.id==='programming'?1:0));
+LIBRARY_GRAPHS.sort((a, b) => (a.id === 'programming' ? -1 : b.id === 'programming' ? 1 : 0));
 // Lucide icons, ISC license: docs/lucide-license.txt. Vendored; no runtime request.
-const LIBRARY_ICONS={"python": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-terminal\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <polyline points=\"4 17 10 11 4 5\" />\n  <line x1=\"12\" x2=\"20\" y1=\"19\" y2=\"19\" />\n</svg>\n", "data-structures-algorithms": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-network\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <rect x=\"16\" y=\"16\" width=\"6\" height=\"6\" rx=\"1\" />\n  <rect x=\"2\" y=\"16\" width=\"6\" height=\"6\" rx=\"1\" />\n  <rect x=\"9\" y=\"2\" width=\"6\" height=\"6\" rx=\"1\" />\n  <path d=\"M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3\" />\n  <path d=\"M12 12V8\" />\n</svg>\n", "design-patterns": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-blocks\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <rect width=\"7\" height=\"7\" x=\"14\" y=\"3\" rx=\"1\" />\n  <path d=\"M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3\" />\n</svg>\n", "sql-server": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-database\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <ellipse cx=\"12\" cy=\"5\" rx=\"9\" ry=\"3\" />\n  <path d=\"M3 5V19A9 3 0 0 0 21 19V5\" />\n  <path d=\"M3 12A9 3 0 0 0 21 12\" />\n</svg>\n", "dotnet": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-braces\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1\" />\n  <path d=\"M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1\" />\n</svg>\n", "react": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-panels-top-left\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" />\n  <path d=\"M3 9h18\" />\n  <path d=\"M9 21V9\" />\n</svg>\n", "system-design": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-server\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\" />\n  <rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\" />\n  <line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\" />\n  <line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\" />\n</svg>\n", "ai-agents": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-bot\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M12 8V4H8\" />\n  <rect width=\"16\" height=\"12\" x=\"4\" y=\"8\" rx=\"2\" />\n  <path d=\"M2 14h2\" />\n  <path d=\"M20 14h2\" />\n  <path d=\"M15 13v2\" />\n  <path d=\"M9 13v2\" />\n</svg>\n", "agent-harnesses": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-workflow\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <rect width=\"8\" height=\"8\" x=\"3\" y=\"3\" rx=\"2\" />\n  <path d=\"M7 11v4a2 2 0 0 0 2 2h4\" />\n  <rect width=\"8\" height=\"8\" x=\"13\" y=\"13\" rx=\"2\" />\n</svg>\n", "financial-foundations": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-chart-no-axes-combined\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M12 16v5\" />\n  <path d=\"M16 14v7\" />\n  <path d=\"M20 10v11\" />\n  <path d=\"m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15\" />\n  <path d=\"M4 18v3\" />\n  <path d=\"M8 14v7\" />\n</svg>\n", "git-team-workflows": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-git-branch\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <line x1=\"6\" x2=\"6\" y1=\"3\" y2=\"15\" />\n  <circle cx=\"18\" cy=\"6\" r=\"3\" />\n  <circle cx=\"6\" cy=\"18\" r=\"3\" />\n  <path d=\"M18 9a9 9 0 0 1-9 9\" />\n</svg>\n", "testing-debugging": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-bug\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m8 2 1.88 1.88\" />\n  <path d=\"M14.12 3.88 16 2\" />\n  <path d=\"M9 7.13v-1a3.003 3.003 0 1 1 6 0v1\" />\n  <path d=\"M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6\" />\n  <path d=\"M12 20v-9\" />\n  <path d=\"M6.53 9C4.6 8.8 3 7.1 3 5\" />\n  <path d=\"M6 13H2\" />\n  <path d=\"M3 21c0-2.1 1.7-3.9 3.8-4\" />\n  <path d=\"M20.97 5c0 2.1-1.6 3.8-3.5 4\" />\n  <path d=\"M22 13h-4\" />\n  <path d=\"M17.2 17c2.1.1 3.8 1.9 3.8 4\" />\n</svg>\n", "application-security": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-shield-check\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" />\n  <path d=\"m9 12 2 2 4-4\" />\n</svg>\n", "networking-web": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-globe\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <circle cx=\"12\" cy=\"12\" r=\"10\" />\n  <path d=\"M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20\" />\n  <path d=\"M2 12h20\" />\n</svg>\n", "delivery-operations": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-package-check\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m16 16 2 2 4-4\" />\n  <path d=\"M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14\" />\n  <path d=\"m7.5 4.27 9 5.15\" />\n  <polyline points=\"3.29 7 12 12 20.71 7\" />\n  <line x1=\"12\" x2=\"12\" y1=\"22\" y2=\"12\" />\n</svg>\n", "kubernetes": "<svg aria-hidden=\"true\" focusable=\"false\"\n  class=\"lucide lucide-boxes\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z\" />\n  <path d=\"m7 16.5-4.74-2.85\" />\n  <path d=\"m7 16.5 5-3\" />\n  <path d=\"M7 16.5v5.17\" />\n  <path d=\"M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z\" />\n  <path d=\"m17 16.5-5-3\" />\n  <path d=\"m17 16.5 4.74-2.85\" />\n  <path d=\"M17 16.5v5.17\" />\n  <path d=\"M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z\" />\n  <path d=\"M12 8 7.26 5.15\" />\n  <path d=\"m12 8 4.74-2.85\" />\n  <path d=\"M12 13.5V8\" />\n</svg>\n"};
-const LIBRARY_LABELS={'python':['PY','Python'],'data-structures-algorithms':['DS','Data structures & algorithms'],'design-patterns':['DP','Design patterns'],'sql-server':['SQL','SQL Server'],'dotnet':['C#','C# & .NET'],'react':['RE','JavaScript → React'],'system-design':['SD','System design'],'ai-agents':['AI','AI agents'],'agent-harnesses':['AH','Agent harnesses'],'financial-foundations':['FF','Financial foundations']};
-Object.assign(LIBRARY_ICONS,{'linux-operating-systems':LIBRARY_ICONS.python,'data-engineering':LIBRARY_ICONS['sql-server'],'ui-accessibility':LIBRARY_ICONS.react,'observability-performance':LIBRARY_ICONS['financial-foundations'],'messaging-events':LIBRARY_ICONS['agent-harnesses'],'cloud-infrastructure':LIBRARY_ICONS.kubernetes,'full-stack-journey':LIBRARY_ICONS['system-design']});
-Object.assign(LIBRARY_ICONS,{'practical-maths-statistics':LIBRARY_ICONS['financial-foundations'],'data-analysis-python':LIBRARY_ICONS['sql-server'],'machine-learning-foundations':LIBRARY_ICONS['ai-agents'],'requirements-maintenance':LIBRARY_ICONS['testing-debugging']});
-// Notebook-authored subject icons; no external assets or requests.
-function personalPathIcon(body){return '<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+body+'</svg>';}
-Object.assign(LIBRARY_ICONS,{
-'time-attention-energy':personalPathIcon('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/>'),
-'task-project-management':personalPathIcon('<rect x="4" y="3" width="16" height="18" rx="2"/><path d="m7 8 1 1 2-2M13 8h4m-10 5 1 1 2-2m3 1h4M7 18h10"/>'),
-'habits-behaviour-change':personalPathIcon('<path d="M12 21v-9M12 15C5 15 3 11 3 6c6 0 9 3 9 9ZM12 12c0-6 3-9 9-9 0 6-3 9-9 9Z"/>'),
-'learning-how-to-learn':personalPathIcon('<path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-3-1-6-1-9 1Zm0 0v15M6 8h3m-3 4h3m6-4h3m-3 4h3"/>'),
-'self-awareness-communication':personalPathIcon('<path d="M3 3h13v10H8l-5 4V3Zm15 5h3v12l-4-3h-6v-2"/>'),
-'weekly-planning-journey':personalPathIcon('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18m-14 4h3m4 0h3m-10 4h3"/>')
+const LIBRARY_ICONS = {
+  python:
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-terminal"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <polyline points="4 17 10 11 4 5" />\n  <line x1="12" x2="20" y1="19" y2="19" />\n</svg>\n',
+  'data-structures-algorithms':
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-network"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <rect x="16" y="16" width="6" height="6" rx="1" />\n  <rect x="2" y="16" width="6" height="6" rx="1" />\n  <rect x="9" y="2" width="6" height="6" rx="1" />\n  <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3" />\n  <path d="M12 12V8" />\n</svg>\n',
+  'design-patterns':
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-blocks"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <rect width="7" height="7" x="14" y="3" rx="1" />\n  <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3" />\n</svg>\n',
+  'sql-server':
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-database"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <ellipse cx="12" cy="5" rx="9" ry="3" />\n  <path d="M3 5V19A9 3 0 0 0 21 19V5" />\n  <path d="M3 12A9 3 0 0 0 21 12" />\n</svg>\n',
+  dotnet:
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-braces"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1" />\n  <path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1" />\n</svg>\n',
+  react:
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-panels-top-left"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <rect width="18" height="18" x="3" y="3" rx="2" />\n  <path d="M3 9h18" />\n  <path d="M9 21V9" />\n</svg>\n',
+  'system-design':
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-server"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <rect width="20" height="8" x="2" y="2" rx="2" ry="2" />\n  <rect width="20" height="8" x="2" y="14" rx="2" ry="2" />\n  <line x1="6" x2="6.01" y1="6" y2="6" />\n  <line x1="6" x2="6.01" y1="18" y2="18" />\n</svg>\n',
+  'ai-agents':
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-bot"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path d="M12 8V4H8" />\n  <rect width="16" height="12" x="4" y="8" rx="2" />\n  <path d="M2 14h2" />\n  <path d="M20 14h2" />\n  <path d="M15 13v2" />\n  <path d="M9 13v2" />\n</svg>\n',
+  'agent-harnesses':
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-workflow"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <rect width="8" height="8" x="3" y="3" rx="2" />\n  <path d="M7 11v4a2 2 0 0 0 2 2h4" />\n  <rect width="8" height="8" x="13" y="13" rx="2" />\n</svg>\n',
+  'financial-foundations':
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-chart-no-axes-combined"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path d="M12 16v5" />\n  <path d="M16 14v7" />\n  <path d="M20 10v11" />\n  <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />\n  <path d="M4 18v3" />\n  <path d="M8 14v7" />\n</svg>\n',
+  'git-team-workflows':
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-git-branch"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <line x1="6" x2="6" y1="3" y2="15" />\n  <circle cx="18" cy="6" r="3" />\n  <circle cx="6" cy="18" r="3" />\n  <path d="M18 9a9 9 0 0 1-9 9" />\n</svg>\n',
+  'testing-debugging':
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-bug"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path d="m8 2 1.88 1.88" />\n  <path d="M14.12 3.88 16 2" />\n  <path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1" />\n  <path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6" />\n  <path d="M12 20v-9" />\n  <path d="M6.53 9C4.6 8.8 3 7.1 3 5" />\n  <path d="M6 13H2" />\n  <path d="M3 21c0-2.1 1.7-3.9 3.8-4" />\n  <path d="M20.97 5c0 2.1-1.6 3.8-3.5 4" />\n  <path d="M22 13h-4" />\n  <path d="M17.2 17c2.1.1 3.8 1.9 3.8 4" />\n</svg>\n',
+  'application-security':
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-shield-check"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />\n  <path d="m9 12 2 2 4-4" />\n</svg>\n',
+  'networking-web':
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-globe"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <circle cx="12" cy="12" r="10" />\n  <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />\n  <path d="M2 12h20" />\n</svg>\n',
+  'delivery-operations':
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-package-check"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path d="m16 16 2 2 4-4" />\n  <path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14" />\n  <path d="m7.5 4.27 9 5.15" />\n  <polyline points="3.29 7 12 12 20.71 7" />\n  <line x1="12" x2="12" y1="22" y2="12" />\n</svg>\n',
+  kubernetes:
+    '<svg aria-hidden="true" focusable="false"\n  class="lucide lucide-boxes"\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z" />\n  <path d="m7 16.5-4.74-2.85" />\n  <path d="m7 16.5 5-3" />\n  <path d="M7 16.5v5.17" />\n  <path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z" />\n  <path d="m17 16.5-5-3" />\n  <path d="m17 16.5 4.74-2.85" />\n  <path d="M17 16.5v5.17" />\n  <path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z" />\n  <path d="M12 8 7.26 5.15" />\n  <path d="m12 8 4.74-2.85" />\n  <path d="M12 13.5V8" />\n</svg>\n',
+};
+const LIBRARY_LABELS = {
+  python: ['PY', 'Python'],
+  'data-structures-algorithms': ['DS', 'Data structures & algorithms'],
+  'design-patterns': ['DP', 'Design patterns'],
+  'sql-server': ['SQL', 'SQL Server'],
+  dotnet: ['C#', 'C# & .NET'],
+  react: ['RE', 'JavaScript → React'],
+  'system-design': ['SD', 'System design'],
+  'ai-agents': ['AI', 'AI agents'],
+  'agent-harnesses': ['AH', 'Agent harnesses'],
+  'financial-foundations': ['FF', 'Financial foundations'],
+};
+Object.assign(LIBRARY_ICONS, {
+  'linux-operating-systems': LIBRARY_ICONS.python,
+  'data-engineering': LIBRARY_ICONS['sql-server'],
+  'ui-accessibility': LIBRARY_ICONS.react,
+  'observability-performance': LIBRARY_ICONS['financial-foundations'],
+  'messaging-events': LIBRARY_ICONS['agent-harnesses'],
+  'cloud-infrastructure': LIBRARY_ICONS.kubernetes,
+  'full-stack-journey': LIBRARY_ICONS['system-design'],
 });
-LIBRARY_ICONS['python-problem-solving']=LIBRARY_ICONS.python;
-function libraryProgress(p){let done=0,next=null;const total=Array.isArray(p.lessons)?p.lessons.length:Number(p.lessons)||0;try{const read=new Set(completed(p.id));done=p.lessons.filter(l=>read.has(l.id)).length;next=p.lessons.find(l=>!read.has(l.id))||null;}catch{}return {done,total,next,percent:total?Math.round(done/total*100):0};}
-function libraryNode(p){const [symbol,label]=LIBRARY_LABELS[p.id]||['↗',p.title],progress=libraryProgress(p);return `<a class="map-node${progress.done?' is-started':''}" data-subject="${escapeText(p.id)}" href="${escapeText(p.href||'#path/'+p.id)}" aria-label="Open ${escapeText(p.title)} · ${progress.done} of ${progress.total} lessons read"><span class="map-node-top"><span class="subject-symbol" aria-hidden="true">${LIBRARY_ICONS[p.id]||escapeText(symbol)}</span><span class="node-open" aria-hidden="true">↗</span></span><strong>${escapeText(p.title)}</strong><span class="node-meta">${progress.done?progress.done+' / '+progress.total+' lessons read':progress.total+' lessons · Not started'}</span>${progress.done?`<span class="node-progress" aria-hidden="true"><span style="width:${progress.percent}%"></span></span>`:''}</a>`;}
-// In-progress rows show where the learner is and link the next unread lesson.
-function libraryFamily(p){return LIBRARY_GRAPHS.find(g=>g.nodes.some(n=>n[0]===p.id))?.name||p.category;}
-function libraryRow(p,progress){const ready=p.status==='ready',started=ready&&progress.done>0,href=escapeText(p.href||'#path/'+p.id);
- const status=!ready?'Coming later':!started?progress.total+' lessons':progress.done===progress.total?'All '+progress.total+' read':progress.done+' of '+progress.total+' read';
- const next=!started||progress.done===progress.total?'':progress.next?`<a class="catalog-next" href="${lessonRoute(p,progress.next)}"><span>Next</span> ${escapeText(progress.next.title.replace(/^\d+\.\s*/,''))}</a>`:`<a class="catalog-next" href="${href}"><span>Next</span> Continue the course</a>`;
- return `<li class="catalog-item${started?' is-started':''}${ready?'':' is-planned'}" data-subject="${escapeText(p.id)}"><span class="catalog-subject" aria-hidden="true">${LIBRARY_ICONS[p.id]||'↗'}</span><div class="catalog-name">${ready?`<a href="${href}">${escapeText(p.title)}</a>`:`<span>${escapeText(p.title)}</span>`}<small>${escapeText(libraryFamily(p))}</small></div><div class="catalog-progress"><span>${status}</span>${started?`<span class="node-progress" aria-hidden="true"><span style="width:${progress.percent}%"></span></span>`:''}</div>${next}</li>`;}
-// Browse cards carry the first sentence of the description and the learner's progress.
-function libraryLine(p){const text=String(p.description||'');return (text.match(/^.*?[.!?](?=\s|$)/)||[text])[0];}
-function libraryCard(p,progress){const ready=p.status==='ready',started=ready&&progress.done>0,href=escapeText(p.href||'#path/'+p.id);
- const status=!ready?'Coming later':!started?progress.total+' lessons':progress.done===progress.total?'All '+progress.total+' read':progress.done+' of '+progress.total+' read';
- const body=`<span class="catalog-subject" aria-hidden="true">${LIBRARY_ICONS[p.id]||'↗'}</span><span class="course-text"><strong>${escapeText(p.title)}</strong><span class="course-line">${escapeText(libraryLine(p))}</span></span><span class="course-status">${status}${started?`<span class="node-progress" aria-hidden="true"><span style="width:${progress.percent}%"></span></span>`:''}</span>`;
- return `<li class="course-card${started?' is-started':''}${ready?'':' is-planned'}" data-subject="${escapeText(p.id)}">${ready?`<a href="${href}">${body}</a>`:`<div>${body}</div>`}</li>`;}
-// Routes group the list; on a phone they start closed, since started courses already lead the page.
-const libraryOpenRoutes=new Map();
-function libraryCompact(){try{return !!window.matchMedia&&window.matchMedia('(max-width: 700px)').matches;}catch{return false;}}
-function libraryRoutes(){
- const known=new Set(LIBRARY_GRAPHS.flatMap(g=>g.nodes.map(n=>n[0]))),find=id=>LEARNING_PATHS.find(p=>p.id===id&&p.status==='ready');
- const routes=LIBRARY_GRAPHS.map(g=>({id:g.id,name:g.name,description:g.description,paths:g.nodes.map(n=>find(n[0])).filter(Boolean)}));
- routes.push({id:'independent',name:'Finance & other subjects',description:'Independent paths you can begin at any time.',paths:LEARNING_PATHS.filter(p=>p.status==='ready'&&!known.has(p.id))});
- routes.push({id:'planned',name:'Planned',description:'Courses that are not ready yet.',paths:LEARNING_PATHS.filter(p=>p.status!=='ready')});
- return routes.filter(r=>r.paths.length);
+Object.assign(LIBRARY_ICONS, {
+  'practical-maths-statistics': LIBRARY_ICONS['financial-foundations'],
+  'data-analysis-python': LIBRARY_ICONS['sql-server'],
+  'machine-learning-foundations': LIBRARY_ICONS['ai-agents'],
+  'requirements-maintenance': LIBRARY_ICONS['testing-debugging'],
+});
+// Notebook-authored subject icons; no external assets or requests.
+function personalPathIcon(body) {
+  return (
+    '<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+    body +
+    '</svg>'
+  );
 }
-function libraryList(query='',compact=false){
- const cards=items=>`<ul class="course-grid">${items.map(p=>libraryCard(p,libraryProgress(p))).join('')}</ul>`;
- if(query.trim()){const matching=rankedPaths(LEARNING_PATHS,query);return matching.length?cards(matching):'<p role="status">No matching learning paths. Try a broader topic.</p>';}
- return libraryRoutes().map(r=>{
-  const progress=r.paths.map(libraryProgress),started=progress.filter(x=>x.done).length;
-  const open=libraryOpenRoutes.has(r.id)?libraryOpenRoutes.get(r.id):!compact;
-  return `<details class="route-group" data-route="${r.id}"${open?' open':''}><summary><strong class="route-title">${escapeText(r.name)}</strong><span class="route-meta">${r.paths.length} ${r.paths.length===1?'course':'courses'}${started?' · '+started+' started':''}<span class="route-names"> · ${escapeText(r.paths.map(p=>p.title).join(', '))}</span></span></summary><p class="route-description">${escapeText(r.description)}</p>${cards(r.paths)}</details>`;
- }).join('');
+Object.assign(LIBRARY_ICONS, {
+  'time-attention-energy': personalPathIcon('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/>'),
+  'task-project-management': personalPathIcon(
+    '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="m7 8 1 1 2-2M13 8h4m-10 5 1 1 2-2m3 1h4M7 18h10"/>',
+  ),
+  'habits-behaviour-change': personalPathIcon(
+    '<path d="M12 21v-9M12 15C5 15 3 11 3 6c6 0 9 3 9 9ZM12 12c0-6 3-9 9-9 0 6-3 9-9 9Z"/>',
+  ),
+  'learning-how-to-learn': personalPathIcon(
+    '<path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-3-1-6-1-9 1Zm0 0v15M6 8h3m-3 4h3m6-4h3m-3 4h3"/>',
+  ),
+  'self-awareness-communication': personalPathIcon('<path d="M3 3h13v10H8l-5 4V3Zm15 5h3v12l-4-3h-6v-2"/>'),
+  'weekly-planning-journey': personalPathIcon(
+    '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18m-14 4h3m4 0h3m-10 4h3"/>',
+  ),
+});
+LIBRARY_ICONS['python-problem-solving'] = LIBRARY_ICONS.python;
+function libraryProgress(p) {
+  let done = 0,
+    next = null;
+  const total = Array.isArray(p.lessons) ? p.lessons.length : Number(p.lessons) || 0;
+  try {
+    const read = new Set(completed(p.id));
+    done = p.lessons.filter(l => read.has(l.id)).length;
+    next = p.lessons.find(l => !read.has(l.id)) || null;
+  } catch {}
+  return { done, total, next, percent: total ? Math.round((done / total) * 100) : 0 };
+}
+function libraryNode(p) {
+  const [symbol, label] = LIBRARY_LABELS[p.id] || ['↗', p.title],
+    progress = libraryProgress(p);
+  return `<a class="map-node${progress.done ? ' is-started' : ''}" data-subject="${escapeText(p.id)}" href="${escapeText(p.href || '#path/' + p.id)}" aria-label="Open ${escapeText(p.title)} · ${progress.done} of ${progress.total} lessons read"><span class="map-node-top"><span class="subject-symbol" aria-hidden="true">${LIBRARY_ICONS[p.id] || escapeText(symbol)}</span><span class="node-open" aria-hidden="true">↗</span></span><strong>${escapeText(p.title)}</strong><span class="node-meta">${progress.done ? progress.done + ' / ' + progress.total + ' lessons read' : progress.total + ' lessons · Not started'}</span>${progress.done ? `<span class="node-progress" aria-hidden="true"><span style="width:${progress.percent}%"></span></span>` : ''}</a>`;
+}
+// In-progress rows show where the learner is and link the next unread lesson.
+function libraryFamily(p) {
+  return LIBRARY_GRAPHS.find(g => g.nodes.some(n => n[0] === p.id))?.name || p.category;
+}
+function libraryRow(p, progress) {
+  const ready = p.status === 'ready',
+    started = ready && progress.done > 0,
+    href = escapeText(p.href || '#path/' + p.id);
+  const status = !ready
+    ? 'Coming later'
+    : !started
+      ? progress.total + ' lessons'
+      : progress.done === progress.total
+        ? 'All ' + progress.total + ' read'
+        : progress.done + ' of ' + progress.total + ' read';
+  const next =
+    !started || progress.done === progress.total
+      ? ''
+      : progress.next
+        ? `<a class="catalog-next" href="${lessonRoute(p, progress.next)}"><span>Next</span> ${escapeText(progress.next.title.replace(/^\d+\.\s*/, ''))}</a>`
+        : `<a class="catalog-next" href="${href}"><span>Next</span> Continue the course</a>`;
+  return `<li class="catalog-item${started ? ' is-started' : ''}${ready ? '' : ' is-planned'}" data-subject="${escapeText(p.id)}"><span class="catalog-subject" aria-hidden="true">${LIBRARY_ICONS[p.id] || '↗'}</span><div class="catalog-name">${ready ? `<a href="${href}">${escapeText(p.title)}</a>` : `<span>${escapeText(p.title)}</span>`}<small>${escapeText(libraryFamily(p))}</small></div><div class="catalog-progress"><span>${status}</span>${started ? `<span class="node-progress" aria-hidden="true"><span style="width:${progress.percent}%"></span></span>` : ''}</div>${next}</li>`;
+}
+// Browse cards carry the first sentence of the description and the learner's progress.
+function libraryLine(p) {
+  const text = String(p.description || '');
+  return (text.match(/^.*?[.!?](?=\s|$)/) || [text])[0];
+}
+function libraryCard(p, progress) {
+  const ready = p.status === 'ready',
+    started = ready && progress.done > 0,
+    href = escapeText(p.href || '#path/' + p.id);
+  const status = !ready
+    ? 'Coming later'
+    : !started
+      ? progress.total + ' lessons'
+      : progress.done === progress.total
+        ? 'All ' + progress.total + ' read'
+        : progress.done + ' of ' + progress.total + ' read';
+  const body = `<span class="catalog-subject" aria-hidden="true">${LIBRARY_ICONS[p.id] || '↗'}</span><span class="course-text"><strong>${escapeText(p.title)}</strong><span class="course-line">${escapeText(libraryLine(p))}</span></span><span class="course-status">${status}${started ? `<span class="node-progress" aria-hidden="true"><span style="width:${progress.percent}%"></span></span>` : ''}</span>`;
+  return `<li class="course-card${started ? ' is-started' : ''}${ready ? '' : ' is-planned'}" data-subject="${escapeText(p.id)}">${ready ? `<a href="${href}">${body}</a>` : `<div>${body}</div>`}</li>`;
+}
+// Routes group the list; on a phone they start closed, since started courses already lead the page.
+const libraryOpenRoutes = new Map();
+function libraryCompact() {
+  try {
+    return !!window.matchMedia && window.matchMedia('(max-width: 700px)').matches;
+  } catch {
+    return false;
+  }
+}
+function libraryRoutes() {
+  const known = new Set(LIBRARY_GRAPHS.flatMap(g => g.nodes.map(n => n[0]))),
+    find = id => LEARNING_PATHS.find(p => p.id === id && p.status === 'ready');
+  const routes = LIBRARY_GRAPHS.map(g => ({
+    id: g.id,
+    name: g.name,
+    description: g.description,
+    paths: g.nodes.map(n => find(n[0])).filter(Boolean),
+  }));
+  routes.push({
+    id: 'independent',
+    name: 'Finance & other subjects',
+    description: 'Independent paths you can begin at any time.',
+    paths: LEARNING_PATHS.filter(p => p.status === 'ready' && !known.has(p.id)),
+  });
+  routes.push({
+    id: 'planned',
+    name: 'Planned',
+    description: 'Courses that are not ready yet.',
+    paths: LEARNING_PATHS.filter(p => p.status !== 'ready'),
+  });
+  return routes.filter(r => r.paths.length);
+}
+function libraryList(query = '', compact = false) {
+  const cards = items => `<ul class="course-grid">${items.map(p => libraryCard(p, libraryProgress(p))).join('')}</ul>`;
+  if (query.trim()) {
+    const matching = rankedPaths(LEARNING_PATHS, query);
+    return matching.length ? cards(matching) : '<p role="status">No matching learning paths. Try a broader topic.</p>';
+  }
+  return libraryRoutes()
+    .map(r => {
+      const progress = r.paths.map(libraryProgress),
+        started = progress.filter(x => x.done).length;
+      const open = libraryOpenRoutes.has(r.id) ? libraryOpenRoutes.get(r.id) : !compact;
+      return `<details class="route-group" data-route="${r.id}"${open ? ' open' : ''}><summary><strong class="route-title">${escapeText(r.name)}</strong><span class="route-meta">${r.paths.length} ${r.paths.length === 1 ? 'course' : 'courses'}${started ? ' · ' + started + ' started' : ''}<span class="route-names"> · ${escapeText(r.paths.map(p => p.title).join(', '))}</span></span></summary><p class="route-description">${escapeText(r.description)}</p>${cards(r.paths)}</details>`;
+    })
+    .join('');
 }
 // Use the empty row gap for downward connections, with separate arrival ports.
-function libraryConnector(graph,nodes,edges,a,b){
- const from=nodes.find(n=>n[0]===a),to=nodes.find(n=>n[0]===b),width=graph.nodeWidth||30;
- if(to[2]>=from[2]+156){
-  const incoming=edges.filter(([source,target])=>target===b&&nodes.find(n=>n[0]===source)[2]+156<=to[2]).sort((left,right)=>nodes.find(n=>n[0]===left[0])[1]-nodes.find(n=>n[0]===right[0])[1]);
-  const port=(incoming.findIndex(edge=>edge[0]===a)+1)/(incoming.length+1);
-  const x1=(from[1]+width/2)*10,x2=(to[1]+width*port)*10,y1=from[2]+156,y2=to[2]-7,middle=(y1+y2)/2;
-  return `M ${x1} ${y1} C ${x1} ${middle}, ${x2} ${middle}, ${x2} ${y2}`;
- }
- const x1=(from[1]+width)*10,x2=to[1]*10,y1=from[2]+78,y2=to[2]+78;
- return `M ${x1} ${y1} C ${(x1+x2)/2} ${y1}, ${(x1+x2)/2} ${y2}, ${x2-7} ${y2}`;
+function libraryConnector(graph, nodes, edges, a, b) {
+  const from = nodes.find(n => n[0] === a),
+    to = nodes.find(n => n[0] === b),
+    width = graph.nodeWidth || 30;
+  if (to[2] >= from[2] + 156) {
+    const incoming = edges
+      .filter(([source, target]) => target === b && nodes.find(n => n[0] === source)[2] + 156 <= to[2])
+      .sort((left, right) => nodes.find(n => n[0] === left[0])[1] - nodes.find(n => n[0] === right[0])[1]);
+    const port = (incoming.findIndex(edge => edge[0] === a) + 1) / (incoming.length + 1);
+    const x1 = (from[1] + width / 2) * 10,
+      x2 = (to[1] + width * port) * 10,
+      y1 = from[2] + 156,
+      y2 = to[2] - 7,
+      middle = (y1 + y2) / 2;
+    return `M ${x1} ${y1} C ${x1} ${middle}, ${x2} ${middle}, ${x2} ${y2}`;
+  }
+  const x1 = (from[1] + width) * 10,
+    x2 = to[1] * 10,
+    y1 = from[2] + 78,
+    y2 = to[2] + 78;
+  return `M ${x1} ${y1} C ${(x1 + x2) / 2} ${y1}, ${(x1 + x2) / 2} ${y2}, ${x2 - 7} ${y2}`;
 }
-function libraryGraph(graph,ready){
- const nodes=graph.nodes.filter(n=>ready.some(p=>p.id===n[0]));
- const edges=graph.edges.filter(([a,b])=>nodes.some(n=>n[0]===a)&&nodes.some(n=>n[0]===b));
- const lines=edges.map(([a,b,type='suggested'])=>`<path class="relationship-${type}" d="${libraryConnector(graph,nodes,edges,a,b)}" marker-end="url(#arrow-${graph.id})"/>`).join('');
- const height=graph.height||(graph.id==='systems'?366:336);
- const labels={suggested:'Suggested order',background:'Useful background',alternative:'Alternative direction'};
- const relationships=Object.entries(labels).map(([type,label])=>{const matching=edges.filter(e=>(e[2]||'suggested')===type);return matching.length?`<div class="relationship-group relationship-${type}"><dt>${label}</dt><dd><ul>${matching.map(([a,b])=>{const from=ready.find(p=>p.id===a),to=ready.find(p=>p.id===b);return `<li><a href="${escapeText(from.href||'#path/'+a)}">${escapeText(from.title)}</a> <span aria-hidden="true">→</span><span class="relationship-to"> to </span> <a href="${escapeText(to.href||'#path/'+b)}">${escapeText(to.title)}</a></li>`;}).join('')}</ul></dd></div>`:'';}).join('');
- return `<section class="branch-section" aria-labelledby="branch-${graph.id}"><div class="branch-heading"><h3 id="branch-${graph.id}">${graph.name}</h3><p>${graph.description}</p></div><div class="branch-canvas branch-${graph.id}" style="--canvas-height:${height}px"><svg class="branch-lines" viewBox="0 0 1000 ${height}" preserveAspectRatio="none" aria-hidden="true" focusable="false"><defs><marker id="arrow-${graph.id}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>${lines}</svg><ul class="branch-nodes">${nodes.map(([id,x,y,tone])=>{const p=ready.find(p=>p.id===id);return `<li class="branch-stop route-${tone}" style="--node-x:${x}%;--node-y:${y}px;--node-width:${graph.nodeWidth||30}%">${libraryNode(p)}</li>`;}).join('')}</ul></div>${relationships?`<details class="map-connections"><summary>View connections as text<span class="relationship-to"> for ${escapeText(graph.name)}</span></summary><dl class="map-relationships" aria-label="Course relationships">${relationships}</dl></details>`:''}</section>`;
+function libraryGraph(graph, ready) {
+  const nodes = graph.nodes.filter(n => ready.some(p => p.id === n[0]));
+  const edges = graph.edges.filter(([a, b]) => nodes.some(n => n[0] === a) && nodes.some(n => n[0] === b));
+  const lines = edges
+    .map(
+      ([a, b, type = 'suggested']) =>
+        `<path class="relationship-${type}" d="${libraryConnector(graph, nodes, edges, a, b)}" marker-end="url(#arrow-${graph.id})"/>`,
+    )
+    .join('');
+  const height = graph.height || (graph.id === 'systems' ? 366 : 336);
+  const labels = {
+    suggested: 'Suggested order',
+    background: 'Useful background',
+    alternative: 'Alternative direction',
+  };
+  const relationships = Object.entries(labels)
+    .map(([type, label]) => {
+      const matching = edges.filter(e => (e[2] || 'suggested') === type);
+      return matching.length
+        ? `<div class="relationship-group relationship-${type}"><dt>${label}</dt><dd><ul>${matching
+            .map(([a, b]) => {
+              const from = ready.find(p => p.id === a),
+                to = ready.find(p => p.id === b);
+              return `<li><a href="${escapeText(from.href || '#path/' + a)}">${escapeText(from.title)}</a> <span aria-hidden="true">→</span><span class="relationship-to"> to </span> <a href="${escapeText(to.href || '#path/' + b)}">${escapeText(to.title)}</a></li>`;
+            })
+            .join('')}</ul></dd></div>`
+        : '';
+    })
+    .join('');
+  return `<section class="branch-section" aria-labelledby="branch-${graph.id}"><div class="branch-heading"><h3 id="branch-${graph.id}">${graph.name}</h3><p>${graph.description}</p></div><div class="branch-canvas branch-${graph.id}" style="--canvas-height:${height}px"><svg class="branch-lines" viewBox="0 0 1000 ${height}" preserveAspectRatio="none" aria-hidden="true" focusable="false"><defs><marker id="arrow-${graph.id}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z"/></marker></defs>${lines}</svg><ul class="branch-nodes">${nodes
+    .map(([id, x, y, tone]) => {
+      const p = ready.find(p => p.id === id);
+      return `<li class="branch-stop route-${tone}" style="--node-x:${x}%;--node-y:${y}px;--node-width:${graph.nodeWidth || 30}%">${libraryNode(p)}</li>`;
+    })
+    .join(
+      '',
+    )}</ul></div>${relationships ? `<details class="map-connections"><summary>View connections as text<span class="relationship-to"> for ${escapeText(graph.name)}</span></summary><dl class="map-relationships" aria-label="Course relationships">${relationships}</dl></details>` : ''}</section>`;
 }
-function libraryMap(query='',route='all'){
- const ready=LEARNING_PATHS.filter(p=>p.status==='ready');
- const matching=rankedPaths(ready,query);
- if(!matching.length)return '<p class="map-empty">No matching paths. Try a broader topic or search inside all lessons.</p>';
- if(query.trim())return `<ul class="map-results">${matching.map(p=>'<li class="route-green">'+libraryNode(p)+'</li>').join('')}</ul>`;
- const known=new Set(LIBRARY_GRAPHS.flatMap(g=>g.nodes.map(n=>n[0])));
- const extra=ready.filter(p=>!known.has(p.id));
- const graphs=LIBRARY_GRAPHS.filter(g=>route==='all'||g.id===route);
- return `<div class="roadmap-legend"><span aria-hidden="true">↗</span> Open any course. Solid arrows suggest an order; dashed arrows show useful background; dotted arrows offer another direction. No course is locked.</div>`+graphs.map(g=>libraryGraph(g,ready)).join('')+(extra.length&&(route==='all'||route==='independent')?`<section class="branch-section independent-paths"><div class="branch-heading"><h3>Finance & other subjects</h3><p>Independent paths you can begin at any time.</p></div><ul class="map-results">${extra.map(p=>'<li class="route-amber">'+libraryNode(p)+'</li>').join('')}</ul></section>`:'');
+function libraryMap(query = '', route = 'all') {
+  const ready = LEARNING_PATHS.filter(p => p.status === 'ready');
+  const matching = rankedPaths(ready, query);
+  if (!matching.length)
+    return '<p class="map-empty">No matching paths. Try a broader topic or search inside all lessons.</p>';
+  if (query.trim())
+    return `<ul class="map-results">${matching.map(p => '<li class="route-green">' + libraryNode(p) + '</li>').join('')}</ul>`;
+  const known = new Set(LIBRARY_GRAPHS.flatMap(g => g.nodes.map(n => n[0])));
+  const extra = ready.filter(p => !known.has(p.id));
+  const graphs = LIBRARY_GRAPHS.filter(g => route === 'all' || g.id === route);
+  return (
+    `<div class="roadmap-legend"><span aria-hidden="true">↗</span> Open any course. Solid arrows suggest an order; dashed arrows show useful background; dotted arrows offer another direction. No course is locked.</div>` +
+    graphs.map(g => libraryGraph(g, ready)).join('') +
+    (extra.length && (route === 'all' || route === 'independent')
+      ? `<section class="branch-section independent-paths"><div class="branch-heading"><h3>Finance & other subjects</h3><p>Independent paths you can begin at any time.</p></div><ul class="map-results">${extra.map(p => '<li class="route-amber">' + libraryNode(p) + '</li>').join('')}</ul></section>`
+      : '')
+  );
 }
 // The home page leads with the learner's next action, then lets them browse.
-const LIBRARY_STARTS=[['New to programming','python'],['Building web applications','dotnet'],['Exploring AI applications','ai-agents'],['Planning your study time','time-attention-energy']];
-function libraryStarted(){let last=null;try{last=JSON.parse(localStorage.getItem('learning-notebook:last-lesson:v1'))?.path;}catch{}
- return LEARNING_PATHS.filter(p=>p.status==='ready').map(p=>[p,libraryProgress(p)]).filter(([,x])=>x.done&&x.done<x.total).sort((a,b)=>(b[0].id===last)-(a[0].id===last)||b[1].percent-a[1].percent);}
-function libraryToday(){
- const resume=resumeView(),review=typeof NotebookReview!=='undefined'?NotebookReview.card():'',backup=typeof NotebookBackup!=='undefined'?NotebookBackup.reminder():'';
- let last=null;try{last=JSON.parse(localStorage.getItem('learning-notebook:last-lesson:v1'))?.path;}catch{}
- const started=libraryStarted().filter(([p])=>!(resume&&p.id===last)),shown=started.slice(0,4);
- if(!resume&&!review&&!started.length){
-  const starts=LIBRARY_STARTS.map(([why,id])=>[why,LEARNING_PATHS.find(p=>p.id===id&&p.status==='ready')]).filter(([,p])=>p);
-  return starts.length?`<section class="home-today home-start" aria-labelledby="today-title"><h2 id="today-title">Where to start</h2><p class="today-note">Every course is open. Pick one that matches what you want to do; your progress stays in this browser.</p><ul class="start-grid">${starts.map(([why,p])=>`<li><a href="${escapeText(p.href||'#path/'+p.id)}"><small>${why}</small><strong>${escapeText(p.title)}</strong><span>${escapeText(libraryLine(p))}</span></a></li>`).join('')}</ul>${backup}</section>`:backup;
- }
- const quiet=review.includes('is-quiet');
- const more=started.length>shown.length?`<p class="today-more">${started.length-shown.length} more started ${started.length-shown.length===1?'course is':'courses are'} marked in the list below.</p>`:'';
- return `<section class="home-today" aria-labelledby="today-title"><h2 id="today-title">Pick up where you left off</h2>${resume||(!quiet&&review)?`<div class="today-actions">${resume}${quiet?'':review}</div>`:''}${shown.length?`<h3 class="today-label">In progress</h3><ul class="catalog-list">${shown.map(([p,x])=>libraryRow(p,x)).join('')}</ul>`:''}${more}${quiet?review:''}${backup}</section>`;
+const LIBRARY_STARTS = [
+  ['New to programming', 'python'],
+  ['Building web applications', 'dotnet'],
+  ['Exploring AI applications', 'ai-agents'],
+  ['Planning your study time', 'time-attention-energy'],
+];
+function libraryStarted() {
+  let last = null;
+  try {
+    last = JSON.parse(localStorage.getItem('learning-notebook:last-lesson:v1'))?.path;
+  } catch {}
+  return LEARNING_PATHS.filter(p => p.status === 'ready')
+    .map(p => [p, libraryProgress(p)])
+    .filter(([, x]) => x.done && x.done < x.total)
+    .sort((a, b) => (b[0].id === last) - (a[0].id === last) || b[1].percent - a[1].percent);
 }
-function learningLibraryView(){const ready=LEARNING_PATHS.filter(p=>p.status==='ready');const total=ready.reduce((n,p)=>n+libraryProgress(p).total,0);const started=libraryStarted().length;
- return `<div class="library-hero"><h1>Your learning notebook</h1><p class="library-summary">${ready.length} learning paths <span aria-hidden="true">·</span> ${total} lessons${started?` <span aria-hidden="true">·</span> ${started} in progress`:''}</p></div>${libraryToday()}<section id="learning-explorer" class="library-explorer" aria-labelledby="explorer-title"><div class="explorer-heading"><h2 id="explorer-title">Browse courses</h2><p id="path-count" role="status" aria-live="polite">${ready.length} available${LEARNING_PATHS.some(p=>p.status!=='ready')?' · '+LEARNING_PATHS.filter(p=>p.status!=='ready').length+' planned':''}</p></div><div class="explorer-toolbar"><div class="library-filter"><label for="path-search">Find a course</label><input class="search" id="path-search" type="search" placeholder="Python, SQL, testing…"></div><div class="map-route-picker" id="map-route-picker" hidden><label for="map-route">Route</label><select id="map-route"><option value="all">All routes</option>${LIBRARY_GRAPHS.map(g=>`<option value="${g.id}">${escapeText(g.name)} · ${g.nodes.length} paths</option>`).join('')}<option value="independent">Finance &amp; other subjects</option></select></div><div class="library-view-switch" role="group" aria-label="Show courses as"><button type="button" data-library-view="list" aria-pressed="true">List</button><button type="button" data-library-view="map" aria-pressed="false">Map</button></div></div><p class="map-guidance" id="map-guidance" role="status" aria-live="polite">Grouped by route. Open any course; none is locked.</p><div class="library-list" id="path-list">${libraryList('',libraryCompact())}</div><div id="learning-map" hidden>${libraryMap()}</div></section>${atlasLibraryFeature()}<div class="library-footer-tools"><div><h2>Keep your place.</h2><p>Move your progress between devices with one backup file.</p></div><a class="download-action" href="#backup">Progress & backups <span aria-hidden="true">↗</span></a></div>`;}
-function bindLibraryMap(main){
- const map=document.getElementById('learning-map');if(!map)return;
- const list=document.getElementById('path-list'),input=document.getElementById('path-search'),buttons=main.querySelectorAll('[data-library-view]');
- const route=document.getElementById('map-route'),picker=document.getElementById('map-route-picker');
- const validRoute=value=>value==='independent'||LIBRARY_GRAPHS.some(g=>g.id===value)?value:'all';
- try{route.value=validRoute(sessionStorage.getItem('learning-notebook:map-route'));}catch{route.value='all';}
- // Remember groups the learner opened or closed while they filter or switch views.
- list.addEventListener('toggle',e=>{const group=e.target.closest?.('.route-group');if(group)libraryOpenRoutes.set(group.dataset.route,group.open);},true);
- const update=()=>{
-  const searching=!!input.value.trim(),isMap=!map.hidden;
-  map.innerHTML=libraryMap(input.value,route.value);
-  list.innerHTML=libraryList(input.value,libraryCompact());
-  const ready=LEARNING_PATHS.filter(p=>p.status==='ready'),known=new Set(LIBRARY_GRAPHS.flatMap(g=>g.nodes.map(n=>n[0])));
-  const shown=searching?rankedPaths(isMap?ready:LEARNING_PATHS,input.value).length:!isMap||route.value==='all'?(isMap?ready:LEARNING_PATHS).length:route.value==='independent'?ready.filter(p=>!known.has(p.id)).length:LIBRARY_GRAPHS.find(g=>g.id===route.value).nodes.filter(n=>ready.some(p=>p.id===n[0])).length;
-  document.getElementById('path-count').textContent=shown+(searching?(shown===1?' matching path':' matching paths'):' paths shown')+' · '+LEARNING_PATHS.length+' total';
-  picker.hidden=!isMap;
-  route.disabled=searching;
-  document.getElementById('map-guidance').textContent=searching?'Matching courses across all routes.':!isMap?'Grouped by route. Open any course; none is locked.':route.value==='all'?'Solid arrows suggest an order, dashed arrows show useful background and dotted arrows offer another direction. Choose a route to see fewer paths.':'Showing '+(LIBRARY_GRAPHS.find(g=>g.id===route.value)?.name||'Finance & other subjects')+'. Choose All routes to see the whole notebook.';
- };
- const select=view=>{const isMap=view==='map';map.hidden=!isMap;list.hidden=isMap;buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.libraryView===(isMap?'map':'list'))));update();};
- buttons.forEach(button=>button.addEventListener('click',()=>{select(button.dataset.libraryView);try{sessionStorage.setItem('learning-notebook:library-view',button.dataset.libraryView);}catch{}}));
- route.addEventListener('change',()=>{route.value=validRoute(route.value);update();try{sessionStorage.setItem('learning-notebook:map-route',route.value);}catch{}});
- try{select(sessionStorage.getItem('learning-notebook:library-view'));}catch{select('list');}
- input.addEventListener('input',update);
+function libraryToday() {
+  const resume = resumeView(),
+    review = typeof NotebookReview !== 'undefined' ? NotebookReview.card() : '',
+    backup = typeof NotebookBackup !== 'undefined' ? NotebookBackup.reminder() : '';
+  let last = null;
+  try {
+    last = JSON.parse(localStorage.getItem('learning-notebook:last-lesson:v1'))?.path;
+  } catch {}
+  const started = libraryStarted().filter(([p]) => !(resume && p.id === last)),
+    shown = started.slice(0, 4);
+  if (!resume && !review && !started.length) {
+    const starts = LIBRARY_STARTS.map(([why, id]) => [
+      why,
+      LEARNING_PATHS.find(p => p.id === id && p.status === 'ready'),
+    ]).filter(([, p]) => p);
+    return starts.length
+      ? `<section class="home-today home-start" aria-labelledby="today-title"><h2 id="today-title">Where to start</h2><p class="today-note">Every course is open. Pick one that matches what you want to do; your progress stays in this browser.</p><ul class="start-grid">${starts.map(([why, p]) => `<li><a href="${escapeText(p.href || '#path/' + p.id)}"><small>${why}</small><strong>${escapeText(p.title)}</strong><span>${escapeText(libraryLine(p))}</span></a></li>`).join('')}</ul>${backup}</section>`
+      : backup;
+  }
+  const quiet = review.includes('is-quiet');
+  const more =
+    started.length > shown.length
+      ? `<p class="today-more">${started.length - shown.length} more started ${started.length - shown.length === 1 ? 'course is' : 'courses are'} marked in the list below.</p>`
+      : '';
+  return `<section class="home-today" aria-labelledby="today-title"><h2 id="today-title">Pick up where you left off</h2>${resume || (!quiet && review) ? `<div class="today-actions">${resume}${quiet ? '' : review}</div>` : ''}${shown.length ? `<h3 class="today-label">In progress</h3><ul class="catalog-list">${shown.map(([p, x]) => libraryRow(p, x)).join('')}</ul>` : ''}${more}${quiet ? review : ''}${backup}</section>`;
+}
+function learningLibraryView() {
+  const ready = LEARNING_PATHS.filter(p => p.status === 'ready');
+  const total = ready.reduce((n, p) => n + libraryProgress(p).total, 0);
+  const started = libraryStarted().length;
+  return `<div class="library-hero"><h1>Your learning notebook</h1><p class="library-summary">${ready.length} learning paths <span aria-hidden="true">·</span> ${total} lessons${started ? ` <span aria-hidden="true">·</span> ${started} in progress` : ''}</p></div>${libraryToday()}<section id="learning-explorer" class="library-explorer" aria-labelledby="explorer-title"><div class="explorer-heading"><h2 id="explorer-title">Browse courses</h2><p id="path-count" role="status" aria-live="polite">${ready.length} available${LEARNING_PATHS.some(p => p.status !== 'ready') ? ' · ' + LEARNING_PATHS.filter(p => p.status !== 'ready').length + ' planned' : ''}</p></div><div class="explorer-toolbar"><div class="library-filter"><label for="path-search">Find a course</label><input class="search" id="path-search" type="search" placeholder="Python, SQL, testing…"></div><div class="map-route-picker" id="map-route-picker" hidden><label for="map-route">Route</label><select id="map-route"><option value="all">All routes</option>${LIBRARY_GRAPHS.map(g => `<option value="${g.id}">${escapeText(g.name)} · ${g.nodes.length} paths</option>`).join('')}<option value="independent">Finance &amp; other subjects</option></select></div><div class="library-view-switch" role="group" aria-label="Show courses as"><button type="button" data-library-view="list" aria-pressed="true">List</button><button type="button" data-library-view="map" aria-pressed="false">Map</button></div></div><p class="map-guidance" id="map-guidance" role="status" aria-live="polite">Grouped by route. Open any course; none is locked.</p><div class="library-list" id="path-list">${libraryList('', libraryCompact())}</div><div id="learning-map" hidden>${libraryMap()}</div></section>${atlasLibraryFeature()}<div class="library-footer-tools"><div><h2>Keep your place.</h2><p>Move your progress between devices with one backup file.</p></div><a class="download-action" href="#backup">Progress & backups <span aria-hidden="true">↗</span></a></div>`;
+}
+function bindLibraryMap(main) {
+  const map = document.getElementById('learning-map');
+  if (!map) return;
+  const list = document.getElementById('path-list'),
+    input = document.getElementById('path-search'),
+    buttons = main.querySelectorAll('[data-library-view]');
+  const route = document.getElementById('map-route'),
+    picker = document.getElementById('map-route-picker');
+  const validRoute = value => (value === 'independent' || LIBRARY_GRAPHS.some(g => g.id === value) ? value : 'all');
+  try {
+    route.value = validRoute(sessionStorage.getItem('learning-notebook:map-route'));
+  } catch {
+    route.value = 'all';
+  }
+  // Remember groups the learner opened or closed while they filter or switch views.
+  list.addEventListener(
+    'toggle',
+    e => {
+      const group = e.target.closest?.('.route-group');
+      if (group) libraryOpenRoutes.set(group.dataset.route, group.open);
+    },
+    true,
+  );
+  const update = () => {
+    const searching = !!input.value.trim(),
+      isMap = !map.hidden;
+    map.innerHTML = libraryMap(input.value, route.value);
+    list.innerHTML = libraryList(input.value, libraryCompact());
+    const ready = LEARNING_PATHS.filter(p => p.status === 'ready'),
+      known = new Set(LIBRARY_GRAPHS.flatMap(g => g.nodes.map(n => n[0])));
+    const shown = searching
+      ? rankedPaths(isMap ? ready : LEARNING_PATHS, input.value).length
+      : !isMap || route.value === 'all'
+        ? (isMap ? ready : LEARNING_PATHS).length
+        : route.value === 'independent'
+          ? ready.filter(p => !known.has(p.id)).length
+          : LIBRARY_GRAPHS.find(g => g.id === route.value).nodes.filter(n => ready.some(p => p.id === n[0])).length;
+    document.getElementById('path-count').textContent =
+      shown +
+      (searching ? (shown === 1 ? ' matching path' : ' matching paths') : ' paths shown') +
+      ' · ' +
+      LEARNING_PATHS.length +
+      ' total';
+    picker.hidden = !isMap;
+    route.disabled = searching;
+    document.getElementById('map-guidance').textContent = searching
+      ? 'Matching courses across all routes.'
+      : !isMap
+        ? 'Grouped by route. Open any course; none is locked.'
+        : route.value === 'all'
+          ? 'Solid arrows suggest an order, dashed arrows show useful background and dotted arrows offer another direction. Choose a route to see fewer paths.'
+          : 'Showing ' +
+            (LIBRARY_GRAPHS.find(g => g.id === route.value)?.name || 'Finance & other subjects') +
+            '. Choose All routes to see the whole notebook.';
+  };
+  const select = view => {
+    const isMap = view === 'map';
+    map.hidden = !isMap;
+    list.hidden = isMap;
+    buttons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.libraryView === (isMap ? 'map' : 'list'))));
+    update();
+  };
+  buttons.forEach(button =>
+    button.addEventListener('click', () => {
+      select(button.dataset.libraryView);
+      try {
+        sessionStorage.setItem('learning-notebook:library-view', button.dataset.libraryView);
+      } catch {}
+    }),
+  );
+  route.addEventListener('change', () => {
+    route.value = validRoute(route.value);
+    update();
+    try {
+      sessionStorage.setItem('learning-notebook:map-route', route.value);
+    } catch {}
+  });
+  try {
+    select(sessionStorage.getItem('learning-notebook:library-view'));
+  } catch {
+    select('list');
+  }
+  input.addEventListener('input', update);
 }
 
 // Course previews are examples, not a second curriculum or prerequisite graph.
-function atlasConceptPreview(p){
- const esc=escapeText;
- let title,body;
- if(p.id==='sql-server'){
-  title='One order. Two matching payments.';
-  body='<div class="preview-join"><span class="preview-record">Order 101<br><strong>100</strong></span><span class="preview-connector" aria-hidden="true">→</span><div><span class="preview-record">Payment 201 · 60</span><span class="preview-record">Payment 202 · 40</span></div></div><p>Two matches repeat the order row.</p>';
- }else if(p.id==='kubernetes'){
-  title='Keep the desired state in sight.';
-  body='<div class="preview-controller"><span class="preview-record">Deployment<br><strong>2 desired</strong></span><span aria-hidden="true">↓</span><span class="preview-record">ReplicaSet</span><span aria-hidden="true">↓</span><div class="preview-pods"><span>Pod A</span><span>Pod B</span></div></div>';
- }else if(p.id==='react'){
-  title='An update becomes a new render.';
-  body='<div class="preview-cycle"><span>Event</span><b aria-hidden="true">→</b><span>State update</span><b aria-hidden="true">→</b><span>Render</span></div><p>Follow the value through the component.</p>';
- }else if(p.id==='data-structures-algorithms'){
-  title='Make each operation visible.';
-  body='<div class="preview-array" aria-label="Unsorted values: 8, 3, 5, 1"><span>8</span><span>3</span><span>5</span><span>1</span></div><span class="preview-sort-label">Sort ascending ↓</span><div class="preview-array is-sorted" aria-label="Sorted values: 1, 3, 5, 8"><span>1</span><span>3</span><span>5</span><span>8</span></div>';
- }else return "";
- return '<figure class="concept-preview"><figcaption>'+esc(title)+'</figcaption>'+body+'</figure>';
+function atlasConceptPreview(p) {
+  const esc = escapeText;
+  let title, body;
+  if (p.id === 'sql-server') {
+    title = 'One order. Two matching payments.';
+    body =
+      '<div class="preview-join"><span class="preview-record">Order 101<br><strong>100</strong></span><span class="preview-connector" aria-hidden="true">→</span><div><span class="preview-record">Payment 201 · 60</span><span class="preview-record">Payment 202 · 40</span></div></div><p>Two matches repeat the order row.</p>';
+  } else if (p.id === 'kubernetes') {
+    title = 'Keep the desired state in sight.';
+    body =
+      '<div class="preview-controller"><span class="preview-record">Deployment<br><strong>2 desired</strong></span><span aria-hidden="true">↓</span><span class="preview-record">ReplicaSet</span><span aria-hidden="true">↓</span><div class="preview-pods"><span>Pod A</span><span>Pod B</span></div></div>';
+  } else if (p.id === 'react') {
+    title = 'An update becomes a new render.';
+    body =
+      '<div class="preview-cycle"><span>Event</span><b aria-hidden="true">→</b><span>State update</span><b aria-hidden="true">→</b><span>Render</span></div><p>Follow the value through the component.</p>';
+  } else if (p.id === 'data-structures-algorithms') {
+    title = 'Make each operation visible.';
+    body =
+      '<div class="preview-array" aria-label="Unsorted values: 8, 3, 5, 1"><span>8</span><span>3</span><span>5</span><span>1</span></div><span class="preview-sort-label">Sort ascending ↓</span><div class="preview-array is-sorted" aria-label="Sorted values: 1, 3, 5, 8"><span>1</span><span>3</span><span>5</span><span>8</span></div>';
+  } else return '';
+  return '<figure class="concept-preview"><figcaption>' + esc(title) + '</figcaption>' + body + '</figure>';
 }
