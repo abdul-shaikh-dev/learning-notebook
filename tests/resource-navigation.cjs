@@ -18,7 +18,7 @@ vm.createContext(context);vm.runInContext(fs.readFileSync('assets/js/learning-to
 for(const p of paths.filter(p=>p.status==='ready'))for(const t of p.resources.tasks){context.location.hash='#resources/'+p.id+'/'+t.id;vm.runInContext('renderCatalog()',context);const html=element('main').innerHTML;assert.ok(html.includes(p.resources.bundle.href));for(const f of p.resources.files.filter(f=>t.fileIds.includes(f.id)))assert.ok(html.includes(f.href));assert.ok(html.includes('Expected:')||t.commands.length===0);}
 // Simple diagrams are explained once, without step controls.
 context.location.hash='#topic/python/values-and-names';context.renderCatalog();
-assert.ok(element('main').innerHTML.includes('Stage project:'));
+assert.ok(element('main').innerHTML.includes('<h2>Stage project:'),'The stage project has its own H2 (#159)');
 assert.ok(element('main').innerHTML.includes('How it works'));
 assert.ok(!element('main').innerHTML.includes('id="diagram-next"'));
 // More involved diagrams keep an opt-in walkthrough with working boundaries.

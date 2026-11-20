@@ -43,9 +43,9 @@ function taskKit(p, t, compact = false) {
   if (compact) {
     const files = p.resources.files.filter(f => t.fileIds.includes(f.id) && ['guide', 'worksheet'].includes(f.role));
     return (
-      '<section class="lesson-task-kit" aria-label="Practice files"><h3>' +
+      '<section class="lesson-task-kit" aria-label="Practice files"><h2>' +
       (t.kind === 'lesson' ? 'Practice files' : 'Stage project: ' + escapeText(t.title)) +
-      '</h3><p>' +
+      '</h2><p>' +
       (t.kind === 'lesson'
         ? 'Files for this exercise.'
         : 'Optional project for this stage. You can complete the lesson exercise separately.') +
@@ -485,6 +485,13 @@ function visualExplorerView(l, print = false) {
   return `<section ${print ? '' : 'id="lesson-visual"'} class="visual-explorer" aria-label="${esc(v.title)}"><p class="eyebrow">Explore the concept</p><h2>${esc(v.title)}</h2><p class="visual-intro">${esc(v.intro)}</p>${print ? v.scenarios.map((s, j) => `<h3>Scenario: ${esc(s.label)}</h3>${s.steps.map((step, i) => visualFrame(step, `print-${l.id}-${j}-${i}`, i ? s.steps[i - 1] : null, l.id, { scenario: s, scenarioIndex: j, index: i, print: true })).join('')}`).join('') : `<div class="visual-scenario"><label for="visual-scenario">Scenario</label><select id="visual-scenario">${v.scenarios.map((s, i) => `<option value="${i}">${esc(s.label)}</option>`).join('')}</select></div><div class="visual-controls"><div class="visual-actions"><button id="visual-prev" class="quiet" type="button">← Previous</button><button id="visual-next" class="primary" type="button">Next step →</button><button id="visual-reset" class="quiet" type="button">Restart</button></div><p id="visual-status" role="status" aria-live="polite"></p></div><div id="visual-frame">${visualFrame(v.scenarios[0].steps[0], 'live-visual', null, l.id, { scenario: v.scenarios[0], scenarioIndex: 0, index: 0 })}</div><div class="visual-playback-panel"><div class="visual-playback"><button id="visual-play" class="primary" type="button" aria-pressed="false">Play sequence</button><label for="visual-pace">Time per step</label><select id="visual-pace"><option value="1000">1 second</option><option value="2000" selected>2 seconds</option><option value="4000">4 seconds</option><option value="7000">7 seconds</option></select></div><p class="visual-motion-note" id="visual-motion-note">Watch the changes, or move one step at a time. Playback stops at the last step.</p></div><section id="visual-walkthrough" class="walkthrough-reading">${visualWalkthrough(v.scenarios[0])}</section>`}<p class="visual-scope"><strong>What this example covers:</strong> ${esc(v.scope)}</p>${v.sources?.length ? `<details><summary>Sources for this exploration</summary><ul>${v.sources.map(s => `<li><a href="${esc(s.url)}">${esc(s.title)}</a></li>`).join('')}</ul></details>` : ''}</section>`;
 }
 let stopVisualPlayback = () => {};
+// The status line announces a step's title and the first sentence of its explanation, so a screen reader hears what changed.
+function firstSentence(text) {
+  const t = String(text || '').trim(),
+    m = t.match(/^[\s\S]*?[.!?](?=\s|$)/);
+  const s = m ? m[0] : t;
+  return s.length > 200 ? s.slice(0, 199).trimEnd() + '…' : s;
+}
 function bindVisualExplorer(l) {
   stopVisualPlayback();
   if (!l?.visual) return;
@@ -578,7 +585,9 @@ function bindVisualExplorer(l) {
       ' of ' +
       v.scenarios[scenario].steps.length +
       ': ' +
-      current.title;
+      current.title +
+      '. ' +
+      firstSentence(current.explanation);
     get('prev').disabled = step === 0;
     get('next').disabled = step === v.scenarios[scenario].steps.length - 1;
     for (const button of frame.querySelectorAll?.('[data-scene-next]') || [])
@@ -699,7 +708,7 @@ function lessonJumps(l) {
 // Lessons carry one compact course menu; its section list stands in for the rail on narrow screens.
 function lessonCourseMenu(p, l) {
   const task = p.resources && taskForLesson(p, l);
-  return `<details class="course-menu"><summary>Contents</summary><div class="course-menu-panel"><nav class="course-menu-sections" aria-label="On this lesson"><h2>On this lesson</h2><ol>${lessonJumps(l)}</ol></nav><nav aria-label="Course"><h2>Course</h2><ul class="course-menu-links"><li><a href="#path/${p.id}">Course overview</a></li>${p.resources ? `<li><a href="#resources/${p.id}${task ? '/' + task.id : ''}">Practice files</a></li>` : ''}${p.glossary ? `<li><a href="#glossary/${p.id}">Glossary</a></li>` : ''}<li><a href="offline.html?course=${p.id}">Save course offline</a></li></ul><ol class="course-menu-lessons">${p.lessons.map(item => `<li><a href="${lessonRoute(p, item)}" ${l.id === item.id ? 'aria-current="page"' : ''}>${escapeText(item.title)}</a></li>`).join('')}</ol></nav></div></details>`;
+  return `<details class="course-menu"><summary>Contents</summary><div class="course-menu-panel"><nav class="course-menu-sections" aria-label="On this lesson"><p class="course-menu-title">On this lesson</p><ol>${lessonJumps(l)}</ol></nav><nav aria-label="Course"><p class="course-menu-title">Course</p><ul class="course-menu-links"><li><a href="#path/${p.id}">Course overview</a></li>${p.resources ? `<li><a href="#resources/${p.id}${task ? '/' + task.id : ''}">Practice files</a></li>` : ''}${p.glossary ? `<li><a href="#glossary/${p.id}">Glossary</a></li>` : ''}<li><a href="offline.html?course=${p.id}">Save course offline</a></li></ul><ol class="course-menu-lessons">${p.lessons.map(item => `<li><a href="${lessonRoute(p, item)}" ${l.id === item.id ? 'aria-current="page"' : ''}>${escapeText(item.title)}</a></li>`).join('')}</ol></nav></div></details>`;
 }
 function atlasLessonRail(p, l) {
   return `<nav class="atlas-lesson-rail" aria-label="On this lesson"><details id="atlas-rail-sections" open><summary>Jump to a section</summary><ol>${lessonJumps(l)}</ol></details></nav>`;

@@ -15,6 +15,9 @@ assert(!/<tr[^>]*data-motion-node/.test(html),l.id+': focus keys go on table cel
 assert(html.includes(ctx.escapeText(step.explanation)),l.id);
 for(const n of step.nodes)assert(html.includes(ctx.escapeText(n.detail)),l.id+': '+n.detail);
 const ids=[...html.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size,l.id);
+// #159: an in-scene button never shares a name with the explorer's own Previous, Next step, Play or Reset controls.
+for(const m of html.matchAll(/<button\b([^>]*)>([\s\S]*?)<\/button>/g)){const label=m[1].match(/aria-label="([^"]*)"/),name=(label?label[1]:m[2].replace(/<span aria-hidden="true">[\s\S]*?<\/span>/g,'').replace(/<[^>]+>/g,'')).replace(/[→←]/g,'').trim();
+ assert(!['Next step','Previous','Play','Pause','Reset'].includes(name),l.id+': in-scene button named '+name);}
 }
 const pack=ctx.visualExplorerView(l,true);const ids=[...pack.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size,l.id+' print IDs');
 }

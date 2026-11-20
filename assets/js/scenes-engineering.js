@@ -12,7 +12,7 @@
   };
   const header = (title, detail) => `<div class="eng-caption"><strong>${title}</strong><span>${e(detail)}</span></div>`;
   const action = m =>
-    `<button type="button" class="quiet eng-action" data-scene-next>${m.index === (m.scenario?.steps.length ?? 0) - 1 ? 'Sequence complete' : 'Next step'} →</button>`;
+    `<button type="button" class="quiet eng-action" data-scene-next>${m.index === (m.scenario?.steps.length ?? 0) - 1 ? 'Sequence complete' : 'Continue the scene'} →</button>`;
   const scene = (kind, body, m) => `<div class="scene-eng scene-eng-${kind}">${body}${action(m)}</div>`;
 
   // Agent loop: one slot per allowed proposal; an unbounded loop has no slots to run out of.
