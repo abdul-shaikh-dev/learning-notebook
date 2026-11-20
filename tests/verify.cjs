@@ -5,7 +5,7 @@ require('./catalog.cjs');
 require('./course-reference.cjs');
 require('./finance-parity.cjs');
 require('./study-pack.cjs');
-const fs=require('node:fs'),assert=require('node:assert/strict');assert.equal(fs.readFileSync('content/paths.js','utf8'),require('../scripts/manifest.cjs').catalogSource(),'Run scripts/sync-catalog.cjs');
+const fs=require('node:fs'),assert=require('node:assert/strict');
 
 require('./authoring.cjs');
 require('./manifest-keys.cjs');

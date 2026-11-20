@@ -3,7 +3,7 @@
 1. Run `node scripts/new-path.cjs topic-id "Topic title"` from the repository. IDs must be unique lowercase hyphenated words. A new path is planned and its lesson payload is excluded from the public catalog.
 2. Edit `paths/topic-id/path.json`. Standard paths omit `href` and use `lessons` as an array. Each lesson has a stable id, title, takeaway, sections with title/paragraphs/optional example, and an optional quiz with question/options/zero-based correct/explanation. The scaffold supplies a complete draft example. `scripts/manifest.cjs` rejects any field it does not know, at every level, naming the file, lesson and field; add a new field to its `KEYS` list together with the code that reads it.
 3. Add original explanations, explicit assumptions, worked examples, useful wrong-answer reasoning and source references where needed. Review calculations and source versions before marking status ready. The shared reader escapes lesson strings; it does not accept HTML markup.
-4. Run `node scripts/sync-catalog.cjs` to regenerate `content/paths.js`. Open index.html to review locally. Generic routes are `#path/topic-id` and `#topic/topic-id/lesson-id`.
+4. Run `node scripts/sync-catalog.cjs` to regenerate the course chunks, the search index and the README course table. Open index.html to review locally. Generic routes are `#path/topic-id` and `#topic/topic-id/lesson-id`.
 5. Run `node verify.cjs` and `node scripts/build-pages.cjs`, then test the built site under its project prefix on desktop and phone. Commit source and generated catalog together. Every push to `main` runs CI and, when it passes, publishes to GitHub Pages (`.github/workflows/pages.yml`); a manual workflow dispatch only republishes `main`.
 
 ## Checklist for a new lesson

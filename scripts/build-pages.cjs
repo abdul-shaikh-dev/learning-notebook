@@ -1,7 +1,7 @@
 // Explicit per-path publish lists keep drafts and authoring files out of the site.
 const fs = require('node:fs'),
   path = require('node:path');
-const { root, readPaths, catalogSource } = require('./manifest.cjs');
+const { root, readPaths } = require('./manifest.cjs');
 const out = path.join(root, '_site');
 const files = [
   'assets/js/escape-text.js',
@@ -75,8 +75,6 @@ for (const [file, source] of Object.entries(require('./lazy-catalog.cjs').lazyFi
 }
 for (const p of readPaths())
   if (p.status === 'ready') for (const file of p.publicFiles) files.push('paths/' + p.id + '/' + file);
-if (fs.readFileSync(path.join(root, 'content/paths.js'), 'utf8') !== catalogSource())
-  throw Error('Run node scripts/sync-catalog.cjs first.');
 if (fs.readFileSync(path.join(root, 'content/search.js'), 'utf8') !== require('./search-index.cjs').searchSource())
   throw Error('Run node scripts/sync-catalog.cjs first.');
 if (path.dirname(out) !== root || path.basename(out) !== '_site') throw Error('Invalid output path');

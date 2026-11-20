@@ -18,4 +18,10 @@ assert.ok(named.length>=15);for(const f of named)assert.ok(fs.existsSync(f),'Che
 for(const [,link] of checklist.matchAll(/\]\(([\w-]+\.md)(?:#[\w-]+)?\)/g))assert.ok(fs.existsSync(path.join('docs',link)),'Checklist links an existing doc: '+link);
 const docs=['README.md',...fs.readdirSync('docs').filter(f=>f.endsWith('.md')&&!/\d{4}-\d{2}-\d{2}/.test(f)).map(f=>'docs/'+f)];
 for(const f of docs){const text=read(f);for(const stale of ['separate authorized workflow dispatch','/ipv/'])assert.ok(!text.includes(stale),f+' repeats a stale statement: '+stale);}
-console.log('Docs facts: README counts current, '+facts.length+' facts scripts in CI, '+named.length+' checklist files exist, no stale workflow or preview statements.');
+// #161: dated reviews live in docs/archive/, docs/README.md lists every current guide, and no Markdown link is broken.
+const current=fs.readdirSync('docs').filter(f=>f.endsWith('.md')&&f!=='README.md');
+for(const f of current)assert.ok(!/\d{4}-\d{2}-\d{2}/.test(f),'Dated review belongs in docs/archive/: '+f);
+const index=read('docs/README.md');for(const f of current)assert.ok(index.includes('('+f+')'),'docs/README.md lists '+f);
+const tracked=require('node:child_process').execSync('git ls-files "*.md"',{encoding:'utf8'}).trim().split('\n').filter(f=>f&&!f.includes('node_modules/')&&fs.existsSync(f));
+let checkedLinks=0;for(const f of tracked)for(const m of read(f).matchAll(/\]\(([^)#\s]+)(?:#[^)]*)?\)/g)){if(/^(https?|mailto):/.test(m[1]))continue;checkedLinks++;assert.ok(fs.existsSync(path.join(path.dirname(f),decodeURIComponent(m[1]))),f+' links a missing file: '+m[1]);}
+console.log('Docs facts: README counts current, '+facts.length+' facts scripts in CI, '+named.length+' checklist files exist, no stale workflow or preview statements; '+current.length+' current guides indexed, '+checkedLinks+' Markdown links resolve.');

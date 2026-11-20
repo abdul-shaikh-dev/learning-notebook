@@ -900,7 +900,7 @@
           "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/case-transact-sql?view=sql-server-ver17",
           "section": "Searched CASE and scalar condition order",
           "reviewed": "2026-10-02",
-          "scope": "Added CASE teaching example and reconciliation queries executed on the local SQL Server Express fixture; see docs/journey-review-2026-10-02.md."
+          "scope": "Added CASE teaching example and reconciliation queries executed on the local SQL Server Express fixture; see docs/archive/journey-review-2026-10-02.md."
         }
       ]
     },

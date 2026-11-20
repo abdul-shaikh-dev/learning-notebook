@@ -1,6 +1,6 @@
 # On-demand notebook content
 
-`node scripts/sync-catalog.cjs` generates the full editorial/test catalog plus the public lightweight `content/catalog.js` and `content/courses/<path>.js` chunks. Do not edit generated files. The homepage metadata contains course labels, lesson IDs/titles and stage IDs so resume, completion counts and backups work without loading lesson bodies.
+`node scripts/sync-catalog.cjs` generates the public lightweight `content/catalog.js` and `content/courses/<path>.js` chunks. Do not edit generated files. The homepage metadata contains course labels, lesson IDs/titles and stage IDs so resume, completion counts and backups work without loading lesson bodies.
 
 `assets/js/notebook-loader.js` loads a course on a path, topic, resource or printable-pack route, and loads the search index on the search route. Classic same-origin scripts preserve the existing non-module architecture; no fetch/CDN dependency is introduced. Course and search URLs carry content hashes. Requests are deduplicated, route changes invalidate pending rendering, and failed requests provide a retry button. Progress storage keys and formats are unchanged.
 
@@ -21,7 +21,7 @@ A lesson transfers the same files, after its first paint instead of before. `tes
 
 ## Build
 
-The public build excludes the monolithic `content/paths.js`, while retaining it locally for editorial and regression tooling. Planned paths have metadata only and no public course chunk. Stale chunks left in an authoring folder are not included in the explicit production inventory.
+The full editorial catalog is never written to disk: tests build it in memory with `catalogSource()` from `scripts/manifest.cjs`. Planned paths have metadata only and no public course chunk. Stale chunks left in an authoring folder are not included in the explicit production inventory.
 
 Run `node tests/lazy-loading.cjs` for loading/race/retry checks and `node scripts/sync-catalog.cjs --check` for generated consistency. Browser-check direct links, search, progress backups, resource pages and printable packs after loader changes.
 

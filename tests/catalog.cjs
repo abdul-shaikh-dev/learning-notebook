@@ -1,6 +1,6 @@
 require('./escape-context.cjs');
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const paths=vm.runInNewContext(fs.readFileSync('content/paths.js','utf8')+';LEARNING_PATHS');
+const paths=vm.runInNewContext(require('../scripts/manifest.cjs').catalogSource()+';LEARNING_PATHS');
 assert.equal(new Set(paths.map(p=>p.id)).size,paths.length);
 for(const p of paths){assert.match(p.id,/^[a-z0-9]+(?:-[a-z0-9]+)*$/);assert.ok(['ready','planned'].includes(p.status));if(p.status==='ready'&&p.href)assert.ok(fs.existsSync(p.href.split(/[?#]/)[0]));if(p.status==='ready'&&!p.href){assert.ok(Array.isArray(p.lessons)&&p.lessons.length);assert.equal(new Set(p.lessons.map(l=>l.id)).size,p.lessons.length);for(const l of p.lessons){assert.ok(l.title&&l.takeaway&&l.sections.length);if(l.quiz)assert.ok(l.quiz.options[l.quiz.correct]&&l.quiz.explanation);}}}
 assert.ok((fs.readFileSync('assets/js/learning-tools.js','utf8')+'\n'+fs.readFileSync('assets/js/catalog.js','utf8')).replace(/\s+/g,'').includes("'learning-notebook:path:'+id+':v1'"));
