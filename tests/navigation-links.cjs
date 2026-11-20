@@ -21,4 +21,18 @@ for(const call of calls)audit(vm.runInContext(call,finance),true);
 const search=vm.runInNewContext(fs.readFileSync('content/search.js','utf8')+';NOTEBOOK_SEARCH').entries;for(const [,,,href] of search)audit('<a href="'+href+'">result</a>');
 for(const hash of financeHashes){const [route,id]=hash.slice(1).split('/');if(['main','explore'].includes(route)){assert.ok(!id,hash);continue;}const valid={practice:[...data.EXERCISES.modules.map(l=>l.id),'revision'],labs:Object.keys(data.LABS),case:data.CASE_STEPS.map((_,i)=>String(i)),journey:data.TRADE_JOURNEY.map(l=>l.id),visual:data.VISUAL_STORIES.map(s=>s.id)};assert.ok(valid[route],hash);if(id)assert.ok(valid[route].includes(id),hash);}
 for(const p of paths)for(const f of p.resources?.files||[])assert.ok(p.publicFiles.includes(f.href.replace('paths/'+p.id+'/','')), 'File omitted from published inventory: '+f.href);
-console.log(`PASS: ${pages} rendered/search/static entries, ${links} links, ${search.length} search destinations, ${financeHashes.size} finance targets; no missing local/published files, invalid routes, duplicate IDs or missing jump targets.`);
+// #160: courses named in prerequisites and next steps are {path:id|label} references to existing courses, rendered as
+// links and as "Recommended before" / "Next" chips; no course is left named as plain text.
+let references=0;const ready=new Set(paths.filter(p=>p.status==='ready').map(p=>p.id));
+for(const p of paths)for(const field of ['prerequisites','nextSteps'])for(const text of p[field]||[]){
+ for(const m of text.matchAll(/\{path:([^}|]*)(?:\|([^}]*))?\}/g)){references++;assert.ok(ready.has(m[1])&&m[1]!==p.id,p.id+' '+field+' names an unknown course: '+m[1]);assert.ok(m[2]===undefined||m[2].trim(),p.id+': empty label');}
+ const rest=text.replace(/\{path:[^}]*\}/g,'');assert.ok(!/[{}]/.test(rest),p.id+': malformed course reference in '+text);
+ for(const c of paths)if(c.id!==p.id)assert.ok(!rest.includes('('+c.id+')')&&!(c.title.length>8&&rest.includes(c.title))&&!new RegExp('\b'+c.title.split(' ')[0]+' (path|paths)\b').test(rest),p.id+' '+field+' names '+c.title+' without a link: '+text);
+ if(/\b(path|paths)\b/.test(rest)&&!/\{path:/.test(text)&&/\b(the|existing|neighboring) [A-Z]/.test(rest))assert.fail(p.id+': a course is named without a link: '+text);}
+assert.ok(references>=40,'course references: '+references);
+ctx.location.hash='#path/kubernetes';vm.runInContext('renderCatalog()',ctx);
+const overview=node('main').innerHTML;
+assert.ok(overview.includes('<nav class="course-relations" aria-label="Related courses"><p><span class="course-relations-label">Recommended before</span><a class="course-chip" href="#path/delivery-operations">Delivery &amp; Operations</a>'),'Kubernetes recommends Delivery & Operations first');
+assert.ok(overview.includes('first; <a href="#path/react">React</a>, <a href="#path/dotnet">.NET</a>'),'References render as links with their labels');
+assert.ok(!overview.includes('{path:'),'No reference marker reaches the page');
+console.log(`PASS: ${references} course references link to real courses. ${pages} rendered/search/static entries, ${links} links, ${search.length} search destinations, ${financeHashes.size} finance targets; no missing local/published files, invalid routes, duplicate IDs or missing jump targets.`);

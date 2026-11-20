@@ -7,7 +7,7 @@
   "level": "Foundations → intermediate → selected advanced topics",
   "runExamples": true,
   "prerequisites": [
-    "Complete Python variables, loops, functions and collections first, or translate the examples into a language you know.",
+    "Complete the variables, loops, functions and collections lessons of {path:python|Python} first, or translate the examples into a language you know.",
     "You only need arithmetic and a willingness to trace a few steps on paper."
   ],
   "setup": [

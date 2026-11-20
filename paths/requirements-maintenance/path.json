@@ -7,7 +7,7 @@
   "level": "Foundations through a local maintenance capstone",
   "prerequisites": [
     "Python functions, exceptions, files and dictionaries.",
-    "Basic terminal use. Git & Team Workflows and Testing & Debugging provide useful background."
+    "Basic terminal use. {path:git-team-workflows|Git & Team Workflows} and {path:testing-debugging|Testing & Debugging} provide useful background."
   ],
   "outcomes": [
     "Write acceptance examples and a scoped change brief.",
@@ -21,7 +21,7 @@
   ],
   "nextSteps": [
     "Apply the method to a small issue in an existing project with permission.",
-    "Continue with Testing & Debugging, Git & Team Workflows and the Full-Stack Project Journey."
+    "Continue with {path:testing-debugging|Testing & Debugging}, {path:git-team-workflows|Git & Team Workflows} and the {path:full-stack-journey|Full-Stack Project Journey}."
   ],
   "sources": [
     {

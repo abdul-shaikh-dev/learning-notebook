@@ -23,7 +23,7 @@
   "nextSteps": [
     "Implement one explicitly identified missing boundary and add a falsifying integration test.",
     "Record runtime, fixtures, changed contract, actual outcome and remaining limits in a review note.",
-    "Use the neighboring Python, System Design and security paths to extend the same small application without claiming professional certification."
+    "Use the neighboring {path:python|Python}, {path:system-design|System Design} and {path:application-security|security} paths to extend the same small application without claiming professional certification."
   ],
   "sources": [
     {

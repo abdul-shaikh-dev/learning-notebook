@@ -24,7 +24,7 @@
   ],
   "nextSteps": [
     "Complete the staged projects and explain failure evidence.",
-    "Cross-reference the existing Python, SQL Server, networking and Kubernetes paths where relevant.",
+    "Cross-reference the existing {path:python|Python}, {path:sql-server|SQL Server}, {path:networking-web|networking} and {path:kubernetes|Kubernetes} paths where relevant.",
     "Run optional platform integration separately and record actual versions and results."
   ],
   "sources": [

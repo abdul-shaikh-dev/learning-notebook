@@ -6,7 +6,7 @@
   "description": "Build one study planner through 20 connected milestones: React UI, .NET API, SQL Server persistence, conflict handling, verification, identity design and release/recovery decisions. Includes a working local reference and complete task files.",
   "level": "Intermediate full-stack project → deployment extensions",
   "prerequisites": [
-    "Complete or consult the React, C# & .NET and SQL Server paths; this journey connects those skills rather than teaching each language from zero.",
+    "Complete or consult the {path:react|React}, {path:dotnet|C# & .NET} and {path:sql-server|SQL Server} paths; this journey connects those skills rather than teaching each language from zero.",
     "Install .NET 10 SDK, Node 24/npm and Python 3.14+; SQL Server/SSMS is required for the persistence milestone."
   ],
   "setup": [
@@ -21,7 +21,7 @@
   ],
   "nextSteps": [
     "Build the filtering, idempotency and verified ownership extensions in milestones.md with new tests.",
-    "Use the UI, observability, messaging and cloud paths to extend the same application after the baseline is understood."
+    "Use the {path:ui-accessibility|UI}, {path:observability-performance|observability}, {path:messaging-events|messaging} and {path:cloud-infrastructure|cloud} paths to extend the same application after the baseline is understood."
   ],
   "sources": [
     {
