@@ -3,7 +3,7 @@
 // Also fails on any Content Security Policy violation (#158), including during a browser Python run.
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),http=require('node:http'),{spawn,spawnSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..');
-const routes=['index.html','index.html#path/python','index.html#path/python/variables','index.html#topic/design-patterns/mediator','index.html#search','index.html#review','index.html#backup','offline.html','course.html','course.html#explore','handbook.html'];
+const routes=['index.html','index.html#path/python','index.html#path/python/variables','index.html#topic/design-patterns/mediator','index.html#topic/system-design/consistent-hashing','index.html#topic/python/iterators-and-generators','index.html#search','index.html#review','index.html#backup','offline.html','course.html','course.html#explore','handbook.html'];
 const views=[{width:1440,height:900,dark:false},{width:1440,height:900,dark:true},{width:390,height:844,dark:false},{width:390,height:844,dark:true}];
 const types={'.html':'text/html','.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.webmanifest':'application/manifest+json','.woff2':'font/woff2','.wasm':'application/wasm'};
 
@@ -41,6 +41,10 @@ const pageAudit=String.raw`(()=>{
   if(!targets.some(o=>o!==t&&!o.el.contains(t.el)&&!t.el.contains(o.el)&&touches(t,o)))continue;
   problems.push('target '+Math.round(t.r.width)+'x'+Math.round(t.r.height)+' '+label(t.el));
  }
+ // #159: the heading outline starts with the page's H1 and never skips a level on the way down.
+ const headings=[...document.querySelectorAll('h1,h2,h3,h4,h5,h6')].filter(h=>!h.closest('[hidden],[aria-hidden=true]'));
+ if(headings.length&&headings[0].tagName!=='H1')problems.push('outline starts with '+label(headings[0])+' before the H1');
+ headings.forEach((h,i)=>{if(i&&+h.tagName[1]>+headings[i-1].tagName[1]+1)problems.push('outline skips from '+headings[i-1].tagName+' to '+label(h));});
  return problems;
 })()`;
 const focusState=String.raw`(()=>{const e=document.activeElement;if(!e||e===document.body)return null;const s=getComputedStyle(e);
@@ -104,6 +108,12 @@ const focusState=String.raw`(()=>{const e=document.activeElement;if(!e||e===docu
    await sleep(500);
    for(const v of violations.splice(0))failures.push(lab+': CSP violation: '+v);
   }
+  // #159: a step change announces the step's title and the first sentence of its explanation.
+  await page('Page.navigate',{url:base+'index.html#topic/python/iterators-and-generators'});
+  for(let i=0;i<80&&!await evaluate("!!document.getElementById('visual-next')");i++)await sleep(150);
+  await evaluate("document.getElementById('visual-next').click()");await sleep(300);
+  const announced=await evaluate("(()=>{try{return [document.getElementById('visual-status').textContent,document.querySelector('#visual-frame .visual-explanation')?.textContent||'',document.querySelector('#visual-frame h3')?.textContent||''];}catch(e){return [String(e),'',''];}})()");
+  if(!announced||!announced[2]||!announced[0].includes(announced[2])||!announced[1]||!announced[0].includes(announced[1].trim().split(/(?<=[.!?])\s/)[0]))failures.push('explorer: step change announced only '+JSON.stringify(announced&&announced[0]));
   // Browser Python under the policy: run a lesson example and wait for its output.
   await page('Emulation.setDeviceMetricsOverride',{width:1440,height:900,deviceScaleFactor:1,mobile:false});
   await page('Page.navigate',{url:base+'index.html#topic/python/values-and-names'});
@@ -116,5 +126,5 @@ const focusState=String.raw`(()=>{const e=document.activeElement;if(!e||e===docu
  }finally{ws.close();chrome.kill();server.close();try{fs.rmSync(profile,{recursive:true,force:true});}catch{}}
  const unique=[...new Set(failures)];
  if(unique.length){console.error(unique.join('\n'));console.error('FAIL: '+unique.length+' UI accessibility problems.');process.exit(1);}
- console.log('PASS: contrast, 24px targets and visible keyboard focus on '+routes.length+' pages, light and dark, at 1440px and 390px; no CSP violations, including a browser Python run.');
+ console.log('PASS: contrast, 24px targets and visible keyboard focus and a heading outline that starts at the H1 on '+routes.length+' pages, light and dark, at 1440px and 390px; explorer steps announce their explanation; no CSP violations, including a browser Python run.');
 })().catch(error=>{console.error(error);process.exit(1);});
