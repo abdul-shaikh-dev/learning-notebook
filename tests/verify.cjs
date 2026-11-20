@@ -7,6 +7,7 @@ require('./study-pack.cjs');
 const fs=require('node:fs'),assert=require('node:assert/strict');assert.equal(fs.readFileSync('content/paths.js','utf8'),require('../scripts/manifest.cjs').catalogSource(),'Run scripts/sync-catalog.cjs');
 
 require('./authoring.cjs');
+require('./manifest-keys.cjs');
 require('./prose-spacing.cjs');
 require('./inline-code.cjs');
 require('./shortcuts.cjs');
