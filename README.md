@@ -108,6 +108,8 @@ node verify.cjs
 node scripts/build-pages.cjs
 ```
 
+JavaScript in `assets/js` and `scripts/*.cjs` is formatted with Prettier (`.prettierrc.json`, width 120); CI fails on unformatted code. Format before committing with `npx prettier@3.6.2 --write "assets/js/*.js" "scripts/*.cjs"`. `assets/js/notebook-theme.js` is excluded because the personal studio labs carry a byte-for-byte copy.
+
 Checkpoint answers that can be computed, such as query results, command output or calculations, are checked by one `tests/<course>_checkpoint_facts.py` script per course. Each checks the stated answers against the course's practice files; CI runs every one as its own step, and some need the course's tools (SQL Server, Docker, a kind cluster). Run the ones for the course you changed, for example `python tests/network_checkpoint_facts.py`.
 
 After changing page styles or markup, run `node tests/ui-audit.cjs`. It opens every page type in headless Chrome, in light and dark mode at desktop and phone widths, and fails on text below WCAG contrast, targets below 24px (with the WCAG spacing and in-text exceptions), and keyboard focus without a visible ring. Set `CHROME_PATH` if Chrome is not in its usual place.

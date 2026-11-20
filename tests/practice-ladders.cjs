@@ -44,5 +44,5 @@ assert.equal((printed.match(/\sid="/g)||[]).length,0,'Printed ladders carry no I
 assert.ok(printed.includes('<h4>Worked solution</h4>')&&printed.includes('Answer 2 &lt;i&gt;.')&&!printed.includes('data-attempt')&&!printed.includes('id="lesson-ladder"'));
 
 // Search: step prompts are indexed with the lesson.
-const source=fs.readFileSync('scripts/search-index.cjs','utf8');assert.match(source,/l\.practice\|\|\[\]\)\.map\(step=>step\.prompt\)/);
+const source=fs.readFileSync('scripts/search-index.cjs','utf8').replace(/\s+/g,'');assert.match(source,/l\.practice\|\|\[\]\)\.map\(step=>step\.prompt\)/);
 console.log('PASS: practice ladders: schema validation, lesson-page steps with hints, escaping and per-step attempts, jump link, print solutions and search indexing.');

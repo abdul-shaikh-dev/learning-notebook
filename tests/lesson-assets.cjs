@@ -60,4 +60,4 @@ const flush=async()=>{for(let i=0;i<10;i++)await Promise.resolve();};
 // #156: version tokens are generated. Source pages name assets without ?v=; scripts/build-pages.cjs stamps each one
 // with its content hash in _site and refuses a page that still carries a hand-written token.
 for(const page of ['index.html','course.html','handbook.html','offline.html'])assert.ok(!fs.readFileSync(page,'utf8').includes('?v='),page+' has no hand-written ?v= token');
-assert.ok(pages.includes("'?v='+version(target)"),'The build stamps content-hash tokens');
+assert.ok(pages.replace(/\s+/g,'').includes("'?v='+version(target)"),'The build stamps content-hash tokens');

@@ -52,5 +52,5 @@ console.log('PASS: overview source register and printed pack carry the glossary,
 assert.doesNotThrow(()=>checkGlossary(glossary,'fixture'));
 for(const bad of [{},{terms:[]},{terms:[{term:'A'}]},{terms:[{term:'A',definition:'x'},{term:'a',definition:'y'}]},{...glossary,extra:1},{...glossary,reference:[{title:'T',columns:['A','B'],rows:[['only one']]}]},{...glossary,reference:[{title:'T'}]},{...glossary,plainTerms:[{term:'',definition:'x'}]}])assert.throws(()=>checkGlossary(bad,'bad'));
 // Search index entries of the new kind decode in the reader.
-assert.match(fs.readFileSync('assets/js/notebook-search.js','utf8'),/G:'Glossary'/);assert.match(fs.readFileSync('scripts/search-index.cjs','utf8'),/Glossary:'G'/);
+assert.match(fs.readFileSync('assets/js/notebook-search.js','utf8'),/G: ?'Glossary'/);assert.match(fs.readFileSync('scripts/search-index.cjs','utf8'),/Glossary: ?'G'/);
 console.log('PASS: glossary validation rejects malformed entries; search decodes glossary results.');
