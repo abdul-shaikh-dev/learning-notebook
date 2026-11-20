@@ -5,8 +5,12 @@ const read=f=>fs.readFileSync(f,'utf8').replace(/\r\n/g,'\n');
 const readme=read('README.md');
 assert.equal(readme,require('../scripts/readme-catalog.cjs').readmeSource(readme),'README course count, table or challenge count is stale. Run node scripts/sync-catalog.cjs.');
 const workflow=read('.github/workflows/pages.yml');
+// #157: CI runs every group of tests/checks.json through scripts/check-all.cjs, which picks up every facts script.
+const {checks,config}=require('../scripts/check-all.cjs'),listed=checks();
 const facts=fs.readdirSync('tests').filter(f=>f.endsWith('_checkpoint_facts.py'));
-for(const f of facts)assert.ok(workflow.includes('tests/'+f),'tests/'+f+' has a CI step in pages.yml');
+for(const f of facts)assert.ok(listed.some(c=>c.run.includes('tests/'+f)),'tests/'+f+' is in the check list');
+for(const g of config.groups)assert.ok(workflow.includes('node scripts/check-all.cjs --group '+g+'\n'),'pages.yml runs the '+g+' group');
+assert.ok(!/run: python tests\/\w+_checkpoint_facts\.py/.test(workflow),'pages.yml runs facts scripts through check-all, not one by one');
 const guide=read('docs/adding-learning-paths.md'),checklist=guide.slice(guide.indexOf('## Checklist for a new lesson'),guide.indexOf('\n## ',guide.indexOf('## Checklist for a new lesson')+3));
 assert.ok(checklist.length>200,'The guide has a lesson checklist');
 const named=[...checklist.matchAll(/`((?:tests|scripts)\/[\w.-]+\.(?:cjs|py))`/g)].map(m=>m[1]).filter(f=>!f.includes('<'));

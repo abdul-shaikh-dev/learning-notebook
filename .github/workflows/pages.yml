@@ -30,24 +30,9 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.14"
-      - name: Check JavaScript formatting
-        run: npx --yes prettier@3.6.2 --check "assets/js/*.js" "scripts/*.cjs"
-      - name: Check complete practice bundles
-        run: |
-          python scripts/sync-problem-solving.py --check
-          python scripts/build-bundles.py --check
-          python tests/resource-bundles.py
-      - name: Verify lessons and calculations
-        run: |
-          node verify.cjs
-          node tests/browser-python.cjs
-      - name: Check contrast, target size and keyboard focus in Chrome
-        run: node tests/ui-audit.cjs
-      - name: Verify Kubernetes context guard without a cluster
-        shell: pwsh
-        run: ./paths/kubernetes/practice/test_lab_guard.ps1
-      - name: Build portable static site
-        run: node scripts/build-pages.cjs
+      # Every check in the build group of tests/checks.json; scripts/check-all.cjs runs the same list locally.
+      - name: Formatting, bundles, lessons, browser Python, UI audit and site build
+        run: node scripts/check-all.cjs --group build
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v4
         with:
@@ -69,60 +54,8 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Install pinned packaging verification tools
         run: python -m pip install build==1.4.0 setuptools==82.0.1
-      - name: Run downloadable Python workshops and algorithms
-        run: python scripts/verify-python.py
-      - name: Check Git checkpoint answers against real Git
-        run: python tests/git_checkpoint_facts.py
-      - name: Check Networking checkpoint answers against the course labs
-        run: python tests/network_checkpoint_facts.py
-      - name: Check Messaging checkpoint answers against the course lab
-        run: python tests/messaging_checkpoint_facts.py
-      - name: Check Data Engineering checkpoint answers against the course labs
-        run: python tests/data_engineering_checkpoint_facts.py
-      - name: Check AI Agents checkpoint answers against the course labs
-        run: python tests/ai_agents_checkpoint_facts.py
-      - name: Check Agent Harnesses checkpoint answers against the course labs
-        run: python tests/agent_harnesses_checkpoint_facts.py
-      - name: Check Application Security checkpoint answers against the course labs
-        run: python tests/application_security_checkpoint_facts.py
-      - name: Check Testing & Debugging checkpoint answers against the course labs
-        run: python tests/testing_debugging_checkpoint_facts.py
-      - name: Check Observability & Performance checkpoint answers against the course labs
-        run: python tests/observability_checkpoint_facts.py
-      - name: Check System Design checkpoint answers against the course labs
-        run: python tests/system_design_checkpoint_facts.py
-      - name: Check Kubernetes checkpoint answers against the course labs
-        run: python tests/kubernetes_checkpoint_facts.py
-      - name: Check Cloud & Infrastructure as Code checkpoint answers against the course labs
-        run: python tests/cloud_infrastructure_checkpoint_facts.py
-      - name: Check Delivery & Operations checkpoint answers against the course labs
-        run: python tests/delivery_operations_checkpoint_facts.py
-      - name: Check UI Design & Accessibility checkpoint answers against the course labs
-        run: python tests/ui_accessibility_checkpoint_facts.py
-      - name: Check Full-Stack Project Journey checkpoint answers against the course labs
-        run: python tests/full_stack_journey_checkpoint_facts.py
-      - name: Check Requirements & software maintenance checkpoint answers against the course labs
-        run: python tests/requirements_maintenance_checkpoint_facts.py
-      - name: Check JavaScript → TypeScript → React checkpoint answers against the course labs
-        run: python tests/react_checkpoint_facts.py
-      - name: Check Linux & Operating Systems checkpoint answers against the course labs
-        run: python tests/linux_checkpoint_facts.py
-      - name: Check Learning How to Learn checkpoint answers against the lessons and kits
-        run: python tests/learning_how_to_learn_checkpoint_facts.py
-      - name: Check Plan and Review Your Week checkpoint answers against the practice studio and lessons
-        run: python tests/weekly_planning_checkpoint_facts.py
-      - name: Check Habits & Behaviour Change checkpoint answers against the practice studio and lessons
-        run: python tests/habits_checkpoint_facts.py
-      - name: Check Self-Awareness & Communication checkpoint answers against the lessons and practice studio
-        run: python tests/self_awareness_checkpoint_facts.py
-      - name: Check Task & Project Management checkpoint answers against the lessons and practice studio
-        run: python tests/task_project_checkpoint_facts.py
-      - name: Check Time, Attention & Energy checkpoint answers against the lessons and practice studio
-        run: python tests/time_attention_checkpoint_facts.py
-      - name: Check Financial foundations checkpoint answers against the course calculators and workbooks
-        run: python tests/finance_checkpoint_facts.py
-      - name: Check concept explorer figures against the course labs
-        run: python tests/explorer_lab_facts.py
+      - name: Python workshops, algorithms and every checkpoint facts script
+        run: node scripts/check-all.cjs --group python
 
   react:
     runs-on: ubuntu-latest
@@ -132,9 +65,8 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
-      - run: npm ci --prefix validation/react --ignore-scripts
       - name: Compile React workshops and run domain and component tests
-        run: npm test --prefix validation/react
+        run: node scripts/check-all.cjs --group react
 
   dotnet:
     runs-on: ubuntu-latest
@@ -147,10 +79,11 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: "10.0.x"
-      - name: Build C# downloads and run HTTP acceptance checks
-        run: python scripts/verify-dotnet.py
-      - name: Check C# & .NET checkpoint answers against the course labs
-        run: python tests/dotnet_checkpoint_facts.py
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Build C# downloads, run HTTP acceptance checks and C# checkpoint facts
+        run: node scripts/check-all.cjs --group dotnet
 
   fullstack:
     runs-on: ubuntu-latest
@@ -167,7 +100,7 @@ jobs:
         with:
           dotnet-version: "10.0.x"
       - name: Build the full-stack journey and run real HTTP checks
-        run: python scripts/verify-fullstack.py
+        run: node scripts/check-all.cjs --group fullstack
 
   data-science:
     runs-on: ubuntu-latest
@@ -179,14 +112,11 @@ jobs:
           python-version: "3.14"
       - name: Install scientific Python practice dependencies
         run: python -m pip install -r paths/data-analysis-python/practice/requirements.txt -r paths/machine-learning-foundations/practice/requirements.txt
-      - name: Run data analysis and machine learning practice suites
-        run: python scripts/verify-data-science.py
-      - name: Check Data analysis worked examples against their stated output
-        run: python tests/data_analysis_examples.py
-      - name: Check Data analysis with Python checkpoint answers against the course labs
-        run: python tests/data_analysis_checkpoint_facts.py
-      - name: Check Machine learning foundations checkpoint answers against the course labs
-        run: python tests/machine_learning_checkpoint_facts.py
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Data analysis and machine learning suites, worked examples and checkpoint facts
+        run: node scripts/check-all.cjs --group data-science
 
   sql-server:
     runs-on: ubuntu-latest
@@ -211,14 +141,14 @@ jobs:
           done
           docker logs sql | tail -40
           exit 1
-      - name: Run the SQL conflict classification tests
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: SQL conflict classification and SQL Server checkpoint facts
         env:
           TMPDIR: /tmp
-        run: python -B tests/sql-conflicts.py --server localhost --user sa --trust-server-certificate --sqlcmd "$RUNNER_TEMP/sqlcmd"
-      - name: Check SQL Server checkpoint answers against the engine
-        env:
-          TMPDIR: /tmp
-        run: python -B tests/sql_checkpoint_facts.py --server localhost --user sa --trust-server-certificate --sqlcmd "$RUNNER_TEMP/sqlcmd"
+          NOTEBOOK_SQL_ARGS: --server localhost --user sa --trust-server-certificate --sqlcmd ${{ runner.temp }}/sqlcmd
+        run: node scripts/check-all.cjs --group sql-server
 
   deploy:
     # Every push to main publishes once all checks pass; a manual run republishes main without a new commit.
