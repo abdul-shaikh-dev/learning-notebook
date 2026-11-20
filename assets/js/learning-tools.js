@@ -1,175 +1,978 @@
 /* Shared, data-driven task resources and accessible reading controls. */
-function fileName(file){return file.href.split('/').pop();}
-function taskForLesson(p,l){const kit=p.resources;return kit?.tasks.find(t=>t.id===kit.lessonTasks?.[l.id]);}
-function bundleLink(p){const kit=p.resources;const studio=kit?.studio;const open=studio&&kit.files.some(f=>f.href===studio.href)&&/^paths\/[a-z0-9-]+\/practice\/[a-z0-9-]+\.html$/.test(studio.href)?`<a class="download-action" href="${escapeText(studio.href)}">${escapeText(studio.title)} <span aria-hidden="true">↗</span></a>`:'';return open+(kit?.bundle?`<a class="download-action bundle-action" download href="${escapeText(kit.bundle.href)}">Download ${escapeText(p.title)} practice ZIP</a>`:'');}
-function resourceFiles(p,ids){const files=p.resources.files.filter(f=>!ids||ids.includes(f.id));return '<ul class="resource-files">'+files.map(f=>`<li><div><strong>${escapeText(fileName(f))}</strong><span class="file-role">${escapeText(f.role)}</span><p>${escapeText(f.description)}</p></div><a class="download-action" download href="${escapeText(f.href)}" aria-label="Download ${escapeText(fileName(f))}">Download <span aria-hidden="true">↓</span></a></li>`).join('')+'</ul>';}
-function taskInstructions(p,t){return `<p>Extract the ZIP and open the <code>${escapeText(p.resources.folder)}</code> folder.${t.commands?.length?" Run the commands below in your terminal from this folder, unless a step says otherwise.":" Follow the steps below; no terminal command is required."}</p><ol>${(t.steps||[]).map(s=>'<li>'+escapeText(s)+'</li>').join('')}</ol>${(t.commands||[]).map(c=>`<h3>${escapeText(c.label)}</h3><pre class="example">${escapeText(c.command)}</pre><p><strong>Expected:</strong> ${escapeText(c.expected)}</p>`).join('')}${(t.prerequisites||[]).length?'<h3>Useful lessons</h3><ul>'+t.prerequisites.map(a=>`<li><a href="${escapeText(a.href)}">${escapeText(a.label)}</a></li>`).join('')+'</ul>':''}${learningList(t.notes)}`;}
-function taskKit(p,t,compact=false){if(!t)return '';if(compact){const files=p.resources.files.filter(f=>t.fileIds.includes(f.id)&&['guide','worksheet'].includes(f.role));return '<section class="lesson-task-kit" aria-label="Practice files"><h3>'+ (t.kind==='lesson'?'Practice files':'Stage project: '+escapeText(t.title))+'</h3><p>'+ (t.kind==='lesson'?'Files for this exercise.':'Optional project for this stage. You can complete the lesson exercise separately.')+'</p>'+bundleLink(p)+(files.length?'<p class="muted">Guides & worksheets</p>':'')+'<ul class="lesson-file-links">'+files.map(f=>'<li><a download href="'+escapeText(f.href)+'">'+escapeText(fileName(f))+' ↓</a></li>').join('')+'</ul><a class="download-action" href="#resources/'+p.id+'/'+t.id+'">All task files, instructions & expected results →</a></section>';}return '<section class="task-kit" aria-label="Files and instructions for '+escapeText(t.title)+'"><div class="task-kit-heading"><h2>'+escapeText(t.title)+'</h2>'+bundleLink(p)+'</div><p>'+escapeText(t.goal)+'</p>'+taskInstructions(p,t)+'<details class="individual-files"><summary>Individual files & references</summary><p>The ZIP includes these files. Keep shared dependencies together; you do not need to study every reference for this task.</p>'+resourceFiles(p,t.fileIds)+'</details>'+'<details><summary>Complete bundle folder layout</summary><pre class="folder-tree" aria-label="Extracted folder layout">'+escapeText(p.resources.folder)+'/\n  START-HERE.txt\n'+p.resources.files.map(f=>'  '+escapeText(fileName(f))).join('\n')+'</pre></details></section>';}
-function lastLessonLink(p){
- try{const saved=JSON.parse(localStorage.getItem('learning-notebook:last-lesson:v1'));const lesson=saved?.path===p.id&&Array.isArray(p.lessons)&&p.lessons.find(l=>l.id===saved.lesson);return lesson?`<p><a href="${lessonRoute(p,lesson)}">Return to last opened lesson: ${escapeText(lesson.title)}</a></p>`:'';}catch{return '';}
+function fileName(file) {
+  return file.href.split('/').pop();
 }
-function resourcesView(p,id){const kit=p.resources;if(!kit)return '<h1>Practice resources</h1><p>This course has no downloadable practice kit.</p>';const task=kit.tasks.find(t=>t.id===id);return `<a class="back-link" href="${escapeText(p.href||'#path/'+p.id)}">← ${escapeText(p.title)}</a>${lastLessonLink(p)}<h1>${escapeText(p.title)} · Files & practice</h1><p class="intro">Choose a task to see its files, instructions and expected results.</p><nav class="task-tabs" aria-label="Practice tasks">${kit.tasks.map(t=>`<a href="#resources/${p.id}/${t.id}" ${task?.id===t.id?'aria-current="page"':''}>${escapeText(t.title)}</a>`).join('')}</nav>${task?taskKit(p,task):`${bundleLink(p)}<h2>All course files</h2>${resourceFiles(p)}<p>The bundle keeps these files together in <code>${escapeText(kit.folder)}</code>. Open START-HERE.txt for all task instructions.</p>`}`;}
-function courseTools(p,l,overview=false){
- if(overview)return `<nav class="course-tools" aria-label="Course shortcuts"><span class="course-current" aria-current="page">Course overview</span>${p.glossary?`<a href="#glossary/${p.id}">Glossary</a>`:''}<a href="offline.html?course=${p.id}">Save course offline</a></nav>`;
- return `<nav class="course-tools" aria-label="Course shortcuts"><a href="#path/${p.id}">Course overview</a><details class="course-contents"><summary aria-label="Course contents"><span class="course-word">Course </span>contents</summary><ol>${p.lessons.map(item=>`<li><a href="${lessonRoute(p,item)}" ${l?.id===item.id?'aria-current="page"':''}>${escapeText(item.title)}</a></li>`).join('')}</ol></details><details class="course-options"><summary aria-label="Course tools"><span class="course-word">Course </span>tools</summary>${p.resources?`<a href="#resources/${p.id}${l&&taskForLesson(p,l)?'/'+taskForLesson(p,l).id:''}">Practice files</a>`:''}${p.glossary?`<a href="#glossary/${p.id}">Glossary</a>`:''}<a href="offline.html?course=${p.id}">Save course offline</a></details></nav>`;
+function taskForLesson(p, l) {
+  const kit = p.resources;
+  return kit?.tasks.find(t => t.id === kit.lessonTasks?.[l.id]);
+}
+function bundleLink(p) {
+  const kit = p.resources;
+  const studio = kit?.studio;
+  const open =
+    studio &&
+    kit.files.some(f => f.href === studio.href) &&
+    /^paths\/[a-z0-9-]+\/practice\/[a-z0-9-]+\.html$/.test(studio.href)
+      ? `<a class="download-action" href="${escapeText(studio.href)}">${escapeText(studio.title)} <span aria-hidden="true">↗</span></a>`
+      : '';
+  return (
+    open +
+    (kit?.bundle
+      ? `<a class="download-action bundle-action" download href="${escapeText(kit.bundle.href)}">Download ${escapeText(p.title)} practice ZIP</a>`
+      : '')
+  );
+}
+function resourceFiles(p, ids) {
+  const files = p.resources.files.filter(f => !ids || ids.includes(f.id));
+  return (
+    '<ul class="resource-files">' +
+    files
+      .map(
+        f =>
+          `<li><div><strong>${escapeText(fileName(f))}</strong><span class="file-role">${escapeText(f.role)}</span><p>${escapeText(f.description)}</p></div><a class="download-action" download href="${escapeText(f.href)}" aria-label="Download ${escapeText(fileName(f))}">Download <span aria-hidden="true">↓</span></a></li>`,
+      )
+      .join('') +
+    '</ul>'
+  );
+}
+function taskInstructions(p, t) {
+  return `<p>Extract the ZIP and open the <code>${escapeText(p.resources.folder)}</code> folder.${t.commands?.length ? ' Run the commands below in your terminal from this folder, unless a step says otherwise.' : ' Follow the steps below; no terminal command is required.'}</p><ol>${(t.steps || []).map(s => '<li>' + escapeText(s) + '</li>').join('')}</ol>${(t.commands || []).map(c => `<h3>${escapeText(c.label)}</h3><pre class="example">${escapeText(c.command)}</pre><p><strong>Expected:</strong> ${escapeText(c.expected)}</p>`).join('')}${(t.prerequisites || []).length ? '<h3>Useful lessons</h3><ul>' + t.prerequisites.map(a => `<li><a href="${escapeText(a.href)}">${escapeText(a.label)}</a></li>`).join('') + '</ul>' : ''}${learningList(t.notes)}`;
+}
+function taskKit(p, t, compact = false) {
+  if (!t) return '';
+  if (compact) {
+    const files = p.resources.files.filter(f => t.fileIds.includes(f.id) && ['guide', 'worksheet'].includes(f.role));
+    return (
+      '<section class="lesson-task-kit" aria-label="Practice files"><h3>' +
+      (t.kind === 'lesson' ? 'Practice files' : 'Stage project: ' + escapeText(t.title)) +
+      '</h3><p>' +
+      (t.kind === 'lesson'
+        ? 'Files for this exercise.'
+        : 'Optional project for this stage. You can complete the lesson exercise separately.') +
+      '</p>' +
+      bundleLink(p) +
+      (files.length ? '<p class="muted">Guides & worksheets</p>' : '') +
+      '<ul class="lesson-file-links">' +
+      files
+        .map(f => '<li><a download href="' + escapeText(f.href) + '">' + escapeText(fileName(f)) + ' ↓</a></li>')
+        .join('') +
+      '</ul><a class="download-action" href="#resources/' +
+      p.id +
+      '/' +
+      t.id +
+      '">All task files, instructions & expected results →</a></section>'
+    );
+  }
+  return (
+    '<section class="task-kit" aria-label="Files and instructions for ' +
+    escapeText(t.title) +
+    '"><div class="task-kit-heading"><h2>' +
+    escapeText(t.title) +
+    '</h2>' +
+    bundleLink(p) +
+    '</div><p>' +
+    escapeText(t.goal) +
+    '</p>' +
+    taskInstructions(p, t) +
+    '<details class="individual-files"><summary>Individual files & references</summary><p>The ZIP includes these files. Keep shared dependencies together; you do not need to study every reference for this task.</p>' +
+    resourceFiles(p, t.fileIds) +
+    '</details>' +
+    '<details><summary>Complete bundle folder layout</summary><pre class="folder-tree" aria-label="Extracted folder layout">' +
+    escapeText(p.resources.folder) +
+    '/\n  START-HERE.txt\n' +
+    p.resources.files.map(f => '  ' + escapeText(fileName(f))).join('\n') +
+    '</pre></details></section>'
+  );
+}
+function lastLessonLink(p) {
+  try {
+    const saved = JSON.parse(localStorage.getItem('learning-notebook:last-lesson:v1'));
+    const lesson = saved?.path === p.id && Array.isArray(p.lessons) && p.lessons.find(l => l.id === saved.lesson);
+    return lesson
+      ? `<p><a href="${lessonRoute(p, lesson)}">Return to last opened lesson: ${escapeText(lesson.title)}</a></p>`
+      : '';
+  } catch {
+    return '';
+  }
+}
+function resourcesView(p, id) {
+  const kit = p.resources;
+  if (!kit) return '<h1>Practice resources</h1><p>This course has no downloadable practice kit.</p>';
+  const task = kit.tasks.find(t => t.id === id);
+  return `<a class="back-link" href="${escapeText(p.href || '#path/' + p.id)}">← ${escapeText(p.title)}</a>${lastLessonLink(p)}<h1>${escapeText(p.title)} · Files & practice</h1><p class="intro">Choose a task to see its files, instructions and expected results.</p><nav class="task-tabs" aria-label="Practice tasks">${kit.tasks.map(t => `<a href="#resources/${p.id}/${t.id}" ${task?.id === t.id ? 'aria-current="page"' : ''}>${escapeText(t.title)}</a>`).join('')}</nav>${task ? taskKit(p, task) : `${bundleLink(p)}<h2>All course files</h2>${resourceFiles(p)}<p>The bundle keeps these files together in <code>${escapeText(kit.folder)}</code>. Open START-HERE.txt for all task instructions.</p>`}`;
+}
+function courseTools(p, l, overview = false) {
+  if (overview)
+    return `<nav class="course-tools" aria-label="Course shortcuts"><span class="course-current" aria-current="page">Course overview</span>${p.glossary ? `<a href="#glossary/${p.id}">Glossary</a>` : ''}<a href="offline.html?course=${p.id}">Save course offline</a></nav>`;
+  return `<nav class="course-tools" aria-label="Course shortcuts"><a href="#path/${p.id}">Course overview</a><details class="course-contents"><summary aria-label="Course contents"><span class="course-word">Course </span>contents</summary><ol>${p.lessons.map(item => `<li><a href="${lessonRoute(p, item)}" ${l?.id === item.id ? 'aria-current="page"' : ''}>${escapeText(item.title)}</a></li>`).join('')}</ol></details><details class="course-options"><summary aria-label="Course tools"><span class="course-word">Course </span>tools</summary>${p.resources ? `<a href="#resources/${p.id}${l && taskForLesson(p, l) ? '/' + taskForLesson(p, l).id : ''}">Practice files</a>` : ''}${p.glossary ? `<a href="#glossary/${p.id}">Glossary</a>` : ''}<a href="offline.html?course=${p.id}">Save course offline</a></details></nav>`;
 }
 
 // Lesson references become links outside code spans only.
-function lessonText(p,text){return proseText(text).split(/(<code>[^<]*<\/code>)/).map((part,i)=>i%2?part:part.replace(/\blesson (\d+)\b/gi,(match,n)=>{const item=p.lessons[Number(n)-1];return item?`<a href="${lessonRoute(p,item)}" aria-label="${escapeText(item.title)}">${match}</a>`:match;})).join('');}
-function resumeView(){try{const saved=JSON.parse(localStorage.getItem('learning-notebook:last-lesson:v1'));const p=LEARNING_PATHS.find(p=>p.id===saved?.path);const l=Array.isArray(p?.lessons)&&p.lessons.find(l=>l.id===saved.lesson);return l?`<section class="resume-card" aria-label="Continue learning"><div><p>Last opened · ${escapeText(p.title)}</p><h2>${escapeText(l.title)}</h2><small>${new Set(completed(p.id).filter(id=>p.lessons.some(item=>item.id===id))).size} of ${p.lessons.length} lessons read · Saved on this browser.</small></div><a href="${lessonRoute(p,l)}" aria-label="Continue ${escapeText(l.title)}">Continue learning <span aria-hidden="true">→</span></a></section>`:'';}catch{return '';}}
-function recommendedRoutes(){const choices=[['Start coding','python','Python'],['Build web applications','dotnet','C# & .NET'],['Explore AI applications','ai-agents','AI Agents']].filter(x=>LEARNING_PATHS.some(p=>p.id===x[1]&&p.status==='ready'));return choices.length?`<details class="learning-routes"><summary>Not sure where to start?</summary><ul>${choices.map(([why,id,name])=>`<li><strong>${why}:</strong> <a href="#path/${id}">${name}</a></li>`).join('')}</ul><p>Learn one programming language before Design Patterns. SQL and API experience help with System Design. Learn AI Agents before Agent Harnesses; their executable workshops use Python.</p></details>`:'';}
-function diagramHasSteps(d){return d.steps.length>0&&(d.type==='sequence'||d.nodes.length>7||d.steps.length>4);}
-function diagramView(l,print=false){
- const d=l.diagram;if(!d)return '';
- const interactive=diagramHasSteps(d);
- const description='<ol class="diagram-nodes">'+d.nodes.map(n=>`<li data-node="${escapeText(n.id)}"><strong>${escapeText(n.label)}</strong><p>${escapeText(n.description)}</p></li>`).join('')+'</ol><h3>Connections</h3><ol class="diagram-edges">'+d.edges.map((e,i)=>`<li data-edge="${i}"><strong>${escapeText(d.nodes.find(n=>n.id===e.from).label)}</strong><span class="edge-label"> ${escapeText(e.label)} → </span><strong>${escapeText(d.nodes.find(n=>n.id===e.to).label)}</strong></li>`).join('')+'</ol>';
- const alternative=print?description:'<details class="mermaid-text" data-diagram-alternative><summary>Full diagram description</summary>'+description+'</details>';
- const steps=!print&&interactive?'<details class="diagram-step-controls"><summary>Walk through the highlights</summary><div id="diagram-step" class="diagram-explanation" role="status"></div><div class="trace-actions"><button id="diagram-prev" class="quiet">Previous diagram step</button><button id="diagram-next" class="primary">Next diagram step</button></div></details>':'';
- return `<section ${print?'':'id="lesson-diagram"'} class="concept-diagram" aria-label="${escapeText(d.title)}"><h2>${escapeText(d.title)}</h2><p>${escapeText(d.summary)}</p><div class="mermaid-panel" data-mermaid-diagram="${escapeText(JSON.stringify(d))}"><div class="mermaid-toolbar no-print"><button class="quiet" data-mermaid-fit type="button" aria-pressed="false">Fit to screen</button><details class="diagram-downloads"><summary>Download diagram</summary><button class="quiet" data-mermaid-source type="button">Download Mermaid source</button><button class="quiet" data-mermaid-svg type="button" disabled>Download SVG</button></details></div><p class="mermaid-status" role="status">Preparing diagram…</p><p class="mermaid-hint">Scroll across wide diagrams, or choose Fit to screen.</p><div class="mermaid-view" tabindex="0" role="region" aria-label="${escapeText(d.title)} diagram; scroll horizontally if needed"></div></div>${alternative}${d.steps.length?`<section class="walkthrough-reading"><h3>How it works</h3><ol>${d.steps.map(s=>`<li><strong>${escapeText(s.title)}</strong><p>${escapeText(s.explanation)}</p></li>`).join('')}</ol></section>`:''}${steps}</section>`;
+function lessonText(p, text) {
+  return proseText(text)
+    .split(/(<code>[^<]*<\/code>)/)
+    .map((part, i) =>
+      i % 2
+        ? part
+        : part.replace(/\blesson (\d+)\b/gi, (match, n) => {
+            const item = p.lessons[Number(n) - 1];
+            return item
+              ? `<a href="${lessonRoute(p, item)}" aria-label="${escapeText(item.title)}">${match}</a>`
+              : match;
+          }),
+    )
+    .join('');
 }
-function enhanceCodePanels(main,context=''){if(typeof NotebookCode!=='undefined'){NotebookCode.enhance(main,context);return;}main.querySelectorAll('pre').forEach((pre,index)=>{pre.tabIndex=0;pre.setAttribute('role','region');pre.setAttribute('aria-label',pre.classList.contains('folder-tree')?'Folder layout':'Code or command example '+(index+1)+'; scroll horizontally if needed');if(pre.classList.contains('folder-tree'))return;const tools=document.createElement('div');tools.className='code-tools no-print';const button=document.createElement('button');button.type='button';button.className='quiet';button.textContent='Copy code';button.setAttribute('aria-label','Copy code or command example '+(index+1));const status=document.createElement('span');status.setAttribute('role','status');button.addEventListener('click',async()=>{try{if(typeof navigator==='undefined'||!navigator.clipboard)throw Error();await navigator.clipboard.writeText(pre.textContent);status.textContent='Copied.';}catch{status.textContent='Copy unavailable. Select the code below and copy it manually.';pre.focus();}});tools.append(button,status);pre.before(tools);});}
+function resumeView() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('learning-notebook:last-lesson:v1'));
+    const p = LEARNING_PATHS.find(p => p.id === saved?.path);
+    const l = Array.isArray(p?.lessons) && p.lessons.find(l => l.id === saved.lesson);
+    return l
+      ? `<section class="resume-card" aria-label="Continue learning"><div><p>Last opened · ${escapeText(p.title)}</p><h2>${escapeText(l.title)}</h2><small>${new Set(completed(p.id).filter(id => p.lessons.some(item => item.id === id))).size} of ${p.lessons.length} lessons read · Saved on this browser.</small></div><a href="${lessonRoute(p, l)}" aria-label="Continue ${escapeText(l.title)}">Continue learning <span aria-hidden="true">→</span></a></section>`
+      : '';
+  } catch {
+    return '';
+  }
+}
+function recommendedRoutes() {
+  const choices = [
+    ['Start coding', 'python', 'Python'],
+    ['Build web applications', 'dotnet', 'C# & .NET'],
+    ['Explore AI applications', 'ai-agents', 'AI Agents'],
+  ].filter(x => LEARNING_PATHS.some(p => p.id === x[1] && p.status === 'ready'));
+  return choices.length
+    ? `<details class="learning-routes"><summary>Not sure where to start?</summary><ul>${choices.map(([why, id, name]) => `<li><strong>${why}:</strong> <a href="#path/${id}">${name}</a></li>`).join('')}</ul><p>Learn one programming language before Design Patterns. SQL and API experience help with System Design. Learn AI Agents before Agent Harnesses; their executable workshops use Python.</p></details>`
+    : '';
+}
+function diagramHasSteps(d) {
+  return d.steps.length > 0 && (d.type === 'sequence' || d.nodes.length > 7 || d.steps.length > 4);
+}
+function diagramView(l, print = false) {
+  const d = l.diagram;
+  if (!d) return '';
+  const interactive = diagramHasSteps(d);
+  const description =
+    '<ol class="diagram-nodes">' +
+    d.nodes
+      .map(
+        n =>
+          `<li data-node="${escapeText(n.id)}"><strong>${escapeText(n.label)}</strong><p>${escapeText(n.description)}</p></li>`,
+      )
+      .join('') +
+    '</ol><h3>Connections</h3><ol class="diagram-edges">' +
+    d.edges
+      .map(
+        (e, i) =>
+          `<li data-edge="${i}"><strong>${escapeText(d.nodes.find(n => n.id === e.from).label)}</strong><span class="edge-label"> ${escapeText(e.label)} → </span><strong>${escapeText(d.nodes.find(n => n.id === e.to).label)}</strong></li>`,
+      )
+      .join('') +
+    '</ol>';
+  const alternative = print
+    ? description
+    : '<details class="mermaid-text" data-diagram-alternative><summary>Full diagram description</summary>' +
+      description +
+      '</details>';
+  const steps =
+    !print && interactive
+      ? '<details class="diagram-step-controls"><summary>Walk through the highlights</summary><div id="diagram-step" class="diagram-explanation" role="status"></div><div class="trace-actions"><button id="diagram-prev" class="quiet">Previous diagram step</button><button id="diagram-next" class="primary">Next diagram step</button></div></details>'
+      : '';
+  return `<section ${print ? '' : 'id="lesson-diagram"'} class="concept-diagram" aria-label="${escapeText(d.title)}"><h2>${escapeText(d.title)}</h2><p>${escapeText(d.summary)}</p><div class="mermaid-panel" data-mermaid-diagram="${escapeText(JSON.stringify(d))}"><div class="mermaid-toolbar no-print"><button class="quiet" data-mermaid-fit type="button" aria-pressed="false">Fit to screen</button><details class="diagram-downloads"><summary>Download diagram</summary><button class="quiet" data-mermaid-source type="button">Download Mermaid source</button><button class="quiet" data-mermaid-svg type="button" disabled>Download SVG</button></details></div><p class="mermaid-status" role="status">Preparing diagram…</p><p class="mermaid-hint">Scroll across wide diagrams, or choose Fit to screen.</p><div class="mermaid-view" tabindex="0" role="region" aria-label="${escapeText(d.title)} diagram; scroll horizontally if needed"></div></div>${alternative}${d.steps.length ? `<section class="walkthrough-reading"><h3>How it works</h3><ol>${d.steps.map(s => `<li><strong>${escapeText(s.title)}</strong><p>${escapeText(s.explanation)}</p></li>`).join('')}</ol></section>` : ''}${steps}</section>`;
+}
+function enhanceCodePanels(main, context = '') {
+  if (typeof NotebookCode !== 'undefined') {
+    NotebookCode.enhance(main, context);
+    return;
+  }
+  main.querySelectorAll('pre').forEach((pre, index) => {
+    pre.tabIndex = 0;
+    pre.setAttribute('role', 'region');
+    pre.setAttribute(
+      'aria-label',
+      pre.classList.contains('folder-tree')
+        ? 'Folder layout'
+        : 'Code or command example ' + (index + 1) + '; scroll horizontally if needed',
+    );
+    if (pre.classList.contains('folder-tree')) return;
+    const tools = document.createElement('div');
+    tools.className = 'code-tools no-print';
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'quiet';
+    button.textContent = 'Copy code';
+    button.setAttribute('aria-label', 'Copy code or command example ' + (index + 1));
+    const status = document.createElement('span');
+    status.setAttribute('role', 'status');
+    button.addEventListener('click', async () => {
+      try {
+        if (typeof navigator === 'undefined' || !navigator.clipboard) throw Error();
+        await navigator.clipboard.writeText(pre.textContent);
+        status.textContent = 'Copied.';
+      } catch {
+        status.textContent = 'Copy unavailable. Select the code below and copy it manually.';
+        pre.focus();
+      }
+    });
+    tools.append(button, status);
+    pre.before(tools);
+  });
+}
 let stopLessonTracking;
-function trackLessonSection(main,l){
- if(stopLessonTracking){stopLessonTracking();stopLessonTracking=null;}
- if(!l||typeof requestAnimationFrame==='undefined')return;
- const buttons=Array.from(main.querySelectorAll('.atlas-lesson-rail [data-jump]'));
- const entries=buttons.map(button=>({button,target:document.getElementById(button.dataset.jump)})).filter(entry=>entry.target);
- const bar=main.querySelector('.reading-progress>span'),article=main.querySelector('.reading');
- if(!entries.length&&!bar)return;
- let frame=0;
- const update=()=>{frame=0;if(bar&&article){const box=article.getBoundingClientRect(),travel=box.height-innerHeight;bar.style.transform='scaleX('+(travel>0?Math.min(1,Math.max(0,-box.top/travel)):1)+')';}if(!entries.length)return;let current=entries[0];for(const entry of entries){if(entry.target.getBoundingClientRect().top<=120)current=entry;}
-  entries.forEach(entry=>{if(entry===current)entry.button.setAttribute('aria-current','location');else entry.button.removeAttribute('aria-current');});
- };
- const schedule=()=>{if(!frame)frame=requestAnimationFrame(update);};
- window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);
- const observer=typeof ResizeObserver==='undefined'?null:new ResizeObserver(schedule);observer?.observe(main);
- stopLessonTracking=()=>{window.removeEventListener('scroll',schedule);window.removeEventListener('resize',schedule);if(frame)cancelAnimationFrame(frame);observer?.disconnect();};
- update();
+function trackLessonSection(main, l) {
+  if (stopLessonTracking) {
+    stopLessonTracking();
+    stopLessonTracking = null;
+  }
+  if (!l || typeof requestAnimationFrame === 'undefined') return;
+  const buttons = Array.from(main.querySelectorAll('.atlas-lesson-rail [data-jump]'));
+  const entries = buttons
+    .map(button => ({ button, target: document.getElementById(button.dataset.jump) }))
+    .filter(entry => entry.target);
+  const bar = main.querySelector('.reading-progress>span'),
+    article = main.querySelector('.reading');
+  if (!entries.length && !bar) return;
+  let frame = 0;
+  const update = () => {
+    frame = 0;
+    if (bar && article) {
+      const box = article.getBoundingClientRect(),
+        travel = box.height - innerHeight;
+      bar.style.transform = 'scaleX(' + (travel > 0 ? Math.min(1, Math.max(0, -box.top / travel)) : 1) + ')';
+    }
+    if (!entries.length) return;
+    let current = entries[0];
+    for (const entry of entries) {
+      if (entry.target.getBoundingClientRect().top <= 120) current = entry;
+    }
+    entries.forEach(entry => {
+      if (entry === current) entry.button.setAttribute('aria-current', 'location');
+      else entry.button.removeAttribute('aria-current');
+    });
+  };
+  const schedule = () => {
+    if (!frame) frame = requestAnimationFrame(update);
+  };
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(schedule);
+  observer?.observe(main);
+  stopLessonTracking = () => {
+    window.removeEventListener('scroll', schedule);
+    window.removeEventListener('resize', schedule);
+    if (frame) cancelAnimationFrame(frame);
+    observer?.disconnect();
+  };
+  update();
 }
-function bindLearningTools(main,p,l){
- trackLessonSection(main,l);
-  main.querySelectorAll('[data-jump]').forEach(button=>button.addEventListener('click',()=>{const target=document.getElementById(button.dataset.jump);if(target){target.tabIndex=-1;target.focus({preventScroll:true});target.scrollIntoView({block:'start'});}button.closest('.course-menu')?.removeAttribute('open');}));
-  enhanceCodePanels(main,p?.id);
+function bindLearningTools(main, p, l) {
+  trackLessonSection(main, l);
+  main.querySelectorAll('[data-jump]').forEach(button =>
+    button.addEventListener('click', () => {
+      const target = document.getElementById(button.dataset.jump);
+      if (target) {
+        target.tabIndex = -1;
+        target.focus({ preventScroll: true });
+        target.scrollIntoView({ block: 'start' });
+      }
+      button.closest('.course-menu')?.removeAttribute('open');
+    }),
+  );
+  enhanceCodePanels(main, p?.id);
   bindVisualExplorer(l);
-  if(typeof NotebookMermaid!=='undefined')NotebookMermaid.render(main);
-  if(l && typeof matchMedia === "function" && matchMedia("(max-width:950px)").matches) document.getElementById("atlas-rail-sections")?.removeAttribute("open");
-  if(l&&p){try{localStorage.setItem('learning-notebook:last-lesson:v1',JSON.stringify({path:p.id,lesson:l.id}));}catch{} }
-  if(l?.diagram&&diagramHasSteps(l.diagram)){const d=l.diagram;let step=0;const show=()=>{const s=d.steps[step];if(typeof NotebookMermaid!=='undefined')NotebookMermaid.active(main.querySelector('.concept-diagram'),d,s);document.getElementById('diagram-step').innerHTML=`<p class="eyebrow">Step ${step+1} of ${d.steps.length}</p><h3>${escapeText(s.title)}</h3><p>${escapeText(s.explanation)}</p>`;main.querySelectorAll('[data-node]').forEach(e=>{const active=s.activeNodes.includes(e.dataset.node);e.classList.toggle('is-current',active);if(active)e.setAttribute('aria-current','step');else e.removeAttribute('aria-current');});main.querySelectorAll('[data-edge]').forEach(e=>e.classList.toggle('is-current',s.activeEdges.includes(Number(e.dataset.edge))));document.getElementById('diagram-prev').disabled=step===0;document.getElementById('diagram-next').disabled=step===d.steps.length-1;};document.getElementById('diagram-prev').addEventListener('click',()=>{step=Math.max(0,step-1);show();});document.getElementById('diagram-next').addEventListener('click',()=>{step=Math.min(d.steps.length-1,step+1);show();});const controls=main.querySelector?.('.diagram-step-controls');controls?.addEventListener('toggle',()=>{if(controls.open)show();else if(typeof NotebookMermaid!=='undefined')NotebookMermaid.active(main.querySelector('.concept-diagram'),d,{activeNodes:[],activeEdges:[]});});}
+  if (typeof NotebookMermaid !== 'undefined') NotebookMermaid.render(main);
+  if (l && typeof matchMedia === 'function' && matchMedia('(max-width:950px)').matches)
+    document.getElementById('atlas-rail-sections')?.removeAttribute('open');
+  if (l && p) {
+    try {
+      localStorage.setItem('learning-notebook:last-lesson:v1', JSON.stringify({ path: p.id, lesson: l.id }));
+    } catch {}
+  }
+  if (l?.diagram && diagramHasSteps(l.diagram)) {
+    const d = l.diagram;
+    let step = 0;
+    const show = () => {
+      const s = d.steps[step];
+      if (typeof NotebookMermaid !== 'undefined') NotebookMermaid.active(main.querySelector('.concept-diagram'), d, s);
+      document.getElementById('diagram-step').innerHTML =
+        `<p class="eyebrow">Step ${step + 1} of ${d.steps.length}</p><h3>${escapeText(s.title)}</h3><p>${escapeText(s.explanation)}</p>`;
+      main.querySelectorAll('[data-node]').forEach(e => {
+        const active = s.activeNodes.includes(e.dataset.node);
+        e.classList.toggle('is-current', active);
+        if (active) e.setAttribute('aria-current', 'step');
+        else e.removeAttribute('aria-current');
+      });
+      main
+        .querySelectorAll('[data-edge]')
+        .forEach(e => e.classList.toggle('is-current', s.activeEdges.includes(Number(e.dataset.edge))));
+      document.getElementById('diagram-prev').disabled = step === 0;
+      document.getElementById('diagram-next').disabled = step === d.steps.length - 1;
+    };
+    document.getElementById('diagram-prev').addEventListener('click', () => {
+      step = Math.max(0, step - 1);
+      show();
+    });
+    document.getElementById('diagram-next').addEventListener('click', () => {
+      step = Math.min(d.steps.length - 1, step + 1);
+      show();
+    });
+    const controls = main.querySelector?.('.diagram-step-controls');
+    controls?.addEventListener('toggle', () => {
+      if (controls.open) show();
+      else if (typeof NotebookMermaid !== 'undefined')
+        NotebookMermaid.active(main.querySelector('.concept-diagram'), d, { activeNodes: [], activeEdges: [] });
+    });
+  }
 }
 
-function visualLayout(nodes,edges){
- if(nodes.length&&nodes.every(n=>n.motionKey)&&!edges.length)return {levels:[nodes],positions:Object.fromEntries(nodes.map((n,i)=>[n.id,{x:24+i*230,y:24}])),width:nodes.length*230+24,height:138};
- const byId=Object.fromEntries(nodes.map(n=>[n.id,n])),depth=Object.fromEntries(nodes.map(n=>[n.id,0]));
- const forward=[],reaches=(start,target)=>{const seen=new Set(),queue=[start];while(queue.length){const id=queue.shift();if(id===target)return true;if(seen.has(id))continue;seen.add(id);forward.filter(e=>e.from===id).forEach(e=>queue.push(e.to));}return false;};
- edges.forEach(e=>{if(byId[e.from]&&byId[e.to]&&!reaches(e.to,e.from))forward.push(e);});
- for(let pass=0;pass<nodes.length;pass++){let changed=false;forward.forEach(e=>{if(depth[e.to]<depth[e.from]+1){depth[e.to]=depth[e.from]+1;changed=true;}});if(!changed)break;}
- const groups=[];nodes.forEach(n=>(groups[Math.min(depth[n.id],nodes.length-1)]??=[]).push(n));
- const levels=groups.filter(Boolean),rows=Math.max(1,...levels.map(g=>g.length)),positions={};
- levels.forEach((group,col)=>group.forEach((n,row)=>positions[n.id]={x:24+col*262,y:24+(row+(rows-group.length)/2)*122}));
- return {levels,positions,width:Math.max(320,levels.length*262+24),height:rows*122+24};
+function visualLayout(nodes, edges) {
+  if (nodes.length && nodes.every(n => n.motionKey) && !edges.length)
+    return {
+      levels: [nodes],
+      positions: Object.fromEntries(nodes.map((n, i) => [n.id, { x: 24 + i * 230, y: 24 }])),
+      width: nodes.length * 230 + 24,
+      height: 138,
+    };
+  const byId = Object.fromEntries(nodes.map(n => [n.id, n])),
+    depth = Object.fromEntries(nodes.map(n => [n.id, 0]));
+  const forward = [],
+    reaches = (start, target) => {
+      const seen = new Set(),
+        queue = [start];
+      while (queue.length) {
+        const id = queue.shift();
+        if (id === target) return true;
+        if (seen.has(id)) continue;
+        seen.add(id);
+        forward.filter(e => e.from === id).forEach(e => queue.push(e.to));
+      }
+      return false;
+    };
+  edges.forEach(e => {
+    if (byId[e.from] && byId[e.to] && !reaches(e.to, e.from)) forward.push(e);
+  });
+  for (let pass = 0; pass < nodes.length; pass++) {
+    let changed = false;
+    forward.forEach(e => {
+      if (depth[e.to] < depth[e.from] + 1) {
+        depth[e.to] = depth[e.from] + 1;
+        changed = true;
+      }
+    });
+    if (!changed) break;
+  }
+  const groups = [];
+  nodes.forEach(n => (groups[Math.min(depth[n.id], nodes.length - 1)] ??= []).push(n));
+  const levels = groups.filter(Boolean),
+    rows = Math.max(1, ...levels.map(g => g.length)),
+    positions = {};
+  levels.forEach((group, col) =>
+    group.forEach(
+      (n, row) => (positions[n.id] = { x: 24 + col * 262, y: 24 + (row + (rows - group.length) / 2) * 122 }),
+    ),
+  );
+  return { levels, positions, width: Math.max(320, levels.length * 262 + 24), height: rows * 122 + 24 };
 }
 // Authored focus names drawn motion keys, whole (emitted-B) or without their renderer prefix (pod-b, join-104); steps without focus keep the generic change cue.
-function focusMatch(focus,v){const short=v.slice(v.indexOf('-')+1);return focus.has(v)?v:focus.has(short)?short:null;}
-function focusMarkup(html,step,priorHtml){const focus=Array.isArray(step.focus)?new Set(step.focus):null;if(!focus?.size)return html;const prior=new Set([...String(priorHtml||'').matchAll(/data-motion-node="([^"]+)"/g)].map(m=>focusMatch(focus,m[1])).filter(Boolean));return html.replace(/data-motion-node="([^"]+)"/g,(m,v)=>{const k=focusMatch(focus,v);return k?`${m} data-change="${escapeText(step.focusLabel||(prior.has(k)?'Changed':'New'))}"`:m;});}
-function visualFrame(step,key,previous,lessonKey="",meta={}){
- const esc=escapeText,nodes=step.nodes||[],edges=step.edges||[],byId=Object.fromEntries(nodes.map(n=>[n.id,n])),layout=visualLayout(nodes,edges);
- const wrap=(s,max)=>{const lines=[''];String(s).split(' ').forEach(w=>{if((lines.at(-1)+' '+w).trim().length>max&&lines.at(-1))lines.push(w);else lines[lines.length-1]=(lines.at(-1)+' '+w).trim();});return lines;};
- const svgText=(s,x,y,max,cls)=>`<text x="${x}" y="${y}" class="${cls}">${wrap(s,max).map((line,i)=>`<tspan x="${x}" dy="${i?18:0}">${esc(line)}</tspan>`).join('')}</text>`;
- const changed=n=>previous&&!previous.nodes?.some(p=>p.id===n.id&&p.label===n.label&&p.detail===n.detail&&p.tone===n.tone);
- const genericDiagram=nodes.length?`<div class="visual-diagram${layout.levels.length>3?' is-wide':''}"><div class="visual-desktop"><svg viewBox="0 0 ${layout.width} ${layout.height}" role="img" aria-label="${esc(step.title)}" aria-describedby="${key}-description"><defs><marker id="${key}-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="currentColor"/></marker></defs>${edges.map((e,i)=>{const a=layout.positions[e.from],b=layout.positions[e.to];if(!a||!b)return '';const back=b.x<=a.x,x1=back?a.x-8:a.x+206,y1=a.y+45,x2=back?b.x+214:b.x-8,y2=b.y+45,bend=layout.height-24;const d=back?`M${x1},${y1} C${x1-38},${bend} ${x2+38},${bend} ${x2},${y2}`:`M${x1},${y1} C${x1+30},${y1} ${x2-30},${y2} ${x2},${y2}`;const badgeY=back?(y1+y2)/8+bend*.75:(y1+y2)/2;return `<path class="visual-edge" d="${d}" marker-end="url(#${key}-arrow)"/><g class="visual-edge-number"><circle cx="${(x1+x2)/2}" cy="${badgeY}" r="12"/><text x="${(x1+x2)/2}" y="${badgeY+4}" text-anchor="middle">${i+1}</text></g>`;}).join('')}${nodes.map(n=>{const p=layout.positions[n.id];return `<g data-motion-node="desktop-${esc(n.motionKey||n.id)}" class="visual-node tone-${n.tone||'neutral'}${changed(n)?' is-changed':''}"><rect x="${p.x}" y="${p.y}" width="206" height="90" rx="9"/>${svgText(n.label,p.x+12,p.y+24,24,'visual-label')}${svgText(n.detail||'',p.x+12,p.y+59,27,'visual-detail')}</g>`;}).join('')}</svg></div><div class="visual-mobile" aria-label="Concept relationships">${layout.levels.map(group=>`<div class="visual-level${group.length===2?' is-pair':''}">${group.map(n=>{const incoming=edges.filter(e=>e.to===n.id&&byId[e.from]);return `<div data-motion-node="mobile-${esc(n.motionKey||n.id)}" class="visual-mobile-node tone-${n.tone||'neutral'}${changed(n)?' is-changed':''}">${incoming.length?`<div class="visual-mobile-links">${incoming.map(e=>`${esc(byId[e.from].label)} <span aria-hidden="true">→</span> ${esc(e.label)}`).join(' · ')}</div>`:''}<strong>${esc(n.label)}</strong><span>${esc(n.detail||'')}</span></div>`;}).join('')}</div>`).join('')}</div></div>`:'';
- const scene=typeof NotebookScenes!=="undefined"?NotebookScenes.render(lessonKey,step,{...meta,key,previous}):"";
- const priorHtml=!previous?'':scene?NotebookScenes.render(lessonKey,previous,{...meta,index:Math.max(0,(meta.index??1)-1)}):(previous.nodes||[]).map(n=>`data-motion-node="node-${esc(n.motionKey||n.id)}"`).join('');
- const diagram=focusMarkup(scene||genericDiagram,step,priorHtml);
- return `<h3>${esc(step.title)}</h3>${diagram}<p id="${key}-description" class="visual-explanation">${esc(step.explanation)}</p>${edges.length?`<details class="visual-connections"><summary>Follow the ${edges.length} connections</summary><ol>${edges.map(e=>`<li>${esc(byId[e.from].label)} <span aria-hidden="true">→</span> ${esc(byId[e.to].label)}: ${esc(e.label)}</li>`).join('')}</ol></details>`:''}${(step.tables||[]).map((t,tableIndex)=>{const prior=(previous?.tables||[]).find(p=>p.caption===t.caption)||previous?.tables?.[tableIndex];return `<div class="visual-table-scroll" tabindex="0" role="region" aria-label="${esc(t.caption)}"><table><caption>${esc(t.caption)}</caption><thead><tr>${t.columns.map(c=>`<th scope="col">${esc(c)}</th>`).join('')}</tr></thead><tbody>${t.rows.map((r,rowIndex)=>`<tr class="${prior&&JSON.stringify(prior.rows?.[rowIndex])!==JSON.stringify(r)?'is-changed':''}">${r.map(c=>`<td>${esc(String(c))}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}).join('')}${nodes.length?`<details class="visual-text"><summary>Read node details as text</summary><ul>${nodes.map(n=>`<li><strong>${esc(n.label)}:</strong> ${esc(n.detail||'')}</li>`).join('')}</ul></details>`:''}`;
+function focusMatch(focus, v) {
+  const short = v.slice(v.indexOf('-') + 1);
+  return focus.has(v) ? v : focus.has(short) ? short : null;
 }
-function visualWalkthrough(s){return '<h3>What happens</h3><ol>'+s.steps.map(step=>'<li><strong>'+escapeText(step.title)+'</strong><p>'+escapeText(step.explanation)+'</p></li>').join('')+'</ol>';}
-function visualExplorerView(l,print=false){const v=l.visual;if(!v)return '';const esc=escapeText;return `<section ${print?'':'id="lesson-visual"'} class="visual-explorer" aria-label="${esc(v.title)}"><p class="eyebrow">Explore the concept</p><h2>${esc(v.title)}</h2><p class="visual-intro">${esc(v.intro)}</p>${print?v.scenarios.map((s,j)=>`<h3>Scenario: ${esc(s.label)}</h3>${s.steps.map((step,i)=>visualFrame(step,`print-${l.id}-${j}-${i}`,i?s.steps[i-1]:null,l.id,{scenario:s,scenarioIndex:j,index:i,print:true})).join('')}`).join(''):`<div class="visual-scenario"><label for="visual-scenario">Scenario</label><select id="visual-scenario">${v.scenarios.map((s,i)=>`<option value="${i}">${esc(s.label)}</option>`).join('')}</select></div><div class="visual-controls"><div class="visual-actions"><button id="visual-prev" class="quiet" type="button">← Previous</button><button id="visual-next" class="primary" type="button">Next step →</button><button id="visual-reset" class="quiet" type="button">Restart</button></div><p id="visual-status" role="status" aria-live="polite"></p></div><div id="visual-frame">${visualFrame(v.scenarios[0].steps[0],'live-visual',null,l.id,{scenario:v.scenarios[0],scenarioIndex:0,index:0})}</div><div class="visual-playback-panel"><div class="visual-playback"><button id="visual-play" class="primary" type="button" aria-pressed="false">Play sequence</button><label for="visual-pace">Time per step</label><select id="visual-pace"><option value="1000">1 second</option><option value="2000" selected>2 seconds</option><option value="4000">4 seconds</option><option value="7000">7 seconds</option></select></div><p class="visual-motion-note" id="visual-motion-note">Watch the changes, or move one step at a time. Playback stops at the last step.</p></div><section id="visual-walkthrough" class="walkthrough-reading">${visualWalkthrough(v.scenarios[0])}</section>`}<p class="visual-scope"><strong>What this example covers:</strong> ${esc(v.scope)}</p>${v.sources?.length?`<details><summary>Sources for this exploration</summary><ul>${v.sources.map(s=>`<li><a href="${esc(s.url)}">${esc(s.title)}</a></li>`).join('')}</ul></details>`:''}</section>`;}
-let stopVisualPlayback=()=>{};
-function bindVisualExplorer(l){
- stopVisualPlayback();if(!l?.visual)return;
- const v=l.visual,elements=Object.fromEntries(['frame','play','pace','prev','next','reset','scenario','status','motion-note'].map(id=>[id,document.getElementById('visual-'+id)])),get=id=>elements[id],frame=get('frame');
- const media=typeof matchMedia==='function'?matchMedia('(prefers-reduced-motion: reduce)'):null;
- let scenario=0,step=0,previous=null,timer=null,playing=false,animations=[];
- const cancelMotion=()=>{animations.forEach(a=>a.cancel());animations=[];};
- const pause=()=>{playing=false;if(timer!==null)clearTimeout(timer);timer=null;get('play').textContent=step===v.scenarios[scenario].steps.length-1?'Replay sequence':'Play sequence';get('play').setAttribute?.('aria-pressed','false');};
- const show=()=>{
-  cancelMotion();
-  const prior=new Map(Array.from(frame.querySelectorAll?.('[data-motion-node]')||[]).map(n=>[n.dataset.motionNode,{rect:n.getBoundingClientRect(),text:n.querySelector?.('.visual-label, strong')?.textContent||n.textContent}]));
-  const current=v.scenarios[scenario].steps[step];frame.innerHTML=visualFrame(current,'live-visual',previous,l.id,{scenario:v.scenarios[scenario],scenarioIndex:scenario,index:step});
-  if(previous&&!media?.matches)for(const n of frame.querySelectorAll?.('[data-motion-node]')||[]){
-   const before=prior.get(n.dataset.motionNode),after=n.getBoundingClientRect();if(!after.width||!n.animate)continue;
-   // Stable identities move between positions; changed content gets a brief focus transition.
-   if(before&&before.text===(n.querySelector?.('.visual-label, strong')?.textContent||n.textContent)&&before.rect.width&&Math.abs(before.rect.width-after.width)<1){
-    const scale=n.getScreenCTM?.();const x=(before.rect.x-after.x)/(scale?.a||1),y=(before.rect.y-after.y)/(scale?.d||1);
-    if(x||y)animations.push(n.animate([{translate:x+'px '+y+'px'},{translate:'0px 0px'}],{duration:480,easing:'cubic-bezier(.22,1,.36,1)'}));
-   }else if(Array.isArray(current.focus)?n.getAttribute?.('data-change'):!before||before.text!==(n.querySelector?.('.visual-label, strong')?.textContent||n.textContent)){animations.push(n.animate([{opacity:.4,translate:'0px 6px'},{opacity:1,translate:'0px 0px'}],{duration:420,easing:'cubic-bezier(.22,1,.36,1)'}));}
-  }
-  previous=current;get('status').textContent=v.scenarios[scenario].label+' · Step '+(step+1)+' of '+v.scenarios[scenario].steps.length+': '+current.title;
-  get('prev').disabled=step===0;get('next').disabled=step===v.scenarios[scenario].steps.length-1;
-  for(const button of frame.querySelectorAll?.('[data-scene-next]')||[])button.disabled=step===v.scenarios[scenario].steps.length-1;
-  if(!playing)pause();
- };
- const schedule=()=>{timer=setTimeout(()=>{timer=null;if(!playing)return;if(frame.isConnected===false||document.hidden){pause();return;}step++;show();if(step===v.scenarios[scenario].steps.length-1)pause();else schedule();},Number(get('pace').value)||2000);};
- get('play').addEventListener('click',()=>{if(playing){pause();return;}if(step===v.scenarios[scenario].steps.length-1){step=0;previous=null;show();}playing=true;get('play').textContent='Pause sequence';get('play').setAttribute?.('aria-pressed','true');schedule();});
- get('pace').addEventListener('change',()=>{if(playing){clearTimeout(timer);schedule();}});
- get('scenario').addEventListener('change',e=>{pause();scenario=Number(e.target.value);step=0;previous=null;const narrative=document.getElementById('visual-walkthrough');if(narrative)narrative.innerHTML=visualWalkthrough(v.scenarios[scenario]);show();});
- get('prev').addEventListener('click',()=>{pause();step=Math.max(0,step-1);show();});
- get('next').addEventListener('click',()=>{pause();step=Math.min(v.scenarios[scenario].steps.length-1,step+1);show();});
- frame.addEventListener?.('click',event=>{const button=event.target?.closest?.('[data-scene-next]');if(!button||button.disabled)return;pause();step=Math.min(v.scenarios[scenario].steps.length-1,step+1);show();const target=frame.querySelector('[data-scene-next]:not(:disabled)');if(target)target.focus({preventScroll:true});else{frame.tabIndex=-1;frame.focus?.({preventScroll:true});}});
- get('reset').addEventListener('click',()=>{pause();step=0;previous=null;show();});
- const visibility=()=>{if(document.hidden){pause();cancelMotion();}};
- const preference=()=>{pause();cancelMotion();get('motion-note').textContent=media?.matches?'Reduced motion is on. Play advances still snapshots; all steps also work manually.':'Watch the changes, or move one step at a time. Playback stops at the last step.';};
- document.addEventListener?.('visibilitychange',visibility);media?.addEventListener?.('change',preference);
- stopVisualPlayback=()=>{pause();cancelMotion();document.removeEventListener?.('visibilitychange',visibility);media?.removeEventListener?.('change',preference);};
- preference();show();
+function focusMarkup(html, step, priorHtml) {
+  const focus = Array.isArray(step.focus) ? new Set(step.focus) : null;
+  if (!focus?.size) return html;
+  const prior = new Set(
+    [...String(priorHtml || '').matchAll(/data-motion-node="([^"]+)"/g)]
+      .map(m => focusMatch(focus, m[1]))
+      .filter(Boolean),
+  );
+  return html.replace(/data-motion-node="([^"]+)"/g, (m, v) => {
+    const k = focusMatch(focus, v);
+    return k ? `${m} data-change="${escapeText(step.focusLabel || (prior.has(k) ? 'Changed' : 'New'))}"` : m;
+  });
+}
+function visualFrame(step, key, previous, lessonKey = '', meta = {}) {
+  const esc = escapeText,
+    nodes = step.nodes || [],
+    edges = step.edges || [],
+    byId = Object.fromEntries(nodes.map(n => [n.id, n])),
+    layout = visualLayout(nodes, edges);
+  const wrap = (s, max) => {
+    const lines = [''];
+    String(s)
+      .split(' ')
+      .forEach(w => {
+        if ((lines.at(-1) + ' ' + w).trim().length > max && lines.at(-1)) lines.push(w);
+        else lines[lines.length - 1] = (lines.at(-1) + ' ' + w).trim();
+      });
+    return lines;
+  };
+  const svgText = (s, x, y, max, cls) =>
+    `<text x="${x}" y="${y}" class="${cls}">${wrap(s, max)
+      .map((line, i) => `<tspan x="${x}" dy="${i ? 18 : 0}">${esc(line)}</tspan>`)
+      .join('')}</text>`;
+  const changed = n =>
+    previous &&
+    !previous.nodes?.some(p => p.id === n.id && p.label === n.label && p.detail === n.detail && p.tone === n.tone);
+  const genericDiagram = nodes.length
+    ? `<div class="visual-diagram${layout.levels.length > 3 ? ' is-wide' : ''}"><div class="visual-desktop"><svg viewBox="0 0 ${layout.width} ${layout.height}" role="img" aria-label="${esc(step.title)}" aria-describedby="${key}-description"><defs><marker id="${key}-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="currentColor"/></marker></defs>${edges
+        .map((e, i) => {
+          const a = layout.positions[e.from],
+            b = layout.positions[e.to];
+          if (!a || !b) return '';
+          const back = b.x <= a.x,
+            x1 = back ? a.x - 8 : a.x + 206,
+            y1 = a.y + 45,
+            x2 = back ? b.x + 214 : b.x - 8,
+            y2 = b.y + 45,
+            bend = layout.height - 24;
+          const d = back
+            ? `M${x1},${y1} C${x1 - 38},${bend} ${x2 + 38},${bend} ${x2},${y2}`
+            : `M${x1},${y1} C${x1 + 30},${y1} ${x2 - 30},${y2} ${x2},${y2}`;
+          const badgeY = back ? (y1 + y2) / 8 + bend * 0.75 : (y1 + y2) / 2;
+          return `<path class="visual-edge" d="${d}" marker-end="url(#${key}-arrow)"/><g class="visual-edge-number"><circle cx="${(x1 + x2) / 2}" cy="${badgeY}" r="12"/><text x="${(x1 + x2) / 2}" y="${badgeY + 4}" text-anchor="middle">${i + 1}</text></g>`;
+        })
+        .join('')}${nodes
+        .map(n => {
+          const p = layout.positions[n.id];
+          return `<g data-motion-node="desktop-${esc(n.motionKey || n.id)}" class="visual-node tone-${n.tone || 'neutral'}${changed(n) ? ' is-changed' : ''}"><rect x="${p.x}" y="${p.y}" width="206" height="90" rx="9"/>${svgText(n.label, p.x + 12, p.y + 24, 24, 'visual-label')}${svgText(n.detail || '', p.x + 12, p.y + 59, 27, 'visual-detail')}</g>`;
+        })
+        .join('')}</svg></div><div class="visual-mobile" aria-label="Concept relationships">${layout.levels
+        .map(
+          group =>
+            `<div class="visual-level${group.length === 2 ? ' is-pair' : ''}">${group
+              .map(n => {
+                const incoming = edges.filter(e => e.to === n.id && byId[e.from]);
+                return `<div data-motion-node="mobile-${esc(n.motionKey || n.id)}" class="visual-mobile-node tone-${n.tone || 'neutral'}${changed(n) ? ' is-changed' : ''}">${incoming.length ? `<div class="visual-mobile-links">${incoming.map(e => `${esc(byId[e.from].label)} <span aria-hidden="true">→</span> ${esc(e.label)}`).join(' · ')}</div>` : ''}<strong>${esc(n.label)}</strong><span>${esc(n.detail || '')}</span></div>`;
+              })
+              .join('')}</div>`,
+        )
+        .join('')}</div></div>`
+    : '';
+  const scene =
+    typeof NotebookScenes !== 'undefined' ? NotebookScenes.render(lessonKey, step, { ...meta, key, previous }) : '';
+  const priorHtml = !previous
+    ? ''
+    : scene
+      ? NotebookScenes.render(lessonKey, previous, { ...meta, index: Math.max(0, (meta.index ?? 1) - 1) })
+      : (previous.nodes || []).map(n => `data-motion-node="node-${esc(n.motionKey || n.id)}"`).join('');
+  const diagram = focusMarkup(scene || genericDiagram, step, priorHtml);
+  return `<h3>${esc(step.title)}</h3>${diagram}<p id="${key}-description" class="visual-explanation">${esc(step.explanation)}</p>${edges.length ? `<details class="visual-connections"><summary>Follow the ${edges.length} connections</summary><ol>${edges.map(e => `<li>${esc(byId[e.from].label)} <span aria-hidden="true">→</span> ${esc(byId[e.to].label)}: ${esc(e.label)}</li>`).join('')}</ol></details>` : ''}${(
+    step.tables || []
+  )
+    .map((t, tableIndex) => {
+      const prior = (previous?.tables || []).find(p => p.caption === t.caption) || previous?.tables?.[tableIndex];
+      return `<div class="visual-table-scroll" tabindex="0" role="region" aria-label="${esc(t.caption)}"><table><caption>${esc(t.caption)}</caption><thead><tr>${t.columns.map(c => `<th scope="col">${esc(c)}</th>`).join('')}</tr></thead><tbody>${t.rows.map((r, rowIndex) => `<tr class="${prior && JSON.stringify(prior.rows?.[rowIndex]) !== JSON.stringify(r) ? 'is-changed' : ''}">${r.map(c => `<td>${esc(String(c))}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+    })
+    .join(
+      '',
+    )}${nodes.length ? `<details class="visual-text"><summary>Read node details as text</summary><ul>${nodes.map(n => `<li><strong>${esc(n.label)}:</strong> ${esc(n.detail || '')}</li>`).join('')}</ul></details>` : ''}`;
+}
+function visualWalkthrough(s) {
+  return (
+    '<h3>What happens</h3><ol>' +
+    s.steps
+      .map(
+        step => '<li><strong>' + escapeText(step.title) + '</strong><p>' + escapeText(step.explanation) + '</p></li>',
+      )
+      .join('') +
+    '</ol>'
+  );
+}
+function visualExplorerView(l, print = false) {
+  const v = l.visual;
+  if (!v) return '';
+  const esc = escapeText;
+  return `<section ${print ? '' : 'id="lesson-visual"'} class="visual-explorer" aria-label="${esc(v.title)}"><p class="eyebrow">Explore the concept</p><h2>${esc(v.title)}</h2><p class="visual-intro">${esc(v.intro)}</p>${print ? v.scenarios.map((s, j) => `<h3>Scenario: ${esc(s.label)}</h3>${s.steps.map((step, i) => visualFrame(step, `print-${l.id}-${j}-${i}`, i ? s.steps[i - 1] : null, l.id, { scenario: s, scenarioIndex: j, index: i, print: true })).join('')}`).join('') : `<div class="visual-scenario"><label for="visual-scenario">Scenario</label><select id="visual-scenario">${v.scenarios.map((s, i) => `<option value="${i}">${esc(s.label)}</option>`).join('')}</select></div><div class="visual-controls"><div class="visual-actions"><button id="visual-prev" class="quiet" type="button">← Previous</button><button id="visual-next" class="primary" type="button">Next step →</button><button id="visual-reset" class="quiet" type="button">Restart</button></div><p id="visual-status" role="status" aria-live="polite"></p></div><div id="visual-frame">${visualFrame(v.scenarios[0].steps[0], 'live-visual', null, l.id, { scenario: v.scenarios[0], scenarioIndex: 0, index: 0 })}</div><div class="visual-playback-panel"><div class="visual-playback"><button id="visual-play" class="primary" type="button" aria-pressed="false">Play sequence</button><label for="visual-pace">Time per step</label><select id="visual-pace"><option value="1000">1 second</option><option value="2000" selected>2 seconds</option><option value="4000">4 seconds</option><option value="7000">7 seconds</option></select></div><p class="visual-motion-note" id="visual-motion-note">Watch the changes, or move one step at a time. Playback stops at the last step.</p></div><section id="visual-walkthrough" class="walkthrough-reading">${visualWalkthrough(v.scenarios[0])}</section>`}<p class="visual-scope"><strong>What this example covers:</strong> ${esc(v.scope)}</p>${v.sources?.length ? `<details><summary>Sources for this exploration</summary><ul>${v.sources.map(s => `<li><a href="${esc(s.url)}">${esc(s.title)}</a></li>`).join('')}</ul></details>` : ''}</section>`;
+}
+let stopVisualPlayback = () => {};
+function bindVisualExplorer(l) {
+  stopVisualPlayback();
+  if (!l?.visual) return;
+  const v = l.visual,
+    elements = Object.fromEntries(
+      ['frame', 'play', 'pace', 'prev', 'next', 'reset', 'scenario', 'status', 'motion-note'].map(id => [
+        id,
+        document.getElementById('visual-' + id),
+      ]),
+    ),
+    get = id => elements[id],
+    frame = get('frame');
+  const media = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+  let scenario = 0,
+    step = 0,
+    previous = null,
+    timer = null,
+    playing = false,
+    animations = [];
+  const cancelMotion = () => {
+    animations.forEach(a => a.cancel());
+    animations = [];
+  };
+  const pause = () => {
+    playing = false;
+    if (timer !== null) clearTimeout(timer);
+    timer = null;
+    get('play').textContent = step === v.scenarios[scenario].steps.length - 1 ? 'Replay sequence' : 'Play sequence';
+    get('play').setAttribute?.('aria-pressed', 'false');
+  };
+  const show = () => {
+    cancelMotion();
+    const prior = new Map(
+      Array.from(frame.querySelectorAll?.('[data-motion-node]') || []).map(n => [
+        n.dataset.motionNode,
+        {
+          rect: n.getBoundingClientRect(),
+          text: n.querySelector?.('.visual-label, strong')?.textContent || n.textContent,
+        },
+      ]),
+    );
+    const current = v.scenarios[scenario].steps[step];
+    frame.innerHTML = visualFrame(current, 'live-visual', previous, l.id, {
+      scenario: v.scenarios[scenario],
+      scenarioIndex: scenario,
+      index: step,
+    });
+    if (previous && !media?.matches)
+      for (const n of frame.querySelectorAll?.('[data-motion-node]') || []) {
+        const before = prior.get(n.dataset.motionNode),
+          after = n.getBoundingClientRect();
+        if (!after.width || !n.animate) continue;
+        // Stable identities move between positions; changed content gets a brief focus transition.
+        if (
+          before &&
+          before.text === (n.querySelector?.('.visual-label, strong')?.textContent || n.textContent) &&
+          before.rect.width &&
+          Math.abs(before.rect.width - after.width) < 1
+        ) {
+          const scale = n.getScreenCTM?.();
+          const x = (before.rect.x - after.x) / (scale?.a || 1),
+            y = (before.rect.y - after.y) / (scale?.d || 1);
+          if (x || y)
+            animations.push(
+              n.animate([{ translate: x + 'px ' + y + 'px' }, { translate: '0px 0px' }], {
+                duration: 480,
+                easing: 'cubic-bezier(.22,1,.36,1)',
+              }),
+            );
+        } else if (
+          Array.isArray(current.focus)
+            ? n.getAttribute?.('data-change')
+            : !before || before.text !== (n.querySelector?.('.visual-label, strong')?.textContent || n.textContent)
+        ) {
+          animations.push(
+            n.animate(
+              [
+                { opacity: 0.4, translate: '0px 6px' },
+                { opacity: 1, translate: '0px 0px' },
+              ],
+              { duration: 420, easing: 'cubic-bezier(.22,1,.36,1)' },
+            ),
+          );
+        }
+      }
+    previous = current;
+    get('status').textContent =
+      v.scenarios[scenario].label +
+      ' · Step ' +
+      (step + 1) +
+      ' of ' +
+      v.scenarios[scenario].steps.length +
+      ': ' +
+      current.title;
+    get('prev').disabled = step === 0;
+    get('next').disabled = step === v.scenarios[scenario].steps.length - 1;
+    for (const button of frame.querySelectorAll?.('[data-scene-next]') || [])
+      button.disabled = step === v.scenarios[scenario].steps.length - 1;
+    if (!playing) pause();
+  };
+  const schedule = () => {
+    timer = setTimeout(
+      () => {
+        timer = null;
+        if (!playing) return;
+        if (frame.isConnected === false || document.hidden) {
+          pause();
+          return;
+        }
+        step++;
+        show();
+        if (step === v.scenarios[scenario].steps.length - 1) pause();
+        else schedule();
+      },
+      Number(get('pace').value) || 2000,
+    );
+  };
+  get('play').addEventListener('click', () => {
+    if (playing) {
+      pause();
+      return;
+    }
+    if (step === v.scenarios[scenario].steps.length - 1) {
+      step = 0;
+      previous = null;
+      show();
+    }
+    playing = true;
+    get('play').textContent = 'Pause sequence';
+    get('play').setAttribute?.('aria-pressed', 'true');
+    schedule();
+  });
+  get('pace').addEventListener('change', () => {
+    if (playing) {
+      clearTimeout(timer);
+      schedule();
+    }
+  });
+  get('scenario').addEventListener('change', e => {
+    pause();
+    scenario = Number(e.target.value);
+    step = 0;
+    previous = null;
+    const narrative = document.getElementById('visual-walkthrough');
+    if (narrative) narrative.innerHTML = visualWalkthrough(v.scenarios[scenario]);
+    show();
+  });
+  get('prev').addEventListener('click', () => {
+    pause();
+    step = Math.max(0, step - 1);
+    show();
+  });
+  get('next').addEventListener('click', () => {
+    pause();
+    step = Math.min(v.scenarios[scenario].steps.length - 1, step + 1);
+    show();
+  });
+  frame.addEventListener?.('click', event => {
+    const button = event.target?.closest?.('[data-scene-next]');
+    if (!button || button.disabled) return;
+    pause();
+    step = Math.min(v.scenarios[scenario].steps.length - 1, step + 1);
+    show();
+    const target = frame.querySelector('[data-scene-next]:not(:disabled)');
+    if (target) target.focus({ preventScroll: true });
+    else {
+      frame.tabIndex = -1;
+      frame.focus?.({ preventScroll: true });
+    }
+  });
+  get('reset').addEventListener('click', () => {
+    pause();
+    step = 0;
+    previous = null;
+    show();
+  });
+  const visibility = () => {
+    if (document.hidden) {
+      pause();
+      cancelMotion();
+    }
+  };
+  const preference = () => {
+    pause();
+    cancelMotion();
+    get('motion-note').textContent = media?.matches
+      ? 'Reduced motion is on. Play advances still snapshots; all steps also work manually.'
+      : 'Watch the changes, or move one step at a time. Playback stops at the last step.';
+  };
+  document.addEventListener?.('visibilitychange', visibility);
+  media?.addEventListener?.('change', preference);
+  stopVisualPlayback = () => {
+    pause();
+    cancelMotion();
+    document.removeEventListener?.('visibilitychange', visibility);
+    media?.removeEventListener?.('change', preference);
+  };
+  preference();
+  show();
 }
 // Course covers and page navigation are derived from the curriculum, not a second content index.
-function atlasCourseCover(p,done){
- const lessons=p.lessons,read=lessons.filter(l=>done.includes(l.id)).length,next=lessons.find(l=>!done.includes(l.id))||lessons[0];
- const icon=typeof LIBRARY_ICONS==='object'?LIBRARY_ICONS[p.id]||'':'';
- return `<section class="atlas-cover" aria-label="Course introduction"><div class="atlas-cover-copy"><p class="atlas-category">${escapeText(p.category)} <span>Learning path</span></p><h1>${escapeText(p.title)}</h1><p class="intro">${escapeText(p.description)}</p><a class="primary" href="${lessonRoute(p,next)}">${read?'Continue learning':'Start learning'} <span aria-hidden="true">→</span></a><p class="atlas-next">${read===lessons.length?'Revisit the beginning':read?'Next unread lesson':'Begin with'}: ${escapeText(next.title.replace(/^\d+\.\s*/,''))}</p></div>${typeof atlasConceptPreview === 'function' ? atlasConceptPreview(p) : ''}<div class="atlas-itinerary"><div class="atlas-itinerary-title"><span class="atlas-course-icon" aria-hidden="true">${icon}</span><div><strong>Your route through this course</strong><small>${read} of ${lessons.length} lessons read</small></div></div><progress value="${read}" max="${lessons.length}" aria-label="Lessons read">${read} / ${lessons.length}</progress><ol>${(p.stages||[]).map((s,i)=>`<li><button data-jump="stage-${s.id}"><span class="atlas-station" aria-hidden="true">${i+1}</span><span><strong>${escapeText(s.title.split(' · ')[0])}</strong><small>${lessons.filter(l=>l.stage===s.id).length} lessons · ${escapeText(s.title.split(' · ').slice(1).join(' · ')||'Explore and practise')}</small></span><span aria-hidden="true">↗</span></button></li>`).join('')}</ol><a href="#resources/${p.id}">Practice files & instructions <span aria-hidden="true">↗</span></a></div></section>`;
+function atlasCourseCover(p, done) {
+  const lessons = p.lessons,
+    read = lessons.filter(l => done.includes(l.id)).length,
+    next = lessons.find(l => !done.includes(l.id)) || lessons[0];
+  const icon = typeof LIBRARY_ICONS === 'object' ? LIBRARY_ICONS[p.id] || '' : '';
+  return `<section class="atlas-cover" aria-label="Course introduction"><div class="atlas-cover-copy"><p class="atlas-category">${escapeText(p.category)} <span>Learning path</span></p><h1>${escapeText(p.title)}</h1><p class="intro">${escapeText(p.description)}</p><a class="primary" href="${lessonRoute(p, next)}">${read ? 'Continue learning' : 'Start learning'} <span aria-hidden="true">→</span></a><p class="atlas-next">${read === lessons.length ? 'Revisit the beginning' : read ? 'Next unread lesson' : 'Begin with'}: ${escapeText(next.title.replace(/^\d+\.\s*/, ''))}</p></div>${typeof atlasConceptPreview === 'function' ? atlasConceptPreview(p) : ''}<div class="atlas-itinerary"><div class="atlas-itinerary-title"><span class="atlas-course-icon" aria-hidden="true">${icon}</span><div><strong>Your route through this course</strong><small>${read} of ${lessons.length} lessons read</small></div></div><progress value="${read}" max="${lessons.length}" aria-label="Lessons read">${read} / ${lessons.length}</progress><ol>${(p.stages || []).map((s, i) => `<li><button data-jump="stage-${s.id}"><span class="atlas-station" aria-hidden="true">${i + 1}</span><span><strong>${escapeText(s.title.split(' · ')[0])}</strong><small>${lessons.filter(l => l.stage === s.id).length} lessons · ${escapeText(s.title.split(' · ').slice(1).join(' · ') || 'Explore and practise')}</small></span><span aria-hidden="true">↗</span></button></li>`).join('')}</ol><a href="#resources/${p.id}">Practice files & instructions <span aria-hidden="true">↗</span></a></div></section>`;
 }
-function lessonJumps(l){return `${l.sections.map((s,i)=>`<li><button data-jump="lesson-section-${i}">${escapeText(s.title)}</button></li>`).join('')}${l.visual?'<li><button data-jump="lesson-visual">Interactive exploration ↗</button></li>':''}${l.diagram?'<li><button data-jump="lesson-diagram">Concept diagram ↗</button></li>':''}${l.exercise?'<li><button data-jump="lesson-practice">'+(l.exercise.challenge?'Your solution':'Practice this idea')+'</button></li>':''}${l.practice?.length?'<li><button data-jump="lesson-ladder">Practice ladder</button></li>':''}${l.activities?.length?'<li><button data-jump="lesson-activities">Practice activities</button></li>':''}${l.quiz?'<li><button data-jump="lesson-checkpoint">Check your understanding</button></li>':''}`;}
+function lessonJumps(l) {
+  return `${l.sections.map((s, i) => `<li><button data-jump="lesson-section-${i}">${escapeText(s.title)}</button></li>`).join('')}${l.visual ? '<li><button data-jump="lesson-visual">Interactive exploration ↗</button></li>' : ''}${l.diagram ? '<li><button data-jump="lesson-diagram">Concept diagram ↗</button></li>' : ''}${l.exercise ? '<li><button data-jump="lesson-practice">' + (l.exercise.challenge ? 'Your solution' : 'Practice this idea') + '</button></li>' : ''}${l.practice?.length ? '<li><button data-jump="lesson-ladder">Practice ladder</button></li>' : ''}${l.activities?.length ? '<li><button data-jump="lesson-activities">Practice activities</button></li>' : ''}${l.quiz ? '<li><button data-jump="lesson-checkpoint">Check your understanding</button></li>' : ''}`;
+}
 // Lessons carry one compact course menu; its section list stands in for the rail on narrow screens.
-function lessonCourseMenu(p,l){const task=p.resources&&taskForLesson(p,l);return `<details class="course-menu"><summary>Contents</summary><div class="course-menu-panel"><nav class="course-menu-sections" aria-label="On this lesson"><h2>On this lesson</h2><ol>${lessonJumps(l)}</ol></nav><nav aria-label="Course"><h2>Course</h2><ul class="course-menu-links"><li><a href="#path/${p.id}">Course overview</a></li>${p.resources?`<li><a href="#resources/${p.id}${task?'/'+task.id:''}">Practice files</a></li>`:''}${p.glossary?`<li><a href="#glossary/${p.id}">Glossary</a></li>`:''}<li><a href="offline.html?course=${p.id}">Save course offline</a></li></ul><ol class="course-menu-lessons">${p.lessons.map(item=>`<li><a href="${lessonRoute(p,item)}" ${l.id===item.id?'aria-current="page"':''}>${escapeText(item.title)}</a></li>`).join('')}</ol></nav></div></details>`;}
-function atlasLessonRail(p,l){return `<nav class="atlas-lesson-rail" aria-label="On this lesson"><details id="atlas-rail-sections" open><summary>Jump to a section</summary><ol>${lessonJumps(l)}</ol></details></nav>`;}
-function atlasLibraryFeature(){return `<aside class="atlas-open-page" aria-label="Try a visual lesson"><div class="atlas-page-tab">Open a page</div><h2>Try a<br> visual lesson.</h2><a href="#topic/sql-server/joins-and-grain"><span>Why did my join double the total?</span><span aria-hidden="true">↗</span></a><a href="#topic/react/state"><span>When does React see new state?</span><span aria-hidden="true">↗</span></a><a href="#topic/kubernetes/deployments"><span>What happens when a Pod disappears?</span><span aria-hidden="true">↗</span></a></aside>`;}
+function lessonCourseMenu(p, l) {
+  const task = p.resources && taskForLesson(p, l);
+  return `<details class="course-menu"><summary>Contents</summary><div class="course-menu-panel"><nav class="course-menu-sections" aria-label="On this lesson"><h2>On this lesson</h2><ol>${lessonJumps(l)}</ol></nav><nav aria-label="Course"><h2>Course</h2><ul class="course-menu-links"><li><a href="#path/${p.id}">Course overview</a></li>${p.resources ? `<li><a href="#resources/${p.id}${task ? '/' + task.id : ''}">Practice files</a></li>` : ''}${p.glossary ? `<li><a href="#glossary/${p.id}">Glossary</a></li>` : ''}<li><a href="offline.html?course=${p.id}">Save course offline</a></li></ul><ol class="course-menu-lessons">${p.lessons.map(item => `<li><a href="${lessonRoute(p, item)}" ${l.id === item.id ? 'aria-current="page"' : ''}>${escapeText(item.title)}</a></li>`).join('')}</ol></nav></div></details>`;
+}
+function atlasLessonRail(p, l) {
+  return `<nav class="atlas-lesson-rail" aria-label="On this lesson"><details id="atlas-rail-sections" open><summary>Jump to a section</summary><ol>${lessonJumps(l)}</ol></details></nav>`;
+}
+function atlasLibraryFeature() {
+  return `<aside class="atlas-open-page" aria-label="Try a visual lesson"><div class="atlas-page-tab">Open a page</div><h2>Try a<br> visual lesson.</h2><a href="#topic/sql-server/joins-and-grain"><span>Why did my join double the total?</span><span aria-hidden="true">↗</span></a><a href="#topic/react/state"><span>When does React see new state?</span><span aria-hidden="true">↗</span></a><a href="#topic/kubernetes/deployments"><span>What happens when a Pod disappears?</span><span aria-hidden="true">↗</span></a></aside>`;
+}
 
 // Explicit author metadata distinguishes conceptual flow text from executable examples.
-function lessonExample(l,s,index,p){
- if(!s.example)return '';
- if(s.exampleFormat==='prose')return '<aside class="worked-example" aria-label="Worked example"><strong>Worked example</strong><p>'+escapeText(s.example)+'</p></aside>';
- // Courses and lessons marked runExamples add Run and Edit below each Python example.
- const controls=p&&typeof NotebookPractice!=='undefined'?NotebookPractice.exampleControls(p,s,index,l):'';
- if(controls)return '<pre class="example" id="example-code-'+index+'" data-language="python">'+escapeText(s.example)+'</pre>'+controls;
- const example='<pre class="example"'+(s.exampleFormat==='text'?' data-language="plaintext"':'')+'>'+escapeText(s.example)+'</pre>'+((p?.runExamples||l?.runExamples)&&s.exampleRunLocally?'<p class="example-local">'+escapeText(s.exampleRunLocally)+'</p>':'');
- return l.diagram?.textExampleSections?.includes(index)?'<div class="flow-text-alternative"><button class="quiet" data-jump="lesson-diagram">View this flow as a diagram ↓</button><details><summary>Read the original flow as text</summary>'+example+'</details></div>':example;
+function lessonExample(l, s, index, p) {
+  if (!s.example) return '';
+  if (s.exampleFormat === 'prose')
+    return (
+      '<aside class="worked-example" aria-label="Worked example"><strong>Worked example</strong><p>' +
+      escapeText(s.example) +
+      '</p></aside>'
+    );
+  // Courses and lessons marked runExamples add Run and Edit below each Python example.
+  const controls = p && typeof NotebookPractice !== 'undefined' ? NotebookPractice.exampleControls(p, s, index, l) : '';
+  if (controls)
+    return (
+      '<pre class="example" id="example-code-' +
+      index +
+      '" data-language="python">' +
+      escapeText(s.example) +
+      '</pre>' +
+      controls
+    );
+  const example =
+    '<pre class="example"' +
+    (s.exampleFormat === 'text' ? ' data-language="plaintext"' : '') +
+    '>' +
+    escapeText(s.example) +
+    '</pre>' +
+    ((p?.runExamples || l?.runExamples) && s.exampleRunLocally
+      ? '<p class="example-local">' + escapeText(s.exampleRunLocally) + '</p>'
+      : '');
+  return l.diagram?.textExampleSections?.includes(index)
+    ? '<div class="flow-text-alternative"><button class="quiet" data-jump="lesson-diagram">View this flow as a diagram ↓</button><details><summary>Read the original flow as text</summary>' +
+        example +
+        '</details></div>'
+    : example;
 }
 
 // Course reference: a course's glossary.json adds a filterable glossary, plain-language word help and reference tables.
-const plainTermPattern=term=>new RegExp(String.raw`\b(?:`+term.split(' / ').map(t=>t.replace(/[.*+?^${}()|[\]\\]/g,String.raw`\$&`)).join('|')+String.raw`)s?\b`,'i');
-function lessonPlainText(l){return [l.title,l.takeaway,...l.sections.flatMap(s=>s.paragraphs)].join(' ');}
-function wordHelp(p,l){const terms=p.glossary?.plainTerms||[];if(!terms.length)return '';const text=lessonPlainText(l);const words=terms.filter(t=>plainTermPattern(t.term).test(text));if(!words.length)return '';return '<details class="beginner-words"><summary>Words for this lesson · plain-language help</summary><div>'+(p.glossary.plainIntro?'<p>'+lessonText(p,p.glossary.plainIntro)+'</p>':'')+words.map(t=>'<h3>'+escapeText(t.term)+'</h3><p>'+escapeText(t.definition)+'</p>').join('')+'<p><a href="#glossary/'+p.id+'">Open the full glossary</a></p></div></details>';}
-function glossaryTerms(p,query=''){const q=String(query).trim().toLowerCase();return p.glossary.terms.filter(t=>!q||(t.term+' '+t.definition).toLowerCase().includes(q));}
-function glossaryList(terms){return terms.length?terms.map(t=>'<div class="term"><h3>'+escapeText(t.term)+'</h3><p>'+escapeText(t.definition)+'</p></div>').join(''):'<div class="empty">No matching terms. Try a shorter word or an acronym.</div>';}
-function referenceBlocks(p){return (p.glossary.reference||[]).map(r=>'<h2>'+escapeText(r.title)+'</h2>'+(r.intro?'<p>'+escapeText(r.intro)+'</p>':'')+(r.columns?'<div class="table-wrap"><table><thead><tr>'+r.columns.map(c=>'<th>'+escapeText(c)+'</th>').join('')+'</tr></thead><tbody>'+r.rows.map(row=>'<tr>'+row.map(c=>'<td>'+escapeText(c)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>':'')+(r.items?'<div class="card"><ol>'+r.items.map(i=>'<li>'+escapeText(i)+'</li>').join('')+'</ol></div>':'')).join('');}
-function plainTermsBlock(p){const terms=p.glossary.plainTerms||[];return terms.length?'<h2>Plain-language words</h2>'+(p.glossary.plainIntro?'<p>'+lessonText(p,p.glossary.plainIntro)+'</p>':'')+terms.map(t=>'<div class="term"><h3>'+escapeText(t.term)+'</h3><p>'+escapeText(t.definition)+'</p></div>').join(''):'';}
-function glossaryView(p){const g=p.glossary;return '<a class="back-link" href="#path/'+p.id+'">← '+escapeText(p.title)+'</a><p class="eyebrow">Glossary & quick reference</p><h1>'+escapeText(g.title||'Find the term. Check the units.')+'</h1>'+(g.intro?'<p class="intro">'+escapeText(g.intro)+'</p>':'')+'<label for="glossary-search">Search terms and definitions</label><input class="search" id="glossary-search" type="search" placeholder="'+escapeText(g.placeholder||'Search the glossary')+'"><p id="glossary-count" class="muted" role="status">'+g.terms.length+' of '+g.terms.length+' terms</p><div id="glossary-terms">'+glossaryList(g.terms)+'</div>'+referenceBlocks(p)+plainTermsBlock(p);}
-function glossaryPrint(p){return p.glossary?'<article id="pack-glossary"><h1>Glossary & quick reference</h1>'+glossaryList(p.glossary.terms)+referenceBlocks(p)+plainTermsBlock(p)+'</article>':'';}
-function bindGlossary(p){const input=document.getElementById('glossary-search');if(!input||!p?.glossary)return;input.addEventListener('input',()=>{const terms=glossaryTerms(p,input.value);document.getElementById('glossary-terms').innerHTML=glossaryList(terms);document.getElementById('glossary-count').textContent=terms.length+' of '+p.glossary.terms.length+' terms';});}
+const plainTermPattern = term =>
+  new RegExp(
+    String.raw`\b(?:` +
+      term
+        .split(' / ')
+        .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`))
+        .join('|') +
+      String.raw`)s?\b`,
+    'i',
+  );
+function lessonPlainText(l) {
+  return [l.title, l.takeaway, ...l.sections.flatMap(s => s.paragraphs)].join(' ');
+}
+function wordHelp(p, l) {
+  const terms = p.glossary?.plainTerms || [];
+  if (!terms.length) return '';
+  const text = lessonPlainText(l);
+  const words = terms.filter(t => plainTermPattern(t.term).test(text));
+  if (!words.length) return '';
+  return (
+    '<details class="beginner-words"><summary>Words for this lesson · plain-language help</summary><div>' +
+    (p.glossary.plainIntro ? '<p>' + lessonText(p, p.glossary.plainIntro) + '</p>' : '') +
+    words.map(t => '<h3>' + escapeText(t.term) + '</h3><p>' + escapeText(t.definition) + '</p>').join('') +
+    '<p><a href="#glossary/' +
+    p.id +
+    '">Open the full glossary</a></p></div></details>'
+  );
+}
+function glossaryTerms(p, query = '') {
+  const q = String(query).trim().toLowerCase();
+  return p.glossary.terms.filter(t => !q || (t.term + ' ' + t.definition).toLowerCase().includes(q));
+}
+function glossaryList(terms) {
+  return terms.length
+    ? terms
+        .map(t => '<div class="term"><h3>' + escapeText(t.term) + '</h3><p>' + escapeText(t.definition) + '</p></div>')
+        .join('')
+    : '<div class="empty">No matching terms. Try a shorter word or an acronym.</div>';
+}
+function referenceBlocks(p) {
+  return (p.glossary.reference || [])
+    .map(
+      r =>
+        '<h2>' +
+        escapeText(r.title) +
+        '</h2>' +
+        (r.intro ? '<p>' + escapeText(r.intro) + '</p>' : '') +
+        (r.columns
+          ? '<div class="table-wrap"><table><thead><tr>' +
+            r.columns.map(c => '<th>' + escapeText(c) + '</th>').join('') +
+            '</tr></thead><tbody>' +
+            r.rows.map(row => '<tr>' + row.map(c => '<td>' + escapeText(c) + '</td>').join('') + '</tr>').join('') +
+            '</tbody></table></div>'
+          : '') +
+        (r.items
+          ? '<div class="card"><ol>' + r.items.map(i => '<li>' + escapeText(i) + '</li>').join('') + '</ol></div>'
+          : ''),
+    )
+    .join('');
+}
+function plainTermsBlock(p) {
+  const terms = p.glossary.plainTerms || [];
+  return terms.length
+    ? '<h2>Plain-language words</h2>' +
+        (p.glossary.plainIntro ? '<p>' + lessonText(p, p.glossary.plainIntro) + '</p>' : '') +
+        terms
+          .map(
+            t => '<div class="term"><h3>' + escapeText(t.term) + '</h3><p>' + escapeText(t.definition) + '</p></div>',
+          )
+          .join('')
+    : '';
+}
+function glossaryView(p) {
+  const g = p.glossary;
+  return (
+    '<a class="back-link" href="#path/' +
+    p.id +
+    '">← ' +
+    escapeText(p.title) +
+    '</a><p class="eyebrow">Glossary & quick reference</p><h1>' +
+    escapeText(g.title || 'Find the term. Check the units.') +
+    '</h1>' +
+    (g.intro ? '<p class="intro">' + escapeText(g.intro) + '</p>' : '') +
+    '<label for="glossary-search">Search terms and definitions</label><input class="search" id="glossary-search" type="search" placeholder="' +
+    escapeText(g.placeholder || 'Search the glossary') +
+    '"><p id="glossary-count" class="muted" role="status">' +
+    g.terms.length +
+    ' of ' +
+    g.terms.length +
+    ' terms</p><div id="glossary-terms">' +
+    glossaryList(g.terms) +
+    '</div>' +
+    referenceBlocks(p) +
+    plainTermsBlock(p)
+  );
+}
+function glossaryPrint(p) {
+  return p.glossary
+    ? '<article id="pack-glossary"><h1>Glossary & quick reference</h1>' +
+        glossaryList(p.glossary.terms) +
+        referenceBlocks(p) +
+        plainTermsBlock(p) +
+        '</article>'
+    : '';
+}
+function bindGlossary(p) {
+  const input = document.getElementById('glossary-search');
+  if (!input || !p?.glossary) return;
+  input.addEventListener('input', () => {
+    const terms = glossaryTerms(p, input.value);
+    document.getElementById('glossary-terms').innerHTML = glossaryList(terms);
+    document.getElementById('glossary-count').textContent = terms.length + ' of ' + p.glossary.terms.length + ' terms';
+  });
+}
 
 // Evidence notes: a section may cite the paragraph it relies on, with the date that source was checked.
-function evidenceNotes(s){return s.evidence?.length?'<div class="sources-inline"><strong>Evidence for this section</strong>'+s.evidence.map(c=>'<p><a href="'+escapeText(/^https:\/\//.test(c.url)?c.url:'#')+'" target="_blank" rel="noopener">'+escapeText(c.label)+'</a>'+(c.paragraph?' · '+escapeText(c.paragraph):'')+(c.checked||c.status?'<br><small>'+(c.checked?'Checked '+escapeText(c.checked)+(c.status?' · ':''):'')+escapeText(c.status||'')+'</small>':'')+'</p>').join('')+'</div>':'';}
+function evidenceNotes(s) {
+  return s.evidence?.length
+    ? '<div class="sources-inline"><strong>Evidence for this section</strong>' +
+        s.evidence
+          .map(
+            c =>
+              '<p><a href="' +
+              escapeText(/^https:\/\//.test(c.url) ? c.url : '#') +
+              '" target="_blank" rel="noopener">' +
+              escapeText(c.label) +
+              '</a>' +
+              (c.paragraph ? ' · ' + escapeText(c.paragraph) : '') +
+              (c.checked || c.status
+                ? '<br><small>' +
+                  (c.checked ? 'Checked ' + escapeText(c.checked) + (c.status ? ' · ' : '') : '') +
+                  escapeText(c.status || '') +
+                  '</small>'
+                : '') +
+              '</p>',
+          )
+          .join('') +
+        '</div>'
+    : '';
+}
 
 // Calculation exercises: a numeric answer is checked within an absolute tolerance before the worked answer.
-function numericCheck(l,e){return Number.isFinite(e?.numericAnswer)?'<div class="numeric-check"><label for="numeric-answer-'+escapeText(l.id)+'">Your numerical answer'+(e.unit?' ('+escapeText(e.unit)+')':' (units in the question)')+'</label><input id="numeric-answer-'+escapeText(l.id)+'" class="search" type="number" step="any" inputmode="decimal"><button class="quiet" type="button" id="numeric-check">Check number</button><p id="numeric-feedback" role="status"></p></div>':'';}
-function numericVerdict(e,raw){const value=String(raw).trim()===''?NaN:Number(raw);return !Number.isFinite(value)?'Enter a number first.':Math.abs(value-e.numericAnswer)<=(e.tolerance??0.01)?'The number matches. Now check your units and reasoning against the rubric.':'Not yet. Recheck the signs, units and calculation; the worked answer explains the steps.';}
-function bindNumericCheck(l){const button=document.getElementById('numeric-check');if(!button||!l?.exercise)return;button.addEventListener('click',()=>{document.getElementById('numeric-feedback').textContent=numericVerdict(l.exercise,document.getElementById('numeric-answer-'+l.id).value);});}
-function exerciseRubric(e){return e.rubric?.length?'<h4>Self-check rubric</h4>'+learningList(e.rubric):'';}
+function numericCheck(l, e) {
+  return Number.isFinite(e?.numericAnswer)
+    ? '<div class="numeric-check"><label for="numeric-answer-' +
+        escapeText(l.id) +
+        '">Your numerical answer' +
+        (e.unit ? ' (' + escapeText(e.unit) + ')' : ' (units in the question)') +
+        '</label><input id="numeric-answer-' +
+        escapeText(l.id) +
+        '" class="search" type="number" step="any" inputmode="decimal"><button class="quiet" type="button" id="numeric-check">Check number</button><p id="numeric-feedback" role="status"></p></div>'
+    : '';
+}
+function numericVerdict(e, raw) {
+  const value = String(raw).trim() === '' ? NaN : Number(raw);
+  return !Number.isFinite(value)
+    ? 'Enter a number first.'
+    : Math.abs(value - e.numericAnswer) <= (e.tolerance ?? 0.01)
+      ? 'The number matches. Now check your units and reasoning against the rubric.'
+      : 'Not yet. Recheck the signs, units and calculation; the worked answer explains the steps.';
+}
+function bindNumericCheck(l) {
+  const button = document.getElementById('numeric-check');
+  if (!button || !l?.exercise) return;
+  button.addEventListener('click', () => {
+    document.getElementById('numeric-feedback').textContent = numericVerdict(
+      l.exercise,
+      document.getElementById('numeric-answer-' + l.id).value,
+    );
+  });
+}
+function exerciseRubric(e) {
+  return e.rubric?.length ? '<h4>Self-check rubric</h4>' + learningList(e.rubric) : '';
+}
 
 // Source register: sources may record the edition used, when they were checked and how they were accessed.
-function sourceRegister(p){const list=(p.sources||[]).filter(s=>s.edition||s.checked||s.access);return list.length?'<details class="source-register"><summary>Source register: editions, checks and review triggers</summary><div>'+(p.sourcesNote?'<p>'+escapeText(p.sourcesNote)+'</p>':'')+list.map(s=>'<section><h3><a href="'+escapeText(/^https:\/\//.test(s.url)?s.url:'#')+'" target="_blank" rel="noopener">'+escapeText(s.title)+'</a></h3>'+(s.edition?'<p>'+escapeText(s.edition)+'</p>':'')+(s.checked||s.access?'<p>'+(s.checked?'Checked/reviewed: '+escapeText(s.checked)+'. ':'')+escapeText(s.access||'')+'</p>':'')+(s.changeTrigger?'<p class="muted">'+escapeText(s.changeTrigger)+'</p>':'')+'</section>').join('')+'</div></details>':'';}
+function sourceRegister(p) {
+  const list = (p.sources || []).filter(s => s.edition || s.checked || s.access);
+  return list.length
+    ? '<details class="source-register"><summary>Source register: editions, checks and review triggers</summary><div>' +
+        (p.sourcesNote ? '<p>' + escapeText(p.sourcesNote) + '</p>' : '') +
+        list
+          .map(
+            s =>
+              '<section><h3><a href="' +
+              escapeText(/^https:\/\//.test(s.url) ? s.url : '#') +
+              '" target="_blank" rel="noopener">' +
+              escapeText(s.title) +
+              '</a></h3>' +
+              (s.edition ? '<p>' + escapeText(s.edition) + '</p>' : '') +
+              (s.checked || s.access
+                ? '<p>' +
+                  (s.checked ? 'Checked/reviewed: ' + escapeText(s.checked) + '. ' : '') +
+                  escapeText(s.access || '') +
+                  '</p>'
+                : '') +
+              (s.changeTrigger ? '<p class="muted">' + escapeText(s.changeTrigger) + '</p>' : '') +
+              '</section>',
+          )
+          .join('') +
+        '</div></details>'
+    : '';
+}
 
 // Links from a course or lesson to its practice studio, worked files or other activities; only relative or HTTPS links render.
-const activityHref=href=>/^https:\/\//.test(href)||!/^[a-z][a-z0-9+.-]*:/i.test(href)&&!href.startsWith('//')?href:'#';
-function activityLinks(p,items,print=false){if(!items?.length)return '';return '<section class="course-activities"'+(print?'':' id="lesson-activities"')+'><h2>'+escapeText(p?.activitiesTitle||'Practice activities')+'</h2><ul>'+items.map(a=>'<li><a href="'+escapeText(activityHref(a.href))+'">'+escapeText(a.title)+(print?'':' <span aria-hidden="true">→</span>')+'</a>'+(a.description?'<p>'+escapeText(a.description)+'</p>':'')+'</li>').join('')+'</ul></section>';}
+const activityHref = href =>
+  /^https:\/\//.test(href) || (!/^[a-z][a-z0-9+.-]*:/i.test(href) && !href.startsWith('//')) ? href : '#';
+function activityLinks(p, items, print = false) {
+  if (!items?.length) return '';
+  return (
+    '<section class="course-activities"' +
+    (print ? '' : ' id="lesson-activities"') +
+    '><h2>' +
+    escapeText(p?.activitiesTitle || 'Practice activities') +
+    '</h2><ul>' +
+    items
+      .map(
+        a =>
+          '<li><a href="' +
+          escapeText(activityHref(a.href)) +
+          '">' +
+          escapeText(a.title) +
+          (print ? '' : ' <span aria-hidden="true">→</span>') +
+          '</a>' +
+          (a.description ? '<p>' + escapeText(a.description) + '</p>' : '') +
+          '</li>',
+      )
+      .join('') +
+    '</ul></section>'
+  );
+}

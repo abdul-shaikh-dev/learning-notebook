@@ -153,7 +153,7 @@ function worker(version='one',storage=new Storage(),courseVersion,tweak){
 // The page shows its own notices word for word and replaces browser exceptions with the given sentence.
 {
  const ui=fs.readFileSync(require('node:path').join(__dirname,'../assets/js/notebook-pwa.js'),'utf8').replace(/\r\n/g,'\n');
- const start=ui.indexOf('  const notice = '),helpers=ui.slice(start,ui.indexOf('\n',ui.indexOf('  const plain = ',start)));
+ const start=ui.indexOf('  const notice = '),helpers=ui.slice(start,ui.indexOf('\n  };\n',ui.indexOf('  const plain = ',start))+5);
  const warned=[],context=vm.createContext({console:{warn:e=>warned.push(e)}});vm.runInContext(helpers+';globalThis.notice=notice;globalThis.plain=plain;',context);
  assert.equal(context.plain(context.notice('This file is not available offline.'),'fallback'),'This file is not available offline.');
  assert.equal(context.plain(new TypeError('Failed to fetch'),'Download unavailable.'),'Download unavailable.');assert.equal(warned.length,1);

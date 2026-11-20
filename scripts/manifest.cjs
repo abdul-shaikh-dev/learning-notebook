@@ -1,70 +1,392 @@
-const fs=require('node:fs'),path=require('node:path');
-const root=path.resolve(__dirname,'..');
+const fs = require('node:fs'),
+  path = require('node:path');
+const root = path.resolve(__dirname, '..');
 // Extra lesson questions and stage checks: up to 8 per lesson (keys 2-9) and 9 per stage, each with distinct options and an explanation.
-function checkQuestions(list,max,where){if(!Array.isArray(list)||!list.length||list.length>max)throw Error('Invalid question list: '+where);for(const q of list){if(!q||typeof q.question!=='string'||!q.question.trim()||!Array.isArray(q.options)||q.options.length<2||q.options.some(o=>typeof o!=='string'||!o.trim())||new Set(q.options).size!==q.options.length||!Number.isInteger(q.correct)||!q.options[q.correct]||typeof q.explanation!=='string'||!q.explanation.trim()||Object.keys(q).some(k=>!['question','options','correct','explanation'].includes(k)))throw Error('Invalid question in '+where+': '+q?.question);}}
+function checkQuestions(list, max, where) {
+  if (!Array.isArray(list) || !list.length || list.length > max) throw Error('Invalid question list: ' + where);
+  for (const q of list) {
+    if (
+      !q ||
+      typeof q.question !== 'string' ||
+      !q.question.trim() ||
+      !Array.isArray(q.options) ||
+      q.options.length < 2 ||
+      q.options.some(o => typeof o !== 'string' || !o.trim()) ||
+      new Set(q.options).size !== q.options.length ||
+      !Number.isInteger(q.correct) ||
+      !q.options[q.correct] ||
+      typeof q.explanation !== 'string' ||
+      !q.explanation.trim() ||
+      Object.keys(q).some(k => !['question', 'options', 'correct', 'explanation'].includes(k))
+    )
+      throw Error('Invalid question in ' + where + ': ' + q?.question);
+  }
+}
 // glossary.json: {terms, plainTerms?, plainIntro?, reference?, title?, intro?, placeholder?}; every entry is checked text.
-function checkGlossary(g,where){const text=v=>typeof v==='string'&&v.trim();const terms=list=>Array.isArray(list)&&list.length&&list.every(t=>t&&text(t.term)&&text(t.definition)&&Object.keys(t).every(k=>['term','definition'].includes(k)));
-if(!g||!terms(g.terms)||(g.plainTerms!==undefined&&!terms(g.plainTerms))||Object.keys(g).some(k=>!['title','intro','placeholder','terms','plainTerms','plainIntro','reference'].includes(k))||['title','intro','placeholder','plainIntro'].some(k=>g[k]!==undefined&&!text(g[k])))throw Error('Invalid glossary: '+where);
-if(new Set(g.terms.map(t=>t.term.toLowerCase())).size!==g.terms.length)throw Error('Duplicate glossary term: '+where);
-for(const r of g.reference||[]){const table=Array.isArray(r.columns)&&r.columns.length&&r.columns.every(text)&&Array.isArray(r.rows)&&r.rows.length&&r.rows.every(row=>Array.isArray(row)&&row.length===r.columns.length&&row.every(text));const items=Array.isArray(r.items)&&r.items.length&&r.items.every(text);if(!text(r.title)||!(table||items)||(r.intro!==undefined&&!text(r.intro))||Object.keys(r).some(k=>!['title','intro','columns','rows','items'].includes(k)))throw Error('Invalid glossary reference: '+where);}}
+function checkGlossary(g, where) {
+  const text = v => typeof v === 'string' && v.trim();
+  const terms = list =>
+    Array.isArray(list) &&
+    list.length &&
+    list.every(
+      t => t && text(t.term) && text(t.definition) && Object.keys(t).every(k => ['term', 'definition'].includes(k)),
+    );
+  if (
+    !g ||
+    !terms(g.terms) ||
+    (g.plainTerms !== undefined && !terms(g.plainTerms)) ||
+    Object.keys(g).some(
+      k => !['title', 'intro', 'placeholder', 'terms', 'plainTerms', 'plainIntro', 'reference'].includes(k),
+    ) ||
+    ['title', 'intro', 'placeholder', 'plainIntro'].some(k => g[k] !== undefined && !text(g[k]))
+  )
+    throw Error('Invalid glossary: ' + where);
+  if (new Set(g.terms.map(t => t.term.toLowerCase())).size !== g.terms.length)
+    throw Error('Duplicate glossary term: ' + where);
+  for (const r of g.reference || []) {
+    const table =
+      Array.isArray(r.columns) &&
+      r.columns.length &&
+      r.columns.every(text) &&
+      Array.isArray(r.rows) &&
+      r.rows.length &&
+      r.rows.every(row => Array.isArray(row) && row.length === r.columns.length && row.every(text));
+    const items = Array.isArray(r.items) && r.items.length && r.items.every(text);
+    if (
+      !text(r.title) ||
+      !(table || items) ||
+      (r.intro !== undefined && !text(r.intro)) ||
+      Object.keys(r).some(k => !['title', 'intro', 'columns', 'rows', 'items'].includes(k))
+    )
+      throw Error('Invalid glossary reference: ' + where);
+  }
+}
 // Activity links (course or lesson) open a practice page, file or task: a relative link or HTTPS, with a title and optional description.
-function checkActivities(list,where){const text=v=>typeof v==='string'&&v.trim();if(list!==undefined&&!(Array.isArray(list)&&list.length&&list.every(a=>a&&text(a.title)&&text(a.href)&&(/^https:\/\//.test(a.href)||!/^[a-z][a-z0-9+.-]*:/i.test(a.href)&&!a.href.startsWith('//'))&&(a.description===undefined||text(a.description))&&Object.keys(a).every(k=>['title','href','description'].includes(k)))))throw Error('Invalid activities: '+where);}
+function checkActivities(list, where) {
+  const text = v => typeof v === 'string' && v.trim();
+  if (
+    list !== undefined &&
+    !(
+      Array.isArray(list) &&
+      list.length &&
+      list.every(
+        a =>
+          a &&
+          text(a.title) &&
+          text(a.href) &&
+          (/^https:\/\//.test(a.href) || (!/^[a-z][a-z0-9+.-]*:/i.test(a.href) && !a.href.startsWith('//'))) &&
+          (a.description === undefined || text(a.description)) &&
+          Object.keys(a).every(k => ['title', 'href', 'description'].includes(k)),
+      )
+    )
+  )
+    throw Error('Invalid activities: ' + where);
+}
 // Optional lesson fields used by calculation exercises, evidence notes, example notes, reading time and activity links.
-function checkLessonExtras(p){checkActivities(p.activities,p.id);if(p.activitiesTitle!==undefined&&!(typeof p.activitiesTitle==='string'&&p.activitiesTitle.trim()))throw Error('Invalid activities title: '+p.id);
-for(const l of Array.isArray(p.lessons)?p.lessons:[]){checkActivities(l.activities,p.id+'/'+l.id);if(l.minutes!==undefined&&!(Number.isInteger(l.minutes)&&l.minutes>0))throw Error('Invalid lesson minutes: '+p.id+'/'+l.id);
-// A lesson opts in to running its Python examples in the browser when its course does not.
-if(l.runExamples!==undefined&&!(l.runExamples===true&&!p.runExamples))throw Error('runExamples on a lesson must be true, in a course without it: '+p.id+'/'+l.id);
-for(const s of l.sections||[])if(s.exampleNote!==undefined&&!(typeof s.exampleNote==='string'&&s.exampleNote.trim()&&s.example))throw Error('An example note needs an example: '+p.id+'/'+l.id);const e=l.exercise;if(e&&(e.numericAnswer!==undefined&&!Number.isFinite(e.numericAnswer)||e.tolerance!==undefined&&!(Number.isFinite(e.tolerance)&&e.tolerance>=0)||e.tolerance!==undefined&&e.numericAnswer===undefined||e.rubric!==undefined&&!(Array.isArray(e.rubric)&&e.rubric.every(x=>typeof x==='string'&&x.trim()))))throw Error('Invalid calculation exercise: '+p.id+'/'+l.id);
-for(const s of l.sections||[])for(const c of s.evidence||[])if(!c||typeof c.label!=='string'||!/^https:\/\//.test(c.url)||Object.keys(c).some(k=>!['label','url','paragraph','checked','status'].includes(k)))throw Error('Invalid evidence note: '+p.id+'/'+l.id);checkPractice(l.practice,p.id+'/'+l.id);}}
+function checkLessonExtras(p) {
+  checkActivities(p.activities, p.id);
+  if (p.activitiesTitle !== undefined && !(typeof p.activitiesTitle === 'string' && p.activitiesTitle.trim()))
+    throw Error('Invalid activities title: ' + p.id);
+  for (const l of Array.isArray(p.lessons) ? p.lessons : []) {
+    checkActivities(l.activities, p.id + '/' + l.id);
+    if (l.minutes !== undefined && !(Number.isInteger(l.minutes) && l.minutes > 0))
+      throw Error('Invalid lesson minutes: ' + p.id + '/' + l.id);
+    // A lesson opts in to running its Python examples in the browser when its course does not.
+    if (l.runExamples !== undefined && !(l.runExamples === true && !p.runExamples))
+      throw Error('runExamples on a lesson must be true, in a course without it: ' + p.id + '/' + l.id);
+    for (const s of l.sections || [])
+      if (s.exampleNote !== undefined && !(typeof s.exampleNote === 'string' && s.exampleNote.trim() && s.example))
+        throw Error('An example note needs an example: ' + p.id + '/' + l.id);
+    const e = l.exercise;
+    if (
+      e &&
+      ((e.numericAnswer !== undefined && !Number.isFinite(e.numericAnswer)) ||
+        (e.tolerance !== undefined && !(Number.isFinite(e.tolerance) && e.tolerance >= 0)) ||
+        (e.tolerance !== undefined && e.numericAnswer === undefined) ||
+        (e.rubric !== undefined &&
+          !(Array.isArray(e.rubric) && e.rubric.every(x => typeof x === 'string' && x.trim()))))
+    )
+      throw Error('Invalid calculation exercise: ' + p.id + '/' + l.id);
+    for (const s of l.sections || [])
+      for (const c of s.evidence || [])
+        if (
+          !c ||
+          typeof c.label !== 'string' ||
+          !/^https:\/\//.test(c.url) ||
+          Object.keys(c).some(k => !['label', 'url', 'paragraph', 'checked', 'status'].includes(k))
+        )
+          throw Error('Invalid evidence note: ' + p.id + '/' + l.id);
+    checkPractice(l.practice, p.id + '/' + l.id);
+  }
+}
 // Practice ladder: 2-4 graded steps after a lesson's exercise. Learners save attempts as "<lesson>/practice/<n>".
-const PRACTICE_KINDS=['completion','variation','transfer','decide'];
-const text=v=>typeof v==='string'&&!!v.trim(),texts=v=>Array.isArray(v)&&v.length>0&&v.every(text);
-function checkPractice(list,where){if(list===undefined)return;if(!Array.isArray(list)||list.length<2||list.length>4)throw Error('A practice ladder needs 2-4 steps: '+where);
-for(const [i,step] of list.entries()){const at=where+' practice '+(i+1);if(!step||typeof step!=='object'||Array.isArray(step))throw Error('Invalid practice step: '+at);
-const extra=Object.keys(step).filter(k=>!['kind','prompt','starter','hints','solution','solutionFormat','checks','reasoning','pitfalls'].includes(k));if(extra.length)throw Error('Unknown practice field '+extra[0]+': '+at);
-if(!PRACTICE_KINDS.includes(step.kind))throw Error('Practice kind must be one of '+PRACTICE_KINDS.join(', ')+': '+at);
-if(!text(step.prompt)||!text(step.solution)||!texts(step.checks))throw Error('A practice step needs a prompt, a solution and checks: '+at);
-if(step.solutionFormat!==undefined&&!['code','prose'].includes(step.solutionFormat))throw Error('Invalid practice solution format: '+at);
-if(step.starter!==undefined&&!text(step.starter))throw Error('Invalid practice starter: '+at);
-for(const k of ['hints','reasoning','pitfalls'])if(step[k]!==undefined&&!texts(step[k]))throw Error('Invalid practice '+k+': '+at);}}
+const PRACTICE_KINDS = ['completion', 'variation', 'transfer', 'decide'];
+const text = v => typeof v === 'string' && !!v.trim(),
+  texts = v => Array.isArray(v) && v.length > 0 && v.every(text);
+function checkPractice(list, where) {
+  if (list === undefined) return;
+  if (!Array.isArray(list) || list.length < 2 || list.length > 4)
+    throw Error('A practice ladder needs 2-4 steps: ' + where);
+  for (const [i, step] of list.entries()) {
+    const at = where + ' practice ' + (i + 1);
+    if (!step || typeof step !== 'object' || Array.isArray(step)) throw Error('Invalid practice step: ' + at);
+    const extra = Object.keys(step).filter(
+      k =>
+        ![
+          'kind',
+          'prompt',
+          'starter',
+          'hints',
+          'solution',
+          'solutionFormat',
+          'checks',
+          'reasoning',
+          'pitfalls',
+        ].includes(k),
+    );
+    if (extra.length) throw Error('Unknown practice field ' + extra[0] + ': ' + at);
+    if (!PRACTICE_KINDS.includes(step.kind))
+      throw Error('Practice kind must be one of ' + PRACTICE_KINDS.join(', ') + ': ' + at);
+    if (!text(step.prompt) || !text(step.solution) || !texts(step.checks))
+      throw Error('A practice step needs a prompt, a solution and checks: ' + at);
+    if (step.solutionFormat !== undefined && !['code', 'prose'].includes(step.solutionFormat))
+      throw Error('Invalid practice solution format: ' + at);
+    if (step.starter !== undefined && !text(step.starter)) throw Error('Invalid practice starter: ' + at);
+    for (const k of ['hints', 'reasoning', 'pitfalls'])
+      if (step[k] !== undefined && !texts(step[k])) throw Error('Invalid practice ' + k + ': ' + at);
+  }
+}
 // practice.json: a practice studio's labs, lab guides, case, module exercises, journey and visual stories.
 // Lesson references must name lessons of the course; population.csv and population.key are read into rows and key text.
-const PRACTICE_KEYS=['labs','labGuides','caseSteps','exercises','journey','visualStories','population'];
-function readPractice(p,dir){const data=JSON.parse(fs.readFileSync(path.join(dir,'practice.json'),'utf8'));
- if(!data||Object.keys(data).some(k=>!PRACTICE_KEYS.includes(k)))throw Error('Invalid practice.json: '+p.id);
- const lesson=id=>{if(!Array.isArray(p.lessons)||!p.lessons.some(l=>l.id===id))throw Error('Unknown practice lesson in '+p.id+': '+id);};
- for(const m of data.exercises?.modules||[])m.lessonIds.forEach(lesson);
- for(const s of data.visualStories||[])s.lessons.forEach(lesson);
- for(const s of data.journey||[])if(s.lesson!==undefined)lesson(s.lesson);
- for(const g of data.labGuides||[])if(!data.labs?.[g.id])throw Error('Lab guide without a lab: '+g.id);
- if(data.population){const file=f=>{const full=path.join(dir,f);if(f.includes('..')||!p.publicFiles.includes(f))throw Error('Practice population file must be a published file: '+f);return fs.readFileSync(full,'utf8').replace(/\r\n/g,'\n');};
-  const csv=file(data.population.csv);if(csv.includes('"'))throw Error('Quoted CSV needs a CSV parser: '+data.population.csv);
-  const lines=csv.trim().split('\n'),cols=lines.shift().split(',');
-  const rows=lines.map(line=>{const values=line.split(',');if(values.length!==cols.length)throw Error('CSV column count mismatch: '+data.population.csv);return Object.fromEntries(cols.map((k,i)=>[k,values[i]]));});
-  data.population={rows,key:file(data.population.key)};}
- return data;}
+const PRACTICE_KEYS = ['labs', 'labGuides', 'caseSteps', 'exercises', 'journey', 'visualStories', 'population'];
+function readPractice(p, dir) {
+  const data = JSON.parse(fs.readFileSync(path.join(dir, 'practice.json'), 'utf8'));
+  if (!data || Object.keys(data).some(k => !PRACTICE_KEYS.includes(k))) throw Error('Invalid practice.json: ' + p.id);
+  const lesson = id => {
+    if (!Array.isArray(p.lessons) || !p.lessons.some(l => l.id === id))
+      throw Error('Unknown practice lesson in ' + p.id + ': ' + id);
+  };
+  for (const m of data.exercises?.modules || []) m.lessonIds.forEach(lesson);
+  for (const s of data.visualStories || []) s.lessons.forEach(lesson);
+  for (const s of data.journey || []) if (s.lesson !== undefined) lesson(s.lesson);
+  for (const g of data.labGuides || []) if (!data.labs?.[g.id]) throw Error('Lab guide without a lab: ' + g.id);
+  if (data.population) {
+    const file = f => {
+      const full = path.join(dir, f);
+      if (f.includes('..') || !p.publicFiles.includes(f))
+        throw Error('Practice population file must be a published file: ' + f);
+      return fs.readFileSync(full, 'utf8').replace(/\r\n/g, '\n');
+    };
+    const csv = file(data.population.csv);
+    if (csv.includes('"')) throw Error('Quoted CSV needs a CSV parser: ' + data.population.csv);
+    const lines = csv.trim().split('\n'),
+      cols = lines.shift().split(',');
+    const rows = lines.map(line => {
+      const values = line.split(',');
+      if (values.length !== cols.length) throw Error('CSV column count mismatch: ' + data.population.csv);
+      return Object.fromEntries(cols.map((k, i) => [k, values[i]]));
+    });
+    data.population = { rows, key: file(data.population.key) };
+  }
+  return data;
+}
 // Allowed fields of path.json (#155): a misspelt optional field would otherwise be ignored silently, for example
 // a prose example rendered as runnable code. Fields added later from other files (diagram, visual, extraQuiz,
 // stageCheck, resources, glossary, practice) are checked when they are read.
-const KEYS={
- path:['id','title','category','status','description','level','href','runExamples','prerequisites','setup','outcomes','nextSteps','sources','sourcesNote','publicFiles','downloads','activities','activitiesTitle','lessons','stages'],
- stage:['id','title','description','exitCriteria','project'],
- project:['title','brief','requirements','rubric','solution','solutionFormat'],
- lesson:['id','title','takeaway','stage','minutes','runExamples','sections','exercise','practice','quiz','references','activities','trace'],
- section:['title','paragraphs','example','exampleFormat','exampleFiles','exampleNote','exampleRunLocally','language','evidence'],
- exercise:['prompt','starter','hints','solution','solutionFormat','checks','reasoning','pitfalls','transfer','complexity','challenge','command','runLocally','numericAnswer','tolerance','rubric'],
- quiz:['question','options','correct','explanation'],
- reference:['title','url','section','reviewed','scope'],
- trace:['title','frames'],frame:['label','items','explanation']};
-function checkKeys(p,file){
- const at=(where,o,kind)=>{if(!o||typeof o!=='object'||Array.isArray(o))return;const extra=Object.keys(o).find(k=>!KEYS[kind].includes(k));if(extra)throw Error('Unknown '+kind+' field "'+extra+'" in '+file+(where?', '+where:''));};
- at('',p,'path');
- for(const s of Array.isArray(p.stages)?p.stages:[]){at('stage '+s?.id,s,'stage');at('stage '+s?.id+' project',s?.project,'project');}
- for(const l of Array.isArray(p.lessons)?p.lessons:[]){const where='lesson '+l?.id;at(where,l,'lesson');
-  (l?.sections||[]).forEach((s,i)=>at(where+' section '+(i+1),s,'section'));
-  at(where+' exercise',l?.exercise,'exercise');at(where+' quiz',l?.quiz,'quiz');
-  (l?.references||[]).forEach((r,i)=>at(where+' reference '+(i+1),r,'reference'));
-  if(l?.trace){at(where+' trace',l.trace,'trace');(l.trace.frames||[]).forEach((f,i)=>at(where+' trace frame '+(i+1),f,'frame'));}}}
-function readPaths(){return fs.readdirSync(path.join(root,'paths'),{withFileTypes:true}).filter(d=>d.isDirectory()).map(d=>{const p=JSON.parse(fs.readFileSync(path.join(root,'paths',d.name,'path.json'),'utf8'));checkKeys(p,'paths/'+d.name+'/path.json');if(p.id!==d.name||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(p.id))throw Error('Invalid path ID: '+d.name);if(!['ready','planned'].includes(p.status))throw Error('Invalid path status');if(!Array.isArray(p.publicFiles))throw Error('Missing publicFiles');for(const f of p.publicFiles){if(f.includes('..')||path.isAbsolute(f)||f.includes('\\')||!(f.match(/\.(js|mjs|cjs|css|html|csv|md|svg|png|jpg|webp|json|py|cs|csproj|sql|tsx|ts|txt|toml|ps1|yaml|yml|wasm|zip)$/)||['Dockerfile','.dockerignore'].includes(f.split('/').pop())))throw Error('Invalid public file: '+f);}const resources=path.join(root,'paths',d.name,'resources.json');if(fs.existsSync(resources)){p.resources=JSON.parse(fs.readFileSync(resources,'utf8'));const bundle=p.resources.bundle.href;if(bundle!=='paths/'+p.id+'/practice-bundle.zip')throw Error('Invalid bundle path');p.publicFiles.push('practice-bundle.zip');}const diagrams=path.join(root,'paths',d.name,'diagrams.json');if(fs.existsSync(diagrams)){const data=JSON.parse(fs.readFileSync(diagrams,'utf8'));for(const id of Object.keys(data)){const lesson=Array.isArray(p.lessons)&&p.lessons.find(l=>l.id===id);if(!lesson)throw Error('Unknown diagram lesson: '+id);lesson.diagram=data[id];}}const visuals=path.join(root,'paths',d.name,'visuals.json');if(fs.existsSync(visuals)){for(const [id,visual] of Object.entries(JSON.parse(fs.readFileSync(visuals,'utf8')))){const lesson=p.lessons?.find(l=>l.id===id);if(!lesson)throw Error('Unknown visual lesson: '+id);lesson.visual=visual;}}const glossary=path.join(root,'paths',d.name,'glossary.json');if(fs.existsSync(glossary)){p.glossary=JSON.parse(fs.readFileSync(glossary,'utf8'));checkGlossary(p.glossary,p.id);}checkLessonExtras(p);if(fs.existsSync(path.join(root,'paths',d.name,'practice.json')))p.practice=readPractice(p,path.join(root,'paths',d.name));const checkpoints=path.join(root,'paths',d.name,'checkpoints.json');if(fs.existsSync(checkpoints)){const data=JSON.parse(fs.readFileSync(checkpoints,'utf8'));for(const [id,list] of Object.entries(data.lessons||{})){const lesson=Array.isArray(p.lessons)&&p.lessons.find(l=>l.id===id);if(!lesson?.quiz)throw Error('Extra questions need a lesson with a checkpoint: '+id);checkQuestions(list,8,id);lesson.extraQuiz=list;}for(const [id,list] of Object.entries(data.stages||{})){const stage=p.stages?.find(s=>s.id===id);if(!stage)throw Error('Unknown checkpoint stage: '+id);checkQuestions(list,9,'stage '+id);stage.stageCheck=list;}}return p;}).sort((a,b)=>(a.status==='ready'?-1:1)-(b.status==='ready'?-1:1)||a.title.localeCompare(b.title));}
-function catalogSource(){return '// Generated by scripts/sync-catalog.cjs from paths/*/path.json.\nconst LEARNING_PATHS = '+JSON.stringify(readPaths().map(({publicFiles,...p})=>p.status==='planned'?{...p,lessons:[]}:p),null,2)+';\n';}
-module.exports={root,KEYS,checkKeys,readPaths,catalogSource,checkQuestions,checkGlossary,checkLessonExtras,checkPractice};
+const KEYS = {
+  path: [
+    'id',
+    'title',
+    'category',
+    'status',
+    'description',
+    'level',
+    'href',
+    'runExamples',
+    'prerequisites',
+    'setup',
+    'outcomes',
+    'nextSteps',
+    'sources',
+    'sourcesNote',
+    'publicFiles',
+    'downloads',
+    'activities',
+    'activitiesTitle',
+    'lessons',
+    'stages',
+  ],
+  stage: ['id', 'title', 'description', 'exitCriteria', 'project'],
+  project: ['title', 'brief', 'requirements', 'rubric', 'solution', 'solutionFormat'],
+  lesson: [
+    'id',
+    'title',
+    'takeaway',
+    'stage',
+    'minutes',
+    'runExamples',
+    'sections',
+    'exercise',
+    'practice',
+    'quiz',
+    'references',
+    'activities',
+    'trace',
+  ],
+  section: [
+    'title',
+    'paragraphs',
+    'example',
+    'exampleFormat',
+    'exampleFiles',
+    'exampleNote',
+    'exampleRunLocally',
+    'language',
+    'evidence',
+  ],
+  exercise: [
+    'prompt',
+    'starter',
+    'hints',
+    'solution',
+    'solutionFormat',
+    'checks',
+    'reasoning',
+    'pitfalls',
+    'transfer',
+    'complexity',
+    'challenge',
+    'command',
+    'runLocally',
+    'numericAnswer',
+    'tolerance',
+    'rubric',
+  ],
+  quiz: ['question', 'options', 'correct', 'explanation'],
+  reference: ['title', 'url', 'section', 'reviewed', 'scope'],
+  trace: ['title', 'frames'],
+  frame: ['label', 'items', 'explanation'],
+};
+function checkKeys(p, file) {
+  const at = (where, o, kind) => {
+    if (!o || typeof o !== 'object' || Array.isArray(o)) return;
+    const extra = Object.keys(o).find(k => !KEYS[kind].includes(k));
+    if (extra) throw Error('Unknown ' + kind + ' field "' + extra + '" in ' + file + (where ? ', ' + where : ''));
+  };
+  at('', p, 'path');
+  for (const s of Array.isArray(p.stages) ? p.stages : []) {
+    at('stage ' + s?.id, s, 'stage');
+    at('stage ' + s?.id + ' project', s?.project, 'project');
+  }
+  for (const l of Array.isArray(p.lessons) ? p.lessons : []) {
+    const where = 'lesson ' + l?.id;
+    at(where, l, 'lesson');
+    (l?.sections || []).forEach((s, i) => at(where + ' section ' + (i + 1), s, 'section'));
+    at(where + ' exercise', l?.exercise, 'exercise');
+    at(where + ' quiz', l?.quiz, 'quiz');
+    (l?.references || []).forEach((r, i) => at(where + ' reference ' + (i + 1), r, 'reference'));
+    if (l?.trace) {
+      at(where + ' trace', l.trace, 'trace');
+      (l.trace.frames || []).forEach((f, i) => at(where + ' trace frame ' + (i + 1), f, 'frame'));
+    }
+  }
+}
+function readPaths() {
+  return fs
+    .readdirSync(path.join(root, 'paths'), { withFileTypes: true })
+    .filter(d => d.isDirectory())
+    .map(d => {
+      const p = JSON.parse(fs.readFileSync(path.join(root, 'paths', d.name, 'path.json'), 'utf8'));
+      checkKeys(p, 'paths/' + d.name + '/path.json');
+      if (p.id !== d.name || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(p.id)) throw Error('Invalid path ID: ' + d.name);
+      if (!['ready', 'planned'].includes(p.status)) throw Error('Invalid path status');
+      if (!Array.isArray(p.publicFiles)) throw Error('Missing publicFiles');
+      for (const f of p.publicFiles) {
+        if (
+          f.includes('..') ||
+          path.isAbsolute(f) ||
+          f.includes('\\') ||
+          !(
+            f.match(
+              /\.(js|mjs|cjs|css|html|csv|md|svg|png|jpg|webp|json|py|cs|csproj|sql|tsx|ts|txt|toml|ps1|yaml|yml|wasm|zip)$/,
+            ) || ['Dockerfile', '.dockerignore'].includes(f.split('/').pop())
+          )
+        )
+          throw Error('Invalid public file: ' + f);
+      }
+      const resources = path.join(root, 'paths', d.name, 'resources.json');
+      if (fs.existsSync(resources)) {
+        p.resources = JSON.parse(fs.readFileSync(resources, 'utf8'));
+        const bundle = p.resources.bundle.href;
+        if (bundle !== 'paths/' + p.id + '/practice-bundle.zip') throw Error('Invalid bundle path');
+        p.publicFiles.push('practice-bundle.zip');
+      }
+      const diagrams = path.join(root, 'paths', d.name, 'diagrams.json');
+      if (fs.existsSync(diagrams)) {
+        const data = JSON.parse(fs.readFileSync(diagrams, 'utf8'));
+        for (const id of Object.keys(data)) {
+          const lesson = Array.isArray(p.lessons) && p.lessons.find(l => l.id === id);
+          if (!lesson) throw Error('Unknown diagram lesson: ' + id);
+          lesson.diagram = data[id];
+        }
+      }
+      const visuals = path.join(root, 'paths', d.name, 'visuals.json');
+      if (fs.existsSync(visuals)) {
+        for (const [id, visual] of Object.entries(JSON.parse(fs.readFileSync(visuals, 'utf8')))) {
+          const lesson = p.lessons?.find(l => l.id === id);
+          if (!lesson) throw Error('Unknown visual lesson: ' + id);
+          lesson.visual = visual;
+        }
+      }
+      const glossary = path.join(root, 'paths', d.name, 'glossary.json');
+      if (fs.existsSync(glossary)) {
+        p.glossary = JSON.parse(fs.readFileSync(glossary, 'utf8'));
+        checkGlossary(p.glossary, p.id);
+      }
+      checkLessonExtras(p);
+      if (fs.existsSync(path.join(root, 'paths', d.name, 'practice.json')))
+        p.practice = readPractice(p, path.join(root, 'paths', d.name));
+      const checkpoints = path.join(root, 'paths', d.name, 'checkpoints.json');
+      if (fs.existsSync(checkpoints)) {
+        const data = JSON.parse(fs.readFileSync(checkpoints, 'utf8'));
+        for (const [id, list] of Object.entries(data.lessons || {})) {
+          const lesson = Array.isArray(p.lessons) && p.lessons.find(l => l.id === id);
+          if (!lesson?.quiz) throw Error('Extra questions need a lesson with a checkpoint: ' + id);
+          checkQuestions(list, 8, id);
+          lesson.extraQuiz = list;
+        }
+        for (const [id, list] of Object.entries(data.stages || {})) {
+          const stage = p.stages?.find(s => s.id === id);
+          if (!stage) throw Error('Unknown checkpoint stage: ' + id);
+          checkQuestions(list, 9, 'stage ' + id);
+          stage.stageCheck = list;
+        }
+      }
+      return p;
+    })
+    .sort(
+      (a, b) => (a.status === 'ready' ? -1 : 1) - (b.status === 'ready' ? -1 : 1) || a.title.localeCompare(b.title),
+    );
+}
+function catalogSource() {
+  return (
+    '// Generated by scripts/sync-catalog.cjs from paths/*/path.json.\nconst LEARNING_PATHS = ' +
+    JSON.stringify(
+      readPaths().map(({ publicFiles, ...p }) => (p.status === 'planned' ? { ...p, lessons: [] } : p)),
+      null,
+      2,
+    ) +
+    ';\n'
+  );
+}
+module.exports = {
+  root,
+  KEYS,
+  checkKeys,
+  readPaths,
+  catalogSource,
+  checkQuestions,
+  checkGlossary,
+  checkLessonExtras,
+  checkPractice,
+};

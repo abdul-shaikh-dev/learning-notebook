@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 const path=require('node:path');process.chdir(path.resolve(__dirname,'..'));
 require('./financial-foundations.cjs');
 require('./catalog.cjs');
@@ -8,6 +9,7 @@ const fs=require('node:fs'),assert=require('node:assert/strict');assert.equal(fs
 
 require('./authoring.cjs');
 require('./manifest-keys.cjs');
+require('./escape-text.cjs');
 require('./prose-spacing.cjs');
 require('./inline-code.cjs');
 require('./shortcuts.cjs');

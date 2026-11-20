@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 // Extra lesson questions and end-of-stage checks: content shape, stable answer order, lesson and course pages, print pack and review.
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const {readPaths,checkQuestions}=require('../scripts/manifest.cjs');

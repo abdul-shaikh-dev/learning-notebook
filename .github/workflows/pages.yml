@@ -30,6 +30,8 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.14"
+      - name: Check JavaScript formatting
+        run: npx --yes prettier@3.6.2 --check "assets/js/*.js" "scripts/*.cjs"
       - name: Check complete practice bundles
         run: |
           python scripts/sync-problem-solving.py --check

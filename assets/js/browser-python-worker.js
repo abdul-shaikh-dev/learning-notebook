@@ -1,22 +1,35 @@
 /* One fresh worker per attempt or run. Terminating it also stops an infinite Python loop.
    A {type:'load'} message starts Python before any code arrives, so a spare worker can wait ready; each worker still runs one job.
    This is a module worker: Pyodide 314 loads only as an ES module. Tests replace importRuntime to reuse one loaded runtime. */
-let loading=null;
-const importRuntime=self.importRuntime||(url=>import(url));
-const load=runtime=>loading||(loading=(async()=>{const {loadPyodide}=await importRuntime(runtime+'pyodide.mjs');return loadPyodide({indexURL:runtime,stdout:()=>{},stderr:()=>{}});})());
-self.onmessage=async ({data})=>{
- if(data.type==='load'){try{await load(data.runtime);self.postMessage({type:'ready'});}catch(error){self.postMessage({type:'error',text:String(error.message||error).slice(0,1500)});}return;}
- try{
-  const py=await load(data.runtime);
-  self.postMessage({type:'ready'});
-  // Lesson starters: run as a script, keep at most 20,000 characters of output and show only the learner's frames.
-  if(data.mode==='run'){
-   // Lesson examples may import the course's own practice modules, written beside the code.
-   py.FS.mkdirTree('/lesson');
-   for(const file of data.files||[])py.FS.writeFile('/lesson/'+file.name,file.source);
-   py.runPython("import sys\nif '/lesson' not in sys.path: sys.path.insert(0,'/lesson')");
-   py.globals.set('_code',data.code);
-   const output=py.runPython(String.raw`
+let loading = null;
+const importRuntime = self.importRuntime || (url => import(url));
+const load = runtime =>
+  loading ||
+  (loading = (async () => {
+    const { loadPyodide } = await importRuntime(runtime + 'pyodide.mjs');
+    return loadPyodide({ indexURL: runtime, stdout: () => {}, stderr: () => {} });
+  })());
+self.onmessage = async ({ data }) => {
+  if (data.type === 'load') {
+    try {
+      await load(data.runtime);
+      self.postMessage({ type: 'ready' });
+    } catch (error) {
+      self.postMessage({ type: 'error', text: String(error.message || error).slice(0, 1500) });
+    }
+    return;
+  }
+  try {
+    const py = await load(data.runtime);
+    self.postMessage({ type: 'ready' });
+    // Lesson starters: run as a script, keep at most 20,000 characters of output and show only the learner's frames.
+    if (data.mode === 'run') {
+      // Lesson examples may import the course's own practice modules, written beside the code.
+      py.FS.mkdirTree('/lesson');
+      for (const file of data.files || []) py.FS.writeFile('/lesson/' + file.name, file.source);
+      py.runPython("import sys\nif '/lesson' not in sys.path: sys.path.insert(0,'/lesson')");
+      py.globals.set('_code', data.code);
+      const output = py.runPython(String.raw`
 import json, contextlib, traceback, sys, io
 LIMIT=20000
 class Capped:
@@ -47,11 +60,11 @@ def run():
 ok,problem=run()
 json.dumps({'ok':ok,'output':''.join(out.parts),'truncated':out.cut,'error':problem[-3000:]})
 `);
-   self.postMessage({type:'result',...JSON.parse(output)});
-   return;
-  }
-  py.globals.set('_payload',JSON.stringify({code:data.code,...data.problem}));
-  const result=py.runPython(String.raw`
+      self.postMessage({ type: 'result', ...JSON.parse(output) });
+      return;
+    }
+    py.globals.set('_payload', JSON.stringify({ code: data.code, ...data.problem }));
+    const result = py.runPython(String.raw`
 import json, copy, contextlib
 p=json.loads(_payload)
 def same(a,b):
@@ -82,6 +95,8 @@ def check():
         return {'ok':False,'text':''.join(traceback.format_exception_only(type(error),error))[-3000:]}
 json.dumps(check())
 `);
-  self.postMessage({type:'result',...JSON.parse(result)});
- }catch(error){self.postMessage({type:'error',text:String(error.message||error).slice(0,1500)});}
+    self.postMessage({ type: 'result', ...JSON.parse(result) });
+  } catch (error) {
+    self.postMessage({ type: 'error', text: String(error.message || error).slice(0, 1500) });
+  }
 };

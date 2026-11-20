@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
 process.chdir(process.env.LEARNING_REPO||path.resolve(__dirname,'..'));
 // The progress dashboard: per-course state and next step, review counts and totals, all from browser storage.

@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const {readPaths}=require('../scripts/manifest.cjs');
 // Financial foundations uses reading stages without projects; its own tests cover it.

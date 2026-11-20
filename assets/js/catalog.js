@@ -1,121 +1,781 @@
-
 // Stable display order preserves original answer identities and existing progress.
-function quizHash(text){let value=2166136261;for(const c of text)value=Math.imul(value^c.charCodeAt(0),16777619)>>>0;return value;}
-function quizChoices(p,l){
- const size=l.quiz.options.length;
- const peers=p.lessons.filter(x=>x.quiz?.options.length===size).slice().sort((a,b)=>quizHash(p.id+'/'+a.id)-quizHash(p.id+'/'+b.id)||a.id.localeCompare(b.id));
- const slot=Math.max(0,peers.findIndex(x=>x.id===l.id))%size;
- const choices=l.quiz.options.map((text,index)=>({text,index}));
- const correct=choices.splice(l.quiz.correct,1)[0];
- choices.sort((a,b)=>quizHash(l.id+'/'+a.text)-quizHash(l.id+'/'+b.text)||a.index-b.index);
- choices.splice(slot,0,correct);return choices;
+function quizHash(text) {
+  let value = 2166136261;
+  for (const c of text) value = Math.imul(value ^ c.charCodeAt(0), 16777619) >>> 0;
+  return value;
+}
+function quizChoices(p, l) {
+  const size = l.quiz.options.length;
+  const peers = p.lessons
+    .filter(x => x.quiz?.options.length === size)
+    .slice()
+    .sort((a, b) => quizHash(p.id + '/' + a.id) - quizHash(p.id + '/' + b.id) || a.id.localeCompare(b.id));
+  const slot =
+    Math.max(
+      0,
+      peers.findIndex(x => x.id === l.id),
+    ) % size;
+  const choices = l.quiz.options.map((text, index) => ({ text, index }));
+  const correct = choices.splice(l.quiz.correct, 1)[0];
+  choices.sort((a, b) => quizHash(l.id + '/' + a.text) - quizHash(l.id + '/' + b.text) || a.index - b.index);
+  choices.splice(slot, 0, correct);
+  return choices;
 }
 // Extra lesson and stage questions: the key places the correct answer and orders the rest, so revisits match.
-function keyedQuizChoices(q,seed){
- const choices=q.options.map((text,index)=>({text,index}));
- const correct=choices.splice(q.correct,1)[0];
- choices.sort((a,b)=>quizHash(seed+'/'+a.text)-quizHash(seed+'/'+b.text)||a.index-b.index);
- choices.splice(quizHash(seed)%q.options.length,0,correct);return choices;
+function keyedQuizChoices(q, seed) {
+  const choices = q.options.map((text, index) => ({ text, index }));
+  const correct = choices.splice(q.correct, 1)[0];
+  choices.sort((a, b) => quizHash(seed + '/' + a.text) - quizHash(seed + '/' + b.text) || a.index - b.index);
+  choices.splice(quizHash(seed) % q.options.length, 0, correct);
+  return choices;
 }
-function keyedQuiz(p,key,q){const id='quiz-'+key.replace(/[^a-z0-9-]/gi,'-');return '<div class="quiz-more" data-quiz-key="'+escapeText(key)+'"><p id="'+id+'">'+escapeText(q.question)+'</p><div role="group" aria-labelledby="'+id+'">'+keyedQuizChoices(q,p.id+'/'+key).map(c=>'<button class="option" type="button" data-key-choice="'+c.index+'">'+escapeText(c.text)+'</button>').join('')+'</div><p class="quiz-feedback" role="status"></p><p class="quiz-note muted"></p></div>';}
-function printedQuiz(q,choices){return '<p>'+escapeText(q.question)+'</p>'+learningList(choices.map(c=>c.text))+'<p><strong>Answer:</strong> '+escapeText(q.options[q.correct])+'. '+escapeText(q.explanation)+'</p>';}
+function keyedQuiz(p, key, q) {
+  const id = 'quiz-' + key.replace(/[^a-z0-9-]/gi, '-');
+  return (
+    '<div class="quiz-more" data-quiz-key="' +
+    escapeText(key) +
+    '"><p id="' +
+    id +
+    '">' +
+    escapeText(q.question) +
+    '</p><div role="group" aria-labelledby="' +
+    id +
+    '">' +
+    keyedQuizChoices(q, p.id + '/' + key)
+      .map(
+        c =>
+          '<button class="option" type="button" data-key-choice="' + c.index + '">' + escapeText(c.text) + '</button>',
+      )
+      .join('') +
+    '</div><p class="quiz-feedback" role="status"></p><p class="quiz-note muted"></p></div>'
+  );
+}
+function printedQuiz(q, choices) {
+  return (
+    '<p>' +
+    escapeText(q.question) +
+    '</p>' +
+    learningList(choices.map(c => c.text)) +
+    '<p><strong>Answer:</strong> ' +
+    escapeText(q.options[q.correct]) +
+    '. ' +
+    escapeText(q.explanation) +
+    '</p>'
+  );
+}
 // A stage check answered from memory before reading anything only measures guessing, so it stays collapsed until a lesson
 // in the stage is read or one of its questions has been answered (#153). Print shows every check.
-function stageCheckReady(p,s,done){if(p.lessons.some(l=>l.stage===s.id&&done.includes(l.id)))return true;const answered=typeof NotebookReview!=='undefined'?NotebookReview.read(p.id):{};return Object.keys(answered).some(k=>k.startsWith('stage/'+s.id+'/'));}
-function stageCheck(p,s,print=false,ready=true){if(!s.stageCheck?.length)return '';const section=stageCheckSection(p,s,print);return print||ready?section:'<details class="stage-check-gate"><summary>Check this stage <span class="muted">· after you read a lesson in it</span></summary>'+section+'</details>';}
-function stageCheckSection(p,s,print){const keys=s.stageCheck.map((q,i)=>'stage/'+s.id+'/'+(i+1));return '<section class="stage-check quiz" aria-labelledby="stage-check-'+escapeText(s.id)+'"><h3 id="stage-check-'+escapeText(s.id)+'">Check this stage</h3>'+(print?s.stageCheck.map((q,i)=>printedQuiz(q,keyedQuizChoices(q,p.id+'/'+keys[i]))).join(''):'<p class="muted">Answer from memory once you have read the stage. Your first answer to each question joins your review.</p>'+s.stageCheck.map((q,i)=>keyedQuiz(p,keys[i],q)).join(''))+'</section>';}
-function lessonReferences(l,print=false){
- if(!l.references?.length)return '';
- const body='<p class="muted">References for this lesson. Review dates record editorial checks; version and scope notes state their limits.</p><ul>'+l.references.map(s=>'<li><a href="'+escapeText(/^https:\/\//.test(s.url)?s.url:'#')+'" target="_blank" rel="noopener">'+escapeText(s.title)+'</a><p>'+escapeText(s.section||'')+'</p><small>'+escapeText(s.scope||'')+(s.reviewed?' · Reviewed '+escapeText(s.reviewed):'')+'</small></li>').join('')+'</ul>';
- return print?'<section class="lesson-references"><h2>Sources for this lesson</h2>'+body+'</section>':'<details class="lesson-references"><summary>Sources & version notes for this lesson</summary>'+body+'</details>';
+function stageCheckReady(p, s, done) {
+  if (p.lessons.some(l => l.stage === s.id && done.includes(l.id))) return true;
+  const answered = typeof NotebookReview !== 'undefined' ? NotebookReview.read(p.id) : {};
+  return Object.keys(answered).some(k => k.startsWith('stage/' + s.id + '/'));
+}
+function stageCheck(p, s, print = false, ready = true) {
+  if (!s.stageCheck?.length) return '';
+  const section = stageCheckSection(p, s, print);
+  return print || ready
+    ? section
+    : '<details class="stage-check-gate"><summary>Check this stage <span class="muted">· after you read a lesson in it</span></summary>' +
+        section +
+        '</details>';
+}
+function stageCheckSection(p, s, print) {
+  const keys = s.stageCheck.map((q, i) => 'stage/' + s.id + '/' + (i + 1));
+  return (
+    '<section class="stage-check quiz" aria-labelledby="stage-check-' +
+    escapeText(s.id) +
+    '"><h3 id="stage-check-' +
+    escapeText(s.id) +
+    '">Check this stage</h3>' +
+    (print
+      ? s.stageCheck.map((q, i) => printedQuiz(q, keyedQuizChoices(q, p.id + '/' + keys[i]))).join('')
+      : '<p class="muted">Answer from memory once you have read the stage. Your first answer to each question joins your review.</p>' +
+        s.stageCheck.map((q, i) => keyedQuiz(p, keys[i], q)).join('')) +
+    '</section>'
+  );
+}
+function lessonReferences(l, print = false) {
+  if (!l.references?.length) return '';
+  const body =
+    '<p class="muted">References for this lesson. Review dates record editorial checks; version and scope notes state their limits.</p><ul>' +
+    l.references
+      .map(
+        s =>
+          '<li><a href="' +
+          escapeText(/^https:\/\//.test(s.url) ? s.url : '#') +
+          '" target="_blank" rel="noopener">' +
+          escapeText(s.title) +
+          '</a><p>' +
+          escapeText(s.section || '') +
+          '</p><small>' +
+          escapeText(s.scope || '') +
+          (s.reviewed ? ' · Reviewed ' + escapeText(s.reviewed) : '') +
+          '</small></li>',
+      )
+      .join('') +
+    '</ul>';
+  return print
+    ? '<section class="lesson-references"><h2>Sources for this lesson</h2>' + body + '</section>'
+    : '<details class="lesson-references"><summary>Sources & version notes for this lesson</summary>' +
+        body +
+        '</details>';
 }
 
-const assessmentKey=id=>'learning-notebook:path:'+id+':assessments:v1';
-function assessed(id){try{const data=JSON.parse(localStorage.getItem(assessmentKey(id))||'[]');return Array.isArray(data)?data.filter(x=>typeof x==='string'):[];}catch{return [];}}
-function stageProject(p,s,print=false){const project=s.project;if(!project)return '';const detail='<h4>Project requirements</h4>'+learningList(project.requirements)+'<h4>Assessment rubric</h4>'+learningList(project.rubric)+(print?'<h4>Reference approach</h4>':'<details><summary>Reference approach</summary>')+(project.solutionFormat==='prose'?workedSolution(project):'<pre class="example">'+escapeText(project.solution)+'</pre>')+(print?'':'</details><button class="quiet" data-stage-check="'+escapeText(s.id)+'">'+(assessed(p.id).includes(s.id)?'Project self-checked · undo':'Mark project self-checked')+'</button><p class="muted">A saved self-assessment, not a certification.</p>');return '<section class="stage-project"><h3>Project: '+escapeText(project.title)+'</h3>'+(project.brief!==s.description?'<p>'+escapeText(project.brief)+'</p>':'')+((!print&&p.resources)?'<p><a class="download-action" href="#resources/'+p.id+'/'+s.id+'">Project files & instructions →</a></p>':'')+(print?detail:'<details><summary>Project requirements & self-check</summary>'+detail+'</details>')+'</section>';}
-function stagedCurriculum(p,print=false){const done=completed(p.id);if(!p.stages)return '<ol class="lesson-list">'+p.lessons.map(l=>'<li><a href="'+lessonRoute(p,l)+'">'+escapeText(l.title)+'</a></li>').join('')+'</ol>';return '<section class="staged-curriculum"><h2>Your learning progression</h2><p>Read the lessons in order or choose a topic.'+(p.stages.some(s=>s.project)?' Each stage ends with a project.':'')+'</p>'+p.stages.map((s,i)=>'<section class="curriculum-stage" id="stage-'+escapeText(s.id)+'"><p class="eyebrow">Stage '+(i+1)+'</p><h2>'+escapeText(s.title)+'</h2><p>'+escapeText(s.description)+'</p><h3>Skills to practise</h3>'+learningList(s.exitCriteria)+'<ol class="lesson-list">'+p.lessons.filter(l=>l.stage===s.id).map(l=>'<li><a href="'+lessonRoute(p,l)+'">'+(done.includes(l.id)?'✓ ':'')+escapeText(l.title)+'</a>'+(!print&&typeof NotebookPractice!=='undefined'?NotebookPractice.badge(p,l):'')+'</li>').join('')+'</ol>'+stageCheck(p,s,print,print||stageCheckReady(p,s,done))+stageProject(p,s,print)+'</section>').join('')+'</section>';}
+const assessmentKey = id => 'learning-notebook:path:' + id + ':assessments:v1';
+function assessed(id) {
+  try {
+    const data = JSON.parse(localStorage.getItem(assessmentKey(id)) || '[]');
+    return Array.isArray(data) ? data.filter(x => typeof x === 'string') : [];
+  } catch {
+    return [];
+  }
+}
+function stageProject(p, s, print = false) {
+  const project = s.project;
+  if (!project) return '';
+  const detail =
+    '<h4>Project requirements</h4>' +
+    learningList(project.requirements) +
+    '<h4>Assessment rubric</h4>' +
+    learningList(project.rubric) +
+    (print ? '<h4>Reference approach</h4>' : '<details><summary>Reference approach</summary>') +
+    (project.solutionFormat === 'prose'
+      ? workedSolution(project)
+      : '<pre class="example">' + escapeText(project.solution) + '</pre>') +
+    (print
+      ? ''
+      : '</details><button class="quiet" data-stage-check="' +
+        escapeText(s.id) +
+        '">' +
+        (assessed(p.id).includes(s.id) ? 'Project self-checked · undo' : 'Mark project self-checked') +
+        '</button><p class="muted">A saved self-assessment, not a certification.</p>');
+  return (
+    '<section class="stage-project"><h3>Project: ' +
+    escapeText(project.title) +
+    '</h3>' +
+    (project.brief !== s.description ? '<p>' + escapeText(project.brief) + '</p>' : '') +
+    (!print && p.resources
+      ? '<p><a class="download-action" href="#resources/' +
+        p.id +
+        '/' +
+        s.id +
+        '">Project files & instructions →</a></p>'
+      : '') +
+    (print ? detail : '<details><summary>Project requirements & self-check</summary>' + detail + '</details>') +
+    '</section>'
+  );
+}
+function stagedCurriculum(p, print = false) {
+  const done = completed(p.id);
+  if (!p.stages)
+    return (
+      '<ol class="lesson-list">' +
+      p.lessons.map(l => '<li><a href="' + lessonRoute(p, l) + '">' + escapeText(l.title) + '</a></li>').join('') +
+      '</ol>'
+    );
+  return (
+    '<section class="staged-curriculum"><h2>Your learning progression</h2><p>Read the lessons in order or choose a topic.' +
+    (p.stages.some(s => s.project) ? ' Each stage ends with a project.' : '') +
+    '</p>' +
+    p.stages
+      .map(
+        (s, i) =>
+          '<section class="curriculum-stage" id="stage-' +
+          escapeText(s.id) +
+          '"><p class="eyebrow">Stage ' +
+          (i + 1) +
+          '</p><h2>' +
+          escapeText(s.title) +
+          '</h2><p>' +
+          escapeText(s.description) +
+          '</p><h3>Skills to practise</h3>' +
+          learningList(s.exitCriteria) +
+          '<ol class="lesson-list">' +
+          p.lessons
+            .filter(l => l.stage === s.id)
+            .map(
+              l =>
+                '<li><a href="' +
+                lessonRoute(p, l) +
+                '">' +
+                (done.includes(l.id) ? '✓ ' : '') +
+                escapeText(l.title) +
+                '</a>' +
+                (!print && typeof NotebookPractice !== 'undefined' ? NotebookPractice.badge(p, l) : '') +
+                '</li>',
+            )
+            .join('') +
+          '</ol>' +
+          stageCheck(p, s, print, print || stageCheckReady(p, s, done)) +
+          stageProject(p, s, print) +
+          '</section>',
+      )
+      .join('') +
+    '</section>'
+  );
+}
 
-
-
-function learningList(items){return (items||[]).length?'<ul>'+items.map(x=>'<li>'+escapeText(x)+'</li>').join('')+'</ul>':'';}
-function learningSources(p){return (p.sources||[]).length?'<section><h2>Official references</h2><ul>'+p.sources.map(s=>'<li><a href="'+escapeText(/^https:\/\//.test(s.url)?s.url:'#')+'" target="_blank" rel="noopener">'+escapeText(s.title)+'</a>'+(s.note?'<p>'+escapeText(s.note)+'</p>':'')+'</li>').join('')+'</ul>'+sourceRegister(p)+'</section>':'';}
-function pathExtras(p,print=false){const content='<div class="path-guide"><section><h2>Before you begin</h2>'+learningList(p.prerequisites)+'</section><section><h2>What you will learn</h2>'+learningList(p.outcomes)+'</section></div><section class="practice-setup"><h2>Set up your practice environment</h2>'+learningList(p.setup)+(p.resources?bundleLink(p)+'<a class="download-action" href="#resources/'+p.id+'">All practice files & instructions →</a>':(p.downloads||[]).map(d=>'<a class="download-action" download href="'+escapeText(d.href)+'">'+escapeText(d.title)+' ↓</a>').join(''))+'<a class="download-action" href="#pack/'+p.id+'">Printable course pack →</a></section>';return print?content:'<details class="path-details"><summary>Before you begin, outcomes & setup</summary>'+content+'</details>';}
-function topicSections(l){return l.sections.map(s=>'<section><h2>'+escapeText(s.title)+'</h2>'+s.paragraphs.map(t=>'<p>'+proseText(t)+'</p>').join('')+(s.example?(s.exampleFormat==='prose'?'<aside class="worked-example" aria-label="Worked example"><strong>Worked example</strong><p>'+escapeText(s.example)+'</p></aside>':'<pre class="example"><code>'+escapeText(s.example)+'</code></pre>'):'')+(s.exampleNote?'<p>'+proseText(s.exampleNote)+'</p>':'')+evidenceNotes(s)+'</section>').join('');}
-function workedSolution(e){return e.solutionFormat==='prose'?'<div class="example worked-prose">'+e.solution.split(/\n\s*\n/).map(text=>'<p>'+escapeText(text)+'</p>').join('')+'</div>':'<pre class="example"><code>'+escapeText(e.solution)+'</code></pre>';}
-function exerciseExplanation(e){return (e.reasoning||[]).map(t=>'<p>'+escapeText(t)+'</p>').join('')+(e.complexity?'<h4>Time and space</h4><p>'+escapeText(e.complexity)+'</p>':'')+(e.pitfalls?.length?'<h4>Common mistakes</h4>'+learningList(e.pitfalls):'');}
+function learningList(items) {
+  return (items || []).length ? '<ul>' + items.map(x => '<li>' + escapeText(x) + '</li>').join('') + '</ul>' : '';
+}
+function learningSources(p) {
+  return (p.sources || []).length
+    ? '<section><h2>Official references</h2><ul>' +
+        p.sources
+          .map(
+            s =>
+              '<li><a href="' +
+              escapeText(/^https:\/\//.test(s.url) ? s.url : '#') +
+              '" target="_blank" rel="noopener">' +
+              escapeText(s.title) +
+              '</a>' +
+              (s.note ? '<p>' + escapeText(s.note) + '</p>' : '') +
+              '</li>',
+          )
+          .join('') +
+        '</ul>' +
+        sourceRegister(p) +
+        '</section>'
+    : '';
+}
+function pathExtras(p, print = false) {
+  const content =
+    '<div class="path-guide"><section><h2>Before you begin</h2>' +
+    learningList(p.prerequisites) +
+    '</section><section><h2>What you will learn</h2>' +
+    learningList(p.outcomes) +
+    '</section></div><section class="practice-setup"><h2>Set up your practice environment</h2>' +
+    learningList(p.setup) +
+    (p.resources
+      ? bundleLink(p) +
+        '<a class="download-action" href="#resources/' +
+        p.id +
+        '">All practice files & instructions →</a>'
+      : (p.downloads || [])
+          .map(
+            d =>
+              '<a class="download-action" download href="' + escapeText(d.href) + '">' + escapeText(d.title) + ' ↓</a>',
+          )
+          .join('')) +
+    '<a class="download-action" href="#pack/' +
+    p.id +
+    '">Printable course pack →</a></section>';
+  return print
+    ? content
+    : '<details class="path-details"><summary>Before you begin, outcomes & setup</summary>' + content + '</details>';
+}
+function topicSections(l) {
+  return l.sections
+    .map(
+      s =>
+        '<section><h2>' +
+        escapeText(s.title) +
+        '</h2>' +
+        s.paragraphs.map(t => '<p>' + proseText(t) + '</p>').join('') +
+        (s.example
+          ? s.exampleFormat === 'prose'
+            ? '<aside class="worked-example" aria-label="Worked example"><strong>Worked example</strong><p>' +
+              escapeText(s.example) +
+              '</p></aside>'
+            : '<pre class="example"><code>' + escapeText(s.example) + '</code></pre>'
+          : '') +
+        (s.exampleNote ? '<p>' + proseText(s.exampleNote) + '</p>' : '') +
+        evidenceNotes(s) +
+        '</section>',
+    )
+    .join('');
+}
+function workedSolution(e) {
+  return e.solutionFormat === 'prose'
+    ? '<div class="example worked-prose">' +
+        e.solution
+          .split(/\n\s*\n/)
+          .map(text => '<p>' + escapeText(text) + '</p>')
+          .join('') +
+        '</div>'
+    : '<pre class="example"><code>' + escapeText(e.solution) + '</code></pre>';
+}
+function exerciseExplanation(e) {
+  return (
+    (e.reasoning || []).map(t => '<p>' + escapeText(t) + '</p>').join('') +
+    (e.complexity ? '<h4>Time and space</h4><p>' + escapeText(e.complexity) + '</p>' : '') +
+    (e.pitfalls?.length ? '<h4>Common mistakes</h4>' + learningList(e.pitfalls) : '')
+  );
+}
 // Practice ladder: graded steps after the exercise, each leaning less on the lesson's worked example.
-const PRACTICE_KINDS={completion:'Finish the worked step',variation:'Same idea, new case',transfer:'A related problem',decide:'Does it apply?'};
-function practiceView(l,print=false,p=null){
- const steps=l.practice;if(!steps?.length)return '';
- const attempt=!print&&p&&typeof NotebookReview!=='undefined';
- const item=(s,i)=>{const n=i+1,id='practice-'+n,label=PRACTICE_KINDS[s.kind]||'Practice';
-  const hints=(s.hints||[]).map((hint,j)=>print?'<h5>Hint '+(j+1)+'</h5><p>'+escapeText(hint)+'</p>':'<details class="challenge-hint"><summary>Hint '+(j+1)+'</summary><p>'+escapeText(hint)+'</p></details>').join('');
-  const solution=workedSolution(s)+exerciseExplanation(s);
-  return '<li class="practice-step" data-practice-step="'+n+'"><h3><span class="practice-step-number">Step '+n+'</span> '+escapeText(label)+'</h3><p>'+(p?lessonText(p,s.prompt):proseText(s.prompt))+'</p>'+
-   (s.starter?'<pre class="example"><code>'+escapeText(s.starter)+'</code></pre>':'')+
-   '<h4>Check your result</h4>'+learningList(s.checks)+
-   (hints?'<section aria-label="Optional hints for step '+n+'">'+hints+'</section>':'')+
-   (attempt?NotebookReview.attemptView(p,{id:l.id+'/practice/'+n},id,solution):(print?'<h4>Worked solution</h4>':'<details><summary>Compare with a worked solution</summary>')+solution+(print?'':'</details>'))+'</li>';};
- return '<section '+(print?'':'id="lesson-ladder" aria-labelledby="lesson-ladder-title" ')+'class="coding-exercise practice-ladder"><h2'+(print?'':' id="lesson-ladder-title"')+'>Practice ladder</h2><p class="muted">'+steps.length+' steps. Each leans on the lesson a little less. Try one without the hints before opening them.</p><ol class="practice-steps">'+steps.map(item).join('')+'</ol></section>';
+const PRACTICE_KINDS = {
+  completion: 'Finish the worked step',
+  variation: 'Same idea, new case',
+  transfer: 'A related problem',
+  decide: 'Does it apply?',
+};
+function practiceView(l, print = false, p = null) {
+  const steps = l.practice;
+  if (!steps?.length) return '';
+  const attempt = !print && p && typeof NotebookReview !== 'undefined';
+  const item = (s, i) => {
+    const n = i + 1,
+      id = 'practice-' + n,
+      label = PRACTICE_KINDS[s.kind] || 'Practice';
+    const hints = (s.hints || [])
+      .map((hint, j) =>
+        print
+          ? '<h5>Hint ' + (j + 1) + '</h5><p>' + escapeText(hint) + '</p>'
+          : '<details class="challenge-hint"><summary>Hint ' +
+            (j + 1) +
+            '</summary><p>' +
+            escapeText(hint) +
+            '</p></details>',
+      )
+      .join('');
+    const solution = workedSolution(s) + exerciseExplanation(s);
+    return (
+      '<li class="practice-step" data-practice-step="' +
+      n +
+      '"><h3><span class="practice-step-number">Step ' +
+      n +
+      '</span> ' +
+      escapeText(label) +
+      '</h3><p>' +
+      (p ? lessonText(p, s.prompt) : proseText(s.prompt)) +
+      '</p>' +
+      (s.starter ? '<pre class="example"><code>' + escapeText(s.starter) + '</code></pre>' : '') +
+      '<h4>Check your result</h4>' +
+      learningList(s.checks) +
+      (hints ? '<section aria-label="Optional hints for step ' + n + '">' + hints + '</section>' : '') +
+      (attempt
+        ? NotebookReview.attemptView(p, { id: l.id + '/practice/' + n }, id, solution)
+        : (print ? '<h4>Worked solution</h4>' : '<details><summary>Compare with a worked solution</summary>') +
+          solution +
+          (print ? '' : '</details>')) +
+      '</li>'
+    );
+  };
+  return (
+    '<section ' +
+    (print ? '' : 'id="lesson-ladder" aria-labelledby="lesson-ladder-title" ') +
+    'class="coding-exercise practice-ladder"><h2' +
+    (print ? '' : ' id="lesson-ladder-title"') +
+    '>Practice ladder</h2><p class="muted">' +
+    steps.length +
+    ' steps. Each leans on the lesson a little less. Try one without the hints before opening them.</p><ol class="practice-steps">' +
+    steps.map(item).join('') +
+    '</ol></section>'
+  );
 }
-function exerciseView(l,print=false,p=null){
- const e=l.exercise;if(!e)return '';
- const hints=(e.hints||[]).map((hint,i)=>print?'<h4>Hint '+(i+1)+'</h4><p>'+escapeText(hint)+'</p>':'<details class="challenge-hint"><summary>Hint '+(i+1)+'</summary><p>'+escapeText(hint)+'</p></details>').join('');
- const explanation=exerciseExplanation(e)+exerciseRubric(e);
- // Outside print and coding challenges, the learner writes an attempt before the solution opens.
- const attempt=!print&&!e.challenge&&p&&typeof NotebookReview!=='undefined';
- return '<section '+(print?'':'id="lesson-practice" ')+'class="coding-exercise"><h2>'+(e.challenge?'Your solution':'Practice this idea')+'</h2><p>'+(p?lessonText(p,e.prompt):proseText(e.prompt))+'</p>'+(e.challenge&&!print&&p&&typeof NotebookPractice!=='undefined'?NotebookPractice.view(p,l):e.starter?(p?.id==='python'&&!print&&typeof NotebookPractice!=='undefined'?NotebookPractice.runner(p,l):(p?.id==='python'?'<p>Copy into a Python file and run locally.</p><pre class="example" data-language="python" data-code-label="Python starter"><code>':'<pre class="example"><code>')+escapeText(e.starter)+'</code></pre>'):'')+(print?'':numericCheck(l,e))+(e.checks?.length?'<h3>Check your result</h3>'+learningList(e.checks):'')+(e.command?'<pre class="example"><code>'+escapeText(e.command)+'</code></pre>':'')+(hints?'<section aria-label="Optional hints"><h3>Hints, if you need them</h3>'+hints+'</section>':'')+(attempt?NotebookReview.attemptView(p,l,'exercise',workedSolution(e)+explanation):(print?'<h3>Worked solution</h3>':'<details><summary>Compare with a worked solution</summary>')+workedSolution(e)+explanation+(print?'':'</details>'))+(e.transfer?(print?'<h3>Try a variation</h3><p>'+escapeText(e.transfer)+'</p>':'<details><summary>Try a variation</summary><p>'+escapeText(e.transfer)+'</p></details>'):'')+'</section>';
+function exerciseView(l, print = false, p = null) {
+  const e = l.exercise;
+  if (!e) return '';
+  const hints = (e.hints || [])
+    .map((hint, i) =>
+      print
+        ? '<h4>Hint ' + (i + 1) + '</h4><p>' + escapeText(hint) + '</p>'
+        : '<details class="challenge-hint"><summary>Hint ' +
+          (i + 1) +
+          '</summary><p>' +
+          escapeText(hint) +
+          '</p></details>',
+    )
+    .join('');
+  const explanation = exerciseExplanation(e) + exerciseRubric(e);
+  // Outside print and coding challenges, the learner writes an attempt before the solution opens.
+  const attempt = !print && !e.challenge && p && typeof NotebookReview !== 'undefined';
+  return (
+    '<section ' +
+    (print ? '' : 'id="lesson-practice" ') +
+    'class="coding-exercise"><h2>' +
+    (e.challenge ? 'Your solution' : 'Practice this idea') +
+    '</h2><p>' +
+    (p ? lessonText(p, e.prompt) : proseText(e.prompt)) +
+    '</p>' +
+    (e.challenge && !print && p && typeof NotebookPractice !== 'undefined'
+      ? NotebookPractice.view(p, l)
+      : e.starter
+        ? p?.id === 'python' && !print && typeof NotebookPractice !== 'undefined'
+          ? NotebookPractice.runner(p, l)
+          : (p?.id === 'python'
+              ? '<p>Copy into a Python file and run locally.</p><pre class="example" data-language="python" data-code-label="Python starter"><code>'
+              : '<pre class="example"><code>') +
+            escapeText(e.starter) +
+            '</code></pre>'
+        : '') +
+    (print ? '' : numericCheck(l, e)) +
+    (e.checks?.length ? '<h3>Check your result</h3>' + learningList(e.checks) : '') +
+    (e.command ? '<pre class="example"><code>' + escapeText(e.command) + '</code></pre>' : '') +
+    (hints ? '<section aria-label="Optional hints"><h3>Hints, if you need them</h3>' + hints + '</section>' : '') +
+    (attempt
+      ? NotebookReview.attemptView(p, l, 'exercise', workedSolution(e) + explanation)
+      : (print ? '<h3>Worked solution</h3>' : '<details><summary>Compare with a worked solution</summary>') +
+        workedSolution(e) +
+        explanation +
+        (print ? '' : '</details>')) +
+    (e.transfer
+      ? print
+        ? '<h3>Try a variation</h3><p>' + escapeText(e.transfer) + '</p>'
+        : '<details><summary>Try a variation</summary><p>' + escapeText(e.transfer) + '</p></details>'
+      : '') +
+    '</section>'
+  );
 }
 
-function traceFrame(trace,i){const f=trace.frames[i];return '<p class="eyebrow">Step '+(i+1)+' of '+trace.frames.length+'</p><h3>'+escapeText(f.label)+'</h3><div class="trace-items">'+f.items.map(x=>'<span>'+escapeText(x)+'</span>').join('')+'</div><p>'+escapeText(f.explanation)+'</p>';}
-function traceView(l){return l.trace?'<section class="learning-trace"><h2>'+escapeText(l.trace.title)+'</h2><ol class="trace-overview">'+l.trace.frames.map((f,i)=>'<li data-trace-index="'+i+'">'+escapeText(f.label)+'</li>').join('')+'</ol><div id="trace-frame" aria-live="polite">'+traceFrame(l.trace,0)+'</div><div class="trace-actions"><button class="quiet" id="trace-prev" disabled>← Previous step</button><button class="primary" id="trace-next">Next step →</button></div><section class="walkthrough-reading"><h3>Read all steps together</h3>'+l.trace.frames.map((f,i)=>traceFrame(l.trace,i)).join('')+'</section></section>':'';}
-function coursePack(p){return '<article class="handbook"><div class="no-print"><a class="back-link" href="#path/'+p.id+'">← '+escapeText(p.title)+'</a><button id="print-course" class="quiet">Print / save PDF</button></div><h1>'+escapeText(p.title)+' · Study pack</h1><p>'+escapeText(p.description)+'</p>'+pathExtras(p,true)+'<h2>Contents</h2><ol>'+p.lessons.map(l=>'<li><button class="text-action" data-jump="pack-'+l.id+'">'+escapeText(l.title.replace(/^\d+\.\s*/,''))+'</button></li>').join('')+ '</ol>'+p.lessons.map((l,i)=>'<article id="pack-'+l.id+'"><p class="eyebrow">Lesson '+(i+1)+'</p><h1>'+escapeText(l.title)+'</h1><div class="takeaway">'+escapeText(l.takeaway)+'</div>'+topicSections(l)+visualExplorerView(l,true)+diagramView(l,true)+(l.trace?'<section><h2>'+escapeText(l.trace.title)+'</h2>'+l.trace.frames.map((f,i)=>traceFrame(l.trace,i)).join('')+'</section>':'')+exerciseView(l,true)+practiceView(l,true)+activityLinks(p,l.activities,true)+lessonReferences(l,true)+(l.quiz?'<h2>Checkpoint</h2>'+printedQuiz(l.quiz,quizChoices(p,l))+(l.extraQuiz||[]).map((q,i)=>printedQuiz(q,keyedQuizChoices(q,p.id+'/'+l.id+'/'+(i+2)))).join(''):'')+'</article>').join('')+stagedCurriculum(p,true)+activityLinks(p,p.activities,true)+glossaryPrint(p)+'<h2>Continue learning</h2>'+learningList(p.nextSteps)+learningSources(p)+'</article>';}
+function traceFrame(trace, i) {
+  const f = trace.frames[i];
+  return (
+    '<p class="eyebrow">Step ' +
+    (i + 1) +
+    ' of ' +
+    trace.frames.length +
+    '</p><h3>' +
+    escapeText(f.label) +
+    '</h3><div class="trace-items">' +
+    f.items.map(x => '<span>' + escapeText(x) + '</span>').join('') +
+    '</div><p>' +
+    escapeText(f.explanation) +
+    '</p>'
+  );
+}
+function traceView(l) {
+  return l.trace
+    ? '<section class="learning-trace"><h2>' +
+        escapeText(l.trace.title) +
+        '</h2><ol class="trace-overview">' +
+        l.trace.frames.map((f, i) => '<li data-trace-index="' + i + '">' + escapeText(f.label) + '</li>').join('') +
+        '</ol><div id="trace-frame" aria-live="polite">' +
+        traceFrame(l.trace, 0) +
+        '</div><div class="trace-actions"><button class="quiet" id="trace-prev" disabled>← Previous step</button><button class="primary" id="trace-next">Next step →</button></div><section class="walkthrough-reading"><h3>Read all steps together</h3>' +
+        l.trace.frames.map((f, i) => traceFrame(l.trace, i)).join('') +
+        '</section></section>'
+    : '';
+}
+function coursePack(p) {
+  return (
+    '<article class="handbook"><div class="no-print"><a class="back-link" href="#path/' +
+    p.id +
+    '">← ' +
+    escapeText(p.title) +
+    '</a><button id="print-course" class="quiet">Print / save PDF</button></div><h1>' +
+    escapeText(p.title) +
+    ' · Study pack</h1><p>' +
+    escapeText(p.description) +
+    '</p>' +
+    pathExtras(p, true) +
+    '<h2>Contents</h2><ol>' +
+    p.lessons
+      .map(
+        l =>
+          '<li><button class="text-action" data-jump="pack-' +
+          l.id +
+          '">' +
+          escapeText(l.title.replace(/^\d+\.\s*/, '')) +
+          '</button></li>',
+      )
+      .join('') +
+    '</ol>' +
+    p.lessons
+      .map(
+        (l, i) =>
+          '<article id="pack-' +
+          l.id +
+          '"><p class="eyebrow">Lesson ' +
+          (i + 1) +
+          '</p><h1>' +
+          escapeText(l.title) +
+          '</h1><div class="takeaway">' +
+          escapeText(l.takeaway) +
+          '</div>' +
+          topicSections(l) +
+          visualExplorerView(l, true) +
+          diagramView(l, true) +
+          (l.trace
+            ? '<section><h2>' +
+              escapeText(l.trace.title) +
+              '</h2>' +
+              l.trace.frames.map((f, i) => traceFrame(l.trace, i)).join('') +
+              '</section>'
+            : '') +
+          exerciseView(l, true) +
+          practiceView(l, true) +
+          activityLinks(p, l.activities, true) +
+          lessonReferences(l, true) +
+          (l.quiz
+            ? '<h2>Checkpoint</h2>' +
+              printedQuiz(l.quiz, quizChoices(p, l)) +
+              (l.extraQuiz || [])
+                .map((q, i) => printedQuiz(q, keyedQuizChoices(q, p.id + '/' + l.id + '/' + (i + 2))))
+                .join('')
+            : '') +
+          '</article>',
+      )
+      .join('') +
+    stagedCurriculum(p, true) +
+    activityLinks(p, p.activities, true) +
+    glossaryPrint(p) +
+    '<h2>Continue learning</h2>' +
+    learningList(p.nextSteps) +
+    learningSources(p) +
+    '</article>'
+  );
+}
 
+('use strict');
 
-"use strict";
-const escapeText=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Lesson prose marks inline code with backticks; it is escaped first, so a span can only become <code>.
-const proseText=s=>escapeText(s).replace(/`([^`]+)`/g,'<code>$1</code>');
-const pathKey=id=>'learning-notebook:path:'+id+':v1';
-function completed(id){try{const x=JSON.parse(localStorage.getItem(pathKey(id))||'[]');return Array.isArray(x)?x.filter(s=>typeof s==='string'):[];}catch{return [];}}
-function catalog(){if(typeof learningLibraryView==='function')return learningLibraryView();return `<div class="eyebrow">YOUR LEARNING LIBRARY</div><h1>Follow your curiosity.</h1><p class="intro">Choose a path, build the foundations, then practise. Each subject has its own lessons and progress.</p>${resumeView()}<p class="library-shortcuts"><a class="download-action" href="#search">Search all lessons & files →</a><a class="download-action" href="#backup">Progress & backups →</a></p>${recommendedRoutes()}<label for="path-search">Find a learning path</label><input class="search" id="path-search" type="search" placeholder="Search by topic or subject"><p class="muted" id="path-count" role="status" aria-live="polite">${LEARNING_PATHS.filter(p=>p.status==='ready').length} available${LEARNING_PATHS.some(p=>p.status!=='ready')?' · '+LEARNING_PATHS.filter(p=>p.status!=='ready').length+' planned':''}</p><div class="path-grid" id="path-list">${cards('')}</div>${LEARNING_PATHS.some(p=>p.status!=='ready')?'<p class="muted">Planned paths are ideas for future learning; their lessons are not available yet.</p>':''}`;}
-function normalizedPathQuery(query){return String(query).trim().toLowerCase();}
-function rankedPaths(paths,q){const query=normalizedPathQuery(q);const rank=p=>{const title=p.title.toLowerCase();return title===query?0:title.startsWith(query)?1:title.includes(query)?2:3;};return paths.filter(p=>[p.title,p.category,p.description].join(' ').toLowerCase().includes(query)).sort((a,b)=>rank(a)-rank(b));}
-function cards(q){const paths=rankedPaths(LEARNING_PATHS,q);return paths.length?paths.map(p=>`<article class="path-card catalog-row"><span class="catalog-subject" aria-hidden="true">${typeof LIBRARY_ICONS==='object'?LIBRARY_ICONS[p.id]||'↗':'↗'}</span><span class="badge">${escapeText(p.category)}</span><h2>${escapeText(p.title)}</h2><p class="catalog-description">${escapeText(p.description)}</p><p class="muted">${escapeText(p.level)}${p.status==='ready'?' · '+(Array.isArray(p.lessons)?p.lessons.length:p.lessons)+' lessons':''}</p>${p.status==='ready'?`<a class="primary" href="${escapeText(p.href||'#path/'+p.id)}">Explore ${escapeText(p.title)} →</a>`:'<span class="muted">Coming later</span>'}</article>`).join(''):'<p role="status">No matching learning paths. Try a broader topic.</p>';}
-function lessonRoute(p,l){return '#topic/'+p.id+'/'+l.id;}
-function renderCatalog(){const [route,id,lessonId]=location.hash.slice(1).split('?')[0].split('/');
-if(typeof NotebookLoader!=='undefined'&&NotebookLoader.prepare(route,id,renderCatalog))return;
-// Preserve existing bookmarks and the original course's progress storage.
+const proseText = s => escapeText(s).replace(/`([^`]+)`/g, '<code>$1</code>');
+const pathKey = id => 'learning-notebook:path:' + id + ':v1';
+function completed(id) {
+  try {
+    const x = JSON.parse(localStorage.getItem(pathKey(id)) || '[]');
+    return Array.isArray(x) ? x.filter(s => typeof s === 'string') : [];
+  } catch {
+    return [];
+  }
+}
+function catalog() {
+  if (typeof learningLibraryView === 'function') return learningLibraryView();
+  return `<div class="eyebrow">YOUR LEARNING LIBRARY</div><h1>Follow your curiosity.</h1><p class="intro">Choose a path, build the foundations, then practise. Each subject has its own lessons and progress.</p>${resumeView()}<p class="library-shortcuts"><a class="download-action" href="#search">Search all lessons & files →</a><a class="download-action" href="#backup">Progress & backups →</a></p>${recommendedRoutes()}<label for="path-search">Find a learning path</label><input class="search" id="path-search" type="search" placeholder="Search by topic or subject"><p class="muted" id="path-count" role="status" aria-live="polite">${LEARNING_PATHS.filter(p => p.status === 'ready').length} available${LEARNING_PATHS.some(p => p.status !== 'ready') ? ' · ' + LEARNING_PATHS.filter(p => p.status !== 'ready').length + ' planned' : ''}</p><div class="path-grid" id="path-list">${cards('')}</div>${LEARNING_PATHS.some(p => p.status !== 'ready') ? '<p class="muted">Planned paths are ideas for future learning; their lessons are not available yet.</p>' : ''}`;
+}
+function normalizedPathQuery(query) {
+  return String(query).trim().toLowerCase();
+}
+function rankedPaths(paths, q) {
+  const query = normalizedPathQuery(q);
+  const rank = p => {
+    const title = p.title.toLowerCase();
+    return title === query ? 0 : title.startsWith(query) ? 1 : title.includes(query) ? 2 : 3;
+  };
+  return paths
+    .filter(p => [p.title, p.category, p.description].join(' ').toLowerCase().includes(query))
+    .sort((a, b) => rank(a) - rank(b));
+}
+function cards(q) {
+  const paths = rankedPaths(LEARNING_PATHS, q);
+  return paths.length
+    ? paths
+        .map(
+          p =>
+            `<article class="path-card catalog-row"><span class="catalog-subject" aria-hidden="true">${typeof LIBRARY_ICONS === 'object' ? LIBRARY_ICONS[p.id] || '↗' : '↗'}</span><span class="badge">${escapeText(p.category)}</span><h2>${escapeText(p.title)}</h2><p class="catalog-description">${escapeText(p.description)}</p><p class="muted">${escapeText(p.level)}${p.status === 'ready' ? ' · ' + (Array.isArray(p.lessons) ? p.lessons.length : p.lessons) + ' lessons' : ''}</p>${p.status === 'ready' ? `<a class="primary" href="${escapeText(p.href || '#path/' + p.id)}">Explore ${escapeText(p.title)} →</a>` : '<span class="muted">Coming later</span>'}</article>`,
+        )
+        .join('')
+    : '<p role="status">No matching learning paths. Try a broader topic.</p>';
+}
+function lessonRoute(p, l) {
+  return '#topic/' + p.id + '/' + l.id;
+}
+function renderCatalog() {
+  const [route, id, lessonId] = location.hash.slice(1).split('?')[0].split('/');
+  if (typeof NotebookLoader !== 'undefined' && NotebookLoader.prepare(route, id, renderCatalog)) return;
+  // Preserve existing bookmarks and the original course's progress storage.
 
-if(['labs','case'].includes(route)){location.replace('course.html'+location.hash);return;}
-const main=document.getElementById('main');const p=LEARNING_PATHS.find(x=>x.id===id&&x.status==='ready'&&(route==='resources'||!x.href));const lessons=p&&Array.isArray(p.lessons)?p.lessons:[];const l=lessons.find(x=>x.id===lessonId);
-let body;
-if(route==='search'){body=notebookSearchView();}
-else if(route==='review'&&typeof NotebookReview!=='undefined'){body=NotebookReview.view();}
-else if(route==='backup'){body=notebookBackupView();}
-else if(route==='resources'&&p){body=resourcesView(p,lessonId);}
-else if(route==='pack'&&p){body=coursePack(p);}
-else if(route==='glossary'&&p?.glossary){body=glossaryView(p);}
-else if(route==='path'&&p){const done=completed(p.id);body=`<a class="back-link" href="#">← All learning paths</a>${atlasCourseCover(p,done)}${courseTools(p,null,true)}${activityLinks(p,p.activities)}${pathExtras(p)}<p>${done.filter(id=>lessons.some(l=>l.id===id)).length} of ${lessons.length} read</p>${typeof NotebookPractice!=='undefined'?NotebookPractice.overview(p):''}${stagedCurriculum(p)}<h2>Next steps</h2>${learningList(p.nextSteps)}${learningSources(p)}`;}
-else if(route==='topic'&&p&&l){const index=lessons.indexOf(l);body=`<div class="reading-progress" aria-hidden="true"><span></span></div><div class="atlas-lesson-layout">${atlasLessonRail(p,l)}<article class="reading"><div class="lesson-meta"><p class="muted"><a href="#path/${p.id}">${escapeText(p.title)}</a> · Lesson ${index+1} of ${lessons.length}${l.minutes?` · ${l.minutes} min`:''}</p>${lessonCourseMenu(p,l)}</div><h1>${escapeText(l.title)}</h1><div class="takeaway">${escapeText(l.takeaway)}</div>${wordHelp(p,l)}${l.sections.map((s,i)=>`<section id="lesson-section-${i}"><h2>${escapeText(s.title)}</h2>${s.paragraphs.map(t=>`<p>${lessonText(p,t)}</p>`).join('')}${lessonExample(l,s,i,p)}${s.exampleNote?`<p>${lessonText(p,s.exampleNote)}</p>`:''}${evidenceNotes(s)}</section>`).join('')}${visualExplorerView(l)}${diagramView(l)}${traceView(l)}${exerciseView(l,false,p)}${practiceView(l,false,p)}${activityLinks(p,l.activities)}${taskKit(p,taskForLesson(p,l),true)}${lessonReferences(l)}${l.quiz?`<section class="quiz" id="lesson-checkpoint"><h2>Check your understanding</h2><p>${escapeText(l.quiz.question)}</p>${quizChoices(p,l).map(c=>`<button class="option" data-choice="${c.index}">${escapeText(c.text)}</button>`).join('')}<p id="feedback" role="status"></p><p id="checkpoint-note" class="muted"></p>${(l.extraQuiz||[]).map((q,i)=>keyedQuiz(p,l.id+'/'+(i+2),q)).join('')}</section>`:''}<div class="lesson-actions">${index>0?`<a href="${lessonRoute(p,lessons[index-1])}">← ${escapeText(lessons[index-1].title)}</a>`:''}${index+1<lessons.length?`<button class="primary" id="read-next">Read & continue <span aria-hidden="true">→</span><small class="next-title">Next: ${escapeText(lessons[index+1].title)}</small></button><a href="${lessonRoute(p,lessons[index+1])}">Next without marking read →</a>`:`<button class="primary" id="read-next">Finish reading →</button>`}</div><details class="reading-status"><summary>Reading status</summary><button class="quiet" id="mark-done">${completed(p.id).includes(l.id)?'Read · mark unread':'Mark read'}</button><p>Change the saved reading status without leaving this lesson.</p></details><p id="save-status" role="status"></p></article></div>`;}
-else if(route&&route!=='main'){body='<h1>Path unavailable</h1><p>This path or lesson is not available yet.</p><a href="#">Return to all learning paths</a>';}
-else body=catalog();
-if(typeof NotebookPractice!=='undefined')NotebookPractice.cleanup();main.innerHTML=body;document.title=(route==='search'?'Search notebook':route==='review'?'Review':route==='backup'?'Progress & backups':route==='glossary'&&p?.glossary?'Glossary · '+p.title:l?l.title:p?p.title:'Learning paths')+' · Learning Notebook';window.scrollTo(0,0);bindLearningTools(main,p,l);if(route==='topic'&&l&&typeof NotebookReview!=='undefined'){NotebookReview.bindAttempt(main,p,l);(l.practice||[]).forEach((s,i)=>NotebookReview.bindAttempt(main,p,{id:l.id+'/practice/'+(i+1)}));}if(typeof NotebookPractice!=='undefined')NotebookPractice.bind(p,l);if(typeof bindLibraryMap==='function')bindLibraryMap(main);if(route==='search')bindNotebookSearch();if(route==='glossary')bindGlossary(p);if(route==='topic')bindNumericCheck(l);if(route==='backup')bindNotebookBackup(main);if(route==='review'&&typeof NotebookReview!=='undefined')NotebookReview.bind(main);
-document.getElementById('print-course')?.addEventListener('click',()=>window.print());
-let traceIndex=0;
-if(l&&l.trace){const showTrace=()=>{document.getElementById('trace-frame').innerHTML=traceFrame(l.trace,traceIndex);main.querySelectorAll('[data-trace-index]').forEach(item=>{const current=Number(item.dataset.traceIndex)===traceIndex;item.classList.toggle('is-current',current);if(current)item.setAttribute('aria-current','step');else item.removeAttribute('aria-current');});document.getElementById('trace-prev').disabled=traceIndex===0;document.getElementById('trace-next').disabled=traceIndex===l.trace.frames.length-1;};document.getElementById('trace-prev')?.addEventListener('click',()=>{traceIndex=Math.max(0,traceIndex-1);showTrace();});document.getElementById('trace-next')?.addEventListener('click',()=>{traceIndex=Math.min(l.trace.frames.length-1,traceIndex+1);showTrace();});showTrace();}
-if(typeof bindLibraryMap!=='function')document.getElementById('path-search')?.addEventListener('input',e=>{document.getElementById('path-list').innerHTML=cards(e.target.value);const matches=LEARNING_PATHS.filter(p=>[p.title,p.category,p.description].join(' ').toLowerCase().includes(normalizedPathQuery(e.target.value))).length;document.getElementById('path-count').textContent=matches+' matching paths · '+LEARNING_PATHS.length+' total';});
-document.getElementById('read-next')?.addEventListener('click',()=>{const done=completed(p.id);try{localStorage.setItem(pathKey(p.id),JSON.stringify(done.includes(l.id)?done:[...done,l.id]));const index=lessons.indexOf(l);location.hash=index+1<lessons.length?lessonRoute(p,lessons[index+1]):'#path/'+p.id;}catch{document.getElementById('save-status').textContent='Progress could not be saved. Use the next lesson link to continue.';}});
-document.getElementById('mark-done')?.addEventListener('click',e=>{const done=completed(p.id);const next=done.includes(l.id)?done.filter(x=>x!==l.id):[...done,l.id];try{localStorage.setItem(pathKey(p.id),JSON.stringify(next));e.target.textContent=next.includes(l.id)?'Read · mark unread':'Mark read';document.getElementById('save-status').textContent='Progress saved in this browser.';}catch{document.getElementById('save-status').textContent='This browser cannot save progress.';}});
-main.querySelectorAll('[data-stage-check]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.stageCheck;const before=assessed(p.id);const next=before.includes(id)?before.filter(x=>x!==id):[...before,id];try{localStorage.setItem(assessmentKey(p.id),JSON.stringify(next));b.textContent=next.includes(id)?'Project self-checked · undo':'Mark project self-checked';}catch{b.textContent='Could not save self-check in this browser';}}));
-// The first answer on each showing is saved for review; later clicks only explain.
-let checkpointAnswered=false;
-main.querySelectorAll('[data-choice]').forEach(b=>b.addEventListener('click',()=>{const correct=Number(b.dataset.choice)===l.quiz.correct;document.getElementById('feedback').textContent=(correct?'Correct. ':'Not quite. ')+l.quiz.explanation;if(checkpointAnswered||typeof NotebookReview==='undefined')return;checkpointAnswered=true;NotebookReview.showNote(document.getElementById('checkpoint-note'),p,l.id,NotebookReview.record(p,l.id,correct),()=>{checkpointAnswered=false;});}));
-// Extra lesson questions and stage checks follow the same first-answer rule, each on its own.
-if(p&&typeof NotebookReview!=='undefined')main.querySelectorAll('[data-quiz-key]').forEach(block=>{const key=block.dataset.quizKey,q=NotebookReview.question(p,key)?.quiz;if(!q)return;let answered=false;block.querySelectorAll('[data-key-choice]').forEach(b=>b.addEventListener('click',()=>{const correct=Number(b.dataset.keyChoice)===q.correct;block.querySelector('.quiz-feedback').textContent=(correct?'Correct. ':'Not quite. ')+q.explanation;if(answered)return;answered=true;NotebookReview.showNote(block.querySelector('.quiz-note'),p,key,NotebookReview.record(p,key,correct),()=>{answered=false;});}));});}
+  if (['labs', 'case'].includes(route)) {
+    location.replace('course.html' + location.hash);
+    return;
+  }
+  const main = document.getElementById('main');
+  const p = LEARNING_PATHS.find(x => x.id === id && x.status === 'ready' && (route === 'resources' || !x.href));
+  const lessons = p && Array.isArray(p.lessons) ? p.lessons : [];
+  const l = lessons.find(x => x.id === lessonId);
+  let body;
+  if (route === 'search') {
+    body = notebookSearchView();
+  } else if (route === 'review' && typeof NotebookReview !== 'undefined') {
+    body = NotebookReview.view();
+  } else if (route === 'backup') {
+    body = notebookBackupView();
+  } else if (route === 'resources' && p) {
+    body = resourcesView(p, lessonId);
+  } else if (route === 'pack' && p) {
+    body = coursePack(p);
+  } else if (route === 'glossary' && p?.glossary) {
+    body = glossaryView(p);
+  } else if (route === 'path' && p) {
+    const done = completed(p.id);
+    body = `<a class="back-link" href="#">← All learning paths</a>${atlasCourseCover(p, done)}${courseTools(p, null, true)}${activityLinks(p, p.activities)}${pathExtras(p)}<p>${done.filter(id => lessons.some(l => l.id === id)).length} of ${lessons.length} read</p>${typeof NotebookPractice !== 'undefined' ? NotebookPractice.overview(p) : ''}${stagedCurriculum(p)}<h2>Next steps</h2>${learningList(p.nextSteps)}${learningSources(p)}`;
+  } else if (route === 'topic' && p && l) {
+    const index = lessons.indexOf(l);
+    body = `<div class="reading-progress" aria-hidden="true"><span></span></div><div class="atlas-lesson-layout">${atlasLessonRail(p, l)}<article class="reading"><div class="lesson-meta"><p class="muted"><a href="#path/${p.id}">${escapeText(p.title)}</a> · Lesson ${index + 1} of ${lessons.length}${l.minutes ? ` · ${l.minutes} min` : ''}</p>${lessonCourseMenu(p, l)}</div><h1>${escapeText(l.title)}</h1><div class="takeaway">${escapeText(l.takeaway)}</div>${wordHelp(p, l)}${l.sections.map((s, i) => `<section id="lesson-section-${i}"><h2>${escapeText(s.title)}</h2>${s.paragraphs.map(t => `<p>${lessonText(p, t)}</p>`).join('')}${lessonExample(l, s, i, p)}${s.exampleNote ? `<p>${lessonText(p, s.exampleNote)}</p>` : ''}${evidenceNotes(s)}</section>`).join('')}${visualExplorerView(l)}${diagramView(l)}${traceView(l)}${exerciseView(l, false, p)}${practiceView(l, false, p)}${activityLinks(p, l.activities)}${taskKit(p, taskForLesson(p, l), true)}${lessonReferences(l)}${
+      l.quiz
+        ? `<section class="quiz" id="lesson-checkpoint"><h2>Check your understanding</h2><p>${escapeText(l.quiz.question)}</p>${quizChoices(
+            p,
+            l,
+          )
+            .map(c => `<button class="option" data-choice="${c.index}">${escapeText(c.text)}</button>`)
+            .join(
+              '',
+            )}<p id="feedback" role="status"></p><p id="checkpoint-note" class="muted"></p>${(l.extraQuiz || []).map((q, i) => keyedQuiz(p, l.id + '/' + (i + 2), q)).join('')}</section>`
+        : ''
+    }<div class="lesson-actions">${index > 0 ? `<a href="${lessonRoute(p, lessons[index - 1])}">← ${escapeText(lessons[index - 1].title)}</a>` : ''}${index + 1 < lessons.length ? `<button class="primary" id="read-next">Read & continue <span aria-hidden="true">→</span><small class="next-title">Next: ${escapeText(lessons[index + 1].title)}</small></button><a href="${lessonRoute(p, lessons[index + 1])}">Next without marking read →</a>` : `<button class="primary" id="read-next">Finish reading →</button>`}</div><details class="reading-status"><summary>Reading status</summary><button class="quiet" id="mark-done">${completed(p.id).includes(l.id) ? 'Read · mark unread' : 'Mark read'}</button><p>Change the saved reading status without leaving this lesson.</p></details><p id="save-status" role="status"></p></article></div>`;
+  } else if (route && route !== 'main') {
+    body =
+      '<h1>Path unavailable</h1><p>This path or lesson is not available yet.</p><a href="#">Return to all learning paths</a>';
+  } else body = catalog();
+  if (typeof NotebookPractice !== 'undefined') NotebookPractice.cleanup();
+  main.innerHTML = body;
+  document.title =
+    (route === 'search'
+      ? 'Search notebook'
+      : route === 'review'
+        ? 'Review'
+        : route === 'backup'
+          ? 'Progress & backups'
+          : route === 'glossary' && p?.glossary
+            ? 'Glossary · ' + p.title
+            : l
+              ? l.title
+              : p
+                ? p.title
+                : 'Learning paths') + ' · Learning Notebook';
+  window.scrollTo(0, 0);
+  bindLearningTools(main, p, l);
+  if (route === 'topic' && l && typeof NotebookReview !== 'undefined') {
+    NotebookReview.bindAttempt(main, p, l);
+    (l.practice || []).forEach((s, i) => NotebookReview.bindAttempt(main, p, { id: l.id + '/practice/' + (i + 1) }));
+  }
+  if (typeof NotebookPractice !== 'undefined') NotebookPractice.bind(p, l);
+  if (typeof bindLibraryMap === 'function') bindLibraryMap(main);
+  if (route === 'search') bindNotebookSearch();
+  if (route === 'glossary') bindGlossary(p);
+  if (route === 'topic') bindNumericCheck(l);
+  if (route === 'backup') bindNotebookBackup(main);
+  if (route === 'review' && typeof NotebookReview !== 'undefined') NotebookReview.bind(main);
+  document.getElementById('print-course')?.addEventListener('click', () => window.print());
+  let traceIndex = 0;
+  if (l && l.trace) {
+    const showTrace = () => {
+      document.getElementById('trace-frame').innerHTML = traceFrame(l.trace, traceIndex);
+      main.querySelectorAll('[data-trace-index]').forEach(item => {
+        const current = Number(item.dataset.traceIndex) === traceIndex;
+        item.classList.toggle('is-current', current);
+        if (current) item.setAttribute('aria-current', 'step');
+        else item.removeAttribute('aria-current');
+      });
+      document.getElementById('trace-prev').disabled = traceIndex === 0;
+      document.getElementById('trace-next').disabled = traceIndex === l.trace.frames.length - 1;
+    };
+    document.getElementById('trace-prev')?.addEventListener('click', () => {
+      traceIndex = Math.max(0, traceIndex - 1);
+      showTrace();
+    });
+    document.getElementById('trace-next')?.addEventListener('click', () => {
+      traceIndex = Math.min(l.trace.frames.length - 1, traceIndex + 1);
+      showTrace();
+    });
+    showTrace();
+  }
+  if (typeof bindLibraryMap !== 'function')
+    document.getElementById('path-search')?.addEventListener('input', e => {
+      document.getElementById('path-list').innerHTML = cards(e.target.value);
+      const matches = LEARNING_PATHS.filter(p =>
+        [p.title, p.category, p.description].join(' ').toLowerCase().includes(normalizedPathQuery(e.target.value)),
+      ).length;
+      document.getElementById('path-count').textContent =
+        matches + ' matching paths · ' + LEARNING_PATHS.length + ' total';
+    });
+  document.getElementById('read-next')?.addEventListener('click', () => {
+    const done = completed(p.id);
+    try {
+      localStorage.setItem(pathKey(p.id), JSON.stringify(done.includes(l.id) ? done : [...done, l.id]));
+      const index = lessons.indexOf(l);
+      location.hash = index + 1 < lessons.length ? lessonRoute(p, lessons[index + 1]) : '#path/' + p.id;
+    } catch {
+      document.getElementById('save-status').textContent =
+        'Progress could not be saved. Use the next lesson link to continue.';
+    }
+  });
+  document.getElementById('mark-done')?.addEventListener('click', e => {
+    const done = completed(p.id);
+    const next = done.includes(l.id) ? done.filter(x => x !== l.id) : [...done, l.id];
+    try {
+      localStorage.setItem(pathKey(p.id), JSON.stringify(next));
+      e.target.textContent = next.includes(l.id) ? 'Read · mark unread' : 'Mark read';
+      document.getElementById('save-status').textContent = 'Progress saved in this browser.';
+    } catch {
+      document.getElementById('save-status').textContent = 'This browser cannot save progress.';
+    }
+  });
+  main.querySelectorAll('[data-stage-check]').forEach(b =>
+    b.addEventListener('click', () => {
+      const id = b.dataset.stageCheck;
+      const before = assessed(p.id);
+      const next = before.includes(id) ? before.filter(x => x !== id) : [...before, id];
+      try {
+        localStorage.setItem(assessmentKey(p.id), JSON.stringify(next));
+        b.textContent = next.includes(id) ? 'Project self-checked · undo' : 'Mark project self-checked';
+      } catch {
+        b.textContent = 'Could not save self-check in this browser';
+      }
+    }),
+  );
+  // The first answer on each showing is saved for review; later clicks only explain.
+  let checkpointAnswered = false;
+  main.querySelectorAll('[data-choice]').forEach(b =>
+    b.addEventListener('click', () => {
+      const correct = Number(b.dataset.choice) === l.quiz.correct;
+      document.getElementById('feedback').textContent = (correct ? 'Correct. ' : 'Not quite. ') + l.quiz.explanation;
+      if (checkpointAnswered || typeof NotebookReview === 'undefined') return;
+      checkpointAnswered = true;
+      NotebookReview.showNote(
+        document.getElementById('checkpoint-note'),
+        p,
+        l.id,
+        NotebookReview.record(p, l.id, correct),
+        () => {
+          checkpointAnswered = false;
+        },
+      );
+    }),
+  );
+  // Extra lesson questions and stage checks follow the same first-answer rule, each on its own.
+  if (p && typeof NotebookReview !== 'undefined')
+    main.querySelectorAll('[data-quiz-key]').forEach(block => {
+      const key = block.dataset.quizKey,
+        q = NotebookReview.question(p, key)?.quiz;
+      if (!q) return;
+      let answered = false;
+      block.querySelectorAll('[data-key-choice]').forEach(b =>
+        b.addEventListener('click', () => {
+          const correct = Number(b.dataset.keyChoice) === q.correct;
+          block.querySelector('.quiz-feedback').textContent = (correct ? 'Correct. ' : 'Not quite. ') + q.explanation;
+          if (answered) return;
+          answered = true;
+          NotebookReview.showNote(
+            block.querySelector('.quiz-note'),
+            p,
+            key,
+            NotebookReview.record(p, key, correct),
+            () => {
+              answered = false;
+            },
+          );
+        }),
+      );
+    });
+}
 // A skip action must not change the hash used by the course router.
-function focusLearningContent(){const main=document.getElementById('main');main.focus?.({preventScroll:true});main.scrollIntoView?.({block:'start'});}
+function focusLearningContent() {
+  const main = document.getElementById('main');
+  main.focus?.({ preventScroll: true });
+  main.scrollIntoView?.({ block: 'start' });
+}
 // An open course menu closes on Escape, returning focus to its button, or on a click elsewhere.
-document.addEventListener?.('click',e=>{document.querySelectorAll('.course-menu[open]').forEach(menu=>{if(!menu.contains(e.target))menu.removeAttribute('open');});});document.addEventListener?.('keydown',e=>{if(e.key!=='Escape')return;const menu=document.querySelector('.course-menu[open]');if(menu){menu.removeAttribute('open');menu.querySelector('summary').focus();}});
-document.getElementById('skip-content')?.addEventListener('click',event=>{event.preventDefault();focusLearningContent();});
-window.addEventListener('hashchange',()=>{renderCatalog();focusLearningContent();});renderCatalog();
+document.addEventListener?.('click', e => {
+  document.querySelectorAll('.course-menu[open]').forEach(menu => {
+    if (!menu.contains(e.target)) menu.removeAttribute('open');
+  });
+});
+document.addEventListener?.('keydown', e => {
+  if (e.key !== 'Escape') return;
+  const menu = document.querySelector('.course-menu[open]');
+  if (menu) {
+    menu.removeAttribute('open');
+    menu.querySelector('summary').focus();
+  }
+});
+document.getElementById('skip-content')?.addEventListener('click', event => {
+  event.preventDefault();
+  focusLearningContent();
+});
+window.addEventListener('hashchange', () => {
+  renderCatalog();
+  focusLearningContent();
+});
+renderCatalog();

@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const DAY=864e5,T0=Date.UTC(2026,9,1);
 const quiz=(q,correct=1)=>({question:q,options:['A','B','C'],correct,explanation:'Because '+q+'.'});

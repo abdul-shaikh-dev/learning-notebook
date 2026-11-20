@@ -11,7 +11,7 @@ for(const m of html.matchAll(/<(?:script src|link rel="stylesheet" href)="([^"]+
 for(const file of marks)assert.ok(fs.existsSync(file.split('?')[0]),'Placeholder names a published file: '+file);
 assert.ok(html.indexOf('content="assets/css/concept-explorer.css')<html.indexOf('href="assets/css/atlas-ui.css'),'Styles keep their place in the cascade');
 const js=marks.filter(f=>f.includes('.js'));
-assert.ok(js.indexOf('assets/js/concrete-scenes.js?v=concrete1')<js.findIndex(f=>f.includes('scenes-dsa')),'The scene registry runs before the scenes that register with it');
+assert.ok(js.indexOf('assets/js/concrete-scenes.js')<js.findIndex(f=>f.includes('scenes-dsa')),'The scene registry runs before the scenes that register with it');
 assert.ok(html.lastIndexOf('lesson-asset')<html.indexOf('</head>'),'Placeholders sit in the head');
 const pages=fs.readFileSync('scripts/build-pages.cjs','utf8');for(const file of marks)assert.ok(pages.includes("'"+file.split('?')[0]+"'"),'Published and cached for offline use: '+file);
 
@@ -57,3 +57,7 @@ const flush=async()=>{for(let i=0;i<10;i++)await Promise.resolve();};
  again[0].onload();await flush();assert.equal(renders,2);
  console.log('PASS: lesson-only assets: '+marks.length+' placeholders in cascade and run order, none fetched on home, progress or review, loaded before a lesson, course page or pack renders, once only, with retry of failures.');
 })().catch(e=>{console.error(e);process.exitCode=1;});
+// #156: version tokens are generated. Source pages name assets without ?v=; scripts/build-pages.cjs stamps each one
+// with its content hash in _site and refuses a page that still carries a hand-written token.
+for(const page of ['index.html','course.html','handbook.html','offline.html'])assert.ok(!fs.readFileSync(page,'utf8').includes('?v='),page+' has no hand-written ?v= token');
+assert.ok(pages.replace(/\s+/g,'').includes("'?v='+version(target)"),'The build stamps content-hash tokens');

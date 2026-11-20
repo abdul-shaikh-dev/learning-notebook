@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const context={};vm.createContext(context);
 vm.runInContext(fs.readFileSync('assets/vendor/highlight.min.js','utf8'),context);

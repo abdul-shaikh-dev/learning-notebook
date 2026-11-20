@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 /* VM-only checks: no browser, network, repository storage or dependencies. */
 const fs = require('node:fs');
 const path = require('node:path');

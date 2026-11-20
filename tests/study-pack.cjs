@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const root='paths/financial-foundations/';
 // Lessons, glossary, sources and practice content come from the shared course data, as the handbook page loads them.

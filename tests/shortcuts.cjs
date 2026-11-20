@@ -1,10 +1,11 @@
+require('./escape-context.cjs');
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
 process.chdir(process.env.LEARNING_REPO||path.resolve(__dirname,'..'));
 // Keyboard shortcuts: which keys act, which never do, and what the help lists.
 const paths=require(path.resolve('scripts/manifest.cjs')).readPaths();
 const ctx={LEARNING_PATHS:paths};vm.createContext(ctx);
 // The reader's own escapeText and lessonRoute, without the rest of catalog.js, which needs a page.
-const catalog=fs.readFileSync('assets/js/catalog.js','utf8'),helpers=[/^const escapeText=.*$/m,/^function lessonRoute\(.*$/m].map(re=>catalog.match(re)[0]).join('\n');
+const catalog=fs.readFileSync('assets/js/catalog.js','utf8'),helpers=catalog.match(/^function lessonRoute\([\s\S]*?^}$/m)[0];
 vm.runInContext([fs.readFileSync('assets/js/learning-tools.js','utf8'),helpers,fs.readFileSync('assets/js/notebook-shortcuts.js','utf8')].join('\n')+'\n;this.NotebookShortcuts=NotebookShortcuts;',ctx);
 const {action,helpHTML,LIST}=ctx.NotebookShortcuts;
 const python=paths.find(p=>p.id==='python'),[first,second,third]=python.lessons,last=python.lessons.at(-1);

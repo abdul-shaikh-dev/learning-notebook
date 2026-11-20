@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const paths=require('../scripts/manifest.cjs').readPaths();
 const nodes=new Map(),store=new Map(),preferences=new Map();
