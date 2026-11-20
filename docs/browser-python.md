@@ -12,7 +12,7 @@ Two lessons set `exercise.runLocally` with a reason and keep the static, copyabl
 
 ## Python course lesson examples
 
-The Python course sets `runExamples`, so 25 of its 27 lesson examples have Run and Edit, as in Design Patterns, Data Structures & Algorithms and Practical Maths & Statistics. Each runs unchanged in run mode, and `tests/browser-python.cjs` checks that its printed output matches its `# Expected output:` block, or that it checks its result with `assert`. The `concurrency-models` and `robust-import-capstone` examples use `ThreadPoolExecutor`; the runtime cannot start threads, so they set `exampleRunLocally` and stay static, highlighted Python with that reason below them. The test runs both and requires the thread error, so if the runtime ever gains threads the test fails and both can be made runnable.
+The Python course sets `runExamples`, so every lesson example except the two below has Run and Edit, as in Design Patterns, Data Structures & Algorithms and Practical Maths & Statistics. Each runs unchanged in run mode, and `tests/browser-python.cjs` checks that its printed output matches its `# Expected output:` block, or that it checks its result with `assert`. The `concurrency-models` and `robust-import-capstone` examples use `ThreadPoolExecutor`; the runtime cannot start threads, so they set `exampleRunLocally` and stay static, highlighted Python with that reason below them. The test runs both and requires the thread error, so if the runtime ever gains threads the test fails and both can be made runnable.
 
 The Python course's offline download includes the runtime files published by Python Problem Solving. The service worker serves a file listed by several courses from any saved owner.
 
