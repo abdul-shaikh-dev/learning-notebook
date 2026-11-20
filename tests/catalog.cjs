@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const paths=vm.runInNewContext(fs.readFileSync('content/paths.js','utf8')+';LEARNING_PATHS');
 assert.equal(new Set(paths.map(p=>p.id)).size,paths.length);

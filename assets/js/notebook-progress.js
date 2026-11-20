@@ -3,7 +3,7 @@ const NotebookProgress = (() => {
   'use strict';
   const DAY = 864e5, FINANCE = 'valuation-lab-v1', LAST = 'learning-notebook:last-lesson:v1';
   const FINANCE_SECTIONS = ['foundations','valuation-control','fair-value-hierarchy','prudent-valuation','working-knowledge','integrated-investigations','revision'];
-  const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const esc = escapeText;
   const plainTitle = title => String(title).replace(/^\d+\.\s*/, '');
   const plural = (n, one, many = one + 's') => n + ' ' + (n === 1 ? one : many);
   function load(name, fallback) {

@@ -1,5 +1,5 @@
 'use strict';
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc=escapeText;
 const paras=a=>a.map(p=>`<p>${esc(p)}</p>`).join('');
 const example=t=>`<pre class="example">${esc(t)}</pre>`;
 const COURSE=FINANCE_COURSE,stageLessons=id=>COURSE.lessons.filter(l=>l.stage===id);

@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const paths=require('../scripts/manifest.cjs').readPaths().filter(p=>Array.isArray(p.lessons));
 const nodes=new Map(),saved=new Map();

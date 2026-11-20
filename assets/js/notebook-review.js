@@ -2,7 +2,7 @@
 const NotebookReview = (() => {
   'use strict';
   const DAY = 864e5, INTERVALS = [1,3,7,21,60], LIMIT = 10;
-  const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const esc = escapeText;
   const key = id => 'learning-notebook:path:' + id + ':checkpoints:v1';
   const exerciseKey = id => 'learning-notebook:path:' + id + ':exercises:v1';
   const ANSWER = 5000, RATINGS = ['matched','partly','missed'];

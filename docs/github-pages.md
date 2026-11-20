@@ -20,6 +20,10 @@ The repository stays private. The learning site and its delivered HTML/JavaScrip
 
 Every push to `main`, including a merged pull request, publishes automatically once every check job passes; if any check fails, nothing is published. Pull requests and other branches run the checks only. To republish `main` without a new commit, for example after a failed deployment, run the workflow with publish enabled. Until 6 November 2026 publishing was manual only, so that an ordinary push could not publish a new version; the owner changed this so that each merge goes live.
 
+## Asset versions
+
+Source pages name scripts and stylesheets without a `?v=` token. `node scripts/build-pages.cjs` adds `?v=` and the first 12 hex characters of each file's SHA-256 to every local script, stylesheet and lesson asset in the built pages, so a browser fetches a file again exactly when its content changes. It refuses a page that still carries a hand-written token. Course chunks and the search index get the same kind of token from `scripts/lazy-catalog.cjs`.
+
 ## Local project-path preview
 
 Run `node scripts/build-pages.cjs`, copy the `_site` output into a `learning-notebook` subdirectory of a temporary web root, serve that root and open `/learning-notebook/`. This checks that relative asset URLs work with a path prefix rather than only at `/`.

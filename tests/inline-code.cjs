@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 const path=require('node:path'),assert=require('node:assert/strict');
 process.chdir(process.env.LEARNING_REPO||path.resolve(__dirname,'..'));
 // Lesson paragraphs mark code with backticks; the patterns live in inline-code-rules.cjs.

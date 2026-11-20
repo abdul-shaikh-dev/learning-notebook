@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 // Feature checklist for the move of Financial foundations onto the shared course page (issue #70):
 // every lesson, quiz, diagram, explainer, advanced section, reference, glossary entry, source record and
 // practice activity of the original reader has a home, and studio pages link to lessons by their shared ids.
@@ -78,7 +79,7 @@ for(const s of c.VISUAL_STORIES)for(const id of s.lessons)assert.ok(byId.has(id)
 for(const s of c.TRADE_JOURNEY)assert.ok(byId.has(s.lesson),s.id+': '+s.lesson);
 show('#labs/ipv');assert.equal(replaced.at(-1),'course.html#labs/ipv','Studio routes on the notebook page open the studio');
 // The handbook and studio read the lessons and practice content from the shared course data, loaded after its register.
-for(const page of ['handbook.html','course.html']){const html=fs.readFileSync(page,'utf8'),at=f=>html.indexOf(f+'?');
+for(const page of ['handbook.html','course.html']){const html=fs.readFileSync(page,'utf8'),at=f=>html.indexOf('"'+f+'"');
  assert.ok(at('paths/financial-foundations/runtime/course-data.js')>-1&&at('paths/financial-foundations/runtime/course-data.js')<at('content/courses/financial-foundations.js'),page+': course data');
  assert.ok(!html.includes('paths/financial-foundations/content/'),page+' loads no separate content files');}
 // The published course files list no content files; practice.json is source data built into the course file.

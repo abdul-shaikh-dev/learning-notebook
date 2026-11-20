@@ -73,7 +73,7 @@ function coursePack(p){return '<article class="handbook"><div class="no-print"><
 
 
 "use strict";
-const escapeText=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
 // Lesson prose marks inline code with backticks; it is escaped first, so a span can only become <code>.
 const proseText=s=>escapeText(s).replace(/`([^`]+)`/g,'<code>$1</code>');
 const pathKey=id=>'learning-notebook:path:'+id+':v1';

@@ -7,7 +7,7 @@ const NotebookBackup = (() => {
   const bytes = n => n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB';
   const FINANCE = 'valuation-lab-v1', LAST = 'learning-notebook:last-lesson:v1';
   const STUDY = ['foundations','valuation-control','fair-value-hierarchy','prudent-valuation','working-knowledge','integrated-investigations','revision'];
-  const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const esc = escapeText;
   const own = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
   const key = id => 'learning-notebook:path:' + id + ':v1';
   const challengeKey = id => 'learning-notebook:challenges:' + id + ':v1';

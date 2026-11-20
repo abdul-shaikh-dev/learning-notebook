@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
 process.chdir(process.env.LEARNING_REPO||path.resolve(__dirname,'..'));
 const paths=require(path.resolve('scripts/manifest.cjs')).readPaths(),nodes=new Map();
@@ -11,7 +12,7 @@ for(const p of paths.filter(p=>p.status==='ready')){for(const hash of [...(p.glo
 ctx.location.hash='';vm.runInContext('renderCatalog()',ctx);audit(node('main').innerHTML);for(const query of ['',...paths.map(p=>p.title),'no matching course zzz'])audit(vm.runInContext('cards('+JSON.stringify(query)+')',ctx));
 audit(fs.readFileSync('index.html','utf8'));
 const course=fs.readFileSync('course.html','utf8');audit(course,true);
-const finance=vm.createContext({...ctx,URL,document:{...ctx.document,currentScript:{src:"https://example.test/assets/js/notebook-mermaid.js"}}});for(const m of course.matchAll(/<script src="([^"]+)"/g)){const file=m[1].split('?')[0];let source=fs.readFileSync(file,'utf8');if(file.endsWith('/app.js'))source=source.split('\ndocument.addEventListener')[0];vm.runInContext(source,finance);}
+const finance=vm.createContext({...ctx,URL,document:{...ctx.document,currentScript:{src:"https://example.test/assets/js/notebook-mermaid.js"}}});for(const m of course.matchAll(/<script src="([^"]+)"/g)){const file=m[1].split('?')[0];if(file==='assets/js/escape-text.js')continue;let source=fs.readFileSync(file,'utf8');if(file.endsWith('/app.js'))source=source.split('\ndocument.addEventListener')[0];vm.runInContext(source,finance);}
 const data=vm.runInContext('({FINANCE_COURSE,EXERCISES,LABS,CASE_STEPS,TRADE_JOURNEY,VISUAL_STORIES})',finance);
 assert.equal(data.FINANCE_COURSE.lessons.length,32,'The studio loads the shared course data');
 // Lessons, introductions, foundation explainers, the glossary and sources are on the shared course page (audited above).

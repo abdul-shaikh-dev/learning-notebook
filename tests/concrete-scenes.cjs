@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const ctx={};ctx.window=ctx;vm.createContext(ctx);
 for(const f of ['concrete-scenes','scenes-dsa','scenes-apps','scenes-infra','scenes-patterns','scenes-data','scenes-engineering','scenes-practice'])vm.runInContext(fs.readFileSync('assets/js/'+f+'.js','utf8'),ctx);

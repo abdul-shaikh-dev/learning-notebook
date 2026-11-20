@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 // Practice ladders: schema validation, the lesson-page ladder with hints and attempts, print packs and search.
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
 process.chdir(process.env.LEARNING_REPO||path.resolve(__dirname,'..'));

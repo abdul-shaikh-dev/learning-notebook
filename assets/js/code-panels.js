@@ -3,7 +3,7 @@
  'use strict';
  const labels={python:'Python',csharp:'C#',javascript:'JavaScript',typescript:'TypeScript',jsx:'JavaScript / JSX',tsx:'TypeScript / TSX',sql:'SQL',bash:'Terminal',powershell:'PowerShell',yaml:'YAML',json:'JSON',xml:'HTML / XML',css:'CSS',dockerfile:'Dockerfile',ini:'TOML / INI',plaintext:'Plain text'};
  const aliases={py:'python',cs:'csharp','c#':'csharp',js:'javascript',ts:'typescript',sh:'bash',shell:'bash',console:'bash',ps1:'powershell',yml:'yaml',html:'xml',toml:'ini',text:'plaintext',none:'plaintext'};
- const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const escape=escapeText;
  function languageFor(source,context='',explicit=''){
   const requested=aliases[explicit.trim().toLowerCase()]||explicit.trim().toLowerCase();
   if(requested)return Object.hasOwn(labels,requested)?requested:'plaintext';

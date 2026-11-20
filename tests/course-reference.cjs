@@ -1,3 +1,4 @@
+require('./escape-context.cjs');
 // Glossary pages, plain-language word help, evidence notes, calculation exercises and source registers on the shared course page.
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const {checkGlossary}=require('../scripts/manifest.cjs');
