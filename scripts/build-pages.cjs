@@ -94,6 +94,11 @@ for (const file of files) {
   fs.copyFileSync(path.join(root, file), target);
 }
 fs.writeFileSync(path.join(out, '.nojekyll'), '');
+// Every published page carries the site's Content Security Policy (#158).
+for (const html of files.filter(f => f.endsWith('.html'))) {
+  const problem = require('./csp.cjs').problem(fs.readFileSync(path.join(out, html), 'utf8'));
+  if (problem) throw Error(html + ' ' + problem);
+}
 // Asset version tokens (#156): source pages carry none. Each local script, stylesheet and lesson asset a page names
 // gets ?v= and 12 hex characters of its content hash, so a browser fetches it again exactly when it changes.
 // Pages are stamped before the offline inventory hashes them.

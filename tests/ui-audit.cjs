@@ -1,10 +1,11 @@
 // Real-browser accessibility audit: text contrast, 24px targets and visible keyboard focus,
 // on every page type, light and dark, desktop and phone. Needs Chrome; set CHROME_PATH if it is elsewhere.
+// Also fails on any Content Security Policy violation (#158), including during a browser Python run.
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),http=require('node:http'),{spawn,spawnSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..');
 const routes=['index.html','index.html#path/python','index.html#path/python/variables','index.html#topic/design-patterns/mediator','index.html#search','index.html#review','index.html#backup','offline.html','course.html','course.html#explore','handbook.html'];
 const views=[{width:1440,height:900,dark:false},{width:1440,height:900,dark:true},{width:390,height:844,dark:false},{width:390,height:844,dark:true}];
-const types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.webmanifest':'application/manifest+json','.woff2':'font/woff2','.wasm':'application/wasm'};
+const types={'.html':'text/html','.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.webmanifest':'application/manifest+json','.woff2':'font/woff2','.wasm':'application/wasm'};
 
 function findChrome(){
  const named=[process.env.CHROME_PATH,'C:/Program Files/Google/Chrome/Application/chrome.exe','/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'].filter(Boolean);
@@ -62,7 +63,10 @@ const focusState=String.raw`(()=>{const e=document.activeElement;if(!e||e===docu
  const browserUrl=await new Promise((resolve,reject)=>{let text='';chrome.stderr.on('data',d=>{text+=d;const m=text.match(/ws:\/\/\S+/);if(m)resolve(m[0]);});chrome.on('exit',()=>reject(new Error('Chrome exited before it started')));});
  const ws=new WebSocket(browserUrl);await new Promise(r=>ws.onopen=r);
  let id=0;const pending=new Map();
- ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.id&&pending.has(m.id)){pending.get(m.id)(m);pending.delete(m.id);}};
+ const violations=[];
+ ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.id&&pending.has(m.id)){pending.get(m.id)(m);pending.delete(m.id);}
+  // Chrome logs every CSP violation, from the page or its workers, as a security entry.
+  if(m.method==='Log.entryAdded'&&/Content Security Policy/i.test(m.params.entry.text))violations.push(m.params.entry.text.slice(0,240));};
  const send=(method,params={},sessionId)=>new Promise(r=>{const i=++id;pending.set(i,r);ws.send(JSON.stringify({id:i,method,params,sessionId}));});
  const {result:{targetId}}=await send('Target.createTarget',{url:'about:blank'});
  const {result:{sessionId}}=await send('Target.attachToTarget',{targetId,flatten:true});
@@ -70,7 +74,7 @@ const focusState=String.raw`(()=>{const e=document.activeElement;if(!e||e===docu
  const evaluate=async expression=>(await page('Runtime.evaluate',{expression,returnByValue:true})).result.result?.value;
  const failures=[];
  try{
-  await page('Page.enable');await page('Runtime.enable');
+  await page('Page.enable');await page('Runtime.enable');await page('Log.enable');
   for(const view of views){
    const mobile=view.width<700;
    await page('Emulation.setDeviceMetricsOverride',{width:view.width,height:view.height,deviceScaleFactor:1,mobile});
@@ -83,6 +87,7 @@ const focusState=String.raw`(()=>{const e=document.activeElement;if(!e||e===docu
     for(let i=0;i<80;i++){await sleep(150);if(await evaluate("document.readyState==='complete'&&!!document.querySelector('main')?.textContent.trim()&&!/Loading/.test(document.querySelector('main').textContent.slice(0,200))"))break;}
     await sleep(300);
     for(const problem of await evaluate(pageAudit)||[])failures.push(where+': '+problem);
+    for(const v of violations.splice(0))failures.push(where+': CSP violation: '+v);
     // Keyboard: the first stops in tab order must each show a visible focus indicator.
     for(let i=0;i<25;i++){
      for(const type of ['keyDown','keyUp'])await page('Input.dispatchKeyEvent',{type,key:'Tab',code:'Tab',windowsVirtualKeyCode:9});
@@ -91,8 +96,25 @@ const focusState=String.raw`(()=>{const e=document.activeElement;if(!e||e===docu
     }
    }
   }
+  // The practice studio pages run under the policy too; their one inline script is allowed by its hash.
+  // (The React and full-stack practice pages are Vite sources and only run under Vite.)
+  for(const lab of ['practice/personal-effectiveness-studio/lab.html','paths/ui-accessibility/practice/demo.html']){
+   await page('Page.navigate',{url:base+lab});
+   for(let i=0;i<40&&!await evaluate("document.readyState==='complete'");i++)await sleep(100);
+   await sleep(500);
+   for(const v of violations.splice(0))failures.push(lab+': CSP violation: '+v);
+  }
+  // Browser Python under the policy: run a lesson example and wait for its output.
+  await page('Emulation.setDeviceMetricsOverride',{width:1440,height:900,deviceScaleFactor:1,mobile:false});
+  await page('Page.navigate',{url:base+'index.html#topic/python/values-and-names'});
+  for(let i=0;i<80&&!await evaluate("!!document.querySelector('[id^=example-run-]')");i++)await sleep(150);
+  await evaluate("document.querySelector('[id^=example-run-]').click()");
+  let output='';
+  for(let i=0;i<240;i++){await sleep(250);output=await evaluate("document.querySelector('[id^=example-output-]')?.textContent||''");if(output&&!/^(Loading|Running)/.test(output))break;}
+  if(!output||/^(Loading|Running)/.test(output)||/could not|error/i.test(output))failures.push('browser Python: example did not run: '+output.slice(0,200));
+  for(const v of violations.splice(0))failures.push('browser Python: CSP violation: '+v);
  }finally{ws.close();chrome.kill();server.close();try{fs.rmSync(profile,{recursive:true,force:true});}catch{}}
  const unique=[...new Set(failures)];
  if(unique.length){console.error(unique.join('\n'));console.error('FAIL: '+unique.length+' UI accessibility problems.');process.exit(1);}
- console.log('PASS: contrast, 24px targets and visible keyboard focus on '+routes.length+' pages, light and dark, at 1440px and 390px.');
+ console.log('PASS: contrast, 24px targets and visible keyboard focus on '+routes.length+' pages, light and dark, at 1440px and 390px; no CSP violations, including a browser Python run.');
 })().catch(error=>{console.error(error);process.exit(1);});

@@ -12,6 +12,12 @@ Each publication generates a new worker from `scripts/sw-template.js` and an exp
 
 Downloads use a temporary course cache, then commit its registry pointer only after verification. Failed downloads discard the temporary cache and retain any previous complete download. Cache names include this site's scope; removal and activation do not touch other applications' caches. Requests to external sites are not intercepted. Practice download links fetch the response through the worker before creating a browser download, so unavailable files produce a visible message instead of a misleading file.
 
+## Security and shared storage
+
+Every published page carries a Content Security Policy as a `<meta http-equiv>` tag, because GitHub Pages cannot send headers. Scripts load only from the site; the practice studio's one inline theme script is allowed by its hash, and `'wasm-unsafe-eval'` lets browser Python compile Pyodide. `scripts/csp.cjs` holds the policy: run `node scripts/csp.cjs --write <page>` after adding a page or changing an inline script. The build refuses a page whose tag is missing or stale, and `tests/ui-audit.cjs` fails on any violation, including during a browser Python run.
+
+Progress, the theme and review history live in `localStorage` under `learning-notebook:` keys. Browsers separate storage by origin, not by path, so every GitHub Pages project published under the same `<user>.github.io` account shares that origin and can read and change those keys. Treat saved progress as convenience data, keep a JSON backup, and publish nothing under the same account that you would not trust with it. A custom domain would give the notebook its own origin.
+
 ## Build and validation
 
 - Run `node scripts/build-pages.cjs`; `sw.js` exists only in `_site`, beside `manifest.webmanifest`.
