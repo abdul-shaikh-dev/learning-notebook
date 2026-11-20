@@ -29,10 +29,16 @@ function readmeSource(current) {
   }).filter(Boolean);
   const table = ['| Area | Courses |', '| --- | --- |', ...rows].join('\n');
   const count = /\*\*\d+ learning paths and \d+ lessons and challenges\*\*/;
+  // The Problem Solving challenge count comes from its source file (#154).
+  // A copy of the repository without that course (as in the authoring test) leaves the sentence alone.
+  const source = path.join(root, 'paths/python-problem-solving/challenges.json');
+  const challenges = fs.existsSync(source) ? JSON.parse(fs.readFileSync(source, 'utf8')).length : null;
+  const challengeCount = /contains \d+ original challenges/;
   const block = /\| Area \| Courses \|\n\| --- \| --- \|\n(?:\|.*\|\n?)*/;
-  if (!count.test(current) || !block.test(current)) throw Error('README is missing the course count or course table');
+  if (!count.test(current) || !block.test(current) || challenges !== null && !challengeCount.test(current)) throw Error('README is missing the course count, course table or challenge count');
   return current
     .replace(count, `**${courses.length} learning paths and ${lessons} lessons and challenges**`)
+    .replace(challengeCount, m => challenges === null ? m : `contains ${challenges} original challenges`)
     .replace(block, m => table + (m.endsWith('\n') ? '\n' : ''));
 }
 

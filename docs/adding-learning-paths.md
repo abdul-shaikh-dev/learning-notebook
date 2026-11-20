@@ -4,7 +4,25 @@
 2. Edit `paths/topic-id/path.json`. Standard paths omit `href` and use `lessons` as an array. Each lesson has a stable id, title, takeaway, sections with title/paragraphs/optional example, and an optional quiz with question/options/zero-based correct/explanation. The scaffold supplies a complete draft example.
 3. Add original explanations, explicit assumptions, worked examples, useful wrong-answer reasoning and source references where needed. Review calculations and source versions before marking status ready. The shared reader escapes lesson strings; it does not accept HTML markup.
 4. Run `node scripts/sync-catalog.cjs` to regenerate `content/paths.js`. Open index.html to review locally. Generic routes are `#path/topic-id` and `#topic/topic-id/lesson-id`.
-5. Run `node verify.cjs` and `node scripts/build-pages.cjs`, then test the built site under its project prefix on desktop and phone. Commit source and generated catalog together. Publishing is a separate authorized workflow dispatch.
+5. Run `node verify.cjs` and `node scripts/build-pages.cjs`, then test the built site under its project prefix on desktop and phone. Commit source and generated catalog together. Every push to `main` runs CI and, when it passes, publishes to GitHub Pages (`.github/workflows/pages.yml`); a manual workflow dispatch only republishes `main`.
+
+## Checklist for a new lesson
+
+Everything a lesson can carry, where it lives, and what fails when it is wrong. Only the lesson itself is required; add the rest where it teaches something. `node verify.cjs` runs the `scripts/manifest.cjs` validation and every `tests/*.cjs` in the last column except `tests/browser-python.cjs`, which needs a real Python runtime and runs as its own CI step. CI runs all of them on each pull request.
+
+| Artifact | Where | Details | Enforced by |
+| --- | --- | --- | --- |
+| Lesson: takeaway, sections, exercise, quiz | `lessons[]` in `path.json` | Steps 2–3 above; [Keep the reading flow clear](#keep-the-reading-flow-clear) | `scripts/manifest.cjs` (unknown or malformed fields), `tests/authoring.cjs`, `tests/inline-code.cjs`, `tests/prose-spacing.cjs`, `tests/reading-flow.cjs` |
+| Worked example | a section's `example`, with `exampleFormat` (`text` or `prose`) when it is not code | [Keep the reading flow clear](#keep-the-reading-flow-clear) | `node scripts/depth-report.cjs --missing` lists lessons without one; `tests/depth-report.cjs` |
+| References | `references[]` on the lesson | [Per-lesson references](#per-lesson-references-and-exercise-verification) | `tests/assessment-sources.cjs`, `tests/link-check.cjs` |
+| Extra checkpoint question | `paths/<id>/checkpoints.json`, keyed by lesson | [checkpoint-review.md](checkpoint-review.md#adding-questions) | `scripts/manifest.cjs`, `tests/checkpoint-questions.cjs` |
+| Stage check | `stageCheck` for the stage in `checkpoints.json` | [checkpoint-review.md](checkpoint-review.md#adding-questions) | `scripts/manifest.cjs`, `tests/checkpoint-questions.cjs` |
+| Facts test for answers that can be computed | `tests/<course>_checkpoint_facts.py` | [checkpoint-review.md](checkpoint-review.md) | its own run, as a step in the `python` job of `pages.yml`; `tests/docs-facts.cjs` fails when a facts script has no CI step |
+| Practice ladder | `practice[]` after the exercise | [Practice ladders](#practice-ladders) | `scripts/manifest.cjs`, `tests/practice-ladders.cjs`, `tests/browser-python.cjs` (code answers) |
+| Concept explorer | `paths/<id>/visuals.json`, keyed by lesson | [concept-explorers.md](concept-explorers.md) | `scripts/manifest.cjs`, `tests/concept-explorers.cjs`, `tests/explorer-focus.cjs` |
+| Flow diagram | `paths/<id>/diagrams.json`, keyed by lesson | [mermaid-diagrams.md](mermaid-diagrams.md) | `tests/mermaid-diagrams.cjs`, `tests/flow-audit.cjs` |
+| Runnable Python example | `runExamples` on the course or lesson; `exampleFiles` for imported practice modules; `exampleRunLocally` with a reason when it cannot run in the browser | [browser-python.md](browser-python.md) | `tests/browser-python.cjs` (runs each example, checks `# Expected output:`), `tests/lesson-examples.cjs` |
+| Glossary terms | `paths/<id>/glossary.json` | [Glossary and quick reference](#glossary-and-quick-reference) | `scripts/manifest.cjs`, `tests/course-reference.cjs` |
 
 ## Specialized courses
 
@@ -165,7 +183,7 @@ follows its step number. `scripts/manifest.cjs` rejects unknown kinds and fields
 
 ## Problem-solving challenges
 
-`paths/python-problem-solving/challenges.json` owns the 30 original problems,
+`paths/python-problem-solving/challenges.json` owns the original problems,
 examples, visible cases, optional hints and worked reasoning. Run
 `python scripts/sync-problem-solving.py` after edits; use `--check` to detect
 stale generated reader metadata, starters, reference code and cases. Do not edit

@@ -47,7 +47,7 @@ The search index (`content/search.js`) lists each word once with the entries tha
 
 The personal effectiveness paths include a [browser practice studio](https://abdul-shaikh-dev.github.io/learning-notebook/paths/time-attention-energy/practice/lab.html) for planning and reflection. Studio entries stay in memory unless you explicitly export them; a chosen review date does not schedule a notification.
 
-The Python Problem Solving path contains 30 original challenges with optional hints and worked reasoning. Download its ZIP, edit `solutions.py`, and run each challenge locally with `check.py`. Tests do not require an account or packages; passing them is separate from reading progress.
+The Python Problem Solving path contains 37 original challenges with optional hints and worked reasoning. Download its ZIP, edit `solutions.py`, and run each challenge locally with `check.py`. Tests do not require an account or packages; passing them is separate from reading progress.
 
 The maths, data analysis and machine learning paths build from hand-calculated examples to local Python labs. Data analysis and machine learning use CPU-based scientific Python packages; installation instructions are included in their practice kits. Requirements & software maintenance follows one existing command through investigation, a compatible repair and file-export failure checks. Each new path includes three stage projects.
 
@@ -74,7 +74,7 @@ python -m http.server 8877 --bind 127.0.0.1 --directory _site
 
 ## Customize or add a subject
 
-Author course content in `paths/<id>/`; generated catalogs and bundles are rebuilt from those files. To create a new planned path:
+Author course content in `paths/<id>/`; generated catalogs and bundles are rebuilt from those files. [docs/adding-learning-paths.md](docs/adding-learning-paths.md) is the checklist for a new lesson: every file a lesson can use and the test that checks it. To create a new planned path:
 
 ```sh
 node scripts/new-path.cjs my-topic "My topic"
@@ -107,6 +107,8 @@ python tests/resource-bundles.py
 node verify.cjs
 node scripts/build-pages.cjs
 ```
+
+Checkpoint answers that can be computed, such as query results, command output or calculations, are checked by one `tests/<course>_checkpoint_facts.py` script per course. Each checks the stated answers against the course's practice files; CI runs every one as its own step, and some need the course's tools (SQL Server, Docker, a kind cluster). Run the ones for the course you changed, for example `python tests/network_checkpoint_facts.py`.
 
 After changing page styles or markup, run `node tests/ui-audit.cjs`. It opens every page type in headless Chrome, in light and dark mode at desktop and phone widths, and fails on text below WCAG contrast, targets below 24px (with the WCAG spacing and in-text exceptions), and keyboard focus without a visible ring. Set `CHROME_PATH` if Chrome is not in its usual place.
 

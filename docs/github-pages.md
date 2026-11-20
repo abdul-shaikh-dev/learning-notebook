@@ -22,7 +22,7 @@ Every push to `main`, including a merged pull request, publishes automatically o
 
 ## Local project-path preview
 
-Serve the directory containing the repository, then open `/ipv/`, or place the `_site` output under a `learning-notebook` subdirectory of a temporary web root. This checks that relative asset URLs work with a path prefix rather than only at `/`.
+Run `node scripts/build-pages.cjs`, copy the `_site` output into a `learning-notebook` subdirectory of a temporary web root, serve that root and open `/learning-notebook/`. This checks that relative asset URLs work with a path prefix rather than only at `/`.
 
 ## Official references
 
